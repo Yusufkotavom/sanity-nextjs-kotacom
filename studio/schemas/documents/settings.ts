@@ -1,6 +1,8 @@
 import { defineField, defineType } from "sanity";
 import { Settings } from "lucide-react";
 
+const hexColor = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/;
+
 export default defineType({
   name: "settings",
   title: "Settings",
@@ -47,6 +49,95 @@ export default defineType({
       name: "copyright",
       type: "block-content",
       description: "The copyright text to display in the footer",
+    }),
+    defineField({
+      name: "themeColors",
+      title: "Theme Colors",
+      type: "object",
+      description:
+        "Update main website colors from Studio without editing code. Use HEX values like #0070F3.",
+      fields: [
+        defineField({
+          name: "lightPrimary",
+          title: "Light: Primary",
+          type: "string",
+          initialValue: "#171717",
+          validation: (Rule) =>
+            Rule.custom((value) =>
+              !value || hexColor.test(value) ? true : "Use HEX format, for example #171717",
+            ),
+        }),
+        defineField({
+          name: "lightPrimaryForeground",
+          title: "Light: Primary Foreground",
+          type: "string",
+          initialValue: "#FAFAFA",
+          validation: (Rule) =>
+            Rule.custom((value) =>
+              !value || hexColor.test(value) ? true : "Use HEX format, for example #FAFAFA",
+            ),
+        }),
+        defineField({
+          name: "lightAccent",
+          title: "Light: Accent",
+          type: "string",
+          initialValue: "#F5F5F5",
+          validation: (Rule) =>
+            Rule.custom((value) =>
+              !value || hexColor.test(value) ? true : "Use HEX format, for example #F5F5F5",
+            ),
+        }),
+        defineField({
+          name: "lightRing",
+          title: "Light: Ring",
+          type: "string",
+          initialValue: "#0070F3",
+          validation: (Rule) =>
+            Rule.custom((value) =>
+              !value || hexColor.test(value) ? true : "Use HEX format, for example #0070F3",
+            ),
+        }),
+        defineField({
+          name: "darkPrimary",
+          title: "Dark: Primary",
+          type: "string",
+          initialValue: "#FAFAFA",
+          validation: (Rule) =>
+            Rule.custom((value) =>
+              !value || hexColor.test(value) ? true : "Use HEX format, for example #FAFAFA",
+            ),
+        }),
+        defineField({
+          name: "darkPrimaryForeground",
+          title: "Dark: Primary Foreground",
+          type: "string",
+          initialValue: "#111111",
+          validation: (Rule) =>
+            Rule.custom((value) =>
+              !value || hexColor.test(value) ? true : "Use HEX format, for example #111111",
+            ),
+        }),
+        defineField({
+          name: "darkAccent",
+          title: "Dark: Accent",
+          type: "string",
+          initialValue: "#222222",
+          validation: (Rule) =>
+            Rule.custom((value) =>
+              !value || hexColor.test(value) ? true : "Use HEX format, for example #222222",
+            ),
+        }),
+        defineField({
+          name: "darkRing",
+          title: "Dark: Ring",
+          type: "string",
+          initialValue: "#3291FF",
+          validation: (Rule) =>
+            Rule.custom((value) =>
+              !value || hexColor.test(value) ? true : "Use HEX format, for example #3291FF",
+            ),
+        }),
+      ],
     }),
     defineField({
       name: "socialLinks",

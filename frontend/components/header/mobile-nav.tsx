@@ -22,10 +22,16 @@ type NavChild = {
   _key?: string;
   icon?: string | null;
   title?: string | null;
+  description?: string | null;
+  badge?: string | null;
   href?: string | null;
   target?: boolean | null;
 };
-type NavLinkWithChildren = SanityLink & { icon?: string | null; children?: NavChild[] | null };
+type NavLinkWithChildren = SanityLink & {
+  icon?: string | null;
+  children?: NavChild[] | null;
+  navLocation?: "primary" | "utility" | null;
+};
 
 export default function MobileNav({
   navigation,
@@ -36,7 +42,11 @@ export default function MobileNav({
 }) {
   const [open, setOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
-  const navItems = (navigation[0]?.links || []).filter((item) => item?.title);
+  const navItems = (navigation[0]?.links || [])
+    .filter((item) => item?.title)
+    .map((item) => item as NavLinkWithChildren);
+  const primaryItems = navItems.filter((item) => item.navLocation !== "utility");
+  const utilityItems = navItems.filter((item) => item.navLocation === "utility");
 
   return (
     <Sheet
@@ -67,8 +77,7 @@ export default function MobileNav({
         </SheetHeader>
         <div className="flex-1 overflow-y-auto px-4 py-6">
           <ul className="list-none space-y-1">
-            {navItems.map((navItem) => {
-              const item = navItem as NavLinkWithChildren;
+            {primaryItems.map((item) => {
               const ItemIcon = item.icon ? SOCIAL_ICON_MAP[item.icon] : null;
               const children =
                 item.children?.filter((child) => child?.title && child?.href) || [];
@@ -132,7 +141,21 @@ export default function MobileNav({
                               className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-foreground/75 hover:bg-accent hover:text-foreground"
                             >
                               {ChildIcon && <ChildIcon className="size-4" />}
-                              {child.title}
+                              <span className="flex flex-col items-start">
+                                <span className="inline-flex items-center gap-1.5">
+                                  <span>{child.title}</span>
+                                  {child.badge && (
+                                    <span className="rounded-full border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-foreground/75">
+                                      {child.badge}
+                                    </span>
+                                  )}
+                                </span>
+                                {child.description && (
+                                  <span className="text-xs text-foreground/55">
+                                    {child.description}
+                                  </span>
+                                )}
+                              </span>
                             </Link>
                           </li>
                         );
@@ -143,6 +166,32 @@ export default function MobileNav({
               );
             })}
           </ul>
+          {!!utilityItems.length && (
+            <div className="mt-6 border-t pt-4">
+              <p className="mb-2 px-3 text-left text-xs uppercase tracking-wide text-foreground/50">
+                Utility
+              </p>
+              <div className="space-y-2">
+                {utilityItems.map((item) => (
+                  <Link
+                    key={item._key}
+                    onClick={() => setOpen(false)}
+                    href={item.href || "#"}
+                    target={item.target ? "_blank" : undefined}
+                    rel={item.target ? "noopener noreferrer" : undefined}
+                    className={cn(
+                      buttonVariants({
+                        variant: item.buttonVariant || "outline",
+                      }),
+                      "h-10 w-full justify-center rounded-md",
+                    )}
+                  >
+                    {item.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="mt-6 border-t pt-4">
             <p className="mb-2 px-3 text-left text-xs uppercase tracking-wide text-foreground/50">
               Social

@@ -24,6 +24,18 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "description",
+      title: "Description",
+      type: "string",
+      description: "Short supporting text for desktop dropdown panels.",
+    }),
+    defineField({
+      name: "badge",
+      title: "Badge",
+      type: "string",
+      description: "Optional small label such as New or Beta.",
+    }),
+    defineField({
       name: "group",
       title: "Group / Section",
       type: "string",

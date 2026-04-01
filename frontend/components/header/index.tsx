@@ -2,7 +2,6 @@ import Link from "next/link";
 import Logo from "@/components/logo";
 import MobileNav from "@/components/header/mobile-nav";
 import DesktopNav from "@/components/header/desktop-nav";
-import SocialLinks from "@/components/header/social-links";
 import { ModeToggle } from "@/components/menu-toggle";
 import { fetchSanitySettings, fetchSanityNavigation } from "@/sanity/lib/fetch";
 
@@ -22,22 +21,14 @@ export default async function Header() {
           </div>
         </div>
 
-        <div className="hidden grid-cols-[auto_1fr_auto] items-start gap-2 py-3 lg:grid">
-          <div className="flex h-10 items-center justify-start">
-            <Link href="/" aria-label="Home page" className="shrink-0">
-              <Logo settings={settings} />
-            </Link>
-          </div>
-          <div className="flex justify-center px-4">
+        <div className="hidden h-16 items-center gap-4 lg:flex">
+          <Link href="/" aria-label="Home page" className="shrink-0">
+            <Logo settings={settings} />
+          </Link>
+          <div className="flex min-w-0 flex-1 items-center gap-2">
             <DesktopNav navigation={navigation} />
           </div>
-          <div className="flex max-w-[340px] flex-wrap items-center justify-end gap-1">
-            <ModeToggle />
-            <SocialLinks
-              links={settings?.socialLinks}
-              className="flex-[1_1_220px] justify-end"
-            />
-          </div>
+          <ModeToggle />
         </div>
       </div>
     </header>

@@ -10,6 +10,8 @@ export const NAVIGATION_QUERY = groq`
       children[]{
         _key,
         group,
+        description,
+        badge,
         icon,
         title,
         target,
