@@ -146,3 +146,16 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter studio run build` passed.
   - `pnpm --filter frontend run build` passed.
+
+## 2026-04-01 - Fix Studio CI Type Errors for Redirect Schema
+- Changed files:
+  - `studio/schemas/documents/redirect.ts`
+- Summary:
+  - Fixed TypeScript validator typings in redirect schema for Sanity v5 compatibility.
+  - Replaced overly strict `Rule` annotations with Sanity-compatible callback signatures.
+- SEO impact:
+  - No direct SEO behavior change.
+  - Restores CI stability so redirect model can be safely built/deployed.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` passed.

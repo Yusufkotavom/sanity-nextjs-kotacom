@@ -1,4 +1,4 @@
-import { defineField, defineType, type Rule } from "sanity";
+import { defineField, defineType } from "sanity";
 import { Link2 } from "lucide-react";
 
 function isValidInternalPath(value: string | undefined) {
@@ -25,7 +25,7 @@ export default defineType({
   icon: Link2,
   description: "Managed redirects used by Next.js next.config redirects().",
   validation: (Rule) =>
-    Rule.custom((doc: { source?: string; destination?: string } | undefined) => {
+    Rule.custom((doc: any) => {
       if (!doc) return true;
       if (doc.source && doc.destination && doc.source === doc.destination) {
         return "Source and destination cannot be the same.";
@@ -38,15 +38,15 @@ export default defineType({
       title: "Source Path",
       type: "string",
       description: "Incoming path. Must start with /. Example: /old-blog/my-post",
-      validation: (rule: Rule) => rule.required().custom(isValidInternalPath),
+      validation: (Rule) => Rule.required().custom(isValidInternalPath),
     }),
     defineField({
       name: "destination",
       title: "Destination",
       type: "string",
       description: "Internal path (/new-path) or full URL (https://example.com).",
-      validation: (rule: Rule) =>
-        rule.required().custom((value: string | undefined) => {
+      validation: (Rule) =>
+        Rule.required().custom((value: string | undefined) => {
           const pathValidation = isValidInternalPath(value);
           if (pathValidation === true) return true;
 
