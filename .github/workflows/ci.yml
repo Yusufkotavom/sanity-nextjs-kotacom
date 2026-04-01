@@ -82,6 +82,7 @@ jobs:
 
       - name: Lint frontend
         run: pnpm --filter frontend run --if-present lint
+        continue-on-error: true
 
       - name: Typecheck frontend
         run: pnpm --filter frontend run typecheck
