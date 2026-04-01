@@ -155,7 +155,7 @@ cd studio
 sanity deploy
 ```
 
-After the first deploy, set `SANITY_STUDIO_APP_ID` from the CLI output so later deploys skip the hostname prompt.
+For CI deploys, prefer `SANITY_STUDIO_HOSTNAME` as the deploy target. `SANITY_STUDIO_APP_ID` is optional and only needed for advanced/legacy app-id based targeting.
 
 #### 4. GitHub Actions (Studio)
 
@@ -163,7 +163,7 @@ The repo includes [`.github/workflows/deploy-studio.yml`](.github/workflows/depl
 
 Configure GitHub **Environments** (`Production` for `master`, `development` for `develop`):
 
-- **Variables**: `SANITY_STUDIO_PREVIEW_URL`, `SANITY_STUDIO_PROJECT_ID`, `SANITY_STUDIO_DATASET`, `SANITY_STUDIO_HOSTNAME`, `SANITY_STUDIO_API_VERSION`, `SANITY_STUDIO_APP_ID`
+- **Variables**: `SANITY_STUDIO_PREVIEW_URL`, `SANITY_STUDIO_PROJECT_ID`, `SANITY_STUDIO_DATASET`, `SANITY_STUDIO_HOSTNAME`, `SANITY_STUDIO_API_VERSION`
 - **Secret**: `SANITY_AUTH_TOKEN` (Sanity Manage → API → Tokens, deploy-capable token)
 
 See the workflow file for the exact names checked during deploy.
@@ -273,7 +273,7 @@ All environment variables and their descriptions:
 - `SANITY_STUDIO_HOSTNAME` - your Sanity Studio hostname for `sanity deploy` (unique on `.sanity.studio`).
 - `SANITY_STUDIO_API_VERSION` - your Sanity API version (same guidance as above). For example: YYYY-MM-DD.
 - `SANITY_AUTH_TOKEN` - your Sanity auth token for Studio deploy via GitHub Actions. Generate in Sanity Manage → API → Tokens with deploy permission.
-- `SANITY_STUDIO_APP_ID` - your Sanity Studio app ID from the first `sanity deploy`; avoids repeated hostname prompts.
+- `SANITY_STUDIO_APP_ID` - optional app-id deploy target from Sanity Manage / first `sanity deploy`. Usually unnecessary when `SANITY_STUDIO_HOSTNAME` is set.
 
 [react-url]: https://reactjs.org/
 [next-js-url]: https://nextjs.org/

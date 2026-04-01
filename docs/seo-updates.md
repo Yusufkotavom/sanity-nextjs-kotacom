@@ -16,6 +16,23 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-01 - Stabilize Sanity Studio CI Deploy Targeting
+- Changed files:
+  - `.github/workflows/deploy-studio.yml`
+  - `studio/sanity.cli.ts`
+  - `studio/.env.example`
+  - `README.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Changed Studio deploy targeting in CLI config to prefer `deployment.studioHost` and only include `deployment.appId` when explicitly set.
+  - Updated deploy workflow to stop requiring/passing `SANITY_STUDIO_APP_ID` in CI, reducing failures caused by stale or unauthorized app IDs.
+  - Updated environment/documentation guidance to mark `SANITY_STUDIO_APP_ID` as optional for legacy/advanced targeting.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - `SANITY_STUDIO_PREVIEW_URL=http://localhost:3000 SANITY_STUDIO_PROJECT_ID=ci-project SANITY_STUDIO_DATASET=production SANITY_STUDIO_HOSTNAME=ci-studio SANITY_STUDIO_API_VERSION=2026-03-23 pnpm --filter studio run build` passed.
+  - `pnpm --filter studio run typecheck` failed due to pre-existing unrelated type errors in `studio/schemas/documents/redirect.ts`.
+
 ## 2026-04-01 - Global SEO Fallback Integration (Studio + Frontend)
 - Changed files:
   - `studio/schemas/documents/seo-settings.ts`
@@ -102,3 +119,30 @@ This file is the canonical changelog for all repository updates, with explicit S
   - https://www.sanity.io/learn/course/seo-optimization/implementing-redirects
   - https://www.sanity.io/docs/developer-guides/managing-redirects-with-sanity
   - https://nextjs.org/docs/app/api-reference/config/next-config-js/redirects
+
+## 2026-04-01 - Advanced SEO Alignment: Studio Fields + JSON-LD + Metadata Hardening
+- Changed files:
+  - `studio/schemas/blocks/shared/meta.ts`
+  - `frontend/sanity/queries/shared/meta.ts`
+  - `frontend/sanity/lib/metadata.ts`
+  - `frontend/components/seo/json-ld.tsx`
+  - `frontend/lib/seo-jsonld.ts`
+  - `frontend/app/(main)/blog/[slug]/page.tsx`
+  - `frontend/app/(main)/products/[slug]/page.tsx`
+  - `frontend/app/(main)/services/[slug]/page.tsx`
+- Summary:
+  - Added SEO fields in Studio meta schema: `canonicalUrl`, `focusKeyword`, `secondaryKeywords`.
+  - Synced frontend query contract for new SEO fields.
+  - Hardened metadata fallback logic to handle null-safe canonical/title/description and support OG type selection (`website`/`article`).
+  - Added reusable JSON-LD component and generators.
+  - Implemented structured data output for detail pages:
+    - Blog post: `Article` + `BreadcrumbList`
+    - Product detail: `Product` + `BreadcrumbList`
+    - Service detail: `Service` + `BreadcrumbList`
+- SEO impact:
+  - Front and Studio SEO models are better aligned with fewer fallback gaps.
+  - Rich-result eligibility improved via structured data on critical templates.
+  - Canonical override is now supported from Studio.
+- Verification:
+  - `pnpm --filter studio run build` passed.
+  - `pnpm --filter frontend run build` passed.

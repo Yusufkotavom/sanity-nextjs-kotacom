@@ -22,6 +22,31 @@ export default defineField({
         Rule.max(160).warning("SEO description should ideally be under 160 characters."),
     }),
     defineField({
+      name: "canonicalUrl",
+      type: "url",
+      title: "Canonical URL Override",
+      description: "Optional absolute URL to override generated canonical URL.",
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ["http", "https"],
+        }),
+    }),
+    defineField({
+      name: "focusKeyword",
+      type: "string",
+      title: "Focus Keyword",
+      description: "Primary keyword this page should rank for.",
+    }),
+    defineField({
+      name: "secondaryKeywords",
+      type: "array",
+      title: "Secondary Keywords",
+      of: [{ type: "string" }],
+      options: {
+        sortable: true,
+      },
+    }),
+    defineField({
       name: "noindex",
       title: "No Index",
       type: "boolean",

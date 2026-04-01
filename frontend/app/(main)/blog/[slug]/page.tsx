@@ -12,6 +12,8 @@ import {
   fetchSanityPostsStaticParams,
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
+import JsonLd from "@/components/seo/json-ld";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "@/lib/seo-jsonld";
 
 type BreadcrumbLink = {
   label: string;
@@ -36,7 +38,11 @@ export async function generateMetadata(props: {
     notFound();
   }
 
-  return await generatePageMetadata({ page: post, slug: `blog/${params.slug}` });
+  return await generatePageMetadata({
+    page: post,
+    slug: `blog/${params.slug}`,
+    pageType: "article",
+  });
 }
 
 export default async function PostPage(props: {
@@ -70,9 +76,27 @@ export default async function PostPage(props: {
   const headingIdMap = Object.fromEntries(
     tocItems.map((item) => [item.key, item.id]),
   );
+  const postPath = `/blog/${params.slug}`;
+  const postExcerpt = (post as any)?.excerpt;
+  const articleJsonLd = buildArticleJsonLd({
+    title: post.title || "",
+    description: post.meta?.description || postExcerpt,
+    path: postPath,
+    image: post.meta?.image || post.image,
+    datePublished: post._createdAt || undefined,
+    dateModified: post._updatedAt || undefined,
+    authorName: post.author?.name || undefined,
+  });
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog" },
+    { name: post.title || "Post", path: postPath },
+  ]);
 
   return (
     <section>
+      <JsonLd data={articleJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
       <div className="container py-16 xl:py-20">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
           <article className="max-w-3xl">

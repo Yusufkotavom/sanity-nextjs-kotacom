@@ -4,6 +4,9 @@ export const metaQuery = `
   meta{
     title,
     description,
+    canonicalUrl,
+    focusKeyword,
+    secondaryKeywords,
     noindex,
     image{
       ${imageQuery}

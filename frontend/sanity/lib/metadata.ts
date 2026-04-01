@@ -8,7 +8,15 @@ const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 type MetaCompatiblePage = {
   title?: string | null;
   excerpt?: string | null;
-  meta?: any | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    canonicalUrl?: string | null;
+    focusKeyword?: string | null;
+    secondaryKeywords?: string[] | null;
+    noindex?: boolean | null;
+    image?: any;
+  } | null;
 };
 
 type SeoSettings = {
@@ -72,6 +80,8 @@ const buildMetadata = ({
   description,
   noindex,
   slug,
+  canonicalUrl,
+  openGraphType = "website",
   page,
   seo,
 }: {
@@ -79,12 +89,15 @@ const buildMetadata = ({
   description?: string;
   noindex?: boolean;
   slug?: string;
+  canonicalUrl?: string;
+  openGraphType?: "website" | "article";
   page?: MetaCompatiblePage | null;
   seo?: SeoSettings | null;
 }): Metadata => {
   const image = resolveImage(page, seo);
   const resolvedTitle = title || seo?.defaultTitle || seo?.siteName;
   const resolvedDescription = description || seo?.defaultDescription;
+  const resolvedCanonical = canonicalUrl || getCanonicalUrl(slug);
   const robotsValue =
     !isProduction || noindex || seo?.defaultNoIndex ? "noindex, nofollow" : "index, follow";
 
@@ -97,8 +110,8 @@ const buildMetadata = ({
       siteName: seo?.siteName || undefined,
       images: [image],
       locale: "en_US",
-      type: "website",
-      url: getCanonicalUrl(slug),
+      type: openGraphType,
+      url: resolvedCanonical,
     },
     twitter: {
       card: "summary_large_image",
@@ -109,7 +122,7 @@ const buildMetadata = ({
     },
     robots: robotsValue,
     alternates: {
-      canonical: getCanonicalUrl(slug),
+      canonical: resolvedCanonical,
     },
   };
 };
@@ -139,9 +152,11 @@ export async function generateRootMetadata(): Promise<Metadata> {
 export async function generatePageMetadata({
   page,
   slug,
+  pageType = "website",
 }: {
   page: PAGE_QUERY_RESULT | POST_QUERY_RESULT | MetaCompatiblePage | null;
   slug: string;
+  pageType?: "website" | "article";
 }): Promise<Metadata> {
   const seo = await getSeoSettings();
   const compatiblePage = page as MetaCompatiblePage | null;
@@ -149,9 +164,12 @@ export async function generatePageMetadata({
   return buildMetadata({
     page: compatiblePage,
     slug,
-    title: compatiblePage?.meta?.title || compatiblePage?.title,
-    description: compatiblePage?.meta?.description || compatiblePage?.excerpt,
+    title: compatiblePage?.meta?.title || compatiblePage?.title || undefined,
+    description:
+      compatiblePage?.meta?.description || compatiblePage?.excerpt || undefined,
+    canonicalUrl: compatiblePage?.meta?.canonicalUrl || undefined,
     noindex: compatiblePage?.meta?.noindex || undefined,
+    openGraphType: pageType,
     seo,
   });
 }

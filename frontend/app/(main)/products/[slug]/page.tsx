@@ -17,6 +17,8 @@ import {
   fetchSanityProductsStaticParams,
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
+import JsonLd from "@/components/seo/json-ld";
+import { buildBreadcrumbJsonLd, buildProductJsonLd } from "@/lib/seo-jsonld";
 
 type BreadcrumbLink = {
   label: string;
@@ -127,9 +129,26 @@ export default async function ProductSlugPage(props: {
     { label: "Products", href: "/products" },
     { label: product.title as string, href: "#" },
   ];
+  const productPath = `/products/${params.slug}`;
+  const productJsonLd = buildProductJsonLd({
+    title: product.title || "",
+    description: product.meta?.description || product.excerpt,
+    path: productPath,
+    image: product.meta?.image || product.image,
+    price: product.price,
+    currency: product.currency,
+    availability: product.availability,
+  });
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Products", path: "/products" },
+    { name: product.title || "Product", path: productPath },
+  ]);
 
   return (
     <section>
+      <JsonLd data={productJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
       <div className="container py-16 xl:py-20">
         <article className="mx-auto max-w-4xl">
           <Breadcrumbs links={links} />
