@@ -70,7 +70,8 @@ export default defineType({
       title: "Sub Menu",
       type: "array",
       of: [defineArrayMember({ type: "navigation-link-child" })],
-      description: "Optional nested items for dropdown/submenu navigation.",
+      description:
+        "Optional nested items for dropdown/submenu navigation. Also used as full footer menu links.",
       validation: (Rule) => Rule.max(8),
     }),
   ],

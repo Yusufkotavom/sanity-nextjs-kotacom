@@ -14,7 +14,7 @@ export default defineType({
       name: "links",
       title: "Links",
       description:
-        "Primary header links. New links default to a Vercel-like text style.",
+        "Primary header links. Footer columns are also generated from these links and their Sub Menu items.",
       type: "array",
       of: [
         defineArrayMember({
