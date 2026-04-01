@@ -18,6 +18,8 @@ type NavChild = {
 };
 type NavLinkWithChildren = SanityLink & {
   icon?: string | null;
+  navLocation?: "primary" | "utility" | null;
+  showInFooter?: boolean | null;
   children?: NavChild[] | null;
 };
 type SettingsWithSocial = SETTINGS_QUERY_RESULT & {
@@ -46,7 +48,10 @@ export default async function Footer() {
   const navigation = await fetchSanityNavigation();
   const navItems = (navigation[0]?.links || [])
     .filter((item) => item?.title)
-    .map((item) => item as NavLinkWithChildren);
+    .map((item) => item as NavLinkWithChildren)
+    .filter((item) => item.showInFooter !== false);
+  const footerPrimaryLinks = navItems.filter((item) => item.navLocation !== "utility");
+  const footerUtilityLinks = navItems.filter((item) => item.navLocation === "utility");
   const footerColumns = navItems.filter(
     (item) =>
       (item.children?.filter((child) => child?.title && child?.href).length || 0) >
@@ -61,7 +66,7 @@ export default async function Footer() {
             <Logo settings={settings} />
           </Link>
           <div className="mt-8 flex flex-wrap items-center gap-7 text-primary">
-            {navItems.map((navItem: SanityLink) => (
+            {footerPrimaryLinks.map((navItem: SanityLink) => (
               <Link
                 key={navItem._key}
                 href={navItem.href || "#"}
@@ -79,6 +84,26 @@ export default async function Footer() {
               </Link>
             ))}
           </div>
+          {!!footerUtilityLinks.length && (
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              {footerUtilityLinks.map((navItem: SanityLink) => (
+                <Link
+                  key={navItem._key}
+                  href={navItem.href || "#"}
+                  target={navItem.target ? "_blank" : undefined}
+                  rel={navItem.target ? "noopener noreferrer" : undefined}
+                  className={cn(
+                    buttonVariants({
+                      variant: navItem.buttonVariant || "outline",
+                    }),
+                    "h-8 px-3 text-xs",
+                  )}
+                >
+                  {navItem.title}
+                </Link>
+              ))}
+            </div>
+          )}
 
           {!!footerColumns.length && (
             <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-3 xl:grid-cols-5">

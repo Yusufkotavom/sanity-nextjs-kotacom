@@ -16,6 +16,57 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-01 - Geist Typography Recipes and Component Adoption
+- Changed files:
+  - `frontend/app/globals.css`
+  - `frontend/components/blocks/hero/hero-1.tsx`
+  - `frontend/components/blocks/hero/hero-2.tsx`
+  - `frontend/components/blocks/section-header.tsx`
+  - `frontend/components/ui/product-card.tsx`
+  - `frontend/components/ui/service-card.tsx`
+  - `frontend/components/ui/post-card.tsx`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable typography utilities (`text-display-xl`, `text-display-lg`, `text-ui-body`, `text-ui-label`, `text-meta`) aligned with Geist hierarchy patterns.
+  - Applied the new typography recipes across hero blocks, section headers, and content cards to reduce ad-hoc bold sizing and improve visual consistency.
+  - Switched metadata lines (price/duration) to mono/tabular style via `text-meta`.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
+## 2026-04-01 - Geist-Inspired Global Color Token Remap
+- Changed files:
+  - `frontend/app/globals.css`
+  - `docs/seo-updates.md`
+- Summary:
+  - Reworked global design tokens to a Geist-inspired semantic palette with explicit light/dark gray scales (`gray 1-10`) and background tiers (`background 1/2`).
+  - Remapped existing app tokens (`background`, `foreground`, `primary`, `secondary`, `muted`, `accent`, `border`, `input`, `ring`, sidebar tokens) to the new scale without changing component structure.
+  - Preserved compatibility for existing components by keeping the same semantic token names.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
+## 2026-04-01 - Switch Frontend Typography to Vercel Geist
+- Changed files:
+  - `frontend/app/layout.tsx`
+  - `frontend/app/globals.css`
+  - `frontend/package.json`
+  - `pnpm-lock.yaml`
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced `Inter` setup with `GeistSans` and `GeistMono` in the Next.js root layout.
+  - Applied official Geist CSS variables globally and ensured code-like elements (`code`, `kbd`, `samp`, `pre`) use mono typography.
+  - Added `geist` dependency to frontend workspace.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
 ## 2026-04-01 - Footer Full Menu from Sanity Navigation
 - Changed files:
   - `frontend/components/footer.tsx`
@@ -200,3 +251,34 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Improves deployment reliability for SEO schema/content updates managed in Studio.
 - Verification:
   - `sanity deploy --help` confirms `--yes` enables unattended mode.
+
+## 2026-04-01 - Vercel-Style Navigation Model and Header UX Alignment
+- Changed files:
+  - `studio/schemas/blocks/shared/link.ts`
+  - `studio/schemas/blocks/shared/navigation-link-child.ts`
+  - `studio/schemas/documents/navigation.ts`
+  - `frontend/sanity/queries/navigation.ts`
+  - `frontend/components/header/index.tsx`
+  - `frontend/components/header/desktop-nav.tsx`
+  - `frontend/components/header/mobile-nav.tsx`
+  - `frontend/components/footer.tsx`
+- Summary:
+  - Added navigation data controls in Studio for Vercel-like structure:
+    - `navLocation` (`primary` or `utility`) to control link placement.
+    - `showInFooter` toggle to control footer visibility.
+    - Child link `description` and `badge` fields for richer dropdown panels.
+  - Updated frontend navigation query to fetch child `description` and `badge`.
+  - Refactored desktop header navigation to Vercel-style behavior:
+    - Primary top-level links stay compact.
+    - Child links render in grouped hover/focus dropdown panels.
+    - Utility/CTA links render on the right with button variants.
+  - Updated mobile menu to separate `Primary` and `Utility` sections and show child badge/description.
+  - Updated footer to respect `showInFooter` and separate utility links into CTA-style actions.
+- SEO impact:
+  - No direct SEO metadata/schema change.
+  - Improves information architecture consistency and internal link presentation across header/footer.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.

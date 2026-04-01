@@ -23,16 +23,16 @@ export default function Hero1({
         <div className="flex flex-col justify-center">
           {tagLine && (
             <h1 className="leading-[0] font-sans animate-fade-up [animation-delay:100ms] opacity-0">
-              <span className="text-base font-semibold">{tagLine}</span>
+              <span className="text-ui-label">{tagLine}</span>
             </h1>
           )}
           {title && (
-            <h2 className="mt-6 font-bold leading-[1.1] text-4xl md:text-5xl lg:text-6xl animate-fade-up [animation-delay:200ms] opacity-0">
+            <h2 className="text-display-xl mt-6 animate-fade-up [animation-delay:200ms] opacity-0">
               {title}
             </h2>
           )}
           {body && (
-            <div className="text-lg mt-6 animate-fade-up [animation-delay:300ms] opacity-0">
+            <div className="text-ui-body mt-6 animate-fade-up [animation-delay:300ms] opacity-0">
               <PortableTextRenderer value={body} />
             </div>
           )}

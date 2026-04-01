@@ -21,6 +21,7 @@ export default defineType({
     defineField({
       name: "title",
       type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "href",
@@ -44,6 +45,28 @@ export default defineType({
       name: "buttonVariant",
       type: "button-variant",
       title: "Button Variant",
+      description:
+        "Recommended: Primary links use Ghost/Link. Utility links can use Link/Outline/Default for CTA.",
+    }),
+    defineField({
+      name: "navLocation",
+      type: "string",
+      title: "Navigation Location",
+      options: {
+        list: [
+          { title: "Primary (center)", value: "primary" },
+          { title: "Utility / CTA (right)", value: "utility" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "primary",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "showInFooter",
+      type: "boolean",
+      title: "Show in Footer",
+      initialValue: true,
     }),
     defineField({
       name: "icon",

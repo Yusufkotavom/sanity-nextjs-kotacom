@@ -42,10 +42,10 @@ export default function PostCard({
         )}
         {title && (
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold text-[1.5rem] leading-[1.2]">{title}</h3>
+            <h3 className="text-display-lg">{title}</h3>
           </div>
         )}
-        {excerpt && <p>{excerpt}</p>}
+        {excerpt && <p className="text-ui-body">{excerpt}</p>}
       </div>
       <div className="mt-3 xl:mt-6 w-10 h-10 border rounded-full flex items-center justify-center group-hover:border-primary">
         <ChevronRight

@@ -13,16 +13,16 @@ export default function Hero2({ tagLine, title, body, links }: Hero2Props) {
     <div className="container dark:bg-background py-20 lg:pt-40 text-center">
       {tagLine && (
         <h1 className="leading-[0] font-sans animate-fade-up [animation-delay:100ms] opacity-0">
-          <span className="text-base font-semibold">{tagLine}</span>
+          <span className="text-ui-label">{tagLine}</span>
         </h1>
       )}
       {title && (
-        <h2 className="mt-6 font-bold leading-[1.1] text-4xl md:text-5xl lg:text-6xl animate-fade-up [animation-delay:200ms] opacity-0">
+        <h2 className="text-display-xl mt-6 animate-fade-up [animation-delay:200ms] opacity-0">
           {title}
         </h2>
       )}
       {body && (
-        <div className="text-lg mt-6 max-w-2xl mx-auto animate-fade-up [animation-delay:300ms] opacity-0">
+        <div className="text-ui-body mt-6 max-w-2xl mx-auto animate-fade-up [animation-delay:300ms] opacity-0">
           <PortableTextRenderer value={body} />
         </div>
       )}

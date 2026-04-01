@@ -14,7 +14,7 @@ export default defineType({
       name: "links",
       title: "Links",
       description:
-        "Primary header links. Footer columns are also generated from these links and their Sub Menu items.",
+        "Navigation links for header and footer. Use Navigation Location to split Primary vs Utility/CTA links.",
       type: "array",
       of: [
         defineArrayMember({

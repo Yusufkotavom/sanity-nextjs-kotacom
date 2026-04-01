@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -10,25 +11,20 @@ export async function generateMetadata(): Promise<Metadata> {
   return generateRootMetadata();
 }
 
-const fontSans = FontSans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-sans",
-});
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
       <link rel="icon" href="/favicon.ico" />
       <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased overscroll-none",
-          fontSans.variable,
-        )}
+        className={cn("min-h-screen bg-background font-sans antialiased overscroll-none")}
       >
         <ThemeProvider
           attribute="class"

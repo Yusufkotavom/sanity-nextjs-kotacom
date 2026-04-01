@@ -36,12 +36,12 @@ export default function SectionHeader({
         >
           {tagLine && (
             <h1 className="leading-[0] mb-4">
-              <span className="text-base font-semibold">{tagLine}</span>
+              <span className="text-ui-label">{tagLine}</span>
             </h1>
           )}
-          <h2 className="text-3xl md:text-5xl mb-4">{title}</h2>
+          <h2 className="text-display-lg mb-4">{title}</h2>
         </div>
-        <p>{description}</p>
+        <p className="text-ui-body">{description}</p>
       </div>
     </SectionContainer>
   );

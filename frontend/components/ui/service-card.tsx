@@ -43,9 +43,9 @@ export default function ServiceCard({
             />
           </div>
         )}
-        <h3 className="text-2xl font-bold leading-tight">{title}</h3>
+        <h3 className="text-display-lg">{title}</h3>
         {(duration || typeof startingPrice === "number") && (
-          <p className="mt-2 text-sm text-foreground/70">
+          <p className="text-meta mt-2">
             {duration || ""}
             {duration && typeof startingPrice === "number" ? " • " : ""}
             {typeof startingPrice === "number"
@@ -62,7 +62,7 @@ export default function ServiceCard({
             ))}
           </div>
         )}
-        {excerpt && <p className="mt-3 text-foreground/80">{excerpt}</p>}
+        {excerpt && <p className="text-ui-body mt-3">{excerpt}</p>}
       </div>
       <div className="mt-6 flex h-10 w-10 items-center justify-center rounded-full border group-hover:border-primary">
         <ChevronRight className="text-border group-hover:text-primary" size={24} />
