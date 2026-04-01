@@ -188,3 +188,15 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Restores automated Studio deployment reliability.
 - Verification:
   - Root cause validated from GitHub Actions logs: non-interactive `select` prompt during `sanity deploy`.
+
+## 2026-04-01 - Force Unattended Sanity Studio Deploy in CI
+- Changed files:
+  - `.github/workflows/deploy-studio.yml`
+- Summary:
+  - Updated deploy step command from `pnpm run deploy` to `pnpm exec sanity deploy --yes --no-build`.
+  - Ensures CI deploy is fully non-interactive and reuses the Studio build artifact from the prior step.
+- SEO impact:
+  - No direct SEO behavior change.
+  - Improves deployment reliability for SEO schema/content updates managed in Studio.
+- Verification:
+  - `sanity deploy --help` confirms `--yes` enables unattended mode.

@@ -99,5 +99,5 @@ jobs:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         run: |
           echo "🚀 Starting Sanity Studio deployment..."
-          pnpm run deploy
+          pnpm exec sanity deploy --yes --no-build
           echo "✅ Sanity Studio deployed successfully!"
