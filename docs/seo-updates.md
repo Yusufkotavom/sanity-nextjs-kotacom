@@ -16,6 +16,31 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-01 - Dependabot Schedule Adjusted Back to Weekly
+- Changed files:
+  - `.github/dependabot.yml`
+  - `docs/seo-updates.md`
+- Summary:
+  - Changed Dependabot interval from monthly back to weekly for root, frontend, studio, and GitHub Actions ecosystems.
+  - Kept strict controls from prior change: PR limit `2` and grouped minor/patch updates.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - Configuration review completed.
+
+## 2026-04-01 - Dependabot Run Volume Reduction
+- Changed files:
+  - `.github/dependabot.yml`
+  - `docs/seo-updates.md`
+- Summary:
+  - Reduced Dependabot schedule from weekly to monthly for npm (root/frontend/studio) and GitHub Actions ecosystems.
+  - Lowered `open-pull-requests-limit` from 10 to 2 for each ecosystem.
+  - Added grouping for minor/patch updates so multiple dependency updates are bundled into fewer PRs.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - Configuration review completed.
+
 ## 2026-04-01 - Local Security Cleanup for Deploy Key File
 - Changed files:
   - `.gitignore`
