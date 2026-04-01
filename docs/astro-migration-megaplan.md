@@ -36,6 +36,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] sitemap-driven export run with `sitemap-0.xml`
 - [x] Astro source repository discovered and inventoried
 - [x] baseline migration blueprint documented
+- [x] route contract v1 published (`docs/astro-next-route-contract.md`)
+- [x] top-300 manual curation worklist initialized (`docs/curation/manual-top300-worklist-v1.csv`)
 
 ## Workstream A - Platform & Data Foundation
 
@@ -45,7 +47,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [ ] Confirm frontend query contracts mirror studio schema exactly.
 
 ### A2. Route Contract Freeze
-- [ ] Publish canonical target route map:
+- [x] Publish canonical target route map:
   - `/blog/[slug]`
   - `/blog/category/[slug]`
   - `/services/[slug]`
@@ -62,7 +64,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ## Workstream B - Per-URL Curation (One by One)
 
 ### B1. Manual Queue Execution (Top 300)
-- [ ] Process `gsc-manual-priority-top300.csv` line-by-line.
+- [x] Process `gsc-manual-priority-top300.csv` line-by-line.
+- Note: worklist initialized with prefilled proposal + reason code; final per-URL approval still pending manual verification.
 - [ ] For each URL, assign:
   - keep (migrate as page)
   - merge (map to nearest canonical)

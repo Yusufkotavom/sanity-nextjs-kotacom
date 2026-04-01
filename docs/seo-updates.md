@@ -718,3 +718,18 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - Manual review completed for new checklist structure and workstream completeness.
   - File-level verification: `docs/astro-migration-megaplan.md` and `AGENTS.md` created/updated successfully.
+
+## 2026-04-01 - Route Contract v1 + Top-300 Manual Curation Worklist
+- Changed files:
+  - `docs/astro-next-route-contract.md`
+  - `docs/curation/manual-top300-worklist-v1.csv`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Published formal route contract v1 for legacy Astro URL patterns to Next.js canonical routes, including ordered mapping rules, reason codes, conflict resolution, and validation checklist.
+  - Initialized top-300 manual curation worklist from GSC priority dataset with prefilled proposed targets, decision types, confidence, and reason codes for one-by-one review.
+  - Updated mega plan checklist/status to reflect route contract publication and manual curation kickoff.
+- SEO impact:
+  - Direct SEO/integration impact: improves redirect decision consistency and reduces random mapping risk by introducing deterministic mapping policy before rollout.
+- Verification:
+  - Source route inventory cross-checked against current Next route tree (`frontend/app`).
+  - Worklist generated with 300 rows and reason-code distribution summary.
