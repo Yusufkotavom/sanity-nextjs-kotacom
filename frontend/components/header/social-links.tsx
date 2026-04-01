@@ -2,13 +2,9 @@
 
 import Link from "next/link";
 import type { ComponentType } from "react";
-import {
-  Globe,
-  Link2,
-  Music2,
-  GitBranch,
-} from "lucide-react";
+import { Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SOCIAL_ICON_MAP } from "@/components/icons/social-icons";
 
 type SocialLinkItem = {
   _key?: string;
@@ -18,14 +14,8 @@ type SocialLinkItem = {
 };
 
 const ICONS: Record<string, ComponentType<{ className?: string }>> = {
-  x: Link2,
-  instagram: Link2,
-  linkedin: Link2,
-  youtube: Link2,
-  facebook: Link2,
-  tiktok: Music2,
-  github: GitBranch,
-  website: Globe,
+  ...SOCIAL_ICON_MAP,
+  website: SOCIAL_ICON_MAP.website || Globe,
 };
 
 const LABELS: Record<string, string> = {

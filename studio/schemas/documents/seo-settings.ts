@@ -40,6 +40,44 @@ export default defineType({
       description: "Applied when a page does not define its own noindex setting.",
     }),
     defineField({
+      name: "noIndexBlogCategories",
+      title: "No Index Blog Category Pages",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "When enabled, all pages under /blog/category/[slug] are marked noindex and excluded from sitemap.",
+    }),
+    defineField({
+      name: "noIndexProductCategories",
+      title: "No Index Product Category Pages",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "When enabled, all category listings under /products/[slug] are marked noindex and excluded from sitemap.",
+    }),
+    defineField({
+      name: "noIndexServiceCategories",
+      title: "No Index Service Category Pages",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "When enabled, all category listings under /services/[slug] are marked noindex and excluded from sitemap.",
+    }),
+    defineField({
+      name: "robotsDisallowPaths",
+      title: "Robots Disallow Paths",
+      type: "array",
+      of: [{ type: "string" }],
+      description:
+        "Optional list of path prefixes blocked in robots.txt, e.g. /internal or /preview.",
+      validation: (Rule) =>
+        Rule.custom((paths: string[] | undefined) => {
+          if (!paths?.length) return true;
+          const invalid = paths.find((path) => !path || !path.startsWith("/"));
+          return invalid ? "Each disallow path must start with '/'" : true;
+        }),
+    }),
+    defineField({
       name: "twitterHandle",
       title: "Twitter/X Handle",
       type: "string",

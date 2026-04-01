@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { Blocks } from "lucide-react";
+import { orderRankField } from "@sanity/orderable-document-list";
 
 const REUSABLE_PLACEMENTS = [
   { title: "Before Header", value: "beforeHeader" },
@@ -133,6 +134,7 @@ export default defineType({
         },
       },
     }),
+    orderRankField({ type: "reusableSection" }),
   ],
   preview: {
     select: {

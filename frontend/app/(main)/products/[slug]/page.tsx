@@ -15,6 +15,7 @@ import {
   fetchSanityProductCategories,
   fetchSanityProductsByCategorySlug,
   fetchSanityProductsStaticParams,
+  fetchSanitySeoSettings,
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
 import JsonLd from "@/components/seo/json-ld";
@@ -47,9 +48,10 @@ export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
-  const [categories, product] = await Promise.all([
+  const [categories, product, seo] = await Promise.all([
     fetchSanityProductCategories(),
     fetchSanityProductBySlug({ slug: params.slug }),
+    fetchSanitySeoSettings(),
   ]);
 
   const isProductCategory = (categories as any[]).some(
@@ -63,7 +65,10 @@ export async function generateMetadata(props: {
       page: {
         title: `${category.title} | Product Category`,
         excerpt: category.description || `Products in ${category.title}`,
-        meta: category.meta,
+        meta: {
+          ...(category.meta || {}),
+          noindex: Boolean(category.meta?.noindex || (seo as any)?.noIndexProductCategories),
+        },
       },
       slug: `products/${params.slug}`,
     });

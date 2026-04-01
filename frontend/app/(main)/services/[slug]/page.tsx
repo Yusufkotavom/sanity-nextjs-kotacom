@@ -11,6 +11,7 @@ import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
 import ServiceCard from "@/components/ui/service-card";
 import {
   fetchSanityCategoryBySlug,
+  fetchSanitySeoSettings,
   fetchSanityServiceBySlug,
   fetchSanityServiceCategories,
   fetchSanityServicesByCategorySlug,
@@ -47,9 +48,10 @@ export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
-  const [categories, service] = await Promise.all([
+  const [categories, service, seo] = await Promise.all([
     fetchSanityServiceCategories(),
     fetchSanityServiceBySlug({ slug: params.slug }),
+    fetchSanitySeoSettings(),
   ]);
 
   const isServiceCategory = (categories as any[]).some(
@@ -63,7 +65,10 @@ export async function generateMetadata(props: {
       page: {
         title: `${category.title} | Service Category`,
         excerpt: category.description || `Services in ${category.title}`,
-        meta: category.meta,
+        meta: {
+          ...(category.meta || {}),
+          noindex: Boolean(category.meta?.noindex || (seo as any)?.noIndexServiceCategories),
+        },
       },
       slug: `services/${params.slug}`,
     });

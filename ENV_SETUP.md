@@ -58,6 +58,21 @@ pnpm dev
 `SANITY_DEV`, `SANITY_DEPLOY`
 - Optional flags for your local scripts/flows.
 
+`SEO_SESSION_SECRET`
+- Session signing secret for SEO dashboard cookie.
+
+`SANITY_AUTH_TOKEN`
+- Needed when saving SEO Ops settings from dashboard into Sanity.
+
+`SEO_SETTINGS_ENCRYPTION_KEY` (optional but recommended)
+- Dedicated key for encrypting dashboard secrets. If missing, fallback uses `SEO_SESSION_SECRET`.
+
+`SEO_*` indexing vars (Google/IndexNow, batch, retry, dashboard password)
+- Optional legacy fallback if you do not set values in dashboard.
+
+`SEO_GSC_PRIORITY_CSV_PATH`
+- Path to `gsc-pages-priority.csv` used by migration priority dashboard.
+
 ## 3) Variables used by `studio/.env`
 
 `SANITY_STUDIO_PREVIEW_URL`
@@ -110,6 +125,11 @@ Set these in Vercel project settings for frontend deployment:
 - `NEXT_RESEND_TO_EMAIL`
 - `NEXT_RESEND_FROM_EMAIL`
 - `REVALIDATE_SECRET`
+- `SEO_SESSION_SECRET`
+- `SANITY_AUTH_TOKEN`
+- `SEO_SETTINGS_ENCRYPTION_KEY` (optional, recommended)
+- Optional legacy fallback: `SEO_DASHBOARD_PASSWORD`/`SEO_DASHBOARD_PASSWORD_SHA256`, `SEO_GOOGLE_*`, `SEO_INDEXNOW_*`, `SEO_INDEXING_*`
+- `SEO_GSC_PRIORITY_CSV_PATH`
 
 For Studio if deployed separately, set all `SANITY_STUDIO_*` + `SANITY_AUTH_TOKEN`.
 
@@ -148,6 +168,13 @@ To make newly published content appear without redeploy, create a Sanity webhook
 
 This project already includes:
 - `frontend/app/api/revalidate/route.ts`
+- `frontend/app/dashboard/seo/*` (SEO Ops dashboard)
+- `frontend/app/api/seo/*` (SEO Ops APIs)
 
 Detailed explanation:
 - `RENDERING_CACHE_REVALIDATION.md`
+
+Additional references:
+- `docs/env-reference.md`
+- `docs/seo-dashboard-setup.md`
+- `docs/gsc-priority-export.md`

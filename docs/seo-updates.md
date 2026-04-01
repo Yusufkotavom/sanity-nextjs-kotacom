@@ -16,6 +16,193 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-01 - Local Security Cleanup for Deploy Key File
+- Changed files:
+  - `.gitignore`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added `deploy/*.json` to git ignore rules to prevent accidental commits of deploy key JSON files.
+  - Performed local cleanup workflow to keep sensitive deploy key material out of pushed history.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - Local git history cleanup prepared; no push executed.
+
+## 2026-04-01 - Detailed Dashboard-First SEO Setup Documentation
+- Changed files:
+  - `docs/seo-dashboard-setup.md`
+  - `docs/env-reference.md`
+  - `ENV_SETUP.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added dedicated detailed guide for dashboard-first SEO operations setup with minimal env requirements.
+  - Documented complete flows for first login bootstrap, Google Indexing API setup, IndexNow setup, runtime verification, and troubleshooting.
+  - Added cross-links from env/setup docs to the new dashboard setup guide.
+- SEO impact:
+  - Reduces setup errors in indexing operations by clarifying operational steps and recovery flow.
+- Verification:
+  - Documentation review completed.
+
+## 2026-04-01 - SEO Dashboard-First Config with Encrypted Studio Secrets
+- Changed files:
+  - `frontend/app/api/seo/config/save/route.ts`
+  - `frontend/app/api/seo/config/status/route.ts`
+  - `frontend/app/api/seo/auth/login/route.ts`
+  - `frontend/app/api/revalidate/route.ts`
+  - `frontend/app/dashboard/seo/settings/page.tsx`
+  - `frontend/lib/seo-ops/crypto.ts`
+  - `frontend/lib/seo-ops/settings-source.ts`
+  - `frontend/lib/seo-ops/sanity-write.ts`
+  - `frontend/lib/seo-ops/session.ts`
+  - `frontend/lib/seo-ops/api-auth.ts`
+  - `frontend/lib/seo-ops/config.ts`
+  - `frontend/lib/seo-ops/jobs.ts`
+  - `frontend/sanity/queries/seo-ops-settings.ts`
+  - `frontend/sanity/lib/fetch.ts`
+  - `frontend/middleware.ts`
+  - `studio/schemas/documents/seo-ops-settings.ts`
+  - `frontend/.env.example`
+  - `docs/env-reference.md`
+  - `ENV_SETUP.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added dashboard save API to persist SEO Ops config into singleton `seoOpsSettings` document in Sanity.
+  - Added AES-GCM secret encryption/decryption layer for Google service account JSON and IndexNow key, using server-side key (`SEO_SETTINGS_ENCRYPTION_KEY` or fallback `SEO_SESSION_SECRET`/`REVALIDATE_SECRET`).
+  - Converted runtime config resolution to Studio-first with env fallback, so Google/IndexNow toggles and operational defaults can be managed from dashboard.
+  - Added password-hash support from Studio (`dashboardPasswordHash`) so dashboard login no longer depends on env password by default.
+  - Updated settings UI to edit/save Google, IndexNow, webhook behavior, queue defaults, notes, and optional new dashboard password.
+  - Updated env docs/examples to make dashboard-first configuration the default and env-based `SEO_*` values as legacy fallback.
+- SEO impact:
+  - Improves operational SEO control by moving indexing engine setup to no-code dashboard flow while keeping secrets protected.
+  - No direct change to page metadata rendering.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter studio run build` passed.
+
+## 2026-04-01 - Environment Reference for Frontend/Studio and SEO Ops
+- Changed files:
+  - `docs/env-reference.md`
+  - `frontend/.env.example`
+  - `ENV_SETUP.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added dedicated environment reference for required and optional variables across frontend, studio, and SEO Ops runtime.
+  - Added copy-ready `.env` examples for frontend and studio, including indexing and dashboard auth variables.
+  - Added documented option for `GOOGLE_APPLICATION_CREDENTIALS` and password hash mode via `SEO_DASHBOARD_PASSWORD_SHA256`.
+  - Linked new env and GSC docs from setup guide for faster onboarding.
+- SEO impact:
+  - Reduces operational risk from env misconfiguration for indexing, migration scoring, and SEO dashboard access.
+- Verification:
+  - Documentation review completed.
+
+## 2026-04-01 - GSC Migration Curation Script Expansion
+- Changed files:
+  - `frontend/scripts/export-gsc-priority.mjs`
+  - `docs/gsc-priority-export.md`
+- Summary:
+  - Expanded GSC export script to produce migration-focused outputs, not only page/query summaries.
+  - Added configurable migration arguments: `blogBase`, `categoryBase`, `minImpressionsForAuto`, and optional sitemap enrichment via `sitemapUrl`.
+  - Added extra GSC breakdown exports by country and device.
+  - Added path normalization and legacy URL classification to generate actionable mapping fields (`legacyType`, `migrationAction`, `suggestedTargetPath`, `mappingConfidence`).
+  - Added auto-redirect export file ready for bulk import after review.
+- SEO impact:
+  - Improves migration planning quality and reduces risk of losing high-performing URLs during URL structure changes.
+  - Enables data-driven redirect prioritization using real clicks/impressions and migration confidence.
+- Verification:
+  - `node --check frontend/scripts/export-gsc-priority.mjs` passed.
+  - Full run completed with service account:
+    - `pnpm --filter frontend run gsc:export -- --site-url https://www.kotacom.id/ --start-date 2025-01-01 --end-date 2026-04-01 --out-dir ./tmp/gsc-kotacom-full --blog-base /blog --category-base /blog/category --min-impressions-auto 1 --sitemap-url https://kotacom.id/sitemap-0.xml`
+
+## 2026-04-01 - SEO Ops Dashboard + Indexing Automation APIs
+- Changed files:
+  - `frontend/middleware.ts`
+  - `frontend/app/dashboard/seo/*`
+  - `frontend/app/api/seo/*`
+  - `frontend/lib/seo-ops/*`
+  - `frontend/app/api/revalidate/route.ts`
+  - `frontend/sanity/queries/seo-ops-settings.ts`
+  - `frontend/sanity/lib/fetch.ts`
+  - `frontend/.env.example`
+  - `studio/schemas/documents/seo-ops-settings.ts`
+  - `studio/schema-types.ts`
+  - `studio/structure.ts`
+  - `studio/sanity.config.ts`
+  - `ENV_SETUP.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added protected SEO Ops Dashboard (`/dashboard/seo`) with modules for overview, indexing jobs, migration-priority curation, technical audit, and settings/import utilities.
+  - Added SEO Ops APIs for auth, indexing submit/retry/jobs, migration-priority reporting, technical audit reporting, and data imports.
+  - Added indexing queue engine adapters (Google Indexing API and IndexNow) with retry handling and job/task status tracking.
+  - Integrated `/api/revalidate` so content webhook revalidation can auto-enqueue indexing jobs.
+  - Added Studio singleton document `seoOpsSettings` for operational toggles/notes (non-secret config), plus frontend query surface.
+  - Added new SEO Ops environment variable templates and setup documentation.
+- SEO impact:
+  - Improves indexing operations and migration prioritization workflows.
+  - Adds operational controls and observability for submit/retry monitoring.
+  - No direct change to metadata rendering logic beyond operational automation hooks.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter studio run build` passed.
+
+## 2026-04-01 - Batch GSC Export and Migration Priority Scoring Script
+- Changed files:
+  - `frontend/scripts/export-gsc-priority.mjs`
+  - `frontend/package.json`
+  - `pnpm-lock.yaml`
+  - `docs/gsc-priority-export.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a CLI script to batch export Search Console data (`page`, `query`, and `page+query`) and generate migration-priority output.
+  - Added URL scoring output (`priorityScore`, `recommendedAction`) to support selective migration of important pages first.
+  - Added setup and usage guide for service-account auth and export command.
+  - Registered `gsc:export` script in frontend workspace and added `googleapis` dependency.
+- SEO impact:
+  - Improves migration sequencing quality by prioritizing high-impact indexed URLs from GSC data.
+- Verification:
+  - `pnpm --filter frontend gsc:export -- --help` passed.
+
+## 2026-04-01 - Global Robots + Category Noindex Controls
+- Changed files:
+  - `studio/schemas/documents/seo-settings.ts`
+  - `frontend/sanity/queries/seo-settings.ts`
+  - `frontend/app/robots.ts`
+  - `frontend/app/sitemap.ts`
+  - `frontend/app/(main)/blog/category/page.tsx`
+  - `frontend/app/(main)/blog/category/[slug]/page.tsx`
+  - `frontend/app/(main)/products/[slug]/page.tsx`
+  - `frontend/app/(main)/services/[slug]/page.tsx`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added new global SEO controls in Studio: `noIndexBlogCategories`, `noIndexProductCategories`, `noIndexServiceCategories`, and `robotsDisallowPaths`.
+  - Updated frontend SEO settings query to include the new fields.
+  - Reworked `robots.txt` generation to use Studio global settings, including full-site noindex mode (`defaultNoIndex`) and optional disallow path list.
+  - Reworked `sitemap.xml` generation to:
+    - stop publishing URLs when `defaultNoIndex` is enabled,
+    - include content URLs for page/post/product/service with `meta.noindex != true`,
+    - include category URLs per surface (`/blog/category/[slug]`, `/products/[slug]`, `/services/[slug]`) only when relevant counts exist and global category noindex toggles are off.
+  - Updated category metadata generation so global category noindex toggles are applied consistently for blog/product/service category pages.
+- SEO impact:
+  - Global indexing behavior can now be controlled centrally from Studio, including robots disallow rules.
+  - Category indexing can now be switched off per surface globally while still supporting per-category `meta.noindex`.
+  - Sitemap and metadata logic are now aligned with the same global + per-document noindex model.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` passed.
+  - `pnpm --filter frontend run build` passed.
+
+## 2026-04-01 - Fix Reusable Section Orderable Schema Requirement
+- Changed files:
+  - `studio/schemas/documents/reusable-section.ts`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added required `orderRank` field (`orderRankField({ type: "reusableSection" })`) so `reusableSection` works with `orderableDocumentListDeskItem`.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - `pnpm --filter studio run build` passed.
+
 ## 2026-04-01 - Global Reusable Section with Placement Slots
 - Changed files:
   - `studio/schemas/documents/reusable-section.ts`
@@ -448,3 +635,34 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Restores CI build reliability for Sanity-backed pages and redirect loading.
 - Verification:
   - Workflow patch validated against previous CI failure signature (`Dataset not found for project ID "ci-project"`).
+
+## 2026-04-01 - GSC Curation Pipeline Hardening (Index Inspection + Metadata Health)
+- Changed files:
+  - `frontend/package.json`
+  - `pnpm-lock.yaml`
+  - `frontend/scripts/export-gsc-priority.mjs`
+  - `frontend/scripts/inspect-gsc-index.mjs`
+  - `frontend/scripts/audit-seo-metadata.mjs`
+  - `frontend/scripts/merge-gsc-migration-health.mjs`
+  - `docs/gsc-priority-export.md`
+- Summary:
+  - Added/ensured `googleapis` dependency so GSC export + URL Inspection scripts run reliably.
+  - Fixed URL normalization in export and inspection scripts to preserve `www` hostname (required for URL-prefix property ownership checks in URL Inspection API).
+  - Completed full GSC curation run for `https://www.kotacom.id/` (2025-01-01 to 2026-04-01), including migration mapping, URL Inspection, metadata audit, and merged health output.
+  - Output directory:
+    - `frontend/tmp/gsc-kotacom-full/`
+  - Main outputs:
+    - `gsc-migration-curation.csv`
+    - `gsc-redirect-auto-import.csv`
+    - `gsc-url-inspection.csv`
+    - `seo-metadata-audit.csv`
+    - `gsc-migration-health-merged.csv`
+- SEO impact:
+  - Direct SEO operations impact: migration planning now includes indexability + metadata quality status in one merged dataset.
+  - Reduces redirect risk by prioritizing URLs based on search performance and inspection evidence.
+- Verification:
+  - `pnpm --filter frontend add -D googleapis` passed.
+  - `pnpm --filter frontend gsc:export -- --site-url https://www.kotacom.id/ --start-date 2025-01-01 --end-date 2026-04-01 --out-dir ./tmp/gsc-kotacom-full ...` passed.
+  - `pnpm --filter frontend exec node scripts/inspect-gsc-index.mjs -- --site-url https://www.kotacom.id/ --input-csv ./tmp/gsc-kotacom-full/gsc-pages.csv --out-dir ./tmp/gsc-kotacom-full --concurrency 15` passed.
+  - `pnpm --filter frontend exec node scripts/audit-seo-metadata.mjs -- --input-csv ./tmp/gsc-kotacom-full/gsc-pages.csv --out-dir ./tmp/gsc-kotacom-full --concurrency 8` passed.
+  - `pnpm --filter frontend exec node scripts/merge-gsc-migration-health.mjs -- --migration-csv ./tmp/gsc-kotacom-full/gsc-migration-curation.csv --inspection-csv ./tmp/gsc-kotacom-full/gsc-url-inspection.csv --metadata-csv ./tmp/gsc-kotacom-full/seo-metadata-audit.csv --out-dir ./tmp/gsc-kotacom-full` passed.

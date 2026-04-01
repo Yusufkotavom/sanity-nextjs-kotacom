@@ -10,6 +10,7 @@
     "lint": "next lint",
     "email": "email dev",
     "docs:scrape": "node scripts/scrape-schemaui-docs.mjs",
+    "gsc:export": "node scripts/export-gsc-priority.mjs",
     "typegen": "npx sanity schema extract && npx sanity typegen generate",
     "typecheck": "tsc --noEmit"
   },
@@ -62,6 +63,7 @@
     "@types/react-dom": "^19.2.3",
     "eslint": "^10.1.0",
     "eslint-config-next": "16.1.7",
+    "googleapis": "^171.4.0",
     "postcss": "^8.5.8",
     "react-email": "^5.2.10",
     "tailwindcss": "^4.2.2",

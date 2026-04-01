@@ -14,7 +14,7 @@ import Logo from "@/components/logo";
 import SocialLinks from "@/components/header/social-links";
 import { NAVIGATION_ICON_MAP } from "@/components/icons/navigation-icons";
 import { useState } from "react";
-import { AlignRight, ChevronDown } from "lucide-react";
+import { AlignRight, ChevronDown, Moon, Sun, Monitor } from "lucide-react";
 import { SETTINGS_QUERY_RESULT, NAVIGATION_QUERY_RESULT } from "@/sanity.types";
 import { useTheme } from "next-themes";
 
@@ -236,26 +236,32 @@ export default function MobileNav({
               <Button
                 type="button"
                 variant={theme === "light" ? "default" : "outline"}
-                className="h-9 text-xs"
+                className="h-9"
                 onClick={() => setTheme("light")}
+                aria-label="Use light mode"
+                title="Light"
               >
-                Light
+                <Sun className="size-4" />
               </Button>
               <Button
                 type="button"
                 variant={theme === "dark" ? "default" : "outline"}
-                className="h-9 text-xs"
+                className="h-9"
                 onClick={() => setTheme("dark")}
+                aria-label="Use dark mode"
+                title="Dark"
               >
-                Dark
+                <Moon className="size-4" />
               </Button>
               <Button
                 type="button"
                 variant={theme === "system" ? "default" : "outline"}
-                className="h-9 text-xs"
+                className="h-9"
                 onClick={() => setTheme("system")}
+                aria-label="Use system mode"
+                title="System"
               >
-                System
+                <Monitor className="size-4" />
               </Button>
             </div>
           </div>
@@ -265,7 +271,7 @@ export default function MobileNav({
             </p>
             <SocialLinks
               links={(settings as any)?.socialLinks}
-              iconOnly={false}
+              iconOnly
               align="start"
               className="flex-wrap"
             />

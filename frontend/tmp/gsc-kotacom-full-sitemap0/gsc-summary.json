@@ -1,0 +1,41 @@
+{
+  "args": {
+    "siteUrl": "https://www.kotacom.id/",
+    "startDate": "2025-01-01",
+    "endDate": "2026-04-01",
+    "rowLimit": 25000,
+    "blogBase": "/blog",
+    "categoryBase": "/blog/category",
+    "minImpressionsForAuto": 1,
+    "sitemapUrl": "https://www.kotacom.id/sitemap-0.xml"
+  },
+  "totals": {
+    "pages": 2807,
+    "queries": 3992,
+    "pageQuery": 6437,
+    "pageCountry": 6200,
+    "pageDevice": 956,
+    "autoRedirectRows": 799
+  },
+  "migrationSummary": {
+    "actionSummary": {
+      "keep_path": 247,
+      "redirect_auto": 1810,
+      "review_manual": 750
+    },
+    "typeSummary": {
+      "home": 2,
+      "root_post_legacy": 1420,
+      "other_nested": 702,
+      "product": 221,
+      "category": 274,
+      "service": 24,
+      "project_index": 3,
+      "project_detail": 45,
+      "category_pagination": 53,
+      "category_index": 2,
+      "root_pagination": 30,
+      "posts_index": 31
+    }
+  }
+}

@@ -6,6 +6,10 @@ export const SEO_SETTINGS_QUERY = groq`*[_type == "seoSettings"][0]{
   defaultTitle,
   defaultDescription,
   defaultNoIndex,
+  noIndexBlogCategories,
+  noIndexProductCategories,
+  noIndexServiceCategories,
+  robotsDisallowPaths,
   twitterHandle,
   defaultImage{
     ${imageQuery}

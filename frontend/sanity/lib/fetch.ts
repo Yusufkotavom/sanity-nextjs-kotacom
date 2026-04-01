@@ -6,6 +6,10 @@ import { SEO_SETTINGS_QUERY } from "@/sanity/queries/seo-settings";
 import { THEME_SETTINGS_QUERY } from "@/sanity/queries/theme-settings";
 import { REUSABLE_SECTIONS_QUERY } from "@/sanity/queries/reusable-section";
 import {
+  SEO_OPS_SETTINGS_PRIVATE_QUERY,
+  SEO_OPS_SETTINGS_PUBLIC_QUERY,
+} from "@/sanity/queries/seo-ops-settings";
+import {
   BLOG_CATEGORIES_QUERY,
   CATEGORIES_QUERY,
   CATEGORY_QUERY,
@@ -182,6 +186,72 @@ export const fetchSanityThemeSettings = async (): Promise<{
     } | null;
   } | null>({
     query: THEME_SETTINGS_QUERY,
+  });
+
+  return data;
+};
+
+export const fetchSanitySeoOpsSettings = async (): Promise<{
+  googleEnabled?: boolean;
+  googleAggressiveMode?: boolean;
+  indexNowEnabled?: boolean;
+  indexNowHost?: string;
+  indexNowEndpoint?: string;
+  indexNowKeyLocation?: string;
+  autoSubmitOnRevalidate?: boolean;
+  maxBatchSize?: number;
+  retryAttempts?: number;
+  notes?: string;
+} | null> => {
+  const data = await fetchPublished<{
+    googleEnabled?: boolean;
+    googleAggressiveMode?: boolean;
+    indexNowEnabled?: boolean;
+    indexNowHost?: string;
+    indexNowEndpoint?: string;
+    indexNowKeyLocation?: string;
+    autoSubmitOnRevalidate?: boolean;
+    maxBatchSize?: number;
+    retryAttempts?: number;
+    notes?: string;
+  } | null>({
+    query: SEO_OPS_SETTINGS_PUBLIC_QUERY,
+  });
+
+  return data;
+};
+
+export const fetchSanitySeoOpsSettingsPrivate = async (): Promise<{
+  googleEnabled?: boolean;
+  googleAggressiveMode?: boolean;
+  googleServiceAccountEncrypted?: string;
+  indexNowEnabled?: boolean;
+  indexNowHost?: string;
+  indexNowEndpoint?: string;
+  indexNowKeyEncrypted?: string;
+  indexNowKeyLocation?: string;
+  autoSubmitOnRevalidate?: boolean;
+  maxBatchSize?: number;
+  retryAttempts?: number;
+  dashboardPasswordHash?: string;
+  notes?: string;
+} | null> => {
+  const data = await fetchPublished<{
+    googleEnabled?: boolean;
+    googleAggressiveMode?: boolean;
+    googleServiceAccountEncrypted?: string;
+    indexNowEnabled?: boolean;
+    indexNowHost?: string;
+    indexNowEndpoint?: string;
+    indexNowKeyEncrypted?: string;
+    indexNowKeyLocation?: string;
+    autoSubmitOnRevalidate?: boolean;
+    maxBatchSize?: number;
+    retryAttempts?: number;
+    dashboardPasswordHash?: string;
+    notes?: string;
+  } | null>({
+    query: SEO_OPS_SETTINGS_PRIVATE_QUERY,
   });
 
   return data;

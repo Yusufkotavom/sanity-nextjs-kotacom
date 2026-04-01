@@ -1,5 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+import { getSeoOpsRuntimeConfig } from "@/lib/seo-ops/config";
+import { enqueueIndexingJob } from "@/lib/seo-ops/jobs";
 
 type WebhookPayload = {
   _type?: string;
@@ -106,6 +108,27 @@ export async function POST(request: NextRequest) {
 
   for (const path of paths) {
     revalidatePath(path);
+  }
+
+  const seoOpsConfig = await getSeoOpsRuntimeConfig();
+  const autoSubmitEnabled = seoOpsConfig.webhook.autoSubmitEnabled;
+
+  if (autoSubmitEnabled) {
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+    const urls = Array.from(paths)
+      .map((path) => {
+        if (!baseUrl || !path.startsWith("/")) return null;
+        return `${baseUrl.replace(/\/+$/, "")}${path}`;
+      })
+      .filter((url): url is string => Boolean(url));
+
+    if (urls.length) {
+      void enqueueIndexingJob({
+        urls,
+        reason: `revalidate webhook: ${payload?._type || "unknown"}`,
+        source: "webhook",
+      });
+    }
   }
 
   return NextResponse.json({

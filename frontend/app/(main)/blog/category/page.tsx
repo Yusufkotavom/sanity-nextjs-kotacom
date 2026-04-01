@@ -1,12 +1,17 @@
 import Link from "next/link";
-import { fetchSanityCategories } from "@/sanity/lib/fetch";
+import { fetchSanityCategories, fetchSanitySeoSettings } from "@/sanity/lib/fetch";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
 
 export async function generateMetadata() {
+  const seo = (await fetchSanitySeoSettings()) as
+    | { noIndexBlogCategories?: boolean }
+    | null;
+
   return await generateBasicMetadata({
     title: "Blog Categories",
     description: "Browse blog posts by category.",
     slug: "blog/category",
+    noindex: Boolean(seo?.noIndexBlogCategories),
   });
 }
 

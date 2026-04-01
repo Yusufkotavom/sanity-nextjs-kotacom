@@ -1,0 +1,19 @@
+{
+  "totalUrls": 1967,
+  "okFetch": 1967,
+  "fetchErrors": 0,
+  "withIssues": 1650,
+  "issueBreakdown": {
+    "meta_description_too_long": 865,
+    "title_too_long": 330,
+    "http_status_not_200": 675,
+    "title_too_short": 27,
+    "meta_description_too_short": 8,
+    "missing_title": 4,
+    "missing_meta_description": 4,
+    "missing_canonical": 4,
+    "missing_og_title": 4,
+    "missing_og_description": 4,
+    "missing_og_image": 4
+  }
+}

@@ -12,6 +12,7 @@ import settings from "./schemas/documents/settings";
 import seoSettings from "./schemas/documents/seo-settings";
 import redirect from "./schemas/documents/redirect";
 import reusableSection from "./schemas/documents/reusable-section";
+import seoOpsSettings from "./schemas/documents/seo-ops-settings";
 
 // Schema UI shared objects
 import blockContent from "./schemas/blocks/shared/block-content";
@@ -59,6 +60,7 @@ export const schemaTypes = [
   navigation,
   settings,
   seoSettings,
+  seoOpsSettings,
   redirect,
   reusableSection,
   // shared objects

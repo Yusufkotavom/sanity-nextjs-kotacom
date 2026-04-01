@@ -11,6 +11,7 @@ import {
   fetchSanityBlogCategories,
   fetchSanityCategoriesStaticParams,
   fetchSanityPostsByCategorySlug,
+  fetchSanitySeoSettings,
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
 
@@ -25,7 +26,10 @@ export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
-  const category = await fetchSanityCategoryBySlug({ slug: params.slug });
+  const [category, seo] = await Promise.all([
+    fetchSanityCategoryBySlug({ slug: params.slug }),
+    fetchSanitySeoSettings(),
+  ]);
 
   if (!category) notFound();
 
@@ -33,7 +37,10 @@ export async function generateMetadata(props: {
     page: {
       title: category.title,
       excerpt: category.description,
-      meta: category.meta,
+      meta: {
+        ...(category.meta || {}),
+        noindex: Boolean(category.meta?.noindex || (seo as any)?.noIndexBlogCategories),
+      },
     },
     slug: `blog/category/${params.slug}`,
   });

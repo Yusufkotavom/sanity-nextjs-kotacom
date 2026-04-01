@@ -12,6 +12,7 @@ import {
   SearchCheck,
   Link2,
   Blocks,
+  Bot,
 } from "lucide-react";
 
 export const structure = (S: any, context: any) =>
@@ -118,5 +119,14 @@ export const structure = (S: any, context: any) =>
             .id("seoSettings")
             .schemaType("seoSettings")
             .documentId("seoSettings")
+        ),
+      S.listItem()
+        .title("SEO Ops Settings")
+        .icon(Bot)
+        .child(
+          S.editor()
+            .id("seoOpsSettings")
+            .schemaType("seoOpsSettings")
+            .documentId("seoOpsSettings")
         ),
     ]);
