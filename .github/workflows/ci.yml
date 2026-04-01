@@ -81,13 +81,13 @@ jobs:
             ${{ runner.os }}-nextjs-
 
       - name: Lint frontend
-        run: pnpm --filter frontend run lint --if-present
+        run: pnpm --filter frontend run --if-present lint
 
       - name: Typecheck frontend
         run: pnpm --filter frontend run typecheck
 
       - name: Test frontend
-        run: pnpm --filter frontend run test --if-present
+        run: pnpm --filter frontend run --if-present test
 
       - name: Build frontend
         run: pnpm --filter frontend run build
@@ -127,7 +127,7 @@ jobs:
         run: pnpm --filter studio run typecheck
 
       - name: Validate Sanity schema types
-        run: pnpm --filter studio run typegen --if-present
+        run: pnpm --filter studio run --if-present typegen
 
       - name: Build studio
         run: pnpm --filter studio run build
