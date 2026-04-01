@@ -25,3 +25,16 @@
 ## Delivery Rule
 
 - A task touching code is not complete until `docs/seo-updates.md` is updated.
+
+## Agent Execution Checklist
+
+- For migration / SEO / redesign tasks, the agent must also maintain checklist status in:
+  - `docs/astro-migration-megaplan.md`
+- At minimum, each execution cycle must update:
+  - `Current Status Snapshot (Already Done)` when an item is completed
+  - Related workstream TODO checkboxes (`[ ]` -> `[x]`) for completed tasks
+  - Any blocked item with a short blocker note in the relevant section
+- If a task result changes route behavior, schema shape, or metadata logic, the agent must verify cross-layer sync:
+  - Studio schema
+  - Frontend query/fetch contract
+  - Frontend rendering/metadata output

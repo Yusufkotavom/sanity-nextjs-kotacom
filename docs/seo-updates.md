@@ -691,3 +691,30 @@ This file is the canonical changelog for all repository updates, with explicit S
   - `pnpm --filter frontend exec node scripts/inspect-gsc-index.mjs -- --site-url https://www.kotacom.id/ --input-csv ./tmp/gsc-kotacom-full/gsc-pages.csv --out-dir ./tmp/gsc-kotacom-full --concurrency 15` passed.
   - `pnpm --filter frontend exec node scripts/audit-seo-metadata.mjs -- --input-csv ./tmp/gsc-kotacom-full/gsc-pages.csv --out-dir ./tmp/gsc-kotacom-full --concurrency 8` passed.
   - `pnpm --filter frontend exec node scripts/merge-gsc-migration-health.mjs -- --migration-csv ./tmp/gsc-kotacom-full/gsc-migration-curation.csv --inspection-csv ./tmp/gsc-kotacom-full/gsc-url-inspection.csv --metadata-csv ./tmp/gsc-kotacom-full/seo-metadata-audit.csv --out-dir ./tmp/gsc-kotacom-full` passed.
+
+## 2026-04-01 - Astro Source Discovery + Migration Blueprint
+- Changed files:
+  - `docs/astro-to-next-migration-plan.md`
+- Summary:
+  - Discovered and validated Astro source repository for migration (`/home/ubuntu/Kotacom-supabase-schhool`, commit `6bcb8b5bf293d44ad19d916f1d72c2f89c273ae2`).
+  - Documented route inventory, SEO component inventory, and phased migration blueprint from Astro to Next.js + Sanity.
+  - Defined recommended target URL strategy and phased rollout plan (content/schema parity -> frontend parity -> SEO stabilization -> redirect waves).
+- SEO impact:
+  - Direct SEO planning impact: reduces migration risk by sequencing URL architecture and metadata parity before redirect activation.
+- Verification:
+  - Manual verification of Astro route tree (`src/pages`) and component tree (`src/components`) completed.
+  - Source repo remote and commit identity verified.
+
+## 2026-04-01 - Mega Plan Migration + SEO Rewrite + UI Refactor Checklist
+- Changed files:
+  - `docs/astro-migration-megaplan.md`
+  - `AGENTS.md`
+- Summary:
+  - Added an execution-grade mega plan covering migration phases, per-URL curation workflow, SEO rewrite program, UI redesign/refactor tracks, redirect wave rollout, and measurable success criteria.
+  - Added explicit content movement plan (Astro source buckets -> Sanity target types) with per-item checklist.
+  - Updated `AGENTS.md` with mandatory agent execution checklist to keep `docs/astro-migration-megaplan.md` progress synchronized each execution cycle.
+- SEO impact:
+  - Direct SEO/integration planning impact: improves migration control and sequencing to reduce ranking-loss risk during rebuild and redirect rollout.
+- Verification:
+  - Manual review completed for new checklist structure and workstream completeness.
+  - File-level verification: `docs/astro-migration-megaplan.md` and `AGENTS.md` created/updated successfully.
