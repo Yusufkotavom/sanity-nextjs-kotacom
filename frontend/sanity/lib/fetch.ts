@@ -1,4 +1,4 @@
-import { sanityFetch } from "@/sanity/lib/live";
+import { client } from "@/sanity/lib/client";
 import { PAGE_QUERY, PAGES_SLUGS_QUERY } from "@/sanity/queries/page";
 import { NAVIGATION_QUERY } from "@/sanity/queries/navigation";
 import { SETTINGS_QUERY } from "@/sanity/queries/settings";
@@ -38,12 +38,22 @@ import {
   SETTINGS_QUERY_RESULT,
 } from "@/sanity.types";
 
+const fetchPublished = async <T>({
+  query,
+  params,
+}: {
+  query: string;
+  params?: Record<string, unknown>;
+}): Promise<T> => {
+  return client.fetch(query, params || {}, { perspective: "published", stega: false });
+};
+
 export const fetchSanityPageBySlug = async ({
   slug,
 }: {
   slug: string;
 }): Promise<PAGE_QUERY_RESULT> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<PAGE_QUERY_RESULT>({
     query: PAGE_QUERY,
     params: { slug },
   });
@@ -53,17 +63,15 @@ export const fetchSanityPageBySlug = async ({
 
 export const fetchSanityPagesStaticParams =
   async (): Promise<PAGES_SLUGS_QUERY_RESULT> => {
-    const { data } = await sanityFetch({
+    const data = await fetchPublished<PAGES_SLUGS_QUERY_RESULT>({
       query: PAGES_SLUGS_QUERY,
-      perspective: "published",
-      stega: false,
     });
 
     return data;
   };
 
 export const fetchSanityPosts = async (): Promise<POSTS_QUERY_RESULT> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<POSTS_QUERY_RESULT>({
     query: POSTS_QUERY,
   });
 
@@ -75,7 +83,7 @@ export const fetchSanityPostBySlug = async ({
 }: {
   slug: string;
 }): Promise<POST_QUERY_RESULT> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<POST_QUERY_RESULT>({
     query: POST_QUERY,
     params: { slug },
   });
@@ -88,7 +96,7 @@ export const fetchSanityPostsByCategorySlug = async ({
 }: {
   slug: string;
 }): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: POSTS_BY_CATEGORY_QUERY,
     params: { slug },
   });
@@ -98,10 +106,8 @@ export const fetchSanityPostsByCategorySlug = async ({
 
 export const fetchSanityPostsStaticParams =
   async (): Promise<POSTS_SLUGS_QUERY_RESULT> => {
-    const { data } = await sanityFetch({
+    const data = await fetchPublished<POSTS_SLUGS_QUERY_RESULT>({
       query: POSTS_SLUGS_QUERY,
-      perspective: "published",
-      stega: false,
     });
 
     return data;
@@ -109,7 +115,7 @@ export const fetchSanityPostsStaticParams =
 
 export const fetchSanityNavigation =
   async (): Promise<NAVIGATION_QUERY_RESULT> => {
-    const { data } = await sanityFetch({
+    const data = await fetchPublished<NAVIGATION_QUERY_RESULT>({
       query: NAVIGATION_QUERY,
     });
 
@@ -117,7 +123,7 @@ export const fetchSanityNavigation =
   };
 
 export const fetchSanitySettings = async (): Promise<SETTINGS_QUERY_RESULT> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<SETTINGS_QUERY_RESULT>({
     query: SETTINGS_QUERY,
   });
 
@@ -125,7 +131,7 @@ export const fetchSanitySettings = async (): Promise<SETTINGS_QUERY_RESULT> => {
 };
 
 export const fetchSanityCategories = async (): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: CATEGORIES_QUERY,
   });
 
@@ -133,7 +139,7 @@ export const fetchSanityCategories = async (): Promise<any[]> => {
 };
 
 export const fetchSanityBlogCategories = async (): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: BLOG_CATEGORIES_QUERY,
   });
 
@@ -141,7 +147,7 @@ export const fetchSanityBlogCategories = async (): Promise<any[]> => {
 };
 
 export const fetchSanityProductCategories = async (): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: PRODUCT_CATEGORIES_QUERY,
   });
 
@@ -149,7 +155,7 @@ export const fetchSanityProductCategories = async (): Promise<any[]> => {
 };
 
 export const fetchSanityServiceCategories = async (): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: SERVICE_CATEGORIES_QUERY,
   });
 
@@ -161,7 +167,7 @@ export const fetchSanityCategoryBySlug = async ({
 }: {
   slug: string;
 }): Promise<any | null> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any | null>({
     query: CATEGORY_QUERY,
     params: { slug },
   });
@@ -170,17 +176,15 @@ export const fetchSanityCategoryBySlug = async ({
 };
 
 export const fetchSanityCategoriesStaticParams = async (): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: CATEGORIES_SLUGS_QUERY,
-    perspective: "published",
-    stega: false,
   });
 
   return data || [];
 };
 
 export const fetchSanityProducts = async (): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: PRODUCTS_QUERY,
   });
 
@@ -192,7 +196,7 @@ export const fetchSanityProductsByCategorySlug = async ({
 }: {
   slug: string;
 }): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: PRODUCTS_BY_CATEGORY_QUERY,
     params: { slug },
   });
@@ -205,7 +209,7 @@ export const fetchSanityProductBySlug = async ({
 }: {
   slug: string;
 }): Promise<any | null> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any | null>({
     query: PRODUCT_QUERY,
     params: { slug },
   });
@@ -214,17 +218,15 @@ export const fetchSanityProductBySlug = async ({
 };
 
 export const fetchSanityProductsStaticParams = async (): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: PRODUCTS_SLUGS_QUERY,
-    perspective: "published",
-    stega: false,
   });
 
   return data || [];
 };
 
 export const fetchSanityServices = async (): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: SERVICES_QUERY,
   });
 
@@ -236,7 +238,7 @@ export const fetchSanityServicesByCategorySlug = async ({
 }: {
   slug: string;
 }): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: SERVICES_BY_CATEGORY_QUERY,
     params: { slug },
   });
@@ -249,7 +251,7 @@ export const fetchSanityServiceBySlug = async ({
 }: {
   slug: string;
 }): Promise<any | null> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any | null>({
     query: SERVICE_QUERY,
     params: { slug },
   });
@@ -258,10 +260,8 @@ export const fetchSanityServiceBySlug = async ({
 };
 
 export const fetchSanityServicesStaticParams = async (): Promise<any[]> => {
-  const { data } = await sanityFetch({
+  const data = await fetchPublished<any[]>({
     query: SERVICES_SLUGS_QUERY,
-    perspective: "published",
-    stega: false,
   });
 
   return data || [];

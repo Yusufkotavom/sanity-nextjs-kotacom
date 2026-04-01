@@ -34,6 +34,9 @@ yarn-error.log*
 **/.env.*
 !**/.env.example
 
+# deployment env exports (contains secrets)
+deploy/env/*.env
+
 # vercel
 .vercel
 
