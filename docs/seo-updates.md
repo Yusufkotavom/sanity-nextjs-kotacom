@@ -733,3 +733,56 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - Source route inventory cross-checked against current Next route tree (`frontend/app`).
   - Worklist generated with 300 rows and reason-code distribution summary.
+
+## 2026-04-01 - Top-300 Curation v2 Classification (Execution Queues)
+- Changed files:
+  - `docs/curation/manual-top300-worklist-v2.csv`
+  - `docs/curation/manual-top300-approved-redirect.csv`
+  - `docs/curation/manual-top300-keep-or-redirect-review.csv`
+  - `docs/curation/manual-top300-pending-manual-intent.csv`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Upgraded top-300 curation worklist into operational v2 queue with final decision/status fields.
+  - Split the queue into execution buckets:
+    - `approved_redirect` (ready for redirect batch)
+    - `approved_keep_or_redirect` (needs content existence check before final redirect/keep decision)
+    - `pending_manual_intent` (requires one-by-one editorial intent mapping)
+  - Added progress snapshot into mega plan to keep agent checklist synchronized with current execution state.
+- SEO impact:
+  - Direct SEO migration impact: enables controlled redirect rollout from reviewed subset while isolating ambiguous URLs to prevent wrong-intent redirects.
+- Verification:
+  - Row counts validated against source top-300 dataset:
+    - approved_redirect: 216
+    - approved_keep_or_redirect: 32
+    - pending_manual_intent: 52
+
+## 2026-04-01 - Top-300 Curation v3 Completion (No Pending Manual Intent)
+- Changed files:
+  - `docs/curation/manual-top300-worklist-v3.csv`
+  - `docs/curation/manual-top300-approved-redirect-v3.csv`
+  - `docs/curation/manual-top300-pending-manual-intent-v3.csv`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Completed v3 one-by-one intent mapping for previously unresolved manual queue items (tags, archives, product-category, download/comment/shop legacy URLs).
+  - Reduced unresolved manual intent queue from 52 to 0.
+  - Updated mega-plan execution snapshot and B1 status note to reflect top-300 completion state.
+- SEO impact:
+  - Direct SEO migration impact: top-300 priority set now has deterministic final decisions for redirect planning, reducing ambiguity before rollout.
+- Verification:
+  - Final decision distribution validated:
+    - approved_redirect: 268
+    - approved_keep_or_redirect: 32
+    - pending_manual_intent: 0
+
+## 2026-04-01 - Top-300 Redirect Import Artifact (v3)
+- Changed files:
+  - `docs/curation/manual-top300-approved-redirect-import.csv`
+- Summary:
+  - Generated redirect-import-ready CSV from top-300 curation v3 approved set.
+  - Output format aligns with redirect ingestion needs (`source,destination,permanent,enabled,reason,queueOrder`).
+  - Deduplicated by source path and excluded self-redirects.
+- SEO impact:
+  - Direct migration execution impact: provides immediate staged redirect batch candidate for high-priority legacy URLs.
+- Verification:
+  - Approved redirect rows exported: 268 (plus header row).
+  - Pending manual intent file reduced to header-only state (`manual-top300-pending-manual-intent-v3.csv`).

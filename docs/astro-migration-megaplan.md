@@ -65,7 +65,12 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 
 ### B1. Manual Queue Execution (Top 300)
 - [x] Process `gsc-manual-priority-top300.csv` line-by-line.
-- Note: worklist initialized with prefilled proposal + reason code; final per-URL approval still pending manual verification.
+- Note: v3 one-by-one curation completed for top-300 with explicit final decision per URL; 32 items remain `keep_or_redirect` pending CMS content existence validation.
+- Progress snapshot (2026-04-01):
+  - `approved_redirect`: 268
+  - `approved_keep_or_redirect`: 32
+  - `pending_manual_intent`: 0
+  - Output files: `docs/curation/manual-top300-worklist-v3.csv`, `docs/curation/manual-top300-approved-redirect-v3.csv`, `docs/curation/manual-top300-keep-or-redirect-review.csv`, `docs/curation/manual-top300-pending-manual-intent-v3.csv`
 - [ ] For each URL, assign:
   - keep (migrate as page)
   - merge (map to nearest canonical)
