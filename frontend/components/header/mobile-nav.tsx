@@ -12,10 +12,11 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Logo from "@/components/logo";
 import SocialLinks from "@/components/header/social-links";
-import { SOCIAL_ICON_MAP } from "@/components/icons/social-icons";
+import { NAVIGATION_ICON_MAP } from "@/components/icons/navigation-icons";
 import { useState } from "react";
 import { AlignRight, ChevronDown } from "lucide-react";
 import { SETTINGS_QUERY_RESULT, NAVIGATION_QUERY_RESULT } from "@/sanity.types";
+import { useTheme } from "next-themes";
 
 type SanityLink = NonNullable<NAVIGATION_QUERY_RESULT[0]["links"]>[number];
 type NavChild = {
@@ -31,6 +32,7 @@ type NavLinkWithChildren = SanityLink & {
   icon?: string | null;
   children?: NavChild[] | null;
   navLocation?: "primary" | "utility" | null;
+  buttonVariant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null;
 };
 
 export default function MobileNav({
@@ -42,11 +44,22 @@ export default function MobileNav({
 }) {
   const [open, setOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const { setTheme, theme } = useTheme();
   const navItems = (navigation[0]?.links || [])
     .filter((item) => item?.title)
     .map((item) => item as NavLinkWithChildren);
+  const navDoc = (navigation[0] as { headerCta?: NavLinkWithChildren | null } | undefined) || {};
   const primaryItems = navItems.filter((item) => item.navLocation !== "utility");
   const utilityItems = navItems.filter((item) => item.navLocation === "utility");
+  const fallbackCta =
+    utilityItems.find(
+      (item) =>
+        item.buttonVariant &&
+        item.buttonVariant !== "ghost" &&
+        item.buttonVariant !== "link",
+    ) || null;
+  const headerCta = navDoc.headerCta || fallbackCta;
+  const utilityLinks = utilityItems.filter((item) => item._key !== headerCta?._key);
 
   return (
     <Sheet
@@ -78,7 +91,7 @@ export default function MobileNav({
         <div className="flex-1 overflow-y-auto px-4 py-6">
           <ul className="list-none space-y-1">
             {primaryItems.map((item) => {
-              const ItemIcon = item.icon ? SOCIAL_ICON_MAP[item.icon] : null;
+              const ItemIcon = item.icon ? NAVIGATION_ICON_MAP[item.icon] : null;
               const children =
                 item.children?.filter((child) => child?.title && child?.href) || [];
               const hasChildren = children.length > 0;
@@ -130,7 +143,7 @@ export default function MobileNav({
                   {groupOpen && (
                     <ul className="ml-3 space-y-1 border-l pl-3">
                       {children.map((child) => {
-                        const ChildIcon = child.icon ? SOCIAL_ICON_MAP[child.icon] : null;
+                        const ChildIcon = child.icon ? NAVIGATION_ICON_MAP[child.icon] : null;
                         return (
                           <li key={child._key || child.href || child.title}>
                             <Link
@@ -166,32 +179,86 @@ export default function MobileNav({
               );
             })}
           </ul>
-          {!!utilityItems.length && (
+          {!!headerCta?.title && (
+            <div className="mt-6 border-t pt-4">
+              <Link
+                key={headerCta._key || "header-cta"}
+                onClick={() => setOpen(false)}
+                href={headerCta.href || "#"}
+                target={headerCta.target ? "_blank" : undefined}
+                rel={headerCta.target ? "noopener noreferrer" : undefined}
+                className={cn(
+                  buttonVariants({
+                    variant: headerCta.buttonVariant || "default",
+                  }),
+                  "h-11 w-full justify-center rounded-md",
+                )}
+              >
+                {headerCta.title}
+              </Link>
+            </div>
+          )}
+          {!!utilityLinks.length && (
             <div className="mt-6 border-t pt-4">
               <p className="mb-2 px-3 text-left text-xs uppercase tracking-wide text-foreground/50">
                 Utility
               </p>
               <div className="space-y-2">
-                {utilityItems.map((item) => (
-                  <Link
-                    key={item._key}
-                    onClick={() => setOpen(false)}
-                    href={item.href || "#"}
-                    target={item.target ? "_blank" : undefined}
-                    rel={item.target ? "noopener noreferrer" : undefined}
-                    className={cn(
-                      buttonVariants({
-                        variant: item.buttonVariant || "outline",
-                      }),
-                      "h-10 w-full justify-center rounded-md",
-                    )}
-                  >
-                    {item.title}
-                  </Link>
-                ))}
+                {utilityLinks.map((item) => {
+                  const ItemIcon = item.icon ? NAVIGATION_ICON_MAP[item.icon] : null;
+                  return (
+                    <Link
+                      key={item._key}
+                      onClick={() => setOpen(false)}
+                      href={item.href || "#"}
+                      target={item.target ? "_blank" : undefined}
+                      rel={item.target ? "noopener noreferrer" : undefined}
+                      className={cn(
+                        buttonVariants({
+                          variant: item.buttonVariant || "outline",
+                        }),
+                        "h-10 w-full justify-center rounded-md",
+                      )}
+                    >
+                      {ItemIcon && <ItemIcon className="size-4" />}
+                      {item.title}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           )}
+          <div className="mt-6 border-t pt-4">
+            <p className="mb-2 px-3 text-left text-xs uppercase tracking-wide text-foreground/50">
+              Appearance
+            </p>
+            <div className="grid grid-cols-3 gap-2 px-1">
+              <Button
+                type="button"
+                variant={theme === "light" ? "default" : "outline"}
+                className="h-9 text-xs"
+                onClick={() => setTheme("light")}
+              >
+                Light
+              </Button>
+              <Button
+                type="button"
+                variant={theme === "dark" ? "default" : "outline"}
+                className="h-9 text-xs"
+                onClick={() => setTheme("dark")}
+              >
+                Dark
+              </Button>
+              <Button
+                type="button"
+                variant={theme === "system" ? "default" : "outline"}
+                className="h-9 text-xs"
+                onClick={() => setTheme("system")}
+              >
+                System
+              </Button>
+            </div>
+          </div>
           <div className="mt-6 border-t pt-4">
             <p className="mb-2 px-3 text-left text-xs uppercase tracking-wide text-foreground/50">
               Social

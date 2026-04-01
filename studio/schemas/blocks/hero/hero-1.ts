@@ -6,6 +6,40 @@ export default defineType({
   title: "Hero 1",
   type: "object",
   icon: LayoutTemplate,
+  initialValue: {
+    tagLine: "Layanan IT Terpadu",
+    title: "Solusi IT & Digital untuk pertumbuhan bisnis Anda",
+    body: [
+      {
+        _type: "block",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            marks: [],
+            text: "Fokus pada bisnis Anda, kami tangani website, software, infrastruktur IT, dan kebutuhan digital harian Anda.",
+          },
+        ],
+      },
+    ],
+    links: [
+      {
+        _type: "link",
+        isExternal: true,
+        title: "Jelajahi Layanan",
+        href: "/services",
+        buttonVariant: "default",
+      },
+      {
+        _type: "link",
+        isExternal: true,
+        title: "Konsultasi WhatsApp",
+        href: "https://wa.me/6281335275219",
+        buttonVariant: "outline",
+      },
+    ],
+  },
   fields: [
     defineField({
       name: "tagLine",

@@ -16,6 +16,80 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-01 - Global Reusable Section with Placement Slots
+- Changed files:
+  - `studio/schemas/documents/reusable-section.ts`
+  - `studio/schema-types.ts`
+  - `studio/structure.ts`
+  - `frontend/sanity/queries/reusable-section.ts`
+  - `frontend/sanity/lib/fetch.ts`
+  - `frontend/components/reusable-slot-sections.tsx`
+  - `frontend/app/(main)/layout.tsx`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added new Sanity document type `reusableSection` so editors can create reusable block groups once and reuse them globally.
+  - Added placement slot selection in Studio with four options: `beforeHeader`, `afterHeader`, `beforeFooter`, and `afterFooter`.
+  - Added `isActive` and `priority` controls to manage publish behavior and render order without code changes.
+  - Added frontend query/fetch flow to load active reusable sections and render selected blocks automatically in each layout slot.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - `pnpm --filter studio run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
+## 2026-04-01 - Predefined Starter Content for Sanity Blocks
+- Changed files:
+  - `studio/schemas/blocks/hero/hero-1.ts`
+  - `studio/schemas/blocks/hero/hero-2.ts`
+  - `studio/schemas/blocks/section-header.ts`
+  - `studio/schemas/blocks/cta/cta-1.ts`
+  - `studio/schemas/blocks/grid/grid-card.ts`
+  - `studio/schemas/blocks/grid/grid-row.ts`
+  - `studio/schemas/blocks/grid/pricing-card.ts`
+  - `studio/schemas/blocks/split/split-content.ts`
+  - `studio/schemas/blocks/split/split-card.ts`
+  - `studio/schemas/blocks/split/split-cards-list.ts`
+  - `studio/schemas/blocks/split/split-info.ts`
+  - `studio/schemas/blocks/split/split-info-list.ts`
+  - `studio/schemas/blocks/split/split-row.ts`
+  - `studio/schemas/blocks/timeline/timelines-1.ts`
+  - `studio/schemas/blocks/timeline/timeline-row.ts`
+  - `studio/schemas/blocks/forms/newsletter.ts`
+  - `studio/schemas/blocks/logo-cloud/logo-cloud-1.ts`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added object-level `initialValue` on core page-builder blocks so newly inserted blocks are pre-populated instead of empty.
+  - Seeded starter copy adapted from Kotacom-style messaging (IT services, website/software development, support, consultation CTA) for faster no-code editing.
+  - Added nested starter items for complex blocks (`grid-row`, `split-row`, `timeline-row`) so editors get complete section scaffolds immediately.
+  - Standardized starter CTA link objects to be valid with the shared `link` schema and shadcn/Geist-oriented button variants.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - `pnpm --filter studio run build` passed.
+
+## 2026-04-01 - Studio Theme Color Picker with Geist Color List
+- Changed files:
+  - `studio/schemas/documents/settings.ts`
+  - `frontend/sanity/queries/theme-settings.ts`
+  - `frontend/sanity/lib/fetch.ts`
+  - `frontend/app/layout.tsx`
+  - `frontend/app/globals.css`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added `Settings > Theme Colors` in Sanity Studio so editors can change core UI colors without code changes.
+  - Added `Theme Preset` selector with presets: `Neutral`, `Ocean`, `Sunset`, plus brand combinations `Brand Tricolor A/B/C` (red/blue/yellow exploration).
+  - Replaced manual HEX-only input with dropdown lists based on a curated Geist-style color palette (`Default`, grayscale, blue, green, teal, amber, purple, red, rose).
+  - Wired frontend layout to fetch preset + theme colors and inject CSS variables (`--studio-*`) at runtime.
+  - Preset values auto-apply by default; individual color fields below the preset act as per-project overrides.
+  - Updated global tokens to use Studio overrides for primary/accent/ring in both light and dark mode, with safe fallbacks.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - `pnpm --filter studio run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
 ## 2026-04-01 - Geist Typography Recipes and Component Adoption
 - Changed files:
   - `frontend/app/globals.css`
@@ -277,6 +351,85 @@ This file is the canonical changelog for all repository updates, with explicit S
 - SEO impact:
   - No direct SEO metadata/schema change.
   - Improves information architecture consistency and internal link presentation across header/footer.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
+## 2026-04-01 - Navigation Icon Picker with Preview (Studio) + Frontend Icon Rendering
+- Changed files:
+  - `studio/schemas/blocks/shared/navigation-icon-options.tsx`
+  - `studio/schemas/inputs/navigation-icon-input.tsx`
+  - `studio/schemas/blocks/shared/navigation-icon.ts`
+  - `studio/schema-types.ts`
+  - `studio/schemas/blocks/shared/link.ts`
+  - `studio/schemas/blocks/shared/navigation-link-child.ts`
+  - `frontend/components/icons/navigation-icons.tsx`
+  - `frontend/components/header/desktop-nav.tsx`
+  - `frontend/components/header/mobile-nav.tsx`
+- Summary:
+  - Added a dedicated `navigation-icon` schema type with a custom Studio input component that shows icon preview cards and supports icon search.
+  - Replaced plain string icon fields on navigation link and child link schemas with the new picker type.
+  - Added a curated navigation icon catalog (Vercel-like IA-friendly set) and preserved backward compatibility for older social icon values.
+  - Updated frontend header navigation (desktop + mobile) to render selected icons for primary links, submenu links, and utility/CTA links.
+- SEO impact:
+  - No direct SEO metadata change.
+  - Improves navigation clarity and scannability, supporting better internal-link discoverability for users.
+- Performance/PageSpeed impact:
+  - Low impact: icons are lightweight SVG components and only rendered where configured.
+  - No additional network request for icon fonts/sprites.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
+## 2026-04-01 - De-duplicate Global Site Name Between Settings and SEO Settings
+- Changed files:
+  - `studio/schemas/documents/settings.ts`
+  - `studio/schemas/documents/seo-settings.ts`
+  - `frontend/sanity/queries/settings.ts`
+  - `frontend/sanity/queries/seo-settings.ts`
+  - `frontend/sanity/lib/metadata.ts`
+- Summary:
+  - Refactored Studio so brand/site naming is managed in a single place:
+    - `settings.siteName` editor field replaced by `settings.brandName`.
+    - `seoSettings.siteName` field removed to avoid duplicate editing source.
+  - Added prefilled defaults:
+    - `settings.brandName` initial value: `Schema UI`.
+    - `seoSettings.defaultTitle` and `seoSettings.defaultDescription` now have initial values.
+  - Added backward-compatible query fallback:
+    - Frontend settings query still exposes `siteName` via `coalesce(brandName, siteName, "Schema UI")`.
+  - Updated metadata generation to resolve site name from `Settings` and use it as SEO fallback source.
+- SEO impact:
+  - Clarifies single source of truth for global site name and reduces misconfiguration risk.
+  - Preserves stable metadata output through fallback logic for existing content.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
+## 2026-04-01 - Header CTA + Move Theme Control Into Menu + Frontend/Backend Sync Policy
+- Changed files:
+  - `studio/schemas/documents/navigation.ts`
+  - `frontend/sanity/queries/navigation.ts`
+  - `frontend/components/header/desktop-nav.tsx`
+  - `frontend/components/header/mobile-nav.tsx`
+  - `frontend/components/header/index.tsx`
+  - `frontend/components/header/header-menu.tsx`
+  - `AGENTS.md`
+- Summary:
+  - Added CMS-driven `headerCta` field in Navigation document for a single desktop header CTA button.
+  - Updated navigation query and desktop/mobile header rendering to use `headerCta` with fallback from existing utility links.
+  - Moved theme control out of always-visible header into menu patterns:
+    - Desktop: new top-right dropdown menu with Appearance selector.
+    - Mobile: Appearance section inside sheet menu.
+  - Updated project agent policy to require frontend changes that depend on CMS/config data to be cross-checked and integrated with Studio schema + query + fetch layers.
+- SEO impact:
+  - No direct SEO metadata changes.
+  - Improves stable IA/UX consistency for primary navigation and call-to-action exposure.
 - Verification:
   - `pnpm --filter studio run typecheck` passed.
   - `pnpm --filter studio run build` passed.

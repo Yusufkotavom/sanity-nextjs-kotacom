@@ -8,12 +8,6 @@ export default defineType({
   icon: SearchCheck,
   fields: [
     defineField({
-      name: "siteName",
-      title: "Site Name",
-      type: "string",
-      validation: (Rule) => Rule.required().error("Site name is required"),
-    }),
-    defineField({
       name: "titleSuffix",
       title: "Title Suffix",
       type: "string",
@@ -24,6 +18,9 @@ export default defineType({
       name: "defaultTitle",
       title: "Default Meta Title",
       type: "string",
+      initialValue: "Schema UI",
+      description:
+        "Fallback default meta title. If empty in rendering logic, brand name from Settings is used.",
       validation: (Rule) => Rule.required().error("Default title is required"),
     }),
     defineField({
@@ -31,6 +28,8 @@ export default defineType({
       title: "Default Meta Description",
       type: "text",
       rows: 3,
+      initialValue:
+        "Modern website powered by Next.js and Sanity with scalable content management.",
       validation: (Rule) => Rule.required().error("Default description is required"),
     }),
     defineField({
@@ -62,7 +61,7 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: "siteName",
+      title: "defaultTitle",
       media: "defaultImage",
     },
     prepare({ title, media }) {

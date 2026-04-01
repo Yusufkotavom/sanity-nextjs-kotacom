@@ -9,6 +9,24 @@ export default defineType({
   title: "Split Info",
   description:
     "Column with a title, content body, image and tags. Part of a split cards.",
+  initialValue: {
+    title: "Website Development",
+    body: [
+      {
+        _type: "block",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            marks: [],
+            text: "Website modern yang cepat, SEO-friendly, dan dirancang untuk mendukung tujuan bisnis.",
+          },
+        ],
+      },
+    ],
+    tags: ["Next.js", "SEO", "Responsive"],
+  },
   fields: [
     defineField({
       name: "image",

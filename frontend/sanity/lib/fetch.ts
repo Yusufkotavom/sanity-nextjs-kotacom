@@ -3,6 +3,8 @@ import { PAGE_QUERY, PAGES_SLUGS_QUERY } from "@/sanity/queries/page";
 import { NAVIGATION_QUERY } from "@/sanity/queries/navigation";
 import { SETTINGS_QUERY } from "@/sanity/queries/settings";
 import { SEO_SETTINGS_QUERY } from "@/sanity/queries/seo-settings";
+import { THEME_SETTINGS_QUERY } from "@/sanity/queries/theme-settings";
+import { REUSABLE_SECTIONS_QUERY } from "@/sanity/queries/reusable-section";
 import {
   BLOG_CATEGORIES_QUERY,
   CATEGORIES_QUERY,
@@ -38,6 +40,20 @@ import {
   NAVIGATION_QUERY_RESULT,
   SETTINGS_QUERY_RESULT,
 } from "@/sanity.types";
+
+type PageBlock = NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
+export type ReusablePlacementSlot =
+  | "beforeHeader"
+  | "afterHeader"
+  | "beforeFooter"
+  | "afterFooter";
+export type ReusableSectionItem = {
+  _id: string;
+  title?: string;
+  priority?: number;
+  placements?: ReusablePlacementSlot[];
+  blocks?: PageBlock[];
+};
 
 const fetchPublished = async <T>({
   query,
@@ -137,6 +153,46 @@ export const fetchSanitySeoSettings = async (): Promise<any | null> => {
   });
 
   return data;
+};
+
+export const fetchSanityThemeSettings = async (): Promise<{
+  themeColors?: {
+    themePreset?: string;
+    lightPrimary?: string;
+    lightPrimaryForeground?: string;
+    lightAccent?: string;
+    lightRing?: string;
+    darkPrimary?: string;
+    darkPrimaryForeground?: string;
+    darkAccent?: string;
+    darkRing?: string;
+  } | null;
+} | null> => {
+  const data = await fetchPublished<{
+    themeColors?: {
+      themePreset?: string;
+      lightPrimary?: string;
+      lightPrimaryForeground?: string;
+      lightAccent?: string;
+      lightRing?: string;
+      darkPrimary?: string;
+      darkPrimaryForeground?: string;
+      darkAccent?: string;
+      darkRing?: string;
+    } | null;
+  } | null>({
+    query: THEME_SETTINGS_QUERY,
+  });
+
+  return data;
+};
+
+export const fetchSanityReusableSections = async (): Promise<ReusableSectionItem[]> => {
+  const data = await fetchPublished<ReusableSectionItem[]>({
+    query: REUSABLE_SECTIONS_QUERY,
+  });
+
+  return data || [];
 };
 
 export const fetchSanityCategories = async (): Promise<any[]> => {

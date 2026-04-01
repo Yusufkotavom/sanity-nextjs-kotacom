@@ -11,6 +11,7 @@ import {
   Settings,
   SearchCheck,
   Link2,
+  Blocks,
 } from "lucide-react";
 
 export const structure = (S: any, context: any) =>
@@ -71,6 +72,13 @@ export const structure = (S: any, context: any) =>
         type: "testimonial",
         title: "Testimonials",
         icon: Quote,
+        S,
+        context,
+      }),
+      orderableDocumentListDeskItem({
+        type: "reusableSection",
+        title: "Reusable Sections",
+        icon: Blocks,
         S,
         context,
       }),

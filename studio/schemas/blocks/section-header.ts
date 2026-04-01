@@ -8,6 +8,15 @@ export default defineType({
   title: "Section Header",
   description: "A section header with a tag line, title, and description",
   icon: LetterText,
+  initialValue: {
+    colorVariant: "background",
+    sectionWidth: "default",
+    stackAlign: "left",
+    tagLine: "Mengapa Memilih Kami",
+    title: "Solusi praktis untuk kebutuhan IT dan digital",
+    description:
+      "Tim kami membantu dari strategi sampai eksekusi agar bisnis Anda tetap fokus pada pertumbuhan, bukan masalah teknis.",
+  },
   fields: [
     defineField({
       name: "padding",

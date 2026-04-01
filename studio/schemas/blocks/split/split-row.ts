@@ -8,6 +8,81 @@ export default defineType({
   description:
     "Split Row: Customizable split row with multiple columns variants",
   icon: SquareSplitHorizontal,
+  initialValue: {
+    colorVariant: "background",
+    noGap: false,
+    splitColumns: [
+      {
+        _type: "split-content",
+        tagLine: "Keunggulan",
+        title: "Satu partner untuk eksekusi teknis end-to-end",
+        body: [
+          {
+            _type: "block",
+            style: "normal",
+            markDefs: [],
+            children: [
+              {
+                _type: "span",
+                marks: [],
+                text: "Dari kebutuhan website, aplikasi, IT support, hingga desain dan percetakan, semuanya bisa dikelola dalam satu alur kerja.",
+              },
+            ],
+          },
+        ],
+        link: {
+          _type: "link",
+          isExternal: true,
+          title: "Konsultasi Gratis",
+          href: "https://wa.me/6281335275219",
+          buttonVariant: "default",
+        },
+      },
+      {
+        _type: "split-info-list",
+        list: [
+          {
+            _type: "split-info",
+            title: "One-Stop Solution",
+            body: [
+              {
+                _type: "block",
+                style: "normal",
+                markDefs: [],
+                children: [
+                  {
+                    _type: "span",
+                    marks: [],
+                    text: "Semua kebutuhan digital dan IT dalam satu vendor yang terkoordinasi.",
+                  },
+                ],
+              },
+            ],
+            tags: ["Efisien", "Terintegrasi"],
+          },
+          {
+            _type: "split-info",
+            title: "Fast Delivery",
+            body: [
+              {
+                _type: "block",
+                style: "normal",
+                markDefs: [],
+                children: [
+                  {
+                    _type: "span",
+                    marks: [],
+                    text: "Timeline implementasi jelas, progress transparan, dan komunikasi cepat.",
+                  },
+                ],
+              },
+            ],
+            tags: ["Timeline", "Execution"],
+          },
+        ],
+      },
+    ],
+  },
   fields: [
     defineField({
       name: "padding",

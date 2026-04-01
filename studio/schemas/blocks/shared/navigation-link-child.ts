@@ -45,22 +45,8 @@ export default defineType({
     defineField({
       name: "icon",
       title: "Icon",
-      type: "string",
-      options: {
-        list: [
-          { title: "None", value: "" },
-          { title: "Facebook", value: "facebook" },
-          { title: "Instagram", value: "instagram" },
-          { title: "X", value: "x" },
-          { title: "YouTube", value: "youtube" },
-          { title: "LinkedIn", value: "linkedin" },
-          { title: "TikTok", value: "tiktok" },
-          { title: "GitHub", value: "github" },
-          { title: "Website", value: "website" },
-        ],
-        layout: "dropdown",
-      },
-      initialValue: "",
+      type: "navigation-icon",
+      description: "Optional icon shown in mobile/desktop nav dropdown links.",
     }),
     defineField({
       name: "href",

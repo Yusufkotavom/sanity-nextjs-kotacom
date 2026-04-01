@@ -8,6 +8,12 @@ export default defineType({
   icon: Menu,
   initialValue: {
     links: [],
+    headerCta: {
+      title: "Start Building",
+      isExternal: false,
+      target: false,
+      buttonVariant: "default",
+    },
   },
   fields: [
     defineField({
@@ -27,6 +33,14 @@ export default defineType({
         }),
       ],
       validation: (Rule) => Rule.max(8),
+    }),
+    defineField({
+      name: "headerCta",
+      title: "Header CTA Button",
+      description:
+        "Primary call-to-action shown at the right side of desktop header.",
+      type: "link",
+      validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {

@@ -4,6 +4,24 @@ export default defineType({
   name: "timelines-1",
   type: "object",
   title: "Timelines 1",
+  initialValue: {
+    title: "Discovery & Audit",
+    tagLine: "Minggu 1",
+    body: [
+      {
+        _type: "block",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            marks: [],
+            text: "Analisis kebutuhan bisnis, audit proses eksisting, dan prioritas fitur untuk fase implementasi.",
+          },
+        ],
+      },
+    ],
+  },
   fields: [
     defineField({
       name: "title",

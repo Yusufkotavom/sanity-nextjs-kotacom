@@ -3,6 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { NAVIGATION_QUERY_RESULT } from "@/sanity.types";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { NAVIGATION_ICON_MAP } from "@/components/icons/navigation-icons";
 
 type SanityLink = NonNullable<NAVIGATION_QUERY_RESULT[0]["links"]>[number];
 type NavChild = {
@@ -16,9 +17,11 @@ type NavChild = {
   target?: boolean | null;
 };
 type NavLinkWithChildren = SanityLink & {
+  icon?: string | null;
   children?: NavChild[] | null;
   navLocation?: "primary" | "utility" | null;
   showInFooter?: boolean | null;
+  buttonVariant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null;
 };
 
 function groupChildren(children: NavChild[]) {
@@ -41,13 +44,24 @@ export default function DesktopNav({
     .filter((item) => item?.title)
     .map((item) => item as NavLinkWithChildren);
 
+  const navDoc = (navigation[0] as { headerCta?: NavLinkWithChildren | null } | undefined) || {};
   const primaryItems = navItems.filter((item) => item.navLocation !== "utility");
   const utilityItems = navItems.filter((item) => item.navLocation === "utility");
+  const fallbackCta =
+    utilityItems.find(
+      (item) =>
+        item.buttonVariant &&
+        item.buttonVariant !== "ghost" &&
+        item.buttonVariant !== "link",
+    ) || null;
+  const headerCta = navDoc.headerCta || fallbackCta;
+  const utilityLinks = utilityItems.filter((item) => item._key !== headerCta?._key);
 
   return (
     <nav className="hidden w-full items-center justify-between gap-6 lg:flex" aria-label="Primary">
       <ul className="flex min-w-0 items-center gap-1">
         {primaryItems.map((item) => {
+          const ItemIcon = item.icon ? NAVIGATION_ICON_MAP[item.icon] : null;
           const children = item.children?.filter((child) => child?.title && child?.href) || [];
           const hasChildren = children.length > 0;
           const groupedChildren = groupChildren(children);
@@ -60,6 +74,7 @@ export default function DesktopNav({
                 rel={item.target ? "noopener noreferrer" : undefined}
                 className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm text-foreground/80 transition-colors hover:bg-accent hover:text-foreground"
               >
+                {ItemIcon && <ItemIcon className="size-4 text-foreground/70" />}
                 <span>{item.title}</span>
                 {hasChildren && <ChevronDown className="size-3.5 text-foreground/50" />}
               </Link>
@@ -75,32 +90,40 @@ export default function DesktopNav({
                           </p>
                         )}
                         <ul className="space-y-1">
-                          {links.map((child) => (
-                            <li key={child._key || child.href || child.title}>
-                              <Link
-                                href={child.href || "#"}
-                                target={child.target ? "_blank" : undefined}
-                                rel={child.target ? "noopener noreferrer" : undefined}
-                                className="block rounded-md px-2 py-2 transition-colors hover:bg-accent"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <span className="text-sm font-medium text-foreground">
-                                    {child.title}
-                                  </span>
-                                  {child.badge && (
-                                    <span className="rounded-full border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-foreground/75">
-                                      {child.badge}
+                          {links.map((child) => {
+                            const ChildIcon = child.icon
+                              ? NAVIGATION_ICON_MAP[child.icon]
+                              : null;
+                            return (
+                              <li key={child._key || child.href || child.title}>
+                                <Link
+                                  href={child.href || "#"}
+                                  target={child.target ? "_blank" : undefined}
+                                  rel={child.target ? "noopener noreferrer" : undefined}
+                                  className="block rounded-md px-2 py-2 transition-colors hover:bg-accent"
+                                >
+                                  <div className="flex items-center gap-2">
+                                    {ChildIcon && (
+                                      <ChildIcon className="size-3.5 text-foreground/60" />
+                                    )}
+                                    <span className="text-sm font-medium text-foreground">
+                                      {child.title}
                                     </span>
+                                    {child.badge && (
+                                      <span className="rounded-full border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-foreground/75">
+                                        {child.badge}
+                                      </span>
+                                    )}
+                                  </div>
+                                  {child.description && (
+                                    <p className="mt-0.5 line-clamp-2 text-xs text-foreground/65">
+                                      {child.description}
+                                    </p>
                                   )}
-                                </div>
-                                {child.description && (
-                                  <p className="mt-0.5 line-clamp-2 text-xs text-foreground/65">
-                                    {child.description}
-                                  </p>
-                                )}
-                              </Link>
-                            </li>
-                          ))}
+                                </Link>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     ))}
@@ -112,25 +135,42 @@ export default function DesktopNav({
         })}
       </ul>
 
-      {!!utilityItems.length && (
+      {(!!utilityLinks.length || !!headerCta) && (
         <div className="ml-auto flex items-center gap-1">
-          {utilityItems.map((item) => (
+          {utilityLinks.map((item) => {
+            const ItemIcon = item.icon ? NAVIGATION_ICON_MAP[item.icon] : null;
+            return (
+              <Link
+                key={item._key}
+                href={item.href || "#"}
+                target={item.target ? "_blank" : undefined}
+                rel={item.target ? "noopener noreferrer" : undefined}
+                className={cn(
+                  buttonVariants({
+                    variant: item.buttonVariant || "ghost",
+                    size: "sm",
+                  }),
+                  item.buttonVariant === "link" && "px-2",
+                )}
+              >
+                {ItemIcon && <ItemIcon className="size-4" />}
+                {item.title}
+              </Link>
+            );
+          })}
+          {headerCta?.title && (
             <Link
-              key={item._key}
-              href={item.href || "#"}
-              target={item.target ? "_blank" : undefined}
-              rel={item.target ? "noopener noreferrer" : undefined}
-              className={cn(
-                buttonVariants({
-                  variant: item.buttonVariant || "ghost",
-                  size: "sm",
-                }),
-                item.buttonVariant === "link" && "px-2",
-              )}
+              href={headerCta.href || "#"}
+              target={headerCta.target ? "_blank" : undefined}
+              rel={headerCta.target ? "noopener noreferrer" : undefined}
+              className={buttonVariants({
+                variant: headerCta.buttonVariant || "default",
+                size: "sm",
+              })}
             >
-              {item.title}
+              {headerCta.title}
             </Link>
-          ))}
+          )}
         </div>
       )}
     </nav>

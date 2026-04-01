@@ -5,6 +5,29 @@ export default defineType({
   name: "pricing-card",
   type: "object",
   icon: WalletCards,
+  initialValue: {
+    title: "Website Starter",
+    tagLine: "Paling cocok untuk UMKM",
+    price: {
+      value: 850000,
+      period: "/project",
+    },
+    list: [
+      "Desain responsif",
+      "Setup domain & hosting",
+      "Optimasi SEO dasar",
+      "Training penggunaan",
+    ],
+    excerpt:
+      "Paket praktis untuk memulai kehadiran digital bisnis Anda dengan timeline yang cepat.",
+    link: {
+      _type: "link",
+      isExternal: true,
+      title: "Konsultasi Paket",
+      href: "https://wa.me/6281335275219",
+      buttonVariant: "default",
+    },
+  },
   fields: [
     defineField({
       name: "title",

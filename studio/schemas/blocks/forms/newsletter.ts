@@ -9,6 +9,13 @@ export default defineType({
   description:
     "A subscription form ideal for collecting email addresses for newsletters and waitlists.",
   icon: Mails,
+  initialValue: {
+    stackAlign: "left",
+    consentText:
+      "Dengan berlangganan, Anda setuju menerima update insight digital dan promo layanan. Bisa berhenti kapan saja.",
+    buttonText: "Dapatkan Update",
+    successMessage: "Terima kasih, email Anda sudah terdaftar.",
+  },
   fields: [
     defineField({
       name: "padding",
@@ -33,18 +40,14 @@ export default defineType({
     defineField({
       name: "consentText",
       type: "text",
-      initialValue:
-        "By subscribing, you agree to receive emails from us. You can unsubscribe at any time.",
     }),
     defineField({
       name: "buttonText",
       type: "string",
-      initialValue: "Subscribe",
     }),
     defineField({
       name: "successMessage",
       type: "text",
-      initialValue: "Thank you for subscribing!",
     }),
   ],
   preview: {

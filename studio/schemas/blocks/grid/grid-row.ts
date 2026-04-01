@@ -7,6 +7,51 @@ export default defineType({
   title: "Grid Row",
   type: "object",
   icon: LayoutGrid,
+  initialValue: {
+    colorVariant: "background",
+    gridColumns: "grid-cols-3",
+    columns: [
+      {
+        _type: "grid-card",
+        title: "IT Support",
+        excerpt:
+          "Dukungan teknis untuk maintenance, troubleshooting, dan stabilitas sistem operasional harian.",
+        link: {
+          _type: "link",
+          isExternal: true,
+          title: "Lihat Layanan",
+          href: "/services/it-support",
+          buttonVariant: "link",
+        },
+      },
+      {
+        _type: "grid-card",
+        title: "Software Development",
+        excerpt:
+          "Pengembangan aplikasi custom untuk kebutuhan operasional, otomasi, dan dashboard bisnis.",
+        link: {
+          _type: "link",
+          isExternal: true,
+          title: "Lihat Layanan",
+          href: "/services/software-development",
+          buttonVariant: "link",
+        },
+      },
+      {
+        _type: "grid-card",
+        title: "Printing Services",
+        excerpt:
+          "Layanan cetak materi bisnis dan promosi dengan kualitas tajam serta warna akurat.",
+        link: {
+          _type: "link",
+          isExternal: true,
+          title: "Lihat Layanan",
+          href: "/services/printing-services",
+          buttonVariant: "link",
+        },
+      },
+    ],
+  },
   fields: [
     defineField({
       name: "padding",

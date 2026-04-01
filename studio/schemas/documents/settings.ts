@@ -1,7 +1,34 @@
 import { defineField, defineType } from "sanity";
 import { Settings } from "lucide-react";
 
-const hexColor = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/;
+const GEIST_COLOR_OPTIONS = [
+  { title: "Default (Follow Code)", value: "" },
+  { title: "Gray 10 (#171717)", value: "#171717" },
+  { title: "Gray 9 (#404040)", value: "#404040" },
+  { title: "Gray 8 (#525252)", value: "#525252" },
+  { title: "Gray 3 (#EBEBEB)", value: "#EBEBEB" },
+  { title: "Gray 2 (#F5F5F5)", value: "#F5F5F5" },
+  { title: "Gray 1 (#FAFAFA)", value: "#FAFAFA" },
+  { title: "Blue 6 (#0070F3)", value: "#0070F3" },
+  { title: "Blue 5 (#3291FF)", value: "#3291FF" },
+  { title: "Green 6 (#00A86B)", value: "#00A86B" },
+  { title: "Teal 6 (#14B8A6)", value: "#14B8A6" },
+  { title: "Amber 6 (#F59E0B)", value: "#F59E0B" },
+  { title: "Purple 6 (#8B5CF6)", value: "#8B5CF6" },
+  { title: "Red 6 (#E5484D)", value: "#E5484D" },
+  { title: "Rose 6 (#FB7185)", value: "#FB7185" },
+];
+
+const GEIST_FOREGROUND_OPTIONS = [
+  { title: "Default (Follow Code)", value: "" },
+  { title: "Gray 1 (#FAFAFA)", value: "#FAFAFA" },
+  { title: "Gray 2 (#F5F5F5)", value: "#F5F5F5" },
+  { title: "Gray 3 (#EBEBEB)", value: "#EBEBEB" },
+  { title: "Gray 9 (#404040)", value: "#404040" },
+  { title: "Gray 10 (#171717)", value: "#171717" },
+  { title: "Dark Background (#0A0A0A)", value: "#0A0A0A" },
+  { title: "Dark Background (#111111)", value: "#111111" },
+];
 
 export default defineType({
   name: "settings",
@@ -40,9 +67,12 @@ export default defineType({
       ],
     }),
     defineField({
-      name: "siteName",
+      name: "brandName",
+      title: "Brand Name",
       type: "string",
-      description: "The name of your site",
+      description:
+        "Primary brand/site name used across UI and as SEO fallback when global SEO site name is empty.",
+      initialValue: "Schema UI",
       validation: (Rule) => Rule.required().error("Site name is required"),
     }),
     defineField({
@@ -58,84 +88,87 @@ export default defineType({
         "Update main website colors from Studio without editing code. Use HEX values like #0070F3.",
       fields: [
         defineField({
+          name: "themePreset",
+          title: "Theme Preset",
+          type: "string",
+          description:
+            "Preset applies an automatic palette on frontend. Individual color fields below can override it.",
+          initialValue: "neutral",
+          options: {
+            list: [
+              { title: "Neutral (Geist Default)", value: "neutral" },
+              { title: "Ocean (Blue Focus)", value: "ocean" },
+              { title: "Sunset (Warm Accent)", value: "sunset" },
+              { title: "Brand Tricolor A (Blue Primary, Red Accent, Yellow Ring)", value: "brand-tricolor-a" },
+              { title: "Brand Tricolor B (Red Primary, Blue Accent, Yellow Ring)", value: "brand-tricolor-b" },
+              { title: "Brand Tricolor C (Yellow Primary, Blue Accent, Red Ring)", value: "brand-tricolor-c" },
+            ],
+            layout: "dropdown",
+          },
+        }),
+        defineField({
           name: "lightPrimary",
           title: "Light: Primary",
           type: "string",
-          initialValue: "#171717",
-          validation: (Rule) =>
-            Rule.custom((value) =>
-              !value || hexColor.test(value) ? true : "Use HEX format, for example #171717",
-            ),
+          description: "Main brand/action color in light mode.",
+          initialValue: "",
+          options: { list: GEIST_COLOR_OPTIONS, layout: "dropdown" },
         }),
         defineField({
           name: "lightPrimaryForeground",
           title: "Light: Primary Foreground",
           type: "string",
-          initialValue: "#FAFAFA",
-          validation: (Rule) =>
-            Rule.custom((value) =>
-              !value || hexColor.test(value) ? true : "Use HEX format, for example #FAFAFA",
-            ),
+          description: "Text/icon color on top of Light Primary.",
+          initialValue: "",
+          options: { list: GEIST_FOREGROUND_OPTIONS, layout: "dropdown" },
         }),
         defineField({
           name: "lightAccent",
           title: "Light: Accent",
           type: "string",
-          initialValue: "#F5F5F5",
-          validation: (Rule) =>
-            Rule.custom((value) =>
-              !value || hexColor.test(value) ? true : "Use HEX format, for example #F5F5F5",
-            ),
+          description: "Subtle accent/surface tint in light mode.",
+          initialValue: "",
+          options: { list: GEIST_COLOR_OPTIONS, layout: "dropdown" },
         }),
         defineField({
           name: "lightRing",
           title: "Light: Ring",
           type: "string",
-          initialValue: "#0070F3",
-          validation: (Rule) =>
-            Rule.custom((value) =>
-              !value || hexColor.test(value) ? true : "Use HEX format, for example #0070F3",
-            ),
+          description: "Focus ring color in light mode.",
+          initialValue: "",
+          options: { list: GEIST_COLOR_OPTIONS, layout: "dropdown" },
         }),
         defineField({
           name: "darkPrimary",
           title: "Dark: Primary",
           type: "string",
-          initialValue: "#FAFAFA",
-          validation: (Rule) =>
-            Rule.custom((value) =>
-              !value || hexColor.test(value) ? true : "Use HEX format, for example #FAFAFA",
-            ),
+          description: "Main brand/action color in dark mode.",
+          initialValue: "",
+          options: { list: GEIST_COLOR_OPTIONS, layout: "dropdown" },
         }),
         defineField({
           name: "darkPrimaryForeground",
           title: "Dark: Primary Foreground",
           type: "string",
-          initialValue: "#111111",
-          validation: (Rule) =>
-            Rule.custom((value) =>
-              !value || hexColor.test(value) ? true : "Use HEX format, for example #111111",
-            ),
+          description: "Text/icon color on top of Dark Primary.",
+          initialValue: "",
+          options: { list: GEIST_FOREGROUND_OPTIONS, layout: "dropdown" },
         }),
         defineField({
           name: "darkAccent",
           title: "Dark: Accent",
           type: "string",
-          initialValue: "#222222",
-          validation: (Rule) =>
-            Rule.custom((value) =>
-              !value || hexColor.test(value) ? true : "Use HEX format, for example #222222",
-            ),
+          description: "Subtle accent/surface tint in dark mode.",
+          initialValue: "",
+          options: { list: GEIST_COLOR_OPTIONS, layout: "dropdown" },
         }),
         defineField({
           name: "darkRing",
           title: "Dark: Ring",
           type: "string",
-          initialValue: "#3291FF",
-          validation: (Rule) =>
-            Rule.custom((value) =>
-              !value || hexColor.test(value) ? true : "Use HEX format, for example #3291FF",
-            ),
+          description: "Focus ring color in dark mode.",
+          initialValue: "",
+          options: { list: GEIST_COLOR_OPTIONS, layout: "dropdown" },
         }),
       ],
     }),
@@ -255,12 +288,13 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: "siteName",
+      title: "brandName",
+      legacyTitle: "siteName",
       media: "logo",
     },
-    prepare({ title, media }) {
+    prepare({ title, legacyTitle, media }) {
       return {
-        title: title || "Site Settings",
+        title: title || legacyTitle || "Site Settings",
         media,
       };
     },

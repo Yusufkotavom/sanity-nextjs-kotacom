@@ -6,6 +6,40 @@ export default defineType({
   title: "Hero 2",
   type: "object",
   icon: LayoutTemplate,
+  initialValue: {
+    tagLine: "Partner Teknologi Bisnis",
+    title: "Website, Software, dan IT Support dalam satu tim",
+    body: [
+      {
+        _type: "block",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            marks: [],
+            text: "Pendekatan one-stop untuk operasional dan pemasaran digital: mulai dari development hingga support harian.",
+          },
+        ],
+      },
+    ],
+    links: [
+      {
+        _type: "link",
+        isExternal: true,
+        title: "Lihat Portofolio",
+        href: "/portfolio",
+        buttonVariant: "default",
+      },
+      {
+        _type: "link",
+        isExternal: true,
+        title: "Hubungi Tim",
+        href: "/contact-us",
+        buttonVariant: "link",
+      },
+    ],
+  },
   fields: [
     defineField({
       name: "tagLine",

@@ -5,6 +5,18 @@ export default defineType({
   name: "grid-card",
   type: "object",
   icon: LayoutGrid,
+  initialValue: {
+    title: "Website Development",
+    excerpt:
+      "Pembuatan website profesional, cepat, dan responsif untuk company profile, landing page, hingga portal bisnis.",
+    link: {
+      _type: "link",
+      isExternal: true,
+      title: "Lihat Detail",
+      href: "/services/website-development",
+      buttonVariant: "link",
+    },
+  },
   fields: [
     defineField({
       name: "title",

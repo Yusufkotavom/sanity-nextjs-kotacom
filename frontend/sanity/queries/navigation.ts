@@ -5,6 +5,9 @@ export const NAVIGATION_QUERY = groq`
   *[_type == "navigation"]{
     _type,
     _key,
+    headerCta{
+      ${linkQuery}
+    },
     links[]{
       ${linkQuery},
       children[]{

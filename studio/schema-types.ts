@@ -11,6 +11,7 @@ import navigation from "./schemas/documents/navigation";
 import settings from "./schemas/documents/settings";
 import seoSettings from "./schemas/documents/seo-settings";
 import redirect from "./schemas/documents/redirect";
+import reusableSection from "./schemas/documents/reusable-section";
 
 // Schema UI shared objects
 import blockContent from "./schemas/blocks/shared/block-content";
@@ -18,6 +19,7 @@ import link from "./schemas/blocks/shared/link";
 import navigationLinkChild from "./schemas/blocks/shared/navigation-link-child";
 import { colorVariant } from "./schemas/blocks/shared/color-variant";
 import { buttonVariant } from "./schemas/blocks/shared/button-variant";
+import { navigationIcon } from "./schemas/blocks/shared/navigation-icon";
 import sectionPadding from "./schemas/blocks/shared/section-padding";
 // Schema UI objects
 import hero1 from "./schemas/blocks/hero/hero-1";
@@ -58,12 +60,14 @@ export const schemaTypes = [
   settings,
   seoSettings,
   redirect,
+  reusableSection,
   // shared objects
   blockContent,
   link,
   navigationLinkChild,
   colorVariant,
   buttonVariant,
+  navigationIcon,
   sectionPadding,
   // blocks
   hero1,

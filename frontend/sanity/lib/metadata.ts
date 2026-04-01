@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { cache } from "react";
 import { urlFor } from "@/sanity/lib/image";
-import { fetchSanitySeoSettings } from "@/sanity/lib/fetch";
+import { fetchSanitySeoSettings, fetchSanitySettings } from "@/sanity/lib/fetch";
 import { PAGE_QUERY_RESULT, POST_QUERY_RESULT } from "@/sanity.types";
 const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 
@@ -20,7 +20,6 @@ type MetaCompatiblePage = {
 };
 
 type SeoSettings = {
-  siteName?: string;
   titleSuffix?: string;
   defaultTitle?: string;
   defaultDescription?: string;
@@ -40,6 +39,15 @@ type SeoSettings = {
 
 const getSeoSettings = cache(async (): Promise<SeoSettings | null> => {
   return (await fetchSanitySeoSettings()) || null;
+});
+
+const getSiteName = cache(async (): Promise<string> => {
+  const settings = (await fetchSanitySettings()) as {
+    siteName?: string | null;
+    brandName?: string | null;
+  } | null;
+
+  return settings?.siteName || settings?.brandName || "Schema UI";
 });
 
 const getCanonicalUrl = (slug?: string) => {
@@ -84,6 +92,7 @@ const buildMetadata = ({
   openGraphType = "website",
   page,
   seo,
+  siteName,
 }: {
   title?: string;
   description?: string;
@@ -93,9 +102,10 @@ const buildMetadata = ({
   openGraphType?: "website" | "article";
   page?: MetaCompatiblePage | null;
   seo?: SeoSettings | null;
+  siteName: string;
 }): Metadata => {
   const image = resolveImage(page, seo);
-  const resolvedTitle = title || seo?.defaultTitle || seo?.siteName;
+  const resolvedTitle = title || seo?.defaultTitle || siteName;
   const resolvedDescription = description || seo?.defaultDescription;
   const resolvedCanonical = canonicalUrl || getCanonicalUrl(slug);
   const robotsValue =
@@ -107,7 +117,7 @@ const buildMetadata = ({
     openGraph: {
       title: resolvedTitle || undefined,
       description: resolvedDescription || undefined,
-      siteName: seo?.siteName || undefined,
+      siteName: siteName || undefined,
       images: [image],
       locale: "en_US",
       type: openGraphType,
@@ -129,7 +139,7 @@ const buildMetadata = ({
 
 export async function generateRootMetadata(): Promise<Metadata> {
   const seo = await getSeoSettings();
-  const siteName = seo?.siteName || "Schema UI";
+  const siteName = await getSiteName();
   const suffix = seo?.titleSuffix || siteName;
 
   return {
@@ -140,10 +150,10 @@ export async function generateRootMetadata(): Promise<Metadata> {
     },
     description: seo?.defaultDescription || undefined,
     openGraph: {
-      ...buildMetadata({ seo }).openGraph,
+      ...buildMetadata({ seo, siteName }).openGraph,
     },
     twitter: {
-      ...buildMetadata({ seo }).twitter,
+      ...buildMetadata({ seo, siteName }).twitter,
     },
     robots: !isProduction || seo?.defaultNoIndex ? "noindex, nofollow" : "index, follow",
   };
@@ -159,6 +169,7 @@ export async function generatePageMetadata({
   pageType?: "website" | "article";
 }): Promise<Metadata> {
   const seo = await getSeoSettings();
+  const siteName = await getSiteName();
   const compatiblePage = page as MetaCompatiblePage | null;
 
   return buildMetadata({
@@ -171,6 +182,7 @@ export async function generatePageMetadata({
     noindex: compatiblePage?.meta?.noindex || undefined,
     openGraphType: pageType,
     seo,
+    siteName,
   });
 }
 
@@ -186,6 +198,7 @@ export async function generateBasicMetadata({
   noindex?: boolean;
 }): Promise<Metadata> {
   const seo = await getSeoSettings();
+  const siteName = await getSiteName();
 
   return buildMetadata({
     title,
@@ -193,5 +206,6 @@ export async function generateBasicMetadata({
     slug,
     noindex,
     seo,
+    siteName,
   });
 }

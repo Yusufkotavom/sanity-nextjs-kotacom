@@ -8,6 +8,24 @@ export default defineType({
   title: "Split Card",
   description:
     "Column with tag line, title and content body. Part of a split cards.",
+  initialValue: {
+    tagLine: "Expertise",
+    title: "Implementasi cepat, hasil terukur",
+    body: [
+      {
+        _type: "block",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            marks: [],
+            text: "Mulai dari audit kebutuhan hingga delivery, setiap langkah dirancang agar efisien dan mudah dipahami oleh tim non-teknis.",
+          },
+        ],
+      },
+    ],
+  },
   fields: [
     defineField({
       name: "tagLine",

@@ -7,6 +7,43 @@ export default defineType({
   title: "CTA 1",
   type: "object",
   icon: Captions,
+  initialValue: {
+    colorVariant: "primary",
+    sectionWidth: "default",
+    stackAlign: "left",
+    tagLine: "Konsultasi Gratis",
+    title: "Ceritakan kebutuhan bisnis Anda, kami siapkan solusi yang relevan",
+    body: [
+      {
+        _type: "block",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            marks: [],
+            text: "Dapatkan rekomendasi teknis, estimasi budget, dan langkah implementasi yang realistis untuk tim Anda.",
+          },
+        ],
+      },
+    ],
+    links: [
+      {
+        _type: "link",
+        isExternal: true,
+        title: "Konsultasi via WhatsApp",
+        href: "https://wa.me/6281335275219",
+        buttonVariant: "default",
+      },
+      {
+        _type: "link",
+        isExternal: true,
+        title: "Lihat Semua Layanan",
+        href: "/services",
+        buttonVariant: "outline",
+      },
+    ],
+  },
   fields: [
     defineField({
       name: "padding",

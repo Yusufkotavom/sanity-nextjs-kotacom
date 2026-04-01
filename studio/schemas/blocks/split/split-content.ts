@@ -7,6 +7,33 @@ export default defineType({
   icon: TextQuote,
   title: "Split Content",
   description: "Column with tag line, title and content body.",
+  initialValue: {
+    sticky: false,
+    colorVariant: "background",
+    tagLine: "Mengapa Kami Ada",
+    title: "One-stop partner untuk kebutuhan teknis bisnis modern",
+    body: [
+      {
+        _type: "block",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            marks: [],
+            text: "Kami membantu bisnis tetap fokus ke growth dengan menangani website, software, IT support, dan kebutuhan digital secara terintegrasi.",
+          },
+        ],
+      },
+    ],
+    link: {
+      _type: "link",
+      isExternal: true,
+      title: "Diskusikan Kebutuhan",
+      href: "/contact-us",
+      buttonVariant: "default",
+    },
+  },
   fields: [
     defineField({
       name: "sticky",

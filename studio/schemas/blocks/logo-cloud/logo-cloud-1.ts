@@ -5,6 +5,10 @@ export default defineType({
   name: "logo-cloud-1",
   type: "object",
   icon: Images,
+  initialValue: {
+    colorVariant: "background",
+    title: "Dipercaya oleh tim bisnis dari berbagai industri",
+  },
   fields: [
     defineField({
       name: "padding",
