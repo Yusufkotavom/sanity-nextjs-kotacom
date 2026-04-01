@@ -83,6 +83,7 @@ jobs:
           SANITY_STUDIO_API_VERSION: ${{ vars.SANITY_STUDIO_API_VERSION }}
           SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID }}
           SANITY_STUDIO_VERCEL_BYPASS_SECRET: ${{ secrets.SANITY_STUDIO_VERCEL_BYPASS_SECRET }}
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         run: pnpm run build
 
       - name: Deploy Sanity Studio
