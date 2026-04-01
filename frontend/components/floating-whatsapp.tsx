@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { fetchSanitySettings } from "@/sanity/lib/fetch";
 import FloatingWhatsAppClient from "@/components/floating-whatsapp-client";
 
@@ -8,12 +9,14 @@ export default async function FloatingWhatsApp() {
   if (!whatsApp?.enabled || !whatsApp?.phoneNumber) return null;
 
   return (
-    <FloatingWhatsAppClient
-      phoneNumber={whatsApp.phoneNumber}
-      predefinedText={whatsApp.predefinedText}
-      ctaText={whatsApp.ctaText}
-      enableAnimation={whatsApp.enableAnimation}
-      sourceUrl={whatsApp.sourceUrl}
-    />
+    <Suspense fallback={null}>
+      <FloatingWhatsAppClient
+        phoneNumber={whatsApp.phoneNumber}
+        predefinedText={whatsApp.predefinedText}
+        ctaText={whatsApp.ctaText}
+        enableAnimation={whatsApp.enableAnimation}
+        sourceUrl={whatsApp.sourceUrl}
+      />
+    </Suspense>
   );
 }

@@ -109,6 +109,7 @@ Set these in Vercel project settings for frontend deployment:
 - `RESEND_API_KEY`
 - `NEXT_RESEND_TO_EMAIL`
 - `NEXT_RESEND_FROM_EMAIL`
+- `REVALIDATE_SECRET`
 
 For Studio if deployed separately, set all `SANITY_STUDIO_*` + `SANITY_AUTH_TOKEN`.
 
@@ -117,3 +118,33 @@ For Studio if deployed separately, set all `SANITY_STUDIO_*` + `SANITY_AUTH_TOKE
 - `.env` files are ignored by git.
 - Never commit real API keys or tokens.
 - Only commit `.env.example` templates.
+
+## 7) Sanity webhook for instant updates
+
+To make newly published content appear without redeploy, create a Sanity webhook:
+
+- URL:
+  - `https://your-frontend-domain.com/api/revalidate?secret=YOUR_REVALIDATE_SECRET`
+- Trigger:
+  - document create, update, delete
+- Filter:
+  - `_type in ["post","product","service","category","page","settings","navigation"]`
+- Projection (recommended):
+```json
+{
+  "_type": _type,
+  "slug": slug,
+  "path": select(
+    _type == "post" && defined(slug.current) => "/blog/" + slug.current,
+    _type == "product" && defined(slug.current) => "/products/" + slug.current,
+    _type == "service" && defined(slug.current) => "/services/" + slug.current,
+    _type == "category" && defined(slug.current) => "/blog/category/" + slug.current,
+    _type == "page" && slug.current == "index" => "/",
+    _type == "page" && defined(slug.current) => "/" + slug.current,
+    null
+  )
+}
+```
+
+This project already includes:
+- `frontend/app/api/revalidate/route.ts`
