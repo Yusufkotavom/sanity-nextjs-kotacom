@@ -148,3 +148,6 @@ To make newly published content appear without redeploy, create a Sanity webhook
 
 This project already includes:
 - `frontend/app/api/revalidate/route.ts`
+
+Detailed explanation:
+- `RENDERING_CACHE_REVALIDATION.md`

@@ -10,6 +10,10 @@ This starter is a part of [Schema UI](https://schemaui.com) project, a comprehen
 
 [Docs](https://schemaui.com/docs) | [Components](https://schemaui.com/docs/components) | [Demo](https://starter.schemaui.com)
 
+Project deployment/runtime docs in this repo:
+- [Environment Setup](./ENV_SETUP.md)
+- [Rendering, Cache, Revalidate](./RENDERING_CACHE_REVALIDATION.md)
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fserge-0v%2Fnext-js-sanity-starter&env=NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_SITE_ENV,NEXT_PUBLIC_SANITY_API_VERSION,NEXT_PUBLIC_SANITY_PROJECT_ID,NEXT_PUBLIC_SANITY_DATASET,SANITY_API_READ_TOKEN,RESEND_API_KEY,RESEND_AUDIENCE_ID&demo-title=Next.js%20Sanity%20Starter&demo-description=Next.js%20Sanity%20Starter%20by%20Schema%20UI&demo-url=https%3A%2F%2Fstarter.schemaui.com)
 
 For this monorepo, set the Vercel project **Root Directory** to `frontend` and add `NEXT_PUBLIC_STUDIO_URL` (and other vars from `frontend/.env.local.example`) in the project settings.
