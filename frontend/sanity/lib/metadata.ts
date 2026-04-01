@@ -2,11 +2,29 @@ import { urlFor } from "@/sanity/lib/image";
 import { PAGE_QUERY_RESULT, POST_QUERY_RESULT } from "@/sanity.types";
 const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 
+type MetaCompatiblePage = {
+  meta?: {
+    title?: string;
+    description?: string;
+    noindex?: boolean;
+    image?: {
+      asset?: {
+        metadata?: {
+          dimensions?: {
+            width?: number;
+            height?: number;
+          };
+        };
+      };
+    };
+  };
+};
+
 export function generatePageMetadata({
   page,
   slug,
 }: {
-  page: PAGE_QUERY_RESULT | POST_QUERY_RESULT;
+  page: PAGE_QUERY_RESULT | POST_QUERY_RESULT | MetaCompatiblePage;
   slug: string;
 }) {
   return {

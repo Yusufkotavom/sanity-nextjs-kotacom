@@ -1,5 +1,6 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import FloatingWhatsApp from "@/components/floating-whatsapp";
 import { DisableDraftMode } from "@/components/disable-draft-mode";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
@@ -14,6 +15,7 @@ export default async function MainLayout({
     <>
       <Header />
       <main>{children}</main>
+      <FloatingWhatsApp />
       <SanityLive />
       {(await draftMode()).isEnabled && (
         <>

@@ -238,3 +238,59 @@
     }
   }
 }
+
+.schemaui-docs-content h1,
+.schemaui-docs-content h2,
+.schemaui-docs-content h3,
+.schemaui-docs-content h4,
+.schemaui-docs-content h5,
+.schemaui-docs-content h6 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.schemaui-docs-content p,
+.schemaui-docs-content ul,
+.schemaui-docs-content ol,
+.schemaui-docs-content pre,
+.schemaui-docs-content blockquote,
+.schemaui-docs-content table {
+  margin-bottom: 1rem;
+}
+
+.schemaui-docs-content ul,
+.schemaui-docs-content ol {
+  padding-left: 1.25rem;
+}
+
+.schemaui-docs-content ul {
+  list-style: disc;
+}
+
+.schemaui-docs-content ol {
+  list-style: decimal;
+}
+
+.schemaui-docs-content a {
+  text-decoration: underline;
+}
+
+.schemaui-docs-content code {
+  background: color-mix(in oklab, var(--secondary) 90%, transparent);
+  border-radius: 0.375rem;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.875em;
+}
+
+.schemaui-docs-content pre {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: color-mix(in oklab, var(--muted) 70%, transparent);
+}
+
+.schemaui-docs-content pre code {
+  background: transparent;
+  padding: 0;
+}

@@ -58,8 +58,11 @@ export default function GridPost({ color, post }: GridPostProps) {
           )}
           {categories && categories.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
-              {categories.map((category) => (
-                <Badge key={category._id} color="primary">
+              {categories.map((category, index) => (
+                <Badge
+                  key={`${category?._id || category?.title || "category"}-${index}`}
+                  color="primary"
+                >
                   {category.title}
                 </Badge>
               ))}

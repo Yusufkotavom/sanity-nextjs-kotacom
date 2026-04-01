@@ -2,13 +2,16 @@ import { MetadataRoute } from "next";
 import { groq } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 
-const VIEWABLE_TYPES = ["page", "post"] as const;
+const VIEWABLE_TYPES = ["page", "post", "product", "service", "category"] as const;
 
 const urlQuery = `
   'url': select(
     slug.current == "index" => $baseUrl + "/",
     _type == "post-index" => $baseUrl + "/blog",
     _type == "post" => $baseUrl + "/blog/" + slug.current,
+    _type == "category" => $baseUrl + "/blog/category/" + slug.current,
+    _type == "product" => $baseUrl + "/products/" + slug.current,
+    _type == "service" => $baseUrl + "/services/" + slug.current,
     _type == "contact" => $baseUrl + "/contact",
     $baseUrl + "/" + slug.current
   )

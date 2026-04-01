@@ -1,0 +1,72 @@
+import { defineField, defineType } from "sanity";
+
+export default defineType({
+  name: "navigation-link-child",
+  type: "object",
+  title: "Navigation Sub Link",
+  fields: [
+    defineField({
+      name: "isExternal",
+      type: "boolean",
+      title: "Is External",
+      initialValue: false,
+    }),
+    defineField({
+      name: "internalLink",
+      type: "reference",
+      title: "Internal Link",
+      to: [{ type: "page" }, { type: "post" }, { type: "category" }, { type: "product" }, { type: "service" }],
+      hidden: ({ parent }) => parent?.isExternal,
+    }),
+    defineField({
+      name: "title",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "group",
+      title: "Group / Section",
+      type: "string",
+      description:
+        "Optional section label for desktop mega menu columns (example: Products, Resources).",
+    }),
+    defineField({
+      name: "icon",
+      title: "Icon",
+      type: "string",
+      options: {
+        list: [
+          { title: "None", value: "" },
+          { title: "Facebook", value: "facebook" },
+          { title: "Instagram", value: "instagram" },
+          { title: "X", value: "x" },
+          { title: "YouTube", value: "youtube" },
+          { title: "LinkedIn", value: "linkedin" },
+          { title: "TikTok", value: "tiktok" },
+          { title: "GitHub", value: "github" },
+          { title: "Website", value: "website" },
+        ],
+        layout: "dropdown",
+      },
+      initialValue: "",
+    }),
+    defineField({
+      name: "href",
+      title: "href",
+      type: "url",
+      hidden: ({ parent }) => !parent?.isExternal,
+      validation: (Rule) =>
+        Rule.uri({
+          allowRelative: true,
+          scheme: ["http", "https", "mailto", "tel"],
+        }),
+    }),
+    defineField({
+      name: "target",
+      type: "boolean",
+      title: "Open in new tab",
+      initialValue: false,
+      hidden: ({ parent }) => !parent?.isExternal,
+    }),
+  ],
+});

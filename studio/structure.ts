@@ -2,6 +2,8 @@ import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import {
   Files,
   BookA,
+  Package,
+  BriefcaseBusiness,
   User,
   ListCollapse,
   Quote,
@@ -28,6 +30,20 @@ export const structure = (S: any, context: any) =>
             .title("Post")
             .defaultOrdering([{ field: "_createdAt", direction: "desc" }]) // Default ordering
         ),
+      orderableDocumentListDeskItem({
+        type: "product",
+        title: "Products",
+        icon: Package,
+        S,
+        context,
+      }),
+      orderableDocumentListDeskItem({
+        type: "service",
+        title: "Services",
+        icon: BriefcaseBusiness,
+        S,
+        context,
+      }),
       orderableDocumentListDeskItem({
         type: "category",
         title: "Categories",

@@ -1,6 +1,8 @@
 // documents
 import page from "./schemas/documents/page";
 import post from "./schemas/documents/post";
+import product from "./schemas/documents/product";
+import service from "./schemas/documents/service";
 import author from "./schemas/documents/author";
 import category from "./schemas/documents/category";
 import faq from "./schemas/documents/faq";
@@ -11,6 +13,7 @@ import settings from "./schemas/documents/settings";
 // Schema UI shared objects
 import blockContent from "./schemas/blocks/shared/block-content";
 import link from "./schemas/blocks/shared/link";
+import navigationLinkChild from "./schemas/blocks/shared/navigation-link-child";
 import { colorVariant } from "./schemas/blocks/shared/color-variant";
 import { buttonVariant } from "./schemas/blocks/shared/button-variant";
 import sectionPadding from "./schemas/blocks/shared/section-padding";
@@ -43,6 +46,8 @@ export const schemaTypes = [
   // documents
   page,
   post,
+  product,
+  service,
   author,
   category,
   faq,
@@ -52,6 +57,7 @@ export const schemaTypes = [
   // shared objects
   blockContent,
   link,
+  navigationLinkChild,
   colorVariant,
   buttonVariant,
   sectionPadding,

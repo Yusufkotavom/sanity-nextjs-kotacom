@@ -1,0 +1,73 @@
+import { groq } from "next-sanity";
+import { imageQuery } from "./shared/image";
+import { bodyQuery } from "./shared/body";
+import { metaQuery } from "./shared/meta";
+import { linkQuery } from "./shared/link";
+
+export const PRODUCT_QUERY = groq`*[_type == "product" && slug.current == $slug][0]{
+  title,
+  slug,
+  excerpt,
+  body[]{
+    ${bodyQuery}
+  },
+  image{
+    ${imageQuery}
+  },
+  gallery[]{
+    ${imageQuery}
+  },
+  price,
+  currency,
+  availability,
+  featured,
+  categories[]->{
+    _id,
+    title,
+    slug
+  },
+  cta{
+    ${linkQuery}
+  },
+  _createdAt,
+  _updatedAt,
+  ${metaQuery},
+}`;
+
+export const PRODUCTS_QUERY = groq`*[_type == "product" && defined(slug)] | order(featured desc, _createdAt desc){
+  title,
+  slug,
+  excerpt,
+  image{
+    ${imageQuery}
+  },
+  price,
+  currency,
+  availability,
+  featured,
+  categories[]->{
+    _id,
+    title,
+    slug
+  }
+}`;
+
+export const PRODUCTS_BY_CATEGORY_QUERY = groq`*[_type == "product" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(featured desc, _createdAt desc){
+  title,
+  slug,
+  excerpt,
+  image{
+    ${imageQuery}
+  },
+  price,
+  currency,
+  availability,
+  featured,
+  categories[]->{
+    _id,
+    title,
+    slug
+  }
+}`;
+
+export const PRODUCTS_SLUGS_QUERY = groq`*[_type == "product" && defined(slug)]{slug}`;

@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export default defineType({
   name: "link",
@@ -15,7 +15,7 @@ export default defineType({
       name: "internalLink",
       type: "reference",
       title: "Internal Link",
-      to: [{ type: "page" }, { type: "post" }],
+      to: [{ type: "page" }, { type: "post" }, { type: "product" }, { type: "service" }],
       hidden: ({ parent }) => parent?.isExternal,
     }),
     defineField({
@@ -44,6 +44,34 @@ export default defineType({
       name: "buttonVariant",
       type: "button-variant",
       title: "Button Variant",
+    }),
+    defineField({
+      name: "icon",
+      title: "Icon",
+      type: "string",
+      options: {
+        list: [
+          { title: "None", value: "" },
+          { title: "Facebook", value: "facebook" },
+          { title: "Instagram", value: "instagram" },
+          { title: "X", value: "x" },
+          { title: "YouTube", value: "youtube" },
+          { title: "LinkedIn", value: "linkedin" },
+          { title: "TikTok", value: "tiktok" },
+          { title: "GitHub", value: "github" },
+          { title: "Website", value: "website" },
+        ],
+        layout: "dropdown",
+      },
+      initialValue: "",
+    }),
+    defineField({
+      name: "children",
+      title: "Sub Menu",
+      type: "array",
+      of: [defineArrayMember({ type: "navigation-link-child" })],
+      description: "Optional nested items for dropdown/submenu navigation.",
+      validation: (Rule) => Rule.max(8),
     }),
   ],
 });

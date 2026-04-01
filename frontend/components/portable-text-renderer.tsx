@@ -5,7 +5,9 @@ import { YouTubeEmbed } from "@next/third-parties/google";
 import { Highlight, themes } from "prism-react-renderer";
 import { CopyButton } from "@/components/ui/copy-button";
 
-const portableTextComponents: PortableTextProps["components"] = {
+const createPortableTextComponents = (
+  headingIdMap?: Record<string, string>,
+): PortableTextProps["components"] => ({
   types: {
     image: ({ value }) => {
       const { url, metadata } = value.asset;
@@ -77,20 +79,50 @@ const portableTextComponents: PortableTextProps["components"] = {
     normal: ({ children }) => (
       <p style={{ marginBottom: "1rem" }}>{children}</p>
     ),
-    h1: ({ children }) => (
-      <h1 style={{ marginBottom: "1rem", marginTop: "1rem" }}>{children}</h1>
+    h1: ({ children, value }) => (
+      <h1
+        id={value?._key ? headingIdMap?.[value._key] : undefined}
+        className="scroll-mt-24"
+        style={{ marginBottom: "1rem", marginTop: "1rem" }}
+      >
+        {children}
+      </h1>
     ),
-    h2: ({ children }) => (
-      <h2 style={{ marginBottom: "1rem", marginTop: "1rem" }}>{children}</h2>
+    h2: ({ children, value }) => (
+      <h2
+        id={value?._key ? headingIdMap?.[value._key] : undefined}
+        className="scroll-mt-24"
+        style={{ marginBottom: "1rem", marginTop: "1rem" }}
+      >
+        {children}
+      </h2>
     ),
-    h3: ({ children }) => (
-      <h3 style={{ marginBottom: "1rem", marginTop: "1rem" }}>{children}</h3>
+    h3: ({ children, value }) => (
+      <h3
+        id={value?._key ? headingIdMap?.[value._key] : undefined}
+        className="scroll-mt-24"
+        style={{ marginBottom: "1rem", marginTop: "1rem" }}
+      >
+        {children}
+      </h3>
     ),
-    h4: ({ children }) => (
-      <h4 style={{ marginBottom: "1rem", marginTop: "1rem" }}>{children}</h4>
+    h4: ({ children, value }) => (
+      <h4
+        id={value?._key ? headingIdMap?.[value._key] : undefined}
+        className="scroll-mt-24"
+        style={{ marginBottom: "1rem", marginTop: "1rem" }}
+      >
+        {children}
+      </h4>
     ),
-    h5: ({ children }) => (
-      <h5 style={{ marginBottom: "1rem", marginTop: "1rem" }}>{children}</h5>
+    h5: ({ children, value }) => (
+      <h5
+        id={value?._key ? headingIdMap?.[value._key] : undefined}
+        className="scroll-mt-24"
+        style={{ marginBottom: "1rem", marginTop: "1rem" }}
+      >
+        {children}
+      </h5>
     ),
   },
   marks: {
@@ -146,14 +178,21 @@ const portableTextComponents: PortableTextProps["components"] = {
       <li style={{ marginBottom: "0.5rem" }}>{children}</li>
     ),
   },
-};
+});
 
 const PortableTextRenderer = ({
   value,
+  headingIdMap,
 }: {
   value: PortableTextProps["value"];
+  headingIdMap?: Record<string, string>;
 }) => {
-  return <PortableText value={value} components={portableTextComponents} />;
+  return (
+    <PortableText
+      value={value}
+      components={createPortableTextComponents(headingIdMap)}
+    />
+  );
 };
 
 export default PortableTextRenderer;

@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "email": "email dev",
+    "docs:scrape": "node scripts/scrape-schemaui-docs.mjs",
     "typegen": "npx sanity schema extract && npx sanity typegen generate",
     "typecheck": "tsc --noEmit"
   },

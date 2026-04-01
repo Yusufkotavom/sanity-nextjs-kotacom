@@ -37,5 +37,19 @@ export const SETTINGS_QUERY = groq`*[_type == "settings"][0]{
     width,
     height,
   },
-  copyright
+  copyright,
+  socialLinks[]{
+    _key,
+    platform,
+    url,
+    target
+  },
+  whatsApp{
+    enabled,
+    phoneNumber,
+    predefinedText,
+    ctaText,
+    enableAnimation,
+    sourceUrl
+  }
 }`;
