@@ -46,12 +46,12 @@ jobs:
     needs: changes
     if: needs.changes.outputs.frontend == 'true'
     env:
-      NEXT_PUBLIC_SITE_URL: https://example.com
-      NEXT_PUBLIC_STUDIO_URL: https://example.sanity.studio
-      NEXT_PUBLIC_SANITY_PROJECT_ID: ci-project
-      NEXT_PUBLIC_SANITY_DATASET: production
-      NEXT_PUBLIC_SANITY_API_VERSION: '2026-03-23'
-      SANITY_API_READ_TOKEN: ci-read-token
+      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://example.com' }}
+      NEXT_PUBLIC_STUDIO_URL: ${{ vars.NEXT_PUBLIC_STUDIO_URL || 'https://example.sanity.studio' }}
+      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+      NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET || 'production' }}
+      NEXT_PUBLIC_SANITY_API_VERSION: ${{ vars.NEXT_PUBLIC_SANITY_API_VERSION || '2026-03-23' }}
+      SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN || secrets.SANITY_AUTH_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -99,12 +99,12 @@ jobs:
     needs: changes
     if: needs.changes.outputs.studio == 'true'
     env:
-      SANITY_STUDIO_PREVIEW_URL: http://localhost:3000
-      SANITY_STUDIO_PROJECT_ID: ci-project
-      SANITY_STUDIO_DATASET: production
-      SANITY_STUDIO_HOSTNAME: ci-studio
-      SANITY_STUDIO_API_VERSION: '2026-03-23'
-      SANITY_STUDIO_APP_ID: ci-studio
+      SANITY_STUDIO_PREVIEW_URL: ${{ vars.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000' }}
+      SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID || vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+      SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET || vars.NEXT_PUBLIC_SANITY_DATASET || 'production' }}
+      SANITY_STUDIO_HOSTNAME: ${{ vars.SANITY_STUDIO_HOSTNAME || 'ci-studio' }}
+      SANITY_STUDIO_API_VERSION: ${{ vars.SANITY_STUDIO_API_VERSION || vars.NEXT_PUBLIC_SANITY_API_VERSION || '2026-03-23' }}
+      SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID || 'ci-studio' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

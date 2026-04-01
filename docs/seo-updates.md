@@ -435,3 +435,16 @@ This file is the canonical changelog for all repository updates, with explicit S
   - `pnpm --filter studio run build` passed.
   - `pnpm --filter frontend run typecheck` passed.
   - `pnpm --filter frontend run build` passed.
+
+## 2026-04-01 - CI Env Alignment With GitHub Vars/Secrets (Remove Dummy Sanity Project)
+- Changed files:
+  - `.github/workflows/ci.yml`
+- Summary:
+  - Updated Frontend CI env to use repository `vars` and `secrets` instead of placeholder values (`ci-project`, `ci-read-token`).
+  - Updated Studio CI env to use `SANITY_STUDIO_*` vars (with sensible fallback chaining) instead of hardcoded dummy values.
+  - Keeps basic fallback defaults only for non-critical URLs to avoid empty-value crashes.
+- SEO impact:
+  - No direct SEO schema/metadata behavior change.
+  - Restores CI build reliability for Sanity-backed pages and redirect loading.
+- Verification:
+  - Workflow patch validated against previous CI failure signature (`Dataset not found for project ID "ci-project"`).
