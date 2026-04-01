@@ -4,11 +4,15 @@ import {
   fetchSanityServiceCategories,
   fetchSanityServices,
 } from "@/sanity/lib/fetch";
+import { generateBasicMetadata } from "@/sanity/lib/metadata";
 
-export const metadata = {
-  title: "Services",
-  description: "Browse our services.",
-};
+export async function generateMetadata() {
+  return await generateBasicMetadata({
+    title: "Services",
+    description: "Browse our services.",
+    slug: "services",
+  });
+}
 
 export default async function ServicesPage() {
   const services = await fetchSanityServices();

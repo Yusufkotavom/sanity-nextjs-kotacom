@@ -9,6 +9,8 @@ import faq from "./schemas/documents/faq";
 import testimonial from "./schemas/documents/testimonial";
 import navigation from "./schemas/documents/navigation";
 import settings from "./schemas/documents/settings";
+import seoSettings from "./schemas/documents/seo-settings";
+import redirect from "./schemas/documents/redirect";
 
 // Schema UI shared objects
 import blockContent from "./schemas/blocks/shared/block-content";
@@ -54,6 +56,8 @@ export const schemaTypes = [
   testimonial,
   navigation,
   settings,
+  seoSettings,
+  redirect,
   // shared objects
   blockContent,
   link,

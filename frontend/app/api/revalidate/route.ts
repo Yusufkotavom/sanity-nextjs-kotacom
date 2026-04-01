@@ -62,11 +62,18 @@ function collectPaths(payload: WebhookPayload | null) {
     }
   }
 
-  if (contentType === "settings" || contentType === "navigation") {
+  if (
+    contentType === "settings" ||
+    contentType === "navigation" ||
+    contentType === "seoSettings"
+  ) {
     paths.add("/");
     paths.add("/blog");
+    paths.add("/blog/category");
     paths.add("/products");
     paths.add("/services");
+    paths.add("/docs");
+    paths.add("/style-guide");
   }
 
   return paths;

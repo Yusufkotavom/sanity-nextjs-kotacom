@@ -1,10 +1,14 @@
 import Link from "next/link";
 import { fetchSanityCategories } from "@/sanity/lib/fetch";
+import { generateBasicMetadata } from "@/sanity/lib/metadata";
 
-export const metadata = {
-  title: "Blog Categories",
-  description: "Browse blog posts by category.",
-};
+export async function generateMetadata() {
+  return await generateBasicMetadata({
+    title: "Blog Categories",
+    description: "Browse blog posts by category.",
+    slug: "blog/category",
+  });
+}
 
 export default async function BlogCategoriesPage() {
   const categories = await fetchSanityCategories();

@@ -57,14 +57,18 @@ export async function generateMetadata(props: {
   if (isProductCategory) {
     const category = await fetchSanityCategoryBySlug({ slug: params.slug });
     if (!category) notFound();
-    return {
-      title: `${category.title} | Product Category`,
-      description: category.description || `Products in ${category.title}`,
-    };
+    return await generatePageMetadata({
+      page: {
+        title: `${category.title} | Product Category`,
+        excerpt: category.description || `Products in ${category.title}`,
+        meta: category.meta,
+      },
+      slug: `products/${params.slug}`,
+    });
   }
 
   if (!product) notFound();
-  return generatePageMetadata({ page: product, slug: `products/${params.slug}` });
+  return await generatePageMetadata({ page: product, slug: `products/${params.slug}` });
 }
 
 export default async function ProductSlugPage(props: {

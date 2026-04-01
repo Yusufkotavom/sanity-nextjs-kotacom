@@ -12,6 +12,7 @@ import {
   fetchSanityCategoriesStaticParams,
   fetchSanityPostsByCategorySlug,
 } from "@/sanity/lib/fetch";
+import { generatePageMetadata } from "@/sanity/lib/metadata";
 
 export async function generateStaticParams() {
   const categories = await fetchSanityCategoriesStaticParams();
@@ -28,10 +29,14 @@ export async function generateMetadata(props: {
 
   if (!category) notFound();
 
-  return {
-    title: `${category.title} | Blog Category`,
-    description: category.description || `Posts in ${category.title}`,
-  };
+  return await generatePageMetadata({
+    page: {
+      title: category.title,
+      excerpt: category.description,
+      meta: category.meta,
+    },
+    slug: `blog/category/${params.slug}`,
+  });
 }
 
 export default async function BlogCategoryDetailPage(props: {

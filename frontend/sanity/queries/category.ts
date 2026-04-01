@@ -1,4 +1,5 @@
 import { groq } from "next-sanity";
+import { metaQuery } from "./shared/meta";
 
 export const CATEGORIES_QUERY = groq`*[_type == "category" && defined(slug)] | order(title asc){
   _id,
@@ -37,6 +38,7 @@ export const CATEGORY_QUERY = groq`*[_type == "category" && slug.current == $slu
   title,
   slug,
   description,
+  ${metaQuery},
   "postCount": count(*[_type == "post" && references(^._id)])
 }`;
 

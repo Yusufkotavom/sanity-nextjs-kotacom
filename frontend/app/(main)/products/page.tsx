@@ -4,11 +4,15 @@ import {
   fetchSanityProductCategories,
   fetchSanityProducts,
 } from "@/sanity/lib/fetch";
+import { generateBasicMetadata } from "@/sanity/lib/metadata";
 
-export const metadata = {
-  title: "Products",
-  description: "Browse our products.",
-};
+export async function generateMetadata() {
+  return await generateBasicMetadata({
+    title: "Products",
+    description: "Browse our products.",
+    slug: "products",
+  });
+}
 
 export default async function ProductsPage() {
   const products = await fetchSanityProducts();

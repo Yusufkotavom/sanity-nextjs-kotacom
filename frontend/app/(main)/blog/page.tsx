@@ -6,11 +6,15 @@ import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
 import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
 import { fetchSanityBlogCategories, fetchSanityPosts } from "@/sanity/lib/fetch";
+import { generateBasicMetadata } from "@/sanity/lib/metadata";
 
-export const metadata = {
-  title: "Blog",
-  description: "Read the latest articles.",
-};
+export async function generateMetadata() {
+  return await generateBasicMetadata({
+    title: "Blog",
+    description: "Read the latest articles.",
+    slug: "blog",
+  });
+}
 
 export default async function BlogPage() {
   const posts = (await fetchSanityPosts()) as any[];

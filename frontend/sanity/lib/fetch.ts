@@ -2,6 +2,7 @@ import { client } from "@/sanity/lib/client";
 import { PAGE_QUERY, PAGES_SLUGS_QUERY } from "@/sanity/queries/page";
 import { NAVIGATION_QUERY } from "@/sanity/queries/navigation";
 import { SETTINGS_QUERY } from "@/sanity/queries/settings";
+import { SEO_SETTINGS_QUERY } from "@/sanity/queries/seo-settings";
 import {
   BLOG_CATEGORIES_QUERY,
   CATEGORIES_QUERY,
@@ -125,6 +126,14 @@ export const fetchSanityNavigation =
 export const fetchSanitySettings = async (): Promise<SETTINGS_QUERY_RESULT> => {
   const data = await fetchPublished<SETTINGS_QUERY_RESULT>({
     query: SETTINGS_QUERY,
+  });
+
+  return data;
+};
+
+export const fetchSanitySeoSettings = async (): Promise<any | null> => {
+  const data = await fetchPublished<any | null>({
+    query: SEO_SETTINGS_QUERY,
   });
 
   return data;

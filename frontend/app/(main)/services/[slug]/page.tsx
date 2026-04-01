@@ -57,14 +57,18 @@ export async function generateMetadata(props: {
   if (isServiceCategory) {
     const category = await fetchSanityCategoryBySlug({ slug: params.slug });
     if (!category) notFound();
-    return {
-      title: `${category.title} | Service Category`,
-      description: category.description || `Services in ${category.title}`,
-    };
+    return await generatePageMetadata({
+      page: {
+        title: `${category.title} | Service Category`,
+        excerpt: category.description || `Services in ${category.title}`,
+        meta: category.meta,
+      },
+      slug: `services/${params.slug}`,
+    });
   }
 
   if (!service) notFound();
-  return generatePageMetadata({ page: service, slug: `services/${params.slug}` });
+  return await generatePageMetadata({ page: service, slug: `services/${params.slug}` });
 }
 
 export default async function ServiceSlugPage(props: {

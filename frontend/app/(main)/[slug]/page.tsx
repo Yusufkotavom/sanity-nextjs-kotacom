@@ -24,7 +24,7 @@ export async function generateMetadata(props: {
     notFound();
   }
 
-  return generatePageMetadata({ page, slug: params.slug });
+  return await generatePageMetadata({ page, slug: params.slug });
 }
 
 export default async function Page(props: {

@@ -20,11 +20,15 @@ import {
 } from "@/components/ui/accordion";
 import ProductCard from "@/components/ui/product-card";
 import ServiceCard from "@/components/ui/service-card";
+import { generateBasicMetadata } from "@/sanity/lib/metadata";
 
-export const metadata = {
-  title: "Style Guide",
-  description: "Reference page for component styles used in the frontend.",
-};
+export async function generateMetadata() {
+  return await generateBasicMetadata({
+    title: "Style Guide",
+    description: "Reference page for component styles used in the frontend.",
+    slug: "style-guide",
+  });
+}
 
 export default function StyleGuidePage() {
   return (

@@ -9,6 +9,8 @@ import {
   Quote,
   Menu,
   Settings,
+  SearchCheck,
+  Link2,
 } from "lucide-react";
 
 export const structure = (S: any, context: any) =>
@@ -72,6 +74,15 @@ export const structure = (S: any, context: any) =>
         S,
         context,
       }),
+      S.listItem()
+        .title("Redirects")
+        .icon(Link2)
+        .schemaType("redirect")
+        .child(
+          S.documentTypeList("redirect")
+            .title("Redirects")
+            .defaultOrdering([{ field: "_updatedAt", direction: "desc" }])
+        ),
       S.divider({ title: "Global" }),
       S.listItem()
         .title("Navigation")
@@ -90,5 +101,14 @@ export const structure = (S: any, context: any) =>
             .id("settings")
             .schemaType("settings")
             .documentId("settings")
+        ),
+      S.listItem()
+        .title("SEO Settings")
+        .icon(SearchCheck)
+        .child(
+          S.editor()
+            .id("seoSettings")
+            .schemaType("seoSettings")
+            .documentId("seoSettings")
         ),
     ]);

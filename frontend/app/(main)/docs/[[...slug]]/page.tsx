@@ -7,6 +7,7 @@ import {
   getSchemauiDocs,
   getSchemauiDocsGroups,
 } from "@/lib/schemaui-docs";
+import { generateBasicMetadata } from "@/sanity/lib/metadata";
 
 const toPath = (slug?: string[]) => (slug?.length ? `/docs/${slug.join("/")}` : "/docs");
 
@@ -25,15 +26,17 @@ export async function generateMetadata(props: {
   const page = getSchemauiDocByPath(path);
 
   if (!page) {
-    return {
+    return await generateBasicMetadata({
       title: "Documentation",
-    };
+      slug: "docs",
+    });
   }
 
-  return {
+  return await generateBasicMetadata({
     title: `${page.title} | Docs`,
     description: `Imported docs from ${page.sourceUrl}`,
-  };
+    slug: path.replace(/^\/+/, ""),
+  });
 }
 
 export default async function DocsPage(props: {
