@@ -16,6 +16,23 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-01 - Footer Full Menu from Sanity Navigation
+- Changed files:
+  - `frontend/components/footer.tsx`
+  - `studio/schemas/documents/navigation.ts`
+  - `studio/schemas/blocks/shared/link.ts`
+  - `docs/seo-updates.md`
+- Summary:
+  - Upgraded footer to render a full multi-column menu sourced from `Navigation` links and their `Sub Menu` items (with `group` section labels).
+  - Kept primary navigation links visible in the footer and added social links row with platform icons.
+  - Clarified Studio field descriptions so editors know that Navigation/Sub Menu configuration is reused by footer.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter studio run build` passed.
+
 ## 2026-04-01 - Stabilize Sanity Studio CI Deploy Targeting
 - Changed files:
   - `.github/workflows/deploy-studio.yml`
@@ -159,3 +176,15 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter studio run typecheck` passed.
   - `pnpm --filter studio run build` passed.
+
+## 2026-04-01 - Fix Deploy Workflow Non-Interactive Prompt (Studio)
+- Changed files:
+  - `.github/workflows/deploy-studio.yml`
+- Summary:
+  - Added `SANITY_STUDIO_APP_ID` as required variable in deploy workflow checks.
+  - Passed `SANITY_STUDIO_APP_ID` into Studio build and deploy step environments.
+- SEO impact:
+  - No direct SEO behavior change.
+  - Restores automated Studio deployment reliability.
+- Verification:
+  - Root cause validated from GitHub Actions logs: non-interactive `select` prompt during `sanity deploy`.
