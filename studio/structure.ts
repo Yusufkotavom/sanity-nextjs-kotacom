@@ -14,6 +14,7 @@ import {
   Link2,
   Blocks,
   Bot,
+  Sparkles,
 } from "lucide-react";
 
 export const structure = (S: any, context: any) =>
@@ -136,5 +137,14 @@ export const structure = (S: any, context: any) =>
             .id("seoOpsSettings")
             .schemaType("seoOpsSettings")
             .documentId("seoOpsSettings")
+        ),
+      S.listItem()
+        .title("AI Writer Settings")
+        .icon(Sparkles)
+        .child(
+          S.editor()
+            .id("aiWriterSettings")
+            .schemaType("aiWriterSettings")
+            .documentId("aiWriterSettings")
         ),
     ]);

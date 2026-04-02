@@ -8,6 +8,7 @@ const nav = [
   { href: "/dashboard/seo/indexing", label: "Indexing" },
   { href: "/dashboard/seo/migration-priority", label: "Migration Priority" },
   { href: "/dashboard/seo/audit", label: "SEO Audit" },
+  { href: "/dashboard/seo/ai-writer", label: "AI Writer" },
   { href: "/dashboard/seo/settings", label: "Settings" },
 ];
 

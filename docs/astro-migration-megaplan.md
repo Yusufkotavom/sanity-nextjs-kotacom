@@ -55,6 +55,12 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Studio shared `link` schema now hides navigation-only fields outside `navigation` documents to avoid editor noise in post/product/service content
 - [x] Metadata resolver now falls back to content thumbnail image when SEO `meta.image` is empty (`meta.image` -> `page.image` -> global default image)
 - [x] Project contract implemented end-to-end: Studio `project` schema + frontend query/fetch + `/projects` and `/projects/[slug]` routes + sitemap integration
+- [x] Percetakan rewrite template enriched from exported `jasa-cetak-buku-*` cluster pattern (399-post structure) with expanded long-form guide and stronger FAQ/CTA blocks
+- [x] Root-slug adapter enabled for deduplicated `jasa-cetak-buku-kota` static dataset (`template.mdx` + `cities.json`) via `/(main)/[slug]` route fallback
+- [x] AI writer ops foundation added: Studio singleton settings + encrypted key pools + gateway/direct generation API for controlled rewrite workflows
+- [x] AI writer production hardening completed for operations: dashboard UI, gateway model validation, prompt guardrails, and go-live checklist docs
+- [x] AI rewrite apply flow completed: Studio `AI Rewrite` document action now triggers server rewrite and patches draft content automatically
+- [x] AI writer documentation consolidated into production-focused runbook; irrelevant/duplicated setup notes removed
 
 ## Workstream A - Platform & Data Foundation
 
@@ -142,6 +148,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [ ] Product detail/list
 - [ ] Project detail/list
 - [x] Legacy Astro static service/trust clusters switched to reusable rewrite template shell (Wave 1)
+- [x] Root slug static generation expanded for `jasa-cetak-buku-<kota>` pages using deduplicated local dataset adapter
 - Blocker note (2026-04-02): Remaining template refactors depend on final shared UI shell lock from orchestration (`docs/rewrite-worker-orchestration.md`) before broader homepage/blog/product rollout.
 
 ### D3. Content UX Upgrade
@@ -150,6 +157,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Improve content differentiation across legacy clusters with slug-specific rewrite mapping (Wave 1 service-focused routes).
 - [x] Complete rewrite coverage for previously generic route templates in legacy Wave 1 service/printing clusters.
 - [x] Add richer conversion-oriented landing sections with iconography and visual proof blocks for legacy rewrite pages.
+- [x] Add reusable long-guide section for rewrite pages to preserve and develop long-form legacy knowledge blocks (enabled for `cetak-buku`).
 - [ ] Ensure internal linking slots are CMS-configurable.
 
 ## Workstream E - Redirect Deployment Strategy

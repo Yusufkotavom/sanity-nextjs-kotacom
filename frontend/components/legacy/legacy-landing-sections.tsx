@@ -34,7 +34,7 @@ const ICON_MAP = {
   default: Sparkles,
 } as const;
 
-const DEFAULT_TOC = [
+const BASE_TOC = [
   { id: "layanan", label: "Jenis Layanan" },
   { id: "paket", label: "Paket Harga" },
   { id: "fitur", label: "Fitur Unggulan" },
@@ -245,6 +245,9 @@ export default function LegacyLandingSections({
   page,
   copy,
 }: LegacyLandingSectionsProps) {
+  const tocItems = copy.longGuide?.length
+    ? [...BASE_TOC, { id: "panduan", label: "Panduan Lengkap" }]
+    : BASE_TOC;
   const serviceTypes = copy.serviceTypes || getDefaultServiceTypes(page);
   const pricingPlans = copy.pricingPlans || getDefaultPricingPlans(page);
   const features = copy.features || getDefaultFeatures(page);
@@ -257,7 +260,7 @@ export default function LegacyLandingSections({
         <div className="rounded-xl border border-border/70 bg-muted/25 p-5 md:p-6">
           <p className="text-ui-label text-foreground/70">Navigasi Cepat</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            {DEFAULT_TOC.map((item) => (
+            {tocItems.map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
@@ -399,6 +402,30 @@ export default function LegacyLandingSections({
           ))}
         </div>
       </section>
+
+      {copy.longGuide?.length ? (
+        <section className="container py-8" id="panduan">
+          <div className="mb-4 flex items-center gap-2">
+            <BookOpenText className="size-4 text-foreground/70" />
+            <h2 className="text-xl font-semibold md:text-2xl">
+              Panduan Lengkap Cetak Buku
+            </h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {copy.longGuide.map((item) => (
+              <article
+                key={item.title}
+                className="rounded-xl border border-border/80 bg-card p-5"
+              >
+                <h3 className="text-base font-semibold">{item.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {item.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="container py-10" id="cta-final">
         <div className="rounded-2xl border border-primary/30 bg-primary/[0.06] p-6 md:p-8">

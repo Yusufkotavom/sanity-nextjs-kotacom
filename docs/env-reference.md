@@ -25,6 +25,14 @@ Dokumen ini merangkum variabel yang dipakai project ini, mana yang wajib, mana o
 - `SEO_SESSION_SECRET`
 - `SANITY_AUTH_TOKEN` (agar dashboard bisa simpan setting ke dokumen `seoOpsSettings`)
 
+### Wajib/opsional jika pakai AI Writer custom
+
+- `AI_GATEWAY_API_KEY` (opsional jika memakai OIDC `VERCEL_OIDC_TOKEN`)
+- `VERCEL_OIDC_TOKEN` (direkomendasikan untuk mode gateway di Vercel)
+- `AI_WRITER_GEMINI_KEYS` (opsional fallback env, format newline/comma list)
+- `AI_WRITER_GROQ_KEYS` (opsional fallback env, format newline/comma list)
+- `AI_WRITER_ACTION_SECRET` (direkomendasikan untuk Studio Document Action lintas-origin)
+
 ### Wajib jika menyimpan secret terenkripsi dari dashboard
 
 - Salah satu:
@@ -65,6 +73,7 @@ Dokumen ini merangkum variabel yang dipakai project ini, mana yang wajib, mana o
 - `SANITY_STUDIO_APP_ID` (legacy/advanced deploy target)
 - `SANITY_DEV`
 - `SANITY_DEPLOY`
+- `SANITY_STUDIO_AI_WRITER_ACTION_SECRET` (harus sama dengan `AI_WRITER_ACTION_SECRET` di frontend)
 
 ---
 
@@ -105,6 +114,13 @@ SANITY_AUTH_TOKEN=replace-with-sanity-write-token
 # SEO_INDEXING_BATCH_SIZE=100
 # SEO_INDEXING_RETRY_ATTEMPTS=2
 SEO_GSC_PRIORITY_CSV_PATH=./tmp/gsc/gsc-pages-priority.csv
+
+# AI writer optional fallback:
+# AI_GATEWAY_API_KEY=
+# VERCEL_OIDC_TOKEN=
+# AI_WRITER_GEMINI_KEYS=key1,key2,key3
+# AI_WRITER_GROQ_KEYS=key1,key2,key3
+# AI_WRITER_ACTION_SECRET=replace-with-strong-shared-secret
 ```
 
 ---

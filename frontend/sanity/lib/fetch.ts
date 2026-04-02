@@ -10,6 +10,10 @@ import {
   SEO_OPS_SETTINGS_PUBLIC_QUERY,
 } from "@/sanity/queries/seo-ops-settings";
 import {
+  AI_WRITER_SETTINGS_PRIVATE_QUERY,
+  AI_WRITER_SETTINGS_PUBLIC_QUERY,
+} from "@/sanity/queries/ai-writer-settings";
+import {
   BLOG_CATEGORIES_QUERY,
   CATEGORIES_QUERY,
   CATEGORY_QUERY,
@@ -257,6 +261,88 @@ export const fetchSanitySeoOpsSettingsPrivate = async (): Promise<{
     notes?: string;
   } | null>({
     query: SEO_OPS_SETTINGS_PRIVATE_QUERY,
+  });
+
+  return data;
+};
+
+export const fetchSanityAiWriterSettings = async (): Promise<{
+  enabled?: boolean;
+  mode?: "gateway" | "direct-gemini" | "direct-groq";
+  defaultModel?: string;
+  fallbackModels?: string[];
+  gatewayProviderOrder?: string[];
+  temperature?: number;
+  maxOutputTokens?: number;
+  prompts?: {
+    globalSystem?: string;
+    postRewrite?: string;
+    serviceRewrite?: string;
+    projectRewrite?: string;
+  };
+  notes?: string;
+} | null> => {
+  const data = await fetchPublished<{
+    enabled?: boolean;
+    mode?: "gateway" | "direct-gemini" | "direct-groq";
+    defaultModel?: string;
+    fallbackModels?: string[];
+    gatewayProviderOrder?: string[];
+    temperature?: number;
+    maxOutputTokens?: number;
+    prompts?: {
+      globalSystem?: string;
+      postRewrite?: string;
+      serviceRewrite?: string;
+      projectRewrite?: string;
+    };
+    notes?: string;
+  } | null>({
+    query: AI_WRITER_SETTINGS_PUBLIC_QUERY,
+  });
+
+  return data;
+};
+
+export const fetchSanityAiWriterSettingsPrivate = async (): Promise<{
+  enabled?: boolean;
+  mode?: "gateway" | "direct-gemini" | "direct-groq";
+  defaultModel?: string;
+  fallbackModels?: string[];
+  gatewayProviderOrder?: string[];
+  temperature?: number;
+  maxOutputTokens?: number;
+  gatewayApiKeyEncrypted?: string;
+  geminiApiKeysEncrypted?: string;
+  groqApiKeysEncrypted?: string;
+  prompts?: {
+    globalSystem?: string;
+    postRewrite?: string;
+    serviceRewrite?: string;
+    projectRewrite?: string;
+  };
+  notes?: string;
+} | null> => {
+  const data = await fetchPublished<{
+    enabled?: boolean;
+    mode?: "gateway" | "direct-gemini" | "direct-groq";
+    defaultModel?: string;
+    fallbackModels?: string[];
+    gatewayProviderOrder?: string[];
+    temperature?: number;
+    maxOutputTokens?: number;
+    gatewayApiKeyEncrypted?: string;
+    geminiApiKeysEncrypted?: string;
+    groqApiKeysEncrypted?: string;
+    prompts?: {
+      globalSystem?: string;
+      postRewrite?: string;
+      serviceRewrite?: string;
+      projectRewrite?: string;
+    };
+    notes?: string;
+  } | null>({
+    query: AI_WRITER_SETTINGS_PRIVATE_QUERY,
   });
 
   return data;

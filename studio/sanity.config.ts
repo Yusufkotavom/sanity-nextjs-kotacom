@@ -8,6 +8,7 @@ import { resolve } from "./presentation/resolve";
 import { structure } from "./structure";
 import { defaultDocumentNode } from "./defaultDocumentNode";
 import { codeInput } from "@sanity/code-input";
+import { aiRewriteAction } from "./document-actions/ai-rewrite-action";
 
 // Define the actions that should be available for singleton documents
 const singletonActions = new Set([
@@ -18,7 +19,13 @@ const singletonActions = new Set([
 ]);
 
 // Define the singleton document types
-const singletonTypes = new Set(["settings", "navigation", "seoSettings", "seoOpsSettings"]);
+const singletonTypes = new Set([
+  "settings",
+  "navigation",
+  "seoSettings",
+  "seoOpsSettings",
+  "aiWriterSettings",
+]);
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || "your-project-id";
 const dataset = process.env.SANITY_STUDIO_DATASET || "production";
@@ -41,10 +48,17 @@ export default defineConfig({
   document: {
     // For singleton types, filter out actions that are not explicitly included
     // in the `singletonActions` list defined above
-    actions: (input, context) =>
-      singletonTypes.has(context.schemaType)
-        ? input.filter(({ action }) => action && singletonActions.has(action))
-        : input,
+    actions: (input, context) => {
+      if (singletonTypes.has(context.schemaType)) {
+        return input.filter(({ action }) => action && singletonActions.has(action));
+      }
+
+      if (["post", "service", "project"].includes(context.schemaType)) {
+        return [aiRewriteAction, ...input];
+      }
+
+      return input;
+    },
   },
   plugins: [
     structureTool({ structure, defaultDocumentNode }),

@@ -14,6 +14,7 @@ import seoSettings from "./schemas/documents/seo-settings";
 import redirect from "./schemas/documents/redirect";
 import reusableSection from "./schemas/documents/reusable-section";
 import seoOpsSettings from "./schemas/documents/seo-ops-settings";
+import aiWriterSettings from "./schemas/documents/ai-writer-settings";
 
 // Schema UI shared objects
 import blockContent from "./schemas/blocks/shared/block-content";
@@ -63,6 +64,7 @@ export const schemaTypes = [
   settings,
   seoSettings,
   seoOpsSettings,
+  aiWriterSettings,
   redirect,
   reusableSection,
   // shared objects

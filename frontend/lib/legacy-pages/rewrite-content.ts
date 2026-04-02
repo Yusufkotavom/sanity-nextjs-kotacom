@@ -21,6 +21,7 @@ export type LegacyRewriteCopy = {
   features?: Array<{ title: string; description: string; icon?: string }>;
   proofItems?: Array<{ title: string; description: string; image?: string; href?: string }>;
   testimonials?: Array<{ name: string; role: string; quote: string }>;
+  longGuide?: Array<{ title: string; description: string }>;
   finalCtaTitle?: string;
   finalCtaDescription?: string;
 };
@@ -344,22 +345,197 @@ function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
   const service = page.title;
   const primaryKeyword = page.route === "/percetakan" ? "Jasa Percetakan" : `Jasa ${service}`;
 
+  if (page.route === "/percetakan") {
+    return {
+      primaryKeyword,
+      secondaryKeywords: [
+        "Jasa percetakan cepat dan presisi",
+        "Percetakan untuk UMKM dan perusahaan",
+        "Cetak promosi dan corporate",
+        "Percetakan Surabaya dan nasional",
+        "Jasa cetak custom sesuai kebutuhan",
+      ],
+      description:
+        "Jasa percetakan untuk kebutuhan promosi, branding, dan materi operasional bisnis dengan alur produksi terukur, kualitas stabil, dan pengiriman nasional.",
+      intro:
+        "Kami membantu bisnis mengeksekusi kebutuhan cetak dari tahap konsultasi spesifikasi, pengecekan file desain, produksi, quality control, hingga pengiriman. Fokus kami adalah hasil yang rapi, tepat waktu, dan siap dipakai untuk aktivitas pemasaran maupun operasional.",
+      highlights: [
+        "Spesifikasi material transparan sejak awal.",
+        "Pre-press check untuk meminimalkan risiko salah cetak.",
+        "Kontrol kualitas setiap batch produksi.",
+        "Timeline pengerjaan jelas dan terukur.",
+      ],
+      process: [
+        "Konsultasi kebutuhan: ukuran, material, finishing, jumlah, dan target deadline.",
+        "Review file desain: bleed, margin aman, resolusi gambar, dan mode warna.",
+        "Produksi + quality control: pengecekan hasil cetak sebelum final packing.",
+        "Pengiriman/serah-terima dengan update status progres yang jelas.",
+      ],
+      faqs: [
+        {
+          question: "Apakah bisa konsultasi dulu sebelum cetak?",
+          answer:
+            "Bisa. Tim kami membantu merekomendasikan ukuran, material, finishing, dan estimasi produksi sebelum Anda memutuskan.",
+        },
+        {
+          question: "Jika belum punya file siap cetak, apakah bisa dibantu?",
+          answer:
+            "Bisa. Kami bisa bantu review, koreksi minor, dan memberi arahan format file agar aman saat proses cetak.",
+        },
+        {
+          question: "Apakah melayani pengerjaan dengan deadline cepat?",
+          answer:
+            "Ya, untuk kebutuhan tertentu kami sediakan opsi prioritas produksi. Estimasi final mengikuti jenis produk dan antrean produksi.",
+        },
+        {
+          question: "Apakah bisa kirim ke luar kota?",
+          answer:
+            "Bisa. Kami melayani pengiriman ke seluruh Indonesia melalui ekspedisi yang disepakati.",
+        },
+      ],
+      serviceTypes: [
+        {
+          title: "Cetak Buku & Dokumen",
+          description:
+            "Buku, modul, company profile, booklet, hingga materi dokumentasi internal dengan finishing rapi.",
+          href: "/percetakan/cetak-buku",
+        },
+        {
+          title: "Cetak Materi Promosi",
+          description:
+            "Banner, spanduk, brosur, stiker, dan materi campaign untuk kebutuhan marketing online-offline.",
+          href: "/percetakan/cetak-brosur",
+        },
+        {
+          title: "Cetak Branding Perusahaan",
+          description:
+            "Kartu nama, company profile, dan kebutuhan identitas visual untuk memperkuat kredibilitas bisnis.",
+          href: "/percetakan/cetak-company-profile",
+        },
+        {
+          title: "Cetak Event & Acara",
+          description:
+            "Undangan, album, dan kebutuhan cetak acara dengan opsi material premium dan estimasi jelas.",
+          href: "/percetakan/cetak-undangan",
+        },
+      ],
+      pricingPlans: [
+        {
+          name: "Starter",
+          price: "Mulai 500rb",
+          description: "Untuk kebutuhan cetak ringan dengan volume kecil dan spesifikasi standar.",
+          items: [
+            "Material standar berkualitas",
+            "Pre-press check dasar",
+            "Estimasi produksi cepat",
+          ],
+        },
+        {
+          name: "Growth",
+          price: "Mulai 1,5jt",
+          description:
+            "Untuk bisnis yang menjalankan campaign rutin dan butuh hasil cetak konsisten.",
+          items: [
+            "Pilihan material lebih luas",
+            "Quality control bertahap",
+            "Prioritas jadwal produksi",
+          ],
+          recommended: true,
+        },
+        {
+          name: "Scale",
+          price: "Custom Quotation",
+          description:
+            "Untuk volume besar, multi-varian cetak, atau kebutuhan finishing khusus tingkat lanjut.",
+          items: [
+            "Skema produksi skala besar",
+            "Opsional SLA proyek",
+            "Pendampingan teknis produksi",
+          ],
+        },
+      ],
+      features: [
+        {
+          title: "Pre-Press Checklist",
+          description:
+            "File dicek lebih dulu untuk mengurangi risiko salah ukuran, blur, atau layout terpotong.",
+          icon: "security",
+        },
+        {
+          title: "Produksi Cepat Terarah",
+          description:
+            "Alur produksi dibagi per tahap agar progress mudah dipantau dan deadline lebih aman.",
+          icon: "speed",
+        },
+        {
+          title: "Pilihan Material Lengkap",
+          description:
+            "Kertas, gramasi, laminasi, dan finishing disesuaikan dengan tujuan penggunaan cetakan.",
+          icon: "boxes",
+        },
+        {
+          title: "Konsultasi Teknis",
+          description:
+            "Tim membantu Anda memilih spesifikasi paling efisien antara kualitas, fungsi, dan biaya.",
+          icon: "support",
+        },
+      ],
+      proofItems: [
+        {
+          title: "Materi Campaign UMKM",
+          description:
+            "Produksi brosur, banner, dan stiker untuk campaign promosi musiman usaha lokal.",
+          href: "/percetakan/cetak-brosur",
+        },
+        {
+          title: "Company Profile Kit",
+          description:
+            "Paket cetak profil perusahaan untuk kebutuhan presentasi mitra dan proses tender.",
+          href: "/percetakan/cetak-company-profile",
+        },
+        {
+          title: "Kebutuhan Cetak Event",
+          description:
+            "Pengerjaan materi cetak event dengan timeline ketat dan kualitas visual yang terjaga.",
+          href: "/percetakan/cetak-undangan",
+        },
+      ],
+      testimonials: [
+        {
+          name: "Andri S.",
+          role: "Owner UMKM Kuliner",
+          quote:
+            "Brosur dan stiker brand kami jadi lebih rapi dan konsisten. Prosesnya jelas dari awal sampai barang diterima.",
+        },
+        {
+          name: "Mega P.",
+          role: "Marketing Executive",
+          quote:
+            "Timnya responsif, enak diajak diskusi spesifikasi, dan hasil cetak banner sesuai ekspektasi campaign kami.",
+        },
+        {
+          name: "Rendy H.",
+          role: "Koordinator Event",
+          quote:
+            "Kami terbantu dengan timeline produksi yang terukur. Semua materi event selesai tepat waktu.",
+        },
+      ],
+      finalCtaTitle: "Siap Produksi Materi Cetak untuk Bisnis Anda?",
+      finalCtaDescription:
+        "Kirim kebutuhan Anda sekarang. Tim kami akan bantu susun spesifikasi, estimasi, dan skema produksi paling efisien.",
+      ctaLabel: "Konsultasi Layanan Percetakan",
+      ctaHref: DEFAULT_CTA,
+    };
+  }
+
   return {
     primaryKeyword,
-    secondaryKeywords:
-      page.route === "/percetakan"
-        ? [
-            "Layanan percetakan untuk bisnis",
-            "Percetakan cepat dan presisi",
-            "Percetakan promosi dan corporate",
-            "Jasa cetak custom",
-          ]
-        : [
-            `${service} berkualitas`,
-            `${service} cepat`,
-            `${service} untuk bisnis`,
-            `${service} custom`,
-          ],
+    secondaryKeywords: [
+      `${service} berkualitas`,
+      `${service} cepat`,
+      `${service} untuk bisnis`,
+      `${service} custom`,
+    ],
     description: `${primaryKeyword} untuk kebutuhan promosi dan branding dengan hasil cetak konsisten, material jelas, serta proses produksi terukur.`,
     intro: `${service} kami dirancang untuk membantu bisnis menjaga kualitas materi promosi dan dokumen brand dengan hasil akhir yang presisi serta siap distribusi.`,
     highlights: [
@@ -393,6 +569,158 @@ function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
 
 function buildPrintingDetailCopy(page: LegacyAstroPage): LegacyRewriteCopy {
   const presets: Record<string, Partial<LegacyRewriteCopy>> = {
+    "cetak-buku": {
+      primaryKeyword: "Jasa Cetak Buku Profesional",
+      secondaryKeywords: [
+        "Cetak buku satuan dan massal",
+        "Percetakan buku untuk penulis",
+        "Cetak buku untuk lembaga dan sekolah",
+        "Print on demand buku",
+        "Jasa cetak buku cepat dan rapi",
+      ],
+      description:
+        "Jasa cetak buku profesional untuk penulis, komunitas, sekolah, dan perusahaan dengan opsi produksi satuan hingga massal serta pengiriman nasional.",
+      intro:
+        "Kami menangani cetak buku dari kebutuhan penulis indie sampai lembaga pendidikan. Anda bisa mulai dari jumlah kecil (POD) atau produksi skala besar, dengan pendampingan teknis agar hasil akhir tetap rapi, presisi, dan sesuai tujuan terbit.",
+      highlights: [
+        "Melayani POD (print on demand) hingga volume besar.",
+        "Pilihan kertas, jilid, dan finishing sesuai karakter buku.",
+        "Tim bantu review file agar aman masuk produksi.",
+        "Opsi pengiriman ke seluruh Indonesia.",
+      ],
+      process: [
+        "Diskusi spesifikasi buku: ukuran, jumlah halaman, kertas isi, cover, dan jilid.",
+        "Cek file final: margin, bleed, resolusi, dan kesiapan layout cetak.",
+        "Produksi + quality control untuk memastikan hasil sesuai spesifikasi.",
+        "Packing aman dan pengiriman ke alamat tujuan.",
+      ],
+      faqs: [
+        {
+          question: "Berapa minimal order untuk cetak buku?",
+          answer:
+            "Kami melayani cetak satuan (POD) maupun produksi jumlah besar. Anda bisa mulai sesuai kebutuhan.",
+        },
+        {
+          question: "Apakah bisa bantu jika saya belum punya desain cover?",
+          answer:
+            "Bisa. Kami dapat bantu arahan format cover dan kebutuhan teknis agar file siap cetak.",
+        },
+        {
+          question: "Format file apa yang paling aman untuk dikirim?",
+          answer:
+            "Format PDF siap cetak adalah yang paling aman. Pastikan ukuran final, bleed, dan resolusi gambar sudah sesuai.",
+        },
+        {
+          question: "Apakah melayani pengiriman luar kota?",
+          answer:
+            "Ya. Kami melayani pengiriman ke seluruh Indonesia dengan opsi ekspedisi yang disepakati.",
+        },
+        {
+          question: "Berapa lama proses produksi cetak buku?",
+          answer:
+            "Durasi produksi mengikuti jumlah halaman, spesifikasi, dan kuantitas. Estimasi detail kami berikan setelah data final diterima.",
+        },
+        {
+          question: "Apakah bisa bantu pengurusan ISBN?",
+          answer:
+            "Untuk kebutuhan ISBN, kami dapat memberikan arahan alur persiapan dokumen dan format buku yang umumnya diperlukan.",
+        },
+        {
+          question: "Apa beda bookpaper dan HVS untuk isi buku?",
+          answer:
+            "Bookpaper lebih nyaman untuk membaca durasi panjang karena warna krem dan bobotnya ringan, sedangkan HVS lebih putih dan cocok untuk buku kerja atau dokumen formal.",
+        },
+        {
+          question: "Bagaimana jika ada kesalahan hasil cetak?",
+          answer:
+            "Jika kesalahan berasal dari proses produksi kami, akan ada evaluasi QC dan tindak lanjut perbaikan sesuai kesepakatan.",
+        },
+      ],
+      serviceTypes: [
+        {
+          title: "Novel & Buku Nonfiksi",
+          description:
+            "Cetak untuk penulis independen, penerbit mini, dan komunitas literasi.",
+        },
+        {
+          title: "Buku Pendidikan",
+          description:
+            "Cetak modul, buku ajar, LKS, dan buku pelatihan untuk sekolah/lembaga.",
+        },
+        {
+          title: "Booklet & Company Profile",
+          description:
+            "Materi cetak informatif untuk kebutuhan presentasi brand dan institusi.",
+        },
+        {
+          title: "Buku Event & Kenangan",
+          description:
+            "Buku tahunan, photobook, dan dokumentasi acara dengan finishing personal.",
+        },
+      ],
+      pricingPlans: [
+        {
+          name: "POD",
+          price: "Mulai 45rb",
+          description: "Cocok untuk sample, proof, atau kebutuhan cetak buku satuan.",
+          items: ["Cetak 1-20 buku", "Waktu produksi fleksibel", "Cocok untuk validasi naskah"],
+        },
+        {
+          name: "Bulk",
+          price: "Mulai 25rb/buku",
+          description:
+            "Untuk kebutuhan sekolah, komunitas, atau perusahaan dengan kuantitas menengah.",
+          items: [
+            "Efisiensi biaya per buku",
+            "Opsi kertas/jilid lebih variatif",
+            "Quality control batch",
+          ],
+          recommended: true,
+        },
+        {
+          name: "Enterprise",
+          price: "Custom Quotation",
+          description:
+            "Untuk produksi skala besar dan kebutuhan distribusi multi-lokasi.",
+          items: [
+            "Rencana produksi bertahap",
+            "Spesifikasi custom",
+            "Koordinasi jadwal kirim",
+          ],
+        },
+      ],
+      longGuide: [
+        {
+          title: "Mengapa Buku Fisik Tetap Penting di Era Digital",
+          description:
+            "Dari ratusan konten `jasa-cetak-buku-*`, pola paling kuat adalah nilai emosional dan kredibilitas buku fisik. Buku cetak memberi pengalaman nyata, lebih mudah dipresentasikan ke klien/lembaga, dan memperkuat positioning penulis maupun brand sebagai pihak yang serius pada kualitas konten.",
+        },
+        {
+          title: "Memilih Metode Cetak: Digital (POD) vs Offset",
+          description:
+            "Cetak digital cocok untuk jumlah kecil, kebutuhan cepat, atau validasi pasar awal. Offset lebih optimal untuk volume tinggi karena biaya per buku turun signifikan ketika jumlah naik. Kami menyarankan metode berdasarkan target distribusi, timeline, dan efisiensi biaya total proyek.",
+        },
+        {
+          title: "Memahami Opsi Jilid agar Buku Tahan Lama",
+          description:
+            "Untuk buku softcover umum, lem panas adalah opsi paling populer. Untuk daya tahan lebih tinggi, jilid jahit benang lebih kuat dan nyaman dibuka. Untuk booklet tipis, saddle stitch lebih ekonomis. Pemilihan jilid sebaiknya disesuaikan dengan ketebalan buku dan intensitas pemakaian.",
+        },
+        {
+          title: "Panduan Praktis Memilih Kertas",
+          description:
+            "HVS cocok untuk buku kerja/edukasi, bookpaper ideal untuk novel atau bacaan panjang, art paper/matte untuk konten visual berwarna, dan art carton umum dipakai untuk cover. Pemilihan gramasi memengaruhi kenyamanan baca, kesan premium, serta ongkos produksi dan pengiriman.",
+        },
+        {
+          title: "Checklist Sebelum File Naik Produksi",
+          description:
+            "Pastikan ukuran final, bleed, margin aman, resolusi gambar, dan konsistensi font sudah benar. Untuk isi buku, gunakan PDF siap cetak. Checklist ini sangat krusial untuk menurunkan risiko revisi dan mencegah keterlambatan saat proses produksi.",
+        },
+      ],
+      finalCtaTitle: "Punya Naskah dan Siap Terbit?",
+      finalCtaDescription:
+        "Kirim detail naskah Anda. Kami bantu hitung estimasi paling efisien sesuai jumlah, spesifikasi, dan target deadline.",
+      ctaLabel: "Minta Penawaran Cetak Buku",
+    },
     "cetak-album-pernikahan": {
       primaryKeyword: "Jasa Cetak Album Pernikahan",
       secondaryKeywords: [
@@ -554,8 +882,26 @@ function buildPrintingDetailCopy(page: LegacyAstroPage): LegacyRewriteCopy {
         `Kalender promosi ${city}`,
         `Cetak kalender custom ${city}`,
       ],
-      description: `Jasa cetak kalender ${city} untuk kebutuhan promosi brand dengan hasil cetak rapi, material berkualitas, dan jadwal produksi terukur.`,
-      intro: `Kami membantu bisnis di ${city} memproduksi kalender promosi dengan desain menarik dan kualitas cetak konsisten untuk campaign tahunan.`,
+      description: `Jasa cetak kalender ${city} untuk kebutuhan promosi brand, corporate gift, dan media pemasaran tahunan dengan kualitas cetak rapi serta timeline produksi terukur.`,
+      intro: `Kami membantu bisnis di ${city} memproduksi kalender promosi yang relevan untuk branding tahunan, lengkap dengan opsi material, finishing, dan kuantitas yang fleksibel.`,
+      highlights: [
+        "Layout kalender disesuaikan untuk branding bisnis.",
+        "Pilihan model dinding, meja, dan custom ukuran.",
+        "Kontrol warna agar visual brand tetap konsisten.",
+        "Estimasi produksi dan pengiriman terukur.",
+      ],
+      faqs: [
+        {
+          question: `Apakah bisa cetak kalender custom untuk area ${city}?`,
+          answer:
+            "Bisa. Kami dapat menyesuaikan desain, ukuran, dan kebutuhan kuantitas untuk distribusi lokal maupun nasional.",
+        },
+        {
+          question: "Apakah bisa sekalian dibantu finalisasi desain?",
+          answer:
+            "Bisa. Kami bantu pengecekan dan penyesuaian file agar siap produksi dengan hasil cetak optimal.",
+        },
+      ],
       ctaLabel: `Konsultasi Cetak Kalender ${city}`,
     };
   }
@@ -968,4 +1314,37 @@ export function buildLegacyRewriteCopy(page: LegacyAstroPage): LegacyRewriteCopy
   }
 
   return buildGenericCopy(page);
+}
+
+export function buildPercetakanCetakBukuCityCopy(city: string): LegacyRewriteCopy {
+  const base = buildPrintingDetailCopy({
+    route: "/percetakan/cetak-buku",
+    section: "percetakan",
+    slug: "cetak-buku",
+    sourceFile: "percetakan/cetak-buku/index.astro",
+    title: "Cetak Buku",
+    migrationStatus: "draft",
+  });
+
+  const cityName = titleCaseFromSlug(city);
+
+  return {
+    ...base,
+    primaryKeyword: `Jasa Cetak Buku ${cityName}`,
+    secondaryKeywords: [
+      `Jasa cetak buku ${cityName}`,
+      `Cetak buku ${cityName}`,
+      `Print on demand ${cityName}`,
+      "Percetakan buku profesional",
+      "Cetak buku satuan dan massal",
+    ],
+    description:
+      `Jasa cetak buku profesional di ${cityName} untuk penulis, penerbit, sekolah, komunitas, dan perusahaan dengan opsi POD maupun produksi massal.`,
+    intro:
+      `Kami melayani jasa cetak buku di ${cityName} dengan alur kerja terstruktur: konsultasi spesifikasi, review file, proses produksi, quality control, hingga pengiriman ke seluruh Indonesia.`,
+    ctaLabel: `Konsultasi Cetak Buku ${cityName}`,
+    finalCtaTitle: `Siap Cetak Buku di ${cityName}?`,
+    finalCtaDescription:
+      `Kirim detail naskah dan spesifikasi Anda. Tim kami bantu susun opsi produksi paling efisien untuk kebutuhan cetak buku di ${cityName}.`,
+  };
 }

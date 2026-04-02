@@ -135,6 +135,102 @@ This file is the canonical changelog for all repository updates, with explicit S
   - `pnpm --filter frontend exec next build --webpack` passed.
   - `pnpm --filter frontend run typecheck` passed.
 
+## 2026-04-02 - AI Writer Foundation with Gateway/BYOK + Key Rotation
+- Changed files:
+  - `studio/schemas/documents/ai-writer-settings.ts`
+  - `studio/schema-types.ts`
+  - `studio/sanity.config.ts`
+  - `studio/structure.ts`
+  - `frontend/sanity/queries/ai-writer-settings.ts`
+  - `frontend/sanity/lib/fetch.ts`
+  - `frontend/lib/ai-writer/sanity-write.ts`
+  - `frontend/lib/ai-writer/settings-source.ts`
+  - `frontend/lib/ai-writer/generate.ts`
+  - `frontend/app/api/ai/config/status/route.ts`
+  - `frontend/app/api/ai/config/save/route.ts`
+  - `frontend/app/api/ai/generate/route.ts`
+  - `frontend/package.json`
+  - `docs/env-reference.md`
+  - `docs/ai-writer-gateway-setup.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added singleton `aiWriterSettings` in Studio for provider mode, model routing, prompt templates, and encrypted credential pools.
+  - Added authenticated AI config APIs to save/read runtime settings with encryption and Sanity persistence.
+  - Added generation API with three execution modes: `gateway`, `direct-gemini` (multi-key rotation), and `direct-groq` (multi-key rotation).
+  - Integrated Vercel AI Gateway client support in frontend dependencies.
+  - Added setup docs for BYOK/OIDC, key rotation input format, and test payloads.
+- SEO impact:
+  - No direct SEO metadata output change yet.
+  - Integration impact: enables controlled AI-assisted rewrite pipeline for post/service/project content operations.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend exec next build --webpack` passed.
+
+## 2026-04-02 - AI Writer Production Hardening (Dashboard + Validation)
+- Changed files:
+  - `frontend/app/dashboard/seo/layout.tsx`
+  - `frontend/app/dashboard/seo/ai-writer/page.tsx`
+  - `frontend/app/api/ai/config/save/route.ts`
+  - `frontend/app/api/ai/generate/route.ts`
+  - `frontend/lib/ai-writer/generate.ts`
+  - `docs/ai-writer-gateway-setup.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added dedicated SEO dashboard page for AI Writer operations with save/test flow and runtime source visibility.
+  - Added model-format validation for gateway mode (`provider/model`) at save API layer.
+  - Added prompt size guard in generate API and normalized direct-provider model IDs (`google/*` and `groq/*` prefix handling).
+  - Extended setup doc with production checklist for go-live hardening.
+- SEO impact:
+  - No direct metadata change.
+  - Integration impact: production-safe operational control for AI rewrite pipeline with stronger validation and error prevention.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter frontend exec next build --webpack` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - AI Rewrite Apply Flow (Studio Action -> Draft Patch)
+- Changed files:
+  - `studio/document-actions/ai-rewrite-action.ts`
+  - `studio/sanity.config.ts`
+  - `frontend/app/api/ai/rewrite/apply/route.ts`
+  - `frontend/.env.example`
+  - `studio/.env.example`
+  - `docs/env-reference.md`
+  - `docs/ai-writer-gateway-setup.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added Studio document action `AI Rewrite` for `post`, `service`, and `project` documents.
+  - Added backend route to generate rewritten content and patch it into Sanity draft (`title`, `excerpt`, `body`) in one flow.
+  - Added action-secret auth path for Studio cross-origin calls (`AI_WRITER_ACTION_SECRET` / `SANITY_STUDIO_AI_WRITER_ACTION_SECRET`) and CORS handling for Studio origin.
+  - Added environment and setup docs for production use of rewrite-apply flow.
+- SEO impact:
+  - Direct SEO impact: enables faster, repeatable rewrite operations on indexed content while preserving slug intent and draft-first publishing flow.
+  - Integration impact: Studio action and frontend API are now linked for end-to-end content rewrite execution.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend exec next build --webpack` passed.
+
+## 2026-04-02 - AI Writer Docs Consolidation (Production-Focused)
+- Changed files:
+  - `docs/ai-writer-gateway-setup.md`
+  - `docs/env-reference.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Rewrote AI writer documentation into a production-focused guide with clear scope, architecture, endpoint behavior, env matrix, setup steps, rewrite flow, and operational checklist.
+  - Removed non-essential sections and duplicated notes to reduce ambiguity during rollout.
+  - Corrected env ownership for `SANITY_STUDIO_AI_WRITER_ACTION_SECRET` to Studio section in env reference.
+- SEO impact:
+  - No direct SEO rendering change.
+  - Integration impact: improves operational reliability and reduces configuration errors for AI-assisted rewrite pipeline.
+- Verification:
+  - Documentation update only (no runtime code change in this entry).
+
 ## 2026-04-02 - Worker 3 Content Rewrite Pass v2 (Slug-Specific Copy Expansion)
 - Changed files:
   - `frontend/lib/legacy-pages/rewrite-content.ts`
@@ -1312,3 +1408,48 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Integration governance impact: improves execution traceability and reduces coordination drift during rewrite/SEO synchronization.
 - Verification:
   - Manual documentation review completed.
+
+## 2026-04-02 - Percetakan `Jasa Cetak Buku` Template Enrichment (Export-Derived, No Content Reduction)
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/components/legacy/legacy-process-faq.tsx`
+  - `frontend/components/legacy/legacy-landing-sections.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Reworked `cetak-buku` rewrite content using structure patterns extracted from exported legacy cluster `jasa-cetak-buku-*` (399 rows with highly identical section architecture).
+  - Expanded template depth to preserve and develop legacy substance (not reducing): stronger service scope, pricing tiers, richer process, extended FAQ set, and additional long-form knowledge guidance.
+  - Added reusable `longGuide` contract on rewrite copy model and rendered it via a reusable section in landing template to keep long-form informational value visible on-page.
+  - Upgraded FAQ rendering to shared shadcn `Accordion` component for consistent reusable UI behavior.
+- SEO impact:
+  - Direct SEO/content impact: improves topical completeness and intent match for `jasa cetak buku` style pages by aligning with proven legacy structure (keunggulan, estimasi, langkah pemesanan, FAQ, and deep guide topics).
+  - Integration impact: no schema/query contract drift introduced; change is isolated to legacy rewrite template content layer.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - Build confirms static generation remains valid for `/percetakan/[...segments]` including `/percetakan/cetak-buku`.
+
+## 2026-04-02 - Root Slug Adapter for Deduplicated `jasa-cetak-buku-kota` (Template + City Data)
+- Changed files:
+  - `frontend/content/astro-local/jasa-cetak-buku-kota/template.mdx`
+  - `frontend/content/astro-local/jasa-cetak-buku-kota/cities.json`
+  - `frontend/content/astro-local/jasa-cetak-buku-kota/excluded-non-city.json`
+  - `frontend/lib/local-content/jasa-cetak-buku-kota.ts`
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/components/legacy/jasa-cetak-buku-city-shell.tsx`
+  - `frontend/app/(main)/[slug]/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added frontend adapter that maps root slugs `jasa-cetak-buku-*` to a deduplicated local dataset generated from export artifacts.
+  - Wired route fallback in `/(main)/[slug]` so city pages render from local `template.mdx + cities.json` before Sanity page lookup.
+  - Expanded static params generation for root slug route by merging Sanity page slugs with local city slugs (deduplicated).
+  - Added dedicated city-shell renderer using existing reusable legacy sections (hero/highlights/landing/process-faq/related-links) and JSON-LD support.
+  - Added explicit helper for city-specific rewrite copy from the shared percetakan template contract.
+- SEO impact:
+  - Direct SEO impact: enables deterministic static generation for high-volume root slug city pages with unique metadata/title/description per city while keeping global fallback behavior.
+  - Integration impact: no Studio schema change required; this is a frontend local-content adapter layer for migration/rewrite wave.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - Build output confirms `/(main)/[slug]` static path volume increased (`+396`), reflecting generated city root slugs.
