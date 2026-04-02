@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isGonePath } from "@/lib/seo/gone-paths";
 
 const LOGIN_PATH = "/dashboard/seo/login";
 const SEO_SESSION_COOKIE = "seo_dash_session";
@@ -11,6 +12,16 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isDashboard = pathname.startsWith("/dashboard/seo");
   const isSeoApi = pathname.startsWith("/api/seo");
+
+  if (isGonePath(pathname)) {
+    return new NextResponse("Gone", {
+      status: 410,
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "x-robots-tag": "noindex",
+      },
+    });
+  }
 
   if (!isDashboard && !isSeoApi) {
     return NextResponse.next();
@@ -42,5 +53,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/seo/:path*", "/api/seo/:path*"],
+  matcher: ["/((?!_next|.*\\..*).*)"],
 };

@@ -65,6 +65,8 @@ const ROOT = path.join(
   "astro-local",
   "json-usaha",
 );
+const DEFAULT_CONTACT = "/contact";
+const MIN_FAQ_ITEMS = 4;
 
 function slugify(input: string) {
   return input
@@ -74,6 +76,152 @@ function slugify(input: string) {
     .toLowerCase()
     .replace(/[_\s]+/g, "-")
     .replace(/-+/g, "-");
+}
+
+type JsonUsahaIntentProfile = {
+  keyword: string;
+  challenge: string;
+  primaryCtaLabel: string;
+  secondaryCtaLabel: string;
+  finalCtaTitle: string;
+  finalCtaDescription: string;
+  faqSeeds: JsonUsahaFaq[];
+};
+
+function inferIntentProfile(
+  slug: string,
+  title: string,
+  businessType?: string,
+): JsonUsahaIntentProfile {
+  const text = `${slug} ${title} ${businessType || ""}`.toLowerCase();
+
+  if (
+    text.includes("izin") ||
+    text.includes("perizinan") ||
+    text.includes("pkp")
+  ) {
+    return {
+      keyword: businessType || "jasa perizinan bisnis",
+      challenge: "proses dokumen yang sering berulang dan memakan waktu",
+      primaryCtaLabel: "Konsultasi Dokumen",
+      secondaryCtaLabel: "Minta Estimasi Proses",
+      finalCtaTitle: "Siap Urus Perizinan Bisnis Tanpa Proses Berbelit?",
+      finalCtaDescription:
+        "Tim kami bantu audit dokumen, susun checklist, dan dampingi proses sampai izin terbit agar operasional bisnis Anda tidak tertunda.",
+      faqSeeds: [
+        {
+          question: "Dokumen apa yang perlu disiapkan di awal proses perizinan?",
+          answer:
+            "Umumnya dibutuhkan data legalitas perusahaan, identitas pengurus, dan dokumen pendukung usaha. Kami bantu petakan detailnya sesuai jenis izin agar pengajuan lebih lancar.",
+        },
+        {
+          question: "Apakah ada pendampingan sampai izin selesai terbit?",
+          answer:
+            "Ya. Kami dampingi dari tahap verifikasi berkas, pengajuan, monitoring progres, hingga tindak lanjut jika ada revisi dari instansi terkait.",
+        },
+      ],
+    };
+  }
+
+  if (
+    text.includes("agency") ||
+    text.includes("digital") ||
+    text.includes("website")
+  ) {
+    return {
+      keyword: businessType || "layanan digital agency",
+      challenge: "website dan funnel yang belum konsisten menghasilkan lead",
+      primaryCtaLabel: "Jadwalkan Discovery Call",
+      secondaryCtaLabel: "Minta Audit Funnel",
+      finalCtaTitle: "Siap Ubah Traffic Menjadi Lead Berkualitas?",
+      finalCtaDescription:
+        "Kami bantu susun prioritas channel, perbaikan halaman, dan eksperimen CTA agar anggaran pemasaran lebih efisien dan terukur.",
+      faqSeeds: [
+        {
+          question: "Apakah layanan ini cocok untuk bisnis yang baru mulai scale?",
+          answer:
+            "Cocok. Strategi kami disusun bertahap mulai dari channel prioritas dan quick wins agar dampak bisnis bisa dirasakan tanpa harus menunggu roadmap panjang selesai.",
+        },
+        {
+          question: "Bagaimana cara mengukur hasil kampanye dan website secara nyata?",
+          answer:
+            "Kami tetapkan KPI sejak awal seperti lead qualified, conversion rate, dan biaya akuisisi, lalu melakukan review berkala agar keputusan optimasi berbasis data.",
+        },
+      ],
+    };
+  }
+
+  return {
+    keyword: businessType || title,
+    challenge: "alur eksekusi layanan yang belum terstruktur",
+    primaryCtaLabel: "Konsultasi Kebutuhan",
+    secondaryCtaLabel: "Minta Penawaran",
+    finalCtaTitle: `Siap Optimalkan ${businessType || "Layanan Bisnis Anda"}?`,
+    finalCtaDescription:
+      "Diskusikan target, timeline, dan ruang lingkup layanan bersama tim kami untuk mendapatkan rencana implementasi yang realistis dan terukur.",
+    faqSeeds: [
+      {
+        question: "Bagaimana alur kerja setelah konsultasi awal?",
+        answer:
+          "Kami mulai dari pemetaan kebutuhan, dilanjutkan rekomendasi scope prioritas, estimasi waktu, lalu eksekusi bertahap dengan update progres yang jelas.",
+      },
+      {
+        question: "Apakah layanan dapat disesuaikan dengan budget bisnis?",
+        answer:
+          "Bisa. Kami susun opsi paket atau scope kerja bertahap agar implementasi tetap berjalan sesuai prioritas bisnis dan kemampuan anggaran.",
+      },
+    ],
+  };
+}
+
+function normalizeHeroTitle(rawTitle: string, profile: JsonUsahaIntentProfile) {
+  const lower = rawTitle.toLowerCase();
+  if (
+    lower.includes("more than an agency of record") ||
+    lower.includes("agency of progress")
+  ) {
+    return "Agency Digital untuk Meningkatkan Lead dan Pertumbuhan Bisnis";
+  }
+  return rawTitle || profile.keyword;
+}
+
+function enrichDescription(
+  baseDescription: string,
+  profile: JsonUsahaIntentProfile,
+) {
+  const clean = baseDescription.replace(/\s+/g, " ").trim();
+  if (!clean) {
+    return `Layanan ${profile.keyword} untuk membantu bisnis mengatasi ${profile.challenge} dengan eksekusi terstruktur dan pendampingan yang jelas.`;
+  }
+  if (clean.length >= 130) return clean;
+  return `${clean} Fokus layanan kami pada ${profile.challenge} agar bisnis Anda dapat bergerak lebih cepat dengan risiko eksekusi yang lebih rendah.`;
+}
+
+function normalizeCtaLabel(rawLabel: string, fallback: string) {
+  const label = rawLabel.replace(/\s+/g, " ").trim();
+  if (!label) return fallback;
+
+  const lower = label.toLowerCase();
+  if (lower === "let's talk" || lower === "lets talk") return fallback;
+  if (lower === "learn more") return "Pelajari Layanan";
+  if (label.length < 4) return fallback;
+  return label;
+}
+
+function mergeFaqs(
+  sourceFaqs: JsonUsahaFaq[],
+  profile: JsonUsahaIntentProfile,
+): JsonUsahaFaq[] {
+  const merged = [...sourceFaqs, ...profile.faqSeeds];
+  const dedup = new Set<string>();
+  const normalized = merged.filter((faq) => {
+    const key = faq.question.toLowerCase().trim();
+    if (!faq.question || !faq.answer || dedup.has(key)) return false;
+    dedup.add(key);
+    return true;
+  });
+
+  return normalized.slice(0, Math.max(MIN_FAQ_ITEMS, normalized.length));
 }
 
 function asArray<T>(value: unknown): T[] {
@@ -194,12 +342,22 @@ function normalizeJsonUsaha(data: Record<string, unknown>, sourceFile: string): 
   const faq = asObject(data.faq);
   const finalCta = asObject(data.final_cta);
 
-  const title = asString(hero.title) || slug;
-  const description =
+  const baseTitle = asString(hero.title) || slug;
+  const baseDescription =
     asString(hero.subtitle) ||
     asString(business.description) ||
     asString(asObject(data.content).subtitle) ||
     "Layanan bisnis code-driven dari source JSON Astro.";
+  const profile = inferIntentProfile(
+    slug,
+    baseTitle,
+    asString(business.type) || undefined,
+  );
+  const title = normalizeHeroTitle(baseTitle, profile);
+  const description = enrichDescription(baseDescription, profile);
+  const sourceFaqs = asArray<unknown>(faq.points || faq.questions)
+    .map(normalizeFaq)
+    .filter(Boolean) as JsonUsahaFaq[];
 
   return {
     slug,
@@ -212,10 +370,15 @@ function normalizeJsonUsaha(data: Record<string, unknown>, sourceFile: string): 
     businessAddress: asString(business.address) || undefined,
     businessPhone: asString(business.phone) || undefined,
     heroCta: (() => {
-      const label =
-        asString(hero.cta_text) || asString(finalCta.primary_cta && asObject(finalCta.primary_cta).text);
+      const label = normalizeCtaLabel(
+        asString(hero.cta_text) ||
+          asString(finalCta.primary_cta && asObject(finalCta.primary_cta).text),
+        profile.primaryCtaLabel,
+      );
       const href =
-        asString(hero.cta_url) || asString(finalCta.primary_cta && asObject(finalCta.primary_cta).url) || "/contact";
+        asString(hero.cta_url) ||
+        asString(finalCta.primary_cta && asObject(finalCta.primary_cta).url) ||
+        DEFAULT_CONTACT;
       return label ? { label, href } : null;
     })(),
     metrics: [
@@ -240,9 +403,7 @@ function normalizeJsonUsaha(data: Record<string, unknown>, sourceFile: string): 
     testimonials: asArray<unknown>(testimonials.card || testimonials.testimonials)
       .map(normalizeTestimonial)
       .filter(Boolean) as JsonUsahaTestimonial[],
-    faqs: asArray<unknown>(faq.points || faq.questions)
-      .map(normalizeFaq)
-      .filter(Boolean) as JsonUsahaFaq[],
+    faqs: mergeFaqs(sourceFaqs, profile),
     contentSections: normalizeContentSections(data),
     finalCta: (() => {
       const ctaTitle = asString(finalCta.title) || asString(hero.title);
@@ -252,16 +413,28 @@ function normalizeJsonUsaha(data: Record<string, unknown>, sourceFile: string): 
       const secondary = asObject(finalCta.secondary_cta);
       return ctaTitle
         ? {
-            title: ctaTitle,
+            title: ctaTitle === title ? profile.finalCtaTitle : ctaTitle,
             description: ctaDescription || undefined,
             primaryLabel:
-              asString(primary.text) || asString(hero.cta_text) || "Hubungi Tim",
+              normalizeCtaLabel(
+                asString(primary.text) || asString(hero.cta_text),
+                profile.primaryCtaLabel,
+              ) || "Hubungi Tim",
             primaryHref:
-              asString(primary.url) || asString(hero.cta_url) || "/contact",
-            secondaryLabel: asString(secondary.text) || undefined,
-            secondaryHref: asString(secondary.url) || undefined,
+              asString(primary.url) || asString(hero.cta_url) || DEFAULT_CONTACT,
+            secondaryLabel:
+              normalizeCtaLabel(asString(secondary.text), profile.secondaryCtaLabel) ||
+              undefined,
+            secondaryHref: asString(secondary.url) || DEFAULT_CONTACT,
           }
-        : null;
+        : {
+            title: profile.finalCtaTitle,
+            description: profile.finalCtaDescription,
+            primaryLabel: profile.primaryCtaLabel,
+            primaryHref: DEFAULT_CONTACT,
+            secondaryLabel: profile.secondaryCtaLabel,
+            secondaryHref: DEFAULT_CONTACT,
+          };
     })(),
   };
 }

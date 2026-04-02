@@ -108,6 +108,15 @@ export default defineType({
       hidden: ({ document }) => document?._type !== "navigation",
     }),
     defineField({
+      name: "showInHeader",
+      type: "boolean",
+      title: "Show in Header",
+      description:
+        "Disable this to keep the link in footer navigation only without rendering it in the header menus.",
+      initialValue: true,
+      hidden: ({ document }) => document?._type !== "navigation",
+    }),
+    defineField({
       name: "icon",
       title: "Icon",
       type: "navigation-icon",

@@ -46,6 +46,8 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
     description: page.description,
     path: `/layanan/${page.slug}`,
   });
+  const heroPrimaryCta = page.heroCta?.href || "/contact";
+  const heroPrimaryLabel = page.heroCta?.label || "Konsultasi Kebutuhan";
 
   return (
     <>
@@ -68,13 +70,11 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                {page.heroCta ? (
-                  <Button asChild size="lg">
-                    <Link href={page.heroCta.href}>{page.heroCta.label}</Link>
-                  </Button>
-                ) : null}
+                <Button asChild size="lg">
+                  <Link href={heroPrimaryCta}>{heroPrimaryLabel}</Link>
+                </Button>
                 <Button asChild size="lg" variant="outline">
-                  <Link href="/contact">Konsultasi Gratis</Link>
+                  <Link href="/contact">Minta Estimasi</Link>
                 </Button>
               </div>
 
@@ -133,7 +133,7 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
           <SectionHeading
             eyebrow="Keunggulan"
             title="Poin Utama Layanan"
-            description="Ringkasan keunggulan yang diambil langsung dari source JSON bisnis Astro."
+            description={`Fokus eksekusi ${page.businessType || "layanan ini"} dirancang agar keputusan bisnis lebih cepat dan minim trial-error.`}
           />
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {page.features.map((item) => (
@@ -177,9 +177,12 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
                   </ul>
                 ) : null}
                 {item.href ? (
-                  <div className="mt-4">
+                  <div className="mt-4 flex flex-wrap gap-2">
                     <Button asChild variant="outline" size="sm">
                       <Link href={item.href}>Pelajari Detail</Link>
+                    </Button>
+                    <Button asChild size="sm">
+                      <Link href="/contact">Diskusikan Scope</Link>
                     </Button>
                   </div>
                 ) : null}
@@ -224,6 +227,19 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
               </div>
             ) : null}
           </div>
+          <div className="mt-6 rounded-2xl border border-border/60 bg-background px-5 py-4">
+            <p className="text-sm text-foreground/72">
+              Perlu validasi cepat sebelum mulai? Kami bisa bantu mapping prioritas eksekusi agar biaya dan timeline tetap realistis.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button asChild size="sm">
+                <Link href="/contact">Konsultasi Prioritas</Link>
+              </Button>
+              <Button asChild size="sm" variant="outline">
+                <Link href="#faq">Lihat FAQ Implementasi</Link>
+              </Button>
+            </div>
+          </div>
         </section>
       ) : null}
 
@@ -256,6 +272,11 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
                     ))}
                   </ul>
                 ) : null}
+                <div className="mt-4">
+                  <Button asChild size="sm">
+                    <Link href="/contact">Pilih Paket Ini</Link>
+                  </Button>
+                </div>
               </article>
             ))}
           </div>
@@ -285,7 +306,7 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
       ) : null}
 
       {page.faqs.length > 0 ? (
-        <section className="container section-divider py-12">
+        <section id="faq" className="container section-divider py-12">
           <SectionHeading eyebrow="FAQ" title="Pertanyaan Umum" />
           <div className="mt-6 space-y-3">
             {page.faqs.map((item) => (
@@ -294,6 +315,14 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
                 <p className="mt-2 text-sm text-foreground/72">{item.answer}</p>
               </article>
             ))}
+          </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button asChild>
+              <Link href="/contact">Ajukan Pertanyaan Lain</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href={heroPrimaryCta}>{heroPrimaryLabel}</Link>
+            </Button>
           </div>
         </section>
       ) : null}
@@ -340,7 +369,11 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
                     {page.finalCta.secondaryLabel}
                   </Link>
                 </Button>
-              ) : null}
+              ) : (
+                <Button asChild size="lg" variant="outline">
+                  <Link href="/contact">Minta Rekomendasi Paket</Link>
+                </Button>
+              )}
             </div>
           </div>
         </section>

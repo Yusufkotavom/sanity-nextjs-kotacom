@@ -14,6 +14,7 @@
     "legacy:manifest": "node scripts/generate-astro-local-pages-manifest.mjs",
     "astro-local:import": "node scripts/import-astro-local-pages.mjs",
     "astro-repo:import": "node scripts/import-astro-repo-content.mjs",
+    "astro-nav:import": "node scripts/import-astro-navigation.mjs",
     "typegen": "npx sanity schema extract && npx sanity typegen generate",
     "typecheck": "tsc --noEmit"
   },

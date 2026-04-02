@@ -1,4 +1,6 @@
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 type RewriteHighlightsProps = {
   copy: LegacyRewriteCopy;
@@ -25,6 +27,14 @@ export default function RewriteHighlights({ copy }: RewriteHighlightsProps) {
             <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy.description}</p>
           </article>
         ))}
+      </div>
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Button asChild>
+          <Link href={copy.ctaHref}>{copy.ctaLabel}</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href="#faq">Lihat FAQ Implementasi</Link>
+        </Button>
       </div>
     </section>
   );

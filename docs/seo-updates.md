@@ -16,6 +16,90 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-02 - Override-Safe Enrichment Fix (FAQ/CTA Coverage Lock)
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Refactored `enrichCopyForSeo` to apply priority slug overrides first, then run enrichment derivation (keywords, intro strengthening, FAQ expansion, CTA link merge, final CTA fallback) on top of the effective copy.
+  - This prevents manual slug overrides from reducing FAQ and CTA-link coverage in money-page outputs.
+  - Added source-level validation for commercial clusters (`pembuatan-website`, `percetakan`, `software`, `sistem-pos`) using `buildLegacyRewriteCopy`.
+- SEO impact:
+  - Direct SEO impact: consistent FAQ depth and action-path CTA coverage across commercial pages after manual copy overrides.
+  - No schema/query contract changes.
+- Verification:
+  - Source check result: `99/99` routes pass (`faq >= 4`, `ctaLinks >= 4`).
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Explicit 410 Handling for Spam/Judi + Template URLs
+- Changed files:
+  - `frontend/lib/seo/gone-paths.ts`
+  - `frontend/proxy.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated frontend denylist for `28` low-value URLs classified as spam/judi or template garbage.
+  - Enforced explicit `410 Gone` responses at the `proxy` layer before normal route resolution, so these paths no longer fall through to generic route handling.
+  - Applied `X-Robots-Tag: noindex` on those responses to reinforce deindexing intent.
+- SEO impact:
+  - Direct SEO impact: stronger removal signal than homepage redirects or generic `404`, reducing soft-404 risk and preventing low-quality URL retention in index evaluation.
+  - Integration impact: path-level cleanup is centralized in frontend runtime without changing Sanity schemas or redirect documents.
+- Verification:
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed after regenerating `.next/types` during build.
+
+## 2026-04-02 - Software Funnel CTA Expansion + Rewrite Section CTA Injection
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/components/ui/rewrite/process-faq.tsx`
+  - `frontend/components/ui/rewrite/highlights.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added software-cluster CTA-link overrides for funnel intent pages: `software`, `pembuatan-software`, `implementasi-software`, `instalasi-software`, and `sistem-pos` to make action paths more specific by stage (discovery, scope, go-live, handover).
+  - Added new CTA blocks in rewrite components:
+    - `highlights`: primary CTA + FAQ jump CTA
+    - `process-faq`: contextual CTA panel (diskusi kebutuhan + quick CTA jump)
+  - This increases conversion entry points in reusable frontend sections without changing route contracts.
+- SEO impact:
+  - Direct SEO/conversion impact: stronger internal action flow and intent alignment for software money pages; improved engagement signals through clearer user-path CTAs.
+  - No schema/query shape change (frontend content + UI reuse layer only).
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Manual Money-Page Rewrite Pass v4 (Website + Printing Priority Slugs)
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added manual commercial copy overrides (headline/intro/CTA/final CTA/FAQ) for additional high-intent slugs in core revenue clusters:
+    - Website: `jasa-pembuatan-website-expedisi`, `jasa-pembuatan-website-komunitas-ngo`, `jasa-pembuatan-website-konstruksi`, `portfolio`
+    - Printing: `cetak-al-quran`, `cetak-album-pernikahan`, `cetak-banner-spanduk`, `cetak-kaos`, `cetak-stiker`, `cetak-undangan`, `cetak-yasin`, `cetak-buku-kenangan-sekolah`
+  - The pass shifts these pages from generic rule-based messaging into more specific intent-driven sales copy with stronger conversion paths.
+- SEO impact:
+  - Direct SEO impact: improves intent match, semantic relevance, and FAQ answer depth on priority commercial routes.
+  - Integration impact: no schema/query/render contract changes; update is isolated to shared rewrite content engine.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Content Quality Pass v3 for `layanan/[slug]` (JSON Usaha Money Pages)
+- Changed files:
+  - `frontend/lib/local-content/json-usaha.ts`
+  - `frontend/components/ui/json-usaha-page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added intent-based normalization for JSON usaha pages: auto-detect page intent (perizinan/agency/general), strengthen hero title fallback, enrich description, normalize CTA labels, and auto-generate stronger final CTA defaults.
+  - Added FAQ enrichment layer with seeded commercial FAQs and dedupe, ensuring richer answer coverage for service-intent pages.
+  - Increased CTA density in `JsonUsahaPageView` across hero, service cards, mid-section prompt, pricing cards, FAQ closeout, and final CTA fallback button.
+- SEO impact:
+  - Direct SEO impact: stronger commercial-intent relevance for service pages (`/layanan/[slug]`), richer FAQ schema payload quality, and improved conversion-oriented internal CTA signals.
+  - Integration impact: no schema/query shape changes; frontend remains aligned with existing local JSON content contract.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
 ## 2026-04-02 - Final SEO Snippet Guard Tuning (Short + Long Normalization)
 - Changed files:
   - `frontend/lib/legacy-pages/metadata.ts`
@@ -2353,3 +2437,33 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter frontend run typecheck` passed.
   - `pnpm dlx tsx` metadata-length verification script run from `frontend` workspace confirmed pass for targeted money/city route sets.
+
+## 2026-04-02 - Astro Navigation Sanitization + Sanity Import
+- Changed files:
+  - `frontend/scripts/import-astro-navigation.mjs`
+  - `frontend/package.json`
+  - `studio/schemas/blocks/shared/link.ts`
+  - `frontend/components/header/index.tsx`
+  - `frontend/components/header/desktop-nav.tsx`
+  - `frontend/components/header/mobile-nav.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated importer for the Astro header menu snapshot at `/home/ubuntu/Kotacom-supabase-schhool/website/content/astro-mirror/globals/main-menu.md`.
+  - Normalized legacy Astro navbar paths to the current Next.js route contract before import, including `/posts -> /blog`, `/categories/percetakan -> /percetakan`, and generic trailing-slash archive links to their canonical archive roots.
+  - Imported the Astro mega-menu structure, including grouped submenu sections, into the active Sanity `navigation` document and set the header CTA to WhatsApp.
+  - Replaced several Astro placeholder submenu targets with live route hubs and enriched submenu content using:
+    - local GSC-priority pages with strong click demand
+    - live Sanity `project` and `product` documents for portfolio/catalog dropdown coverage
+  - Added curated live/GSC submenu entries for high-value routes such as `jasa-cetak-buku-surabaya`, `jasa-instal-aplikasi-surabaya`, `jasa-install-software-macbook`, `jasa-recovery-data-surabaya`, `service-komputer-surabaya-panggilan`, `rekomendasi-rakit-pc-5-jutaan`, and other PC-guide posts.
+  - Added Studio-controlled `showInHeader` support so top-level nav items can be footer-only; header rendering now excludes links with `showInHeader: false` while footer keeps using `showInFooter`.
+  - Applied the new footer-only behavior to secondary top-level links imported from Astro so `About` and `Contact` stay available in the footer without adding more pressure to the main header.
+  - Added `pnpm --filter frontend astro-nav:import` for repeatable dry-run and write execution.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: Astro-source navigation is now synchronized with the live Sanity menu contract, preserving route consistency and CMS control for primary links and submenus while making internal links more reflective of actual live demand and live content inventory.
+  - Cross-layer sync: Studio navigation schema, importer payload, and frontend header/footer rendering now share the same visibility contract for footer-only behavior.
+- Verification:
+  - `pnpm --filter frontend exec node scripts/import-astro-navigation.mjs` dry run passed.
+  - `pnpm --filter frontend exec node scripts/import-astro-navigation.mjs --write` passed using `SANITY_DEV` auth and updated Sanity document `navigation` to `linkCount: 6`, `childCount: 45`.
+  - `pnpm --filter frontend run typecheck` passed.

@@ -18,6 +18,7 @@ type NavLinkWithChildren = SanityLink & {
   icon?: string | null;
   children?: NavChild[] | null;
   navLocation?: "primary" | "utility" | null;
+  showInHeader?: boolean | null;
 };
 
 function groupChildren(children: NavChild[]) {
@@ -37,7 +38,7 @@ export default function DesktopNav({
   navigation: NAVIGATION_QUERY_RESULT;
 }) {
   const navItems = (navigation[0]?.links || [])
-    .filter((item) => item?.title)
+    .filter((item) => item?.title && (item as NavLinkWithChildren)?.showInHeader !== false)
     .map((item) => item as NavLinkWithChildren);
 
   const primaryItems = navItems.filter((item) => item.navLocation !== "utility");

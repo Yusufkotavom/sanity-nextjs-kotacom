@@ -421,6 +421,66 @@ const PRIORITY_SLUG_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> = {
       },
     ],
   },
+  "jasa-pembuatan-website-expedisi": {
+    intro:
+      "Halaman ini dipertajam untuk intent operasional logistik: calon klien ingin cek cakupan layanan, SLA pengiriman, dan cara request pickup secepat mungkin. Copy difokuskan agar inquiry B2B masuk dengan data yang siap ditindaklanjuti.",
+    ctaLabel: "Bangun Website Expedisi",
+    finalCtaTitle: "Siap Tingkatkan Inquiry Layanan Pengiriman Anda?",
+    finalCtaDescription:
+      "Kami bantu susun website expedisi dengan struktur layanan, area coverage, dan CTA request agar tim sales mendapatkan lead lebih relevan.",
+    faqs: [
+      {
+        question: "Fitur apa yang paling penting untuk website jasa expedisi?",
+        answer:
+          "Yang paling berdampak biasanya cakupan area, simulasi layanan, kanal request cepat, dan informasi SLA agar calon klien bisa mengambil keputusan lebih cepat.",
+      },
+      {
+        question: "Apakah bisa dibuat alur khusus untuk lead corporate?",
+        answer:
+          "Bisa. Kami dapat menambahkan alur formulir B2B dengan field kebutuhan pengiriman agar tim Anda menerima prospek dengan data awal yang lebih lengkap.",
+      },
+    ],
+  },
+  "jasa-pembuatan-website-komunitas-ngo": {
+    intro:
+      "Untuk NGO dan komunitas, intent pengunjung biasanya dua hal: memahami dampak program dan tahu bagaimana ikut berkontribusi. Karena itu copy kami menekankan kredibilitas program, transparansi aktivitas, dan CTA donasi/kolaborasi yang jelas.",
+    ctaLabel: "Rancang Website NGO",
+    finalCtaTitle: "Perkuat Kepercayaan Publik untuk Program Komunitas Anda",
+    finalCtaDescription:
+      "Kami bantu NGO membangun website yang informatif, mudah dikelola, dan punya alur aksi yang mendorong dukungan publik.",
+    faqs: [
+      {
+        question: "Bagaimana website NGO bisa meningkatkan partisipasi publik?",
+        answer:
+          "Website perlu menampilkan program secara konkret, bukti dampak, dan CTA kontribusi yang jelas agar pengunjung tahu langkah aksi yang harus dilakukan.",
+      },
+      {
+        question: "Apakah tim internal bisa update konten program secara mandiri?",
+        answer:
+          "Bisa. Struktur halaman dapat dibuat agar tim non-teknis tetap mudah mengelola update kegiatan, berita, dan agenda komunitas.",
+      },
+    ],
+  },
+  "jasa-pembuatan-website-konstruksi": {
+    intro:
+      "Halaman konstruksi kami arahkan untuk intent tender dan proyek B2B: visitor perlu melihat kapabilitas teknis, portofolio pekerjaan, serta cara menghubungi tim untuk diskusi scope proyek.",
+    ctaLabel: "Bangun Website Konstruksi",
+    finalCtaTitle: "Tampilkan Kapabilitas Proyek Anda Lebih Meyakinkan",
+    finalCtaDescription:
+      "Kami bantu perusahaan konstruksi menyusun website berbasis portofolio dan kredensial agar peluang tender dan partnership meningkat.",
+    faqs: [
+      {
+        question: "Konten apa yang wajib ada di website konstruksi B2B?",
+        answer:
+          "Minimal profil perusahaan, portofolio proyek, sertifikasi, layanan inti, dan CTA diskusi proyek agar calon klien dapat melakukan evaluasi awal dengan cepat.",
+      },
+      {
+        question: "Apakah website bisa diarahkan untuk kebutuhan tender?",
+        answer:
+          "Bisa. Kami menata struktur konten agar dokumen kapabilitas dan rekam jejak proyek mudah ditemukan oleh evaluator tender.",
+      },
+    ],
+  },
   template: {
     intro:
       "Template kami posisikan untuk bisnis yang butuh go-live cepat tanpa mengorbankan fondasi SEO dan konversi. Ini bukan template generik, melainkan kerangka siap produksi yang bisa dipersonalisasi.",
@@ -438,6 +498,26 @@ const PRIORITY_SLUG_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> = {
         question: "Template cocok untuk tahap awal atau jangka panjang?",
         answer:
           "Keduanya. Template menjadi fondasi cepat saat awal, lalu bisa dikembangkan bertahap sesuai pertumbuhan bisnis.",
+      },
+    ],
+  },
+  portfolio: {
+    intro:
+      "Portfolio tidak hanya untuk pajangan visual. Copy halaman ini dipoles agar calon klien bisa menilai pendekatan kerja, relevansi hasil, dan potensi dampak bisnis dari proyek yang sudah pernah dikerjakan.",
+    ctaLabel: "Diskusikan Proyek Serupa",
+    finalCtaTitle: "Ingin Hasil Sejenis untuk Bisnis Anda?",
+    finalCtaDescription:
+      "Pilih referensi proyek yang paling dekat dengan kebutuhan Anda, lalu tim kami susun strategi implementasi yang realistis.",
+    faqs: [
+      {
+        question: "Bagaimana membaca portfolio agar sesuai dengan kebutuhan bisnis saya?",
+        answer:
+          "Fokus pada kesamaan tujuan bisnis, kompleksitas fitur, dan model audience. Tim kami dapat membantu memetakan relevansinya untuk konteks Anda.",
+      },
+      {
+        question: "Apakah hasil portfolio bisa dijadikan baseline estimasi proyek?",
+        answer:
+          "Bisa sebagai acuan awal. Estimasi final tetap disesuaikan dengan scope detail, timeline, dan kebutuhan integrasi aktual.",
       },
     ],
   },
@@ -561,10 +641,176 @@ const PRIORITY_SLUG_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> = {
       },
     ],
   },
+  "cetak-al-quran": {
+    intro:
+      "Halaman ini dioptimasi untuk kebutuhan cetak mushaf dengan standar ketelitian lebih tinggi: keterbacaan teks, ketahanan jilid, dan kualitas finishing yang nyaman dipakai jangka panjang.",
+    ctaLabel: "Konsultasi Cetak Al-Quran",
+    finalCtaTitle: "Butuh Cetak Al-Quran dengan Hasil Rapi dan Presisi?",
+    finalCtaDescription:
+      "Kami bantu memilih spesifikasi kertas, jilid, dan finishing agar hasil cetak Al-Quran lebih nyaman dibaca dan tahan lama.",
+    faqs: [
+      {
+        question: "Apa fokus quality control untuk cetak Al-Quran?",
+        answer:
+          "Fokus utamanya pada keterbacaan teks, konsistensi cetak halaman, serta ketahanan jilid agar mushaf tetap nyaman digunakan dalam jangka panjang.",
+      },
+      {
+        question: "Apakah bisa konsultasi material sebelum produksi massal?",
+        answer:
+          "Bisa. Kami sarankan opsi material sesuai tujuan penggunaan agar kualitas tetap terjaga sekaligus efisien secara biaya.",
+      },
+    ],
+  },
+  "cetak-album-pernikahan": {
+    intro:
+      "Intent utama halaman ini adalah menjaga momen spesial tetap premium. Karena itu copy difokuskan pada ketajaman visual, pilihan material eksklusif, dan detail finishing agar hasil album benar-benar berkesan.",
+    ctaLabel: "Konsultasi Album Pernikahan",
+    finalCtaTitle: "Wujudkan Album Pernikahan yang Elegan dan Tahan Lama",
+    finalCtaDescription:
+      "Diskusikan konsep album Anda, lalu kami bantu pilih material dan finishing yang paling sesuai untuk hasil akhir premium.",
+    faqs: [
+      {
+        question: "Finishing apa yang populer untuk album pernikahan premium?",
+        answer:
+          "Umumnya hard cover premium dengan laminasi doff/gloss dan opsi emboss atau spot UV untuk meningkatkan kesan eksklusif.",
+      },
+      {
+        question: "Apakah bisa cetak album dalam jumlah terbatas untuk keluarga inti?",
+        answer:
+          "Bisa. Kami dapat menyesuaikan kuantitas produksi dari jumlah kecil hingga batch tambahan sesuai kebutuhan.",
+      },
+    ],
+  },
+  "cetak-banner-spanduk": {
+    intro:
+      "Halaman banner-spanduk kami perkuat untuk intent campaign cepat: bisnis membutuhkan media promosi yang terbaca jelas, siap tayang, dan diproduksi sesuai timeline aktivitas marketing.",
+    ctaLabel: "Pesan Banner Spanduk",
+    finalCtaTitle: "Siap Jalankan Campaign dengan Materi Outdoor yang Menonjol?",
+    finalCtaDescription:
+      "Kami bantu memilih ukuran, material, dan ketahanan media agar banner-spanduk Anda efektif untuk kebutuhan promosi.",
+    faqs: [
+      {
+        question: "Bagaimana menentukan ukuran banner yang efektif untuk lokasi tertentu?",
+        answer:
+          "Ukuran ditentukan dari jarak baca, area pemasangan, dan tujuan pesan. Kami bantu rekomendasikan ukuran yang paling relevan sebelum produksi.",
+      },
+      {
+        question: "Apakah tersedia opsi produksi cepat untuk kebutuhan event mendadak?",
+        answer:
+          "Tersedia untuk kondisi tertentu, dengan estimasi mengikuti jenis material, volume, dan antrean produksi saat itu.",
+      },
+    ],
+  },
+  "cetak-kaos": {
+    intro:
+      "Copy halaman cetak kaos difokuskan pada intent branding: bisnis dan komunitas butuh merchandise yang nyaman dipakai, visual konsisten, dan siap untuk event atau kampanye promosi.",
+    ctaLabel: "Konsultasi Cetak Kaos",
+    finalCtaTitle: "Butuh Merchandise Kaos yang Siap Pakai dan Konsisten Brand?",
+    finalCtaDescription:
+      "Kami bantu menentukan bahan, teknik cetak, dan skema produksi agar kaos promosi Anda lebih efektif untuk branding.",
+    faqs: [
+      {
+        question: "Teknik cetak kaos apa yang cocok untuk produksi event?",
+        answer:
+          "Tergantung desain, jumlah, dan target pemakaian. Kami bantu memilih teknik yang seimbang antara kualitas visual, kenyamanan, dan efisiensi biaya.",
+      },
+      {
+        question: "Apakah bisa produksi ukuran campuran dalam satu batch?",
+        answer:
+          "Bisa. Kami dapat mengatur komposisi size sesuai kebutuhan tim, komunitas, atau peserta event.",
+      },
+    ],
+  },
+  "cetak-stiker": {
+    intro:
+      "Halaman ini dipoles untuk intent produk dan promosi: user butuh stiker yang kuat secara visual, rapi saat ditempel, dan mudah diproduksi dengan varian ukuran yang fleksibel.",
+    ctaLabel: "Pesan Cetak Stiker",
+    finalCtaTitle: "Ingin Stiker Produk yang Lebih Menonjol di Rak?",
+    finalCtaDescription:
+      "Kami bantu menentukan material, laminasi, dan cutting agar stiker Anda mendukung branding sekaligus fungsi label produk.",
+    faqs: [
+      {
+        question: "Apa bedanya stiker untuk label produk dan stiker promosi?",
+        answer:
+          "Label produk lebih fokus pada ketahanan dan informasi, sedangkan stiker promosi fokus pada visual campaign. Material dan laminasinya biasanya berbeda.",
+      },
+      {
+        question: "Apakah bisa cetak stiker dengan bentuk potong custom?",
+        answer:
+          "Bisa. Kami melayani cutting custom sesuai bentuk desain agar hasil akhir lebih presisi dan siap aplikasikan.",
+      },
+    ],
+  },
+  "cetak-undangan": {
+    intro:
+      "Untuk undangan, intent utama pengunjung adalah hasil yang berkesan namun tetap tepat waktu. Copy kami menekankan pemilihan material, detail finishing, dan kontrol timeline produksi.",
+    ctaLabel: "Konsultasi Cetak Undangan",
+    finalCtaTitle: "Siapkan Undangan Acara dengan Tampilan yang Lebih Berkelas",
+    finalCtaDescription:
+      "Diskusikan konsep acara Anda, lalu kami bantu pilih opsi cetak undangan yang paling sesuai dengan karakter acara.",
+    faqs: [
+      {
+        question: "Apakah bisa pilih beberapa opsi kertas sebelum final produksi?",
+        answer:
+          "Bisa. Kami bantu membandingkan opsi material agar hasil undangan sesuai ekspektasi visual dan budget acara.",
+      },
+      {
+        question: "Bagaimana memastikan undangan selesai sebelum tanggal acara?",
+        answer:
+          "Kami susun estimasi produksi berdasarkan volume dan finishing, lalu menetapkan buffer waktu agar distribusi tetap aman.",
+      },
+    ],
+  },
+  "cetak-yasin": {
+    intro:
+      "Halaman cetak yasin difokuskan pada intent keluarga dan penyelenggara acara: hasil cetak harus rapi, mudah dibaca, dan selesai sesuai jadwal kegiatan.",
+    ctaLabel: "Pesan Cetak Yasin",
+    finalCtaTitle: "Butuh Cetak Yasin Rapi dengan Proses yang Lebih Tenang?",
+    finalCtaDescription:
+      "Kami bantu menyiapkan produksi buku yasin dengan detail spesifikasi jelas agar hasil akhir siap digunakan tepat waktu.",
+    faqs: [
+      {
+        question: "Apakah tersedia pilihan desain cover untuk cetak yasin?",
+        answer:
+          "Tersedia. Kami dapat menyesuaikan desain cover dan format isi berdasarkan kebutuhan acara dan preferensi keluarga.",
+      },
+      {
+        question: "Bisa produksi cepat untuk kebutuhan mendesak?",
+        answer:
+          "Bisa untuk kondisi tertentu, dengan estimasi menyesuaikan jumlah buku, kompleksitas finishing, dan antrean produksi.",
+      },
+    ],
+  },
+  "cetak-buku-kenangan-sekolah": {
+    intro:
+      "Halaman ini dioptimasi untuk kebutuhan institusi pendidikan yang ingin menghasilkan buku kenangan dengan visual konsisten, layout rapi, dan proses produksi yang terkoordinasi lintas kelas atau angkatan.",
+    ctaLabel: "Konsultasi Buku Kenangan",
+    finalCtaTitle: "Siap Produksi Buku Kenangan Sekolah yang Lebih Berkesan?",
+    finalCtaDescription:
+      "Kami bantu sekolah menyusun spesifikasi, alur pengumpulan konten, dan jadwal produksi agar buku kenangan selesai tepat waktu.",
+    faqs: [
+      {
+        question: "Bagaimana mengelola produksi buku kenangan untuk banyak kelas?",
+        answer:
+          "Produksi dibagi per tahap: pengumpulan konten, validasi layout, persetujuan final, lalu cetak batch agar koordinasi lebih tertata.",
+      },
+      {
+        question: "Apakah bisa bantu menyesuaikan layout agar seragam antar halaman?",
+        answer:
+          "Bisa. Kami dapat membantu standarisasi layout agar tampilan buku kenangan tetap konsisten dan profesional.",
+      },
+    ],
+  },
   software: {
     intro:
       "Halaman software kami arahkan ke intent decision-maker: meningkatkan efisiensi proses, menyatukan data, dan mempercepat pengambilan keputusan lewat sistem yang benar-benar dipakai tim.",
     ctaLabel: "Audit Kebutuhan Software",
+    ctaLinks: [
+      { label: "Audit Kebutuhan Software", href: DEFAULT_CTA },
+      { label: "Minta Scope Modul Inti", href: DEFAULT_CTA },
+      { label: "Lihat FAQ Implementasi", href: "#faq" },
+      { label: "Jadwalkan Discovery Call", href: DEFAULT_CTA },
+    ],
     finalCtaTitle: "Bangun Software yang Menyelesaikan Bottleneck Operasional",
     finalCtaDescription:
       "Kami bantu memetakan kebutuhan prioritas dan merancang roadmap software bertahap agar impact bisnis lebih cepat terasa.",
@@ -585,6 +831,12 @@ const PRIORITY_SLUG_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> = {
     intro:
       "Copy halaman pembuatan software difokuskan pada intent eksekusi: requirement jelas, prioritas fitur inti, dan delivery iteratif agar bisnis tidak menunggu terlalu lama untuk melihat hasil.",
     ctaLabel: "Mulai Pembuatan Software",
+    ctaLinks: [
+      { label: "Mulai Discovery Software", href: DEFAULT_CTA },
+      { label: "Minta Breakdown Fase", href: DEFAULT_CTA },
+      { label: "Cek FAQ Pembuatan", href: "#faq" },
+      { label: "Jadwalkan Kickoff", href: DEFAULT_CTA },
+    ],
     finalCtaTitle: "Mulai dari Modul Inti, Rasakan Dampak Lebih Cepat",
     finalCtaDescription:
       "Diskusikan alur operasional bisnis Anda dan kami susun fase pengembangan software yang terukur.",
@@ -605,6 +857,12 @@ const PRIORITY_SLUG_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> = {
     intro:
       "Pada tahap implementasi, user intent utamanya adalah kelancaran go-live. Karena itu kami tekankan rencana transisi, training pengguna, dan monitoring awal supaya adopsi sistem lebih stabil.",
     ctaLabel: "Rencanakan Implementasi",
+    ctaLinks: [
+      { label: "Rencanakan Go-Live", href: DEFAULT_CTA },
+      { label: "Minta Checklist Implementasi", href: DEFAULT_CTA },
+      { label: "Lihat FAQ Go-Live", href: "#faq" },
+      { label: "Diskusikan Training Tim", href: DEFAULT_CTA },
+    ],
     finalCtaTitle: "Go-Live Lebih Terkontrol dengan Implementasi Terstruktur",
     finalCtaDescription:
       "Kami dampingi implementasi dari persiapan data hingga fase stabilisasi pasca go-live.",
@@ -625,6 +883,12 @@ const PRIORITY_SLUG_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> = {
     intro:
       "Untuk instalasi software, fokus copy kami adalah keamanan konfigurasi, verifikasi fungsi, dan kesiapan tim operasional agar software bisa langsung dipakai tanpa kebingungan.",
     ctaLabel: "Jadwalkan Instalasi",
+    ctaLinks: [
+      { label: "Jadwalkan Instalasi", href: DEFAULT_CTA },
+      { label: "Minta Checklist Setup", href: DEFAULT_CTA },
+      { label: "Lihat FAQ Instalasi", href: "#faq" },
+      { label: "Diskusikan Handover Teknis", href: DEFAULT_CTA },
+    ],
     finalCtaTitle: "Instalasi Software Aman, Tim Siap Pakai Sejak Hari Pertama",
     finalCtaDescription:
       "Kami bantu setup teknis, uji fungsional, dan handover agar sistem siap dipakai untuk operasional harian.",
@@ -646,6 +910,12 @@ const PRIORITY_SLUG_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> = {
     intro:
       "Halaman sistem POS ini dioptimalkan untuk intent pemilik outlet: transaksi cepat, stok akurat, dan laporan real-time untuk keputusan harian. Copy difokuskan pada hasil operasional, bukan sekadar fitur.",
     ctaLabel: "Konsultasi Sistem POS",
+    ctaLinks: [
+      { label: "Konsultasi Sistem POS", href: DEFAULT_CTA },
+      { label: "Minta Demo Alur POS", href: DEFAULT_CTA },
+      { label: "Lihat FAQ Operasional", href: "#faq" },
+      { label: "Diskusikan Integrasi Outlet", href: DEFAULT_CTA },
+    ],
     finalCtaTitle: "Siap Menyatukan Kasir, Stok, dan Laporan dalam Satu Sistem?",
     finalCtaDescription:
       "Kami bantu menyiapkan implementasi POS yang sesuai ritme operasional outlet Anda, dari setup hingga adopsi tim.",
@@ -694,34 +964,40 @@ function uniqueCtaLinks(values: Array<{ label: string; href: string }>) {
 }
 
 function enrichCopyForSeo(page: LegacyAstroPage, copy: LegacyRewriteCopy): LegacyRewriteCopy {
+  const priorityOverride = PRIORITY_SLUG_OVERRIDES[page.slug] || {};
+  const effectiveCopy: LegacyRewriteCopy = {
+    ...copy,
+    ...priorityOverride,
+  };
+
   const semantic = SECTION_SEMANTIC_KEYWORDS[page.section] || [];
   const intentKeywords = SLUG_INTENT_KEYWORDS.filter((item) => item.match(page)).flatMap(
     (item) => item.keywords,
   );
   const derived = [
-    `${copy.primaryKeyword} profesional`,
-    `${copy.primaryKeyword} terpercaya`,
-    `${copy.primaryKeyword} untuk bisnis`,
+    `${effectiveCopy.primaryKeyword} profesional`,
+    `${effectiveCopy.primaryKeyword} terpercaya`,
+    `${effectiveCopy.primaryKeyword} untuk bisnis`,
     ...semantic,
     ...intentKeywords,
   ];
 
   const secondaryKeywords = uniqueKeywords([
-    ...(copy.secondaryKeywords || []),
+    ...(effectiveCopy.secondaryKeywords || []),
     ...derived,
   ]).slice(0, 10);
 
-  const description = copy.description.includes("Kotacom")
-    ? copy.description
-    : `${copy.description} Didukung tim Kotacom dengan alur kerja terukur untuk hasil yang konsisten.`;
+  const description = effectiveCopy.description.includes("Kotacom")
+    ? effectiveCopy.description
+    : `${effectiveCopy.description} Didukung tim Kotacom dengan alur kerja terukur untuk hasil yang konsisten.`;
 
-  const intro = /konversi|lead|operasional|produksi|efisiensi/i.test(copy.intro)
-    ? copy.intro
-    : `${copy.intro} Fokus kami adalah memperkuat konversi, efisiensi operasional, dan kualitas implementasi jangka panjang.`;
+  const intro = /konversi|lead|operasional|produksi|efisiensi/i.test(effectiveCopy.intro)
+    ? effectiveCopy.intro
+    : `${effectiveCopy.intro} Fokus kami adalah memperkuat konversi, efisiensi operasional, dan kualitas implementasi jangka panjang.`;
 
   const extraFaqs = [
     {
-      question: `Bagaimana estimasi biaya ${copy.primaryKeyword.toLowerCase()} ditentukan?`,
+      question: `Bagaimana estimasi biaya ${effectiveCopy.primaryKeyword.toLowerCase()} ditentukan?`,
       answer:
         "Biaya ditentukan dari ruang lingkup, kompleksitas eksekusi, target timeline, dan kebutuhan output akhir agar proposal lebih akurat.",
     },
@@ -733,7 +1009,7 @@ function enrichCopyForSeo(page: LegacyAstroPage, copy: LegacyRewriteCopy): Legac
     ...SLUG_INTENT_FAQS.filter((item) => item.match(page)).flatMap((item) => item.faqs),
   ];
   const faqs = uniqueKeywords([
-    ...(copy.faqs || []).map((item) => `${item.question}|||${item.answer}`),
+    ...(effectiveCopy.faqs || []).map((item) => `${item.question}|||${item.answer}`),
     ...extraFaqs.map((item) => `${item.question}|||${item.answer}`),
   ])
     .slice(0, 5)
@@ -743,8 +1019,8 @@ function enrichCopyForSeo(page: LegacyAstroPage, copy: LegacyRewriteCopy): Legac
     });
 
   const longGuide =
-    (copy.longGuide && copy.longGuide.length > 0)
-      ? copy.longGuide
+    (effectiveCopy.longGuide && effectiveCopy.longGuide.length > 0)
+      ? effectiveCopy.longGuide
       : SECTION_LONG_GUIDE_DEFAULT[page.section];
 
   const sectionDefaultCtas: Record<string, Array<{ label: string; href: string }>> = {
@@ -783,19 +1059,17 @@ function enrichCopyForSeo(page: LegacyAstroPage, copy: LegacyRewriteCopy): Legac
     { label: "Minta Estimasi", href: DEFAULT_CTA },
     { label: "Lihat FAQ", href: "#faq" },
   ];
-  const mergedCtaLinks = uniqueCtaLinks([...(copy.ctaLinks || []), ...ctaSeed]).slice(0, 6);
-  const defaultCtaLinks = mergedCtaLinks.length > 0 ? mergedCtaLinks : copy.ctaLinks;
+  const mergedCtaLinks = uniqueCtaLinks([...(effectiveCopy.ctaLinks || []), ...ctaSeed]).slice(0, 6);
+  const defaultCtaLinks = mergedCtaLinks.length > 0 ? mergedCtaLinks : effectiveCopy.ctaLinks;
 
   const finalCtaTitle =
-    copy.finalCtaTitle || `Siap Optimalkan ${copy.primaryKeyword}?`;
+    effectiveCopy.finalCtaTitle || `Siap Optimalkan ${effectiveCopy.primaryKeyword}?`;
   const finalCtaDescription =
-    copy.finalCtaDescription ||
+    effectiveCopy.finalCtaDescription ||
     `Diskusikan kebutuhan Anda bersama tim Kotacom untuk menyusun strategi implementasi yang realistis, terukur, dan berorientasi hasil bisnis. Respon awal kami fokus pada langkah eksekusi yang bisa langsung dijalankan.`;
 
-  const priorityOverride = PRIORITY_SLUG_OVERRIDES[page.slug] || {};
-
   return {
-    ...copy,
+    ...effectiveCopy,
     secondaryKeywords,
     description,
     intro,
@@ -804,7 +1078,6 @@ function enrichCopyForSeo(page: LegacyAstroPage, copy: LegacyRewriteCopy): Legac
     ctaLinks: defaultCtaLinks,
     finalCtaTitle,
     finalCtaDescription,
-    ...priorityOverride,
   };
 }
 

@@ -12,7 +12,9 @@ export default async function Header() {
   const settings = (await fetchSanitySettings()) as any;
   const navigation = (await fetchSanityNavigation()) as any;
   const navDoc = navigation?.[0] || {};
-  const navItems = (navDoc.links || []).filter((item: any) => item?.title);
+  const navItems = (navDoc.links || []).filter(
+    (item: any) => item?.title && item?.showInHeader !== false,
+  );
   const utilityItems = navItems.filter((item: any) => item.navLocation === "utility");
   const fallbackCta =
     utilityItems.find(

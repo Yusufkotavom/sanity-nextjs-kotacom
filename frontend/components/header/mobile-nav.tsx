@@ -32,6 +32,7 @@ type NavLinkWithChildren = SanityLink & {
   icon?: string | null;
   children?: NavChild[] | null;
   navLocation?: "primary" | "utility" | null;
+  showInHeader?: boolean | null;
   buttonVariant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null;
 };
 
@@ -48,7 +49,7 @@ export default function MobileNav({
   const navItems = useMemo(
     () =>
       (navigation[0]?.links || [])
-        .filter((item) => item?.title)
+        .filter((item) => item?.title && (item as NavLinkWithChildren)?.showInHeader !== false)
         .map((item) => item as NavLinkWithChildren),
     [navigation],
   );

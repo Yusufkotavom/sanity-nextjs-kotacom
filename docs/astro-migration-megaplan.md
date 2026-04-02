@@ -109,6 +109,12 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Frontend CTA density enhancement shipped for rewrite/legacy landing templates (quick CTA + mid CTA + enriched final CTA action set) with centralized default CTA-link expansion in rewrite content engine
 - [x] Live SEO metadata audit rerun on 120 priority URLs with unrestricted network completed (`frontend/tmp/seo-pass-front-20260402-escalated`)
 - [x] Unified frontend SEO metadata normalization utility shipped and applied to legacy + basic metadata builders (`frontend/lib/seo-normalize.ts`) with money-route + city-route length-pass verification
+- [x] Content quality pass v3 shipped for JSON-usaha money pages (`/layanan/[slug]`): intent-based headline/description/CTA normalization, FAQ enrichment, and higher CTA density in frontend renderer
+- [x] Astro header navigation snapshot normalized and imported into the live Sanity `navigation` document, including grouped submenu migration, legacy-route sanitization, and GSC-informed/live-page submenu curation
+- [x] Navigation contract now supports footer-only top-level links via Studio-controlled `showInHeader` + `showInFooter` flags, and header rendering respects that split
+- [x] Manual money-page rewrite pass v4 shipped for additional commercial slugs (`pembuatan-website` + `percetakan` details) with intent-specific intro/CTA/final CTA/FAQ overrides beyond rule-based enrichment
+- [x] Software funnel pass completed: stage-specific CTA links added for `software`/`pembuatan-software`/`implementasi-software`/`instalasi-software`/`sistem-pos` plus reusable CTA blocks in rewrite highlights and process-FAQ sections
+- [x] Override-safe SEO enrichment fix shipped: priority slug overrides now merge before enrichment so FAQ/CTA coverage stays consistent (`99/99` commercial routes pass source-level coverage checks)
 
 ## Workstream A - Platform & Data Foundation
 
@@ -163,7 +169,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 
 ### B3. Long-tail Backlog
 - [ ] Continue remaining manual queue (750 total manual candidates).
-- [ ] Archive low-value URLs (noindex/410 strategy candidate list).
+- [x] Archive low-value URLs (noindex/410 strategy candidate list).
+  - 2026-04-02 execution: finalized `28` spam/judi + blog-template root URLs as explicit `410 Gone` candidates and enforced them in frontend `proxy` to prevent redirect dilution and soft-404 behavior.
 
 ## Workstream C - SEO Rewrite & Optimization
 
@@ -179,6 +186,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Manual money-page rewrite v2 shipped for 16 high-intent slugs (`pembuatan-website`, `harga`, `jasa-migrasi-wordpress`, `jasa-pembuatan-website-*` selected pages, `template`, `percetakan` selected pages, `software`, `pembuatan-software`, `implementasi-software`, `instalasi-software`, `sistem-pos`) with conversion-focused headline/intro/CTA/FAQ tuning.
 - [x] Manual city rewrite v1 shipped for top 20 `jasa-cetak-buku-<kota>` routes (based on local GSC priority file) through centralized city override map in rewrite content engine.
 - [x] Money-page SEO length pass confirmed on frontend source layer (14 money routes + top 20 city routes; title 30-60 and description 120-155 after normalization, `TOTAL_FAIL=0`).
+- [x] Manual money-page rewrite v4 completed for 12 additional high-intent slugs in `pembuatan-website` and `percetakan` clusters with tailored conversion copy (headline/intro/CTA/final CTA/FAQ).
 - Blocker note (2026-04-02): Live SEO sample audit (`120` URLs) still reports unresolved issues outside migrated frontend scope (`meta_description_too_long: 106`, `title_too_long: 22`, `http_status_not_200: 10`) dominated by legacy live pages/redirect gaps; requires content import/redirect wave plus metadata cleanup on production routes.
 
 ### C2. Structured Data
@@ -195,7 +203,10 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 
 ### D1. Design System Alignment
 - [x] Define reusable primitives: typography, spacing, button variants, card patterns, nav behavior.
-- [ ] Harmonize with current header/nav architecture and CMS-driven menus.
+- [x] Harmonize with current header/nav architecture and CMS-driven menus.
+  - 2026-04-02 execution: added Astro navigation importer, sanitized legacy header routes (`/posts` -> `/blog`, `/categories/percetakan` -> `/percetakan`, generic archive placeholders to canonical archive roots), and synced grouped submenu structure into the active Sanity `navigation` document.
+  - 2026-04-02 execution update: enriched submenu with live dataset-backed `project`/`product` links plus GSC-priority pages (`jasa-cetak-buku-surabaya`, `jasa-instal-aplikasi-surabaya`, `jasa-install-software-macbook`, `jasa-recovery-data-surabaya`, `service-komputer-surabaya-panggilan`, and high-traffic PC guide posts) so the header reflects current demand instead of Astro placeholder-only links.
+  - 2026-04-02 execution update: added footer-only support for top-level navigation through Studio flags, and moved lower-priority top-level links (`About`, `Contact`) out of the header while preserving them in the footer.
 - [x] Apply shared icon-only social pattern for footer/navigation shell using reusable component contract.
 - [x] Apply compact sticky header rhythm with single CTA focus and icon actions (dark mode + social) across desktop/mobile shell.
 - [x] Apply Vercel-like visual shell tokens and reusable surface/separator utilities across shared layout blocks (`globals.css`, header, footer, section container, legacy landing shell).
@@ -222,6 +233,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Add reusable micro-badge visual strip (`fast response`, `secure process`, `guarantee`, `nationwide delivery`, `custom request`) sourced from split pack and embedded in rewrite/legacy page shells.
 - [x] Final CTA button label now reuses per-page copy (`copy.ctaLabel`) in both rewrite and legacy landing sections to keep UI/message parity across migrated money pages.
 - [x] Rewrite/legacy landing sections now include additional mid-page conversion CTA block (`#cta-mid`) and expanded final CTA action set to increase action opportunities on commercial pages.
+- [x] JSON-usaha service templates now include stronger conversion CTA placement (hero, service cards, mid CTA, pricing cards, FAQ closeout, final CTA fallback) plus intent-based copy normalization from local source parser.
+- [x] Rewrite shared sections now include extra CTA placements in `highlights` and `process-faq` to reinforce conversion paths on money pages using reusable UI blocks.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.
 - Blocker note (2026-04-02): Regenerated `v2` assets are ready, but final selection/approval and route-level wiring are still pending.

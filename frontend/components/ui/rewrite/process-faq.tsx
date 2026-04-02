@@ -1,10 +1,12 @@
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
+import Link from "next/link";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 
 type RewriteProcessFaqProps = {
   copy: LegacyRewriteCopy;
@@ -45,6 +47,19 @@ export default function RewriteProcessFaq({ copy }: RewriteProcessFaqProps) {
               </AccordionItem>
             ))}
           </Accordion>
+          <div className="mt-4 rounded-lg border border-border/70 bg-muted/20 p-4">
+            <p className="text-sm text-foreground/80">
+              Butuh jawaban yang lebih spesifik untuk konteks bisnis Anda?
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button asChild size="sm">
+                <Link href={copy.ctaHref}>Diskusi Kebutuhan</Link>
+              </Button>
+              <Button asChild size="sm" variant="outline">
+                <Link href="#cta-mid">Lanjut ke CTA Cepat</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
