@@ -41,6 +41,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Astro static-page clusters scaffolded in Next.js (code-driven placeholder routes, non-Sanity)
 - [x] Legacy route rewrite shell v1 applied with reusable components for service/trust clusters (`pembuatan-website`, `percetakan`, `software`, `layanan`, `about`, `contact`, `privacy`, `sistem-pos`)
 - [x] 3-worker rewrite orchestration contract published (`docs/rewrite-worker-orchestration.md`)
+- [x] Legacy route metadata moved to centralized helper with `seoSettings` global fallback; hardcoded `noindex` removed from rewrite clusters
 
 ## Workstream A - Platform & Data Foundation
 
@@ -125,7 +126,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - Blocker note (2026-04-02): Remaining template refactors depend on final shared UI shell lock from orchestration (`docs/rewrite-worker-orchestration.md`) before broader homepage/blog/product rollout.
 
 ### D3. Content UX Upgrade
-- [ ] Improve readability modules (TOC, CTA in-content, related links, FAQ blocks).
+- [x] Improve readability modules (TOC, CTA in-content, related links, FAQ blocks).
+  - Done for legacy rewrite clusters via reusable template sections (CTA, related links, FAQ, process/highlights). TOC remains pending for blog/product/service long-form templates.
 - [ ] Ensure internal linking slots are CMS-configurable.
 
 ## Workstream E - Redirect Deployment Strategy

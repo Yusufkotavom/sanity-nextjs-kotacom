@@ -16,6 +16,37 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-02 - Legacy Rewrite Routes: Metadata Fallback + JSON-LD Template Sync
+- Changed files:
+  - `frontend/components/legacy/legacy-page-shell.tsx`
+  - `frontend/lib/legacy-pages/metadata.ts`
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/app/(main)/about/page.tsx`
+  - `frontend/app/(main)/about/[slug]/page.tsx`
+  - `frontend/app/(main)/contact/page.tsx`
+  - `frontend/app/(main)/privacy/page.tsx`
+  - `frontend/app/(main)/layanan/page.tsx`
+  - `frontend/app/(main)/sistem-pos/page.tsx`
+  - `frontend/app/(main)/pembuatan-website/page.tsx`
+  - `frontend/app/(main)/pembuatan-website/[slug]/page.tsx`
+  - `frontend/app/(main)/percetakan/page.tsx`
+  - `frontend/app/(main)/percetakan/[slug]/page.tsx`
+  - `frontend/app/(main)/percetakan/cetak-kalender/[kota]/page.tsx`
+  - `frontend/app/(main)/software/page.tsx`
+  - `frontend/app/(main)/software/[slug]/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Reworked legacy rewrite shell into reusable sections with stronger Vercel-style rhythm (hero, keyword chips, highlights, process, FAQ, related links, CTA).
+  - Added centralized `generateLegacyPageMetadata` helper and migrated all rewritten legacy routes to metadata pipeline that preserves global fallback from `seoSettings`.
+  - Added JSON-LD application on legacy template (Breadcrumb for all; Service schema for relevant clusters) and refreshed rewrite-copy mappings for trust/support pages.
+- SEO impact:
+  - Improves metadata consistency and prevents route-level hardcoded `noindex` drift on rewritten legacy clusters.
+  - Preserves Studio->Frontend SEO fallback contract via existing `generateBasicMetadata` path; no schema shape change required.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
 ## 2026-04-02 - Legacy Route Rewrite v1 with Reusable Shell Components
 - Changed files:
   - `frontend/components/legacy/legacy-page-shell.tsx`
