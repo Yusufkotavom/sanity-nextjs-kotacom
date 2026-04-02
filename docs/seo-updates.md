@@ -16,6 +16,18 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-02 - Local Main Branch Alignment + Deploy Trigger
+- Changed files:
+  - `studio/.ci-trigger.txt`
+  - `docs/seo-updates.md`
+- Summary:
+  - Switched local development branch to `main` to align daily work with primary remote branch.
+  - Updated deploy trigger marker file with a fresh timestamp to trigger deployment without functional code changes.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - `git status` reviewed; only intended files changed.
+
 ## 2026-04-02 - Legacy Landing v4 (Icons + Visual Sections + FAQ Schema)
 - Changed files:
   - `frontend/components/legacy/legacy-landing-sections.tsx`
