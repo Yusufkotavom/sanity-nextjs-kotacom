@@ -165,6 +165,20 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter frontend exec next build --webpack` passed.
   - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Add /toc Unified Content Index (Sanity + Local Files)
+- Changed files:
+  - `frontend/app/(main)/toc/page.tsx`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added new `/toc` page that aggregates links from Sanity content (pages, posts, services, products, categories) and local content sources (legacy route manifest + local docs index JSON).
+  - Implemented dynamic/no-store rendering to keep runtime content listing fresh from current source state.
+  - Added grouped section layout with per-source counts to simplify migration and coverage checks.
+- SEO impact:
+  - Direct SEO/integration impact: improves crawl planning visibility and internal QA by exposing a consolidated site content index across CMS and local source pipelines.
+- Verification:
+  - `pnpm --filter frontend exec next build --webpack` passed.
+  - `pnpm --filter frontend run typecheck` passed.
   - `pnpm --filter studio run typecheck` passed.
 
 ## 2026-04-02 - Worker 3 Route Parity Hardening for Percetakan Nested Paths
