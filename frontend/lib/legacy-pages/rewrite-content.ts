@@ -149,6 +149,184 @@ function buildWebsiteIndexCopy(): LegacyRewriteCopy {
   };
 }
 
+function buildWebsiteServiceCopy(page: LegacyAstroPage): LegacyRewriteCopy {
+  const serviceName = titleCaseFromSlug(page.slug);
+  const primaryKeyword = `Jasa ${serviceName}`;
+
+  const presets: Record<string, Partial<LegacyRewriteCopy>> = {
+    harga: {
+      primaryKeyword: "Harga Jasa Pembuatan Website",
+      secondaryKeywords: [
+        "Biaya pembuatan website",
+        "Paket website bisnis",
+        "Harga website company profile",
+        "Estimasi biaya web profesional",
+      ],
+      description:
+        "Informasi harga jasa pembuatan website yang transparan, dengan paket fleksibel sesuai kebutuhan bisnis dan target pertumbuhan.",
+      intro:
+        "Halaman ini membantu Anda memahami komponen biaya website, scope pekerjaan, dan opsi paket agar keputusan investasi digital lebih terukur.",
+      ctaLabel: "Minta Estimasi Harga",
+    },
+    "jasa-migrasi-wordpress": {
+      primaryKeyword: "Jasa Migrasi WordPress",
+      secondaryKeywords: [
+        "Migrasi website WordPress",
+        "Pindah hosting WordPress aman",
+        "Migrasi konten dan database",
+        "Optimasi WordPress pasca migrasi",
+      ],
+      description:
+        "Jasa migrasi WordPress aman untuk memindahkan situs, database, dan aset tanpa mengganggu performa dan visibilitas SEO.",
+      intro:
+        "Kami menangani proses migrasi WordPress end-to-end mulai dari backup, transfer, validasi fungsi, sampai optimasi pasca pindah server/platform.",
+      ctaLabel: "Konsultasi Migrasi WordPress",
+    },
+    "jasa-pembuatan-website-company-profile": {
+      primaryKeyword: "Jasa Pembuatan Website Company Profile",
+      secondaryKeywords: [
+        "Website company profile profesional",
+        "Website profil perusahaan",
+        "Web branding bisnis",
+        "Pembuatan website corporate",
+      ],
+      description:
+        "Jasa pembuatan website company profile untuk memperkuat kredibilitas brand, memperjelas layanan, dan mendukung akuisisi klien.",
+      intro:
+        "Kami menyusun website company profile dengan struktur konten yang jelas agar calon klien cepat memahami value perusahaan Anda.",
+      ctaLabel: "Buat Website Company Profile",
+    },
+    "jasa-pembuatan-website-dokter-klinik": {
+      primaryKeyword: "Jasa Pembuatan Website Dokter Klinik",
+      secondaryKeywords: [
+        "Website klinik profesional",
+        "Website praktik dokter",
+        "Website layanan kesehatan",
+        "Website klinik siap SEO",
+      ],
+      description:
+        "Jasa pembuatan website dokter dan klinik untuk meningkatkan kredibilitas layanan kesehatan dan memudahkan pasien menemukan informasi penting.",
+      intro:
+        "Kami membantu klinik dan praktik dokter membangun website informatif, terpercaya, dan mudah diakses untuk mendukung akuisisi pasien.",
+      ctaLabel: "Konsultasi Website Klinik",
+    },
+    "jasa-pembuatan-website-expedisi": {
+      primaryKeyword: "Jasa Pembuatan Website Expedisi",
+      secondaryKeywords: [
+        "Website perusahaan ekspedisi",
+        "Website logistik profesional",
+        "Website jasa pengiriman",
+        "Website tracking layanan",
+      ],
+      description:
+        "Jasa pembuatan website expedisi untuk menampilkan layanan pengiriman, area cakupan, dan keunggulan operasional secara jelas.",
+      intro:
+        "Website expedisi kami rancang agar pelanggan mudah memahami layanan, biaya, dan proses pengiriman sehingga meningkatkan konversi inquiry.",
+      ctaLabel: "Bangun Website Expedisi",
+    },
+    "jasa-pembuatan-website-komunitas-ngo": {
+      primaryKeyword: "Jasa Pembuatan Website Komunitas NGO",
+      secondaryKeywords: [
+        "Website NGO profesional",
+        "Website organisasi sosial",
+        "Website komunitas nirlaba",
+        "Website kampanye sosial",
+      ],
+      description:
+        "Jasa pembuatan website komunitas dan NGO untuk memperkuat komunikasi program, kredibilitas organisasi, dan dukungan publik.",
+      intro:
+        "Kami membantu NGO dan komunitas membangun website yang mudah dikelola untuk publikasi program, transparansi kegiatan, dan penguatan engagement.",
+      ctaLabel: "Konsultasi Website NGO",
+    },
+    "jasa-pembuatan-website-konstruksi": {
+      primaryKeyword: "Jasa Pembuatan Website Konstruksi",
+      secondaryKeywords: [
+        "Website perusahaan konstruksi",
+        "Website kontraktor profesional",
+        "Website portofolio proyek konstruksi",
+        "Website tender dan layanan konstruksi",
+      ],
+      description:
+        "Jasa pembuatan website konstruksi untuk menampilkan portofolio proyek, kompetensi teknis, dan kredibilitas perusahaan secara profesional.",
+      intro:
+        "Website konstruksi kami fokuskan pada penyajian portofolio proyek, layanan inti, dan keunggulan perusahaan agar mendukung peluang tender maupun klien baru.",
+      ctaLabel: "Buat Website Konstruksi",
+    },
+    "jasa-pembuatan-website-sekolah": {
+      primaryKeyword: "Jasa Pembuatan Website Sekolah",
+      secondaryKeywords: [
+        "Website sekolah modern",
+        "Website pendidikan profesional",
+        "Website informasi akademik",
+        "Website profil sekolah",
+      ],
+      description:
+        "Jasa pembuatan website sekolah untuk menyajikan profil institusi, informasi akademik, dan komunikasi orang tua-siswa secara terstruktur.",
+      intro:
+        "Kami membantu sekolah membangun website yang informatif dan mudah diakses agar komunikasi institusi, publikasi kegiatan, dan branding pendidikan lebih efektif.",
+      ctaLabel: "Konsultasi Website Sekolah",
+    },
+    "jasa-pembuatan-website-toko-online": {
+      primaryKeyword: "Jasa Pembuatan Website Toko Online",
+      secondaryKeywords: [
+        "Website e-commerce custom",
+        "Website toko online profesional",
+        "Pembuatan website jualan online",
+        "Website katalog produk",
+      ],
+      description:
+        "Jasa pembuatan website toko online untuk bisnis yang ingin meningkatkan penjualan dengan pengalaman belanja yang cepat dan terpercaya.",
+      intro:
+        "Website toko online kami rancang untuk memudahkan pelanggan menemukan produk, memahami keunggulan, dan melakukan transaksi dengan nyaman.",
+      ctaLabel: "Bangun Website Toko Online",
+    },
+    template: {
+      primaryKeyword: "Template Website Siap Pakai",
+      secondaryKeywords: [
+        "Template website bisnis",
+        "Desain website profesional",
+        "Template landing page",
+        "Template company profile",
+      ],
+      description:
+        "Template website siap pakai untuk mempercepat proses go-live bisnis tanpa mengorbankan kualitas struktur dan tampilan.",
+      intro:
+        "Kami menyediakan opsi template website untuk bisnis yang membutuhkan implementasi cepat dengan fondasi desain dan konten yang tetap profesional.",
+      ctaLabel: "Pilih Template Website",
+    },
+    portfolio: {
+      primaryKeyword: "Portfolio Website Kotacom",
+      secondaryKeywords: [
+        "Portofolio pembuatan website",
+        "Contoh website bisnis",
+        "Hasil proyek website",
+        "Referensi desain website profesional",
+      ],
+      description:
+        "Portfolio pembuatan website Kotacom berisi contoh implementasi untuk berbagai industri, dengan fokus hasil bisnis dan kualitas eksekusi.",
+      intro:
+        "Halaman portfolio ini menampilkan contoh pendekatan desain, struktur konten, dan strategi implementasi website yang telah kami kerjakan.",
+      ctaLabel: "Diskusikan Proyek Website Anda",
+    },
+  };
+
+  return {
+    ...buildGenericCopy(page),
+    primaryKeyword,
+    secondaryKeywords: [
+      `${serviceName} profesional`,
+      `${serviceName} untuk bisnis`,
+      `${serviceName} terpercaya`,
+      `${serviceName} Indonesia`,
+    ],
+    description: `${primaryKeyword} dengan pendekatan strategis untuk kebutuhan bisnis yang membutuhkan website terstruktur, cepat, dan siap scale.`,
+    intro: `${primaryKeyword} kami dirancang agar website tidak hanya terlihat baik, tetapi juga mendukung akuisisi lead dan kredibilitas brand.`,
+    ctaLabel: `Konsultasi ${serviceName}`,
+    ...presets[page.slug],
+    ctaHref: DEFAULT_CTA,
+  };
+}
+
 function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
   const service = page.title;
   const primaryKeyword = page.route === "/percetakan" ? "Jasa Percetakan" : `Jasa ${service}`;
@@ -198,6 +376,61 @@ function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
     ctaLabel: page.route === "/percetakan" ? "Konsultasi Layanan Percetakan" : "Diskusikan Kebutuhan Cetak",
     ctaHref: DEFAULT_CTA,
   };
+}
+
+function buildPrintingDetailCopy(page: LegacyAstroPage): LegacyRewriteCopy {
+  if (page.sourceFile.includes("percetakan/cetak-kalender/[kota]")) {
+    const city = titleCaseFromSlug(page.slug);
+    return {
+      ...buildPrintingCopy(page),
+      primaryKeyword: `Jasa Cetak Kalender ${city}`,
+      secondaryKeywords: [
+        `Cetak kalender ${city}`,
+        `Percetakan kalender ${city}`,
+        `Kalender promosi ${city}`,
+        `Cetak kalender custom ${city}`,
+      ],
+      description: `Jasa cetak kalender ${city} untuk kebutuhan promosi brand dengan hasil cetak rapi, material berkualitas, dan jadwal produksi terukur.`,
+      intro: `Kami membantu bisnis di ${city} memproduksi kalender promosi dengan desain menarik dan kualitas cetak konsisten untuk campaign tahunan.`,
+      ctaLabel: `Konsultasi Cetak Kalender ${city}`,
+    };
+  }
+
+  if (page.slug.includes("kalender")) {
+    return {
+      ...buildPrintingCopy(page),
+      primaryKeyword: `Jasa ${page.title}`,
+      secondaryKeywords: [
+        "Cetak kalender custom",
+        "Cetak kalender promosi",
+        "Cetak kalender perusahaan",
+        "Desain kalender bisnis",
+      ],
+      description:
+        "Jasa cetak kalender custom untuk kebutuhan promosi dan branding perusahaan dengan hasil cetak rapi serta jadwal produksi terukur.",
+      intro:
+        "Kami membantu produksi kalender promosi dari tahap penyiapan desain hingga finishing, sehingga materi promosi siap distribusi tepat waktu.",
+      ctaLabel: "Konsultasi Cetak Kalender",
+    };
+  }
+
+  if (page.slug.includes("buku") || page.slug.includes("quran")) {
+    return {
+      ...buildPrintingCopy(page),
+      primaryKeyword: `Jasa ${page.title}`,
+      secondaryKeywords: [
+        `${page.title} berkualitas`,
+        "Cetak buku custom",
+        "Finishing buku premium",
+        "Produksi buku skala bisnis",
+      ],
+      description: `Jasa ${page.title.toLowerCase()} dengan standar produksi stabil untuk kebutuhan buku komersial, edukasi, maupun publikasi brand.`,
+      intro: `Layanan ${page.title.toLowerCase()} kami fokus pada ketelitian hasil akhir, konsistensi warna, dan ketepatan finishing agar buku siap dipasarkan.`,
+      ctaLabel: "Diskusi Proyek Cetak Buku",
+    };
+  }
+
+  return buildPrintingCopy(page);
 }
 
 function buildSoftwareCopy(page: LegacyAstroPage): LegacyRewriteCopy {
@@ -250,6 +483,49 @@ function buildSoftwareCopy(page: LegacyAstroPage): LegacyRewriteCopy {
     ctaLabel: page.route === "/software" ? "Diskusi Pengembangan Software" : "Konsultasi Kebutuhan Software",
     ctaHref: DEFAULT_CTA,
   };
+}
+
+function buildSoftwareDetailCopy(page: LegacyAstroPage): LegacyRewriteCopy {
+  const presets: Record<string, Partial<LegacyRewriteCopy>> = {
+    "implementasi-software": {
+      primaryKeyword: "Implementasi Software Bisnis",
+      secondaryKeywords: [
+        "Implementasi sistem bisnis",
+        "Deployment software perusahaan",
+        "Go-live aplikasi internal",
+        "Pendampingan adopsi software",
+      ],
+      description:
+        "Layanan implementasi software bisnis agar sistem baru dapat diadopsi cepat, stabil, dan minim gangguan operasional.",
+      ctaLabel: "Konsultasi Implementasi",
+    },
+    "instalasi-software": {
+      primaryKeyword: "Instalasi Software Perusahaan",
+      secondaryKeywords: [
+        "Instalasi aplikasi bisnis",
+        "Konfigurasi software operasional",
+        "Setup sistem perusahaan",
+        "Instalasi software aman",
+      ],
+      description:
+        "Jasa instalasi software perusahaan dengan proses konfigurasi terstruktur, validasi teknis, dan dokumentasi handover.",
+      ctaLabel: "Jadwalkan Instalasi",
+    },
+    "pembuatan-software": {
+      primaryKeyword: "Jasa Pembuatan Software Custom",
+      secondaryKeywords: [
+        "Pengembangan software custom",
+        "Aplikasi bisnis sesuai workflow",
+        "Sistem internal perusahaan",
+        "Software operasional terintegrasi",
+      ],
+      description:
+        "Jasa pembuatan software custom untuk bisnis yang membutuhkan sistem sesuai alur kerja internal dan target pertumbuhan.",
+      ctaLabel: "Mulai Proyek Software",
+    },
+  };
+
+  return { ...buildSoftwareCopy(page), ...(presets[page.slug] || {}) };
 }
 
 function buildLayananCopy(): LegacyRewriteCopy {
@@ -332,6 +608,48 @@ function buildAboutCopy(): LegacyRewriteCopy {
       },
     ],
     ctaLabel: "Diskusi Dengan Tim",
+    ctaHref: DEFAULT_CTA,
+  };
+}
+
+function buildAboutStatementCopy(): LegacyRewriteCopy {
+  return {
+    primaryKeyword: "AI Statement Kotacom",
+    secondaryKeywords: [
+      "Kebijakan AI perusahaan",
+      "Pemanfaatan AI yang bertanggung jawab",
+      "Transparansi penggunaan AI",
+      "Etika AI dalam layanan digital",
+    ],
+    description:
+      "AI Statement Kotacom menjelaskan prinsip penggunaan AI secara bertanggung jawab, transparan, dan tetap berorientasi kualitas layanan.",
+    intro:
+      "Kami menggunakan AI untuk meningkatkan efisiensi kerja, namun keputusan strategis, kontrol mutu, dan akuntabilitas tetap berada pada tim profesional kami.",
+    highlights: [
+      "AI digunakan sebagai akselerator, bukan pengganti tanggung jawab tim.",
+      "Output AI melalui review manusia sebelum dipublikasikan.",
+      "Privasi data klien tetap dijaga dengan kebijakan internal.",
+      "Pemanfaatan AI selalu disesuaikan konteks bisnis klien.",
+    ],
+    process: [
+      "Menentukan area kerja yang relevan untuk dukungan AI.",
+      "Menerapkan review manusia pada output kritikal.",
+      "Validasi kualitas dan konsistensi brand.",
+      "Penyempurnaan praktik AI berdasarkan evaluasi berkala.",
+    ],
+    faqs: [
+      {
+        question: "Apakah seluruh pekerjaan dibuat otomatis oleh AI?",
+        answer:
+          "Tidak. AI membantu efisiensi, sementara perencanaan, validasi, dan keputusan akhir tetap dikelola tim kami.",
+      },
+      {
+        question: "Bagaimana keamanan data saat AI digunakan?",
+        answer:
+          "Kami menerapkan kebijakan internal untuk menjaga kerahasiaan data dan membatasi penggunaan data sesuai kebutuhan layanan.",
+      },
+    ],
+    ctaLabel: "Diskusikan Standar Kerja",
     ctaHref: DEFAULT_CTA,
   };
 }
@@ -423,21 +741,30 @@ function buildPrivacyCopy(): LegacyRewriteCopy {
 export function buildLegacyRewriteCopy(page: LegacyAstroPage): LegacyRewriteCopy {
   if (
     page.section === "pembuatan-website" &&
-    page.sourceFile.includes("[kota]")
+    (page.sourceFile.includes("[kota]") || page.slug === "sidoarjo")
   ) {
     return buildWebsiteCityCopy(page);
   }
 
   if (page.section === "pembuatan-website") {
+    if (page.slug !== "pembuatan-website") {
+      return buildWebsiteServiceCopy(page);
+    }
     return buildWebsiteIndexCopy();
   }
 
   if (page.section === "percetakan") {
+    if (page.slug !== "percetakan") {
+      return buildPrintingDetailCopy(page);
+    }
     return buildPrintingCopy(page);
   }
 
   if (page.section === "software" || page.section === "sistem-pos") {
-    const softwareCopy = buildSoftwareCopy(page);
+    const softwareCopy =
+      page.section === "software" && page.slug !== "software"
+        ? buildSoftwareDetailCopy(page)
+        : buildSoftwareCopy(page);
     if (page.section === "sistem-pos") {
       return {
         ...softwareCopy,
@@ -462,6 +789,9 @@ export function buildLegacyRewriteCopy(page: LegacyAstroPage): LegacyRewriteCopy
   }
 
   if (page.section === "about") {
+    if (page.slug === "ai-statement") {
+      return buildAboutStatementCopy();
+    }
     return buildAboutCopy();
   }
 

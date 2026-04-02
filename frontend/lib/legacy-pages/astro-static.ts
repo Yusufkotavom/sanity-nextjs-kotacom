@@ -9,9 +9,45 @@ export type LegacyAstroPage = {
   migrationStatus: "draft" | string;
 };
 
-const pages = (manifest as LegacyAstroPage[]).slice().sort((a, b) => {
+const supplementalPages: LegacyAstroPage[] = [
+  {
+    route: "/pembuatan-website/sidoarjo",
+    section: "pembuatan-website",
+    slug: "sidoarjo",
+    sourceFile: "supplemental/pembuatan-website/sidoarjo",
+    title: "Pembuatan Website Sidoarjo",
+    migrationStatus: "draft",
+  },
+  {
+    route: "/pembuatan-website/portfolio",
+    section: "pembuatan-website",
+    slug: "portfolio",
+    sourceFile: "supplemental/pembuatan-website/portfolio",
+    title: "Portfolio Pembuatan Website",
+    migrationStatus: "draft",
+  },
+];
+
+const pages = [...(manifest as LegacyAstroPage[]), ...supplementalPages]
+  .filter(
+    (item, index, arr) => arr.findIndex((candidate) => candidate.route === item.route) === index,
+  )
+  .sort((a, b) => {
   return a.route.localeCompare(b.route);
-});
+  });
+
+const SECTION_SLUG_ALIASES: Record<string, Record<string, string>> = {
+  "pembuatan-website": {
+    "toko-online": "jasa-pembuatan-website-toko-online",
+    sekolah: "jasa-pembuatan-website-sekolah",
+    "company-profile": "jasa-pembuatan-website-company-profile",
+    "dokter-klinik": "jasa-pembuatan-website-dokter-klinik",
+    expedisi: "jasa-pembuatan-website-expedisi",
+    "komunitas-ngo": "jasa-pembuatan-website-komunitas-ngo",
+    konstruksi: "jasa-pembuatan-website-konstruksi",
+    "migrasi-wordpress": "jasa-migrasi-wordpress",
+  },
+};
 
 export function getLegacyRoute(route: string): LegacyAstroPage | null {
   return pages.find((item) => item.route === route) ?? null;
@@ -40,7 +76,13 @@ export function getLegacySectionSlug(
   section: string,
   slug: string,
 ): LegacyAstroPage | null {
-  return getLegacyRoute(`/${section}/${slug}`);
+  const direct = getLegacyRoute(`/${section}/${slug}`);
+  if (direct) return direct;
+
+  const aliasedSlug = SECTION_SLUG_ALIASES[section]?.[slug];
+  if (!aliasedSlug) return null;
+
+  return getLegacyRoute(`/${section}/${aliasedSlug}`);
 }
 
 export function getLegacySinglePage(section: string): LegacyAstroPage | null {
@@ -56,7 +98,12 @@ export function getLegacySectionRouteBySegments(
   segments: string[],
 ): LegacyAstroPage | null {
   if (segments.length === 0) return getLegacySectionIndex(section);
+  if (segments.length === 1) return getLegacySectionSlug(section, segments[0]);
   return getLegacyRoute(`/${section}/${segments.join("/")}`);
+}
+
+export function getLegacySectionAliasSlugs(section: string): string[] {
+  return Object.keys(SECTION_SLUG_ALIASES[section] || {});
 }
 
 export function getLegacySections() {

@@ -16,6 +16,38 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-02 - Worker 3 Content Rewrite Pass v3 (Remaining Route Coverage)
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Reviewed remaining legacy routes and expanded slug-specific rewrite presets under `/pembuatan-website/*` for vertical intents (dokter/klinik, expedisi, komunitas/NGO, konstruksi, sekolah, toko online, template).
+  - Added city-aware rewrite branch for `/percetakan/cetak-kalender/[kota]` so localized pages receive explicit local keyword intent and CTA.
+  - Kept existing fallback branches in place for routes that already had dedicated rewrite behavior.
+- SEO impact:
+  - Increases uniqueness and intent alignment on previously less-specific service pages.
+  - No direct Studio schema/query change; frontend metadata fallback flow via `seoSettings` remains unchanged.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Worker 3 Content Rewrite Pass v2 (Slug-Specific Copy Expansion)
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Extended legacy rewrite copy with slug-specific variants to reduce repetitive content across cluster pages.
+  - Added dedicated website-service variants (`harga`, `jasa-migrasi-wordpress`, `jasa-pembuatan-website-company-profile`) while keeping generic fallback for other service slugs.
+  - Added printing detail variants for calendar/book-oriented pages and software detail variants (`implementasi-software`, `instalasi-software`, `pembuatan-software`).
+  - Added specific content branch for `about/ai-statement`.
+- SEO impact:
+  - Improves semantic uniqueness and intent matching between pages within the same cluster.
+  - No direct schema/query change; Studio-Frontend SEO contract remains unchanged.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` not run in this cycle.
+
 ## 2026-04-02 - Worker 3 Content Rewrite Pass for Legacy Service Clusters
 - Changed files:
   - `frontend/lib/legacy-pages/rewrite-content.ts`
@@ -79,6 +111,42 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter frontend run typecheck` passed.
   - `pnpm --filter frontend exec next build --webpack` passed.
+
+## 2026-04-02 - Rewrite Content Progress Tracker + High-Intent Alias Coverage
+- Changed files:
+  - `frontend/lib/legacy-pages/astro-static.ts`
+  - `frontend/app/(main)/pembuatan-website/[slug]/page.tsx`
+  - `docs/rewrite-content-progress.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added explicit rewrite progress tracker document to separate “already rewritten” versus “pending” items for content migration visibility.
+  - Added alias slug support in legacy route resolver for high-intent `pembuatan-website` paths to reduce route gaps during rewrite-first phase.
+  - Extended static param generation for `pembuatan-website/[slug]` so alias paths are pre-rendered and covered consistently.
+- SEO impact:
+  - Direct SEO/integration impact: lowers accidental 404 risk for legacy high-intent alias paths and improves execution traceability of rewrite content completion.
+- Verification:
+  - `pnpm --filter frontend exec next build --webpack` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Rewrite Content Wave Completion for Tracked Top-Priority Legacy URLs
+- Changed files:
+  - `frontend/lib/legacy-pages/astro-static.ts`
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/app/(main)/pembuatan-website/[slug]/page.tsx`
+  - `docs/rewrite-content-progress.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added supplemental legacy route coverage for previously pending high-priority paths:
+    - `/pembuatan-website/portfolio`
+    - `/pembuatan-website/sidoarjo`
+  - Extended slug resolver + static params generation so these paths are included in SSG output without redirect dependency.
+  - Added route-specific rewrite copy preset for `portfolio` and city-intent handling for `sidoarjo`.
+  - Updated rewrite progress tracker status from pending to done for tracked top-priority cluster URLs.
+- SEO impact:
+  - Direct SEO impact: closes remaining tracked rewrite gaps on high-priority legacy cluster URLs and prevents orphan/404 behavior for these paths during rewrite-first rollout.
+- Verification:
+  - `pnpm --filter frontend exec next build --webpack` passed.
+  - `pnpm --filter frontend run typecheck` passed.
   - `pnpm --filter studio run typecheck` passed.
 
 ## 2026-04-02 - Worker 3 Route Parity Hardening for Percetakan Nested Paths

@@ -1,5 +1,6 @@
 import LegacyPageShell from "@/components/legacy/legacy-page-shell";
 import {
+  getLegacySectionAliasSlugs,
   getLegacySectionChildren,
   getLegacySectionSlug,
 } from "@/lib/legacy-pages/astro-static";
@@ -7,8 +8,13 @@ import { generateLegacyPageMetadata } from "@/lib/legacy-pages/metadata";
 import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
-  return getLegacySectionChildren("pembuatan-website").map((item) => ({
-    slug: item.slug,
+  const directSlugs = getLegacySectionChildren("pembuatan-website").map(
+    (item) => item.slug,
+  );
+  const aliasSlugs = getLegacySectionAliasSlugs("pembuatan-website");
+
+  return Array.from(new Set([...directSlugs, ...aliasSlugs])).map((slug) => ({
+    slug,
   }));
 }
 
