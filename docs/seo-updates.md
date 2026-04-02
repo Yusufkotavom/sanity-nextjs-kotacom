@@ -22,14 +22,15 @@ This file is the canonical changelog for all repository updates, with explicit S
   - `docs/astro-migration-megaplan.md`
   - `docs/seo-updates.md`
 - Summary:
-  - Reviewed remaining legacy routes and expanded slug-specific rewrite presets under `/pembuatan-website/*` for vertical intents (dokter/klinik, expedisi, komunitas/NGO, konstruksi, sekolah, toko online, template).
-  - Added city-aware rewrite branch for `/percetakan/cetak-kalender/[kota]` so localized pages receive explicit local keyword intent and CTA.
-  - Kept existing fallback branches in place for routes that already had dedicated rewrite behavior.
+  - Expanded slug-specific rewrite presets under `/pembuatan-website/*` for vertical intents (dokter/klinik, expedisi, komunitas/NGO, konstruksi, sekolah, toko online, template, portfolio).
+  - Added city-aware rewrite branch for `/percetakan/cetak-kalender/[kota]` plus dedicated copy presets for remaining printing slugs (`cetak-album-pernikahan`, `cetak-banner-spanduk`, `cetak-brosur`, `cetak-company-profile`, `cetak-kaos`, `cetak-kartu-nama`, `cetak-kemasan-product`, `cetak-stiker`, `cetak-undangan`, `cetak-yasin`).
+  - Completed the remaining generic route rewrite backlog for Wave 1 clusters.
 - SEO impact:
   - Increases uniqueness and intent alignment on previously less-specific service pages.
   - No direct Studio schema/query change; frontend metadata fallback flow via `seoSettings` remains unchanged.
 - Verification:
   - `pnpm --filter frontend run typecheck` passed.
+  - Coverage check script result: `TOTAL_GENERIC 0`.
 
 ## 2026-04-02 - Worker 3 Content Rewrite Pass v2 (Slug-Specific Copy Expansion)
 - Changed files:
@@ -144,6 +145,23 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Updated rewrite progress tracker status from pending to done for tracked top-priority cluster URLs.
 - SEO impact:
   - Direct SEO impact: closes remaining tracked rewrite gaps on high-priority legacy cluster URLs and prevents orphan/404 behavior for these paths during rewrite-first rollout.
+- Verification:
+  - `pnpm --filter frontend exec next build --webpack` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Rewrite Internal-Link Strategy Added to Legacy Shell
+- Changed files:
+  - `frontend/lib/legacy-pages/internal-links.ts`
+  - `frontend/components/legacy/legacy-page-shell.tsx`
+  - `frontend/components/legacy/legacy-related-links.tsx`
+  - `docs/rewrite-content-progress.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added strategic internal-link fallback map per rewrite cluster (`pembuatan-website`, `percetakan`, `software`, `sistem-pos`, trust pages).
+  - Connected legacy shell to render “Jelajahi Selanjutnya” links before related legacy links, improving cross-cluster navigation paths.
+  - Updated rewrite progress tracker to mark internal-link strategy as implemented for current wave (code-driven fallback mode).
+- SEO impact:
+  - Direct SEO impact: improves internal linking structure and crawl discoverability across canonical service/blog/contact paths from rewritten legacy pages.
 - Verification:
   - `pnpm --filter frontend exec next build --webpack` passed.
   - `pnpm --filter frontend run typecheck` passed.

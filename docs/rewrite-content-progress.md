@@ -44,8 +44,8 @@ Owner track: Worker 3 (Route Rewrite + SEO Application)
 
 ## Pending for Next Rewrite Wave
 
-- Per-URL editorial deep rewrite for highest-business-impact pages (not only template-level copy).
-- Internal-link slot strategy per rewrite page cluster (cross-link to canonical service/product/blog pages).
+- Per-URL editorial deep rewrite for highest-business-impact pages outside current legacy cluster scope (`blog`, `products`, `services` long-form detail refinement).
+- Advanced internal-link orchestration from CMS-managed slots (current strategic links are code-driven fallback in rewrite shell).
 
 ## Notes
 

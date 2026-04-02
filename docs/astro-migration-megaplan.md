@@ -47,7 +47,9 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Worker 1 UI shell pass applied for header/nav action layout and reusable icon-action patterns (`frontend/components/header/**`, `frontend/components/footer.tsx`, `frontend/app/(main)/style-guide/page.tsx`)
 - [x] Worker 3 content rewrite pass applied to legacy service clusters via centralized copy mapping (`frontend/lib/legacy-pages/rewrite-content.ts`)
 - [x] Tracked top-priority rewrite gaps closed for `/pembuatan-website/portfolio` and `/pembuatan-website/sidoarjo` with route coverage + rewrite content handling
+- [x] Legacy rewrite shell now includes strategic internal-link slots to canonical clusters (services/blog/contact) as crawl-support fallback
 - [x] Worker 3 content rewrite pass v2 expanded to slug-specific copy variants (website services, printing details, software details, `about/ai-statement`)
+- [x] Worker 3 content rewrite pass v3 closed remaining generic-route backlog in Wave 1 clusters (`TOTAL_GENERIC 0`)
 
 ## Workstream A - Platform & Data Foundation
 
@@ -140,6 +142,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Improve readability modules (TOC, CTA in-content, related links, FAQ blocks).
   - Done for legacy rewrite clusters via reusable template sections (CTA, related links, FAQ, process/highlights). TOC remains pending for blog/product/service long-form templates.
 - [x] Improve content differentiation across legacy clusters with slug-specific rewrite mapping (Wave 1 service-focused routes).
+- [x] Complete rewrite coverage for previously generic route templates in legacy Wave 1 service/printing clusters.
 - [ ] Ensure internal linking slots are CMS-configurable.
 
 ## Workstream E - Redirect Deployment Strategy

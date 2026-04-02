@@ -2,6 +2,7 @@ import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import { buildLegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 import JsonLd from "@/components/seo/json-ld";
 import { buildBreadcrumbJsonLd, buildServiceJsonLd } from "@/lib/seo-jsonld";
+import { getStrategicLinks } from "@/lib/legacy-pages/internal-links";
 import LegacyHero from "@/components/legacy/legacy-hero";
 import LegacyHighlights from "@/components/legacy/legacy-highlights";
 import LegacyProcessFaq from "@/components/legacy/legacy-process-faq";
@@ -22,6 +23,7 @@ export default function LegacyPageShell({
   const related = siblings
     .filter((item) => item.route !== page.route)
     .slice(0, 12);
+  const strategicLinks = getStrategicLinks(page);
   const breadcrumbParts = page.route.split("/").filter(Boolean);
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
@@ -62,7 +64,11 @@ export default function LegacyPageShell({
       />
       <LegacyHighlights copy={copy} />
       <LegacyProcessFaq copy={copy} />
-      <LegacyRelatedLinks page={page} related={related} />
+      <LegacyRelatedLinks
+        page={page}
+        related={related}
+        strategicLinks={strategicLinks}
+      />
     </>
   );
 }
