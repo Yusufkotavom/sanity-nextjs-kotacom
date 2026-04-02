@@ -3,6 +3,7 @@ import page from "./schemas/documents/page";
 import post from "./schemas/documents/post";
 import product from "./schemas/documents/product";
 import service from "./schemas/documents/service";
+import project from "./schemas/documents/project";
 import author from "./schemas/documents/author";
 import category from "./schemas/documents/category";
 import faq from "./schemas/documents/faq";
@@ -53,6 +54,7 @@ export const schemaTypes = [
   post,
   product,
   service,
+  project,
   author,
   category,
   faq,

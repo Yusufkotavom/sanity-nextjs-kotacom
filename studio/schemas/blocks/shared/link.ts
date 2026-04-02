@@ -41,6 +41,7 @@ export default defineType({
         { type: "category" },
         { type: "product" },
         { type: "service" },
+        { type: "project" },
       ],
       hidden: ({ parent }) => parent?.isExternal,
     }),
@@ -78,6 +79,7 @@ export default defineType({
       title: "Button Variant",
       description:
         "Recommended: Primary links use Ghost/Link. Utility links can use Link/Outline/Default for CTA.",
+      hidden: ({ document }) => document?._type !== "navigation",
     }),
     defineField({
       name: "navLocation",
@@ -91,19 +93,26 @@ export default defineType({
         layout: "radio",
       },
       initialValue: "primary",
-      validation: (Rule) => Rule.required(),
+      hidden: ({ document }) => document?._type !== "navigation",
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          if (context.document?._type !== "navigation") return true;
+          return value ? true : "Navigation Location is required.";
+        }),
     }),
     defineField({
       name: "showInFooter",
       type: "boolean",
       title: "Show in Footer",
       initialValue: true,
+      hidden: ({ document }) => document?._type !== "navigation",
     }),
     defineField({
       name: "icon",
       title: "Icon",
       type: "navigation-icon",
       description: "Optional icon shown near the navigation label.",
+      hidden: ({ document }) => document?._type !== "navigation",
     }),
     defineField({
       name: "children",
@@ -113,6 +122,7 @@ export default defineType({
       description:
         "Optional nested items for dropdown/submenu navigation. Also used as full footer menu links.",
       validation: (Rule) => Rule.max(8),
+      hidden: ({ document }) => document?._type !== "navigation",
     }),
   ],
 });

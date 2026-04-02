@@ -30,6 +30,11 @@ import {
   SERVICES_SLUGS_QUERY,
 } from "@/sanity/queries/service";
 import {
+  PROJECT_QUERY,
+  PROJECTS_QUERY,
+  PROJECTS_SLUGS_QUERY,
+} from "@/sanity/queries/project";
+import {
   POST_QUERY,
   POSTS_BY_CATEGORY_QUERY,
   POSTS_QUERY,
@@ -397,6 +402,35 @@ export const fetchSanityServiceBySlug = async ({
 export const fetchSanityServicesStaticParams = async (): Promise<any[]> => {
   const data = await fetchPublished<any[]>({
     query: SERVICES_SLUGS_QUERY,
+  });
+
+  return data || [];
+};
+
+export const fetchSanityProjects = async (): Promise<any[]> => {
+  const data = await fetchPublished<any[]>({
+    query: PROJECTS_QUERY,
+  });
+
+  return data || [];
+};
+
+export const fetchSanityProjectBySlug = async ({
+  slug,
+}: {
+  slug: string;
+}): Promise<any | null> => {
+  const data = await fetchPublished<any | null>({
+    query: PROJECT_QUERY,
+    params: { slug },
+  });
+
+  return data;
+};
+
+export const fetchSanityProjectsStaticParams = async (): Promise<any[]> => {
+  const data = await fetchPublished<any[]>({
+    query: PROJECTS_SLUGS_QUERY,
   });
 
   return data || [];

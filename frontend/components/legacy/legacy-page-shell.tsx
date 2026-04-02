@@ -1,9 +1,14 @@
 import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import { buildLegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 import JsonLd from "@/components/seo/json-ld";
-import { buildBreadcrumbJsonLd, buildServiceJsonLd } from "@/lib/seo-jsonld";
+import {
+  buildBreadcrumbJsonLd,
+  buildFaqJsonLd,
+  buildServiceJsonLd,
+} from "@/lib/seo-jsonld";
 import { getStrategicLinks } from "@/lib/legacy-pages/internal-links";
 import LegacyHero from "@/components/legacy/legacy-hero";
+import LegacyLandingSections from "@/components/legacy/legacy-landing-sections";
 import LegacyHighlights from "@/components/legacy/legacy-highlights";
 import LegacyProcessFaq from "@/components/legacy/legacy-process-faq";
 import LegacyRelatedLinks from "@/components/legacy/legacy-related-links";
@@ -50,11 +55,13 @@ export default function LegacyPageShell({
         path: page.route,
       })
     : null;
+  const faqJsonLd = copy.faqs.length > 0 ? buildFaqJsonLd(copy.faqs) : null;
 
   return (
     <>
       <JsonLd data={breadcrumbJsonLd} />
       {serviceJsonLd ? <JsonLd data={serviceJsonLd} /> : null}
+      {faqJsonLd ? <JsonLd data={faqJsonLd} /> : null}
 
       <LegacyHero
         page={page}
@@ -62,6 +69,7 @@ export default function LegacyPageShell({
         sectionLabel={sectionLabel}
         sectionHref={sectionHref}
       />
+      <LegacyLandingSections page={page} copy={copy} />
       <LegacyHighlights copy={copy} />
       <LegacyProcessFaq copy={copy} />
       <LegacyRelatedLinks

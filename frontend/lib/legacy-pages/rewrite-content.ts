@@ -10,6 +10,19 @@ export type LegacyRewriteCopy = {
   faqs: Array<{ question: string; answer: string }>;
   ctaLabel: string;
   ctaHref: string;
+  serviceTypes?: Array<{ title: string; description: string; href?: string }>;
+  pricingPlans?: Array<{
+    name: string;
+    price: string;
+    description: string;
+    items: string[];
+    recommended?: boolean;
+  }>;
+  features?: Array<{ title: string; description: string; icon?: string }>;
+  proofItems?: Array<{ title: string; description: string; image?: string; href?: string }>;
+  testimonials?: Array<{ name: string; role: string; quote: string }>;
+  finalCtaTitle?: string;
+  finalCtaDescription?: string;
 };
 
 const DEFAULT_CTA = "/contact";

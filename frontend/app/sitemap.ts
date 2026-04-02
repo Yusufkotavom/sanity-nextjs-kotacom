@@ -4,7 +4,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { fetchSanitySeoSettings } from "@/sanity/lib/fetch";
 
 type SitemapItem = {
-  _type: "page" | "post" | "product" | "service";
+  _type: "page" | "post" | "product" | "service" | "project";
   slug?: { current?: string | null } | null;
   _updatedAt?: string;
 };
@@ -19,7 +19,7 @@ type CategorySitemapItem = {
 
 const CONTENT_SITEMAP_QUERY = groq`
   *[
-    _type in ["page", "post", "product", "service"]
+    _type in ["page", "post", "product", "service", "project"]
     && meta.noindex != true
     && defined(slug.current)
   ]{
@@ -54,6 +54,7 @@ function mapContentPath(item: SitemapItem): string | null {
   if (item._type === "post") return `/blog/${slug}`;
   if (item._type === "product") return `/products/${slug}`;
   if (item._type === "service") return `/services/${slug}`;
+  if (item._type === "project") return `/projects/${slug}`;
   return null;
 }
 

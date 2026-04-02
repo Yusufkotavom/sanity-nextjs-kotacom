@@ -5,7 +5,7 @@ const SANITY_STUDIO_PREVIEW_URL =
   process.env.SANITY_STUDIO_PREVIEW_URL || "http://localhost:3000";
 
 // Specify document types that should have preview panes
-const previewSchemaTypes = ["page", "post", "contact"];
+const previewSchemaTypes = ["page", "post", "project", "contact"];
 
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (
   S,
@@ -34,6 +34,9 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
               } else if (doc._type === "post") {
                 const slug = doc.slug?.current;
                 path = slug ? `/blog/${slug}` : "/blog";
+              } else if (doc._type === "project") {
+                const slug = doc.slug?.current;
+                path = slug ? `/projects/${slug}` : "/projects";
               } else if (doc._type === "contact") {
                 path = "/contact";
               }

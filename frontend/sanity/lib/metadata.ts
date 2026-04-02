@@ -8,6 +8,7 @@ const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 type MetaCompatiblePage = {
   title?: string | null;
   excerpt?: string | null;
+  image?: any;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -65,6 +66,14 @@ const resolveImage = (
       url: urlFor(page.meta.image).quality(100).url(),
       width: page.meta.image.asset?.metadata?.dimensions?.width || 1200,
       height: page.meta.image.asset?.metadata?.dimensions?.height || 630,
+    };
+  }
+
+  if (page?.image) {
+    return {
+      url: urlFor(page.image).quality(100).url(),
+      width: page.image.asset?.metadata?.dimensions?.width || 1200,
+      height: page.image.asset?.metadata?.dimensions?.height || 630,
     };
   }
 

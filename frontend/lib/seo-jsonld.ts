@@ -133,3 +133,18 @@ export const buildServiceJsonLd = ({
         }
       : undefined,
 });
+
+export const buildFaqJsonLd = (
+  faqs: Array<{ question: string; answer: string }>,
+) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+});

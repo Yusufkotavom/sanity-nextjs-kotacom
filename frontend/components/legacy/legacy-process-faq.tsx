@@ -6,7 +6,7 @@ type LegacyProcessFaqProps = {
 
 export default function LegacyProcessFaq({ copy }: LegacyProcessFaqProps) {
   return (
-    <section className="container py-4">
+    <section className="container py-4" id="faq">
       <div className="grid gap-8 rounded-2xl border border-border/80 bg-muted/25 p-6 md:grid-cols-[1.2fr_1fr] md:p-8">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">Proses Eksekusi</h2>

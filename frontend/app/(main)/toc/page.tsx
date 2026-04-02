@@ -1,18 +1,9 @@
 import Link from "next/link";
 import docsIndex from "@/content/schemaui-docs.json";
+import { getAstroLocalCatalog } from "@/lib/local-content/astro-catalog";
 import legacyManifest from "@/lib/legacy-pages/astro-static-manifest.json";
-import {
-  fetchSanityCategoriesStaticParams,
-  fetchSanityPagesStaticParams,
-  fetchSanityPostsStaticParams,
-  fetchSanityProductsStaticParams,
-  fetchSanityServicesStaticParams,
-} from "@/sanity/lib/fetch";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
 import { unstable_noStore as noStore } from "next/cache";
-
-type SlugObject = { current?: string | null } | null;
-type SlugEntry = { slug?: SlugObject } | null;
 
 type TocLink = {
   title: string;
@@ -23,19 +14,6 @@ type TocSection = {
   title: string;
   links: TocLink[];
 };
-
-function normalizeSlug(entry: SlugEntry) {
-  return entry?.slug?.current || "";
-}
-
-function toTitleFromSlug(slug: string) {
-  if (!slug || slug === "index") return "Home";
-  return slug
-    .split("-")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
 
 function dedupeLinks(links: TocLink[]) {
   const seen = new Set<string>();
@@ -56,7 +34,7 @@ export async function generateMetadata() {
   return generateBasicMetadata({
     title: "Table of Contents",
     description:
-      "Daftar seluruh konten situs yang bersumber dari Sanity dan file lokal.",
+      "Daftar konten situs dari sumber lokal di dalam repository.",
     slug: "toc",
   });
 }
@@ -64,54 +42,11 @@ export async function generateMetadata() {
 export default async function TocPage() {
   noStore();
 
-  const [pages, posts, services, products, categories] = await Promise.all([
-    fetchSanityPagesStaticParams(),
-    fetchSanityPostsStaticParams(),
-    fetchSanityServicesStaticParams(),
-    fetchSanityProductsStaticParams(),
-    fetchSanityCategoriesStaticParams(),
-  ]);
-
-  const sanityPageLinks = dedupeLinks(
-    (pages as SlugEntry[]).map((item) => {
-      const slug = normalizeSlug(item);
-      return {
-        title: toTitleFromSlug(slug),
-        href: slug === "index" ? "/" : `/${slug}`,
-      };
-    }),
-  );
-
-  const postLinks = dedupeLinks(
-    (posts as SlugEntry[]).map((item) => {
-      const slug = normalizeSlug(item);
-      return { title: toTitleFromSlug(slug), href: `/blog/${slug}` };
-    }),
-  );
-
-  const serviceLinks = dedupeLinks(
-    (services as SlugEntry[]).map((item) => {
-      const slug = normalizeSlug(item);
-      return { title: toTitleFromSlug(slug), href: `/services/${slug}` };
-    }),
-  );
-
-  const productLinks = dedupeLinks(
-    (products as SlugEntry[]).map((item) => {
-      const slug = normalizeSlug(item);
-      return { title: toTitleFromSlug(slug), href: `/products/${slug}` };
-    }),
-  );
-
-  const categoryLinks = dedupeLinks(
-    (categories as SlugEntry[]).flatMap((item) => {
-      const slug = normalizeSlug(item);
-      return [
-        { title: `${toTitleFromSlug(slug)} (Blog)`, href: `/blog/category/${slug}` },
-        { title: `${toTitleFromSlug(slug)} (Service)`, href: `/services/category/${slug}` },
-        { title: `${toTitleFromSlug(slug)} (Product)`, href: `/products/category/${slug}` },
-      ];
-    }),
+  const astroLocalLinks = dedupeLinks(
+    (await getAstroLocalCatalog()).map((item) => ({
+      title: item.title,
+      href: item.href,
+    })),
   );
 
   const legacyLinks = dedupeLinks(
@@ -133,17 +68,14 @@ export default async function TocPage() {
     { title: "Blog", href: "/blog" },
     { title: "Services", href: "/services" },
     { title: "Products", href: "/products" },
+    { title: "Projects", href: "/projects" },
     { title: "Docs", href: "/docs" },
     { title: "TOC", href: "/toc" },
   ]);
 
   const sections: TocSection[] = [
     { title: "Core Static", links: staticCoreLinks },
-    { title: "Sanity Pages", links: sanityPageLinks },
-    { title: "Sanity Posts", links: postLinks },
-    { title: "Sanity Services", links: serviceLinks },
-    { title: "Sanity Products", links: productLinks },
-    { title: "Sanity Categories", links: categoryLinks },
+    { title: "Local Astro Mirror", links: astroLocalLinks },
     { title: "Local Legacy Routes", links: legacyLinks },
     { title: "Local Docs Index", links: localDocsLinks },
   ];
@@ -154,7 +86,7 @@ export default async function TocPage() {
         <p className="text-ui-label text-foreground/70">Table of Contents</p>
         <h1 className="mt-2 text-display-lg">All Content Sources</h1>
         <p className="mt-3 max-w-3xl text-ui-body text-muted-foreground">
-          Halaman ini menggabungkan konten dari Sanity dan file lokal agar Anda
+          Halaman ini menggabungkan konten lokal di dalam repository agar Anda
           bisa melihat coverage URL dalam satu tempat.
         </p>
       </header>

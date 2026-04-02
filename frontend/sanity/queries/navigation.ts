@@ -26,6 +26,7 @@ export const NAVIGATION_QUERY = groq`
           @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,
           @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,
           @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,
+          @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,
           "/" + @.internalLink->slug.current
         )
       }

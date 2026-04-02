@@ -50,6 +50,11 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Legacy rewrite shell now includes strategic internal-link slots to canonical clusters (services/blog/contact) as crawl-support fallback
 - [x] Worker 3 content rewrite pass v2 expanded to slug-specific copy variants (website services, printing details, software details, `about/ai-statement`)
 - [x] Worker 3 content rewrite pass v3 closed remaining generic-route backlog in Wave 1 clusters (`TOTAL_GENERIC 0`)
+- [x] Legacy landing v4 sections added for rewrite routes (TOC, pricing, feature icons, portfolio visuals, testimonials, final CTA, FAQ schema)
+- [x] `/toc` content index locked to repository-local sources only (no external copy/fetch, no Sanity dependency in TOC runtime)
+- [x] Studio shared `link` schema now hides navigation-only fields outside `navigation` documents to avoid editor noise in post/product/service content
+- [x] Metadata resolver now falls back to content thumbnail image when SEO `meta.image` is empty (`meta.image` -> `page.image` -> global default image)
+- [x] Project contract implemented end-to-end: Studio `project` schema + frontend query/fetch + `/projects` and `/projects/[slug]` routes + sitemap integration
 
 ## Workstream A - Platform & Data Foundation
 
@@ -58,6 +63,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [ ] Remove/disable unused Supabase dependencies in migration path.
 - [ ] Confirm frontend query contracts mirror studio schema exactly.
 - [x] Navigation link contract synced: `link`/`navigation-link-child` destination validation + `category` reference support aligned with frontend query mapping.
+- [x] `project` document contract shipped across Studio schema, frontend GROQ/fetch layer, and route rendering.
 - Blocker note (2026-04-02): Full A1 closure still pending audit for remaining document contracts (`project`, `redirect`) outside Worker 2 navigation scope.
 
 ### A2. Route Contract Freeze
@@ -143,6 +149,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - Done for legacy rewrite clusters via reusable template sections (CTA, related links, FAQ, process/highlights). TOC remains pending for blog/product/service long-form templates.
 - [x] Improve content differentiation across legacy clusters with slug-specific rewrite mapping (Wave 1 service-focused routes).
 - [x] Complete rewrite coverage for previously generic route templates in legacy Wave 1 service/printing clusters.
+- [x] Add richer conversion-oriented landing sections with iconography and visual proof blocks for legacy rewrite pages.
 - [ ] Ensure internal linking slots are CMS-configurable.
 
 ## Workstream E - Redirect Deployment Strategy

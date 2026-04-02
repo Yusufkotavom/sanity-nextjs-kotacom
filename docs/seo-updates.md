@@ -16,6 +16,28 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-02 - Legacy Landing v4 (Icons + Visual Sections + FAQ Schema)
+- Changed files:
+  - `frontend/components/legacy/legacy-landing-sections.tsx`
+  - `frontend/components/legacy/legacy-page-shell.tsx`
+  - `frontend/components/legacy/legacy-highlights.tsx`
+  - `frontend/components/legacy/legacy-process-faq.tsx`
+  - `frontend/lib/seo-jsonld.ts`
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Upgraded legacy rewrite template to richer landing composition: quick navigation (TOC), service types, pricing tiers, feature grid with icons, portfolio gallery with images, testimonials, and final CTA section.
+  - Added `FAQPage` JSON-LD generation and injected it into legacy page shell to strengthen structured data coverage for rewrite routes.
+  - Added section anchors (`#faq`, `#keunggulan`) and integrated new landing sections into the existing reusable shell pipeline.
+  - Extended content presets in `rewrite-content.ts` to cover all previously generic Wave 1 routes.
+- SEO impact:
+  - Direct SEO impact: better intent coverage, stronger on-page structure, richer internal sectioning, and FAQ structured data support.
+  - No Studio schema/query contract changes in this cycle.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` not run in this cycle.
+
 ## 2026-04-02 - Worker 3 Content Rewrite Pass v3 (Remaining Route Coverage)
 - Changed files:
   - `frontend/lib/legacy-pages/rewrite-content.ts`
@@ -31,6 +53,87 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter frontend run typecheck` passed.
   - Coverage check script result: `TOTAL_GENERIC 0`.
+
+## 2026-04-02 - TOC Local-Only Source Lock (No External Copy/Fetch)
+- Changed files:
+  - `frontend/lib/local-content/astro-catalog.ts`
+  - `frontend/app/(main)/toc/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Removed all outside-repository source paths from local content catalog and locked catalog scan to `frontend/content/astro-local/pages` only.
+  - Refactored `/toc` to local-only aggregation (core static links, local astro mirror, legacy manifest, docs index) and removed Sanity fetch dependency for this page.
+  - Updated migration megapan snapshot to reflect local-first TOC behavior.
+- SEO impact:
+  - Direct integration impact: keeps URL coverage QA available without CMS/runtime dependency and prevents accidental coupling to out-of-repo sources.
+  - No direct metadata schema change.
+- Verification:
+  - `pnpm --filter frontend exec next build --webpack` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Scope Navigation-Only Fields in Shared Link Schema
+- Changed files:
+  - `studio/schemas/blocks/shared/link.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Scoped navigation-specific fields in the shared `link` schema (`buttonVariant`, `navLocation`, `showInFooter`, `icon`, `children`) so they only appear when editing `navigation` documents.
+  - Updated `navLocation` validation to enforce required value only for `navigation` documents, preventing irrelevant validation pressure on non-navigation content (post/product/service/cta blocks).
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: reduces Studio authoring ambiguity and prevents navigation-only config from leaking into non-navigation content models.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+
+## 2026-04-02 - Metadata Image Fallback Enhanced with Content Thumbnail
+- Changed files:
+  - `frontend/sanity/lib/metadata.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Updated metadata image resolver to use per-document content image as fallback when `meta.image` is empty.
+  - New priority order for Open Graph/Twitter image: `meta.image` -> content main image (`page.image`) -> global `seoSettings.defaultImage` -> static `/images/og-image.jpg`.
+- SEO impact:
+  - Direct SEO impact: improves share-card relevance by using document thumbnail automatically when dedicated SEO image is not filled.
+  - Studio-frontend contract remains compatible (no schema shape change).
+- Verification:
+  - `pnpm --filter frontend exec next build --webpack` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Add Project CMS Contract + Frontend Routes (`/projects`)
+- Changed files:
+  - `studio/schemas/documents/project.ts`
+  - `studio/schema-types.ts`
+  - `studio/structure.ts`
+  - `studio/defaultDocumentNode.ts`
+  - `studio/presentation/resolve.ts`
+  - `studio/schemas/blocks/shared/link.ts`
+  - `studio/schemas/blocks/shared/navigation-link-child.ts`
+  - `studio/schemas/blocks/shared/block-content.ts`
+  - `frontend/sanity/queries/project.ts`
+  - `frontend/sanity/lib/fetch.ts`
+  - `frontend/sanity/queries/shared/link.ts`
+  - `frontend/sanity/queries/navigation.ts`
+  - `frontend/components/ui/project-card.tsx`
+  - `frontend/app/(main)/projects/page.tsx`
+  - `frontend/app/(main)/projects/[slug]/page.tsx`
+  - `frontend/app/sitemap.ts`
+  - `frontend/app/(main)/toc/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added new Studio `project` document schema and registered it in schema types + Studio desk structure.
+  - Added Studio preview/presentation route resolution for project documents (`/projects/[slug]`).
+  - Synced shared link/reference contracts so internal links can target `project` in navigation and rich text annotations.
+  - Added frontend project data layer (GROQ queries + fetch helpers) and new routes: `/projects` listing and `/projects/[slug]` detail.
+  - Extended sitemap path mapping and TOC core links to include project URLs.
+- SEO impact:
+  - Direct SEO/integration impact: project pages are now first-class routable content with metadata generation and sitemap inclusion.
+  - Cross-layer sync completed for route/schema/query/render contracts of `project`.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter frontend exec next build --webpack` passed.
+  - `pnpm --filter frontend run typecheck` passed.
 
 ## 2026-04-02 - Worker 3 Content Rewrite Pass v2 (Slug-Specific Copy Expansion)
 - Changed files:
