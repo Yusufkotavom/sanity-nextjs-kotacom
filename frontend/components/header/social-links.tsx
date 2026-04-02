@@ -34,11 +34,13 @@ export default function SocialLinks({
   className,
   iconOnly = true,
   align = "end",
+  size = "md",
 }: {
   links?: SocialLinkItem[] | null;
   className?: string;
   iconOnly?: boolean;
   align?: "start" | "end";
+  size?: "sm" | "md";
 }) {
   if (!links?.length) return null;
 
@@ -65,11 +67,13 @@ export default function SocialLinks({
               rel={item.target ? "noopener noreferrer" : undefined}
               aria-label={label}
               className={cn(
-                "inline-flex h-9 shrink-0 items-center rounded-md text-sm text-foreground/70 transition-colors hover:bg-accent hover:text-foreground",
+                "inline-flex shrink-0 items-center rounded-md text-sm text-foreground/70 transition-colors hover:bg-accent hover:text-foreground",
+                size === "sm" ? "h-8" : "h-9",
                 iconOnly
-                  ? "justify-center px-2.5"
+                  ? cn("justify-center", size === "sm" ? "px-2" : "px-2.5")
                   : cn(
-                      "w-full gap-2 px-3",
+                      "w-full gap-2",
+                      size === "sm" ? "px-2.5" : "px-3",
                       align === "start" ? "justify-start" : "justify-end",
                     ),
               )}

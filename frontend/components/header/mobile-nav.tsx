@@ -272,6 +272,7 @@ export default function MobileNav({
             <SocialLinks
               links={(settings as any)?.socialLinks}
               iconOnly
+              size="sm"
               align="start"
               className="flex-wrap"
             />

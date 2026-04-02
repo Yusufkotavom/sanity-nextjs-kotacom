@@ -3,9 +3,9 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import PortableTextRenderer from "@/components/portable-text-renderer";
+import SocialLinks from "@/components/header/social-links";
 import { fetchSanitySettings, fetchSanityNavigation } from "@/sanity/lib/fetch";
 import { NAVIGATION_QUERY_RESULT, SETTINGS_QUERY_RESULT } from "@/sanity.types";
-import { SOCIAL_ICON_MAP } from "@/components/icons/social-icons";
 
 type SanityLink = NonNullable<NAVIGATION_QUERY_RESULT[0]["links"]>[number];
 type NavChild = {
@@ -155,29 +155,17 @@ export default async function Footer() {
           )}
 
           {!!settingsWithSocial?.socialLinks?.length && (
-            <ul className="mt-10 flex flex-wrap items-center gap-4 border-t pt-8">
-              {settingsWithSocial.socialLinks.map((item) => {
-                const Icon = item?.platform
-                  ? SOCIAL_ICON_MAP[item.platform]
-                  : undefined;
-
-                if (!item?.url) return null;
-
-                return (
-                  <li key={item._key || item.url}>
-                    <Link
-                      href={item.url}
-                      target={item.target ? "_blank" : undefined}
-                      rel={item.target ? "noopener noreferrer" : undefined}
-                      className="inline-flex items-center gap-2 text-sm text-foreground/70 transition-colors hover:text-foreground"
-                    >
-                      {Icon && <Icon className="size-4" />}
-                      <span className="capitalize">{item.platform || "Link"}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+            <div className="mt-10 flex items-center justify-between gap-4 border-t pt-8">
+              <p className="text-xs uppercase tracking-wide text-foreground/55">
+                Ikuti Update Kami
+              </p>
+              <SocialLinks
+                links={settingsWithSocial.socialLinks}
+                iconOnly
+                size="sm"
+                className="justify-end"
+              />
+            </div>
           )}
 
           <div className="mt-8 flex flex-row gap-6 border-t pt-8 text-xs lg:mt-10">

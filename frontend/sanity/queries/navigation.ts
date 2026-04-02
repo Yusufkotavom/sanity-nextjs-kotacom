@@ -2,15 +2,15 @@ import { groq } from "next-sanity";
 import { linkQuery } from "./shared/link";
 
 export const NAVIGATION_QUERY = groq`
-  *[_type == "navigation"]{
+  *[_type == "navigation"] | order(_updatedAt desc)[0...1]{
     _type,
     _key,
     headerCta{
       ${linkQuery}
     },
-    links[]{
+    "links": coalesce(links, [])[]{
       ${linkQuery},
-      children[]{
+      "children": coalesce(children, [])[]{
         _key,
         group,
         description,

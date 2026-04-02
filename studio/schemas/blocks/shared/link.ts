@@ -4,6 +4,26 @@ export default defineType({
   name: "link",
   type: "object",
   title: "Link",
+  validation: (Rule) =>
+    Rule.custom((value) => {
+      if (!value) return true;
+
+      const link = value as {
+        isExternal?: boolean;
+        href?: string;
+        internalLink?: { _ref?: string } | null;
+      };
+
+      if (link.isExternal) {
+        return link.href
+          ? true
+          : "External link requires URL (href).";
+      }
+
+      return link.internalLink?._ref
+        ? true
+        : "Internal link requires Internal Link reference.";
+    }),
   fields: [
     defineField({
       name: "isExternal",
@@ -15,7 +35,13 @@ export default defineType({
       name: "internalLink",
       type: "reference",
       title: "Internal Link",
-      to: [{ type: "page" }, { type: "post" }, { type: "product" }, { type: "service" }],
+      to: [
+        { type: "page" },
+        { type: "post" },
+        { type: "category" },
+        { type: "product" },
+        { type: "service" },
+      ],
       hidden: ({ parent }) => parent?.isExternal,
     }),
     defineField({
@@ -32,6 +58,11 @@ export default defineType({
         Rule.uri({
           allowRelative: true,
           scheme: ["http", "https", "mailto", "tel"],
+        }).custom((value, context) => {
+          const isExternal = (context.parent as { isExternal?: boolean } | undefined)
+            ?.isExternal;
+          if (!isExternal) return true;
+          return value ? true : "URL is required when Is External is enabled.";
         }),
     }),
     defineField({

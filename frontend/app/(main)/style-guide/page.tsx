@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/accordion";
 import ProductCard from "@/components/ui/product-card";
 import ServiceCard from "@/components/ui/service-card";
+import SocialLinks from "@/components/header/social-links";
+import { Moon } from "lucide-react";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
 
 export async function generateMetadata() {
@@ -57,10 +59,24 @@ export default function StyleGuidePage() {
                 <Button variant="outline">Outline</Button>
                 <Button variant="secondary">Secondary</Button>
                 <Button variant="ghost">Ghost</Button>
-                <Button variant="destructive">Destructive</Button>
-                <Button variant="link" asChild>
-                  <Link href="#">Link Button</Link>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="mb-4 text-2xl font-semibold">Icon Actions</h2>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button variant="ghost" size="icon" aria-label="Toggle appearance">
+                  <Moon className="size-4" />
                 </Button>
+                <SocialLinks
+                  iconOnly
+                  size="sm"
+                  links={[
+                    { _key: "sg-ig", platform: "instagram", url: "https://instagram.com" },
+                    { _key: "sg-li", platform: "linkedin", url: "https://linkedin.com" },
+                    { _key: "sg-yt", platform: "youtube", url: "https://youtube.com" },
+                  ]}
+                />
               </div>
             </div>
 

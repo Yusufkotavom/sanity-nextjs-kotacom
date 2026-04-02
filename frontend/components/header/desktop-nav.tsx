@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { NAVIGATION_QUERY_RESULT } from "@/sanity.types";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { NAVIGATION_ICON_MAP } from "@/components/icons/navigation-icons";
 
 type SanityLink = NonNullable<NAVIGATION_QUERY_RESULT[0]["links"]>[number];
@@ -20,8 +18,6 @@ type NavLinkWithChildren = SanityLink & {
   icon?: string | null;
   children?: NavChild[] | null;
   navLocation?: "primary" | "utility" | null;
-  showInFooter?: boolean | null;
-  buttonVariant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null;
 };
 
 function groupChildren(children: NavChild[]) {
@@ -44,21 +40,10 @@ export default function DesktopNav({
     .filter((item) => item?.title)
     .map((item) => item as NavLinkWithChildren);
 
-  const navDoc = (navigation[0] as { headerCta?: NavLinkWithChildren | null } | undefined) || {};
   const primaryItems = navItems.filter((item) => item.navLocation !== "utility");
-  const utilityItems = navItems.filter((item) => item.navLocation === "utility");
-  const fallbackCta =
-    utilityItems.find(
-      (item) =>
-        item.buttonVariant &&
-        item.buttonVariant !== "ghost" &&
-        item.buttonVariant !== "link",
-    ) || null;
-  const headerCta = navDoc.headerCta || fallbackCta;
-  const utilityLinks = utilityItems.filter((item) => item._key !== headerCta?._key);
 
   return (
-    <nav className="hidden w-full items-center justify-between gap-6 lg:flex" aria-label="Primary">
+    <nav className="hidden min-w-0 flex-1 items-center lg:flex" aria-label="Primary">
       <ul className="flex min-w-0 items-center gap-1">
         {primaryItems.map((item) => {
           const ItemIcon = item.icon ? NAVIGATION_ICON_MAP[item.icon] : null;
@@ -134,45 +119,6 @@ export default function DesktopNav({
           );
         })}
       </ul>
-
-      {(!!utilityLinks.length || !!headerCta) && (
-        <div className="ml-auto flex items-center gap-1">
-          {utilityLinks.map((item) => {
-            const ItemIcon = item.icon ? NAVIGATION_ICON_MAP[item.icon] : null;
-            return (
-              <Link
-                key={item._key}
-                href={item.href || "#"}
-                target={item.target ? "_blank" : undefined}
-                rel={item.target ? "noopener noreferrer" : undefined}
-                className={cn(
-                  buttonVariants({
-                    variant: item.buttonVariant || "ghost",
-                    size: "sm",
-                  }),
-                  item.buttonVariant === "link" && "px-2",
-                )}
-              >
-                {ItemIcon && <ItemIcon className="size-4" />}
-                {item.title}
-              </Link>
-            );
-          })}
-          {headerCta?.title && (
-            <Link
-              href={headerCta.href || "#"}
-              target={headerCta.target ? "_blank" : undefined}
-              rel={headerCta.target ? "noopener noreferrer" : undefined}
-              className={buttonVariants({
-                variant: headerCta.buttonVariant || "default",
-                size: "sm",
-              })}
-            >
-              {headerCta.title}
-            </Link>
-          )}
-        </div>
-      )}
     </nav>
   );
 }

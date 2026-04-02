@@ -16,6 +16,126 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-02 - Worker 3 Content Rewrite Pass for Legacy Service Clusters
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Rewrote legacy content mapping to reduce generic copy and strengthen intent alignment per cluster.
+  - Added dedicated website index copy (`buildWebsiteIndexCopy`) with stronger conversion-oriented narrative and keyword coverage.
+  - Improved printing/software cluster copy logic to differentiate section index pages vs detail pages, including CTA and supporting keyword refinements.
+  - Refined Sistem POS branch with stronger keyword coverage and cluster-specific CTA.
+- SEO impact:
+  - Improves on-page semantic relevance for migrated legacy service pages and reduces duplicate boilerplate patterns across cluster routes.
+  - No direct change to Studio schema/query contracts; existing `seoSettings` fallback behavior remains unchanged.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Worker 2 CMS Contract Sync for Navigation Links
+- Changed files:
+  - `studio/schemas/blocks/shared/link.ts`
+  - `studio/schemas/blocks/shared/navigation-link-child.ts`
+  - `frontend/sanity/queries/navigation.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Synced Studio-to-Frontend contract by adding `category` support to main `link.internalLink` references, matching existing frontend query route mapping.
+  - Added destination validation on `link` and `navigation-link-child` objects to prevent empty navigation targets (external requires `href`, internal requires `internalLink`).
+  - Hardened navigation query contract with deterministic document selection (`order(_updatedAt desc)[0...1]`) and `coalesce` defaults for `links`/`children` to reduce empty-state risk in header/footer rendering.
+- SEO impact:
+  - No direct metadata rendering change.
+  - Improves integration safety by preventing broken internal/external navigation links that can degrade crawl path quality.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Parallel Worker Integration Pass (UI + CMS Contract + Rewrite Route Parity)
+- Changed files:
+  - `frontend/components/header/index.tsx`
+  - `frontend/components/header/desktop-nav.tsx`
+  - `frontend/components/header/mobile-nav.tsx`
+  - `frontend/components/header/social-links.tsx`
+  - `frontend/components/footer.tsx`
+  - `frontend/app/(main)/style-guide/page.tsx`
+  - `frontend/sanity/queries/navigation.ts`
+  - `studio/schemas/blocks/shared/link.ts`
+  - `studio/schemas/blocks/shared/navigation-link-child.ts`
+  - `frontend/lib/legacy-pages/astro-static.ts`
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/app/(main)/percetakan/[...segments]/page.tsx`
+  - `frontend/app/(main)/percetakan/[slug]/page.tsx` (removed)
+  - `frontend/app/(main)/percetakan/cetak-kalender/[kota]/page.tsx` (removed)
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Integrated Worker 1 UI shell refinements (single CTA emphasis, icon-only social actions, compact header rhythm) across header/footer/style guide.
+  - Finalized Worker 2 navigation contract synchronization between Studio schema validation and frontend query defaults.
+  - Finalized Worker 3 route parity hardening by consolidating nested `percetakan` URL handling into manifest-driven catch-all routing.
+  - Enriched rewrite copy mapping for top cluster index pages (`pembuatan-website`, `percetakan`, `software`, `sistem-pos`) with stronger keyword and CTA differentiation.
+- SEO impact:
+  - Direct SEO impact: improves crawl continuity for nested `percetakan` legacy URLs and strengthens rewrite-page keyword/metadata alignment.
+  - Integration impact: reduces frontend-backend contract drift for navigation-driven internal linking behavior.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend exec next build --webpack` passed.
+  - `pnpm --filter studio run typecheck` passed.
+
+## 2026-04-02 - Worker 3 Route Parity Hardening for Percetakan Nested Paths
+- Changed files:
+  - `frontend/lib/legacy-pages/astro-static.ts`
+  - `frontend/app/(main)/percetakan/[...segments]/page.tsx`
+  - `frontend/app/(main)/percetakan/[slug]/page.tsx` (removed)
+  - `frontend/app/(main)/percetakan/cetak-kalender/[kota]/page.tsx` (removed)
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced split dynamic routes under `percetakan` with a single manifest-driven catch-all (`[...segments]`) route.
+  - Added helper APIs in legacy route registry to resolve section descendants and route lookup by segment array.
+  - Consolidated metadata and rendering path for nested URLs (including `cetak-kalender/{kota}`) through one routing contract to reduce 404 risk during rewrite-first migration.
+- SEO impact:
+  - Direct technical SEO impact: improves legacy URL parity coverage for nested `percetakan` paths and reduces accidental crawl loss from route mismatch.
+  - Keeps shared metadata helper path intact so global fallback behavior remains consistent.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend exec next build --webpack` passed.
+
+## 2026-04-02 - Worker 1 UI Shell Pass (Header/Nav + Icon Actions)
+- Changed files:
+  - `frontend/components/header/index.tsx`
+  - `frontend/components/header/desktop-nav.tsx`
+  - `frontend/components/header/mobile-nav.tsx`
+  - `frontend/components/header/social-links.tsx`
+  - `frontend/components/footer.tsx`
+  - `frontend/app/(main)/style-guide/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Refactored desktop header to a clearer single-CTA shell: primary nav stays focused, while CTA, dark-mode action, and icon-only social actions are grouped on the right.
+  - Kept mobile shell compact and aligned action sizing (`sm`) for CTA/social/theme controls.
+  - Enhanced reusable `SocialLinks` primitive with size variants (`sm`/`md`) and reused it in header/footer/style-guide.
+  - Updated style-guide showcase to reflect Worker 1 contract: button matrix focus (`default`, `outline`, `secondary`, `ghost`) and icon-action pattern.
+- SEO impact:
+  - No direct SEO impact.
+  - Indirect integration impact: navigation consistency and shared shell primitives reduce UI drift risk during rewrite rollout.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend exec next build --webpack` passed.
+
+## 2026-04-02 - Footer Rewrite: Icon-Only Social Pattern
+- Changed files:
+  - `frontend/components/footer.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Rewrote footer social rendering to use shared `SocialLinks` component with icon-only layout, replacing per-item text labels.
+  - Aligned footer interaction style with shared UI contract (compact, reusable, and consistent icon treatment).
+- SEO impact:
+  - No direct SEO impact.
+  - Indirect UX improvement can support cleaner navigation scanning for users.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
 ## 2026-04-02 - Legacy Rewrite Routes: Metadata Fallback + JSON-LD Template Sync
 - Changed files:
   - `frontend/components/legacy/legacy-page-shell.tsx`
@@ -65,8 +185,8 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Improves on-page semantic relevance and internal consistency across migrated legacy routes.
   - No schema/query contract change in Studio; frontend SEO fallback behavior remains unchanged.
 - Verification:
-  - `pnpm --filter frontend run typecheck` (pending)
-  - `pnpm --filter frontend run build` (pending)
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
 
 ## 2026-04-01 - Dependabot Schedule Adjusted Back to Weekly
 - Changed files:

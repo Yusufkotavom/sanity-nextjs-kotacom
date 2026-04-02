@@ -42,6 +42,10 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Legacy route rewrite shell v1 applied with reusable components for service/trust clusters (`pembuatan-website`, `percetakan`, `software`, `layanan`, `about`, `contact`, `privacy`, `sistem-pos`)
 - [x] 3-worker rewrite orchestration contract published (`docs/rewrite-worker-orchestration.md`)
 - [x] Legacy route metadata moved to centralized helper with `seoSettings` global fallback; hardcoded `noindex` removed from rewrite clusters
+- [x] Footer social area aligned to shared icon-only reusable pattern (`frontend/components/footer.tsx`)
+- [x] Worker 2 contract hardening shipped for navigation links (Studio schema validation + frontend query fallback sync)
+- [x] Worker 1 UI shell pass applied for header/nav action layout and reusable icon-action patterns (`frontend/components/header/**`, `frontend/components/footer.tsx`, `frontend/app/(main)/style-guide/page.tsx`)
+- [x] Worker 3 content rewrite pass applied to legacy service clusters via centralized copy mapping (`frontend/lib/legacy-pages/rewrite-content.ts`)
 
 ## Workstream A - Platform & Data Foundation
 
@@ -49,6 +53,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [ ] Finalize document contracts for `post`, `service`, `product`, `project`, `category`, `seoSettings`, `redirect`.
 - [ ] Remove/disable unused Supabase dependencies in migration path.
 - [ ] Confirm frontend query contracts mirror studio schema exactly.
+- [x] Navigation link contract synced: `link`/`navigation-link-child` destination validation + `category` reference support aligned with frontend query mapping.
+- Blocker note (2026-04-02): Full A1 closure still pending audit for remaining document contracts (`project`, `redirect`) outside Worker 2 navigation scope.
 
 ### A2. Route Contract Freeze
 - [x] Publish canonical target route map:
@@ -99,6 +105,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - title target 50-60 chars
   - meta description target 120-155 chars
 - [ ] Ensure canonical consistency for paginated and variant pages.
+- [x] Legacy rewrite copy hardening completed for service/trust clusters to reduce boilerplate and improve intent-specific keyword coverage.
 
 ### C2. Structured Data
 - [ ] Align JSON-LD by template (Article, BreadcrumbList, ItemList, Organization, WebSite).
@@ -115,6 +122,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ### D1. Design System Alignment
 - [ ] Define reusable primitives: typography, spacing, button variants, card patterns, nav behavior.
 - [ ] Harmonize with current header/nav architecture and CMS-driven menus.
+- [x] Apply shared icon-only social pattern for footer/navigation shell using reusable component contract.
+- [x] Apply compact sticky header rhythm with single CTA focus and icon actions (dark mode + social) across desktop/mobile shell.
 
 ### D2. Template Refactor Priority
 - [ ] Homepage

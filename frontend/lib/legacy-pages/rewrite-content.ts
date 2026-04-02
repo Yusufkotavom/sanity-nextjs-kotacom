@@ -106,18 +106,69 @@ function buildWebsiteCityCopy(page: LegacyAstroPage): LegacyRewriteCopy {
   };
 }
 
+function buildWebsiteIndexCopy(): LegacyRewriteCopy {
+  return {
+    primaryKeyword: "Jasa Pembuatan Website",
+    secondaryKeywords: [
+      "Jasa pembuatan website profesional",
+      "Pembuatan website bisnis",
+      "Website company profile",
+      "Website siap SEO",
+      "Jasa web developer Indonesia",
+    ],
+    description:
+      "Jasa pembuatan website untuk bisnis yang membutuhkan tampilan kredibel, performa cepat, dan struktur SEO yang siap dikembangkan.",
+    intro:
+      "Kami membantu bisnis membangun website yang tidak hanya menarik secara visual, tetapi juga siap mendukung traffic organik, campaign iklan, dan konversi lead.",
+    highlights: [
+      "Struktur halaman disusun berdasarkan intent pencarian.",
+      "Desain dan copy diarahkan untuk meningkatkan konversi.",
+      "Optimasi performa, metadata, dan internal linking sejak awal.",
+      "Website mudah dikembangkan untuk kebutuhan jangka panjang.",
+    ],
+    process: [
+      "Audit tujuan bisnis, audience, dan positioning layanan.",
+      "Penyusunan arsitektur halaman serta keyword mapping.",
+      "Eksekusi desain, development, dan QA teknis.",
+      "Launch, monitoring performa, dan iterasi konversi.",
+    ],
+    faqs: [
+      {
+        question: "Apakah website bisa dikembangkan bertahap?",
+        answer:
+          "Bisa. Kami menyusun fondasi yang fleksibel agar fitur dan konten baru dapat ditambahkan tanpa mengulang dari awal.",
+      },
+      {
+        question: "Apakah website sudah siap untuk SEO dan iklan?",
+        answer:
+          "Ya. Struktur teknis, kecepatan, metadata, dan alur CTA disiapkan agar mendukung akuisisi dari organik maupun paid traffic.",
+      },
+    ],
+    ctaLabel: "Mulai Proyek Website",
+    ctaHref: DEFAULT_CTA,
+  };
+}
+
 function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
   const service = page.title;
-  const primaryKeyword = `Jasa ${service}`;
+  const primaryKeyword = page.route === "/percetakan" ? "Jasa Percetakan" : `Jasa ${service}`;
 
   return {
     primaryKeyword,
-    secondaryKeywords: [
-      `${service} berkualitas`,
-      `${service} cepat`,
-      `${service} untuk bisnis`,
-      `${service} custom`,
-    ],
+    secondaryKeywords:
+      page.route === "/percetakan"
+        ? [
+            "Layanan percetakan untuk bisnis",
+            "Percetakan cepat dan presisi",
+            "Percetakan promosi dan corporate",
+            "Jasa cetak custom",
+          ]
+        : [
+            `${service} berkualitas`,
+            `${service} cepat`,
+            `${service} untuk bisnis`,
+            `${service} custom`,
+          ],
     description: `${primaryKeyword} untuk kebutuhan promosi dan branding dengan hasil cetak konsisten, material jelas, serta proses produksi terukur.`,
     intro: `${service} kami dirancang untuk membantu bisnis menjaga kualitas materi promosi dan dokumen brand dengan hasil akhir yang presisi serta siap distribusi.`,
     highlights: [
@@ -144,23 +195,32 @@ function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
           "Tersedia. Spesifikasi material, jumlah, dan finishing dapat disesuaikan dengan kebutuhan kampanye Anda.",
       },
     ],
-    ctaLabel: "Diskusikan Kebutuhan Cetak",
+    ctaLabel: page.route === "/percetakan" ? "Konsultasi Layanan Percetakan" : "Diskusikan Kebutuhan Cetak",
     ctaHref: DEFAULT_CTA,
   };
 }
 
 function buildSoftwareCopy(page: LegacyAstroPage): LegacyRewriteCopy {
   const title = page.title;
-  const primaryKeyword = `Pengembangan ${title}`;
+  const primaryKeyword =
+    page.route === "/software" ? "Jasa Pengembangan Software" : `Pengembangan ${title}`;
 
   return {
     primaryKeyword,
-    secondaryKeywords: [
-      `${title} custom`,
-      `${title} untuk operasional`,
-      `Software bisnis terintegrasi`,
-      `Aplikasi internal perusahaan`,
-    ],
+    secondaryKeywords:
+      page.route === "/software"
+        ? [
+            "Software custom untuk bisnis",
+            "Pengembangan aplikasi internal",
+            "Sistem operasional terintegrasi",
+            "Jasa software house Indonesia",
+          ]
+        : [
+            `${title} custom`,
+            `${title} untuk operasional`,
+            "Software bisnis terintegrasi",
+            "Aplikasi internal perusahaan",
+          ],
     description: `${primaryKeyword} untuk meningkatkan efisiensi operasional, visibilitas data, dan kecepatan eksekusi tim.`,
     intro: `Kami membangun ${title.toLowerCase()} dengan pendekatan produk: requirement jelas, prioritas fitur terukur, dan implementasi bertahap agar cepat memberi dampak bisnis.`,
     highlights: [
@@ -187,7 +247,7 @@ function buildSoftwareCopy(page: LegacyAstroPage): LegacyRewriteCopy {
           "Scope dipecah per fase dengan indikator hasil yang jelas, sehingga prioritas dan delivery lebih terkontrol.",
       },
     ],
-    ctaLabel: "Konsultasi Kebutuhan Software",
+    ctaLabel: page.route === "/software" ? "Diskusi Pengembangan Software" : "Konsultasi Kebutuhan Software",
     ctaHref: DEFAULT_CTA,
   };
 }
@@ -369,18 +429,7 @@ export function buildLegacyRewriteCopy(page: LegacyAstroPage): LegacyRewriteCopy
   }
 
   if (page.section === "pembuatan-website") {
-    return {
-      ...buildGenericCopy(page),
-      primaryKeyword: "Jasa Pembuatan Website",
-      secondaryKeywords: [
-        "Jasa pembuatan website profesional",
-        "Pembuatan website bisnis",
-        "Website company profile",
-      ],
-      description:
-        "Jasa pembuatan website untuk bisnis yang butuh tampilan kredibel, performa cepat, dan struktur SEO yang siap dikembangkan.",
-      ctaLabel: "Mulai Proyek Website",
-    };
+    return buildWebsiteIndexCopy();
   }
 
   if (page.section === "percetakan") {
@@ -398,9 +447,11 @@ export function buildLegacyRewriteCopy(page: LegacyAstroPage): LegacyRewriteCopy
           "Sistem POS retail",
           "Software POS restoran",
           "POS terintegrasi stok",
+          "Sistem point of sale",
         ],
         description:
           "Software sistem POS untuk bisnis retail dan F&B yang membutuhkan transaksi cepat, kontrol stok akurat, dan laporan real-time.",
+        ctaLabel: "Konsultasi Sistem POS",
       };
     }
     return softwareCopy;

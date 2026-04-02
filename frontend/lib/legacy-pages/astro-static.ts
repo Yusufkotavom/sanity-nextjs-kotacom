@@ -30,6 +30,12 @@ export function getLegacySectionChildren(section: string): LegacyAstroPage[] {
   );
 }
 
+export function getLegacySectionDescendants(section: string): LegacyAstroPage[] {
+  return pages.filter(
+    (item) => item.section === section && item.route.startsWith(`/${section}/`),
+  );
+}
+
 export function getLegacySectionSlug(
   section: string,
   slug: string,
@@ -43,6 +49,14 @@ export function getLegacySinglePage(section: string): LegacyAstroPage | null {
 
 export function getLegacyRoutesByPrefix(prefix: string): LegacyAstroPage[] {
   return pages.filter((item) => item.route.startsWith(prefix));
+}
+
+export function getLegacySectionRouteBySegments(
+  section: string,
+  segments: string[],
+): LegacyAstroPage | null {
+  if (segments.length === 0) return getLegacySectionIndex(section);
+  return getLegacyRoute(`/${section}/${segments.join("/")}`);
 }
 
 export function getLegacySections() {
