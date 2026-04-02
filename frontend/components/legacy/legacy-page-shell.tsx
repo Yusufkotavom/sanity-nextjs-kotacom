@@ -12,6 +12,7 @@ import LegacyLandingSections from "@/components/legacy/legacy-landing-sections";
 import LegacyHighlights from "@/components/legacy/legacy-highlights";
 import LegacyProcessFaq from "@/components/legacy/legacy-process-faq";
 import LegacyRelatedLinks from "@/components/legacy/legacy-related-links";
+import MicroBadges from "@/components/micro-badges";
 
 type LegacyPageShellProps = {
   page: LegacyAstroPage;
@@ -70,6 +71,7 @@ export default function LegacyPageShell({
         sectionHref={sectionHref}
       />
       <LegacyLandingSections page={page} copy={copy} />
+      <MicroBadges />
       <LegacyHighlights copy={copy} />
       <LegacyProcessFaq copy={copy} />
       <LegacyRelatedLinks

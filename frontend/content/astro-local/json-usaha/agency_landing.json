@@ -1,0 +1,373 @@
+{
+  "hero": {
+    "badge_text": "Digital Agency",
+    "title": "We're more than an agency of record, we're an agency of progress",
+    "subtitle": "Here at KotaCom we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.",
+    "cta_text": "Let's talk",
+    "cta_url": "/contact",
+    "background_image": "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/agency-background.jpg",
+    "style": "overlay",
+    "features": [
+      {
+        "icon": "design",
+        "title": "Website Design",
+        "description": "Design and develop professional websites",
+        "link": "/services/website-design"
+      },
+      {
+        "icon": "marketing",
+        "title": "Digital Marketing",
+        "description": "Digital marketing services such as SEO, PPC",
+        "link": "/services/digital-marketing"
+      },
+      {
+        "icon": "ecommerce",
+        "title": "E-commerce Solutions",
+        "description": "Build and manage e-commerce websites",
+        "link": "/services/ecommerce"
+      },
+      {
+        "icon": "maintenance",
+        "title": "Website Maintenance",
+        "description": "Ongoing maintenance and support",
+        "link": "/services/maintenance"
+      }
+    ]
+  },
+  "info": {
+    "title": "Powering innovation at 200,000+ companies worldwide",
+    "subtitle": "Empower Developers, IT Ops, and business teams to collaborate at high velocity",
+    "description": "Respond to changes and deliver great customer and employee service experiences fast.",
+    "content": [
+      "Empower Developers, IT Ops, and business teams to collaborate at high velocity. Respond to changes and deliver great customer and employee service experiences fast.",
+      "Track work across the enterprise through an open, collaborative platform. Link issues across Jira and ingest data from other software development tools, so your IT support and operations teams have richer contextual information to rapidly respond to requests, incidents, and changes.",
+      "Deliver great service experiences fast - without the complexity of traditional ITSM solutions. Accelerate critical development work, eliminate toil, and deploy changes with ease, with a complete audit trail for every change."
+    ],
+    "link": {
+      "text": "Learn more",
+      "url": "/about"
+    },
+    "image": "/assets/images/about-section.jpg"
+  },
+  "stats": {
+    "title": "Our Impact",
+    "subtitle": "Numbers that speak for themselves",
+    "stats": [
+      {
+        "number": "200+",
+        "label": "Happy Clients"
+      },
+      {
+        "number": "500+",
+        "label": "Projects Completed"
+      },
+      {
+        "number": "50+",
+        "label": "Team Members"
+      },
+      {
+        "number": "5+",
+        "label": "Years Experience"
+      }
+    ]
+  },
+  "clients": {
+    "title": "Over 200+ happy clients",
+    "description": "Let's take most of the money we would've spent on paid advertising and paid marketing and instead of spending it on that, invest it in the customer experience/customer service and then let our customers do the marketing for us.",
+    "clients": [
+      {
+        "name": "PT Indosat Ooredoo",
+        "logo": "/assets/client-logos/indosat.svg"
+      },
+      {
+        "name": "Bank BCA",
+        "logo": "/assets/client-logos/bca.svg"
+      },
+      {
+        "name": "Tokopedia",
+        "logo": "/assets/client-logos/tokopedia.svg"
+      },
+      {
+        "name": "Gojek",
+        "logo": "/assets/client-logos/gojek.svg"
+      },
+      {
+        "name": "Traveloka",
+        "logo": "/assets/client-logos/traveloka.svg"
+      },
+      {
+        "name": "Bukalapak",
+        "logo": "/assets/client-logos/bukalapak.svg"
+      }
+    ]
+  },
+  "gallery": {
+    "images": [
+      "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-1.png",
+      "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-2.png",
+      "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png",
+      "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-4.png",
+      "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-5.png",
+      "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-6.png"
+    ]
+  },
+  "features": {
+    "title": "Innovative solutions for your business",
+    "subtitle": "We provide cutting-edge technology solutions",
+    "items": [
+      {
+        "icon": "responsive",
+        "title": "Responsive Design",
+        "description": "Websites that work perfectly on all devices",
+        "benefits": ["Mobile-first approach", "Fast loading times", "SEO optimized"]
+      },
+      {
+        "icon": "security",
+        "title": "Secure & Reliable",
+        "description": "Enterprise-grade security and reliability",
+        "benefits": ["SSL certificates", "Regular backups", "24/7 monitoring"]
+      },
+      {
+        "icon": "scalable",
+        "title": "Scalable Solutions",
+        "description": "Solutions that grow with your business",
+        "benefits": ["Cloud infrastructure", "Auto-scaling", "Performance optimization"]
+      }
+    ]
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive digital solutions for your business",
+    "services": [
+      {
+        "icon": "web-development",
+        "title": "Web Development",
+        "description": "Custom websites and web applications",
+        "features": ["Responsive Design", "SEO Optimization", "CMS Integration"],
+        "price": "Starting from Rp 5,000,000",
+        "link": "/services/web-development"
+      },
+      {
+        "icon": "mobile-app",
+        "title": "Mobile App Development",
+        "description": "iOS and Android mobile applications",
+        "features": ["Native Development", "Cross-platform", "UI/UX Design"],
+        "price": "Starting from Rp 15,000,000",
+        "link": "/services/mobile-app"
+      },
+      {
+        "icon": "digital-marketing",
+        "title": "Digital Marketing",
+        "description": "SEO, SEM, and social media marketing",
+        "features": ["SEO Optimization", "Google Ads", "Social Media Management"],
+        "price": "Starting from Rp 2,000,000/month",
+        "link": "/services/digital-marketing"
+      }
+    ]
+  },
+  "why_us": {
+    "title": "Why Choose KotaCom?",
+    "subtitle": "We deliver exceptional results",
+    "reasons": [
+      {
+        "icon": "experience",
+        "title": "5+ Years Experience",
+        "description": "Proven track record in delivering successful projects"
+      },
+      {
+        "icon": "team",
+        "title": "Expert Team",
+        "description": "Certified professionals with latest technology expertise"
+      },
+      {
+        "icon": "support",
+        "title": "24/7 Support",
+        "description": "Round-the-clock technical support and maintenance"
+      },
+      {
+        "icon": "quality",
+        "title": "Quality Assurance",
+        "description": "Rigorous testing and quality control processes"
+      }
+    ]
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "subtitle": "Flexible pricing for businesses of all sizes",
+    "plans": [
+      {
+        "name": "Starter",
+        "price": "Rp 5,000,000",
+        "period": "one-time",
+        "description": "Perfect for small businesses",
+        "features": [
+          "5 Pages Website",
+          "Responsive Design",
+          "Basic SEO",
+          "Contact Form",
+          "1 Year Support"
+        ],
+        "cta": "Get Started",
+        "popular": false
+      },
+      {
+        "name": "Professional",
+        "price": "Rp 10,000,000",
+        "period": "one-time",
+        "description": "Best for growing businesses",
+        "features": [
+          "10 Pages Website",
+          "Custom Design",
+          "Advanced SEO",
+          "CMS Integration",
+          "E-commerce Ready",
+          "2 Years Support"
+        ],
+        "cta": "Choose Professional",
+        "popular": true
+      },
+      {
+        "name": "Enterprise",
+        "price": "Custom",
+        "period": "quote",
+        "description": "For large organizations",
+        "features": [
+          "Unlimited Pages",
+          "Custom Development",
+          "Full SEO Package",
+          "Multi-language Support",
+          "Advanced Security",
+          "Lifetime Support"
+        ],
+        "cta": "Contact Us",
+        "popular": false
+      }
+    ]
+  },
+  "portfolio": {
+    "title": "Our Portfolio",
+    "subtitle": "Recent projects we're proud of",
+    "projects": [
+      {
+        "title": "E-commerce Platform",
+        "category": "Web Development",
+        "description": "Modern e-commerce solution with payment integration",
+        "image": "/assets/portfolio/ecommerce-platform.jpg",
+        "technologies": ["React", "Node.js", "MongoDB"],
+        "link": "/portfolio/ecommerce-platform"
+      },
+      {
+        "title": "Mobile Banking App",
+        "category": "Mobile Development",
+        "description": "Secure mobile banking application",
+        "image": "/assets/portfolio/banking-app.jpg",
+        "technologies": ["React Native", "Firebase", "Blockchain"],
+        "link": "/portfolio/banking-app"
+      },
+      {
+        "title": "Corporate Website",
+        "category": "Web Design",
+        "description": "Professional corporate website with CMS",
+        "image": "/assets/portfolio/corporate-website.jpg",
+        "technologies": ["Astro", "Tailwind CSS", "Strapi"],
+        "link": "/portfolio/corporate-website"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "What Our Clients Say",
+    "subtitle": "Real feedback from real clients",
+    "testimonials": [
+      {
+        "name": "Budi Santoso",
+        "position": "CEO",
+        "company": "PT Maju Jaya",
+        "content": "KotaCom delivered an exceptional website that exceeded our expectations. Their team is professional and responsive.",
+        "avatar": "/assets/testimonials/budi-santoso.jpg",
+        "rating": 5
+      },
+      {
+        "name": "Sari Dewi",
+        "position": "Marketing Manager",
+        "company": "CV Berkah Mandiri",
+        "content": "The digital marketing services helped us increase our online presence significantly. Highly recommended!",
+        "avatar": "/assets/testimonials/sari-dewi.jpg",
+        "rating": 5
+      },
+      {
+        "name": "Ahmad Rahman",
+        "position": "Founder",
+        "company": "StartupXYZ",
+        "content": "Fast development, excellent communication, and great results. Will definitely work with them again.",
+        "avatar": "/assets/testimonials/ahmad-rahman.jpg",
+        "rating": 5
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to common questions",
+    "questions": [
+      {
+        "question": "How long does it take to develop a website?",
+        "answer": "Development time varies depending on complexity. A basic website takes 2-4 weeks, while complex projects may take 8-12 weeks."
+      },
+      {
+        "question": "Do you provide ongoing support and maintenance?",
+        "answer": "Yes, we provide comprehensive support and maintenance packages to ensure your website stays updated and secure."
+      },
+      {
+        "question": "Can you help with digital marketing?",
+        "answer": "Absolutely! We offer full digital marketing services including SEO, Google Ads, social media marketing, and content marketing."
+      },
+      {
+        "question": "What technologies do you use?",
+        "answer": "We use modern technologies like React, Astro, Node.js, Python, and cloud platforms to build scalable solutions."
+      },
+      {
+        "question": "Do you work with international clients?",
+        "answer": "Yes, we work with clients globally and can accommodate different time zones and communication preferences."
+      }
+    ]
+  },
+  "content": {
+    "title": "Our Approach",
+    "subtitle": "How we deliver exceptional results",
+    "sections": [
+      {
+        "title": "Discovery & Planning",
+        "description": "We start by understanding your business goals and requirements thoroughly.",
+        "image": "/assets/process/discovery.jpg"
+      },
+      {
+        "title": "Design & Development",
+        "description": "Our team creates beautiful, functional solutions using latest technologies.",
+        "image": "/assets/process/development.jpg"
+      },
+      {
+        "title": "Testing & Launch",
+        "description": "Rigorous testing ensures quality before launching your project.",
+        "image": "/assets/process/testing.jpg"
+      },
+      {
+        "title": "Support & Maintenance",
+        "description": "Ongoing support to keep your solution running smoothly.",
+        "image": "/assets/process/support.jpg"
+      }
+    ]
+  },
+  "final_cta": {
+    "title": "Ready to Start Your Project?",
+    "subtitle": "Let's discuss how we can help your business grow",
+    "description": "Contact us today for a free consultation and quote. Our team is ready to turn your ideas into reality.",
+    "primary_cta": {
+      "text": "Get Free Quote",
+      "url": "/contact"
+    },
+    "secondary_cta": {
+      "text": "View Portfolio",
+      "url": "/portfolio"
+    },
+    "background_color": "dark"
+  }
+}

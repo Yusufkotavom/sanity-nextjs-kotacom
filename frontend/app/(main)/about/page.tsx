@@ -1,4 +1,4 @@
-import LegacyPageShell from "@/components/legacy/legacy-page-shell";
+import RewritePageShell from "@/components/ui/rewrite/page-shell";
 import {
   getLegacySectionChildren,
   getLegacySectionIndex,
@@ -14,5 +14,5 @@ export default function AboutPage() {
   const page = getLegacySectionIndex("about");
   if (!page) notFound();
 
-  return <LegacyPageShell page={page} siblings={getLegacySectionChildren("about")} />;
+  return <RewritePageShell page={page} siblings={getLegacySectionChildren("about")} />;
 }

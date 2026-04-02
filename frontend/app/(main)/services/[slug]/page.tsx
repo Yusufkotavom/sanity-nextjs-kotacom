@@ -8,7 +8,7 @@ import { badgeVariants } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
 import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
-import ServiceCard from "@/components/ui/service-card";
+import ServiceGrid from "@/components/services/service-grid";
 import {
   fetchSanityCategoryBySlug,
   fetchSanitySeoSettings,
@@ -117,11 +117,7 @@ export default async function ServiceSlugPage(props: {
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {(services as any[]).map((item: any) => (
-              <ServiceCard key={item.slug?.current || item.title} {...item} />
-            ))}
-          </div>
+          <ServiceGrid services={services as any[]} />
         </div>
       </section>
     );

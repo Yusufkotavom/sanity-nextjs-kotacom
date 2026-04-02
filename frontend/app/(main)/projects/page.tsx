@@ -1,4 +1,4 @@
-import ProjectCard from "@/components/ui/project-card";
+import ProjectGrid from "@/components/projects/project-grid";
 import { fetchSanityProjects } from "@/sanity/lib/fetch";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
 
@@ -22,11 +22,7 @@ export default async function ProjectsPage() {
             Case-driven portfolio of product, service, and software delivery work.
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project: any) => (
-            <ProjectCard key={project.slug?.current || project.title} {...project} />
-          ))}
-        </div>
+        <ProjectGrid projects={projects as any[]} />
       </div>
     </section>
   );

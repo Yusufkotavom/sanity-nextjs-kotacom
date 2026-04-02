@@ -16,6 +16,376 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-02 - Final SEO Snippet Guard Tuning (Short + Long Normalization)
+- Changed files:
+  - `frontend/lib/legacy-pages/metadata.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Enhanced metadata normalization to handle both edges:
+    - title: normalized for too short and too long values
+    - description: normalized for too short and too long values
+  - This ensures rewrite-route metadata snippets remain consistently SEO-friendly without manual per-page adjustment.
+- SEO impact:
+  - Direct SEO impact: improves SERP snippet consistency and readability by maintaining practical title/description bounds across legacy rewrite routes.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Wave 2 SEO Rewrite Power-Up (Priority Slug Overrides + Meta Length Guard)
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/lib/legacy-pages/metadata.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added priority commercial copy overrides for 10 money-page slugs across printing/website/software clusters (stronger final CTA title/description positioning).
+  - Fixed enrichment consistency gap for `sistem-pos` by routing it through centralized SEO enrichment pipeline.
+  - Added metadata guard (`normalizeMetaDescription`) in legacy metadata generator to keep generated meta descriptions within SEO-friendly length target (~120-155 chars) with safe truncation.
+- SEO impact:
+  - Direct SEO/integration impact: stronger conversion intent signals on high-value rewrite routes + improved snippet readability/consistency on SERP due to controlled description length.
+  - No CMS schema/query contract changes.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Intent-Based SEO Rewrite Enrichment (Slug Pattern Packs)
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Extended centralized rewrite SEO enrichment with slug-intent packs for high-intent patterns (`harga/biaya`, `migrasi`, `toko-online/ecommerce`, `cetak-buku/buku`, `kalender`, `implementasi/instalasi`).
+  - Added intent-driven keyword expansion and FAQ injection by slug pattern, while preserving dedupe/length guardrails in the enrichment flow.
+  - Added default quick CTA links and normalized final CTA copy for key commercial sections (`pembuatan-website`, `percetakan`, `software`, `sistem-pos`) when route copy does not define them.
+- SEO impact:
+  - Direct SEO/integration impact: higher intent coverage and stronger commercial relevance per route family without manual per-page rewrite.
+  - No schema/query contract changes (content generation layer only).
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Rewrite Content SEO Power Enrichment Layer (Centralized)
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added centralized `enrichCopyForSeo` layer in rewrite-content pipeline and applied it across all `buildLegacyRewriteCopy` return paths.
+  - Enrichment includes semantic keyword expansion + deduplication, stronger conversion-oriented intro/description normalization, FAQ intent expansion, and section-level default long-guide generation for major clusters.
+  - This makes rewrite pages more content-rich and SEO-oriented without requiring per-route manual text patching.
+- SEO impact:
+  - Direct SEO/integration impact: improves topical relevance breadth, semantic keyword coverage, and intent-answer depth on rewrite routes.
+  - No CMS schema/query contract changes required (code-driven rewrite content layer only).
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - SEO Fallback Images Unified to ZIP Source (OG/Twitter/JSON-LD)
+- Changed files:
+  - `frontend/lib/illustrations/kotacom-split.ts`
+  - `frontend/lib/seo-jsonld.ts`
+  - `frontend/sanity/lib/metadata.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added centralized SEO fallback image constant in illustration source map (`KOTACOM_SPLIT_DEFAULT_SEO_IMAGE`).
+  - Updated JSON-LD image resolver fallback to use the split-pack SEO image instead of legacy `/images/og-image.jpg`.
+  - Updated metadata resolver fallback (OpenGraph/Twitter image) to use the same centralized split-pack SEO image.
+- SEO impact:
+  - Direct SEO/integration impact: social preview and structured data fallback imagery are now aligned to a consistent branded illustration source.
+  - Preserved existing fallback hierarchy behavior (`meta.image` -> `page.image` -> `seo.defaultImage` -> centralized ZIP fallback).
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Enriched About/Contact/404 + Added Global Micro Badge Strip from ZIP Source
+- Changed files:
+  - `frontend/components/micro-badges.tsx`
+  - `frontend/components/ui/rewrite/page-shell.tsx`
+  - `frontend/components/legacy/legacy-page-shell.tsx`
+  - `frontend/components/404.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable `MicroBadges` component using ZIP-sourced badge assets (`fast response`, `secure process`, `guarantee`, `nationwide delivery`, `custom request`).
+  - Wired micro badges into rewrite and legacy page shells so pages that use these shells inherit the new trust-strip visual block.
+  - Added section-based hero image mapping in rewrite shell so `about` and `contact` pages now automatically render split-pack hero illustrations.
+  - Enriched 404 UI with dedicated split-pack 404 state image and integrated micro badge strip.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: visual/trust UX enrichment only; no CMS schema/query/metadata contract changes.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - ZIP Asset Mapping Centralization for All Illustration Consumers
+- Changed files:
+  - `frontend/lib/illustrations/kotacom-split.ts`
+  - `frontend/components/ui/jasa-cetak-buku-city-shell.tsx`
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `frontend/components/legacy/legacy-landing-sections.tsx`
+  - `frontend/app/(main)/style-guide/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added centralized illustration source map (`kotacom-split.ts`) that points to extracted ZIP assets under `/images/kotacom-split-production-ready`.
+  - Migrated all active illustration consumers in rewrite/city-shell/style-guide to use centralized mapping constants instead of scattered hardcoded image paths.
+  - Updated legacy landing sections proof-image fallback to the same centralized ZIP-based source to keep behavior consistent across UI variants.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: unified image source contract for illustration components, reducing path drift and easing future asset swaps.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Integrated `kotacom-split-production-ready` Assets into Active Rewrite UI
+- Changed files:
+  - `frontend/components/ui/jasa-cetak-buku-city-shell.tsx`
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `frontend/app/(main)/style-guide/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced legacy `images/percetakan/*.svg` illustration references with extracted production pack assets under `images/kotacom-split-production-ready/*`.
+  - Wired `jasa-cetak-buku` city-shell hero to production hero image (`hero-cetak-buku-shark-v2.png`).
+  - Updated rewrite landing defaults for service cards and proof cards with production-ready printing/website/IT/proof illustration files.
+  - Updated `/style-guide` gallery sections (hero/service/support) to display new production pack assets.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: stronger visual consistency on CMS-driven rewrite pages and style-guide reference surfaces.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Extracted `kotacom-split-production-ready` Illustration Bundle
+- Changed files:
+  - `frontend/public/images/kotacom-split-production-ready/**`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Extracted `frontend/public/images/kotacom-split-production-ready.zip` into `frontend/public/images/kotacom-split-production-ready/`.
+  - Bundle contains normalized/cropped PNG shark mascot assets grouped by production categories (`hero`, `services/*`, `ui`, `proof`, `micro`, `states`, `about`, `contact`, plus `archive`).
+  - Verified manifest and readme presence for direct integration mapping.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: ready-to-use visual assets for redesign/remodeling sections and service pages.
+- Verification:
+  - `unzip -l` verified archive index (53 entries total including manifest/readme).
+  - `manifest.json` validated with `count: 51` asset file list.
+
+## 2026-04-02 - Prompt Hardening + Priority-1 Illustration Regeneration (`v2`)
+- Changed files:
+  - `docs/flat-illustration-shark-plan.md`
+  - `frontend/public/images/illustrations/hero/hero-jasa-cetak-buku-shark-v2.jpg`
+  - `frontend/public/images/illustrations/services/service-cetak-buku-pod-shark-v2.jpg`
+  - `frontend/public/images/illustrations/services/service-cetak-buku-offset-shark-v2.jpg`
+  - `frontend/public/images/illustrations/services/service-finishing-jilid-shark-v2.jpg`
+  - `frontend/public/images/illustrations/cta/cta-konsultasi-cetak-buku-shark-v2.jpg`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added `Consistency Prompt Lock v2` section to the shark illustration master doc with stricter mascot/style/palette/composition constraints.
+  - Added detailed regeneration prompts for the Priority-1 `jasa-cetak-buku` pack (hero, POD, offset, finishing, CTA).
+  - Regenerated all 5 priority illustration assets as `-v2` variants using the hardened prompts.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: visual asset consistency improved for upcoming route-level migration/remodeling integration.
+- Verification:
+  - `file` command check passed for all regenerated outputs (valid JPEG image files, `1280x768`).
+
+## 2026-04-02 - Priority-1 KOTA SHARK Illustration Generation (Jasa Cetak Buku Pack)
+- Changed files:
+  - `frontend/public/images/illustrations/hero/hero-jasa-cetak-buku-shark.jpg`
+  - `frontend/public/images/illustrations/services/service-cetak-buku-pod-shark.jpg`
+  - `frontend/public/images/illustrations/services/service-cetak-buku-offset-shark.jpg`
+  - `frontend/public/images/illustrations/services/service-finishing-jilid-shark.jpg`
+  - `frontend/public/images/illustrations/cta/cta-konsultasi-cetak-buku-shark.jpg`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Generated first priority illustration pack based on `docs/flat-illustration-shark-plan.md` for `jasa-cetak-buku` workflow.
+  - Produced 5 web-ready shark-mascot assets covering hero, core services (POD, offset, finishing), and conversion CTA visual.
+  - Saved outputs in the standardized illustration directory structure for upcoming route/component integration.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: visual content assets prepared for migration/remodeling implementation; no schema/query/metadata contract changes in this step.
+- Verification:
+  - `file` command check passed for all outputs (valid JPEG image files, `1280x768`).
+
+## 2026-04-02 - Kotacom Logo Remodeling Integration (Default Brand Asset + Style Guide Sync)
+- Changed files:
+  - `frontend/components/logo.tsx`
+  - `frontend/public/images/branding/kotacom-logo.svg`
+  - `frontend/app/(main)/style-guide/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added official `kotacom.id` SVG logo asset into frontend public branding directory and wired it as the default logo fallback.
+  - Refactored shared `Logo` component so Sanity-driven logo remains primary when available, while defaulting to the official Kotacom brand logo when CMS logo is empty.
+  - Updated `/style-guide` page with a dedicated brand section showing integrated logo usage and key visual brand cues used in migration.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: improved cross-page branding consistency for migration UI shell while preserving existing CMS query/schema logo contract.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - Manual cross-layer sync check completed: Studio `settings.logo` schema, frontend settings query (`SETTINGS_QUERY`), and frontend logo render fallback remain aligned.
+
+## 2026-04-02 - Sticky WhatsApp Icon Switched to WhatsApp Brand Glyph
+- Changed files:
+  - `frontend/components/floating-whatsapp-client.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced generic message bubble icon in sticky WhatsApp button with a dedicated WhatsApp brand-style SVG icon.
+  - Preserved existing animation, CTA text behavior, and tracking link generation logic.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: UI-only update for clearer WhatsApp affordance.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Local Dev Stability Switch (`next dev --webpack`)
+- Changed files:
+  - `frontend/package.json`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Switched frontend local dev script from Turbopack to Webpack (`next dev --webpack`) to avoid persistent Turbopack workspace-root inference failure in monorepo environment.
+  - Keeps production build path unchanged (`next build`), while restoring reliable local startup for ongoing migration work.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: dev-runtime reliability improvement only.
+- Verification:
+  - Script-level change validated in `frontend/package.json`.
+  - Runtime verification to be confirmed in user environment by re-running `pnpm dev`.
+
+## 2026-04-02 - Turbopack Root Revert for Package-Local Resolution (`next`/`tailwindcss`)
+- Changed files:
+  - `frontend/next.config.mjs`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Reverted `turbopack.root` from workspace root back to frontend package root (`__dirname`).
+  - Prevents Turbopack from resolving dependencies from the wrong package boundary, which caused `next/package.json` and `tailwindcss(.css)` lookup failures under `frontend/app`.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: restores local frontend dev runtime stability for migration/SEO work.
+- Verification:
+  - Config-level validation completed; `turbopack.root` points to frontend package directory.
+  - Runtime verification to be confirmed via clean local dev restart (`pnpm dev`) after cache reset.
+
+## 2026-04-02 - Global Vercel-Style Grid Background Utility
+- Changed files:
+  - `frontend/app/globals.css`
+  - `frontend/app/(main)/layout.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable global utility class `bg-grid-vercel` using dual linear-gradients (x/y) with radial mask for subtle Vercel-style square grid effect.
+  - Applied `bg-grid-vercel` to main layout wrapper (`app/(main)/layout.tsx`) so all main pages inherit a consistent grid background layer.
+  - Kept existing `ui-shell` background system intact; grid layer is additive and low-opacity.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: visual layer update only (no schema/query/metadata changes).
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Mobile Nav Loop Hard-Fix (Remove `useEffect` State Init)
+- Changed files:
+  - `frontend/components/header/mobile-nav.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Removed `useEffect`-based `openGroups` initialization entirely to eliminate update-loop risk in dev runtime.
+  - Added `defaultOpenGroupKeys` memo and moved open/close group initialization to `Sheet` `onOpenChange` event (`open => all groups`, `close => []`).
+  - Keeps accordion behavior and full-open default state, while avoiding reactive dependency churn.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: fixes client-side stability issue in mobile navigation.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Fix Mobile Nav Infinite Render Loop (`Maximum update depth exceeded`)
+- Changed files:
+  - `frontend/components/header/mobile-nav.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Stabilized navigation-derived arrays with `useMemo` (`navItems`, `primaryItems`, `utilityItems`) to prevent effect dependency churn on every render.
+  - Hardened `openGroups` initialization effect so state updates occur only when computed group keys actually change.
+  - Removed unconditional `setOpenGroups([])` loop pattern when drawer closes.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: fixes client-side runtime crash in mobile navigation UI.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Footer Clean Mode (No Background/Button Surface)
+- Changed files:
+  - `frontend/components/footer.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Removed button-style surface treatment from footer primary/utility links and converted them to plain text-link navigation.
+  - Removed extra rounded wrapper styling from footer navigation columns so footer renders with no background panel/card feel.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: UI-only cleanup for footer visual consistency.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Mobile Navigation Full-Accordion + Icon Alignment
+- Changed files:
+  - `frontend/components/header/mobile-nav.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Updated mobile navigation drawer to full-width/full-height presentation with accordion groups open by default when menu is opened.
+  - Preserved accordion interaction (each group remains collapsible/expandable) while improving full-menu visibility for faster scanning.
+  - Adjusted icon placement for leaf/child links to right-aligned treatment for cleaner visual rhythm.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: UI/navigation presentation update only (route/query/schema unchanged).
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Turbopack Root Fix for Dev Boot (`frontend/app` resolution error)
+- Changed files:
+  - `frontend/next.config.mjs`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Updated `turbopack.root` from frontend package directory to workspace root (`path.join(__dirname, "..")`) in monorepo setup.
+  - This prevents Turbopack from resolving project context from `frontend/app` and fixes the `couldn't find next/package.json` startup failure.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: stabilizes local dev runtime so migration/SEO implementation can proceed without Turbopack boot errors.
+- Verification:
+  - Config-level validation completed; `next.config.mjs` now resolves root to monorepo workspace path.
+  - Runtime verification to be confirmed in user local environment (`pnpm dev`) because sandbox cannot bind to port 3000.
+
+## 2026-04-02 - Footer Navigation Cleanup (Remove Card Surface)
+- Changed files:
+  - `frontend/components/footer.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Removed `surface-muted` card treatment from footer navigation column wrapper so footer links render in a cleaner flat style.
+  - Kept footer navigation grouping and hierarchy intact; only visual container styling changed.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: UI-only cleanup on footer navigation presentation.
+- Verification:
+  - Manual code review on footer render path completed (navigation links/groups unchanged).
+
+## 2026-04-02 - Home Background Cleanup (Remove Blue Glow Accent)
+- Changed files:
+  - `frontend/app/globals.css`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Updated global `ui-shell` glow token (`--glow-top`) in both light and dark themes from blue-tinted radial gradient to neutral grayscale tint.
+  - Keeps existing separator and surface system intact while removing blue cast visible on Home background.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: visual consistency improvement only (no metadata/schema/query contract changes).
+- Verification:
+  - Manual CSS token check completed (`--glow-top` light/dark values updated).
+
 ## 2026-04-02 - Env Matrix Sync (`.env.example` + Deploy Env Templates)
 - Changed files:
   - `frontend/.env.example`
@@ -1614,3 +1984,372 @@ This file is the canonical changelog for all repository updates, with explicit S
   - `pnpm --filter frontend run typecheck` passed.
   - `pnpm --filter frontend run build` passed.
   - Manual parity checks: root slug adapter and template CTA strings remain present for `jasa-cetak-buku-*` flow (Hubungi/Tanya/Penawaran/Chat).
+
+## 2026-04-02 - Shared UI Consolidation (`legacy` -> `ui`) + Shadcn Breadcrumb Alignment
+- Changed files:
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `frontend/components/blocks/rich-content.tsx`
+  - `frontend/components/blocks/legacy-rich-content.tsx`
+  - `frontend/components/blocks/index.tsx`
+  - `frontend/components/ui/breadcrumbs.tsx`
+  - `frontend/package.json`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Consolidated rewrite shell component naming into shared `ui` by renaming exported landing section component to `RewriteLandingSections`.
+  - Promoted raw rich-content renderer into non-legacy shared block component (`rich-content`) and kept backward compatibility for Sanity block type `legacy-rich-content`.
+  - Extended block map contract so both `_type: "legacy-rich-content"` and `_type: "rich-content"` render through the same shared component.
+  - Reworked `Breadcrumbs` wrapper to follow shadcn breadcrumb structure more closely (clean list composition, proper current-page rendering, standard separators, stable keys, no forced primary/bold styling).
+  - Stabilized local production build script on webpack (`next build --webpack`) to avoid Turbopack workspace-root inference regressions in this monorepo layout.
+- SEO impact:
+  - No direct metadata/schema changes.
+  - Integration/UX impact: breadcrumb output is cleaner and more consistent across content templates; rich content block contract remains backward-compatible for existing imported Sanity data.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
+## 2026-04-02 - Product Listing Grid Update (2 Mobile / 4 Desktop) + Lazy Load "Show More"
+- Changed files:
+  - `frontend/components/products/product-grid.tsx`
+  - `frontend/app/(main)/products/page.tsx`
+  - `frontend/app/(main)/products/[slug]/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable client component for product listing grid with progressive reveal behavior.
+  - Set product card layout to `2 columns` on mobile and `4 columns` on desktop (`lg`).
+  - Limited initial render to 16 items and added `Show more products` button to load next batches (16 each click).
+  - Applied the same behavior consistently to both `/products` and `/products/[category]` listing views.
+- SEO impact:
+  - No direct SEO metadata/schema impact.
+  - UX/performance impact: reduced initial product-card payload on large collections while preserving crawlable route/content structure.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Lazy Load Added for Post/Project/Service Listings (Layout Preserved)
+- Changed files:
+  - `frontend/components/posts/post-grid.tsx`
+  - `frontend/components/projects/project-grid.tsx`
+  - `frontend/components/services/service-grid.tsx`
+  - `frontend/app/(main)/blog/page.tsx`
+  - `frontend/app/(main)/blog/category/[slug]/page.tsx`
+  - `frontend/app/(main)/projects/page.tsx`
+  - `frontend/app/(main)/services/page.tsx`
+  - `frontend/app/(main)/services/[slug]/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable lazy-load listing components for post, project, and service archives.
+  - Set default initial render to 16 items, with progressive loading via per-section button (`Show more posts/projects/services`).
+  - Integrated lazy loading into blog main listing, blog category listing, projects listing, services listing, and services category listing route branch.
+  - Kept existing grid layout behavior unchanged for these templates (no new column reconfiguration in this task).
+- SEO impact:
+  - No direct SEO metadata/schema/query change.
+  - UX/performance impact: lowers initial list render payload for large archives while preserving route, links, and content discoverability.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Rewrite Template Refresh for `jasa-cetak-buku-*` and Related Rewrite Routes (Colorful + CTA-First)
+- Changed files:
+  - `frontend/components/ui/rewrite/hero.tsx`
+  - `frontend/components/ui/rewrite/highlights.tsx`
+  - `frontend/components/ui/rewrite/process-faq.tsx`
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `frontend/components/ui/rewrite/related-links.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Refreshed shared rewrite visual system used by `jasa-cetak-buku-(kota)` pages (including `/jasa-cetak-buku-bandung`) and other rewrite templates using the same UI shell.
+  - Removed non-relevant surface labels from UI (no visible `legacy/rewrite wave/source file/legacy route` text in hero/related sections).
+  - Expanded CTA density across long-form page flow (`hero`, `aksi cepat`, `final CTA`) with clearer multi-action paths.
+  - Increased section spacing and introduced broader color surfaces/gradients (sky/cyan/emerald/violet/amber/indigo) to keep long content readable, less monotonous, and more engaging.
+  - Preserved existing content/data contracts while improving presentation and conversion hierarchy.
+- SEO impact:
+  - No direct schema/query/metadata contract change.
+  - Indirect SEO/engagement impact: improved readability and CTA prominence for long-form landing routes can improve user engagement signals.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Percetakan Visual Enrichment (Component-Level Color + Local Illustrations)
+- Changed files:
+  - `frontend/components/ui/rewrite/hero.tsx`
+  - `frontend/components/ui/rewrite/highlights.tsx`
+  - `frontend/components/ui/rewrite/process-faq.tsx`
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `frontend/components/ui/rewrite/related-links.tsx`
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/public/images/percetakan/print-branding.svg`
+  - `frontend/public/images/percetakan/print-promo.svg`
+  - `frontend/public/images/percetakan/print-event.svg`
+  - `frontend/public/images/percetakan/print-book.svg`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable local illustration set for percetakan/service-like sections and wired visuals into rewrite templates.
+  - Applied image cards to “Jenis Layanan” and refreshed portfolio proof visuals for rewrite pages (including `jasa-cetak-buku-(kota)` routes).
+  - Adjusted color strategy per request: reduced full-section background coloration and moved emphasis into smaller components (chips, badges, icon accents, CTA/button accents, border accents).
+  - Preserved content breadth while increasing visual breathing room and CTA touchpoints.
+- SEO impact:
+  - No direct metadata/schema/query contract change.
+  - Indirect engagement impact: richer visual assets and clearer CTA hierarchy can improve scroll depth and conversion interaction.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Universal Hero Vector Integrated for `jasa-cetak-buku-(kota)` Pages
+- Changed files:
+  - `frontend/public/images/percetakan/hero-kotacom-universal.svg`
+  - `frontend/components/ui/rewrite/hero.tsx`
+  - `frontend/components/ui/jasa-cetak-buku-city-shell.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added new universal flat-vector hero image branded `KOTACOM` for percetakan city routes.
+  - Extended shared rewrite hero component with optional `heroImage` prop.
+  - Integrated hero image only for `jasa-cetak-buku-(kota)` template via city shell adapter (covers Bandung and all city variants using same template).
+- SEO impact:
+  - No direct SEO metadata/schema impact.
+  - UX impact: stronger first-screen visual context and brand recognition for city landing pages.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Book-Printing Visual Alignment (Gradient Flat Brand + Service-Specific Illustrations)
+- Changed files:
+  - `frontend/public/images/percetakan/hero-kotacom-universal.svg`
+  - `frontend/public/images/percetakan/service-book-satuan.svg`
+  - `frontend/public/images/percetakan/service-book-bulk.svg`
+  - `frontend/public/images/percetakan/service-book-finishing.svg`
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Rebuilt universal hero vector to be explicitly relevant to `jasa-cetak-buku` intent (book-printing context) with colorful flat gradient brand treatment for `KOTACOM`.
+  - Added three dedicated flat-vector illustrations for `Jenis Layanan Utama`:
+    - Cetak Buku Satuan (POD)
+    - Cetak Buku Massal (Offset)
+    - Finishing & Jilid Premium
+  - Updated rewrite landing service cards for percetakan routes to use book-printing specific titles, copy, and the new per-service images.
+- SEO impact:
+  - No direct SEO metadata/schema/query changes.
+  - UX intent alignment improvement: above-the-fold and service section visuals now match cetak-buku search intent more closely.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Flat Illustration Master Plan (Shark Mascot) Documentation
+- Changed files:
+  - `docs/flat-illustration-shark-plan.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a single comprehensive illustration strategy document for website-wide flat-style assets with shark mascot direction.
+  - Document includes: visual system, color rules (blue/red/yellow/black-white), mascot consistency rules, production scope by page/use-case (hero, contact, 404, service-specific, CTA/state), detailed prompt template, and highly detailed ready-to-use prompts.
+  - Added production workflow, QA checklist, and recommended file structure for implementation.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration support impact: improves consistency for future visual content production and conversion-focused UX implementation.
+- Verification:
+  - Manual document review completed.
+
+## 2026-04-02 - Flat Illustration Plan Expanded with Quick-Scan `Jasa` Coverage
+- Changed files:
+  - `docs/flat-illustration-shark-plan.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Expanded the master illustration document with a quick-scan mapping for additional `jasa` clusters identified from active rewrite/service coverage.
+  - Added explicit priority list for service-specific illustrations (website variants, software implementation/installation/custom, and percetakan variants).
+  - Added highly detailed ready-to-use prompts for each additional jasa use case to accelerate batch illustration production with consistent mascot/style direction.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration/UX planning impact: improves visual-content readiness across broader service inventory.
+- Verification:
+  - Manual document review completed.
+
+## 2026-04-02 - Illustration Plan Priority Lock + Remodeling Directive (`Jasa Cetak Buku` First)
+- Changed files:
+  - `docs/flat-illustration-shark-plan.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Updated illustration master plan to lock business priority order with `Jasa Cetak Buku` as Priority 1.
+  - Added official KOTACOM logo reference URL into the plan for brand consistency guidance.
+  - Added explicit remodeling directive section (hero, section rhythm, CTA cadence, trust elements, consistency rules) for high-priority cetak-buku rollout.
+  - Added dedicated “Priority Pack Prompt” for `Jasa Cetak Buku` to accelerate production of conversion-oriented master visuals.
+- SEO impact:
+  - No direct SEO impact.
+  - UX/conversion planning impact: clearer execution priority and remodeling guidance for highest-value landing cluster.
+- Verification:
+  - Manual document review completed.
+
+## 2026-04-02 - Unified Style Guide Page + Priority Illustration Batch (Variations)
+- Changed files:
+  - `frontend/app/(main)/style-guide/page.tsx`
+  - `frontend/public/images/percetakan/hero-kotacom-universal-v2.svg`
+  - `frontend/public/images/percetakan/hero-kotacom-universal-v3.svg`
+  - `frontend/public/images/percetakan/cta-cetak-buku-contact.svg`
+  - `frontend/public/images/percetakan/social-proof-cetak-buku.svg`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Rebuilt `/style-guide` into a single visual system page that now consolidates illustration direction, palette, design principles, priority pack, and a live gallery of generated assets.
+  - Added two additional hero variations for `jasa-cetak-buku-(kota)` plus dedicated support visuals for CTA/contact and social proof.
+  - The style guide now functions as the primary visual review surface for ongoing illustration rollout rather than a generic component demo page.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration/UX impact: creates a single internal review surface for visual consistency and accelerates rollout of conversion-focused imagery.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Importer for Repo-Local Astro Root-Slug Pages
+- Changed files:
+  - `frontend/scripts/import-astro-local-pages.mjs`
+  - `frontend/package.json`
+  - `frontend/app/(main)/[slug]/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added an idempotent importer for the repo-local Astro source pack under `frontend/content/astro-local/jasa-cetak-buku-kota`.
+  - The importer loads the local template plus city and excluded-slug datasets, builds Sanity `page` documents with `legacy-rich-content` blocks, and writes only missing slugs by default.
+  - Updated the root-slug route to prefer imported Sanity `page` documents before falling back to the local dataset adapter so CMS content becomes the live source immediately after import.
+- SEO impact:
+  - Integration impact: repo-local Astro fallback content can now be promoted into Sanity while preserving slug and canonical continuity for root-slug pages.
+  - No direct schema change; frontend route resolution now honors CMS content first for imported slugs.
+- Verification:
+  - Dry-run/import verification executed with the new importer script against the target Sanity dataset.
+
+## 2026-04-02 - Imported Missing MDX Content from Astro Repo into Sanity
+- Changed files:
+  - `frontend/scripts/import-astro-repo-content.mjs`
+  - `frontend/package.json`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated importer for MDX content stored in the external Astro repo at `/home/ubuntu/Kotacom-supabase-schhool/src/pages`.
+  - Import scope was limited to content-document buckets only: `posts`, `services`, `projects`, and `products`.
+  - Imported only documents that were missing in Sanity, along with the required `category` documents for referenced taxonomy terms.
+  - Left the repo-local fallback pack `frontend/content/astro-local/jasa-cetak-buku-kota` untouched, per migration scope.
+- SEO impact:
+  - Integration impact: canonical CMS content now exists in Sanity for repo-Astro MDX documents, improving migration completeness across blog/service/project/product routes.
+  - No direct SEO schema change; import preserved existing frontend/studio contracts and did not alter the local root-slug fallback pack.
+- Verification:
+  - Dry run before import reported `36` missing content docs and `89` new categories.
+  - Write run imported `20` posts, `3` services, `12` projects, `1` product, and `89` categories.
+  - Post-import dry run reported `missingTotal: 0`.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Code-Driven `layanan/[slug]` Coverage from Astro JSON Source
+- Changed files:
+  - `frontend/content/astro-local/json-usaha/Biro_jasa_perizinan.json`
+  - `frontend/content/astro-local/json-usaha/Jasa_pengukuhan_PKP.json`
+  - `frontend/content/astro-local/json-usaha/agency_landing.json`
+  - `frontend/lib/local-content/json-usaha.ts`
+  - `frontend/components/ui/json-usaha-page.tsx`
+  - `frontend/app/(main)/layanan/[slug]/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Copied the Astro `json_usaha` business-page source files into the frontend repo as migration-safe local content input.
+  - Added a normalization adapter that maps the raw JSON structures into a single code-driven page contract for Next.js.
+  - Implemented `/(main)/layanan/[slug]` as a static route that generates pages from the normalized JSON source and renders shared section blocks for hero, service list, pricing, testimonials, FAQ, and CTA.
+  - This closes the missing legacy business-page gap for the `layanan/[slug]` Astro route without moving the content into Sanity.
+- SEO impact:
+  - Integration impact: preserves legacy business-page route coverage in a code-driven form while keeping metadata generation and breadcrumb/service/FAQ JSON-LD on the Next side.
+  - No direct Sanity schema/query impact.
+- Verification:
+  - JSON source coverage check confirmed `3/3` slugs: `agency-landing`, `biro-jasa-perizinan`, `jasa-pengukuhan-pkp`.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
+## 2026-04-02 - Money Pages Content Quality Pass v2 (Manual Intent Rewrite + CTA Reuse)
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `frontend/components/legacy/legacy-landing-sections.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Expanded manual money-page rewrite overrides from generic priority CTA tuning into a deeper intent rewrite pass for 16 commercial slugs.
+  - Fine-tuned conversion copy per slug on headline-level keyword focus (`primaryKeyword`), intro framing, final CTA message, CTA button label, and manual FAQ pairs to better match user intent on key commercial routes.
+  - Included selected pages across website/printing/software clusters (`pembuatan-website`, `harga`, `jasa-migrasi-wordpress`, key `jasa-pembuatan-website-*`, `template`, `percetakan`, `cetak-buku`, `cetak-brosur`, `cetak-company-profile`, `cetak-kartu-nama`, `cetak-kemasan-product`, `software`, `pembuatan-software`, `implementasi-software`, `instalasi-software`, `sistem-pos`).
+  - Synced shared UI behavior by replacing hardcoded final CTA text with `copy.ctaLabel` fallback in both rewrite and legacy landing section components so messaging remains consistent with page-specific rewrite copy.
+- SEO/integration impact:
+  - Direct SEO impact: stronger intent alignment and commercial relevance for priority money pages via manual copy tuning beyond rule-based enrichment.
+  - Integration impact: UI CTA label now reuses central copy contract, reducing content/render drift between rewrite-content engine and rendered page CTA.
+  - Astro vs Next comparison note: static Astro manifest supplies route/title scaffolding, while this pass upgrades Next rewrite output to intent-led commercial messaging on selected high-value pages.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - Manual diff review completed for rewritten slugs and CTA reuse wiring.
+
+## 2026-04-02 - City Money Pages Pass v1 (`jasa-cetak-buku-*` Top 20) + Metadata Sync
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/components/ui/jasa-cetak-buku-city-shell.tsx`
+  - `frontend/app/(main)/[slug]/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added manual intent overrides for top 20 GSC-priority city slugs in `buildPercetakanCetakBukuCityCopy` (`surabaya`, `sidoarjo`, `mojokerto`, `samarinda`, `jeneponto`, `mataram`, `banjarmasin`, `polewali-mandar`, `kendari`, `manado`, `jayapura`, `medan`, `pontianak`, `tomohon`, `kepulauan-sangihe`, `manokwari-selatan`, `sarolangun`, `palu`, `tanjung-pinang`, `pringsewu`).
+  - Enriched city copy with more specific intro/CTA/final-CTA direction and city-level conversion framing.
+  - Added reusable city FAQ set in the city-copy builder to keep long-tail city pages aligned with the same conversion and trust structure.
+  - Synced city shell rendering to prefer rewrite copy for on-page intro/description instead of falling back to legacy excerpt text.
+  - Synced root-slug metadata generation to use rewrite city title/description, so metadata output matches rendered city-copy strategy.
+- SEO/integration impact:
+  - Direct SEO impact: improved intent specificity and snippet quality across high-priority city commercial pages.
+  - Integration impact: city route metadata and rendered content now share one rewrite source of truth, reducing copy drift between route-level metadata and UI output.
+  - Cross-layer sync: frontend metadata route (`/(main)/[slug]`), rewrite content engine, and city-shell renderer updated in the same task.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - Manual check completed against local GSC priority source (`frontend/tmp/gsc-kotacom-full-sitemap0/gsc-pages-priority.csv`) for city target selection.
+
+## 2026-04-02 - Frontend CTA Expansion + Live SEO Pass Check (Priority Sample)
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `frontend/components/legacy/legacy-landing-sections.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Expanded centralized CTA strategy in rewrite engine:
+    - Added section-level CTA seed packs (`pembuatan-website`, `percetakan`, `software`, `sistem-pos`) with mixed action intents (consultation, estimate, package, FAQ, discovery).
+    - Added CTA de-duplication helper and merged page CTA + section CTA defaults to increase conversion action options per page.
+    - Strengthened default final CTA description to be more action-oriented.
+  - Expanded frontend conversion surfaces in both rewrite and legacy templates:
+    - Added new mid-page conversion section `#cta-mid`.
+    - Added extra final CTA action (`Lihat FAQ`) so users have more decision paths near final conversion block.
+    - Added TOC entry for mid CTA when CTA links are available.
+  - Ran live SEO metadata audit for priority sample with unrestricted network:
+    - Output: `frontend/tmp/seo-pass-front-20260402-escalated/seo-metadata-audit.csv`
+    - Summary: `frontend/tmp/seo-pass-front-20260402-escalated/seo-metadata-audit-summary.json`
+- SEO/integration impact:
+  - Direct frontend UX/SEO impact: stronger CTA density and clearer internal conversion paths across commercial page templates.
+  - SEO pass status (live sample, 120 URLs): **not fully pass yet**.
+    - `meta_description_too_long`: 106
+    - `title_too_long`: 22
+    - `http_status_not_200`: 10
+  - Interpretation: residual failures are still dominated by legacy live pages/redirect gaps and long metadata on production URLs, not only migrated frontend templates.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend exec node scripts/audit-seo-metadata.mjs -- --input-csv ./tmp/gsc-kotacom-full-sitemap0/gsc-pages-priority.csv --input-column page --out-dir ./tmp/seo-pass-front-20260402-escalated --concurrency 6 --max-urls 120 --timeout-ms 12000` completed.
+
+## 2026-04-02 - Frontend Metadata Normalization Unification + Money-Page Length Pass
+- Changed files:
+  - `frontend/lib/seo-normalize.ts` (new)
+  - `frontend/lib/legacy-pages/metadata.ts`
+  - `frontend/sanity/lib/metadata.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added shared frontend SEO normalization utility for title and description length management (`normalizeSeoTitle`, `normalizeSeoDescription`) in `frontend/lib/seo-normalize.ts`.
+  - Refactored legacy metadata generator to use shared utility instead of local duplicate normalize functions.
+  - Applied the same normalization in `frontend/sanity/lib/metadata.ts` (`buildMetadata`) so `generateBasicMetadata` and `generatePageMetadata` outputs are aligned with the same title/description quality envelope.
+  - Improved short-title behavior to always reach minimum practical SEO title length by extending short outputs safely (for example on compact service names).
+  - Validated money-page and city-page metadata lengths from frontend source layer:
+    - 14 money routes (`/pembuatan-website*`, `/percetakan*`, `/software*`, `/sistem-pos`)
+    - 20 top city routes (`jasa-cetak-buku-*` priority set)
+    - Result: `TOTAL_FAIL=0`, `CITY_TOTAL_FAIL=0` for target ranges (title 30-60, description 120-155).
+- SEO/integration impact:
+  - Direct SEO impact: consistent metadata normalization across legacy and non-legacy metadata generators reduces title/description length outliers on frontend-generated routes.
+  - Integration impact: one shared utility now controls normalization policy, reducing drift risk between route families.
+  - Note on live-site gap: production audit sample still shows unresolved legacy URL issues outside migrated frontend scope and requires redirect/content cleanup waves.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm dlx tsx` metadata-length verification script run from `frontend` workspace confirmed pass for targeted money/city route sets.

@@ -1,10 +1,11 @@
 import { urlFor } from "@/sanity/lib/image";
+import { KOTACOM_SPLIT_DEFAULT_SEO_IMAGE } from "@/lib/illustrations/kotacom-split";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 const toAbsoluteUrl = (path: string) => `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 
-const resolveImageUrl = (image: any, fallback = "/images/og-image.jpg") => {
+const resolveImageUrl = (image: any, fallback = KOTACOM_SPLIT_DEFAULT_SEO_IMAGE) => {
   if (image) {
     try {
       return urlFor(image).quality(100).url();

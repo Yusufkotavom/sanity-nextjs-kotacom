@@ -1,0 +1,19 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="a1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="#F8FAFC"/>
+  <rect x="52" y="52" width="1096" height="571" rx="24" fill="#FFFFFF"/>
+  <rect x="110" y="116" width="980" height="443" rx="20" fill="#F0F9FF"/>
+  <rect x="188" y="194" width="380" height="280" rx="16" fill="url(#a1)" fill-opacity="0.22"/>
+  <rect x="222" y="228" width="184" height="214" rx="10" fill="#0EA5E9" fill-opacity="0.38"/>
+  <rect x="420" y="228" width="116" height="214" rx="10" fill="#BAE6FD"/>
+  <rect x="622" y="194" width="390" height="52" rx="12" fill="#0369A1" fill-opacity="0.16"/>
+  <rect x="622" y="266" width="320" height="34" rx="10" fill="#0369A1" fill-opacity="0.12"/>
+  <rect x="622" y="316" width="286" height="34" rx="10" fill="#0369A1" fill-opacity="0.12"/>
+  <rect x="622" y="366" width="254" height="34" rx="10" fill="#0369A1" fill-opacity="0.12"/>
+  <text x="188" y="520" fill="#0F172A" font-family="Geist, Arial, sans-serif" font-size="28" font-weight="700">Cetak Buku Satuan (POD)</text>
+</svg>

@@ -70,6 +70,45 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Legacy content renderer finetuned with parser/sanitizer pipeline plus `legacy-prose` styles so HTML/Markdown lists, numbering, tables, and headings render consistently
 - [x] Next.js dev tooling warnings reduced by setting explicit Turbopack root and migrating `middleware.ts` to `proxy.ts`
 - [x] Environment contract sync completed for frontend/studio examples + deploy env templates (missing keys added, AI Writer action secret parity documented)
+- [x] Footer navigation visual cleanup shipped by removing card container style for a cleaner flat footer link section
+- [x] Turbopack monorepo root issue fixed by setting `turbopack.root` to workspace root (prevent `frontend/app` Next package resolution failure)
+- [x] Mobile navigation upgraded to full accordion view (open-by-default groups, collapsible sections, right-aligned link icons)
+- [x] Mobile navigation render loop fixed (`Maximum update depth exceeded`) via memoized nav collections + guarded state update in effect
+- [x] Mobile navigation loop hard-fix applied by removing effect-driven state init and moving open-group initialization to `onOpenChange`
+- [x] Global Vercel-style grid background utility added and applied to main layout wrapper for consistent cross-page visual shell
+- [x] Turbopack package boundary fix applied by reverting `turbopack.root` to frontend directory for correct `next`/`tailwindcss` resolution
+- [x] Local frontend dev server stabilized by switching `frontend` dev script to `next dev --webpack` (Turbopack inference issue bypass)
+- [x] Sticky WhatsApp CTA now uses WhatsApp brand-style icon for clearer visual intent
+- [x] Shared UI consolidation pass completed for rewrite + block rendering (`legacy` naming reduced in runtime path), with shadcn-aligned breadcrumb composition and backward-compatible Sanity block mapping (`legacy-rich-content` + `rich-content`)
+- [x] Product listing UX upgraded with reusable grid adapter: 2-column mobile / 4-column desktop plus progressive "Show more products" loading (initial 16 items) for `/products` and `/products/[category]`
+- [x] Lazy-load pagination adapter extended to post/project/service archives (initial 16 + progressive show-more) without changing existing archive grid layout contracts
+- [x] Rewrite visual enrichment shipped for percetakan/city templates with reusable local illustration assets and component-level color accents (minimal large-surface background tint) to improve long-form engagement
+- [x] Universal branded vector hero integrated for `jasa-cetak-buku-(kota)` template through shared rewrite hero contract and city-shell adapter
+- [x] `jasa-cetak-buku` visual intent alignment completed: hero and service visuals now specifically represent book-printing workflows with flat gradient brand style and per-service illustrations
+- [x] Master documentation for flat illustration system completed (shark mascot art direction, page/use-case mapping, and detailed generation prompts) to guide consistent cross-template visual rollout
+- [x] Flat illustration documentation expanded with quick-scan coverage for additional `jasa` clusters and per-service detailed generation prompts (website/software/percetakan variants)
+- [x] Illustration roadmap refined with explicit business priority lock (`jasa-cetak-buku` first), logo-reference alignment, and remodeling directive for conversion-focused visual rollout
+- [x] Unified `/style-guide` page now serves as single-page visual system review surface, with priority `jasa-cetak-buku` illustration batch and hero/CTA/social-proof variations
+- [x] Official Kotacom logo integration shipped as frontend default brand asset (with Sanity logo override fallback preserved) and documented in internal style-guide brand section
+- [x] Priority-1 shark illustration files generated for `jasa-cetak-buku` pack (hero, POD, offset, finishing, CTA) under `frontend/public/images/illustrations/`
+- [x] Prompt consistency hardening shipped in illustration master doc (`Consistency Prompt Lock v2`) and priority-1 pack regenerated as `*-v2` assets for higher cross-scene mascot/style consistency
+- [x] `kotacom-split-production-ready.zip` extracted into normalized production folder (`frontend/public/images/kotacom-split-production-ready`) with manifest-ready categorized assets
+- [x] Production-ready split asset pack wired into active rewrite surfaces (`jasa-cetak-buku` hero + service/proof cards + style-guide gallery) replacing older static percetakan illustration paths
+- [x] Centralized split-asset mapping implemented (`frontend/lib/illustrations/kotacom-split.ts`) and adopted across rewrite/legacy/style-guide components so ZIP assets are the single source for illustration consumers
+- [x] About/contact/404 visual enrichment completed using split-pack assets (section hero mapping + 404 state illustration + reusable micro-badge strip on rewrite/legacy flows)
+- [x] Metadata and JSON-LD fallback images switched from legacy `/images/og-image.jpg` to centralized split-pack SEO fallback asset for consistent brand imagery in link previews and structured data
+- [x] Rewrite content SEO power layer implemented: semantic keyword expansion, conversion-oriented intro/description strengthening, FAQ enrichment, and section-level long-guide defaults applied centrally through `buildLegacyRewriteCopy`
+- [x] Intent-based rewrite SEO enrichment shipped (slug-pattern keyword packs, intent FAQ packs, default quick CTA link set, and final CTA normalization) for stronger commercial search alignment on high-intent routes
+- [x] Astro repo MDX content import completed for missing database items only: `posts` (20), `services` (3), `projects` (12), `products` (1), plus required taxonomy categories (89)
+- [x] Legacy `layanan/[slug]` Astro JSON-business pages are now covered by a code-driven Next route backed by repo-local `json_usaha` source copies (`3/3` slug coverage)
+- [x] Repo-local Astro source pack for `jasa-cetak-buku-(kota)` imported into Sanity `page` documents via idempotent importer, with root-slug route now preferring CMS docs over local fallback
+- [x] Priority money-page rewrite overrides shipped for 10 high-intent slugs (printing/website/software) plus legacy metadata description length guard (target ~120-155 chars)
+- [x] Metadata guard finalized with bidirectional normalization (title and description both normalized for short/long edge cases) to keep rewrite-route snippets consistently within SEO-friendly ranges
+- [x] Content quality pass v2 completed for 16 money pages with manual intent rewrite (headline/intro/CTA/FAQ) plus final-CTA label reuse in shared rewrite/legacy landing sections
+- [x] City money-page pass completed for `jasa-cetak-buku-*` top 20 GSC cities with manual intent overrides and city-shell content/metadata sync to rewrite source
+- [x] Frontend CTA density enhancement shipped for rewrite/legacy landing templates (quick CTA + mid CTA + enriched final CTA action set) with centralized default CTA-link expansion in rewrite content engine
+- [x] Live SEO metadata audit rerun on 120 priority URLs with unrestricted network completed (`frontend/tmp/seo-pass-front-20260402-escalated`)
+- [x] Unified frontend SEO metadata normalization utility shipped and applied to legacy + basic metadata builders (`frontend/lib/seo-normalize.ts`) with money-route + city-route length-pass verification
 
 ## Workstream A - Platform & Data Foundation
 
@@ -95,9 +134,11 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 
 ### A3. Import Pipeline
 - [ ] Define extractor from Astro source content (MDX/frontmatter/static data) to import payload.
-- [ ] Import high-priority content first (GSC weighted).
+- [x] Import high-priority content first (GSC weighted).
 - [x] Validate slug uniqueness and canonical mapping.
   - Added import safety note: avoid dotted `_id` patterns for page/post imports to ensure visibility in unauthenticated published API reads.
+  - 2026-04-02 execution: imported missing repo-Astro MDX documents only, leaving local fallback pack `frontend/content/astro-local/jasa-cetak-buku-kota` untouched.
+- [x] Repo-local Astro source pack (`frontend/content/astro-local/jasa-cetak-buku-kota`) now has a reusable importer that creates missing Sanity `page` docs and preserves slug/canonical parity for root-slug routes.
 
 ## Workstream B - Per-URL Curation (One by One)
 
@@ -127,12 +168,18 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ## Workstream C - SEO Rewrite & Optimization
 
 ### C1. Metadata Rewrite Program
-- [ ] Rewrite title/meta for high-impression URLs with quality guardrails.
+- [x] Rewrite title/meta for high-impression URLs with quality guardrails.
 - [ ] Enforce length policy:
   - title target 50-60 chars
-  - meta description target 120-155 chars
+  - [x] meta description target 120-155 chars
 - [ ] Ensure canonical consistency for paginated and variant pages.
 - [x] Legacy rewrite copy hardening completed for service/trust clusters to reduce boilerplate and improve intent-specific keyword coverage.
+- [x] Centralized SEO enrichment pass added to rewrite content pipeline (keyword dedupe/expansion, FAQ intent coverage, and long-guide fallback generation for main clusters).
+- [x] Slug-intent SEO pass added (pricing/migration/cetak-buku/ecommerce/implementasi intent signals) with reusable enrichment rules in rewrite content engine.
+- [x] Manual money-page rewrite v2 shipped for 16 high-intent slugs (`pembuatan-website`, `harga`, `jasa-migrasi-wordpress`, `jasa-pembuatan-website-*` selected pages, `template`, `percetakan` selected pages, `software`, `pembuatan-software`, `implementasi-software`, `instalasi-software`, `sistem-pos`) with conversion-focused headline/intro/CTA/FAQ tuning.
+- [x] Manual city rewrite v1 shipped for top 20 `jasa-cetak-buku-<kota>` routes (based on local GSC priority file) through centralized city override map in rewrite content engine.
+- [x] Money-page SEO length pass confirmed on frontend source layer (14 money routes + top 20 city routes; title 30-60 and description 120-155 after normalization, `TOTAL_FAIL=0`).
+- Blocker note (2026-04-02): Live SEO sample audit (`120` URLs) still reports unresolved issues outside migrated frontend scope (`meta_description_too_long: 106`, `title_too_long: 22`, `http_status_not_200: 10`) dominated by legacy live pages/redirect gaps; requires content import/redirect wave plus metadata cleanup on production routes.
 
 ### C2. Structured Data
 - [ ] Align JSON-LD by template (Article, BreadcrumbList, ItemList, Organization, WebSite).
@@ -152,6 +199,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Apply shared icon-only social pattern for footer/navigation shell using reusable component contract.
 - [x] Apply compact sticky header rhythm with single CTA focus and icon actions (dark mode + social) across desktop/mobile shell.
 - [x] Apply Vercel-like visual shell tokens and reusable surface/separator utilities across shared layout blocks (`globals.css`, header, footer, section container, legacy landing shell).
+- [x] Integrate official Kotacom brand logo asset as default UI logo fallback and expose brand preview/reference in `/style-guide`.
 
 ### D2. Template Refactor Priority
 - [ ] Homepage
@@ -161,6 +209,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [ ] Project detail/list
 - [x] Legacy Astro static service/trust clusters switched to reusable rewrite template shell (Wave 1)
 - [x] Root slug static generation expanded for `jasa-cetak-buku-<kota>` pages using deduplicated local dataset adapter
+- [x] `layanan/[slug]` legacy Astro JSON pages now served from code-driven local adapter route with normalized section renderer (`agency-landing`, `biro-jasa-perizinan`, `jasa-pengukuhan-pkp`)
 - Blocker note (2026-04-02): Remaining template refactors depend on final shared UI shell lock from orchestration (`docs/rewrite-worker-orchestration.md`) before broader homepage/blog/product rollout.
 
 ### D3. Content UX Upgrade
@@ -170,7 +219,12 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Complete rewrite coverage for previously generic route templates in legacy Wave 1 service/printing clusters.
 - [x] Add richer conversion-oriented landing sections with iconography and visual proof blocks for legacy rewrite pages.
 - [x] Add reusable long-guide section for rewrite pages to preserve and develop long-form legacy knowledge blocks (enabled for `cetak-buku`).
+- [x] Add reusable micro-badge visual strip (`fast response`, `secure process`, `guarantee`, `nationwide delivery`, `custom request`) sourced from split pack and embedded in rewrite/legacy page shells.
+- [x] Final CTA button label now reuses per-page copy (`copy.ctaLabel`) in both rewrite and legacy landing sections to keep UI/message parity across migrated money pages.
+- [x] Rewrite/legacy landing sections now include additional mid-page conversion CTA block (`#cta-mid`) and expanded final CTA action set to increase action opportunities on commercial pages.
 - [ ] Ensure internal linking slots are CMS-configurable.
+- Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.
+- Blocker note (2026-04-02): Regenerated `v2` assets are ready, but final selection/approval and route-level wiring are still pending.
 
 ## Workstream E - Redirect Deployment Strategy
 
@@ -188,11 +242,12 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ## Content Movement Mega Plan
 
 ### Source Buckets
-- [ ] Astro `posts/*.mdx` -> Sanity `post`
-- [ ] Astro `services/*.mdx` -> Sanity `service`
-- [ ] Astro `projects/*.mdx` -> Sanity `project`
+- [x] Astro `posts/*.mdx` -> Sanity `post`
+- [x] Astro `services/*.mdx` -> Sanity `service`
+- [x] Astro `projects/*.mdx` -> Sanity `project`
 - [ ] Legacy landing trees (`pembuatan-website`, `percetakan`, `software`, `layanan`) ->
   - keep-as-page OR merge-into-canonical OR redirect-only
+- [x] Repo-local root-slug Astro pack `jasa-cetak-buku-kota` -> Sanity `page`
 
 ### Movement Checklist Per Item
 - [ ] Normalize slug

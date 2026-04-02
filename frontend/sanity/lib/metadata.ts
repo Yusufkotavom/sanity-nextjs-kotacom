@@ -3,6 +3,8 @@ import { cache } from "react";
 import { urlFor } from "@/sanity/lib/image";
 import { fetchSanitySeoSettings, fetchSanitySettings } from "@/sanity/lib/fetch";
 import { PAGE_QUERY_RESULT, POST_QUERY_RESULT } from "@/sanity.types";
+import { KOTACOM_SPLIT_DEFAULT_SEO_IMAGE } from "@/lib/illustrations/kotacom-split";
+import { normalizeSeoDescription, normalizeSeoTitle } from "@/lib/seo-normalize";
 const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 
 type MetaCompatiblePage = {
@@ -86,7 +88,7 @@ const resolveImage = (
   }
 
   return {
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/images/og-image.jpg`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}${KOTACOM_SPLIT_DEFAULT_SEO_IMAGE}`,
     width: 1200,
     height: 630,
   };
@@ -114,8 +116,11 @@ const buildMetadata = ({
   siteName: string;
 }): Metadata => {
   const image = resolveImage(page, seo);
-  const resolvedTitle = title || seo?.defaultTitle || siteName;
-  const resolvedDescription = description || seo?.defaultDescription;
+  const resolvedTitle = normalizeSeoTitle(title || seo?.defaultTitle || siteName);
+  const normalizedDescription = normalizeSeoDescription(
+    description || seo?.defaultDescription || "",
+  );
+  const resolvedDescription = normalizedDescription || undefined;
   const resolvedCanonical = canonicalUrl || getCanonicalUrl(slug);
   const robotsValue =
     !isProduction || noindex || seo?.defaultNoIndex ? "noindex, nofollow" : "index, follow";

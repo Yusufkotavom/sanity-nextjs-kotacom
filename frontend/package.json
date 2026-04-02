@@ -4,14 +4,16 @@
   "private": true,
   "packageManager": "pnpm@10.19.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint",
     "email": "email dev",
     "docs:scrape": "node scripts/scrape-schemaui-docs.mjs",
     "gsc:export": "node scripts/export-gsc-priority.mjs",
     "legacy:manifest": "node scripts/generate-astro-local-pages-manifest.mjs",
+    "astro-local:import": "node scripts/import-astro-local-pages.mjs",
+    "astro-repo:import": "node scripts/import-astro-repo-content.mjs",
     "typegen": "npx sanity schema extract && npx sanity typegen generate",
     "typecheck": "tsc --noEmit"
   },

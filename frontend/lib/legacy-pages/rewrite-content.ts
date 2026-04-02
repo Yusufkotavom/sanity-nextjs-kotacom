@@ -11,7 +11,7 @@ export type LegacyRewriteCopy = {
   ctaLabel: string;
   ctaHref: string;
   ctaLinks?: Array<{ label: string; href: string }>;
-  serviceTypes?: Array<{ title: string; description: string; href?: string }>;
+  serviceTypes?: Array<{ title: string; description: string; href?: string; image?: string }>;
   pricingPlans?: Array<{
     name: string;
     price: string;
@@ -28,6 +28,785 @@ export type LegacyRewriteCopy = {
 };
 
 const DEFAULT_CTA = "/contact";
+
+const SECTION_SEMANTIC_KEYWORDS: Record<string, string[]> = {
+  "pembuatan-website": [
+    "website profesional",
+    "optimasi SEO on-page",
+    "landing page konversi",
+    "pengembangan website bisnis",
+    "jasa web developer",
+  ],
+  percetakan: [
+    "percetakan profesional",
+    "cetak cepat dan presisi",
+    "quality control produksi",
+    "cetak buku satuan dan massal",
+    "finishing premium",
+  ],
+  software: [
+    "software custom bisnis",
+    "implementasi bertahap",
+    "integrasi sistem operasional",
+    "efisiensi proses bisnis",
+    "dashboard dan laporan",
+  ],
+  "sistem-pos": [
+    "aplikasi kasir online",
+    "sistem point of sale",
+    "sinkronisasi stok",
+    "laporan penjualan real-time",
+    "POS retail dan F&B",
+  ],
+  layanan: [
+    "layanan IT terintegrasi",
+    "implementasi website software percetakan",
+    "konsultasi digital bisnis",
+  ],
+  about: [
+    "tim ahli IT",
+    "partner teknologi bisnis",
+    "pengalaman implementasi proyek",
+  ],
+  contact: [
+    "konsultasi cepat",
+    "respon tim profesional",
+    "diskusi kebutuhan bisnis",
+  ],
+  privacy: [
+    "perlindungan data pengguna",
+    "keamanan informasi",
+    "kebijakan privasi digital",
+  ],
+};
+
+const SECTION_LONG_GUIDE_DEFAULT: Partial<
+  Record<LegacyAstroPage["section"], Array<{ title: string; description: string }>>
+> = {
+  "pembuatan-website": [
+    {
+      title: "Struktur Halaman Berbasis Intent",
+      description:
+        "Kami memetakan halaman berdasarkan intent pencarian agar traffic lebih relevan dan peluang konversi lead meningkat.",
+    },
+    {
+      title: "Optimasi SEO Sejak Tahap Build",
+      description:
+        "Metadata, heading, internal link, dan performa teknis disiapkan dari awal agar halaman lebih siap tumbuh di pencarian organik.",
+    },
+    {
+      title: "Iterasi Berbasis Data",
+      description:
+        "Setelah live, konten dan CTA dioptimasi bertahap berdasarkan performa agar website terus berkembang sesuai target bisnis.",
+    },
+  ],
+  software: [
+    {
+      title: "Prioritas Fitur Berorientasi Dampak",
+      description:
+        "Fitur dipilih berdasarkan dampak bisnis paling tinggi agar implementasi awal memberi hasil nyata lebih cepat.",
+    },
+    {
+      title: "Integrasi dan Adopsi Tim",
+      description:
+        "Kami menyiapkan alur adopsi pengguna supaya software tidak hanya selesai dibangun, tetapi benar-benar dipakai operasional harian.",
+    },
+    {
+      title: "Roadmap Pengembangan Bertahap",
+      description:
+        "Pengembangan dibagi dalam fase terukur agar risiko lebih rendah dan investasi sistem tetap efisien.",
+    },
+  ],
+  "sistem-pos": [
+    {
+      title: "Kontrol Transaksi dan Stok",
+      description:
+        "Sistem POS dirancang untuk menjaga kecepatan transaksi sekaligus akurasi stok lintas cabang.",
+    },
+    {
+      title: "Laporan Operasional Real-time",
+      description:
+        "Data penjualan dan performa item bisa dipantau untuk mendukung keputusan harian maupun strategi bulanan.",
+    },
+    {
+      title: "Skalabilitas untuk Pertumbuhan Outlet",
+      description:
+        "Arsitektur POS disiapkan untuk pertumbuhan bisnis agar penambahan outlet tetap terkontrol.",
+    },
+  ],
+  percetakan: [
+    {
+      title: "Standar File dan Spesifikasi Cetak",
+      description:
+        "Pemeriksaan file, ukuran, bleed, dan profil warna dilakukan sejak awal untuk menekan risiko revisi produksi.",
+    },
+    {
+      title: "Produksi dengan Quality Control",
+      description:
+        "Setiap tahap produksi dipantau agar hasil cetak konsisten, rapi, dan sesuai target kualitas brand.",
+    },
+    {
+      title: "Distribusi dan Ketepatan Waktu",
+      description:
+        "Timeline produksi dan pengiriman dibuat terukur agar materi cetak siap dipakai sesuai jadwal campaign.",
+    },
+  ],
+};
+
+const SLUG_INTENT_KEYWORDS: Array<{
+  match: (page: LegacyAstroPage) => boolean;
+  keywords: string[];
+}> = [
+  {
+    match: (page) => page.slug.includes("harga") || page.slug.includes("biaya"),
+    keywords: [
+      "estimasi biaya",
+      "paket layanan bisnis",
+      "konsultasi budget",
+      "harga transparan",
+    ],
+  },
+  {
+    match: (page) => page.slug.includes("migrasi"),
+    keywords: [
+      "minim downtime",
+      "migrasi aman",
+      "validasi pasca migrasi",
+      "backup dan rollback plan",
+    ],
+  },
+  {
+    match: (page) => page.slug.includes("toko-online") || page.slug.includes("ecommerce"),
+    keywords: [
+      "konversi penjualan",
+      "checkout flow",
+      "katalog produk",
+      "optimasi funnel e-commerce",
+    ],
+  },
+  {
+    match: (page) => page.slug.includes("cetak-buku") || page.slug.includes("buku"),
+    keywords: [
+      "print on demand",
+      "offset printing",
+      "finishing jilid",
+      "estimasi produksi buku",
+    ],
+  },
+  {
+    match: (page) => page.slug.includes("kalender"),
+    keywords: [
+      "kalender promosi",
+      "branding tahunan",
+      "distribusi corporate gift",
+      "produksi kalender custom",
+    ],
+  },
+  {
+    match: (page) => page.slug.includes("implementasi") || page.slug.includes("instalasi"),
+    keywords: [
+      "go-live terukur",
+      "adopsi pengguna",
+      "training operasional",
+      "handover teknis",
+    ],
+  },
+];
+
+const SLUG_INTENT_FAQS: Array<{
+  match: (page: LegacyAstroPage) => boolean;
+  faqs: Array<{ question: string; answer: string }>;
+}> = [
+  {
+    match: (page) => page.slug.includes("harga") || page.slug.includes("biaya"),
+    faqs: [
+      {
+        question: "Apakah tersedia paket layanan sesuai budget bisnis?",
+        answer:
+          "Ya. Scope layanan bisa disusun bertahap agar tetap realistis terhadap budget tanpa mengorbankan fondasi utama.",
+      },
+      {
+        question: "Bagaimana cara mendapatkan estimasi biaya yang lebih akurat?",
+        answer:
+          "Kirim kebutuhan detail (target, timeline, fitur/output) agar estimasi disesuaikan dengan kompleksitas riil proyek.",
+      },
+    ],
+  },
+  {
+    match: (page) => page.slug.includes("migrasi"),
+    faqs: [
+      {
+        question: "Bagaimana menjaga website tetap aman saat proses migrasi?",
+        answer:
+          "Kami menyiapkan backup, tahapan validasi, dan checklist pasca migrasi agar risiko gangguan layanan bisa ditekan.",
+      },
+      {
+        question: "Apakah URL dan SEO existing tetap dipertahankan?",
+        answer:
+          "Ya, struktur URL, redirect, dan elemen SEO penting dipetakan agar visibilitas organik tetap terjaga setelah migrasi.",
+      },
+    ],
+  },
+  {
+    match: (page) => page.slug.includes("cetak-buku") || page.slug.includes("buku"),
+    faqs: [
+      {
+        question: "Metode cetak apa yang cocok untuk kebutuhan saya: POD atau offset?",
+        answer:
+          "POD cocok untuk jumlah kecil/validasi awal, sedangkan offset lebih efisien untuk kuantitas besar dengan biaya per unit lebih rendah.",
+      },
+      {
+        question: "Apakah bisa konsultasi spesifikasi sebelum produksi buku dimulai?",
+        answer:
+          "Bisa. Tim kami bantu menyusun ukuran, jenis kertas, jilid, finishing, dan estimasi timeline agar keputusan produksi lebih tepat.",
+      },
+    ],
+  },
+  {
+    match: (page) => page.slug.includes("implementasi") || page.slug.includes("instalasi"),
+    faqs: [
+      {
+        question: "Bagaimana memastikan tim internal cepat beradaptasi dengan sistem baru?",
+        answer:
+          "Implementasi disertai panduan alur, training, dan fase transisi agar proses adopsi lebih lancar dan minim hambatan operasional.",
+      },
+      {
+        question: "Apakah ada pendampingan setelah go-live?",
+        answer:
+          "Ada. Kami menyediakan fase stabilisasi pasca go-live untuk memastikan sistem berjalan sesuai target operasional.",
+      },
+    ],
+  },
+];
+
+const PRIORITY_SLUG_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> = {
+  "pembuatan-website": {
+    primaryKeyword: "Jasa Pembuatan Website untuk Lead dan Penjualan",
+    intro:
+      "Halaman ini kami tulis ulang untuk intent komersial: bisnis yang butuh website bukan hanya tampil menarik, tetapi menghasilkan lead yang bisa ditindaklanjuti tim sales. Fokusnya pada struktur halaman, pesan nilai, dan CTA yang benar-benar mendorong konsultasi.",
+    ctaLabel: "Minta Strategi Website",
+    finalCtaTitle: "Siap Ubah Website Menjadi Mesin Akuisisi Lead?",
+    finalCtaDescription:
+      "Ceritakan target lead Anda. Tim Kotacom akan memetakan struktur halaman, prioritas konten, dan roadmap implementasi yang realistis untuk bisnis Anda.",
+    faqs: [
+      {
+        question: "Apa bedanya website biasa dengan website yang fokus konversi?",
+        answer:
+          "Website konversi menyusun alur informasi, bukti sosial, dan CTA berdasarkan intent user agar kunjungan berubah jadi lead yang siap di-follow-up.",
+      },
+      {
+        question: "Apakah bisa mulai dari halaman inti dulu?",
+        answer:
+          "Bisa. Umumnya kami mulai dari halaman paling berdampak: homepage, layanan utama, dan halaman kontak sebelum ekspansi konten.",
+      },
+    ],
+  },
+  harga: {
+    intro:
+      "Intent user di halaman harga adalah kepastian budget dan scope. Karena itu kami memprioritaskan transparansi komponen biaya, pilihan paket, serta skenario implementasi bertahap supaya keputusan investasi digital lebih aman.",
+    ctaLabel: "Minta Estimasi Final",
+    finalCtaTitle: "Ingin Estimasi Biaya yang Benar-Benar Relevan?",
+    finalCtaDescription:
+      "Kirim kebutuhan dan target bisnis Anda, lalu kami susun estimasi berdasarkan scope aktual, bukan angka template.",
+    faqs: [
+      {
+        question: "Kenapa harga website bisa berbeda antar bisnis?",
+        answer:
+          "Perbedaan biasanya muncul dari kompleksitas fitur, volume konten, integrasi sistem, dan target performa setelah website live.",
+      },
+      {
+        question: "Bisakah proyek dibagi per fase agar budget lebih ringan?",
+        answer:
+          "Bisa. Kami sering membagi proyek ke fase fondasi, fase optimasi, lalu fase scale agar cashflow bisnis tetap sehat.",
+      },
+    ],
+  },
+  "jasa-migrasi-wordpress": {
+    intro:
+      "Untuk migrasi WordPress, user intent utamanya adalah aman, minim downtime, dan SEO tidak jatuh. Copy halaman ini difokuskan pada mitigasi risiko, checklist validasi, dan rencana rollback jika dibutuhkan.",
+    ctaLabel: "Jadwalkan Audit Migrasi",
+    finalCtaTitle: "Migrasi WordPress Tanpa Drama Operasional",
+    finalCtaDescription:
+      "Kami bantu audit struktur situs Anda, siapkan skenario migrasi, dan eksekusi bertahap agar performa bisnis tetap stabil.",
+    faqs: [
+      {
+        question: "Apakah ranking SEO bisa tetap dijaga saat migrasi?",
+        answer:
+          "Bisa, dengan pemetaan URL, redirect plan, dan validasi metadata pasca migrasi agar sinyal SEO tetap konsisten.",
+      },
+      {
+        question: "Bagaimana kalau ada bug setelah migrasi?",
+        answer:
+          "Kami menyiapkan fase stabilisasi pasca go-live untuk menangani isu prioritas tanpa mengganggu operasi utama.",
+      },
+    ],
+  },
+  "jasa-pembuatan-website-company-profile": {
+    intro:
+      "Halaman ini ditulis untuk user yang membutuhkan kredibilitas bisnis di mata calon klien, investor, atau partner. Fokus copy kami adalah trust signal, positioning, dan kemudahan menghubungi tim Anda.",
+    ctaLabel: "Rancang Website Company Profile",
+    finalCtaTitle: "Bangun Kredibilitas Perusahaan Sejak Kunjungan Pertama",
+    finalCtaDescription:
+      "Kami bantu susun struktur company profile yang menampilkan value bisnis Anda secara jelas dan meyakinkan.",
+    faqs: [
+      {
+        question: "Konten apa yang wajib ada di website company profile?",
+        answer:
+          "Minimal meliputi profil perusahaan, layanan inti, portofolio, testimoni, dan kontak yang mudah diakses.",
+      },
+      {
+        question: "Apakah website company profile tetap bisa menghasilkan lead?",
+        answer:
+          "Bisa. Dengan CTA yang tepat, halaman ini bisa menjadi pintu awal konsultasi dari calon klien berkualitas.",
+      },
+    ],
+  },
+  "jasa-pembuatan-website-dokter-klinik": {
+    intro:
+      "Kami menyesuaikan copy untuk intent pasien: cepat menemukan layanan, jadwal, dan kanal konsultasi. Untuk pemilik klinik, halaman ini menekankan trust, edukasi pasien, dan efisiensi komunikasi.",
+    ctaLabel: "Bangun Website Klinik",
+    finalCtaTitle: "Permudah Pasien Menemukan Klinik Anda Secara Online",
+    finalCtaDescription:
+      "Konsultasikan kebutuhan website klinik Anda untuk alur informasi pasien yang lebih jelas dan kredibel.",
+    faqs: [
+      {
+        question: "Apakah bisa menampilkan jadwal dokter dan layanan unggulan?",
+        answer:
+          "Bisa. Struktur halaman dapat dirancang agar pasien cepat menemukan layanan, jadwal, dan prosedur pendaftaran.",
+      },
+      {
+        question: "Apakah konten medis bisa disiapkan untuk edukasi SEO?",
+        answer:
+          "Bisa. Kami siapkan kerangka konten edukasi yang tetap ramah pembaca dan relevan dengan intent pencarian pasien.",
+      },
+    ],
+  },
+  "jasa-pembuatan-website-sekolah": {
+    intro:
+      "Intent utama halaman sekolah adalah informasi yang cepat diakses orang tua dan calon siswa. Karena itu copy difokuskan pada kejelasan program, agenda akademik, serta kanal komunikasi resmi.",
+    ctaLabel: "Rancang Website Sekolah",
+    finalCtaTitle: "Website Sekolah Informatif dan Mudah Dikelola Tim Internal",
+    finalCtaDescription:
+      "Kami bantu sekolah membangun website yang rapi untuk publikasi program, kegiatan, dan informasi penerimaan siswa.",
+    faqs: [
+      {
+        question: "Apakah website bisa dikelola oleh staf sekolah setelah live?",
+        answer:
+          "Bisa. Kami menyiapkan struktur konten yang mudah diperbarui tanpa proses teknis rumit.",
+      },
+      {
+        question: "Bisakah dibuat halaman khusus PPDB atau pendaftaran?",
+        answer:
+          "Bisa. Halaman PPDB dapat dioptimasi agar informasi syarat dan alur pendaftaran lebih jelas bagi orang tua.",
+      },
+    ],
+  },
+  "jasa-pembuatan-website-toko-online": {
+    intro:
+      "Copy halaman toko online disusun untuk intent transaksional: mempercepat user menemukan produk, memahami value, dan menyelesaikan pembelian dengan friksi minimal.",
+    ctaLabel: "Optimalkan Toko Online Saya",
+    finalCtaTitle: "Siap Dorong Penjualan dari Website Toko Online Anda?",
+    finalCtaDescription:
+      "Tim kami bantu merancang alur katalog, halaman produk, dan CTA checkout agar konversi penjualan meningkat.",
+    faqs: [
+      {
+        question: "Apakah website toko online bisa diintegrasikan dengan pembayaran dan pengiriman?",
+        answer:
+          "Bisa. Integrasi disesuaikan dengan kebutuhan operasional agar proses order lebih cepat dan akurat.",
+      },
+      {
+        question: "Bagaimana agar traffic tidak berhenti di halaman produk saja?",
+        answer:
+          "Kami mengoptimalkan copy, trust element, dan CTA pembelian agar user bergerak dari lihat produk ke aksi checkout.",
+      },
+    ],
+  },
+  template: {
+    intro:
+      "Template kami posisikan untuk bisnis yang butuh go-live cepat tanpa mengorbankan fondasi SEO dan konversi. Ini bukan template generik, melainkan kerangka siap produksi yang bisa dipersonalisasi.",
+    ctaLabel: "Pilih Template Terbaik",
+    finalCtaTitle: "Go-Live Lebih Cepat dengan Template Siap Bisnis",
+    finalCtaDescription:
+      "Pilih template yang paling cocok dengan model bisnis Anda, lalu kami bantu adaptasi konten dan CTA agar tetap konversi-ready.",
+    faqs: [
+      {
+        question: "Apakah template tetap bisa dikustomisasi sesuai brand?",
+        answer:
+          "Bisa. Identitas visual, struktur konten, dan CTA dapat disesuaikan agar selaras dengan positioning bisnis.",
+      },
+      {
+        question: "Template cocok untuk tahap awal atau jangka panjang?",
+        answer:
+          "Keduanya. Template menjadi fondasi cepat saat awal, lalu bisa dikembangkan bertahap sesuai pertumbuhan bisnis.",
+      },
+    ],
+  },
+  percetakan: {
+    intro:
+      "Halaman percetakan kami rewrite untuk intent komersial dengan titik fokus pada kepastian hasil cetak, timeline produksi, dan kontrol kualitas agar materi siap dipakai tanpa banyak revisi.",
+    ctaLabel: "Konsultasi Produksi Cetak",
+    finalCtaTitle: "Butuh Mitra Percetakan yang Cepat dan Konsisten?",
+    finalCtaDescription:
+      "Kirim spesifikasi cetak Anda, dan kami bantu susun skema produksi paling efisien sesuai deadline campaign.",
+    faqs: [
+      {
+        question: "Bagaimana memastikan hasil cetak sesuai ekspektasi brand?",
+        answer:
+          "Kami gunakan tahap pre-press checking dan quality control agar warna, ukuran, dan finishing lebih presisi.",
+      },
+      {
+        question: "Apakah layanan cocok untuk kebutuhan rutin bulanan?",
+        answer:
+          "Ya. Kami dapat menyiapkan skema produksi berkala untuk kebutuhan promosi atau operasional bisnis.",
+      },
+    ],
+  },
+  "cetak-buku": {
+    intro:
+      "Untuk halaman cetak buku, kami menyesuaikan copy agar menjawab intent penulis dan institusi: pilihan metode cetak, efisiensi biaya per volume, serta kepastian kualitas hasil akhir.",
+    ctaLabel: "Minta Simulasi Cetak Buku",
+    finalCtaTitle: "Cetak Buku dengan Spesifikasi Tepat Sejak Awal",
+    finalCtaDescription:
+      "Diskusikan naskah, jumlah, dan target distribusi Anda. Kami bantu pilih metode produksi paling efisien.",
+    faqs: [
+      {
+        question: "Kapan sebaiknya memilih POD dan kapan offset?",
+        answer:
+          "POD cocok untuk uji pasar/jumlah kecil, sedangkan offset lebih hemat untuk volume besar dengan spesifikasi stabil.",
+      },
+      {
+        question: "Bisakah saya konsultasi spesifikasi sebelum kirim file final?",
+        answer:
+          "Bisa. Kami bantu validasi ukuran, kertas, jilid, dan finishing agar proses produksi lebih aman.",
+      },
+    ],
+  },
+  "cetak-brosur": {
+    intro:
+      "Brosur efektif saat pesan inti langsung terbaca dan visualnya konsisten dengan brand. Karena itu copy halaman ini menekankan tujuan campaign, segmentasi audiens, dan kesiapan distribusi.",
+    ctaLabel: "Diskusikan Brosur Campaign",
+    finalCtaTitle: "Buat Brosur yang Benar-Benar Menggerakkan Aksi",
+    finalCtaDescription:
+      "Kami bantu menentukan format, material, dan pesan utama agar brosur Anda lebih kuat untuk promosi.",
+    faqs: [
+      {
+        question: "Ukuran brosur apa yang paling cocok untuk campaign offline?",
+        answer:
+          "Tergantung distribusi dan volume informasi. Kami bantu pilih format paling efektif untuk konteks campaign Anda.",
+      },
+      {
+        question: "Apakah bisa cetak brosur untuk kebutuhan rutin promo bulanan?",
+        answer:
+          "Bisa. Kami dapat menyiapkan ritme produksi berkala agar materi promosi selalu siap tepat waktu.",
+      },
+    ],
+  },
+  "cetak-company-profile": {
+    intro:
+      "Halaman ini difokuskan untuk intent B2B: materi company profile yang rapi, kredibel, dan siap dipakai untuk presentasi klien, partnership, maupun tender.",
+    ctaLabel: "Cetak Company Profile Saya",
+    finalCtaTitle: "Perkuat Presentasi Bisnis dengan Company Profile Berkualitas",
+    finalCtaDescription:
+      "Kami bantu menyusun spesifikasi cetak company profile agar pesan brand tampil profesional dan meyakinkan.",
+    faqs: [
+      {
+        question: "Apakah company profile cocok untuk kebutuhan tender?",
+        answer:
+          "Ya. Materi ini efektif menampilkan kapabilitas, portofolio, dan value perusahaan secara terstruktur.",
+      },
+      {
+        question: "Bisakah menyesuaikan finishing agar terlihat premium?",
+        answer:
+          "Bisa. Kami sediakan opsi material dan finishing untuk menyesuaikan kesan brand yang ingin ditampilkan.",
+      },
+    ],
+  },
+  "cetak-kemasan-product": {
+    intro:
+      "Untuk kemasan produk, intent user biasanya terkait daya tarik rak dan kekuatan identitas brand. Copy kami menekankan ketepatan ukuran, kualitas cetak, dan kesiapan untuk distribusi.",
+    ctaLabel: "Konsultasi Kemasan Produk",
+    finalCtaTitle: "Kemasan Produk yang Siap Jual dan Konsisten dengan Brand",
+    finalCtaDescription:
+      "Diskusikan tipe produk, dimensi, dan target pasar Anda agar kemasan yang dicetak mendukung konversi penjualan.",
+    faqs: [
+      {
+        question: "Apakah bisa cetak kemasan dalam jumlah kecil untuk trial pasar?",
+        answer:
+          "Bisa. Kami dapat menyesuaikan skema produksi awal sebelum masuk volume lebih besar.",
+      },
+      {
+        question: "Bagaimana memastikan kemasan cocok dengan karakter produk?",
+        answer:
+          "Kami bantu menentukan material, struktur box/label, dan finishing berdasarkan kebutuhan proteksi dan branding.",
+      },
+    ],
+  },
+  "cetak-kartu-nama": {
+    intro:
+      "Kartu nama masih relevan untuk sales meeting, networking, dan event B2B. Halaman ini dipoles untuk intent profesional: kesan pertama yang kuat, rapi, dan konsisten dengan identitas bisnis.",
+    ctaLabel: "Pesan Kartu Nama Sekarang",
+    finalCtaTitle: "Kartu Nama Profesional untuk Kesan Pertama yang Kuat",
+    finalCtaDescription:
+      "Pilih material dan finishing yang tepat agar kartu nama Anda lebih representatif saat bertemu calon klien.",
+    faqs: [
+      {
+        question: "Material kartu nama apa yang paling sering dipilih bisnis?",
+        answer:
+          "Umumnya art carton dengan laminasi doff/gloss, lalu ditingkatkan dengan spot UV atau emboss untuk kesan premium.",
+      },
+      {
+        question: "Apakah bisa cetak kartu nama tim dalam satu batch?",
+        answer:
+          "Bisa. Kami dapat menyiapkan produksi multi-nama agar konsisten secara desain dan efisien secara proses.",
+      },
+    ],
+  },
+  software: {
+    intro:
+      "Halaman software kami arahkan ke intent decision-maker: meningkatkan efisiensi proses, menyatukan data, dan mempercepat pengambilan keputusan lewat sistem yang benar-benar dipakai tim.",
+    ctaLabel: "Audit Kebutuhan Software",
+    finalCtaTitle: "Bangun Software yang Menyelesaikan Bottleneck Operasional",
+    finalCtaDescription:
+      "Kami bantu memetakan kebutuhan prioritas dan merancang roadmap software bertahap agar impact bisnis lebih cepat terasa.",
+    faqs: [
+      {
+        question: "Apakah software custom selalu harus dimulai dari sistem besar?",
+        answer:
+          "Tidak. Kami biasanya memulai dari modul inti yang paling berdampak, lalu dikembangkan bertahap.",
+      },
+      {
+        question: "Bagaimana memastikan software benar-benar dipakai tim internal?",
+        answer:
+          "Kami merancang alur berdasarkan proses kerja nyata dan menyiapkan fase adopsi agar transisi lebih mulus.",
+      },
+    ],
+  },
+  "pembuatan-software": {
+    intro:
+      "Copy halaman pembuatan software difokuskan pada intent eksekusi: requirement jelas, prioritas fitur inti, dan delivery iteratif agar bisnis tidak menunggu terlalu lama untuk melihat hasil.",
+    ctaLabel: "Mulai Pembuatan Software",
+    finalCtaTitle: "Mulai dari Modul Inti, Rasakan Dampak Lebih Cepat",
+    finalCtaDescription:
+      "Diskusikan alur operasional bisnis Anda dan kami susun fase pengembangan software yang terukur.",
+    faqs: [
+      {
+        question: "Berapa lama fase awal pembuatan software biasanya berjalan?",
+        answer:
+          "Tergantung scope, namun fase awal biasanya difokuskan pada modul inti yang memberi dampak operasional paling cepat.",
+      },
+      {
+        question: "Apakah software bisa diintegrasikan ke sistem lama?",
+        answer:
+          "Bisa. Integrasi dirancang sejak awal agar perpindahan data dan proses tidak mengganggu operasional.",
+      },
+    ],
+  },
+  "implementasi-software": {
+    intro:
+      "Pada tahap implementasi, user intent utamanya adalah kelancaran go-live. Karena itu kami tekankan rencana transisi, training pengguna, dan monitoring awal supaya adopsi sistem lebih stabil.",
+    ctaLabel: "Rencanakan Implementasi",
+    finalCtaTitle: "Go-Live Lebih Terkontrol dengan Implementasi Terstruktur",
+    finalCtaDescription:
+      "Kami dampingi implementasi dari persiapan data hingga fase stabilisasi pasca go-live.",
+    faqs: [
+      {
+        question: "Apa risiko terbesar saat implementasi software?",
+        answer:
+          "Biasanya ada di adopsi pengguna dan kesiapan data. Keduanya kami mitigasi lewat checklist transisi dan pelatihan.",
+      },
+      {
+        question: "Apakah ada pendampingan setelah sistem live?",
+        answer:
+          "Ada. Fase pasca go-live digunakan untuk menangani isu prioritas dan menyempurnakan alur kerja.",
+      },
+    ],
+  },
+  "instalasi-software": {
+    intro:
+      "Untuk instalasi software, fokus copy kami adalah keamanan konfigurasi, verifikasi fungsi, dan kesiapan tim operasional agar software bisa langsung dipakai tanpa kebingungan.",
+    ctaLabel: "Jadwalkan Instalasi",
+    finalCtaTitle: "Instalasi Software Aman, Tim Siap Pakai Sejak Hari Pertama",
+    finalCtaDescription:
+      "Kami bantu setup teknis, uji fungsional, dan handover agar sistem siap dipakai untuk operasional harian.",
+    faqs: [
+      {
+        question: "Apakah instalasi mencakup pengujian setelah setup?",
+        answer:
+          "Ya. Setelah instalasi kami lakukan validasi fungsi utama untuk memastikan sistem berjalan sesuai kebutuhan.",
+      },
+      {
+        question: "Apakah ada dokumentasi untuk tim internal?",
+        answer:
+          "Ada. Kami siapkan dokumentasi dan panduan singkat agar tim dapat mengoperasikan sistem dengan lebih percaya diri.",
+      },
+    ],
+  },
+  "sistem-pos": {
+    primaryKeyword: "Software POS untuk Retail dan F&B",
+    intro:
+      "Halaman sistem POS ini dioptimalkan untuk intent pemilik outlet: transaksi cepat, stok akurat, dan laporan real-time untuk keputusan harian. Copy difokuskan pada hasil operasional, bukan sekadar fitur.",
+    ctaLabel: "Konsultasi Sistem POS",
+    finalCtaTitle: "Siap Menyatukan Kasir, Stok, dan Laporan dalam Satu Sistem?",
+    finalCtaDescription:
+      "Kami bantu menyiapkan implementasi POS yang sesuai ritme operasional outlet Anda, dari setup hingga adopsi tim.",
+    faqs: [
+      {
+        question: "Apakah sistem POS bisa dipakai untuk multi-cabang?",
+        answer:
+          "Bisa. Struktur data dapat disiapkan untuk pemantauan stok dan penjualan lintas outlet secara terpusat.",
+      },
+      {
+        question: "Bagaimana jika internet di outlet tidak stabil?",
+        answer:
+          "Arsitektur POS dapat disesuaikan dengan kebutuhan operasional agar transaksi tetap aman dan sinkron saat koneksi tersedia.",
+      },
+    ],
+  },
+};
+
+function uniqueKeywords(values: string[]) {
+  const seen = new Set<string>();
+  const result: string[] = [];
+  for (const value of values) {
+    const normalized = value.trim();
+    if (!normalized) continue;
+    const key = normalized.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push(normalized);
+  }
+  return result;
+}
+
+function uniqueCtaLinks(values: Array<{ label: string; href: string }>) {
+  const seen = new Set<string>();
+  const result: Array<{ label: string; href: string }> = [];
+  for (const item of values) {
+    const label = item.label.trim();
+    const href = item.href.trim();
+    if (!label || !href) continue;
+    const key = `${label.toLowerCase()}|||${href.toLowerCase()}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push({ label, href });
+  }
+  return result;
+}
+
+function enrichCopyForSeo(page: LegacyAstroPage, copy: LegacyRewriteCopy): LegacyRewriteCopy {
+  const semantic = SECTION_SEMANTIC_KEYWORDS[page.section] || [];
+  const intentKeywords = SLUG_INTENT_KEYWORDS.filter((item) => item.match(page)).flatMap(
+    (item) => item.keywords,
+  );
+  const derived = [
+    `${copy.primaryKeyword} profesional`,
+    `${copy.primaryKeyword} terpercaya`,
+    `${copy.primaryKeyword} untuk bisnis`,
+    ...semantic,
+    ...intentKeywords,
+  ];
+
+  const secondaryKeywords = uniqueKeywords([
+    ...(copy.secondaryKeywords || []),
+    ...derived,
+  ]).slice(0, 10);
+
+  const description = copy.description.includes("Kotacom")
+    ? copy.description
+    : `${copy.description} Didukung tim Kotacom dengan alur kerja terukur untuk hasil yang konsisten.`;
+
+  const intro = /konversi|lead|operasional|produksi|efisiensi/i.test(copy.intro)
+    ? copy.intro
+    : `${copy.intro} Fokus kami adalah memperkuat konversi, efisiensi operasional, dan kualitas implementasi jangka panjang.`;
+
+  const extraFaqs = [
+    {
+      question: `Bagaimana estimasi biaya ${copy.primaryKeyword.toLowerCase()} ditentukan?`,
+      answer:
+        "Biaya ditentukan dari ruang lingkup, kompleksitas eksekusi, target timeline, dan kebutuhan output akhir agar proposal lebih akurat.",
+    },
+    {
+      question: "Apakah layanan bisa disesuaikan dengan kebutuhan bisnis spesifik?",
+      answer:
+        "Bisa. Tim kami menyesuaikan strategi, prioritas, dan deliverable agar implementasi tetap relevan dengan target bisnis Anda.",
+    },
+    ...SLUG_INTENT_FAQS.filter((item) => item.match(page)).flatMap((item) => item.faqs),
+  ];
+  const faqs = uniqueKeywords([
+    ...(copy.faqs || []).map((item) => `${item.question}|||${item.answer}`),
+    ...extraFaqs.map((item) => `${item.question}|||${item.answer}`),
+  ])
+    .slice(0, 5)
+    .map((item) => {
+      const [question, answer] = item.split("|||");
+      return { question, answer };
+    });
+
+  const longGuide =
+    (copy.longGuide && copy.longGuide.length > 0)
+      ? copy.longGuide
+      : SECTION_LONG_GUIDE_DEFAULT[page.section];
+
+  const sectionDefaultCtas: Record<string, Array<{ label: string; href: string }>> = {
+    "pembuatan-website": [
+      { label: "Konsultasi Website", href: DEFAULT_CTA },
+      { label: "Minta Estimasi Biaya", href: DEFAULT_CTA },
+      { label: "Lihat Paket Layanan", href: "#paket" },
+      { label: "Cek FAQ Implementasi", href: "#faq" },
+      { label: "Jadwalkan Diskusi", href: DEFAULT_CTA },
+    ],
+    percetakan: [
+      { label: "Konsultasi Spesifikasi Cetak", href: DEFAULT_CTA },
+      { label: "Minta Simulasi Harga", href: DEFAULT_CTA },
+      { label: "Lihat Paket Produksi", href: "#paket" },
+      { label: "Cek Pertanyaan Umum", href: "#faq" },
+      { label: "Mulai Proyek Cetak", href: DEFAULT_CTA },
+    ],
+    software: [
+      { label: "Audit Kebutuhan Software", href: DEFAULT_CTA },
+      { label: "Minta Scope Awal", href: DEFAULT_CTA },
+      { label: "Lihat Opsi Paket", href: "#paket" },
+      { label: "Cek FAQ Implementasi", href: "#faq" },
+      { label: "Jadwalkan Discovery Call", href: DEFAULT_CTA },
+    ],
+    "sistem-pos": [
+      { label: "Konsultasi Sistem POS", href: DEFAULT_CTA },
+      { label: "Minta Demo Alur POS", href: DEFAULT_CTA },
+      { label: "Lihat Paket POS", href: "#paket" },
+      { label: "Cek FAQ POS", href: "#faq" },
+      { label: "Diskusikan Integrasi Outlet", href: DEFAULT_CTA },
+    ],
+  };
+
+  const ctaSeed = sectionDefaultCtas[page.section] || [
+    { label: "Konsultasi Sekarang", href: DEFAULT_CTA },
+    { label: "Minta Estimasi", href: DEFAULT_CTA },
+    { label: "Lihat FAQ", href: "#faq" },
+  ];
+  const mergedCtaLinks = uniqueCtaLinks([...(copy.ctaLinks || []), ...ctaSeed]).slice(0, 6);
+  const defaultCtaLinks = mergedCtaLinks.length > 0 ? mergedCtaLinks : copy.ctaLinks;
+
+  const finalCtaTitle =
+    copy.finalCtaTitle || `Siap Optimalkan ${copy.primaryKeyword}?`;
+  const finalCtaDescription =
+    copy.finalCtaDescription ||
+    `Diskusikan kebutuhan Anda bersama tim Kotacom untuk menyusun strategi implementasi yang realistis, terukur, dan berorientasi hasil bisnis. Respon awal kami fokus pada langkah eksekusi yang bisa langsung dijalankan.`;
+
+  const priorityOverride = PRIORITY_SLUG_OVERRIDES[page.slug] || {};
+
+  return {
+    ...copy,
+    secondaryKeywords,
+    description,
+    intro,
+    faqs,
+    longGuide,
+    ctaLinks: defaultCtaLinks,
+    finalCtaTitle,
+    finalCtaDescription,
+    ...priorityOverride,
+  };
+}
 
 function titleCaseFromSlug(value: string) {
   return value
@@ -1260,21 +2039,21 @@ export function buildLegacyRewriteCopy(page: LegacyAstroPage): LegacyRewriteCopy
     page.section === "pembuatan-website" &&
     (page.sourceFile.includes("[kota]") || page.slug === "sidoarjo")
   ) {
-    return buildWebsiteCityCopy(page);
+    return enrichCopyForSeo(page, buildWebsiteCityCopy(page));
   }
 
   if (page.section === "pembuatan-website") {
     if (page.slug !== "pembuatan-website") {
-      return buildWebsiteServiceCopy(page);
+      return enrichCopyForSeo(page, buildWebsiteServiceCopy(page));
     }
-    return buildWebsiteIndexCopy();
+    return enrichCopyForSeo(page, buildWebsiteIndexCopy());
   }
 
   if (page.section === "percetakan") {
     if (page.slug !== "percetakan") {
-      return buildPrintingDetailCopy(page);
+      return enrichCopyForSeo(page, buildPrintingDetailCopy(page));
     }
-    return buildPrintingCopy(page);
+    return enrichCopyForSeo(page, buildPrintingCopy(page));
   }
 
   if (page.section === "software" || page.section === "sistem-pos") {
@@ -1283,7 +2062,7 @@ export function buildLegacyRewriteCopy(page: LegacyAstroPage): LegacyRewriteCopy
         ? buildSoftwareDetailCopy(page)
         : buildSoftwareCopy(page);
     if (page.section === "sistem-pos") {
-      return {
+      return enrichCopyForSeo(page, {
         ...softwareCopy,
         primaryKeyword: "Software Sistem POS",
         secondaryKeywords: [
@@ -1296,31 +2075,31 @@ export function buildLegacyRewriteCopy(page: LegacyAstroPage): LegacyRewriteCopy
         description:
           "Software sistem POS untuk bisnis retail dan F&B yang membutuhkan transaksi cepat, kontrol stok akurat, dan laporan real-time.",
         ctaLabel: "Konsultasi Sistem POS",
-      };
+      });
     }
-    return softwareCopy;
+    return enrichCopyForSeo(page, softwareCopy);
   }
 
   if (page.section === "layanan") {
-    return buildLayananCopy();
+    return enrichCopyForSeo(page, buildLayananCopy());
   }
 
   if (page.section === "about") {
     if (page.slug === "ai-statement") {
-      return buildAboutStatementCopy();
+      return enrichCopyForSeo(page, buildAboutStatementCopy());
     }
-    return buildAboutCopy();
+    return enrichCopyForSeo(page, buildAboutCopy());
   }
 
   if (page.section === "contact") {
-    return buildContactCopy();
+    return enrichCopyForSeo(page, buildContactCopy());
   }
 
   if (page.section === "privacy") {
-    return buildPrivacyCopy();
+    return enrichCopyForSeo(page, buildPrivacyCopy());
   }
 
-  return buildGenericCopy(page);
+  return enrichCopyForSeo(page, buildGenericCopy(page));
 }
 
 export function buildPercetakanCetakBukuCityCopy(city: string): LegacyRewriteCopy {
@@ -1334,6 +2113,169 @@ export function buildPercetakanCetakBukuCityCopy(city: string): LegacyRewriteCop
   });
 
   const cityName = titleCaseFromSlug(city);
+  const cityIntentOverrides: Record<string, Partial<LegacyRewriteCopy>> = {
+    surabaya: {
+      intro:
+        "Layanan cetak buku Surabaya kami ditujukan untuk penulis, kampus, komunitas, dan bisnis yang butuh produksi stabil dengan koordinasi cepat. Fokusnya: kualitas cetak rapi, timeline jelas, dan pengiriman aman.",
+      ctaLabel: "Konsultasi Cetak Buku Surabaya",
+      finalCtaTitle: "Siap Produksi Cetak Buku di Surabaya dengan Timeline Jelas?",
+      finalCtaDescription:
+        "Kirim detail naskah, jumlah, dan deadline Anda. Tim kami bantu pilih metode produksi paling efisien untuk kebutuhan Surabaya.",
+    },
+    sidoarjo: {
+      intro:
+        "Untuk kebutuhan cetak buku di Sidoarjo, kami fokus pada proses praktis: konsultasi spesifikasi, validasi file, produksi terukur, dan support sampai pengiriman selesai.",
+      ctaLabel: "Cetak Buku Sidoarjo",
+      finalCtaTitle: "Butuh Partner Cetak Buku di Sidoarjo yang Responsif?",
+      finalCtaDescription:
+        "Diskusikan kebutuhan Anda sekarang agar proses cetak buku di Sidoarjo berjalan cepat, aman, dan sesuai target kualitas.",
+    },
+    mojokerto: {
+      intro:
+        "Halaman ini dirancang untuk kebutuhan cetak buku Mojokerto yang menuntut efisiensi biaya tanpa menurunkan mutu. Kami bantu dari penentuan spesifikasi sampai kontrol hasil cetak.",
+      ctaLabel: "Konsultasi Cetak Buku Mojokerto",
+      finalCtaTitle: "Cetak Buku Mojokerto dengan Skema Produksi Lebih Efisien",
+      finalCtaDescription:
+        "Kami bantu Anda menentukan metode POD/offset yang paling tepat untuk kebutuhan distribusi dan anggaran di Mojokerto.",
+    },
+    samarinda: {
+      intro:
+        "Layanan cetak buku Samarinda kami difokuskan untuk klien yang membutuhkan kualitas konsisten dan komunikasi progres yang jelas dari awal hingga buku siap kirim.",
+      ctaLabel: "Konsultasi Cetak Buku Samarinda",
+      finalCtaTitle: "Ingin Cetak Buku Samarinda Tanpa Bolak-Balik Revisi?",
+      finalCtaDescription:
+        "Mulai dari review file yang tepat agar produksi cetak buku di Samarinda lebih aman dan minim hambatan.",
+    },
+    jeneponto: {
+      intro:
+        "Untuk pasar Jeneponto, kami menyiapkan layanan cetak buku yang fleksibel untuk kebutuhan edukasi, komunitas, dan publikasi bisnis dengan hasil akhir tetap profesional.",
+      ctaLabel: "Cetak Buku Jeneponto",
+      finalCtaTitle: "Cetak Buku Jeneponto yang Siap Pakai dan Tepat Waktu",
+      finalCtaDescription:
+        "Konsultasikan kebutuhan Anda, lalu kami susun timeline produksi dan opsi finishing sesuai tujuan penggunaan buku.",
+    },
+    mataram: {
+      intro:
+        "Kebutuhan cetak buku Mataram kami tangani dengan alur terstruktur agar buku Anda siap dipakai untuk distribusi, penjualan, atau kebutuhan institusi tanpa proses yang membingungkan.",
+      ctaLabel: "Konsultasi Cetak Buku Mataram",
+      finalCtaTitle: "Siap Cetak Buku di Mataram dengan Hasil Lebih Presisi?",
+      finalCtaDescription:
+        "Kami bantu cek file dan spesifikasi sejak awal agar hasil cetak buku Mataram konsisten dengan standar brand Anda.",
+    },
+    banjarmasin: {
+      intro:
+        "Layanan cetak buku Banjarmasin kami disiapkan untuk kebutuhan volume kecil hingga besar dengan fokus pada akurasi file, ketahanan jilid, dan pengiriman aman.",
+      ctaLabel: "Cetak Buku Banjarmasin",
+      finalCtaTitle: "Perlu Mitra Cetak Buku Banjarmasin yang Bisa Diandalkan?",
+      finalCtaDescription:
+        "Diskusikan spesifikasi buku Anda, lalu tim kami bantu susun rencana produksi paling efisien untuk area Banjarmasin.",
+    },
+    "polewali-mandar": {
+      intro:
+        "Untuk cetak buku Polewali Mandar, kami menekankan proses yang sederhana namun terkontrol agar klien tetap mendapatkan hasil rapi dengan estimasi yang jelas.",
+      ctaLabel: "Cetak Buku Polewali Mandar",
+      finalCtaTitle: "Cetak Buku Polewali Mandar dengan Proses Lebih Terarah",
+      finalCtaDescription:
+        "Kirim kebutuhan naskah Anda hari ini dan kami bantu pilih opsi produksi paling tepat untuk target distribusi lokal maupun nasional.",
+    },
+    kendari: {
+      intro:
+        "Halaman ini difokuskan untuk kebutuhan cetak buku Kendari yang mengutamakan kualitas visual, durabilitas buku, dan efisiensi biaya produksi.",
+      ctaLabel: "Konsultasi Cetak Buku Kendari",
+      finalCtaTitle: "Butuh Cetak Buku Kendari dengan Kualitas Konsisten?",
+      finalCtaDescription:
+        "Kami bantu Anda menentukan material isi, cover, dan jilid yang paling sesuai dengan tujuan penggunaan buku.",
+    },
+    manado: {
+      intro:
+        "Layanan cetak buku Manado dirancang untuk membantu penulis dan institusi mendapatkan output cetak yang siap distribusi dengan timeline produksi yang terukur.",
+      ctaLabel: "Cetak Buku Manado",
+      finalCtaTitle: "Siap Produksi Cetak Buku Manado untuk Kebutuhan Anda?",
+      finalCtaDescription:
+        "Konsultasikan jumlah, spesifikasi, dan deadline Anda agar proses cetak buku Manado berjalan efektif dari awal.",
+    },
+    jayapura: {
+      intro:
+        "Untuk kebutuhan cetak buku Jayapura, kami fokus pada perencanaan spesifikasi yang tepat agar hasil cetak tetap terjaga sekalipun kebutuhan distribusi lintas wilayah.",
+      ctaLabel: "Konsultasi Cetak Buku Jayapura",
+      finalCtaTitle: "Cetak Buku Jayapura dengan Perencanaan Produksi yang Matang",
+      finalCtaDescription:
+        "Diskusi awal yang tepat membantu menekan risiko revisi dan mempercepat proses cetak buku Jayapura.",
+    },
+    medan: {
+      intro:
+        "Layanan cetak buku Medan kami menargetkan kebutuhan komersial dan institusi dengan kualitas produksi stabil, finishing rapi, dan dukungan konsultasi teknis sejak awal.",
+      ctaLabel: "Cetak Buku Medan",
+      finalCtaTitle: "Ingin Cetak Buku Medan yang Siap Jual dan Siap Distribusi?",
+      finalCtaDescription:
+        "Kami bantu hitung skema produksi paling efisien untuk kebutuhan cetak buku Medan Anda.",
+    },
+    pontianak: {
+      intro:
+        "Untuk cetak buku Pontianak, kami fokus pada ketelitian file, konsistensi warna, dan pilihan jilid agar hasil akhir lebih representatif untuk kebutuhan profesional.",
+      ctaLabel: "Konsultasi Cetak Buku Pontianak",
+      finalCtaTitle: "Cetak Buku Pontianak dengan Standar Produksi Profesional",
+      finalCtaDescription:
+        "Kirim detail proyek Anda, dan kami bantu susun rencana cetak buku Pontianak yang terukur.",
+    },
+    tomohon: {
+      intro:
+        "Layanan cetak buku Tomohon kami menekankan proses cepat namun tetap akurat, terutama untuk kebutuhan komunitas, sekolah, dan publikasi lokal.",
+      ctaLabel: "Cetak Buku Tomohon",
+      finalCtaTitle: "Butuh Cetak Buku Tomohon yang Rapi dan Tepat Deadline?",
+      finalCtaDescription:
+        "Kami bantu menyiapkan produksi cetak buku Tomohon dengan workflow yang jelas dari file hingga pengiriman.",
+    },
+    "kepulauan-sangihe": {
+      intro:
+        "Untuk kebutuhan cetak buku Kepulauan Sangihe, kami menyiapkan alur kerja yang memperhitungkan ketepatan spesifikasi dan kesiapan distribusi sejak tahap awal.",
+      ctaLabel: "Cetak Buku Kepulauan Sangihe",
+      finalCtaTitle: "Cetak Buku Kepulauan Sangihe dengan Alur Produksi Terukur",
+      finalCtaDescription:
+        "Diskusikan kebutuhan Anda agar kami dapat menyarankan opsi cetak buku paling efisien untuk lokasi dan target penggunaan.",
+    },
+    "manokwari-selatan": {
+      intro:
+        "Layanan cetak buku Manokwari Selatan kami sesuaikan untuk kebutuhan institusi dan komunitas yang memerlukan hasil stabil serta komunikasi proses yang transparan.",
+      ctaLabel: "Konsultasi Cetak Buku Manokwari Selatan",
+      finalCtaTitle: "Produksi Cetak Buku Manokwari Selatan Lebih Terkontrol",
+      finalCtaDescription:
+        "Kami bantu menyusun spesifikasi dan timeline agar cetak buku Manokwari Selatan berjalan lancar.",
+    },
+    sarolangun: {
+      intro:
+        "Untuk cetak buku Sarolangun, fokus kami adalah menyederhanakan proses keputusan spesifikasi sambil menjaga kualitas akhir agar buku siap dipakai tanpa revisi berulang.",
+      ctaLabel: "Cetak Buku Sarolangun",
+      finalCtaTitle: "Cetak Buku Sarolangun Tanpa Kebingungan Spesifikasi",
+      finalCtaDescription:
+        "Konsultasi cepat bersama tim kami untuk menentukan opsi material dan finishing paling sesuai kebutuhan.",
+    },
+    palu: {
+      intro:
+        "Layanan cetak buku Palu kami dirancang agar penulis dan institusi mendapatkan proses produksi yang jelas, hasil rapi, dan pengiriman tepat sesuai rencana.",
+      ctaLabel: "Konsultasi Cetak Buku Palu",
+      finalCtaTitle: "Siap Cetak Buku Palu dengan Workflow Lebih Efektif?",
+      finalCtaDescription:
+        "Kami bantu dari tahap validasi file hingga final QC agar hasil cetak buku Palu lebih konsisten.",
+    },
+    "tanjung-pinang": {
+      intro:
+        "Untuk kebutuhan cetak buku Tanjung Pinang, kami menyiapkan skema produksi fleksibel yang tetap menjaga kualitas cetak dan ketepatan jadwal.",
+      ctaLabel: "Cetak Buku Tanjung Pinang",
+      finalCtaTitle: "Butuh Cetak Buku Tanjung Pinang dengan Estimasi Jelas?",
+      finalCtaDescription:
+        "Kirim detail kebutuhan Anda untuk mendapatkan rekomendasi metode cetak paling tepat.",
+    },
+    pringsewu: {
+      intro:
+        "Layanan cetak buku Pringsewu kami menekankan kemudahan konsultasi, ketelitian pre-press, dan kualitas finishing agar hasil buku siap dipakai secara profesional.",
+      ctaLabel: "Konsultasi Cetak Buku Pringsewu",
+      finalCtaTitle: "Cetak Buku Pringsewu dengan Hasil Rapi dan Siap Distribusi",
+      finalCtaDescription:
+        "Kami bantu merancang spesifikasi cetak buku Pringsewu sesuai target kuantitas dan kualitas Anda.",
+    },
+  };
+  const cityOverride = cityIntentOverrides[city] || {};
 
   return {
     ...base,
@@ -1359,5 +2301,28 @@ export function buildPercetakanCetakBukuCityCopy(city: string): LegacyRewriteCop
     finalCtaTitle: `Siap Cetak Buku di ${cityName}?`,
     finalCtaDescription:
       `Kirim detail naskah dan spesifikasi Anda. Tim kami bantu susun opsi produksi paling efisien untuk kebutuhan cetak buku di ${cityName}.`,
+    faqs: [
+      {
+        question: `Apakah bisa konsultasi spesifikasi sebelum cetak buku di ${cityName}?`,
+        answer:
+          "Bisa. Kami bantu validasi ukuran, jenis kertas, jilid, dan finishing agar keputusan produksi lebih tepat sejak awal.",
+      },
+      {
+        question: `Apakah melayani cetak buku ${cityName} untuk jumlah kecil maupun besar?`,
+        answer:
+          "Ya. Kami melayani kebutuhan POD untuk jumlah kecil hingga produksi massal sesuai target distribusi Anda.",
+      },
+      {
+        question: "Bagaimana memastikan file aman sebelum masuk produksi?",
+        answer:
+          "Tim kami melakukan pre-press check pada bleed, margin aman, resolusi gambar, dan format file untuk menekan risiko revisi.",
+      },
+      {
+        question: "Apakah ada pendampingan sampai pengiriman selesai?",
+        answer:
+          "Ada. Kami memastikan alur produksi, quality control, dan pengiriman dipantau agar hasil tiba sesuai ekspektasi.",
+      },
+    ],
+    ...cityOverride,
   };
 }

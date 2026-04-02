@@ -8,7 +8,7 @@ import { badgeVariants } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
 import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
-import ProductCard from "@/components/ui/product-card";
+import ProductGrid from "@/components/products/product-grid";
 import {
   fetchSanityCategoryBySlug,
   fetchSanityProductBySlug,
@@ -117,11 +117,7 @@ export default async function ProductSlugPage(props: {
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {(products as any[]).map((item: any) => (
-              <ProductCard key={item.slug?.current || item.title} {...item} />
-            ))}
-          </div>
+          <ProductGrid products={products as any[]} />
         </div>
       </section>
     );

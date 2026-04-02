@@ -1,4 +1,4 @@
-import LegacyPageShell from "@/components/legacy/legacy-page-shell";
+import RewritePageShell from "@/components/ui/rewrite/page-shell";
 import {
   getLegacySectionChildren,
   getLegacySectionSlug,
@@ -27,7 +27,7 @@ export default async function AboutDetailPage(props: {
   if (!page) notFound();
 
   return (
-    <LegacyPageShell
+    <RewritePageShell
       page={page}
       siblings={getLegacySectionChildren("about")}
     />

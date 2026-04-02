@@ -1,5 +1,5 @@
-import ServiceCard from "@/components/ui/service-card";
 import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
+import ServiceGrid from "@/components/services/service-grid";
 import {
   fetchSanityServiceCategories,
   fetchSanityServices,
@@ -37,11 +37,7 @@ export default async function ServicesPage() {
             />
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {services.map((service: any) => (
-            <ServiceCard key={service.slug?.current || service.title} {...service} />
-          ))}
-        </div>
+        <ServiceGrid services={services as any[]} />
       </div>
     </section>
   );

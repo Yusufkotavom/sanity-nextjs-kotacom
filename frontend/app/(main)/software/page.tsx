@@ -1,4 +1,4 @@
-import LegacyPageShell from "@/components/legacy/legacy-page-shell";
+import RewritePageShell from "@/components/ui/rewrite/page-shell";
 import {
   getLegacySectionChildren,
   getLegacySectionIndex,
@@ -15,7 +15,7 @@ export default function SoftwarePage() {
   if (!page) notFound();
 
   return (
-    <LegacyPageShell
+    <RewritePageShell
       page={page}
       siblings={getLegacySectionChildren("software")}
     />

@@ -1,4 +1,4 @@
-import LegacyPageShell from "@/components/legacy/legacy-page-shell";
+import RewritePageShell from "@/components/ui/rewrite/page-shell";
 import {
   getLegacySectionAliasSlugs,
   getLegacySectionChildren,
@@ -35,7 +35,7 @@ export default async function PembuatanWebsiteDetailPage(props: {
   if (!page) notFound();
 
   return (
-    <LegacyPageShell
+    <RewritePageShell
       page={page}
       siblings={getLegacySectionChildren("pembuatan-website")}
     />

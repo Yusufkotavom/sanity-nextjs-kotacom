@@ -1,0 +1,17 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" rx="28" fill="#F8FAFC"/>
+  <rect x="52" y="52" width="1096" height="571" rx="24" fill="#FFFFFF"/>
+  <rect x="112" y="112" width="976" height="451" rx="20" fill="#F8FAFC"/>
+  <rect x="172" y="180" width="428" height="312" rx="18" fill="#E0F2FE"/>
+  <rect x="214" y="222" width="134" height="134" rx="20" fill="#0EA5E9" fill-opacity="0.30"/>
+  <rect x="370" y="222" width="188" height="34" rx="10" fill="#0EA5E9" fill-opacity="0.18"/>
+  <rect x="370" y="274" width="154" height="26" rx="8" fill="#111827" fill-opacity="0.08"/>
+  <rect x="370" y="318" width="168" height="26" rx="8" fill="#111827" fill-opacity="0.08"/>
+  <rect x="370" y="362" width="122" height="26" rx="8" fill="#111827" fill-opacity="0.08"/>
+  <rect x="656" y="180" width="372" height="312" rx="18" fill="#FFFFFF"/>
+  <rect x="696" y="222" width="292" height="46" rx="12" fill="#10B981" fill-opacity="0.14"/>
+  <rect x="696" y="290" width="244" height="34" rx="10" fill="#0EA5E9" fill-opacity="0.10"/>
+  <rect x="696" y="338" width="206" height="34" rx="10" fill="#0EA5E9" fill-opacity="0.10"/>
+  <rect x="696" y="404" width="170" height="44" rx="12" fill="#111827"/>
+  <text x="172" y="536" fill="#0F172A" font-family="Geist, Arial, sans-serif" font-size="30" font-weight="700">Konsultasi Cepat Cetak Buku</text>
+</svg>

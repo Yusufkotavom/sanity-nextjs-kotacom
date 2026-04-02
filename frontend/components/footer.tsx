@@ -1,7 +1,5 @@
 import Logo from "@/components/logo";
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import SocialLinks from "@/components/header/social-links";
 import { fetchSanitySettings, fetchSanityNavigation } from "@/sanity/lib/fetch";
@@ -70,42 +68,28 @@ export default async function Footer() {
               Solusi website, software, dan layanan IT dengan implementasi yang
               rapi, cepat, serta mudah di-scale untuk kebutuhan bisnis Anda.
             </p>
-            <div className="mt-6 flex flex-wrap items-center gap-2.5">
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2.5">
               {footerPrimaryLinks.map((navItem: SanityLink) => (
                 <Link
                   key={navItem._key}
                   href={navItem.href || "#"}
                   target={navItem.target ? "_blank" : undefined}
                   rel={navItem.target ? "noopener noreferrer" : undefined}
-                  className={cn(
-                    buttonVariants({
-                      variant: navItem.buttonVariant || "ghost",
-                      size: "sm",
-                    }),
-                    "h-8 rounded-lg px-3 text-xs",
-                    navItem.buttonVariant === "ghost" &&
-                      "border border-transparent text-foreground/72 hover:border-border/80 hover:bg-accent/80 hover:text-foreground",
-                  )}
+                  className="text-xs text-foreground/72 transition-colors hover:text-foreground"
                 >
                   {navItem.title}
                 </Link>
               ))}
             </div>
             {!!footerUtilityLinks.length && (
-              <div className="mt-3 flex flex-wrap items-center gap-2.5">
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2.5">
                 {footerUtilityLinks.map((navItem: SanityLink) => (
                   <Link
                     key={navItem._key}
                     href={navItem.href || "#"}
                     target={navItem.target ? "_blank" : undefined}
                     rel={navItem.target ? "noopener noreferrer" : undefined}
-                    className={cn(
-                      buttonVariants({
-                        variant: navItem.buttonVariant || "outline",
-                        size: "sm",
-                      }),
-                      "h-8 rounded-lg px-3 text-xs",
-                    )}
+                    className="text-xs text-foreground/62 transition-colors hover:text-foreground"
                   >
                     {navItem.title}
                   </Link>
@@ -122,10 +106,7 @@ export default async function Footer() {
                 const groupedChildren = groupChildren(children);
 
                 return (
-                  <div
-                    key={item._key}
-                    className="surface-muted rounded-xl p-4"
-                  >
+                  <div key={item._key}>
                     <Link
                       href={item.href || "#"}
                       target={item.target ? "_blank" : undefined}

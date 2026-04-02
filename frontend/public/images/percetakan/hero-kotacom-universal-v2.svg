@@ -1,0 +1,38 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="v2a" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="v2b" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FACC15"/>
+      <stop offset="100%" stop-color="#F97316"/>
+    </linearGradient>
+    <linearGradient id="v2c" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EF4444"/>
+      <stop offset="100%" stop-color="#B91C1C"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" rx="36" fill="#F8FAFC"/>
+  <rect x="40" y="40" width="1520" height="820" rx="32" fill="#FFFFFF"/>
+  <rect x="104" y="104" width="792" height="692" rx="28" fill="#FFFFFF"/>
+  <rect x="922" y="104" width="574" height="692" rx="28" fill="#F8FAFC"/>
+  <rect x="160" y="176" width="418" height="58" rx="14" fill="#0EA5E9" fill-opacity="0.15"/>
+  <rect x="160" y="258" width="520" height="34" rx="10" fill="#0EA5E9" fill-opacity="0.10"/>
+  <rect x="160" y="308" width="440" height="34" rx="10" fill="#0EA5E9" fill-opacity="0.10"/>
+  <rect x="160" y="384" width="232" height="54" rx="14" fill="url(#v2a)"/>
+  <rect x="410" y="384" width="232" height="54" rx="14" fill="#FFF7ED"/>
+  <rect x="160" y="486" width="188" height="210" rx="18" fill="#DBEAFE"/>
+  <rect x="378" y="486" width="188" height="210" rx="18" fill="#FEF3C7"/>
+  <rect x="596" y="486" width="236" height="210" rx="18" fill="#FEE2E2"/>
+  <rect x="986" y="166" width="444" height="248" rx="20" fill="#E0F2FE"/>
+  <rect x="1026" y="206" width="146" height="168" rx="14" fill="url(#v2a)" fill-opacity="0.70"/>
+  <rect x="1190" y="206" width="146" height="168" rx="14" fill="url(#v2b)" fill-opacity="0.65"/>
+  <rect x="1354" y="206" width="36" height="168" rx="10" fill="url(#v2c)" fill-opacity="0.70"/>
+  <rect x="986" y="458" width="444" height="214" rx="20" fill="#FFFFFF"/>
+  <rect x="1026" y="500" width="306" height="30" rx="8" fill="#111827" fill-opacity="0.10"/>
+  <rect x="1026" y="548" width="268" height="30" rx="8" fill="#111827" fill-opacity="0.08"/>
+  <rect x="1026" y="596" width="214" height="30" rx="8" fill="#111827" fill-opacity="0.08"/>
+  <text x="160" y="760" fill="#0F172A" font-family="Geist, Arial, sans-serif" font-size="52" font-weight="800">KOTACOM</text>
+  <text x="446" y="760" fill="#475569" font-family="Geist, Arial, sans-serif" font-size="26" font-weight="600">CETAK BUKU DARI FILE HINGGA DISTRIBUSI</text>
+</svg>

@@ -1,0 +1,464 @@
+{
+  "business": {
+    "type": "Konsultan Pajak dan Legal",
+    "address": "Jl. Raya Darmo No. 123, Surabaya, Jawa Timur 60286",
+    "phone": "085799520350",
+    "description": "Lintangizin adalah konsultan pajak dan legal terpercaya yang membantu bisnis Anda dalam mengurus pengukuhan PKP dan berbagai hal terkait perpajakan lainnya. Kami memiliki tim ahli berpengalaman dan berkomitmen memberikan solusi terbaik."
+  },
+  "hero": {
+    "badge_text": "Layanan Terpercaya & Terbaik di Jawa Timur",
+    "title": "Jasa Pengukuhan PKP Terpercaya di Indonesia",
+    "subtitle": "Amankan Bisnis Anda dengan Layanan Pengukuhan PKP Profesional dari Lintangizin",
+    "feature": [
+      {
+        "point": "500+",
+        "description": "Klien Puas"
+      },
+      {
+        "point": "98%",
+        "description": "Tingkat Kesuksesan"
+      },
+      {
+        "point": "10+",
+        "description": "Tahun Pengalaman"
+      },
+      {
+        "point": "24/7",
+        "description": "Konsultasi"
+      }
+    ],
+    "image_url": "https://res.cloudinary.com/dwxw1h9my/image/upload/f_auto,q_auto,w_auto,dpr_auto/v1753726244/kotacom/website-images/Web_Development_hero.jpg"
+  },
+  "features": {
+    "badge_text": "Solusi Terlengkap untuk Pengukuhan PKP",
+    "title": "Fitur Unggulan Jasa Pengukuhan PKP Lintangizin",
+    "subtitle": "Kami menawarkan solusi komprehensif untuk semua kebutuhan pengukuhan PKP Anda.",
+    "point": [
+      {
+        "title": "Konsultasi Pajak Gratis",
+        "description": "Konsultasikan permasalahan pajak Anda secara gratis dengan tim ahli kami sebelum memutuskan untuk menggunakan layanan kami.  Kami akan menganalisa kebutuhan Anda dan memberikan solusi yang tepat."
+      },
+      {
+        "title": "Proses Cepat & Efisien",
+        "description": "Kami memproses pengukuhan PKP Anda dengan cepat dan efisien, sehingga Anda dapat fokus pada bisnis inti Anda.  Tim kami berpengalaman dalam menangani berbagai kasus dan prosedur yang berkaitan dengan pengukuhan PKP."
+      },
+      {
+        "title": "Tim Ahli Berpengalaman",
+        "description": "Tim kami terdiri dari para ahli pajak dan legal berpengalaman yang terdaftar resmi di Kementrian Keuangan dan memiliki rekam jejak yang bagus."
+      },
+      {
+        "title": "Garansi Keberhasilan",
+        "description": "Kami memberikan garansi keberhasilan dalam proses pengukuhan PKP Anda. Jika terjadi kendala, kami akan bertanggung jawab penuh."
+      },
+      {
+        "title": "Transparansi Biaya",
+        "description": "Kami memberikan rincian biaya yang transparan dan tidak ada biaya tersembunyi. Anda akan mengetahui detail biaya sejak awal proses."
+      },
+      {
+        "title": "Laporan Berkala",
+        "description": "Kami memberikan laporan berkala mengenai perkembangan proses pengukuhan PKP Anda sehingga Anda selalu mendapatkan update terkini."
+      }
+    ]
+  },
+  "info": {
+    "img_alt": "Tim Ahli Lintangizin",
+    "badge_text": "Tim Ahli & Berpengalaman",
+    "title": "Mengenal Tim Ahli Lintangizin",
+    "subtitle": "Dibangun oleh para profesional berpengalaman dibidangnya.",
+    "description": "Lintangizin dibangun oleh tim ahli yang berpengalaman lebih dari 10 tahun di bidang perpajakan dan legal.  Kami memiliki rekam jejak yang baik dalam membantu berbagai klien, mulai dari UMKM hingga perusahaan besar.  Kami berkomitmen untuk selalu memberikan pelayanan terbaik dan solusi yang tepat untuk kebutuhan klien.",
+    "point": [
+      {
+        "title": "Total 25+ tahun pengalaman di bidang perpajakan"
+      },
+      {
+        "title": "Pemenang Penghargaan 'Konsultan Pajak Terbaik' 2022 oleh Majalah Bisnis Indonesia"
+      },
+      {
+        "title": "Klien kami mencakup perusahaan ternama seperti PT. Karya Mandiri Sejahtera dan PT. Cahaya Indonesia"
+      },
+      {
+        "title": "Keahlian di berbagai bidang perpajakan, termasuk PPN, PPh, dan Pajak Pertambahan Nilai"
+      },
+      {
+        "title": "Selalu mengikuti perkembangan peraturan perpajakan terbaru"
+      }
+    ]
+  },
+  "services": {
+    "badge_text": "Layanan Komprehensif untuk Semua Kebutuhan Bisnis Anda",
+    "title": "Layanan Jasa Pengukuhan PKP Lintangizin",
+    "subtitle": "Pilih layanan yang sesuai dengan kebutuhan bisnis Anda.",
+    "point": [
+      {
+        "title": "Pengukuhan PKP Standar",
+        "description": "Layanan pengukuhan PKP standar untuk bisnis kecil dan menengah.",
+        "link": "/pengukuhan-pkp-standar",
+        "feature": [
+          "Konsultasi Awal",
+          "Pengurusan Dokumen",
+          "Pengajuan ke KPP",
+          "Monitoring Proses",
+          "Laporan Berkala"
+        ]
+      },
+      {
+        "title": "Pengukuhan PKP Cepat",
+        "description": "Layanan pengukuhan PKP dengan proses lebih cepat untuk bisnis yang membutuhkan respon cepat.",
+        "link": "/pengukuhan-pkp-cepat",
+        "feature": [
+          "Konsultasi Ekspres",
+          "Pengurusan Dokumen Prioritas",
+          "Pengajuan Kilat ke KPP",
+          "Monitoring Intensif",
+          "Laporan Real-time"
+        ]
+      },
+      {
+        "title": "Konsultasi Pajak PKP",
+        "description": "Layanan konsultasi pajak khusus bagi wajib pajak yang telah memiliki NPWP.",
+        "link": "/konsultasi-pajak-pkp",
+        "feature": [
+          "Konsultasi Pajak",
+          "Analisa Pajak",
+          "Perencanaan Pajak",
+          "Optimasi Pajak"
+        ]
+      }
+    ]
+  },
+  "why_us": {
+    "badge_text": "Keunggulan Kami",
+    "title": "Mengapa Memilih Lintangizin?",
+    "subtitle": "Kami berbeda karena...",
+    "description": "Lintangizin menawarkan layanan pengukuhan PKP yang unggul, cepat, dan terpercaya, didukung oleh tim ahli berpengalaman dan komitmen terhadap kepuasan klien.",
+    "point": [
+      {
+        "title": "Tim Ahli Berpengalaman",
+        "description": "Kami memiliki tim ahli yang berpengalaman dan terdaftar resmi."
+      },
+      {
+        "title": "Proses Cepat dan Efisien",
+        "description": "Kami memproses pengukuhan PKP Anda dengan cepat dan efisien."
+      },
+      {
+        "title": "Garansi Keberhasilan",
+        "description": "Kami memberikan garansi keberhasilan dalam proses pengukuhan PKP Anda."
+      },
+      {
+        "title": "Transparansi Biaya",
+        "description": "Tidak ada biaya tersembunyi, detail biaya akan diberikan sejak awal."
+      }
+    ]
+  },
+  "what_you_get": {
+    "title": "Apa yang Anda Dapatkan?",
+    "subtitle": "Manfaat yang Anda dapatkan dengan menggunakan layanan kami.",
+    "points": [
+      {
+        "title": "NPWP",
+        "description": "Nomor Pokok Wajib Pajak (NPWP) yang telah terdaftar di Kementrian Keuangan."
+      },
+      {
+        "title": "Sertifikat PKP",
+        "description": "Sertifikat Pengukuhan Pengusaha Kena Pajak (PKP) yang sah."
+      },
+      {
+        "title": "Konsultasi Pajak",
+        "description": "Konsultasi pajak gratis dari tim ahli kami."
+      },
+      {
+        "title": "Laporan Berkala",
+        "description": "Laporan berkala mengenai perkembangan proses pengukuhan PKP Anda."
+      }
+    ]
+  },
+  "why_need": {
+    "badge_text": "Pentingnya Pengukuhan PKP",
+    "title": "Mengapa Bisnis Anda Membutuhkan Pengukuhan PKP?",
+    "subtitle": "Ketahui pentingnya pengukuhan PKP dalam mengembangkan bisnis Anda.",
+    "description": "Di era bisnis digital saat ini,  pengukuhan PKP menjadi sangat penting untuk kredibilitas dan legalitas bisnis Anda.  Dengan menjadi PKP, Anda dapat menerbitkan faktur pajak, meningkatkan kepercayaan pelanggan, dan menghindari denda pajak yang besar.  Lebih dari itu, menjadi PKP menunjukkan komitmen bisnis anda terhadap peraturan perpajakan di Indonesia. Ini penting untuk menjaga citra baik dan mengembangkan bisnis jangka panjang.",
+    "point": [
+      {
+        "title": "Meningkatkan Kredibilitas Bisnis",
+        "description": "Menjadi PKP meningkatkan kepercayaan pelanggan dan mitra bisnis."
+      },
+      {
+        "title": "Menerbitkan Faktur Pajak",
+        "description": "Anda dapat menerbitkan faktur pajak yang sah."
+      },
+      {
+        "title": "Mempermudah Transaksi Bisnis",
+        "description": "Memudahkan transaksi bisnis, khususnya dengan perusahaan besar."
+      },
+      {
+        "title": "Menghindari Denda Pajak",
+        "description": "Mengikuti peraturan pajak mencegah denda dan sanksi yang besar."
+      }
+    ]
+  },
+  "pricing": {
+    "badge_text": "Paket Layanan",
+    "title": "Daftar Harga Jasa Pengukuhan PKP",
+    "description": "Harga transparan dan tanpa biaya tersembunyi. Konsultasi gratis!",
+    "plan": [
+      {
+        "badge": "Paling Populer",
+        "title": "Paket Standar",
+        "price": "Rp 1.500.000",
+        "description": "Cocok untuk UMKM dan bisnis skala kecil.",
+        "feature": [
+          "Konsultasi Awal",
+          "Pengurusan Dokumen",
+          "Pengajuan ke KPP",
+          "Monitoring Proses",
+          "Laporan Berkala"
+        ]
+      },
+      {
+        "badge": "Rekomendasi",
+        "title": "Paket Premium",
+        "price": "Rp 2.500.000",
+        "description": "Proses lebih cepat dan disertai konsultasi intensif.",
+        "feature": [
+          "Konsultasi Ekspres",
+          "Pengurusan Dokumen Prioritas",
+          "Pengajuan Kilat ke KPP",
+          "Monitoring Intensif",
+          "Laporan Real-time",
+          "Garansi Keberhasilan"
+        ]
+      },
+      {
+        "badge": "Enterprise",
+        "title": "Paket Enterprise",
+        "price": "Rp 5.000.000",
+        "description": "Untuk perusahaan besar dan kompleks.",
+        "feature": [
+          "Konsultasi Mendalam",
+          "Pengurusan Dokumen Kompleks",
+          "Pengajuan Prioritas ke KPP",
+          "Monitoring Ekstensif",
+          "Laporan Detail",
+          "Garansi Keberhasilan",
+          "Dukungan Penuh"
+        ]
+      }
+    ]
+  },
+  "portfolio": {
+    "title": "Portofolio Kami",
+    "description": "Berikut adalah beberapa klien yang telah kami bantu dalam proses pengukuhan PKP.",
+    "list": [
+      {
+        "type": "UMKM",
+        "title": "Toko Kue Manis",
+        "description": "Membantu Toko Kue Manis mendapatkan PKP dengan cepat dan efisien."
+      },
+      {
+        "type": "Perusahaan Besar",
+        "title": "PT. Cahaya Indonesia",
+        "description": "Memberikan solusi lengkap untuk PT. Cahaya Indonesia dalam proses pengukuhan PKP."
+      },
+      {
+        "type": "Startup",
+        "title": "Aplikasi Pintar",
+        "description": "Membantu Startup Aplikasi Pintar dalam mengurus perizinan PKP dan perpajakannya."
+      },
+      {
+        "type": "UMKM",
+        "title": "Restoran Rasa",
+        "description": "Membantu Restoran Rasa dalam mendapatkan PKP dan mematuhi peraturan pajak."
+      },
+      {
+        "type": "Perusahaan Besar",
+        "title": "PT. Maju Jaya",
+        "description": "Memberikan solusi yang tepat untuk PT. Maju Jaya dalam proses pengukuhan PKP."
+      }
+    ]
+  },
+  "testimonials": {
+    "badge_text": "Testimoni Klien",
+    "title": "Apa Kata Klien Kami?",
+    "subtitle": "Ketahui pengalaman klien kami dengan layanan pengukuhan PKP dari Lintangizin.",
+    "card": [
+      {
+        "headline": "Proses Cepat dan Mudah",
+        "quote": "Saya sangat puas dengan layanan Lintangizin. Proses pengukuhan PKP sangat cepat dan mudah. Tim mereka sangat profesional dan responsif.",
+        "name": "Budi Santoso",
+        "position": "Owner, Toko Kue Manis"
+      },
+      {
+        "headline": "Solusi Lengkap dan Terpercaya",
+        "quote": "Lintangizin memberikan solusi lengkap dan terpercaya untuk kebutuhan pengukuhan PKP kami. Mereka membantu kami dalam setiap langkah prosesnya.",
+        "name": "Ani Lestari",
+        "position": "Direktur, PT. Cahaya Indonesia"
+      },
+      {
+        "headline": "Pelayanan yang Sangat Profesional",
+        "quote": "Saya sangat terkesan dengan pelayanan profesional yang diberikan oleh tim Lintangizin. Mereka sangat membantu dan ramah.",
+        "name": "Rudi Hartono",
+        "position": "CEO, Aplikasi Pintar"
+      }
+    ]
+  },
+  "faq": {
+    "badge_text": "Pertanyaan Umum",
+    "title": "Pertanyaan yang Sering Diajukan",
+    "subtitle": "Temukan jawaban atas pertanyaan umum mengenai jasa pengukuhan PKP.",
+    "points": [
+      {
+        "question": "Berapa lama proses pengukuhan PKP?",
+        "answer": "Proses pengukuhan PKP biasanya memakan waktu sekitar 1-2 minggu, tergantung kompleksitas kasus."
+      },
+      {
+        "question": "Bagaimana proses kerjanya?",
+        "answer": "Prosesnya dimulai dengan konsultasi, kemudian pengurusan dokumen, pengajuan ke KPP, monitoring proses, dan pelaporan."
+      },
+      {
+        "question": "Apakah ada garansi revisi?",
+        "answer": "Ya, kami memberikan garansi revisi jika terdapat kesalahan dalam proses pengukuhan PKP."
+      },
+      {
+        "question": "Apa saja dokumen yang dibutuhkan?",
+        "answer": "Dokumen yang dibutuhkan antara lain KTP, NPWP, SIUP, dan dokumen pendukung lainnya. Kami akan memberikan daftar lengkap dokumen yang dibutuhkan setelah konsultasi."
+      },
+      {
+        "question": "Berapa biaya yang dibutuhkan?",
+        "answer": "Biaya bervariasi tergantung paket layanan yang dipilih. Silahkan lihat detail harga pada halaman harga."
+      },
+      {
+        "question": "Bagaimana cara menghubungi Lintangizin?",
+        "answer": "Anda dapat menghubungi kami melalui telepon, email, atau WhatsApp yang tertera di website."
+      },
+      {
+        "question": "Apakah Lintangizin memiliki kantor?",
+        "answer": "Ya, kantor kami berlokasi di Jl. Raya Darmo No. 123, Surabaya, Jawa Timur 60286."
+      },
+      {
+        "question": "Apakah layanan ini tersedia di luar Jawa Timur?",
+        "answer": "Saat ini layanan kami fokus di Jawa Timur, namun kami akan terus berekspansi."
+      }
+    ]
+  },
+  "final_cta": {
+    "badge_text": "Hubungi Kami Sekarang!",
+    "title": "Mulai Proses Pengukuhan PKP Anda Sekarang!",
+    "subtitle": "Jangan tunda lagi, amankan bisnis Anda dengan layanan terbaik dari Lintangizin!"
+  },
+  "content": {
+    "title": "Pentingnya Jasa Pengukuhan PKP untuk Bisnis di Era Digital",
+    "subtitle": "Mengapa Anda membutuhkan jasa profesional untuk pengukuhan PKP?",
+    "description": "Di era digital saat ini, setiap bisnis dituntut untuk profesional dan taat aturan. Salah satu kewajiban penting yang seringkali menjadi kendala adalah pengukuhan Pengusaha Kena Pajak (PKP).  Prosesnya yang rumit dan memerlukan pemahaman mendalam tentang perpajakan seringkali membuat para pelaku bisnis, terutama UMKM, merasa kesulitan.  Oleh karena itu, menggunakan jasa profesional untuk pengukuhan PKP menjadi solusi yang tepat dan efisien.  \n\nDengan Lintangizin, Anda tidak perlu khawatir lagi dengan proses yang rumit. Tim ahli kami siap membantu Anda dari awal hingga akhir proses pengukuhan PKP.  Kami akan mengurus semua dokumen dan prosedur yang diperlukan, sehingga Anda dapat fokus pada pengembangan bisnis inti Anda.  Lebih dari itu, kami juga akan memberikan konsultasi pajak gratis untuk memastikan Anda memahami kewajiban pajak Anda. \n\nBerdasarkan data dari Kementrian Keuangan, terdapat peningkatan signifikan dalam jumlah wajib pajak yang terdaftar sebagai PKP setiap tahunnya.  Hal ini menunjukkan semakin tingginya kesadaran pelaku bisnis tentang pentingnya kepatuhan pajak.  Namun, masih banyak pelaku bisnis yang mengalami kesulitan dalam proses pengukuhan PKP.  \n\nKeuntungan menjadi PKP antara lain: meningkatkan kepercayaan pelanggan, memudahkan transaksi bisnis, dan menghindari denda pajak yang besar.  Bayangkan, jika proses pengukuhan PKP Anda terhambat, bisnis Anda akan terdampak.  Oleh karena itu, memilih jasa profesional seperti Lintangizin adalah investasi yang cerdas untuk keberhasilan bisnis Anda. \n\nJangan ragu untuk berkonsultasi dengan tim ahli kami. Kami siap membantu Anda dalam setiap tahap proses pengukuhan PKP.  Hubungi kami sekarang juga dan dapatkan konsultasi gratis!"
+  },
+  "local": {
+    "title": "Jangkauan Layanan di Jawa Timur",
+    "subtitle": "Lintangizin hadir untuk membantu bisnis di seluruh Jawa Timur.",
+    "description": "Lintangizin hadir untuk membantu UMKM dan bisnis di Jawa Timur dalam mengurus pengukuhan PKP.  Jawa Timur memiliki potensi ekonomi yang besar, dan kami berkomitmen untuk membantu para pelaku bisnis di sini untuk berkembang dengan mematuhi peraturan perpajakan.  Dengan pertumbuhan ekonomi digital yang pesat,  semakin banyak UMKM yang membutuhkan layanan pengukuhan PKP.  Layanan kami dirancang untuk membantu bisnis lokal bersaing di pasar yang kompetitif.  Kami memahami tantangan yang dihadapi oleh bisnis lokal, dan kami siap untuk memberikan solusi yang tepat.",
+    "city": [
+      {
+        "title": "Surabaya",
+        "description": "Layanan pengukuhan PKP di Surabaya dan sekitarnya."
+      },
+      {
+        "title": "Malang",
+        "description": "Layanan pengukuhan PKP di Malang dan sekitarnya."
+      },
+      {
+        "title": "Sidoarjo",
+        "description": "Layanan pengukuhan PKP di Sidoarjo dan sekitarnya."
+      }
+    ]
+  },
+  "kabupaten_kota": [
+    {
+      "nama": "Kota Surabaya",
+      "description": "Layanan pengukuhan PKP di seluruh kecamatan di Surabaya.",
+      "kecamatan": [
+        {
+          "nama": "Bubutan",
+          "link": "/kota-surabaya/bubutan"
+        },
+        {
+          "nama": "Gununganyar",
+          "link": "/kota-surabaya/gununganyar"
+        },
+        {
+          "nama": "Rungkut",
+          "link": "/kota-surabaya/rungkut"
+        }
+      ]
+    },
+    {
+      "nama": "Kabupaten Sidoarjo",
+      "description": "Layanan pengukuhan PKP di seluruh kecamatan di Sidoarjo.",
+      "kecamatan": [
+        {
+          "nama": "Sedati",
+          "link": "/kabupaten-sidoarjo/sedati"
+        },
+        {
+          "nama": "Waru",
+          "link": "/kabupaten-sidoarjo/waru"
+        },
+        {
+          "nama": "Buduran",
+          "link": "/kabupaten-sidoarjo/buduran"
+        }
+      ]
+    },
+    {
+      "nama": "Kota Malang",
+      "description": "Layanan pengukuhan PKP di seluruh kecamatan di Malang.",
+      "kecamatan": [
+        {
+          "nama": "Klojen",
+          "link": "/kota-malang/klojen"
+        },
+        {
+          "nama": "Sukun",
+          "link": "/kota-malang/sukun"
+        },
+        {
+          "nama": "Lowokwaru",
+          "link": "/kota-malang/lowokwaru"
+        }
+      ]
+    },
+    {
+      "nama": "Kota Madiun",
+      "description": "Layanan pengukuhan PKP di seluruh kecamatan di Madiun.",
+      "kecamatan": [
+        {
+          "nama": "Kartoharjo",
+          "link": "/kota-madiun/kartoharjo"
+        },
+        {
+          "nama": "Taman",
+          "link": "/kota-madiun/taman"
+        },
+        {
+          "nama": "Manguharjo",
+          "link": "/kota-madiun/manguharjo"
+        }
+      ]
+    },
+    {
+      "nama": "Kota Kediri",
+      "description": "Layanan pengukuhan PKP di seluruh kecamatan di Kediri.",
+      "kecamatan": [
+        {
+          "nama": "Mojoroto",
+          "link": "/kota-kediri/mojoroto"
+        },
+        {
+          "nama": "Kota",
+          "link": "/kota-kediri/kota"
+        },
+        {
+          "nama": "Pesantren",
+          "link": "/kota-kediri/pesantren"
+        }
+      ]
+    }
+  ]
+}

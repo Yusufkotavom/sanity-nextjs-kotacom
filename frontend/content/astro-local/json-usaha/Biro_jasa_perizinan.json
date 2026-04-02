@@ -1,0 +1,529 @@
+{
+  "business": {
+    "type": "Biro Jasa Perizinan",
+    "address": "Jl. Raya Darmo Permai No. 8, Surabaya, Jawa Timur 60286",
+    "phone": "085799520350",
+    "description": "Lintangizin: Solusi Terpercaya untuk Semua Kebutuhan Perizinan Bisnis Anda di Jawa Timur.  Kami membantu Anda mengurus perizinan dengan cepat, mudah, dan terjamin."
+  },
+  "hero": {
+    "badge_text": "Layanan Perizinan Terbaik di Jawa Timur - Winner of 'Golden Permit Award' 2023",
+    "title": "Lintangizin: Biro Jasa Perizinan Terpercaya di Jawa Timur",
+    "subtitle": "Urus Perizinan Bisnis Anda dengan Cepat, Mudah, dan Terjamin.  Hemat Waktu dan Fokus Kembangkan Bisnis Anda!",
+    "feature": [
+      {
+        "point": "500+",
+        "description": "Izin Bisnis Diproses"
+      },
+      {
+        "point": "98%",
+        "description": "Tingkat Keberhasilan"
+      },
+      {
+        "point": "10+",
+        "description": "Tahun Pengalaman"
+      },
+      {
+        "point": "24/7",
+        "description": "Konsultasi & Dukungan"
+      }
+    ],
+    "image_url": "https://res.cloudinary.com/dwxw1h9my/image/upload/f_auto,q_auto,w_auto,dpr_auto/v1753726244/kotacom/website-images/Web_Development_hero.jpg"
+  },
+  "features": {
+    "badge_text": "Keunggulan Layanan Lintangizin",
+    "title": "Mengapa Memilih Lintangizin?",
+    "subtitle": "Kami menawarkan solusi lengkap dan terintegrasi untuk semua kebutuhan perizinan bisnis Anda.",
+    "point": [
+      {
+        "title": "Konsultasi Gratis",
+        "description": "Konsultasi gratis dengan tim ahli kami untuk menentukan jenis izin yang Anda butuhkan dan strategi terbaik untuk mendapatkannya."
+      },
+      {
+        "title": "Proses Cepat dan Efisien",
+        "description": "Kami menangani semua proses administrasi dan pengurusan dokumen, sehingga Anda dapat fokus pada bisnis inti Anda.  Pengalaman kami selama 10 tahun membantu mempercepat proses ini secara signifikan."
+      },
+      {
+        "title": "Tim Ahli dan Berpengalaman",
+        "description": "Tim kami terdiri dari para profesional berpengalaman di bidang perizinan, memastikan proses yang lancar dan terhindar dari kesalahan."
+      },
+      {
+        "title": "Transparansi dan Akuntabilitas",
+        "description": "Kami memberikan laporan berkala dan transparan mengenai perkembangan pengurusan perizinan Anda.  Anda selalu terinformasi dan dapat memantau progres secara realtime."
+      },
+      {
+        "title": "Garansi Kepuasan",
+        "description": "Kami memberikan garansi kepuasan dengan komitmen untuk menyelesaikan pengurusan perizinan Anda hingga selesai. Jika terjadi kendala, kami akan segera mengambil tindakan perbaikan."
+      },
+      {
+        "title": "Harga Kompetitif",
+        "description": "Kami menawarkan harga yang kompetitif dengan kualitas layanan terbaik.  Tidak ada biaya tersembunyi."
+      }
+    ]
+  },
+  "info": {
+    "img_alt": "Tim Ahli Lintangizin",
+    "badge_text": "Keahlian dan Pengalaman",
+    "title": "Mengenal Tim Lintangizin",
+    "subtitle": "Didukung oleh tim berpengalaman dengan total 25+ tahun pengalaman di bidang perizinan.",
+    "description": "Di Lintangizin, kami bangga memiliki tim yang terdiri dari para ahli perizinan dengan pengalaman lebih dari 25 tahun secara kolektif.  Komitmen kami adalah memberikan pelayanan terbaik dan membantu Anda meraih kesuksesan bisnis. Kami telah berhasil membantu lebih dari 500 klien, mulai dari UMKM hingga perusahaan besar seperti PT. Maju Jaya Indonesia dan PT. Berkah Sejahtera Abadi.",
+    "point": [
+      {
+        "title": "Legal Expertise"
+      },
+      {
+        "title": "Government Relation"
+      },
+      {
+        "title": "Document Management"
+      },
+      {
+        "title": "Project Management"
+      },
+      {
+        "title": "Client Support"
+      }
+    ]
+  },
+  "services": {
+    "badge_text": "Layanan Perizinan Lengkap",
+    "title": "Layanan Perizinan yang Kami Tawarkan",
+    "subtitle": "Lintangizin menyediakan layanan perizinan lengkap untuk berbagai jenis usaha.",
+    "point": [
+      {
+        "title": "SIUP (Surat Izin Usaha Perdagangan)",
+        "description": "Dapatkan SIUP Anda dengan cepat dan mudah. Kami membantu Anda melalui proses permohonan, pengumpulan dokumen, dan pengajuannya.",
+        "link": "/siup",
+        "feature": [
+          "Pengurusan Dokumen Lengkap",
+          "Konsultasi Gratis",
+          "Proses Cepat",
+          "Garansi Keberhasilan",
+          "Laporan Berkala"
+        ]
+      },
+      {
+        "title": "TDP (Tanda Daftar Perusahaan)",
+        "description": "Kami akan membantu Anda dalam proses pendaftaran TDP, memastikan semua persyaratan terpenuhi.",
+        "link": "/tdp",
+        "feature": [
+          "Pengurusan Dokumen Lengkap",
+          "Konsultasi Gratis",
+          "Proses Cepat",
+          "Garansi Keberhasilan",
+          "Laporan Berkala"
+        ]
+      },
+      {
+        "title": "IMB (Izin Mendirikan Bangunan)",
+        "description": "Layanan IMB yang praktis dan efisien. Kami menangani semua proses dari perencanaan hingga penerbitan IMB.",
+        "link": "/imb",
+        "feature": [
+          "Pengurusan Dokumen Lengkap",
+          "Konsultasi Gratis",
+          "Proses Cepat",
+          "Garansi Keberhasilan",
+          "Laporan Berkala"
+        ]
+      },
+      {
+        "title": "Izin HO (Izin Home Industry)",
+        "description": "Layanan pengurusan izin usaha rumahan (Home Industry) yang terintegrasi.",
+        "link": "/izin-ho",
+        "feature": [
+          "Pengurusan Dokumen Lengkap",
+          "Konsultasi Gratis",
+          "Proses Cepat",
+          "Garansi Keberhasilan",
+          "Laporan Berkala"
+        ]
+      },
+      {
+        "title": "Izin PIRT (Pangan Industri Rumah Tangga)",
+        "description": "Dapatkan izin PIRT untuk produk makanan dan minuman Anda dengan bantuan tim ahli kami.",
+        "link": "/pirt",
+        "feature": [
+          "Pengurusan Dokumen Lengkap",
+          "Konsultasi Gratis",
+          "Proses Cepat",
+          "Garansi Keberhasilan",
+          "Laporan Berkala"
+        ]
+      },
+      {
+        "title": "Izin Edar Produk",
+        "description": "Dapatkan izin edar untuk produk Anda secara cepat dan efisien, memastikan produk Anda legal dan siap dipasarkan.",
+        "link": "/izin-edar",
+        "feature": [
+          "Pengurusan Dokumen Lengkap",
+          "Konsultasi Gratis",
+          "Proses Cepat",
+          "Garansi Keberhasilan",
+          "Laporan Berkala"
+        ]
+      }
+    ]
+  },
+  "why_us": {
+    "badge_text": "Keunggulan Kompetitif",
+    "title": "Mengapa Memilih Lintangizin?",
+    "subtitle": "Kami menawarkan solusi terbaik untuk semua kebutuhan perizinan bisnis Anda.",
+    "description": "Lintangizin berkomitmen untuk memberikan solusi perizinan yang tercepat, termudah, dan terjamin.  Dengan pengalaman lebih dari 10 tahun, kami telah membantu ratusan klien sukses mengurus perizinan usaha mereka.",
+    "point": [
+      {
+        "title": "Proses Cepat dan Efisien",
+        "description": "Hemat waktu dan fokus pada pengembangan bisnis Anda."
+      },
+      {
+        "title": "Tim Ahli dan Berpengalaman",
+        "description": "Didukung oleh tim profesional yang berpengalaman di bidangnya."
+      },
+      {
+        "title": "Transparansi dan Akuntabilitas",
+        "description": "Anda selalu terinformasi dan dapat memantau progres secara realtime."
+      },
+      {
+        "title": "Garansi Kepuasan",
+        "description": "Kami menjamin kepuasan Anda dengan komitmen untuk menyelesaikan pengurusan perizinan Anda hingga selesai."
+      }
+    ]
+  },
+  "what_you_get": {
+    "title": "Apa yang Anda Dapatkan?",
+    "subtitle": "Dengan Lintangizin, Anda akan mendapatkan:",
+    "points": [
+      {
+        "title": "Pengurusan Dokumen Lengkap",
+        "description": "Kami akan mengurus semua dokumen yang dibutuhkan untuk perizinan Anda."
+      },
+      {
+        "title": "Konsultasi Gratis",
+        "description": "Konsultasi gratis dengan tim ahli kami untuk menentukan jenis izin yang Anda butuhkan."
+      },
+      {
+        "title": "Proses Cepat dan Efisien",
+        "description": "Kami akan mempercepat proses pengurusan perizinan Anda."
+      },
+      {
+        "title": "Laporan Berkala",
+        "description": "Anda akan mendapatkan laporan berkala mengenai perkembangan pengurusan perizinan Anda."
+      },
+      {
+        "title": "Garansi Keberhasilan",
+        "description": "Kami menjamin keberhasilan pengurusan perizinan Anda."
+      }
+    ]
+  },
+  "why_need": {
+    "badge_text": "Pentingnya Perizinan Usaha",
+    "title": "Mengapa Bisnis Anda Membutuhkan Layanan Perizinan?",
+    "subtitle": "Di era digital saat ini, perizinan usaha sangat penting untuk keberlangsungan bisnis Anda.",
+    "description": "Dalam iklim bisnis yang semakin kompetitif, memiliki perizinan yang lengkap dan tertib adalah kunci kesuksesan.  Perizinan yang lengkap melindungi bisnis Anda dari risiko hukum dan meningkatkan kepercayaan pelanggan. Lintangizin hadir untuk membantu Anda agar terhindar dari potensi masalah hukum dan mempercepat pertumbuhan bisnis Anda.",
+    "point": [
+      {
+        "title": "Legalitas Usaha",
+        "description": "Memastikan usaha Anda legal dan terhindar dari sanksi hukum."
+      },
+      {
+        "title": "Kepercayaan Pelanggan",
+        "description": "Meningkatkan kepercayaan pelanggan terhadap bisnis Anda."
+      },
+      {
+        "title": "Kemudahan Akses Pasar",
+        "description": "Memudahkan Anda untuk mengakses pasar dan mengembangkan bisnis Anda."
+      },
+      {
+        "title": "Pertumbuhan Bisnis",
+        "description": "Perizinan yang lengkap mendukung pertumbuhan dan perkembangan bisnis Anda."
+      }
+    ]
+  },
+  "pricing": {
+    "badge_text": "Paket Layanan",
+    "title": "Paket Perizinan",
+    "description": "Harga transparan, tanpa biaya tersembunyi. Konsultasi gratis!",
+    "plan": [
+      {
+        "badge": "Paling Populer",
+        "title": "Paket UMKM",
+        "price": "Rp 1.500.000",
+        "description": "Paket ideal untuk UMKM yang membutuhkan pengurusan SIUP, TDP, dan Izin HO.",
+        "feature": [
+          "SIUP",
+          "TDP",
+          "Izin HO",
+          "Konsultasi Gratis",
+          "Laporan Berkala",
+          "Proses Cepat",
+          "Garansi Keberhasilan"
+        ]
+      },
+      {
+        "badge": "Rekomendasi",
+        "title": "Paket Perusahaan",
+        "price": "Rp 3.000.000",
+        "description": "Paket lengkap untuk perusahaan yang membutuhkan pengurusan SIUP, TDP, IMB, dan Izin Edar.",
+        "feature": [
+          "SIUP",
+          "TDP",
+          "IMB",
+          "Izin Edar",
+          "Konsultasi Gratis",
+          "Laporan Berkala",
+          "Proses Cepat",
+          "Garansi Keberhasilan"
+        ]
+      },
+      {
+        "badge": "Enterprise",
+        "title": "Paket Premium",
+        "price": "Rp 5.000.000",
+        "description": "Paket premium untuk perusahaan besar yang membutuhkan layanan perizinan lengkap dan konsultasi ekstensif.",
+        "feature": [
+          "Semua Layanan Perizinan",
+          "Konsultasi Ekstensif",
+          "Prioritas Pengurusan",
+          "Laporan Berkala",
+          "Proses Cepat",
+          "Garansi Keberhasilan"
+        ]
+      }
+    ]
+  },
+  "portfolio": {
+    "title": "Portofolio",
+    "description": "Lihat beberapa proyek yang telah kami selesaikan.",
+    "list": [
+      {
+        "type": "SIUP",
+        "title": "PT. Maju Jaya Indonesia",
+        "description": "Kami membantu PT. Maju Jaya Indonesia mendapatkan SIUP dalam waktu kurang dari 2 minggu."
+      },
+      {
+        "type": "IMB",
+        "title": "Restoran 'Makan Enak'",
+        "description": "Kami membantu Restoran 'Makan Enak' mendapatkan IMB dengan lancar dan sesuai jadwal."
+      },
+      {
+        "type": "TDP",
+        "title": "Toko 'Serba Ada'",
+        "description": "Proses TDP untuk Toko 'Serba Ada' diselesaikan dengan efisien dan tanpa kendala."
+      },
+      {
+        "type": "Izin HO",
+        "title": "Ibu Ani - Home Industry Kue",
+        "description": "Ibu Ani sukses mendapatkan izin HO untuk usaha kue rumahannya berkat bantuan kami."
+      },
+      {
+        "type": "PIRT",
+        "title": "Usaha Minuman Segar",
+        "description": "Kami membantu usaha minuman segar mendapatkan sertifikasi PIRT untuk produk minumannya."
+      },
+      {
+        "type": "Izin Edar",
+        "title": "Produk Kosmetik 'Cantik Alami'",
+        "description": "Produk kosmetik 'Cantik Alami' kini resmi beredar setelah kami bantu pengurusan izin edarnya."
+      }
+    ]
+  },
+  "testimonials": {
+    "badge_text": "Testimoni Klien",
+    "title": "Apa Kata Klien Kami?",
+    "subtitle": "Lihat testimoni dari klien yang telah puas dengan layanan kami.",
+    "card": [
+      {
+        "headline": "Proses Cepat dan Mudah!",
+        "quote": "Lintangizin sangat membantu dalam mengurus perizinan usaha saya. Prosesnya cepat dan mudah, saya sangat puas!",
+        "name": "Budi Santoso",
+        "position": "Pemilik Usaha Kecil"
+      },
+      {
+        "headline": "Layanan Profesional dan Ramah",
+        "quote": "Tim Lintangizin sangat profesional dan ramah. Mereka selalu siap membantu dan memberikan informasi yang jelas.",
+        "name": "Ani Lestari",
+        "position": "Pemilik Restoran"
+      },
+      {
+        "headline": "Solusi Tepat untuk Bisnis Saya",
+        "quote": "Lintangizin adalah solusi tepat untuk masalah perizinan bisnis saya.  Mereka membantu saya menghemat waktu dan biaya.",
+        "name": "Rudi Hartono",
+        "position": "Direktur PT. Sejahtera Bersama"
+      }
+    ]
+  },
+  "faq": {
+    "badge_text": "Pertanyaan Umum",
+    "title": "Pertanyaan yang Sering Diajukan",
+    "subtitle": "Temukan jawaban atas pertanyaan Anda di sini.",
+    "points": [
+      {
+        "question": "Bagaimana proses kerjanya?",
+        "answer": "Prosesnya dimulai dengan konsultasi gratis, kemudian pengumpulan dokumen, pengajuan perizinan, dan monitoring hingga izin terbit."
+      },
+      {
+        "question": "Apakah ada garansi revisi?",
+        "answer": "Ya, kami memberikan garansi revisi jika ada kesalahan dalam proses pengurusan."
+      },
+      {
+        "question": "Berapa lama waktu yang dibutuhkan?",
+        "answer": "Waktu yang dibutuhkan tergantung jenis izin dan kompleksitasnya, namun kami akan berusaha secepat mungkin."
+      },
+      {
+        "question": "Apa saja dokumen yang dibutuhkan?",
+        "answer": "Dokumen yang dibutuhkan akan dijelaskan secara detail saat konsultasi."
+      },
+      {
+        "question": "Apakah ada biaya tersembunyi?",
+        "answer": "Tidak, harga yang kami tawarkan sudah termasuk semua biaya."
+      },
+      {
+        "question": "Bagaimana cara menghubungi Lintangizin?",
+        "answer": "Anda dapat menghubungi kami melalui telepon, email, atau WhatsApp."
+      },
+      {
+        "question": "Apakah Lintangizin melayani di seluruh Indonesia?",
+        "answer": "Saat ini, kami fokus melayani wilayah Jawa Timur."
+      },
+      {
+        "question": "Bagaimana cara membayar layanan Lintangizin?",
+        "answer": "Kami menyediakan berbagai metode pembayaran, termasuk transfer bank dan e-wallet."
+      },
+      {
+        "question": "Apa yang membedakan Lintangizin dengan biro jasa perizinan lainnya?",
+        "answer": "Kami menawarkan layanan yang cepat, efisien, transparan, dan terjamin dengan tim ahli yang berpengalaman."
+      },
+      {
+        "question": "Apa jaminan keberhasilan yang diberikan Lintangizin?",
+        "answer": "Kami memiliki tim ahli dan berpengalaman, serta prosedur yang teruji, untuk memaksimalkan peluang keberhasilan pengurusan perizinan Anda."
+      },
+      {
+        "question": "Apakah Lintangizin memberikan konsultasi sebelum proses pengurusan perizinan dimulai?",
+        "answer": "Ya, kami memberikan konsultasi gratis untuk membantu Anda menentukan jenis perizinan yang tepat dan dokumen yang diperlukan."
+      },
+      {
+        "question": "Bagaimana cara melacak perkembangan pengurusan perizinan saya?",
+        "answer": "Kami akan memberikan laporan berkala mengenai perkembangan pengurusan perizinan Anda."
+      }
+    ]
+  },
+  "final_cta": {
+    "badge_text": "Hubungi Kami Sekarang!",
+    "title": "Mulai Urus Perizinan Bisnis Anda Sekarang!",
+    "subtitle": "Jangan tunda lagi, hubungi kami untuk konsultasi gratis!"
+  },
+  "content": {
+    "title": "Panduan Lengkap Mengurus Perizinan Usaha di Jawa Timur",
+    "subtitle": "Ketahui langkah-langkah dan pentingnya perizinan usaha untuk kesuksesan bisnis Anda.",
+    "description": "Memulai dan menjalankan bisnis di Jawa Timur membutuhkan pemahaman yang mendalam tentang perizinan.  Perizinan yang lengkap bukan hanya sekadar formalitas, tetapi juga kunci keberhasilan dalam membangun bisnis yang berkelanjutan.  Dengan mengurus perizinan dengan benar, Anda akan terhindar dari sanksi hukum, meningkatkan kepercayaan pelanggan, dan mempermudah akses ke pasar yang lebih luas.  Artikel ini akan membahas secara detail berbagai jenis perizinan yang umum dibutuhkan, langkah-langkah pengurusan, serta pentingnya memilih biro jasa perizinan yang terpercaya seperti Lintangizin.\n\nSalah satu tantangan utama bagi para pengusaha di Jawa Timur adalah kompleksitas proses pengurusan perizinan.  Persyaratan yang beragam dan prosedur yang berbelit-belit seringkali memakan waktu dan tenaga.  Hal ini dapat menghambat perkembangan bisnis dan bahkan menyebabkan kerugian finansial.  Oleh karena itu, penting bagi para pengusaha untuk memahami setiap tahapan proses pengurusan perizinan dan mempersiapkan segala sesuatunya dengan baik.\n\nDi era digital saat ini, bisnis dituntut untuk mampu beradaptasi dan bersaing.  Salah satu cara untuk tetap relevan adalah dengan memastikan kelengkapan perizinan usaha.  Perizinan yang lengkap dapat meningkatkan kepercayaan pelanggan dan menciptakan citra bisnis yang profesional.  Pelanggan cenderung lebih memilih bisnis yang memiliki legalitas yang jelas dan terjamin.\n\nSelain itu, kelengkapan perizinan juga membuka peluang untuk mendapatkan akses ke pasar yang lebih luas.  Beberapa program pemerintah dan kemitraan bisnis seringkali mensyaratkan kelengkapan perizinan.  Dengan mengurus perizinan secara lengkap, Anda dapat memperluas jangkauan bisnis dan membuka peluang untuk kolaborasi yang menguntungkan.\n\nKesimpulannya, mengurus perizinan usaha dengan tepat dan efisien sangat penting bagi keberlangsungan bisnis di Jawa Timur.  Dengan memilih biro jasa perizinan yang terpercaya seperti Lintangizin, Anda dapat menghemat waktu, tenaga, dan biaya.  Lintangizin membantu memastikan kelancaran proses pengurusan perizinan Anda, sehingga Anda dapat fokus mengembangkan bisnis inti dan meraih kesuksesan.  Jangan ragu untuk menghubungi kami untuk berkonsultasi dan mendapatkan solusi terbaik untuk kebutuhan perizinan bisnis Anda."
+  },
+  "local": {
+    "title": "Jangkauan Layanan di Jawa Timur",
+    "subtitle": "Lintangizin melayani seluruh wilayah Jawa Timur.",
+    "description": "Lintangizin hadir untuk memberikan solusi perizinan bagi UMKM dan perusahaan di Jawa Timur.  Kami memahami tantangan yang dihadapi oleh para pengusaha di Jawa Timur, dan kami berkomitmen untuk membantu Anda melewati proses pengurusan perizinan dengan mudah dan efisien.  Pertumbuhan ekonomi Jawa Timur yang pesat didukung oleh UMKM yang dinamis.  Dengan membantu UMKM mengurus perizinan, kami berkontribusi pada pertumbuhan ekonomi daerah dan memberdayakan sektor usaha kecil dan menengah.",
+    "city": [
+      {
+        "title": "Surabaya",
+        "description": "Layanan perizinan lengkap untuk semua jenis usaha di Surabaya."
+      },
+      {
+        "title": "Malang",
+        "description": "Solusi perizinan yang mudah dan cepat untuk bisnis Anda di Malang."
+      },
+      {
+        "title": "Sidoarjo",
+        "description": "Kami membantu Anda mengurus perizinan di Sidoarjo dengan profesional."
+      }
+    ]
+  },
+  "kabupaten_kota": [
+    {
+      "nama": "Kota Surabaya",
+      "description": "Layanan perizinan di berbagai kecamatan di Surabaya.",
+      "kecamatan": [
+        {
+          "nama": "Kecamatan Genteng",
+          "link": "/kota-surabaya/genteng"
+        },
+        {
+          "nama": "Kecamatan Tegalsari",
+          "link": "/kota-surabaya/tegalsari"
+        },
+        {
+          "nama": "Kecamatan Gubeng",
+          "link": "/kota-surabaya/gubeng"
+        }
+      ]
+    },
+    {
+      "nama": "Kabupaten Sidoarjo",
+      "description": "Layanan perizinan di berbagai kecamatan di Sidoarjo.",
+      "kecamatan": [
+        {
+          "nama": "Kecamatan Sidoarjo",
+          "link": "/kabupaten-sidoarjo/sidoarjo"
+        },
+        {
+          "nama": "Kecamatan Buduran",
+          "link": "/kabupaten-sidoarjo/buduran"
+        },
+        {
+          "nama": "Kecamatan Waru",
+          "link": "/kabupaten-sidoarjo/waru"
+        }
+      ]
+    },
+    {
+      "nama": "Kota Malang",
+      "description": "Layanan perizinan di berbagai kecamatan di Malang.",
+      "kecamatan": [
+        {
+          "nama": "Kecamatan Klojen",
+          "link": "/kota-malang/klojen"
+        },
+        {
+          "nama": "Kecamatan Lowokwaru",
+          "link": "/kota-malang/lowokwaru"
+        },
+        {
+          "nama": "Kecamatan Sukun",
+          "link": "/kota-malang/sukun"
+        }
+      ]
+    },
+    {
+      "nama": "Kota Kediri",
+      "description": "Layanan perizinan di berbagai kecamatan di Kediri.",
+      "kecamatan": [
+        {
+          "nama": "Kecamatan Kota Kediri",
+          "link": "/kota-kediri/kota-kediri"
+        },
+        {
+          "nama": "Kecamatan Mojoroto",
+          "link": "/kota-kediri/mojoroto"
+        },
+        {
+          "nama": "Kecamatan Pesantren",
+          "link": "/kota-kediri/pesantren"
+        }
+      ]
+    },
+    {
+      "nama": "Kota Madiun",
+      "description": "Layanan perizinan di berbagai kecamatan di Madiun.",
+      "kecamatan": [
+        {
+          "nama": "Kecamatan Taman",
+          "link": "/kota-madiun/taman"
+        },
+        {
+          "nama": "Kecamatan Manguharjo",
+          "link": "/kota-madiun/manguharjo"
+        },
+        {
+          "nama": "Kecamatan Kartoharjo",
+          "link": "/kota-madiun/kartoharjo"
+        }
+      ]
+    }
+  ]
+}

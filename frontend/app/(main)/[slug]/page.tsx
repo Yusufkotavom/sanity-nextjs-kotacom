@@ -1,5 +1,5 @@
 import Blocks from "@/components/blocks";
-import JasaCetakBukuCityShell from "@/components/legacy/jasa-cetak-buku-city-shell";
+import JasaCetakBukuCityShell from "@/components/ui/jasa-cetak-buku-city-shell";
 import {
   getJasaCetakBukuCityBySlugOrFallback,
   getJasaCetakBukuCityStaticParams,
@@ -10,6 +10,7 @@ import {
 } from "@/sanity/lib/fetch";
 import { notFound } from "next/navigation";
 import { generateBasicMetadata, generatePageMetadata } from "@/sanity/lib/metadata";
+import { buildPercetakanCetakBukuCityCopy } from "@/lib/legacy-pages/rewrite-content";
 
 export async function generateStaticParams() {
   const pages = await fetchSanityPagesStaticParams();
@@ -32,38 +33,43 @@ export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
+  const page = await fetchSanityPageBySlug({ slug: params.slug });
+
+  if (page) {
+    return await generatePageMetadata({ page, slug: params.slug });
+  }
+
   const cityPage = getJasaCetakBukuCityBySlugOrFallback(params.slug);
   if (cityPage) {
+    const cityCopy = buildPercetakanCetakBukuCityCopy(cityPage.citySlug);
     return await generateBasicMetadata({
-      title: cityPage.title || `Jasa cetak buku ${cityPage.city}`,
-      description: cityPage.excerpt,
+      title: cityCopy.primaryKeyword || cityPage.title || `Jasa cetak buku ${cityPage.city}`,
+      description: cityCopy.description || cityPage.excerpt,
       slug: params.slug,
     });
   }
 
-  const page = await fetchSanityPageBySlug({ slug: params.slug });
-
   if (!page) {
     notFound();
   }
-
-  return await generatePageMetadata({ page, slug: params.slug });
 }
 
 export default async function Page(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
+  const page = await fetchSanityPageBySlug({ slug: params.slug });
+
+  if (page) {
+    return <Blocks blocks={page?.blocks ?? []} />;
+  }
+
   const cityPage = getJasaCetakBukuCityBySlugOrFallback(params.slug);
   if (cityPage) {
     return <JasaCetakBukuCityShell item={cityPage} />;
   }
 
-  const page = await fetchSanityPageBySlug({ slug: params.slug });
-
   if (!page) {
     notFound();
   }
-
-  return <Blocks blocks={page?.blocks ?? []} />;
 }

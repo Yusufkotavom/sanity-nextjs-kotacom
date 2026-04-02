@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import { buildLegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
+import { normalizeSeoDescription, normalizeSeoTitle } from "@/lib/seo-normalize";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
 
 function routeToSlug(route: string) {
@@ -14,10 +15,12 @@ export async function generateLegacyPageMetadata(
   if (!page) return {};
 
   const copy = buildLegacyRewriteCopy(page);
+  const title = normalizeSeoTitle(copy.primaryKeyword);
+  const description = normalizeSeoDescription(copy.description);
 
   return generateBasicMetadata({
-    title: copy.primaryKeyword,
-    description: copy.description,
+    title,
+    description,
     slug: routeToSlug(page.route),
   });
 }

@@ -1,4 +1,4 @@
-import LegacyPageShell from "@/components/legacy/legacy-page-shell";
+import RewritePageShell from "@/components/ui/rewrite/page-shell";
 import {
   getLegacyRoutesByPrefix,
   getLegacySectionChildren,
@@ -43,5 +43,5 @@ export default async function PercetakanCatchAllPage(props: {
   const page = getLegacySectionRouteBySegments(SECTION, params.segments);
   if (!page) notFound();
 
-  return <LegacyPageShell page={page} siblings={resolveSiblings(page.route)} />;
+  return <RewritePageShell page={page} siblings={resolveSiblings(page.route)} />;
 }

@@ -1,19 +1,11 @@
 {
-  "totalUrls": 1967,
-  "okFetch": 1967,
+  "totalUrls": 120,
+  "okFetch": 120,
   "fetchErrors": 0,
-  "withIssues": 1650,
+  "withIssues": 119,
   "issueBreakdown": {
-    "meta_description_too_long": 865,
-    "title_too_long": 330,
-    "http_status_not_200": 675,
-    "title_too_short": 27,
-    "meta_description_too_short": 8,
-    "missing_title": 4,
-    "missing_meta_description": 4,
-    "missing_canonical": 4,
-    "missing_og_title": 4,
-    "missing_og_description": 4,
-    "missing_og_image": 4
+    "meta_description_too_long": 106,
+    "title_too_long": 28,
+    "http_status_not_200": 11
   }
 }

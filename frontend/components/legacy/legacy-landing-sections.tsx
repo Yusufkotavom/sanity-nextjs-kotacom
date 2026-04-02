@@ -17,6 +17,10 @@ import {
 import { Button } from "@/components/ui/button";
 import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
+import {
+  KOTACOM_SPLIT_DEFAULT_ILLUSTRATION,
+  kotacomSplitIllustrations,
+} from "@/lib/illustrations/kotacom-split";
 
 type LegacyLandingSectionsProps = {
   page: LegacyAstroPage;
@@ -186,23 +190,23 @@ function getDefaultFeatures(page: LegacyAstroPage) {
 }
 
 function getDefaultProofItems(page: LegacyAstroPage) {
-  const image = "/images/og-image.jpg";
+  const image = KOTACOM_SPLIT_DEFAULT_ILLUSTRATION;
   if (page.section === "percetakan") {
     return [
       {
         title: "Campaign Promosi Retail",
         description: "Produksi materi cetak promosi untuk seasonal campaign.",
-        image,
+        image: kotacomSplitIllustrations.proof.growthResults,
       },
       {
         title: "Corporate Branding Kit",
         description: "Paket cetak branding untuk kebutuhan presentasi perusahaan.",
-        image,
+        image: kotacomSplitIllustrations.proof.portfolioShowcase,
       },
       {
         title: "Event Printing Delivery",
         description: "Support kebutuhan cetak event dengan deadline ketat.",
-        image,
+        image: kotacomSplitIllustrations.proof.testimonial,
       },
     ];
   }
@@ -248,6 +252,7 @@ export default function LegacyLandingSections({
   const tocItems = [...BASE_TOC];
   if (copy.ctaLinks?.length) {
     tocItems.push({ id: "cta-quick", label: "Aksi Cepat" });
+    tocItems.push({ id: "cta-mid", label: "Konsultasi Cepat" });
   }
   if (copy.longGuide?.length) {
     tocItems.push({ id: "panduan", label: "Panduan Lengkap" });
@@ -353,6 +358,33 @@ export default function LegacyLandingSections({
         </div>
       </section>
 
+      {copy.ctaLinks?.length ? (
+        <section className="container section-divider py-6" id="cta-mid">
+          <div className="rounded-xl border border-primary/30 bg-primary/[0.06] p-5 md:p-6">
+            <p className="text-ui-label text-primary/80">Butuh Arahan Cepat?</p>
+            <h3 className="mt-2 text-lg font-semibold tracking-tight">
+              Mulai dari CTA paling relevan untuk kebutuhan Anda
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Tim kami akan bantu menerjemahkan kebutuhan Anda menjadi scope kerja dan estimasi
+              implementasi yang lebih jelas.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              {copy.ctaLinks.slice(0, 4).map((item, index) => (
+                <Button
+                  key={`${item.label}-${item.href}`}
+                  asChild
+                  size="sm"
+                  variant={index === 0 ? "default" : "outline"}
+                >
+                  <Link href={item.href}>{item.label}</Link>
+                </Button>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="container section-divider py-8" id="fitur">
         <div className="mb-4 flex items-center gap-2">
           <Sparkles className="size-4 text-foreground/70" />
@@ -390,7 +422,7 @@ export default function LegacyLandingSections({
             <article key={item.title} className="surface-card overflow-hidden rounded-xl">
               <div className="relative aspect-[16/9]">
                 <Image
-                  src={item.image || "/images/og-image.jpg"}
+                  src={item.image || KOTACOM_SPLIT_DEFAULT_ILLUSTRATION}
                   alt={item.title}
                   fill
                   className="object-cover"
@@ -458,10 +490,13 @@ export default function LegacyLandingSections({
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Button asChild size="lg">
-                <Link href={copy.ctaHref}>Konsultasi Gratis Sekarang</Link>
+                <Link href={copy.ctaHref}>{copy.ctaLabel || "Konsultasi Gratis Sekarang"}</Link>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link href="#paket">Lihat Paket</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link href="#faq">Lihat FAQ</Link>
               </Button>
             </div>
           </div>

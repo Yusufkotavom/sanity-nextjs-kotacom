@@ -24,7 +24,7 @@ export default async function Header() {
   const headerCta = navDoc.headerCta || fallbackCta;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/65">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/65 dark:border-white/10 dark:bg-black/85">
       <div className="container">
         <div className="flex h-15 items-center justify-between lg:hidden">
           <Link href="/" aria-label="Home page" className="shrink-0">
@@ -41,7 +41,7 @@ export default async function Header() {
                     variant: headerCta.buttonVariant || "outline",
                     size: "sm",
                   }),
-                  "h-8 px-3 text-xs font-medium",
+                  "h-8 rounded-full px-3 text-xs font-medium dark:border-white/15 dark:bg-white/[0.03] dark:text-white dark:hover:bg-white/[0.08]",
                 )}
               >
                 {headerCta.title}
@@ -75,7 +75,7 @@ export default async function Header() {
                     variant: headerCta.buttonVariant || "default",
                     size: "sm",
                   }),
-                  "h-8 px-3.5 text-xs font-medium",
+                  "h-8 rounded-full px-3.5 text-xs font-medium dark:border-white/15 dark:bg-white dark:text-black dark:hover:bg-white/90",
                 )}
               >
                 {headerCta.title}

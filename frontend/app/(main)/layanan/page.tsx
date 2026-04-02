@@ -1,4 +1,4 @@
-import LegacyPageShell from "@/components/legacy/legacy-page-shell";
+import RewritePageShell from "@/components/ui/rewrite/page-shell";
 import { getLegacySinglePage } from "@/lib/legacy-pages/astro-static";
 import { generateLegacyPageMetadata } from "@/lib/legacy-pages/metadata";
 import { notFound } from "next/navigation";
@@ -10,5 +10,5 @@ export async function generateMetadata() {
 export default function LayananPage() {
   const page = getLegacySinglePage("layanan");
   if (!page) notFound();
-  return <LegacyPageShell page={page} />;
+  return <RewritePageShell page={page} />;
 }

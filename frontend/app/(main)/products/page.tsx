@@ -1,5 +1,5 @@
-import ProductCard from "@/components/ui/product-card";
 import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
+import ProductGrid from "@/components/products/product-grid";
 import {
   fetchSanityProductCategories,
   fetchSanityProducts,
@@ -37,11 +37,7 @@ export default async function ProductsPage() {
             />
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {products.map((product: any) => (
-            <ProductCard key={product.slug?.current || product.title} {...product} />
-          ))}
-        </div>
+        <ProductGrid products={products as any[]} />
       </div>
     </section>
   );
