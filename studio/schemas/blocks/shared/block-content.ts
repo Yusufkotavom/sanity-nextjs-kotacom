@@ -134,5 +134,8 @@ export default defineType({
         ],
       },
     }),
+    defineArrayMember({
+      type: "legacy-rich-content",
+    }),
   ],
 });

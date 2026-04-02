@@ -16,6 +16,55 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-02 - Legacy Content Rendering Finetune (HTML/Markdown Lists & Structure)
+- Changed files:
+  - `frontend/lib/legacy-content/render.ts`
+  - `frontend/components/blocks/legacy-rich-content.tsx`
+  - `frontend/components/portable-text-renderer.tsx`
+  - `frontend/app/globals.css`
+  - `frontend/package.json`
+  - `pnpm-lock.yaml`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced regex-only legacy renderer with parser pipeline based on `unified` (`rehype-parse`, `rehype-sanitize`, `rehype-stringify`, `remark-parse`, `remark-rehype`) for more stable HTML/Markdown rendering.
+  - Added sanitization schema and external link normalization to reduce broken/unsafe legacy markup while preserving semantic structures.
+  - Added `legacy-prose` style system in global CSS to improve visual consistency for headings, bullet/number lists, links, tables, blockquotes, and spacing.
+  - Switched legacy content render targets (`page` block renderer and `PortableText` custom type renderer) to use `legacy-prose`.
+- SEO impact:
+  - Direct integration impact: improved readability and structural clarity for migrated long-form content (including lists and numbered steps), reducing malformed rendering risk on indexable pages.
+  - No metadata schema contract change.
+- Verification:
+  - `pnpm install` completed with lockfile update.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-02 - Legacy Rich Content Block + Safe-ID Import Validation
+- Changed files:
+  - `studio/schemas/blocks/legacy/legacy-rich-content.ts`
+  - `studio/schema-types.ts`
+  - `studio/schemas/documents/page.ts`
+  - `studio/schemas/blocks/shared/block-content.ts`
+  - `frontend/sanity/queries/legacy/legacy-rich-content.ts`
+  - `frontend/sanity/queries/page.ts`
+  - `frontend/lib/legacy-content/render.ts`
+  - `frontend/components/blocks/legacy-rich-content.tsx`
+  - `frontend/components/blocks/index.tsx`
+  - `frontend/components/portable-text-renderer.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a shared `legacy-rich-content` schema object to support raw `markdown` or `html` content ingestion for migration paths.
+  - Wired the new block across Studio and frontend contracts: available in `page.blocks`, available in `post.body` (`block-content`), queried in page GROQ, and rendered in both page block renderer and Portable Text renderer.
+  - Added lightweight markdown/html rendering utility with basic sanitization for HTML and markdown-to-HTML conversion for migration-ready rendering.
+  - Validated critical import behavior: documents using dotted IDs can be missing from unauthenticated published reads; switched import IDs to non-dotted `legacy-*` format.
+  - Executed Sanity import smoke test: imported 2 pages (`import-page-html-20260402`, `import-page-md-20260402`) and 2 posts (`import-post-html-20260402`, `import-post-md-20260402`) and verified they are visible in both public and authenticated published queries.
+- SEO impact:
+  - Direct SEO/integration impact: imported legacy content can now be rendered with controlled md/html handling while preserving root/blog slug architecture.
+  - Import visibility reliability improved by enforcing safe non-dotted `_id` strategy for page/post migration docs.
+- Verification:
+  - Sanity mutate transaction succeeded for 4 docs (`2 page + 2 post`) with published visibility checks (`public` and `auth`) both returning the imported slugs.
+  - Manual API parity check confirmed the safe-ID docs are readable in unauthenticated published query.
+
 ## 2026-04-02 - Local Main Branch Alignment + Deploy Trigger
 - Changed files:
   - `studio/.ci-trigger.txt`

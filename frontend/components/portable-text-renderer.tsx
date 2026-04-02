@@ -4,6 +4,7 @@ import Link from "next/link";
 import { YouTubeEmbed } from "@next/third-parties/google";
 import { Highlight, themes } from "prism-react-renderer";
 import { CopyButton } from "@/components/ui/copy-button";
+import { renderLegacyRichHtml } from "@/lib/legacy-content/render";
 
 const createPortableTextComponents = (
   headingIdMap?: Record<string, string>,
@@ -72,6 +73,26 @@ const createPortableTextComponents = (
             )}
           </Highlight>
         </div>
+      );
+    },
+    "legacy-rich-content": ({ value }) => {
+      const html = renderLegacyRichHtml(
+        value?.contentRaw || "",
+        value?.contentFormat,
+      );
+      return (
+        <section className="my-6 rounded-xl border border-border/70 p-5">
+          {value?.title ? (
+            <h2 className="mb-2 text-2xl font-semibold">{value.title}</h2>
+          ) : null}
+          {value?.excerpt ? (
+            <p className="mb-4 text-sm text-muted-foreground">{value.excerpt}</p>
+          ) : null}
+          <div
+            className="legacy-prose"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+        </section>
       );
     },
   },

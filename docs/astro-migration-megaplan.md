@@ -64,6 +64,10 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] AI writer production hardening completed for operations: dashboard UI, gateway model validation, prompt guardrails, and go-live checklist docs
 - [x] AI rewrite apply flow completed: Studio `AI Rewrite` document action now triggers server rewrite and patches draft content automatically
 - [x] AI writer documentation consolidated into production-focused runbook; irrelevant/duplicated setup notes removed
+- [x] Critical import behavior confirmed: dotted document IDs (example `post.import.*`, `page.legacy.*`) are visible in authenticated reads but can be missing in public published reads used by frontend build/runtime
+- [x] Shared `legacy-rich-content` block contract added for Markdown/HTML raw rendering and wired to both `page.blocks` and `post.body` (`block-content`)
+- [x] Sanity import smoke test completed with safe ID strategy (no dots): 2 pages + 2 posts published and visible in both public and authenticated published reads
+- [x] Legacy content renderer finetuned with parser/sanitizer pipeline plus `legacy-prose` styles so HTML/Markdown lists, numbering, tables, and headings render consistently
 
 ## Workstream A - Platform & Data Foundation
 
@@ -89,7 +93,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ### A3. Import Pipeline
 - [ ] Define extractor from Astro source content (MDX/frontmatter/static data) to import payload.
 - [ ] Import high-priority content first (GSC weighted).
-- [ ] Validate slug uniqueness and canonical mapping.
+- [x] Validate slug uniqueness and canonical mapping.
+  - Added import safety note: avoid dotted `_id` patterns for page/post imports to ensure visibility in unauthenticated published API reads.
 
 ## Workstream B - Per-URL Curation (One by One)
 
