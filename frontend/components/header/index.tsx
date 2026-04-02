@@ -24,9 +24,9 @@ export default async function Header() {
   const headerCta = navDoc.headerCta || fallbackCta;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
-      <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10">
-        <div className="flex h-14 items-center justify-between lg:hidden">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/65">
+      <div className="container">
+        <div className="flex h-15 items-center justify-between lg:hidden">
           <Link href="/" aria-label="Home page" className="shrink-0">
             <Logo settings={settings} />
           </Link>
@@ -38,10 +38,10 @@ export default async function Header() {
                 rel={headerCta.target ? "noopener noreferrer" : undefined}
                 className={cn(
                   buttonVariants({
-                    variant: headerCta.buttonVariant || "default",
+                    variant: headerCta.buttonVariant || "outline",
                     size: "sm",
                   }),
-                  "h-8 px-3 text-xs",
+                  "h-8 px-3 text-xs font-medium",
                 )}
               >
                 {headerCta.title}
@@ -52,7 +52,7 @@ export default async function Header() {
           </div>
         </div>
 
-        <div className="hidden h-14 items-center gap-4 lg:flex">
+        <div className="hidden h-15 items-center gap-5 lg:flex">
           <Link href="/" aria-label="Home page" className="shrink-0">
             <Logo settings={settings} />
           </Link>
@@ -70,10 +70,13 @@ export default async function Header() {
                 href={headerCta.href || "#"}
                 target={headerCta.target ? "_blank" : undefined}
                 rel={headerCta.target ? "noopener noreferrer" : undefined}
-                className={buttonVariants({
-                  variant: headerCta.buttonVariant || "default",
-                  size: "sm",
-                })}
+                className={cn(
+                  buttonVariants({
+                    variant: headerCta.buttonVariant || "default",
+                    size: "sm",
+                  }),
+                  "h-8 px-3.5 text-xs font-medium",
+                )}
               >
                 {headerCta.title}
               </Link>

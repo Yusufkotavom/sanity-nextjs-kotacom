@@ -20,7 +20,7 @@ export default async function MainLayout({
       <ReusableSlotSections sections={reusableSections} slot="beforeHeader" />
       <Header />
       <ReusableSlotSections sections={reusableSections} slot="afterHeader" />
-      <main>{children}</main>
+      <main className="ui-shell min-h-[calc(100vh-64px)]">{children}</main>
       <ReusableSlotSections sections={reusableSections} slot="beforeFooter" />
       <Footer />
       <ReusableSlotSections sections={reusableSections} slot="afterFooter" />

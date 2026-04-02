@@ -131,6 +131,17 @@
   --sidebar-accent-foreground: var(--geist-gray-10);
   --sidebar-border: var(--geist-gray-3);
   --sidebar-ring: var(--geist-blue-6);
+
+  --surface-1: #ffffff;
+  --surface-2: #fafafa;
+  --surface-3: #f6f6f6;
+  --line-soft: rgba(10, 10, 10, 0.08);
+  --line-strong: rgba(10, 10, 10, 0.16);
+  --glow-top: radial-gradient(
+    68% 40% at 50% -10%,
+    rgba(0, 112, 243, 0.12) 0%,
+    rgba(0, 112, 243, 0) 100%
+  );
 }
 
 .dark {
@@ -180,6 +191,17 @@
   --sidebar-accent-foreground: var(--geist-gray-10);
   --sidebar-border: var(--geist-gray-4);
   --sidebar-ring: var(--geist-blue-6);
+
+  --surface-1: #0a0a0a;
+  --surface-2: #111111;
+  --surface-3: #151515;
+  --line-soft: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --glow-top: radial-gradient(
+    68% 40% at 50% -10%,
+    rgba(50, 145, 255, 0.18) 0%,
+    rgba(50, 145, 255, 0) 100%
+  );
 }
 
 @utility container {
@@ -200,9 +222,12 @@
     max-width: 1024px;
   }
   @media (width >= theme(--breakpoint-xl)) {
-    max-width: 1280px;
-    padding-left: 4rem;
-    padding-right: 4rem;
+    max-width: 1240px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+  @media (width >= 1440px) {
+    max-width: 1320px;
   }
 }
 
@@ -246,12 +271,61 @@
   color: var(--muted-foreground);
 }
 
+@utility ui-shell {
+  position: relative;
+  background:
+    linear-gradient(to bottom, transparent 0, transparent 64px, var(--line-soft) 64px, transparent 65px),
+    var(--glow-top),
+    var(--background);
+}
+
+@utility section-divider {
+  position: relative;
+}
+
+@layer utilities {
+  .section-divider::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--line-soft) 15%,
+      var(--line-soft) 85%,
+      transparent 100%
+    );
+  }
+}
+
+@utility surface-card {
+  border: 1px solid var(--line-soft);
+  background: color-mix(in oklab, var(--surface-1) 92%, var(--surface-2) 8%);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.02),
+    0 8px 28px -16px rgba(0, 0, 0, 0.22);
+}
+
+@utility surface-muted {
+  border: 1px solid var(--line-soft);
+  background: color-mix(in oklab, var(--surface-2) 88%, var(--surface-3) 12%);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.02em;
   }
   code,
   kbd,

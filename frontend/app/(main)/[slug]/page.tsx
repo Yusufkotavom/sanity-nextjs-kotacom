@@ -1,7 +1,7 @@
 import Blocks from "@/components/blocks";
 import JasaCetakBukuCityShell from "@/components/legacy/jasa-cetak-buku-city-shell";
 import {
-  getJasaCetakBukuCityBySlug,
+  getJasaCetakBukuCityBySlugOrFallback,
   getJasaCetakBukuCityStaticParams,
 } from "@/lib/local-content/jasa-cetak-buku-kota";
 import {
@@ -32,7 +32,7 @@ export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
-  const cityPage = getJasaCetakBukuCityBySlug(params.slug);
+  const cityPage = getJasaCetakBukuCityBySlugOrFallback(params.slug);
   if (cityPage) {
     return await generateBasicMetadata({
       title: cityPage.title || `Jasa cetak buku ${cityPage.city}`,
@@ -54,7 +54,7 @@ export default async function Page(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
-  const cityPage = getJasaCetakBukuCityBySlug(params.slug);
+  const cityPage = getJasaCetakBukuCityBySlugOrFallback(params.slug);
   if (cityPage) {
     return <JasaCetakBukuCityShell item={cityPage} />;
   }

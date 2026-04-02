@@ -1453,3 +1453,68 @@ This file is the canonical changelog for all repository updates, with explicit S
   - `pnpm --filter frontend run typecheck` passed.
   - `pnpm --filter frontend run build` passed.
   - Build output confirms `/(main)/[slug]` static path volume increased (`+396`), reflecting generated city root slugs.
+
+## 2026-04-02 - Slug Coverage Fix for `jasa-cetak-buku-*` Export Parity (399/399)
+- Changed files:
+  - `frontend/lib/local-content/jasa-cetak-buku-kota.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Identified exact slug gap between export source and frontend dataset: source `399` vs cities dataset `394`.
+  - Confirmed the `5` missing slugs are non-city variants from export cluster (`dari-pdf`, `novel-murah`, `yasin`, etc.).
+  - Updated static params generation to merge `cities.json` + `excluded-non-city.json`, restoring route coverage parity to `399/399`.
+  - Runtime fallback for `jasa-cetak-buku-*` remains active for defensive slug handling.
+- SEO impact:
+  - Direct SEO impact: removes potential 404 risk for missing exported root slugs and restores crawlable route parity to source export set.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - Data parity check passed: `cities 394 + excluded 5 = combined 399`.
+
+## 2026-04-02 - CTA Parity Fix for `jasa-cetak-buku-(kota)` from Export Template
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/components/legacy/legacy-landing-sections.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable quick-action CTA group to rewrite landing sections, enabled through `copy.ctaLinks` contract.
+  - Aligned `jasa-cetak-buku-(kota)` CTA labels with export-source template pattern to avoid missing CTA intents:
+    - `Hubungi Kami Sekarang`
+    - `Tanya di Sini`
+    - `Minta Penawaran Akurat di Sini`
+    - `Chat & Cetak Sekarang`
+  - Enabled these CTA links in both base `cetak-buku` copy preset and city-derived copy builder.
+- SEO impact:
+  - Direct content/UX impact: restores conversion-intent parity against legacy export pages so key CTA intents are preserved on city pages.
+  - No direct Studio schema/query contract impact.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - Build output confirms static root slug generation remains healthy (`/[slug]` +401 static paths).
+
+## 2026-04-02 - Vercel-Style UI Shell Rewrite Pass (Reusable Header/Footer/Section Surfaces)
+- Changed files:
+  - `frontend/app/globals.css`
+  - `frontend/app/(main)/layout.tsx`
+  - `frontend/components/header/index.tsx`
+  - `frontend/components/header/desktop-nav.tsx`
+  - `frontend/components/header/mobile-nav.tsx`
+  - `frontend/components/footer.tsx`
+  - `frontend/components/ui/button.tsx`
+  - `frontend/components/ui/card.tsx`
+  - `frontend/components/ui/section-container.tsx`
+  - `frontend/components/legacy/legacy-landing-sections.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Implemented a full UI-shell refresh to align visual direction closer to Vercel style while staying on reusable shadcn + Geist foundations.
+  - Added reusable global surface/separator tokens and utilities (`ui-shell`, `section-divider`, `surface-card`, `surface-muted`) and applied them consistently across shared layout blocks.
+  - Refined header/navigation (desktop + mobile) rhythm, dropdown/sheet surfaces, and action styles for clearer hierarchy with preserved CMS-driven menu behavior.
+  - Refactored footer into cleaner two-zone composition and grouped link surfaces; updated legacy landing section surfaces/dividers so root-slug city pages inherit the same upgraded shell.
+- SEO impact:
+  - No direct metadata/schema change.
+  - Indirect SEO/UX impact: stronger readability and CTA visibility on high-volume rewrite pages without changing route, slug, or CMS query contracts.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - Manual parity checks: root slug adapter and template CTA strings remain present for `jasa-cetak-buku-*` flow (Hubungi/Tanya/Penawaran/Chat).

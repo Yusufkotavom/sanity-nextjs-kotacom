@@ -245,9 +245,13 @@ export default function LegacyLandingSections({
   page,
   copy,
 }: LegacyLandingSectionsProps) {
-  const tocItems = copy.longGuide?.length
-    ? [...BASE_TOC, { id: "panduan", label: "Panduan Lengkap" }]
-    : BASE_TOC;
+  const tocItems = [...BASE_TOC];
+  if (copy.ctaLinks?.length) {
+    tocItems.push({ id: "cta-quick", label: "Aksi Cepat" });
+  }
+  if (copy.longGuide?.length) {
+    tocItems.push({ id: "panduan", label: "Panduan Lengkap" });
+  }
   const serviceTypes = copy.serviceTypes || getDefaultServiceTypes(page);
   const pricingPlans = copy.pricingPlans || getDefaultPricingPlans(page);
   const features = copy.features || getDefaultFeatures(page);
@@ -256,16 +260,16 @@ export default function LegacyLandingSections({
 
   return (
     <>
-      <section className="container py-10" id="toc">
-        <div className="rounded-xl border border-border/70 bg-muted/25 p-5 md:p-6">
+      <section className="container section-divider py-10" id="toc">
+        <div className="surface-muted rounded-xl p-5 md:p-6">
           <p className="text-ui-label text-foreground/70">Navigasi Cepat</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {tocItems.map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                className="inline-flex rounded-md border border-border/70 bg-background px-3 py-1.5 text-xs text-foreground/80 transition-colors hover:bg-accent hover:text-foreground"
-              >
+                  className="inline-flex rounded-md border border-border/70 bg-background px-3 py-1.5 text-xs text-foreground/80 transition-colors hover:border-border hover:bg-accent/80 hover:text-foreground"
+                >
                 {item.label}
               </a>
             ))}
@@ -273,14 +277,29 @@ export default function LegacyLandingSections({
         </div>
       </section>
 
-      <section className="container py-6" id="layanan">
+      {copy.ctaLinks?.length ? (
+        <section className="container py-2" id="cta-quick">
+          <div className="surface-card rounded-xl p-5 md:p-6">
+            <p className="text-ui-label text-primary/80">Aksi Cepat</p>
+            <div className="mt-3 flex flex-wrap gap-3">
+              {copy.ctaLinks.map((item) => (
+                <Button key={item.label} asChild size="sm" variant="outline">
+                  <Link href={item.href}>{item.label}</Link>
+                </Button>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="container section-divider py-8" id="layanan">
         <div className="mb-4 flex items-center gap-2">
           <BookOpenText className="size-4 text-foreground/70" />
           <h2 className="text-xl font-semibold md:text-2xl">Jenis Layanan Utama</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {serviceTypes.map((item) => (
-            <article key={item.title} className="rounded-xl border border-border/80 bg-card p-5">
+            <article key={item.title} className="surface-card rounded-xl p-5">
               <h3 className="text-base font-semibold">{item.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
               {item.href ? (
@@ -296,7 +315,7 @@ export default function LegacyLandingSections({
         </div>
       </section>
 
-      <section className="container py-8" id="paket">
+      <section className="container section-divider py-8" id="paket">
         <div className="mb-4 flex items-center gap-2">
           <Store className="size-4 text-foreground/70" />
           <h2 className="text-xl font-semibold md:text-2xl">Paket & Investasi</h2>
@@ -305,10 +324,10 @@ export default function LegacyLandingSections({
           {pricingPlans.map((plan) => (
             <article
               key={plan.name}
-              className={`rounded-xl border p-5 ${
+              className={`rounded-xl p-5 ${
                 plan.recommended
-                  ? "border-primary/50 bg-primary/[0.04]"
-                  : "border-border/80 bg-card"
+                  ? "border border-primary/40 bg-primary/[0.05] shadow-[0_10px_30px_-18px_rgba(0,112,243,0.45)]"
+                  : "surface-card"
               }`}
             >
               <div className="flex items-center justify-between">
@@ -334,7 +353,7 @@ export default function LegacyLandingSections({
         </div>
       </section>
 
-      <section className="container py-8" id="fitur">
+      <section className="container section-divider py-8" id="fitur">
         <div className="mb-4 flex items-center gap-2">
           <Sparkles className="size-4 text-foreground/70" />
           <h2 className="text-xl font-semibold md:text-2xl">Fitur Unggulan</h2>
@@ -345,7 +364,7 @@ export default function LegacyLandingSections({
               ICON_MAP[(feature.icon as keyof typeof ICON_MAP) || "default"] ||
               ICON_MAP.default;
             return (
-              <article key={feature.title} className="rounded-xl border border-border/80 bg-card p-5">
+              <article key={feature.title} className="surface-card rounded-xl p-5">
                 <div className="flex items-start gap-3">
                   <span className="inline-flex size-9 items-center justify-center rounded-lg bg-muted">
                     <Icon className="size-4 text-foreground/75" />
@@ -361,14 +380,14 @@ export default function LegacyLandingSections({
         </div>
       </section>
 
-      <section className="container py-8" id="portfolio">
+      <section className="container section-divider py-8" id="portfolio">
         <div className="mb-4 flex items-center gap-2">
           <LayoutTemplate className="size-4 text-foreground/70" />
           <h2 className="text-xl font-semibold md:text-2xl">Portfolio & Bukti Kerja</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {proofItems.map((item) => (
-            <article key={item.title} className="overflow-hidden rounded-xl border border-border/80 bg-card">
+            <article key={item.title} className="surface-card overflow-hidden rounded-xl">
               <div className="relative aspect-[16/9]">
                 <Image
                   src={item.image || "/images/og-image.jpg"}
@@ -386,14 +405,14 @@ export default function LegacyLandingSections({
         </div>
       </section>
 
-      <section className="container py-8" id="testimoni">
+      <section className="container section-divider py-8" id="testimoni">
         <div className="mb-4 flex items-center gap-2">
           <Star className="size-4 text-foreground/70" />
           <h2 className="text-xl font-semibold md:text-2xl">Apa Kata Klien</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {testimonials.map((item) => (
-            <blockquote key={`${item.name}-${item.role}`} className="rounded-xl border border-border/80 bg-card p-5">
+            <blockquote key={`${item.name}-${item.role}`} className="surface-card rounded-xl p-5">
               <p className="text-sm text-foreground/85">“{item.quote}”</p>
               <footer className="mt-3 text-xs text-muted-foreground">
                 <span className="font-medium text-foreground">{item.name}</span> · {item.role}
@@ -404,7 +423,7 @@ export default function LegacyLandingSections({
       </section>
 
       {copy.longGuide?.length ? (
-        <section className="container py-8" id="panduan">
+        <section className="container section-divider py-8" id="panduan">
           <div className="mb-4 flex items-center gap-2">
             <BookOpenText className="size-4 text-foreground/70" />
             <h2 className="text-xl font-semibold md:text-2xl">
@@ -415,7 +434,7 @@ export default function LegacyLandingSections({
             {copy.longGuide.map((item) => (
               <article
                 key={item.title}
-                className="rounded-xl border border-border/80 bg-card p-5"
+                className="surface-card rounded-xl p-5"
               >
                 <h3 className="text-base font-semibold">{item.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -427,8 +446,8 @@ export default function LegacyLandingSections({
         </section>
       ) : null}
 
-      <section className="container py-10" id="cta-final">
-        <div className="rounded-2xl border border-primary/30 bg-primary/[0.06] p-6 md:p-8">
+      <section className="container section-divider py-10" id="cta-final">
+        <div className="rounded-2xl border border-primary/30 bg-primary/[0.06] p-6 shadow-[0_16px_44px_-26px_rgba(0,112,243,0.5)] md:p-8">
           <div className="max-w-3xl">
             <h2 className="text-2xl font-semibold tracking-tight">
               {copy.finalCtaTitle || `Siap Mulai ${copy.primaryKeyword}?`}

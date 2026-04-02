@@ -73,13 +73,16 @@ export default function MobileNav({
         <Button
           aria-label="Open Menu"
           variant="ghost"
-          className="w-10 p-5 focus-visible:ring-1 focus-visible:ring-offset-1"
+          className="h-9 w-9 rounded-lg border border-transparent p-0 text-foreground/85 hover:border-border/70 hover:bg-accent/70 focus-visible:ring-1 focus-visible:ring-offset-1"
         >
           <AlignRight className="dark:text-white" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="h-full w-[86vw] border-r p-0 sm:max-w-sm">
-        <SheetHeader className="border-b px-6 py-5">
+      <SheetContent
+        side="left"
+        className="h-full w-[88vw] border-r border-border/70 bg-background/98 p-0 backdrop-blur-2xl sm:max-w-sm"
+      >
+        <SheetHeader className="section-divider px-6 py-5">
           <div>
             <Logo settings={settings} />
           </div>
@@ -88,8 +91,8 @@ export default function MobileNav({
             <SheetDescription>Navigate to the website pages</SheetDescription>
           </div>
         </SheetHeader>
-        <div className="flex-1 overflow-y-auto px-4 py-6">
-          <ul className="list-none space-y-1">
+        <div className="flex-1 overflow-y-auto px-4 py-5">
+          <ul className="list-none space-y-1.5">
             {primaryItems.map((item) => {
               const ItemIcon = item.icon ? NAVIGATION_ICON_MAP[item.icon] : null;
               const children =
@@ -108,11 +111,11 @@ export default function MobileNav({
                       rel={item.target ? "noopener noreferrer" : undefined}
                       className={cn(
                         buttonVariants({
-                          variant: item.buttonVariant || "default",
+                          variant: item.buttonVariant || "ghost",
                         }),
-                        "h-11 w-full justify-start rounded-md px-3 text-left text-base",
+                        "h-10 w-full justify-start rounded-lg border border-transparent px-3 text-left text-sm font-medium",
                         item.buttonVariant === "ghost" &&
-                          "text-foreground/85 hover:bg-accent hover:text-foreground",
+                          "text-foreground/82 hover:border-border/80 hover:bg-accent/80 hover:text-foreground",
                       )}
                     >
                       {ItemIcon && <ItemIcon className="size-4" />}
@@ -123,11 +126,11 @@ export default function MobileNav({
               }
 
               return (
-                <li key={key} className="rounded-md">
+                <li key={key} className="rounded-lg">
                   <button
                     type="button"
                     onClick={() => setOpenGroup(groupOpen ? null : key)}
-                    className="inline-flex h-11 w-full items-center justify-between gap-2 rounded-md px-3 text-left text-base text-foreground/85 hover:bg-accent"
+                    className="inline-flex h-10 w-full items-center justify-between gap-2 rounded-lg border border-transparent px-3 text-left text-sm font-medium text-foreground/82 hover:border-border/80 hover:bg-accent/80"
                   >
                     <span className="inline-flex items-center gap-2">
                       {ItemIcon && <ItemIcon className="size-4" />}
@@ -141,7 +144,7 @@ export default function MobileNav({
                     />
                   </button>
                   {groupOpen && (
-                    <ul className="ml-3 space-y-1 border-l pl-3">
+                    <ul className="ml-3 mt-1 space-y-1 border-l border-border/70 pl-3">
                       {children.map((child) => {
                         const ChildIcon = child.icon ? NAVIGATION_ICON_MAP[child.icon] : null;
                         return (
@@ -151,7 +154,7 @@ export default function MobileNav({
                               href={child.href || "#"}
                               target={child.target ? "_blank" : undefined}
                               rel={child.target ? "noopener noreferrer" : undefined}
-                              className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-foreground/75 hover:bg-accent hover:text-foreground"
+                              className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-foreground/75 hover:bg-accent/70 hover:text-foreground"
                             >
                               {ChildIcon && <ChildIcon className="size-4" />}
                               <span className="flex flex-col items-start">
@@ -180,7 +183,7 @@ export default function MobileNav({
             })}
           </ul>
           {!!headerCta?.title && (
-            <div className="mt-6 border-t pt-4">
+            <div className="section-divider mt-6 pt-4">
               <Link
                 key={headerCta._key || "header-cta"}
                 onClick={() => setOpen(false)}
@@ -191,7 +194,7 @@ export default function MobileNav({
                   buttonVariants({
                     variant: headerCta.buttonVariant || "default",
                   }),
-                  "h-11 w-full justify-center rounded-md",
+                  "h-10 w-full justify-center rounded-lg",
                 )}
               >
                 {headerCta.title}
@@ -199,7 +202,7 @@ export default function MobileNav({
             </div>
           )}
           {!!utilityLinks.length && (
-            <div className="mt-6 border-t pt-4">
+            <div className="section-divider mt-6 pt-4">
               <p className="mb-2 px-3 text-left text-xs uppercase tracking-wide text-foreground/50">
                 Utility
               </p>
@@ -217,7 +220,7 @@ export default function MobileNav({
                         buttonVariants({
                           variant: item.buttonVariant || "outline",
                         }),
-                        "h-10 w-full justify-center rounded-md",
+                        "h-10 w-full justify-center rounded-lg",
                       )}
                     >
                       {ItemIcon && <ItemIcon className="size-4" />}
@@ -228,7 +231,7 @@ export default function MobileNav({
               </div>
             </div>
           )}
-          <div className="mt-6 border-t pt-4">
+          <div className="section-divider mt-6 pt-4">
             <p className="mb-2 px-3 text-left text-xs uppercase tracking-wide text-foreground/50">
               Appearance
             </p>
@@ -265,7 +268,7 @@ export default function MobileNav({
               </Button>
             </div>
           </div>
-          <div className="mt-6 border-t pt-4">
+          <div className="section-divider mt-6 pt-4">
             <p className="mb-2 px-3 text-left text-xs uppercase tracking-wide text-foreground/50">
               Social
             </p>

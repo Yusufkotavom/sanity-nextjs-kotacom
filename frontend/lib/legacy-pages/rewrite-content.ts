@@ -10,6 +10,7 @@ export type LegacyRewriteCopy = {
   faqs: Array<{ question: string; answer: string }>;
   ctaLabel: string;
   ctaHref: string;
+  ctaLinks?: Array<{ label: string; href: string }>;
   serviceTypes?: Array<{ title: string; description: string; href?: string }>;
   pricingPlans?: Array<{
     name: string;
@@ -720,6 +721,12 @@ function buildPrintingDetailCopy(page: LegacyAstroPage): LegacyRewriteCopy {
       finalCtaDescription:
         "Kirim detail naskah Anda. Kami bantu hitung estimasi paling efisien sesuai jumlah, spesifikasi, dan target deadline.",
       ctaLabel: "Minta Penawaran Cetak Buku",
+      ctaLinks: [
+        { label: "Hubungi Kami Sekarang", href: DEFAULT_CTA },
+        { label: "Tanya di Sini", href: DEFAULT_CTA },
+        { label: "Minta Penawaran Akurat di Sini", href: DEFAULT_CTA },
+        { label: "Chat & Cetak Sekarang", href: DEFAULT_CTA },
+      ],
     },
     "cetak-album-pernikahan": {
       primaryKeyword: "Jasa Cetak Album Pernikahan",
@@ -1343,6 +1350,12 @@ export function buildPercetakanCetakBukuCityCopy(city: string): LegacyRewriteCop
     intro:
       `Kami melayani jasa cetak buku di ${cityName} dengan alur kerja terstruktur: konsultasi spesifikasi, review file, proses produksi, quality control, hingga pengiriman ke seluruh Indonesia.`,
     ctaLabel: `Konsultasi Cetak Buku ${cityName}`,
+    ctaLinks: [
+      { label: "Hubungi Kami Sekarang", href: DEFAULT_CTA },
+      { label: "Tanya di Sini", href: DEFAULT_CTA },
+      { label: "Minta Penawaran Akurat di Sini", href: DEFAULT_CTA },
+      { label: "Chat & Cetak Sekarang", href: DEFAULT_CTA },
+    ],
     finalCtaTitle: `Siap Cetak Buku di ${cityName}?`,
     finalCtaDescription:
       `Kirim detail naskah dan spesifikasi Anda. Tim kami bantu susun opsi produksi paling efisien untuk kebutuhan cetak buku di ${cityName}.`,

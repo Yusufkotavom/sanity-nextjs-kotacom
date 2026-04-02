@@ -59,34 +59,19 @@ export default async function Footer() {
   );
 
   return (
-    <footer>
-      <div className="dark:bg-background dark:text-gray-300 border-t">
-        <div className="container py-12 xl:py-14">
-          <Link href="/" className="inline-block" aria-label="Home page">
-            <Logo settings={settings} />
-          </Link>
-          <div className="mt-8 flex flex-wrap items-center gap-7 text-primary">
-            {footerPrimaryLinks.map((navItem: SanityLink) => (
-              <Link
-                key={navItem._key}
-                href={navItem.href || "#"}
-                target={navItem.target ? "_blank" : undefined}
-                rel={navItem.target ? "noopener noreferrer" : undefined}
-                className={cn(
-                  buttonVariants({
-                    variant: navItem.buttonVariant || "default",
-                  }),
-                  navItem.buttonVariant === "ghost" &&
-                    "transition-colors hover:text-foreground/80 text-foreground/60 text-sm p-0 h-auto hover:bg-transparent",
-                )}
-              >
-                {navItem.title}
-              </Link>
-            ))}
-          </div>
-          {!!footerUtilityLinks.length && (
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              {footerUtilityLinks.map((navItem: SanityLink) => (
+    <footer className="section-divider mt-10">
+      <div className="container py-12 xl:py-14">
+        <div className="grid gap-10 xl:grid-cols-[1.2fr_1fr] xl:gap-14">
+          <div>
+            <Link href="/" className="inline-block" aria-label="Home page">
+              <Logo settings={settings} />
+            </Link>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-foreground/65">
+              Solusi website, software, dan layanan IT dengan implementasi yang
+              rapi, cepat, serta mudah di-scale untuk kebutuhan bisnis Anda.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-2.5">
+              {footerPrimaryLinks.map((navItem: SanityLink) => (
                 <Link
                   key={navItem._key}
                   href={navItem.href || "#"}
@@ -94,51 +79,78 @@ export default async function Footer() {
                   rel={navItem.target ? "noopener noreferrer" : undefined}
                   className={cn(
                     buttonVariants({
-                      variant: navItem.buttonVariant || "outline",
+                      variant: navItem.buttonVariant || "ghost",
+                      size: "sm",
                     }),
-                    "h-8 px-3 text-xs",
+                    "h-8 rounded-lg px-3 text-xs",
+                    navItem.buttonVariant === "ghost" &&
+                      "border border-transparent text-foreground/72 hover:border-border/80 hover:bg-accent/80 hover:text-foreground",
                   )}
                 >
                   {navItem.title}
                 </Link>
               ))}
             </div>
-          )}
+            {!!footerUtilityLinks.length && (
+              <div className="mt-3 flex flex-wrap items-center gap-2.5">
+                {footerUtilityLinks.map((navItem: SanityLink) => (
+                  <Link
+                    key={navItem._key}
+                    href={navItem.href || "#"}
+                    target={navItem.target ? "_blank" : undefined}
+                    rel={navItem.target ? "noopener noreferrer" : undefined}
+                    className={cn(
+                      buttonVariants({
+                        variant: navItem.buttonVariant || "outline",
+                        size: "sm",
+                      }),
+                      "h-8 rounded-lg px-3 text-xs",
+                    )}
+                  >
+                    {navItem.title}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
 
           {!!footerColumns.length && (
-            <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-3 xl:grid-cols-5">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
               {footerColumns.map((item) => {
                 const children =
                   item.children?.filter((child) => child?.title && child?.href) || [];
                 const groupedChildren = groupChildren(children);
 
                 return (
-                  <div key={item._key} className="min-w-0">
+                  <div
+                    key={item._key}
+                    className="surface-muted rounded-xl p-4"
+                  >
                     <Link
                       href={item.href || "#"}
                       target={item.target ? "_blank" : undefined}
                       rel={item.target ? "noopener noreferrer" : undefined}
-                      className="text-sm font-semibold text-foreground"
+                      className="text-sm font-semibold tracking-tight text-foreground"
                     >
                       {item.title}
                     </Link>
 
-                    <div className="mt-4 space-y-4">
+                    <div className="mt-3 space-y-3">
                       {groupedChildren.map(([groupName, links]) => (
                         <div key={groupName || "default"}>
                           {groupName && (
-                            <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-foreground/45">
+                            <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground/45">
                               {groupName}
                             </p>
                           )}
-                          <ul className="space-y-2">
+                          <ul className="space-y-1.5">
                             {links.map((child) => (
                               <li key={child._key || child.href || child.title}>
                                 <Link
                                   href={child.href || "#"}
                                   target={child.target ? "_blank" : undefined}
                                   rel={child.target ? "noopener noreferrer" : undefined}
-                                  className="text-sm text-foreground/70 transition-colors hover:text-foreground"
+                                  className="text-sm text-foreground/68 transition-colors hover:text-foreground"
                                 >
                                   {child.title}
                                 </Link>
@@ -153,30 +165,30 @@ export default async function Footer() {
               })}
             </div>
           )}
+        </div>
 
-          {!!settingsWithSocial?.socialLinks?.length && (
-            <div className="mt-10 flex items-center justify-between gap-4 border-t pt-8">
-              <p className="text-xs uppercase tracking-wide text-foreground/55">
-                Ikuti Update Kami
-              </p>
-              <SocialLinks
-                links={settingsWithSocial.socialLinks}
-                iconOnly
-                size="sm"
-                className="justify-end"
-              />
-            </div>
-          )}
+        {!!settingsWithSocial?.socialLinks?.length && (
+          <div className="section-divider mt-10 flex items-center justify-between gap-4 pt-7">
+            <p className="text-xs uppercase tracking-[0.13em] text-foreground/55">
+              Ikuti Update Kami
+            </p>
+            <SocialLinks
+              links={settingsWithSocial.socialLinks}
+              iconOnly
+              size="sm"
+              className="justify-end"
+            />
+          </div>
+        )}
 
-          <div className="mt-8 flex flex-row gap-6 border-t pt-8 text-xs lg:mt-10">
-            <div className="flex items-center gap-2 text-foreground/60">
-              <span>&copy; {new Date().getFullYear()}</span>
-              {settings?.copyright && (
-                <span className="[&>p]:!m-0">
-                  <PortableTextRenderer value={settings.copyright} />
-                </span>
-              )}
-            </div>
+        <div className="section-divider mt-7 flex flex-row gap-6 pt-6 text-xs lg:mt-8">
+          <div className="flex items-center gap-2 text-foreground/60">
+            <span>&copy; {new Date().getFullYear()}</span>
+            {settings?.copyright && (
+              <span className="[&>p]:!m-0">
+                <PortableTextRenderer value={settings.copyright} />
+              </span>
+            )}
           </div>
         </div>
       </div>
