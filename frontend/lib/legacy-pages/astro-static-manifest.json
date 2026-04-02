@@ -1,0 +1,834 @@
+[
+  {
+    "route": "/about",
+    "section": "about",
+    "slug": "about",
+    "sourceFile": "about/index.astro",
+    "title": "About",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/about/ai-statement",
+    "section": "about",
+    "slug": "ai-statement",
+    "sourceFile": "about/ai-statement.astro",
+    "title": "Ai Statement",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/contact",
+    "section": "contact",
+    "slug": "contact",
+    "sourceFile": "contact.astro",
+    "title": "Contact",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/layanan",
+    "section": "layanan",
+    "slug": "layanan",
+    "sourceFile": "layanan/index.astro",
+    "title": "Layanan",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website",
+    "section": "pembuatan-website",
+    "slug": "pembuatan-website",
+    "sourceFile": "pembuatan-website/index.astro",
+    "title": "Pembuatan Website",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/ambon",
+    "section": "pembuatan-website",
+    "slug": "ambon",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Ambon",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/balikpapan",
+    "section": "pembuatan-website",
+    "slug": "balikpapan",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Balikpapan",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/banda-aceh",
+    "section": "pembuatan-website",
+    "slug": "banda-aceh",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Banda Aceh",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/bandar-lampung",
+    "section": "pembuatan-website",
+    "slug": "bandar-lampung",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Bandar Lampung",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/bandung",
+    "section": "pembuatan-website",
+    "slug": "bandung",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Bandung",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/banjarmasin",
+    "section": "pembuatan-website",
+    "slug": "banjarmasin",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Banjarmasin",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/bengkulu",
+    "section": "pembuatan-website",
+    "slug": "bengkulu",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Bengkulu",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/denpasar",
+    "section": "pembuatan-website",
+    "slug": "denpasar",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Denpasar",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/gorontalo",
+    "section": "pembuatan-website",
+    "slug": "gorontalo",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Gorontalo",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/harga",
+    "section": "pembuatan-website",
+    "slug": "harga",
+    "sourceFile": "pembuatan-website/harga.astro",
+    "title": "Harga",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jakarta",
+    "section": "pembuatan-website",
+    "slug": "jakarta",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Jakarta",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jambi",
+    "section": "pembuatan-website",
+    "slug": "jambi",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Jambi",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jasa-migrasi-wordpress",
+    "section": "pembuatan-website",
+    "slug": "jasa-migrasi-wordpress",
+    "sourceFile": "pembuatan-website/jasa-migrasi-wordpress/index.astro",
+    "title": "Jasa Migrasi Wordpress",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jasa-pembuatan-website-company-profile",
+    "section": "pembuatan-website",
+    "slug": "jasa-pembuatan-website-company-profile",
+    "sourceFile": "pembuatan-website/jasa-pembuatan-website-company-profile/index.astro",
+    "title": "Jasa Pembuatan Website Company Profile",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jasa-pembuatan-website-dokter-klinik",
+    "section": "pembuatan-website",
+    "slug": "jasa-pembuatan-website-dokter-klinik",
+    "sourceFile": "pembuatan-website/jasa-pembuatan-website-dokter-klinik/index.astro",
+    "title": "Jasa Pembuatan Website Dokter Klinik",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jasa-pembuatan-website-expedisi",
+    "section": "pembuatan-website",
+    "slug": "jasa-pembuatan-website-expedisi",
+    "sourceFile": "pembuatan-website/jasa-pembuatan-website-expedisi/index.astro",
+    "title": "Jasa Pembuatan Website Expedisi",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jasa-pembuatan-website-komunitas-ngo",
+    "section": "pembuatan-website",
+    "slug": "jasa-pembuatan-website-komunitas-ngo",
+    "sourceFile": "pembuatan-website/jasa-pembuatan-website-komunitas-ngo/index.astro",
+    "title": "Jasa Pembuatan Website Komunitas Ngo",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jasa-pembuatan-website-konstruksi",
+    "section": "pembuatan-website",
+    "slug": "jasa-pembuatan-website-konstruksi",
+    "sourceFile": "pembuatan-website/jasa-pembuatan-website-konstruksi/index.astro",
+    "title": "Jasa Pembuatan Website Konstruksi",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jasa-pembuatan-website-sekolah",
+    "section": "pembuatan-website",
+    "slug": "jasa-pembuatan-website-sekolah",
+    "sourceFile": "pembuatan-website/jasa-pembuatan-website-sekolah/index.astro",
+    "title": "Jasa Pembuatan Website Sekolah",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jasa-pembuatan-website-toko-online",
+    "section": "pembuatan-website",
+    "slug": "jasa-pembuatan-website-toko-online",
+    "sourceFile": "pembuatan-website/jasa-pembuatan-website-toko-online/index.astro",
+    "title": "Jasa Pembuatan Website Toko Online",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/jayapura",
+    "section": "pembuatan-website",
+    "slug": "jayapura",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Jayapura",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/kendari",
+    "section": "pembuatan-website",
+    "slug": "kendari",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Kendari",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/kupang",
+    "section": "pembuatan-website",
+    "slug": "kupang",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Kupang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/makassar",
+    "section": "pembuatan-website",
+    "slug": "makassar",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Makassar",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/manado",
+    "section": "pembuatan-website",
+    "slug": "manado",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Manado",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/manokwari",
+    "section": "pembuatan-website",
+    "slug": "manokwari",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Manokwari",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/mataram",
+    "section": "pembuatan-website",
+    "slug": "mataram",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Mataram",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/medan",
+    "section": "pembuatan-website",
+    "slug": "medan",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Medan",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/padang",
+    "section": "pembuatan-website",
+    "slug": "padang",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Padang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/palangkaraya",
+    "section": "pembuatan-website",
+    "slug": "palangkaraya",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Palangkaraya",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/palembang",
+    "section": "pembuatan-website",
+    "slug": "palembang",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Palembang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/palu",
+    "section": "pembuatan-website",
+    "slug": "palu",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Palu",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/pangkal-pinang",
+    "section": "pembuatan-website",
+    "slug": "pangkal-pinang",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Pangkal Pinang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/pekanbaru",
+    "section": "pembuatan-website",
+    "slug": "pekanbaru",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Pekanbaru",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/pontianak",
+    "section": "pembuatan-website",
+    "slug": "pontianak",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Pontianak",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/samarinda",
+    "section": "pembuatan-website",
+    "slug": "samarinda",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Samarinda",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/semarang",
+    "section": "pembuatan-website",
+    "slug": "semarang",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Semarang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/serang",
+    "section": "pembuatan-website",
+    "slug": "serang",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Serang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/surabaya",
+    "section": "pembuatan-website",
+    "slug": "surabaya",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Surabaya",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/tanjung-pinang",
+    "section": "pembuatan-website",
+    "slug": "tanjung-pinang",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Tanjung Pinang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/tanjung-selor",
+    "section": "pembuatan-website",
+    "slug": "tanjung-selor",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Tanjung Selor",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/template",
+    "section": "pembuatan-website",
+    "slug": "template",
+    "sourceFile": "pembuatan-website/template.astro",
+    "title": "Template",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/ternate",
+    "section": "pembuatan-website",
+    "slug": "ternate",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Ternate",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/pembuatan-website/yogyakarta",
+    "section": "pembuatan-website",
+    "slug": "yogyakarta",
+    "sourceFile": "pembuatan-website/[kota]/index.astro",
+    "title": "Pembuatan Website Yogyakarta",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan",
+    "section": "percetakan",
+    "slug": "percetakan",
+    "sourceFile": "percetakan/index.astro",
+    "title": "Percetakan",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-al-quran",
+    "section": "percetakan",
+    "slug": "cetak-al-quran",
+    "sourceFile": "percetakan/cetak-al-quran/index.astro",
+    "title": "Cetak Al Quran",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-album-pernikahan",
+    "section": "percetakan",
+    "slug": "cetak-album-pernikahan",
+    "sourceFile": "percetakan/cetak-album-pernikahan/index.astro",
+    "title": "Cetak Album Pernikahan",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-banner-spanduk",
+    "section": "percetakan",
+    "slug": "cetak-banner-spanduk",
+    "sourceFile": "percetakan/cetak-banner-spanduk/index.astro",
+    "title": "Cetak Banner Spanduk",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-brosur",
+    "section": "percetakan",
+    "slug": "cetak-brosur",
+    "sourceFile": "percetakan/cetak-brosur/index.astro",
+    "title": "Cetak Brosur",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-buku",
+    "section": "percetakan",
+    "slug": "cetak-buku",
+    "sourceFile": "percetakan/cetak-buku/index.astro",
+    "title": "Cetak Buku",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-buku-kenangan-sekolah",
+    "section": "percetakan",
+    "slug": "cetak-buku-kenangan-sekolah",
+    "sourceFile": "percetakan/cetak-buku-kenangan-sekolah/index.astro",
+    "title": "Cetak Buku Kenangan Sekolah",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-company-profile",
+    "section": "percetakan",
+    "slug": "cetak-company-profile",
+    "sourceFile": "percetakan/cetak-company-profile/index.astro",
+    "title": "Cetak Company Profile",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender",
+    "section": "percetakan",
+    "slug": "cetak-kalender",
+    "sourceFile": "percetakan/cetak-kalender/index.astro",
+    "title": "Cetak Kalender",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/ambon",
+    "section": "percetakan",
+    "slug": "ambon",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Ambon",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/balikpapan",
+    "section": "percetakan",
+    "slug": "balikpapan",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Balikpapan",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/banda-aceh",
+    "section": "percetakan",
+    "slug": "banda-aceh",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Banda Aceh",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/bandar-lampung",
+    "section": "percetakan",
+    "slug": "bandar-lampung",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Bandar Lampung",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/bandung",
+    "section": "percetakan",
+    "slug": "bandung",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Bandung",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/banjarmasin",
+    "section": "percetakan",
+    "slug": "banjarmasin",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Banjarmasin",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/bengkulu",
+    "section": "percetakan",
+    "slug": "bengkulu",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Bengkulu",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/denpasar",
+    "section": "percetakan",
+    "slug": "denpasar",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Denpasar",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/gorontalo",
+    "section": "percetakan",
+    "slug": "gorontalo",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Gorontalo",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/jakarta",
+    "section": "percetakan",
+    "slug": "jakarta",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Jakarta",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/jambi",
+    "section": "percetakan",
+    "slug": "jambi",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Jambi",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/jayapura",
+    "section": "percetakan",
+    "slug": "jayapura",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Jayapura",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/kendari",
+    "section": "percetakan",
+    "slug": "kendari",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Kendari",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/kupang",
+    "section": "percetakan",
+    "slug": "kupang",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Kupang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/makassar",
+    "section": "percetakan",
+    "slug": "makassar",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Makassar",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/manado",
+    "section": "percetakan",
+    "slug": "manado",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Manado",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/manokwari",
+    "section": "percetakan",
+    "slug": "manokwari",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Manokwari",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/mataram",
+    "section": "percetakan",
+    "slug": "mataram",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Mataram",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/medan",
+    "section": "percetakan",
+    "slug": "medan",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Medan",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/padang",
+    "section": "percetakan",
+    "slug": "padang",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Padang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/palangkaraya",
+    "section": "percetakan",
+    "slug": "palangkaraya",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Palangkaraya",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/palembang",
+    "section": "percetakan",
+    "slug": "palembang",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Palembang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/palu",
+    "section": "percetakan",
+    "slug": "palu",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Palu",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/pangkal-pinang",
+    "section": "percetakan",
+    "slug": "pangkal-pinang",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Pangkal Pinang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/pekanbaru",
+    "section": "percetakan",
+    "slug": "pekanbaru",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Pekanbaru",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/pontianak",
+    "section": "percetakan",
+    "slug": "pontianak",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Pontianak",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/samarinda",
+    "section": "percetakan",
+    "slug": "samarinda",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Samarinda",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/semarang",
+    "section": "percetakan",
+    "slug": "semarang",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Semarang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/serang",
+    "section": "percetakan",
+    "slug": "serang",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Serang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/surabaya",
+    "section": "percetakan",
+    "slug": "surabaya",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Surabaya",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/tanjung-pinang",
+    "section": "percetakan",
+    "slug": "tanjung-pinang",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Tanjung Pinang",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/tanjung-selor",
+    "section": "percetakan",
+    "slug": "tanjung-selor",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Tanjung Selor",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/ternate",
+    "section": "percetakan",
+    "slug": "ternate",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Ternate",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kalender/yogyakarta",
+    "section": "percetakan",
+    "slug": "yogyakarta",
+    "sourceFile": "percetakan/cetak-kalender/[kota]/index.astro",
+    "title": "Cetak Kalender Yogyakarta",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kaos",
+    "section": "percetakan",
+    "slug": "cetak-kaos",
+    "sourceFile": "percetakan/cetak-kaos/index.astro",
+    "title": "Cetak Kaos",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kartu-nama",
+    "section": "percetakan",
+    "slug": "cetak-kartu-nama",
+    "sourceFile": "percetakan/cetak-kartu-nama/index.astro",
+    "title": "Cetak Kartu Nama",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-kemasan-product",
+    "section": "percetakan",
+    "slug": "cetak-kemasan-product",
+    "sourceFile": "percetakan/cetak-kemasan-product/index.astro",
+    "title": "Cetak Kemasan Product",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-stiker",
+    "section": "percetakan",
+    "slug": "cetak-stiker",
+    "sourceFile": "percetakan/cetak-stiker/index.astro",
+    "title": "Cetak Stiker",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-undangan",
+    "section": "percetakan",
+    "slug": "cetak-undangan",
+    "sourceFile": "percetakan/cetak-undangan/index.astro",
+    "title": "Cetak Undangan",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/percetakan/cetak-yasin",
+    "section": "percetakan",
+    "slug": "cetak-yasin",
+    "sourceFile": "percetakan/cetak-yasin/index.astro",
+    "title": "Cetak Yasin",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/privacy",
+    "section": "privacy",
+    "slug": "privacy",
+    "sourceFile": "privacy.astro",
+    "title": "Privacy",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/sistem-pos",
+    "section": "sistem-pos",
+    "slug": "sistem-pos",
+    "sourceFile": "sistem-pos.astro",
+    "title": "Sistem Pos",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/software",
+    "section": "software",
+    "slug": "software",
+    "sourceFile": "software/index.astro",
+    "title": "Software",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/software/implementasi-software",
+    "section": "software",
+    "slug": "implementasi-software",
+    "sourceFile": "software/implementasi-software/index.astro",
+    "title": "Implementasi Software",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/software/instalasi-software",
+    "section": "software",
+    "slug": "instalasi-software",
+    "sourceFile": "software/instalasi-software/index.astro",
+    "title": "Instalasi Software",
+    "migrationStatus": "draft"
+  },
+  {
+    "route": "/software/pembuatan-software",
+    "section": "software",
+    "slug": "pembuatan-software",
+    "sourceFile": "software/pembuatan-software/index.astro",
+    "title": "Pembuatan Software",
+    "migrationStatus": "draft"
+  }
+]

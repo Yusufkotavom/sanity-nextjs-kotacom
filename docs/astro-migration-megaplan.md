@@ -38,6 +38,9 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] baseline migration blueprint documented
 - [x] route contract v1 published (`docs/astro-next-route-contract.md`)
 - [x] top-300 manual curation worklist initialized (`docs/curation/manual-top300-worklist-v1.csv`)
+- [x] Astro static-page clusters scaffolded in Next.js (code-driven placeholder routes, non-Sanity)
+- [x] Legacy route rewrite shell v1 applied with reusable components for service/trust clusters (`pembuatan-website`, `percetakan`, `software`, `layanan`, `about`, `contact`, `privacy`, `sistem-pos`)
+- [x] 3-worker rewrite orchestration contract published (`docs/rewrite-worker-orchestration.md`)
 
 ## Workstream A - Platform & Data Foundation
 
@@ -53,7 +56,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - `/services/[slug]`
   - `/products/[slug]`
   - `/projects/[slug]`
-- [ ] Mark exceptions for legacy pages to keep as dedicated landing pages.
+- [x] Mark exceptions for legacy pages to keep as dedicated landing pages.
+  - Done in rewrite orchestration contract for non-blog static clusters (`about`, `contact`, `privacy`, `layanan`, `pembuatan-website`, `percetakan`, `software`, `sistem-pos`).
 - [ ] Identify routes to be redirected only.
 
 ### A3. Import Pipeline
@@ -117,6 +121,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [ ] Service detail/list
 - [ ] Product detail/list
 - [ ] Project detail/list
+- [x] Legacy Astro static service/trust clusters switched to reusable rewrite template shell (Wave 1)
+- Blocker note (2026-04-02): Remaining template refactors depend on final shared UI shell lock from orchestration (`docs/rewrite-worker-orchestration.md`) before broader homepage/blog/product rollout.
 
 ### D3. Content UX Upgrade
 - [ ] Improve readability modules (TOC, CTA in-content, related links, FAQ blocks).
@@ -128,6 +134,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [ ] Wave 1: top traffic redirects only (safe subset).
 - [ ] Wave 2: remaining validated auto redirects.
 - [ ] Wave 3: curated manual redirects.
+- Note: redirect rollout explicitly deferred until rewrite coverage for legacy Astro clusters is completed.
 
 ### E2. Post-wave Monitoring
 - [ ] Check 404/redirect-chain loops.

@@ -16,6 +16,27 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-02 - Legacy Route Rewrite v1 with Reusable Shell Components
+- Changed files:
+  - `frontend/components/legacy/legacy-page-shell.tsx`
+  - `frontend/components/legacy/legacy-hero.tsx`
+  - `frontend/components/legacy/legacy-highlights.tsx`
+  - `frontend/components/legacy/legacy-process-faq.tsx`
+  - `frontend/components/legacy/legacy-related-links.tsx`
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Refactored legacy rewrite shell into reusable section components (hero, highlights, process+FAQ, related links) so Astro route clusters are template-driven and easier to scale.
+  - Kept metadata pipeline on existing `generateBasicMetadata` flow to preserve global fallback from `seoSettings`.
+  - Rewrote copy strategy for trust and service cluster pages (`layanan`, `about`, `contact`, `privacy`) to improve keyword intent alignment and CTA specificity.
+- SEO impact:
+  - Improves on-page semantic relevance and internal consistency across migrated legacy routes.
+  - No schema/query contract change in Studio; frontend SEO fallback behavior remains unchanged.
+- Verification:
+  - `pnpm --filter frontend run typecheck` (pending)
+  - `pnpm --filter frontend run build` (pending)
+
 ## 2026-04-01 - Dependabot Schedule Adjusted Back to Weekly
 - Changed files:
   - `.github/dependabot.yml`
@@ -786,3 +807,154 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - Approved redirect rows exported: 268 (plus header row).
   - Pending manual intent file reduced to header-only state (`manual-top300-pending-manual-intent-v3.csv`).
+
+## 2026-04-01 - Astro Static Cluster Scaffold in Next.js (Blog stays Sanity)
+- Changed files:
+  - `frontend/scripts/generate-astro-local-pages-manifest.mjs`
+  - `frontend/lib/legacy-pages/astro-static-manifest.json`
+  - `frontend/lib/legacy-pages/astro-static.ts`
+  - `frontend/components/legacy/legacy-page-shell.tsx`
+  - `frontend/app/(main)/about/page.tsx`
+  - `frontend/app/(main)/about/[slug]/page.tsx`
+  - `frontend/app/(main)/contact/page.tsx`
+  - `frontend/app/(main)/privacy/page.tsx`
+  - `frontend/app/(main)/layanan/page.tsx`
+  - `frontend/app/(main)/pembuatan-website/page.tsx`
+  - `frontend/app/(main)/pembuatan-website/[slug]/page.tsx`
+  - `frontend/app/(main)/percetakan/page.tsx`
+  - `frontend/app/(main)/percetakan/[slug]/page.tsx`
+  - `frontend/app/(main)/software/page.tsx`
+  - `frontend/app/(main)/software/[slug]/page.tsx`
+  - `frontend/app/(main)/sistem-pos/page.tsx`
+  - `frontend/package.json`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Added Astro manifest generator to map static legacy Astro pages into a local Next.js manifest (code-driven, no Sanity dependency).
+  - Introduced legacy-page registry and reusable rendering shell.
+  - Added Next.js routes for high-volume Astro service/landing clusters (`pembuatan-website`, `percetakan`, `software`, `layanan`) plus supporting pages (`about`, `contact`, `privacy`, `sistem-pos`).
+  - All migrated legacy scaffold routes are currently marked noindex as temporary placeholders during rewrite phase.
+  - Blog workflow remains Sanity-driven.
+- SEO impact:
+  - Integration impact: enables phased Astro-to-Next migration for non-blog pages while avoiding immediate risky bulk redirects.
+  - Temporary noindex on scaffold pages prevents thin placeholder pages from being indexed before rewrite completion.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - Build output confirms new static routes for `pembuatan-website`, `percetakan`, `software`, `about`, `contact`, `privacy`, `layanan`, and `sistem-pos`.
+
+## 2026-04-02 - Rewrite-first Strategy Applied (No Mass Redirect Yet)
+- Changed files:
+  - `frontend/next.config.mjs`
+  - `frontend/scripts/generate-astro-local-pages-manifest.mjs`
+  - `frontend/lib/legacy-pages/astro-static-manifest.json`
+  - `frontend/lib/legacy-pages/astro-static.ts`
+  - `frontend/app/(main)/percetakan/cetak-kalender/[kota]/page.tsx`
+- Summary:
+  - Removed temporary mass-cleanup redirect rules to follow rewrite-first migration strategy.
+  - Extended legacy manifest generator to include Astro programmatic city pages from `src/data/kota_website/*.json`.
+  - Added route support for `/percetakan/cetak-kalender/[kota]` so city pages are present in Next rewrite phase instead of being redirected.
+  - Regenerated legacy manifest; total legacy rewrite entries now include city routes.
+- SEO impact:
+  - Prevents premature redirect deployment before rewrite completion.
+  - Keeps legacy city URLs available in controlled noindex rewrite phase, reducing migration gap risk.
+- Verification:
+  - `pnpm --filter frontend run legacy:manifest` passed.
+  - `pnpm --filter frontend run build` passed.
+  - Build output confirms generated city routes for:
+    - `/pembuatan-website/[slug]` (includes city slugs)
+    - `/percetakan/cetak-kalender/[kota]`.
+
+## 2026-04-02 - Fix Legacy Dynamic Params Causing False 404 on Rewritten Astro Routes
+- Changed files:
+  - `frontend/app/(main)/about/[slug]/page.tsx`
+  - `frontend/app/(main)/pembuatan-website/[slug]/page.tsx`
+  - `frontend/app/(main)/percetakan/[slug]/page.tsx`
+  - `frontend/app/(main)/software/[slug]/page.tsx`
+  - `frontend/app/(main)/percetakan/cetak-kalender/[kota]/page.tsx`
+  - `docs/seo-updates.md`
+- Summary:
+  - Updated new legacy rewrite dynamic routes to await App Router `params` (Promise shape in Next 16 server components).
+  - This fixes false `notFound()` cases where slug/kota was read as undefined at runtime, which caused 404 on valid routes.
+- SEO impact:
+  - Prevents accidental 404 responses on valid legacy rewrite URLs.
+  - Keeps rewrite-first migration stable without forcing early redirects.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - Build output confirms static generation includes `/percetakan/[slug]`, `/pembuatan-website/[slug]`, and `/percetakan/cetak-kalender/[kota]` routes.
+
+## 2026-04-02 - 3-Worker Rewrite Orchestration Doc (No-Overlap + Shared UI/SEO Contract)
+- Changed files:
+  - `docs/rewrite-worker-orchestration.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated orchestration playbook for parallel rewrite execution with 3 workers.
+  - Defined strict non-overlapping file ownership per worker (UI shell, CMS contract, route rewrite/SEO application).
+  - Added mandatory skill usage list, including reusable component requirement and explicit Vercel + shadcn + Geist UI contract.
+  - Added shared SEO contract to keep Studio schemas, GROQ query contracts, and frontend metadata logic synchronized.
+  - Added merge order and quality gates for stable integration.
+- SEO impact:
+  - Direct SEO/integration process impact: reduces schema-query-render drift and lowers migration risk by enforcing synchronized implementation and fallback behavior across workers.
+- Verification:
+  - Manual review completed for ownership matrix, shared standards, and checklist completeness.
+
+## 2026-04-02 - Rewrite Template Activation for Legacy Astro Route Clusters
+- Changed files:
+  - `frontend/components/legacy/legacy-page-shell.tsx`
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/lib/legacy-pages/metadata.ts`
+  - `frontend/app/(main)/about/page.tsx`
+  - `frontend/app/(main)/about/[slug]/page.tsx`
+  - `frontend/app/(main)/contact/page.tsx`
+  - `frontend/app/(main)/privacy/page.tsx`
+  - `frontend/app/(main)/layanan/page.tsx`
+  - `frontend/app/(main)/sistem-pos/page.tsx`
+  - `frontend/app/(main)/pembuatan-website/page.tsx`
+  - `frontend/app/(main)/pembuatan-website/[slug]/page.tsx`
+  - `frontend/app/(main)/percetakan/page.tsx`
+  - `frontend/app/(main)/percetakan/[slug]/page.tsx`
+  - `frontend/app/(main)/percetakan/cetak-kalender/[kota]/page.tsx`
+  - `frontend/app/(main)/software/page.tsx`
+  - `frontend/app/(main)/software/[slug]/page.tsx`
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced placeholder-style legacy shell with reusable rewrite template sections (hero, highlights, process, FAQ, CTA, related links).
+  - Added `rewrite-content` generator to produce section/slug-aware copy model for website city pages, printing pages, software pages, and generic pages.
+  - Added centralized legacy metadata helper that maps rewritten pages to existing frontend metadata pipeline (`generateBasicMetadata`) so canonical/title/description/robots fallback behavior remains integrated.
+  - Updated all migrated legacy route files to use centralized metadata helper instead of hardcoded noindex metadata.
+- SEO impact:
+  - Direct SEO impact: rewritten legacy pages now have richer, intent-aligned content scaffolding and dynamic meta descriptions per route cluster.
+  - Integration impact: metadata generation stays synchronized with global SEO fallback logic from Studio (`seoSettings`) through existing frontend helper flow.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+  - Build output confirms affected legacy clusters compile and generate static paths, including `/percetakan/cetak-buku` via `/percetakan/[slug]`.
+
+## 2026-04-02 - Worker Execution Prompts for Parallel Rewrite Tracks
+- Changed files:
+  - `docs/worker-prompts/worker-1-ui-shell.md`
+  - `docs/worker-prompts/worker-2-cms-contract.md`
+  - `docs/worker-prompts/worker-3-rewrite-pages.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added 3 copy-paste worker prompts to operationalize parallel execution without file overlap.
+  - Each prompt includes mandatory skill usage, owned file boundaries, forbidden paths, mission scope, and acceptance checklist.
+  - Prompt content is aligned with existing orchestration rules: Vercel + shadcn + Geist UI direction, reusable component policy, and SEO synchronization discipline.
+- SEO impact:
+  - Direct SEO/integration process impact: reduces parallel execution drift and improves consistency in metadata and fallback handling across worker outputs.
+- Verification:
+  - Manual review completed for ownership disjointness and checklist alignment with `docs/rewrite-worker-orchestration.md`.
+
+## 2026-04-02 - Orchestration Docs Sync (Megaplan + SEO Log Consistency)
+- Changed files:
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Synced mega-plan status after orchestration publication by adding completed snapshot item for the 3-worker rewrite contract.
+  - Updated Workstream A2 checklist to mark legacy dedicated-landing-page exception mapping as completed, with explicit route-cluster note.
+  - Added this log entry to keep AGENTS mandatory update-log compliance for the documentation-only sync cycle.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration governance impact: improves execution traceability and reduces coordination drift during rewrite/SEO synchronization.
+- Verification:
+  - Manual documentation review completed.

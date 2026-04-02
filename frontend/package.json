@@ -11,6 +11,7 @@
     "email": "email dev",
     "docs:scrape": "node scripts/scrape-schemaui-docs.mjs",
     "gsc:export": "node scripts/export-gsc-priority.mjs",
+    "legacy:manifest": "node scripts/generate-astro-local-pages-manifest.mjs",
     "typegen": "npx sanity schema extract && npx sanity typegen generate",
     "typecheck": "tsc --noEmit"
   },
