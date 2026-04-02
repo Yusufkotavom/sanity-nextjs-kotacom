@@ -68,6 +68,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Shared `legacy-rich-content` block contract added for Markdown/HTML raw rendering and wired to both `page.blocks` and `post.body` (`block-content`)
 - [x] Sanity import smoke test completed with safe ID strategy (no dots): 2 pages + 2 posts published and visible in both public and authenticated published reads
 - [x] Legacy content renderer finetuned with parser/sanitizer pipeline plus `legacy-prose` styles so HTML/Markdown lists, numbering, tables, and headings render consistently
+- [x] Next.js dev tooling warnings reduced by setting explicit Turbopack root and migrating `middleware.ts` to `proxy.ts`
+- [x] Environment contract sync completed for frontend/studio examples + deploy env templates (missing keys added, AI Writer action secret parity documented)
 
 ## Workstream A - Platform & Data Foundation
 
@@ -77,6 +79,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [ ] Confirm frontend query contracts mirror studio schema exactly.
 - [x] Navigation link contract synced: `link`/`navigation-link-child` destination validation + `category` reference support aligned with frontend query mapping.
 - [x] `project` document contract shipped across Studio schema, frontend GROQ/fetch layer, and route rendering.
+- [x] Env/deploy contract synced for AI Writer + SEO Ops required keys across `frontend/.env.example`, `studio/.env.example`, and deploy env templates.
 - Blocker note (2026-04-02): Full A1 closure still pending audit for remaining document contracts (`project`, `redirect`) outside Worker 2 navigation scope.
 
 ### A2. Route Contract Freeze

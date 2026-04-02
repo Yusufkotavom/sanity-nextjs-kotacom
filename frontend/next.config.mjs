@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 import { createClient } from "@sanity/client";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const SANITY_PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const SANITY_DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -57,6 +62,9 @@ async function fetchSanityRedirects() {
 }
 
 const nextConfig = {
+  turbopack: {
+    root: __dirname,
+  },
   allowedDevOrigins: [
     '168.110.210.101',
     'localhost',

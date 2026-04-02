@@ -7,7 +7,7 @@ function isPublicSeoApi(pathname: string) {
   return pathname === "/api/seo/auth/login" || pathname === "/api/seo/auth/logout";
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isDashboard = pathname.startsWith("/dashboard/seo");
   const isSeoApi = pathname.startsWith("/api/seo");

@@ -16,6 +16,41 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-02 - Env Matrix Sync (`.env.example` + Deploy Env Templates)
+- Changed files:
+  - `frontend/.env.example`
+  - `studio/.env.example`
+  - `docs/env-reference.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Synced frontend env example with missing runtime keys used in code (`RESEND_AUDIENCE_ID`) and added complete optional migration/audit script env key list.
+  - Updated Studio env example to include explicit `SANITY_STUDIO_AI_WRITER_ACTION_SECRET` for `AI Rewrite` action parity.
+  - Updated env reference doc to reflect newsletter audience ID, `SEO_BING_INDEXNOW_ALIAS`, migration/audit env keys, and refreshed quick-start samples.
+  - Updated local deploy env templates (`deploy/env/*`) by adding missing keys only (kept existing real values unchanged) for frontend, studio, and GitHub Actions usage.
+- SEO impact:
+  - No direct SEO rendering impact.
+  - Integration impact: lowers env drift risk between local/dev/deploy and stabilizes AI Writer + SEO Ops runtime configuration.
+- Verification:
+  - Manual cross-check against `process.env.*` usage in `frontend/` and `studio/` completed.
+  - Env key parity rechecked across `.env.example` and docs references.
+
+## 2026-04-02 - Next Dev Warning Cleanup (`turbopack.root` + `proxy.ts`)
+- Changed files:
+  - `frontend/next.config.mjs`
+  - `frontend/proxy.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added explicit `turbopack.root` in Next config to avoid workspace root inference warning caused by multiple lockfiles.
+  - Migrated deprecated `middleware.ts` convention to `proxy.ts` and updated exported handler name to `proxy`.
+  - Updated migration snapshot to record tooling cleanup.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: cleaner local/dev runtime signal and reduced warning noise during content migration operations.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
 ## 2026-04-02 - Legacy Content Rendering Finetune (HTML/Markdown Lists & Structure)
 - Changed files:
   - `frontend/lib/legacy-content/render.ts`
