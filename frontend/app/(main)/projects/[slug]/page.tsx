@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/ui/breadcrumbs";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import { Button } from "@/components/ui/button";
 import { urlFor } from "@/sanity/lib/image";
+import InlineMetaList from "@/components/ui/inline-meta-list";
 import {
   fetchSanityProjectBySlug,
   fetchSanityProjectsStaticParams,
@@ -86,25 +87,14 @@ export default async function ProjectPage(props: {
               />
             </div>
           )}
-          {(project.clientName || project.industry || project.completionYear) && (
-            <div className="mb-6 flex flex-wrap gap-3 text-sm text-foreground/70">
-              {project.clientName && (
-                <span className="rounded-full border px-3 py-1">
-                  Client: {project.clientName}
-                </span>
-              )}
-              {project.industry && (
-                <span className="rounded-full border px-3 py-1">
-                  Industry: {project.industry}
-                </span>
-              )}
-              {project.completionYear && (
-                <span className="rounded-full border px-3 py-1">
-                  Year: {project.completionYear}
-                </span>
-              )}
-            </div>
-          )}
+          <InlineMetaList
+            className="mb-6"
+            items={[
+              project.clientName ? `Client: ${project.clientName}` : undefined,
+              project.industry ? `Industry: ${project.industry}` : undefined,
+              project.completionYear ? `Year: ${project.completionYear}` : undefined,
+            ]}
+          />
           {project.body && <PortableTextRenderer value={project.body} />}
           {project.projectUrl && (
             <div className="mt-8">

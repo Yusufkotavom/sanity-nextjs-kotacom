@@ -8,10 +8,15 @@ import {
 } from "@/lib/seo-jsonld";
 import { getStrategicLinks } from "@/lib/legacy-pages/internal-links";
 import RewriteHero from "@/components/ui/rewrite/hero";
+import InlinePhraseStrip from "@/components/ui/rewrite/inline-phrase-strip";
 import RewriteLandingSections from "@/components/ui/rewrite/landing-sections";
+import MetricsRail from "@/components/ui/rewrite/metrics-rail";
+import ProductStage from "@/components/ui/rewrite/product-stage";
+import QuoteSpotlight from "@/components/ui/rewrite/quote-spotlight";
 import RewriteHighlights from "@/components/ui/rewrite/highlights";
 import RewriteProcessFaq from "@/components/ui/rewrite/process-faq";
 import RewriteRelatedLinks from "@/components/ui/rewrite/related-links";
+import LogoWall from "@/components/ui/rewrite/logo-wall";
 import MicroBadges from "@/components/micro-badges";
 import { kotacomSplitIllustrations } from "@/lib/illustrations/kotacom-split";
 
@@ -97,6 +102,60 @@ export default function RewritePageShell({
     }
     return undefined;
   })();
+  const metricItems = [
+    { value: "24h", label: "respons awal untuk brief yang jelas dan siap ditindaklanjuti", brand: "KOTACOM" },
+    { value: "3x", label: "jalur CTA lebih fokus agar lead tidak tercecer ke banyak arah", brand: "Sales-ready" },
+    { value: "100%", label: "struktur halaman diarahkan ke intent komersial dan konsultasi", brand: "Landing flow" },
+    { value: "1 scope", label: "satu page diarahkan ke satu pesan dan satu langkah lanjut utama", brand: "Conversion" },
+  ];
+  const phraseStrip = [
+    "Visual lebih terarah",
+    "Lead lebih siap ditindaklanjuti",
+    "CTA lebih dekat ke closing",
+  ];
+  const productStageItems = [
+    {
+      eyebrow: "Stage 1",
+      title: "Struktur halaman diarahkan ke kebutuhan buyer, bukan sekadar layout cantik.",
+      description:
+        "Kami susun section berdasarkan intent dan pertanyaan yang biasanya muncul sebelum prospek siap kontak ke sales.",
+      image: heroImageBySection?.src,
+      bullets: [
+        "Headline menjawab value utama",
+        "Proof dan trust ditempatkan lebih awal",
+        "CTA mengikuti kesiapan user",
+      ],
+    },
+    {
+      eyebrow: "Stage 2",
+      title: "Setiap visual sekarang jadi pembawa konteks, bukan dekorasi yang berdiri sendiri.",
+      description:
+        "Pola split text + visual dipakai berulang agar ritme halaman lebih jelas dan tiap section punya scene yang mudah dipindai.",
+      bullets: [
+        "Separator antar section lebih tegas",
+        "Frame tipis dan tint saling nyambung",
+        "Hierarchy mobile tetap terjaga",
+      ],
+    },
+  ];
+  const trustStackItems = [
+    "Website",
+    "SEO",
+    "WhatsApp",
+    "CRM",
+    "Analytics",
+    "Content",
+    "Speed",
+    "Security",
+    "Sales",
+    "Support",
+  ];
+  const spotlight = copy.testimonials?.[0] || {
+    name: "Tim Bisnis",
+    role: "Commercial Team",
+    quote:
+      "Halaman jadi lebih mudah dijelaskan ke calon klien dan jalur konsultasinya terasa jauh lebih siap untuk ditindaklanjuti tim sales.",
+  };
 
   return (
     <>
@@ -111,7 +170,24 @@ export default function RewritePageShell({
         sectionHref={sectionHref}
         heroImage={heroImageBySection}
       />
+      <MetricsRail items={metricItems} />
+      <InlinePhraseStrip phrases={phraseStrip} />
+      <ProductStage
+        title="Section sekarang dibangun sebagai rangkaian scene, bukan tumpukan blok."
+        description="Ini menutup gap utama dari referensi Vercel: tiap area punya visual state, pesan utama, dan arah interaksi yang lebih jelas."
+        items={productStageItems}
+      />
       <RewriteLandingSections page={page} copy={copy} />
+      <QuoteSpotlight
+        quote={spotlight.quote}
+        author={spotlight.name}
+        role={spotlight.role}
+      />
+      <LogoWall
+        title="Komponen baru untuk ritme visual-driven sudah mulai lengkap."
+        description="Layer ini menutup primitive yang sebelumnya belum kita miliki untuk pola section ala Vercel."
+        items={trustStackItems}
+      />
       <MicroBadges />
       <RewriteHighlights copy={copy} />
       <RewriteProcessFaq copy={copy} />

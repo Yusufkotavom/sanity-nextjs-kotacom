@@ -16,6 +16,51 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-03 - Product Card Compact Desktop Pass
+- Changed files:
+  - `frontend/components/ui/product-card.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Reduced product card density for listing views by shrinking desktop title/body/meta text, tightening spacing, shortening image height, and reducing the CTA icon footprint.
+  - Added a `line-clamp-3` guard on product excerpts so card heights stay more consistent in denser desktop grids.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: frontend-only presentation refinement for the existing product card contract; no Sanity schema/query changes required.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Reusable Archive Card/Grid System
+- Changed files:
+  - `frontend/components/ui/archive-card.tsx`
+  - `frontend/components/ui/load-more-grid.tsx`
+  - `frontend/components/ui/taxonomy-badge-list.tsx`
+  - `frontend/components/ui/inline-meta-list.tsx`
+  - `frontend/components/ui/post-card.tsx`
+  - `frontend/components/ui/product-card.tsx`
+  - `frontend/components/ui/service-card.tsx`
+  - `frontend/components/ui/project-card.tsx`
+  - `frontend/components/posts/post-grid.tsx`
+  - `frontend/components/products/product-grid.tsx`
+  - `frontend/components/services/service-grid.tsx`
+  - `frontend/components/projects/project-grid.tsx`
+  - `frontend/app/(main)/blog/[slug]/page.tsx`
+  - `frontend/app/(main)/products/[slug]/page.tsx`
+  - `frontend/app/(main)/services/[slug]/page.tsx`
+  - `frontend/app/(main)/projects/[slug]/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added shared archive-card primitives for shell, media, title, meta, excerpt, and arrow CTA so `post`, `product`, `service`, and `project` listings reuse the same structure.
+  - Added reusable `LoadMoreGrid` to centralize progressive archive pagination behavior across listing pages.
+  - Added reusable taxonomy badge list and inline metadata pill list, then wired them into blog/product/service/project detail pages for consistent tag/meta rendering.
+  - Converted domain card components into thin wrappers over the new reusable layer while preserving route-level behavior and existing content contracts.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: frontend-only UI/component consolidation; no Sanity schema, query contract, or metadata fallback behavior changed.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+
 ## 2026-04-03 - Build-Time Sanity Redirect Diagnostics
 - Changed files:
   - `frontend/next.config.mjs`
@@ -43,6 +88,29 @@ This file is the canonical changelog for all repository updates, with explicit S
     - anonymous redirect query returned `0`
     - authenticated redirect query returned `28`
     - local `next.config.mjs` redirect loader previously returned only static redirect in anonymous mode, confirming the root cause before auth fallback was added.
+
+## 2026-04-03 - `/home` Vercel-Style Showcase Route + Redirect Release
+- Changed files:
+  - `frontend/lib/local-content/home-page.ts`
+  - `frontend/components/ui/home/home-page.tsx`
+  - `frontend/app/(main)/home/page.tsx`
+  - `frontend/components/ui/rewrite/hero-primary-cta.tsx`
+  - `frontend/components/floating-whatsapp-client.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated `/home` route as a code-driven showcase landing page with a restrained Vercel-inspired composition and reusable section structure.
+  - Source messaging was derived from the live `kotacom.id` homepage and expanded into a clearer product-style narrative covering website delivery, software, IT support, printing, workflow, proof, and tech stack.
+  - Introduced reusable content/config layer in `frontend/lib/local-content/home-page.ts` so the page structure stays code-driven while page copy remains easy to evolve.
+  - Disabled the live Sanity redirect document `/home -> /` so the new route can resolve directly instead of being absorbed into the redirect wave.
+  - Removed `useSearchParams()` dependencies from WhatsApp CTA client components that only needed path-level recomputation, preventing Next 16 prerender failures on `/about` while keeping CTA behavior intact.
+- SEO impact:
+  - Direct SEO impact: creates a new crawlable landing experience at `/home` with dedicated metadata instead of redirecting to `/`.
+  - Integration impact: preserves the CMS-driven `/` homepage while adding a controlled experimental/preview route for redesign comparison; build-safe client CTA hook cleanup does not change CMS/schema contracts.
+- Verification:
+  - Local Sanity verification: redirect document `redirect.kotacom.fb365c1216b59e1c` now has `isEnabled: false`.
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
 
 ## 2026-04-02 - Sanity Dev Key Policy for Agent Communication
 - Changed files:
@@ -2507,6 +2575,7 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Applied the new footer-only behavior to secondary top-level links imported from Astro so `About` and `Contact` stay available in the footer without adding more pressure to the main header.
   - Removed submenu description copy from header rendering and importer output so dropdowns stay denser and more scannable.
   - Updated mobile nav interaction so accordion groups stay collapsed when the menu opens instead of expanding all sections immediately.
+  - Reworked top-level navigation IA so the broad `Services` bucket is split into more explicit business-led entries: `Home`, `Web Dev`, `IT Service`, `Percetakan`, `Portfolio`, `Produk`, `About`, and `Contact`, while `Blog` is retained as a footer-only support link.
   - Added `pnpm --filter frontend astro-nav:import` for repeatable dry-run and write execution.
 - SEO/integration impact:
   - No direct SEO impact.
@@ -2514,5 +2583,96 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Cross-layer sync: Studio navigation schema, importer payload, and frontend header/footer rendering now share the same visibility contract for footer-only behavior.
 - Verification:
   - `pnpm --filter frontend exec node scripts/import-astro-navigation.mjs` dry run passed.
-  - `pnpm --filter frontend exec node scripts/import-astro-navigation.mjs --write` passed using `SANITY_DEV` auth and updated Sanity document `navigation` to `linkCount: 6`, `childCount: 45`.
+  - `pnpm --filter frontend exec node scripts/import-astro-navigation.mjs --write` passed using `SANITY_DEV` auth and updated Sanity document `navigation` to `linkCount: 9`, `childCount: 47`.
   - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Rewrite Hero V2 + Shared WhatsApp CTA Contract
+- Changed files:
+  - `frontend/components/ui/rewrite/hero.tsx`
+  - `frontend/components/ui/rewrite/hero-primary-cta.tsx`
+  - `frontend/components/floating-whatsapp-client.tsx`
+  - `frontend/lib/whatsapp.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Rebuilt the shared rewrite hero into a centered Vercel-inspired composition with a tighter two-CTA hierarchy for service landing pages.
+  - Added colored emphasis treatment to the hero headline and supporting description so the above-the-fold message feels more intentional and distinct.
+  - Moved the hero primary CTA to a dedicated client component that builds its WhatsApp destination from the live Sanity settings contract (`phoneNumber`, `predefinedText`, `ctaText`, `sourceUrl`) while keeping the existing page CTA as fallback when WhatsApp is unavailable.
+  - Extracted the WhatsApp URL builder into a shared utility and updated the floating WhatsApp CTA to use the same helper so both conversion surfaces stay behaviorally aligned.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: the rewrite hero and floating WhatsApp CTA now share the same Sanity-driven WhatsApp destination contract, reducing drift between conversion surfaces.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Visual Section Foundation for Rewrite Pages
+- Changed files:
+  - `frontend/components/ui/section-shell.tsx`
+  - `frontend/app/globals.css`
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `frontend/components/ui/rewrite/highlights.tsx`
+  - `frontend/components/ui/rewrite/process-faq.tsx`
+  - `frontend/components/ui/rewrite/related-links.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable rewrite-page UI primitives for section structure: container shell, section intro, tinted thin-frame panel, and split visual/content panel.
+  - Added global surface utilities for connected gradient-tint panels so section backgrounds and thin frames feel more deliberate and visually continuous.
+  - Migrated the rewrite-page quick navigation, service section, proof/portfolio section, highlights, process/FAQ, and related-link surfaces to the new primitives.
+  - Shifted key rewrite sections from card-grid-first layouts toward a more visual-driven split-panel rhythm inspired by the Vercel reference pattern.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: shared rewrite UI sections now use a centralized visual-shell contract, reducing styling drift between landing-page components.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Visual Section Foundation V2 for Commercial Rewrite Blocks
+- Changed files:
+  - `frontend/components/ui/rewrite/hero.tsx`
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Moved the hero intro copy into a thin framed panel so the above-the-fold message matches the Vercel-inspired surface language already introduced in the hero shell.
+  - Rebuilt pricing, features, testimonials, and final CTA blocks to follow the same visual-first split-panel rhythm instead of generic card-grid sections.
+  - Added stronger continuity between commercial sections by keeping tint, border weight, and separator behavior consistent from hero through closeout CTA.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: commercial rewrite sections now share a more uniform visual contract, reducing divergence between high-intent page components.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Missing Vercel-Pattern Rewrite Primitives Added
+- Changed files:
+  - `frontend/components/ui/rewrite/inline-phrase-strip.tsx`
+  - `frontend/components/ui/rewrite/metrics-rail.tsx`
+  - `frontend/components/ui/rewrite/product-stage.tsx`
+  - `frontend/components/ui/rewrite/quote-spotlight.tsx`
+  - `frontend/components/ui/rewrite/logo-wall.tsx`
+  - `frontend/components/ui/rewrite/page-shell.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable rewrite-page components to cover several patterns previously missing versus the Vercel references: metrics rail, inline phrase strip, staged product/story section, quote spotlight, and logo wall.
+  - Wired the new primitives into the shared rewrite page shell so all rewrite pages can now render a richer product-led flow without custom one-off section code.
+  - Resolved a transient Next route-validator issue during verification by clearing stale `frontend/.next` artifacts before rerunning typecheck.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: the shared rewrite shell now owns a broader visual component system, reducing the need for page-specific section implementations as more Vercel-like patterns are adopted.
+- Verification:
+  - `rm -rf frontend/.next && pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Draft-Only Sanity Live Mount for Public Routes
+- Changed files:
+  - `frontend/app/(main)/layout.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Updated the main frontend layout so `SanityLive` only mounts when Next.js Draft Mode is enabled.
+  - Kept `DisableDraftMode` and `VisualEditing` behavior intact for draft sessions while removing unnecessary live-preview client bootstrapping from public routes.
+  - This prevents public rewrite/city landing pages such as `/jasa-cetak-buku-surabaya` from hitting the observed client-side parsing failure during dev/runtime.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: public frontend rendering is now isolated from Sanity live-preview client behavior unless the session explicitly enters Draft Mode.
+- Verification:
+  - Pending manual route retest in local dev after layout change.

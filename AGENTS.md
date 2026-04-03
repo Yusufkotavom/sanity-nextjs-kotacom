@@ -38,3 +38,12 @@
   - Studio schema
   - Frontend query/fetch contract
   - Frontend rendering/metadata output
+
+## Sanity Dev Communication Rule
+
+- For all **agent-driven Sanity communication** (read/write/query/import/mutation via scripts/CLI), default to **development credentials first**.
+- Priority for Sanity write auth in agent workflows:
+  1. `SANITY_DEV` (expected to contain **dev write token**, not boolean)
+  2. `SANITY_AUTH_TOKEN`
+- Do **not** target production credentials by default for routine migration/content automation tasks unless explicitly requested by the user.
+- Agent outputs/logs must never print raw token values.

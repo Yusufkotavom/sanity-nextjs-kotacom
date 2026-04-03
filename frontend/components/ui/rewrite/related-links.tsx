@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import type { StrategicLink } from "@/lib/legacy-pages/internal-links";
+import { SectionPanel, SectionShell } from "@/components/ui/section-shell";
 
 type RewriteRelatedLinksProps = {
   page: LegacyAstroPage;
@@ -14,8 +15,8 @@ export default function RewriteRelatedLinks({
   strategicLinks = [],
 }: RewriteRelatedLinksProps) {
   return (
-    <section className="container py-12">
-      <div className="rounded-2xl border border-border/70 bg-background p-5 md:p-6">
+    <SectionShell className="py-12">
+      <SectionPanel tone="amber" className="rounded-[1.75rem] p-5 md:p-6">
         {strategicLinks.length > 0 ? (
           <div className="mt-5">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-foreground/70">
@@ -54,7 +55,7 @@ export default function RewriteRelatedLinks({
             </ul>
           </div>
         ) : null}
-      </div>
-    </section>
+      </SectionPanel>
+    </SectionShell>
   );
 }

@@ -9,7 +9,6 @@ type NavChild = {
   group?: string | null;
   icon?: string | null;
   title?: string | null;
-  description?: string | null;
   badge?: string | null;
   href?: string | null;
   target?: boolean | null;
@@ -101,11 +100,6 @@ export default function DesktopNav({
                                       </span>
                                     )}
                                   </div>
-                                  {child.description && (
-                                    <p className="mt-0.5 line-clamp-2 text-xs text-foreground/65 dark:text-white/62">
-                                      {child.description}
-                                    </p>
-                                  )}
                                 </Link>
                               </li>
                             );

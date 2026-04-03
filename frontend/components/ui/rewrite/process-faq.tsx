@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { SectionPanel, SectionShell } from "@/components/ui/section-shell";
 
 type RewriteProcessFaqProps = {
   copy: LegacyRewriteCopy;
@@ -14,10 +15,14 @@ type RewriteProcessFaqProps = {
 
 export default function RewriteProcessFaq({ copy }: RewriteProcessFaqProps) {
   return (
-    <section className="container py-10 md:py-12" id="faq">
-      <div className="grid gap-8 rounded-2xl border border-border/80 bg-muted/20 p-6 md:grid-cols-[1.2fr_1fr] md:p-8">
+    <SectionShell id="faq" className="py-10 md:py-12">
+      <SectionPanel
+        tone="neutral"
+        className="grid gap-8 rounded-[1.75rem] p-6 md:grid-cols-[1.2fr_1fr] md:p-8"
+      >
         <div>
-          <h2 className="text-2xl font-semibold tracking-tight">Proses Eksekusi</h2>
+          <p className="text-ui-label text-foreground/55">Execution</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight">Proses Eksekusi</h2>
           <ol className="mt-4 space-y-3">
             {copy.process.map((step, index) => (
               <li key={step} className="flex items-start gap-3">
@@ -30,11 +35,12 @@ export default function RewriteProcessFaq({ copy }: RewriteProcessFaqProps) {
           </ol>
         </div>
         <div>
-          <h2 className="text-2xl font-semibold tracking-tight">FAQ</h2>
+          <p className="text-ui-label text-foreground/55">FAQ</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight">Pertanyaan Umum</h2>
           <Accordion
             type="single"
             collapsible
-            className="mt-4 rounded-lg border border-violet-300/30 bg-background px-4"
+            className="mt-4 rounded-2xl border border-white/35 bg-white/70 px-4 dark:border-white/10 dark:bg-white/5"
           >
             {copy.faqs.map((item, index) => (
               <AccordionItem key={item.question} value={`faq-${index}`}>
@@ -47,7 +53,7 @@ export default function RewriteProcessFaq({ copy }: RewriteProcessFaqProps) {
               </AccordionItem>
             ))}
           </Accordion>
-          <div className="mt-4 rounded-lg border border-border/70 bg-muted/20 p-4">
+          <div className="mt-4 rounded-2xl border border-black/8 bg-background/70 p-4 dark:border-white/10 dark:bg-black/10">
             <p className="text-sm text-foreground/80">
               Butuh jawaban yang lebih spesifik untuk konteks bisnis Anda?
             </p>
@@ -61,7 +67,7 @@ export default function RewriteProcessFaq({ copy }: RewriteProcessFaqProps) {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </SectionPanel>
+    </SectionShell>
   );
 }

@@ -4,11 +4,11 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import { Button } from "@/components/ui/button";
-import { badgeVariants } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
 import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
 import ServiceGrid from "@/components/services/service-grid";
+import InlineMetaList from "@/components/ui/inline-meta-list";
+import TaxonomyBadgeList from "@/components/ui/taxonomy-badge-list";
 import {
   fetchSanityCategoryBySlug,
   fetchSanitySeoSettings,
@@ -167,29 +167,20 @@ export default async function ServiceSlugPage(props: {
               />
             </div>
           )}
-          <div className="mb-6 flex flex-wrap gap-3 text-sm text-foreground/70">
-            {service.duration && (
-              <span className="rounded-full border px-3 py-1">{service.duration}</span>
-            )}
-            {typeof service.startingPrice === "number" && (
-              <span className="rounded-full border px-3 py-1">
-                From {service.currency || "IDR"} {service.startingPrice}
-              </span>
-            )}
-          </div>
-          {service.categories?.length > 0 && (
-            <div className="mb-6 flex flex-wrap gap-2">
-              {service.categories.map((category: any, index: number) => (
-                <Link
-                  key={`${category?._id || category?.title || "category"}-${index}`}
-                  href={`/services/${category.slug?.current}`}
-                  className={cn(badgeVariants({ variant: "secondary" }))}
-                >
-                  {category.title}
-                </Link>
-              ))}
-            </div>
-          )}
+          <InlineMetaList
+            className="mb-6"
+            items={[
+              service.duration,
+              typeof service.startingPrice === "number"
+                ? `From ${service.currency || "IDR"} ${service.startingPrice}`
+                : undefined,
+            ]}
+          />
+          <TaxonomyBadgeList
+            items={service.categories}
+            baseHref="/services"
+            className="mb-6"
+          />
 
           {Array.isArray(service.deliverables) && service.deliverables.length > 0 && (
             <div className="mb-6">

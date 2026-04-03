@@ -32,7 +32,7 @@ export default defineType({
           },
         }),
       ],
-      validation: (Rule) => Rule.max(8),
+      validation: (Rule) => Rule.max(10),
     }),
     defineField({
       name: "headerCta",

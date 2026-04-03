@@ -4,11 +4,11 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import { Button } from "@/components/ui/button";
-import { badgeVariants } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
 import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
 import ProductGrid from "@/components/products/product-grid";
+import InlineMetaList from "@/components/ui/inline-meta-list";
+import TaxonomyBadgeList from "@/components/ui/taxonomy-badge-list";
 import {
   fetchSanityCategoryBySlug,
   fetchSanityProductBySlug,
@@ -168,29 +168,20 @@ export default async function ProductSlugPage(props: {
               />
             </div>
           )}
-          <div className="mb-6 flex flex-wrap gap-3 text-sm text-foreground/70">
-            {typeof product.price === "number" && (
-              <span className="rounded-full border px-3 py-1">
-                {product.currency || "IDR"} {product.price}
-              </span>
-            )}
-            {product.availability && (
-              <span className="rounded-full border px-3 py-1">{product.availability}</span>
-            )}
-          </div>
-          {product.categories?.length > 0 && (
-            <div className="mb-6 flex flex-wrap gap-2">
-              {product.categories.map((category: any, index: number) => (
-                <Link
-                  key={`${category?._id || category?.title || "category"}-${index}`}
-                  href={`/products/${category.slug?.current}`}
-                  className={cn(badgeVariants({ variant: "secondary" }))}
-                >
-                  {category.title}
-                </Link>
-              ))}
-            </div>
-          )}
+          <InlineMetaList
+            className="mb-6"
+            items={[
+              typeof product.price === "number"
+                ? `${product.currency || "IDR"} ${product.price}`
+                : undefined,
+              product.availability,
+            ]}
+          />
+          <TaxonomyBadgeList
+            items={product.categories}
+            baseHref="/products"
+            className="mb-6"
+          />
 
           {product.body && <PortableTextRenderer value={product.body} />}
           {product.cta?.href && (

@@ -14,6 +14,7 @@ export default async function MainLayout({
   children: React.ReactNode;
 }) {
   const reusableSections = await fetchSanityReusableSections();
+  const isDraftMode = (await draftMode()).isEnabled;
 
   return (
     <>
@@ -25,8 +26,8 @@ export default async function MainLayout({
       <Footer />
       <ReusableSlotSections sections={reusableSections} slot="afterFooter" />
       <FloatingWhatsApp />
-      <SanityLive />
-      {(await draftMode()).isEnabled && (
+      {isDraftMode && <SanityLive />}
+      {isDraftMode && (
         <>
           <DisableDraftMode />
           <VisualEditing />

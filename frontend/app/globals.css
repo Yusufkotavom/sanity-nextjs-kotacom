@@ -332,6 +332,65 @@
   background: color-mix(in oklab, var(--surface-2) 88%, var(--surface-3) 12%);
 }
 
+@utility surface-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.95)),
+    color-mix(in oklab, var(--surface-1) 94%, var(--surface-2) 6%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.4) inset,
+    0 20px 64px -36px rgba(15, 23, 42, 0.22);
+}
+
+@layer utilities {
+  .surface-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at top left, var(--panel-glow-a, rgba(255, 255, 255, 0.16)), transparent 34%),
+      radial-gradient(circle at bottom right, var(--panel-glow-b, rgba(255, 255, 255, 0.1)), transparent 38%);
+    opacity: 0.95;
+  }
+
+  .surface-panel-neutral {
+    --panel-glow-a: rgba(255, 255, 255, 0.34);
+    --panel-glow-b: rgba(148, 163, 184, 0.14);
+  }
+
+  .surface-panel-amber {
+    --panel-glow-a: rgba(251, 191, 36, 0.2);
+    --panel-glow-b: rgba(249, 115, 22, 0.16);
+  }
+
+  .surface-panel-sky {
+    --panel-glow-a: rgba(59, 130, 246, 0.18);
+    --panel-glow-b: rgba(34, 211, 238, 0.16);
+  }
+
+  .surface-panel-emerald {
+    --panel-glow-a: rgba(16, 185, 129, 0.18);
+    --panel-glow-b: rgba(45, 212, 191, 0.16);
+  }
+
+  .surface-panel-rose {
+    --panel-glow-a: rgba(244, 63, 94, 0.18);
+    --panel-glow-b: rgba(251, 146, 60, 0.16);
+  }
+
+  .dark .surface-panel {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+      color-mix(in oklab, var(--surface-2) 92%, var(--surface-1) 8%);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 20px 64px -36px rgba(0, 0, 0, 0.45);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -61,6 +61,39 @@ const TOP_LEVEL_ICON_BY_TRIGGER = {
   Produk: "product",
 };
 
+const TOP_LEVEL_NAV_ITEMS = [
+  { title: "Home", href: "/", icon: "home", source: null, showInHeader: true },
+  {
+    title: "Web Dev",
+    href: "/pembuatan-website",
+    icon: "global",
+    source: "Services",
+    includeGroups: ["Website"],
+    showInHeader: true,
+  },
+  {
+    title: "IT Service",
+    href: "/layanan",
+    icon: "support",
+    source: "Services",
+    includeGroups: ["IT Support & Services"],
+    showInHeader: true,
+  },
+  {
+    title: "Percetakan",
+    href: "/percetakan",
+    icon: "page",
+    source: "Services",
+    includeGroups: ["Printing & Design"],
+    showInHeader: true,
+  },
+  { title: "Portfolio", href: "/projects", icon: "grid", source: "Portfolio", showInHeader: true },
+  { title: "Produk", href: "/products", icon: "product", source: "Produk", showInHeader: true },
+  { title: "Blog", href: "/blog", icon: "blog", source: null, showInHeader: false },
+  { title: "About", href: "/about", icon: "company", source: null, showInHeader: true },
+  { title: "Contact", href: "/contact", icon: "contact", source: null, showInHeader: true },
+];
+
 const CHILD_ICON_RULES = [
   { match: /(website|web|e-commerce|ecommerce)/i, icon: "global" },
   { match: /(software|system|tools|network|admin|integrat)/i, icon: "workflow" },
@@ -245,7 +278,6 @@ function buildNavLink({
   title,
   href,
   icon,
-  description,
   badge,
   group,
   navLocation,
@@ -259,7 +291,6 @@ function buildNavLink({
     isExternal: true,
     href,
     target: false,
-    ...(description ? { description } : {}),
     ...(badge ? { badge } : {}),
     ...(group ? { group } : {}),
     ...(icon ? { icon } : {}),
@@ -361,74 +392,51 @@ function resolveAstroItemHref({ item, trigger }) {
 
 async function buildNavigationPayload(snapshot, client) {
   const megaEntries = Object.values(snapshot.MEGA_MENU_CONFIG || {});
-  const simpleItems = snapshot.SIMPLE_NAV_ITEMS || [];
   const [gscRows, liveCollections] = await Promise.all([
     readTopGscPages(),
     fetchLiveCollections(client),
   ]);
   const rankedGscLinks = rankCuratedGscLinks(gscRows);
 
-  const links = megaEntries.map((entry) => {
-    const href = sanitizePath(
-      entry.trigger === "Services"
-        ? "/services"
-        : entry.trigger === "Portfolio"
-          ? "/projects"
-          : "/products",
+  const megaByTrigger = new Map(megaEntries.map((entry) => [sanitizeLabel(entry.trigger), entry]));
+
+  const links = TOP_LEVEL_NAV_ITEMS.map((item) => {
+    const sourceEntry = item.source ? megaByTrigger.get(item.source) : null;
+    const sourceSections = sourceEntry?.sections || [];
+    const filteredSections = item.includeGroups?.length
+      ? sourceSections.filter((section) => item.includeGroups.includes(sanitizeLabel(section.title)))
+      : sourceSections;
+
+    const children = dedupeChildren(
+      filteredSections.flatMap((section) =>
+        (section.items || []).map((sourceItem) =>
+          buildNavLink({
+            title: sanitizeLabel(sourceItem.title),
+            href: resolveAstroItemHref({ item: sourceItem, trigger: sourceEntry?.trigger || item.title }),
+            badge: sourceItem.badge?.trim(),
+            group: sanitizeLabel(section.title),
+            icon: inferIcon({
+              title: sourceItem.title,
+              url: resolveAstroItemHref({ item: sourceItem, trigger: sourceEntry?.trigger || item.title }),
+              trigger: sourceEntry?.trigger || item.title,
+            }),
+          }),
+        ),
+      ),
     );
 
-    return buildNavLink({
-      title: sanitizeLabel(entry.trigger),
-      href,
-      icon: inferIcon({ title: entry.trigger, url: href, trigger: entry.trigger }),
-      navLocation: "primary",
-      group: null,
-      children: null,
-    });
-  });
-
-  for (let index = 0; index < megaEntries.length; index += 1) {
-    const entry = megaEntries[index];
-    links[index].children = dedupeChildren((entry.sections || []).flatMap((section) =>
-      (section.items || []).map((item) =>
-        buildNavLink({
-          title: sanitizeLabel(item.title),
-          href: resolveAstroItemHref({ item, trigger: entry.trigger }),
-          description: item.description?.trim(),
-          badge: item.badge?.trim(),
-          group: sanitizeLabel(section.title),
-          icon: inferIcon({
-            title: item.title,
-            url: resolveAstroItemHref({ item, trigger: entry.trigger }),
-            trigger: entry.trigger,
-          }),
-        }),
-      ),
-    ));
-  }
-
-  for (const item of simpleItems) {
-    const href = sanitizePath(item.url);
-    const normalizedTitle =
-      href === "/blog"
-        ? "Blog"
-        : href === "/about"
-          ? "About"
-          : href === "/contact"
-            ? "Contact"
-            : sanitizeLabel(item.title);
-
-    links.push(
-      buildNavLink({
-        title: normalizedTitle,
-        href,
-        icon: inferIcon({ title: normalizedTitle, url: href }),
+    return {
+      ...buildNavLink({
+        title: item.title,
+        href: sanitizePath(item.href),
+        icon: item.icon,
         navLocation: "primary",
         showInFooter: true,
-        showInHeader: !["About", "Contact"].includes(normalizedTitle),
+        showInHeader: item.showInHeader,
       }),
-    );
-  }
+      children,
+    };
+  });
 
   const blogLink = links.find((item) => item.title === "Blog");
   if (blogLink) {
@@ -440,7 +448,6 @@ async function buildNavigationPayload(snapshot, client) {
           buildNavLink({
             title: item.title,
             href: item.href,
-            description: item.description,
             group: item.group,
             icon: item.icon,
           }),
@@ -448,46 +455,83 @@ async function buildNavigationPayload(snapshot, client) {
       buildNavLink({
         title: "Browse Categories",
         href: "/blog/category",
-        description: "Masuk ke indeks kategori blog untuk eksplorasi topik lebih cepat.",
         group: "Explore",
         icon: "grid",
       }),
     ]);
   }
 
-  const serviceLink = links.find((item) => item.title === "Services");
-  if (serviceLink) {
-    serviceLink.children = dedupeChildren([
-      ...(serviceLink.children || []),
-      buildNavLink({
-        title: "Percetakan",
-        href: "/percetakan",
-        description: "Hub legacy rewrite aktif untuk cluster percetakan dan cetak buku.",
-        group: "Live Hubs",
-        icon: "page",
-      }),
+  const webDevLink = links.find((item) => item.title === "Web Dev");
+  if (webDevLink) {
+    webDevLink.children = dedupeChildren([
       buildNavLink({
         title: "Pembuatan Website",
         href: "/pembuatan-website",
-        description: "Landing hub aktif untuk website bisnis, company profile, dan web custom.",
-        group: "Live Hubs",
+        group: "Core",
         icon: "global",
       }),
       buildNavLink({
         title: "Software",
         href: "/software",
-        description: "Hub software development dan implementasi sistem yang aktif di frontend.",
-        group: "Live Hubs",
+        group: "Core",
         icon: "workflow",
       }),
+      ...(webDevLink.children || []),
+    ]);
+  }
+
+  const itServiceLink = links.find((item) => item.title === "IT Service");
+  if (itServiceLink) {
+    itServiceLink.children = dedupeChildren([
+      buildNavLink({
+        title: "Layanan",
+        href: "/layanan",
+        group: "Core",
+        icon: "support",
+      }),
+      buildNavLink({
+        title: "Sistem POS",
+        href: "/sistem-pos",
+        group: "Core",
+        icon: "workflow",
+      }),
+      buildNavLink({
+        title: "Software",
+        href: "/software",
+        group: "Core",
+        icon: "workflow",
+      }),
+      ...(itServiceLink.children || []),
       ...rankedGscLinks
         .filter((item) => item.parent === "Services")
         .map((item) =>
           buildNavLink({
             title: item.title,
             href: item.href,
-            description: item.description,
             group: item.group,
+            icon: item.icon,
+          }),
+        ),
+    ]);
+  }
+
+  const percetakanLink = links.find((item) => item.title === "Percetakan");
+  if (percetakanLink) {
+    percetakanLink.children = dedupeChildren([
+      buildNavLink({
+        title: "Percetakan",
+        href: "/percetakan",
+        group: "Core",
+        icon: "page",
+      }),
+      ...(percetakanLink.children || []),
+      ...rankedGscLinks
+        .filter((item) => item.href.includes("cetak-buku"))
+        .map((item) =>
+          buildNavLink({
+            title: item.title,
+            href: item.href,
+            group: "Popular",
             icon: item.icon,
           }),
         ),
@@ -502,7 +546,6 @@ async function buildNavigationPayload(snapshot, client) {
         buildNavLink({
           title: sanitizeLabel(item.title),
           href: item.href,
-          description: item.excerpt || "Project live dari Sanity yang siap dijadikan referensi portfolio.",
           group: "Featured Projects",
           icon: "grid",
         }),
@@ -518,7 +561,6 @@ async function buildNavigationPayload(snapshot, client) {
         buildNavLink({
           title: sanitizeLabel(item.title),
           href: item.href,
-          description: item.excerpt || "Produk live dari Sanity untuk memperkaya submenu katalog.",
           group: "Live Products",
           icon: "product",
         }),
@@ -562,7 +604,7 @@ async function main() {
 
   if (!projectId || !dataset || !token) {
     throw new Error(
-      "Missing Sanity write config. Expected NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, and SANITY_AUTH_TOKEN.",
+      "Missing Sanity write config. Expected NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, and write token via SANITY_DEV or SANITY_AUTH_TOKEN.",
     );
   }
 

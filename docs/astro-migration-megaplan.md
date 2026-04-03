@@ -81,6 +81,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Sticky WhatsApp CTA now uses WhatsApp brand-style icon for clearer visual intent
 - [x] Shared UI consolidation pass completed for rewrite + block rendering (`legacy` naming reduced in runtime path), with shadcn-aligned breadcrumb composition and backward-compatible Sanity block mapping (`legacy-rich-content` + `rich-content`)
 - [x] Product listing UX upgraded with reusable grid adapter: 2-column mobile / 4-column desktop plus progressive "Show more products" loading (initial 16 items) for `/products` and `/products/[category]`
+- [x] Product listing card compactness pass applied for desktop readability: smaller product-card typography, tighter spacing, shorter media block, and excerpt clamping for denser grids
+- [x] Archive listing reusable system shipped across `post`/`product`/`service`/`project`: shared card primitives, shared load-more grid, and shared taxonomy/meta rows adopted by listing and detail surfaces
 - [x] Lazy-load pagination adapter extended to post/project/service archives (initial 16 + progressive show-more) without changing existing archive grid layout contracts
 - [x] Rewrite visual enrichment shipped for percetakan/city templates with reusable local illustration assets and component-level color accents (minimal large-surface background tint) to improve long-form engagement
 - [x] Universal branded vector hero integrated for `jasa-cetak-buku-(kota)` template through shared rewrite hero contract and city-shell adapter
@@ -96,6 +98,11 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Production-ready split asset pack wired into active rewrite surfaces (`jasa-cetak-buku` hero + service/proof cards + style-guide gallery) replacing older static percetakan illustration paths
 - [x] Centralized split-asset mapping implemented (`frontend/lib/illustrations/kotacom-split.ts`) and adopted across rewrite/legacy/style-guide components so ZIP assets are the single source for illustration consumers
 - [x] About/contact/404 visual enrichment completed using split-pack assets (section hero mapping + 404 state illustration + reusable micro-badge strip on rewrite/legacy flows)
+- [x] Rewrite hero v2 shipped with centered Vercel-inspired composition, two-CTA focus, and Sanity-driven WhatsApp primary CTA behavior shared with the floating WhatsApp surface
+- [x] Rewrite section foundation v1 shipped: reusable visual section primitives now drive quick-nav, service split panels, highlights, process/FAQ, and related-link surfaces with clearer separators and connected gradient-tint framing
+- [x] Rewrite section foundation v2 completed the visual-first pass across remaining commercial sections: hero intro panel, pricing, features, testimonials, and closeout CTA now follow the same split-panel rhythm
+- [x] Missing Vercel-pattern primitives v1 added to rewrite system: metrics rail, inline phrase strip, product stage, quote spotlight, and rewrite logo wall are now available and wired into the shared rewrite page shell
+- [x] Public rewrite routes no longer mount `SanityLive` outside Draft Mode, avoiding live-preview client errors on public city landing pages while preserving draft visual editing flows
 - [x] Metadata and JSON-LD fallback images switched from legacy `/images/og-image.jpg` to centralized split-pack SEO fallback asset for consistent brand imagery in link previews and structured data
 - [x] Rewrite content SEO power layer implemented: semantic keyword expansion, conversion-oriented intro/description strengthening, FAQ enrichment, and section-level long-guide defaults applied centrally through `buildLegacyRewriteCopy`
 - [x] Intent-based rewrite SEO enrichment shipped (slug-pattern keyword packs, intent FAQ packs, default quick CTA link set, and final CTA normalization) for stronger commercial search alignment on high-intent routes
@@ -113,11 +120,13 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Astro header navigation snapshot normalized and imported into the live Sanity `navigation` document, including grouped submenu migration, legacy-route sanitization, and GSC-informed/live-page submenu curation
 - [x] Navigation contract now supports footer-only top-level links via Studio-controlled `showInHeader` + `showInFooter` flags, and header rendering respects that split
 - [x] Header navigation interaction tightened: submenu descriptions removed for cleaner information density and mobile accordion now opens in fully collapsed state by default
+- [x] Header IA split from broad “Services” bucket into specific top-level entries (`Home`, `Web Dev`, `IT Service`, `Percetakan`, `Portfolio`, `Produk`, `About`, `Contact`) with `Blog` retained as footer-only support link
 - [x] Manual money-page rewrite pass v4 shipped for additional commercial slugs (`pembuatan-website` + `percetakan` details) with intent-specific intro/CTA/final CTA/FAQ overrides beyond rule-based enrichment
 - [x] Software funnel pass completed: stage-specific CTA links added for `software`/`pembuatan-software`/`implementasi-software`/`instalasi-software`/`sistem-pos` plus reusable CTA blocks in rewrite highlights and process-FAQ sections
 - [x] Override-safe SEO enrichment fix shipped: priority slug overrides now merge before enrichment so FAQ/CTA coverage stays consistent (`99/99` commercial routes pass source-level coverage checks)
 - [x] Agent communication policy now enforces Sanity dev-first credential usage (`SANITY_DEV` -> `SANITY_AUTH_TOKEN`) and env documentation/examples are aligned for safer CMS automation
 - [x] Redirect rollout hardening added: build-time Next.js redirect loader now supports authenticated Sanity fetch for private `redirect` documents, plus diagnostics to expose redirect count/token mode in deployment logs
+- [x] Standalone `/home` landing page shipped as a Vercel-style code-driven showcase route using reusable UI sections and expanded messaging derived from the live `kotacom.id` homepage; legacy `/home -> /` Sanity redirect was disabled so the route can resolve directly, and related client CTA hooks were adjusted to stay prerender-safe under Next 16
 
 ## Workstream A - Platform & Data Foundation
 
@@ -211,6 +220,12 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - 2026-04-02 execution update: enriched submenu with live dataset-backed `project`/`product` links plus GSC-priority pages (`jasa-cetak-buku-surabaya`, `jasa-instal-aplikasi-surabaya`, `jasa-install-software-macbook`, `jasa-recovery-data-surabaya`, `service-komputer-surabaya-panggilan`, and high-traffic PC guide posts) so the header reflects current demand instead of Astro placeholder-only links.
   - 2026-04-02 execution update: added footer-only support for top-level navigation through Studio flags, and moved lower-priority top-level links (`About`, `Contact`) out of the header while preserving them in the footer.
   - 2026-04-02 execution update: removed submenu description text from header UI and changed mobile nav to keep all accordion groups closed when the sheet opens.
+  - 2026-04-03 execution update: replaced the generic top-level `Services`/`Portfolio`/`Produk` IA with a more explicit split around business intent (`Home`, `Web Dev`, `IT Service`, `Percetakan`, `Portfolio`, `Produk`, `About`, `Contact`), while keeping `Blog` available as footer-only navigation.
+  - 2026-04-03 execution update: rewrote the shared rewrite hero into a centered Vercel-inspired layout with exactly two primary actions and routed the lead CTA through Sanity-configured WhatsApp behavior so conversion handling stays aligned with the sticky WhatsApp surface.
+  - 2026-04-03 execution update: introduced reusable section-shell primitives for visual-driven rewrite pages and migrated quick navigation, service sections, proof sections, highlights, FAQ/process, and related-link surfaces to connected thin-frame/tinted-panel patterns with clearer separators.
+  - 2026-04-03 execution update: extended the new visual-first rewrite system into the remaining high-intent blocks so pricing, features, testimonials, final CTA, and the hero description area now share the same panel/separator language.
+  - 2026-04-03 execution update: closed several remaining component gaps versus the Vercel reference set by adding reusable metrics/proof rail, phrase-strip heading, product-stage scene, quote spotlight, and logo-wall modules to the rewrite shell.
+  - 2026-04-03 execution update: constrained `SanityLive` to Draft Mode only in the main layout so public landing pages stop hitting client-side live-preview parsing failures during dev/runtime.
 - [x] Apply shared icon-only social pattern for footer/navigation shell using reusable component contract.
 - [x] Apply compact sticky header rhythm with single CTA focus and icon actions (dark mode + social) across desktop/mobile shell.
 - [x] Apply Vercel-like visual shell tokens and reusable surface/separator utilities across shared layout blocks (`globals.css`, header, footer, section container, legacy landing shell).
@@ -218,9 +233,10 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 
 ### D2. Template Refactor Priority
 - [ ] Homepage
+- [x] Standalone `/home` showcase landing added as a reusable code-driven preview path (does not replace CMS-driven `/` homepage yet)
 - [ ] Blog detail/list/category
 - [ ] Service detail/list
-- [ ] Product detail/list
+- [x] Product detail/list
 - [ ] Project detail/list
 - [x] Legacy Astro static service/trust clusters switched to reusable rewrite template shell (Wave 1)
 - [x] Root slug static generation expanded for `jasa-cetak-buku-<kota>` pages using deduplicated local dataset adapter

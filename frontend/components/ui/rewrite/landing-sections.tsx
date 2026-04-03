@@ -15,6 +15,12 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  SectionIntro,
+  SectionPanel,
+  SectionShell,
+  SplitVisualPanel,
+} from "@/components/ui/section-shell";
 import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 import {
@@ -274,26 +280,26 @@ export default function RewriteLandingSections({
 
   return (
     <>
-      <section className="container section-divider py-12" id="toc">
-        <div className="surface-muted rounded-2xl p-5 md:p-7">
+      <SectionShell id="toc">
+        <SectionPanel tone="neutral" className="rounded-[1.75rem] p-5 md:p-7">
           <p className="text-ui-label text-foreground/70">Navigasi Cepat</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {tocItems.map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                  className="inline-flex rounded-md border border-border/70 bg-background px-3 py-1.5 text-xs text-foreground/80 transition-colors hover:border-border hover:bg-accent/80 hover:text-foreground"
-                >
+                className="inline-flex rounded-full border border-black/10 bg-white/70 px-3.5 py-1.5 text-xs text-foreground/80 transition-colors hover:border-black/15 hover:bg-white hover:text-foreground dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+              >
                 {item.label}
               </a>
             ))}
           </div>
-        </div>
-      </section>
+        </SectionPanel>
+      </SectionShell>
 
       {copy.ctaLinks?.length ? (
-        <section className="container py-4" id="cta-quick">
-          <div className="surface-card rounded-2xl p-5 md:p-7">
+        <SectionShell id="cta-quick" divider={false} className="py-4">
+          <SectionPanel tone="sky" className="rounded-[1.75rem] p-5 md:p-7">
             <p className="text-ui-label text-primary/80">Aksi Cepat</p>
             <div className="mt-3 flex flex-wrap gap-3">
               {copy.ctaLinks.map((item) => (
@@ -302,85 +308,129 @@ export default function RewriteLandingSections({
                 </Button>
               ))}
             </div>
-          </div>
-        </section>
+          </SectionPanel>
+        </SectionShell>
       ) : null}
 
-      <section className="container section-divider py-12" id="layanan">
-        <div className="mb-4 flex items-center gap-2">
-          <BookOpenText className="size-4 text-foreground/70" />
-          <h2 className="text-xl font-semibold md:text-2xl">Jenis Layanan Utama</h2>
-        </div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {serviceTypes.map((item) => (
-            <article key={item.title} className="surface-card rounded-xl p-5">
-              {item.image ? (
-                <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-lg border border-border/50">
+      <SectionShell id="layanan">
+        <SectionIntro
+          eyebrow="Service Focus"
+          title="Jenis Layanan Utama"
+          description="Setiap section diarahkan ke pola visual-driven: satu pesan, satu visual, satu langkah lanjut yang jelas."
+        />
+        <div className="space-y-5">
+          {serviceTypes.map((item, index) => (
+            <SplitVisualPanel
+              key={item.title}
+              tone={index % 3 === 0 ? "amber" : index % 3 === 1 ? "sky" : "emerald"}
+              reverse={index % 2 === 1}
+              content={
+                <>
+                  <div className="inline-flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white/75 px-3 py-1 text-ui-label text-foreground/70 dark:border-white/10 dark:bg-white/5">
+                    <BookOpenText className="size-3.5" />
+                    Layanan {index + 1}
+                  </div>
+                  <h3 className="mt-4 text-2xl font-semibold tracking-tight md:text-3xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground md:text-base">
+                    {item.description}
+                  </p>
+                  {item.href ? (
+                    <div className="mt-5">
+                      <Link
+                        href={item.href}
+                        className="inline-flex rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-white dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+                      >
+                        Lihat detail
+                      </Link>
+                    </div>
+                  ) : null}
+                </>
+              }
+              visual={
+                item.image ? (
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
                     className="object-cover"
-                    sizes="(min-width: 768px) 33vw, 100vw"
+                    sizes="(min-width: 768px) 45vw, 100vw"
                   />
-                </div>
-              ) : null}
-              <h3 className="text-base font-semibold">{item.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-              {item.href ? (
-                <Link
-                  href={item.href}
-                  className="mt-4 inline-flex text-xs font-medium text-primary hover:underline"
-                >
-                  Lihat detail
-                </Link>
-              ) : null}
-            </article>
+                ) : null
+              }
+            />
           ))}
         </div>
-      </section>
+      </SectionShell>
 
-      <section className="container section-divider py-12" id="paket">
-        <div className="mb-4 flex items-center gap-2">
-          <Store className="size-4 text-foreground/70" />
-          <h2 className="text-xl font-semibold md:text-2xl">Paket & Investasi</h2>
-        </div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {pricingPlans.map((plan) => (
-            <article
+      <SectionShell id="paket">
+        <SectionIntro
+          eyebrow="Investment"
+          title="Paket & Investasi"
+          description="Bukan sekadar daftar harga. Setiap opsi diposisikan sebagai level kesiapan bisnis yang berbeda, dengan frame visual yang jelas."
+        />
+        <div className="space-y-5">
+          {pricingPlans.map((plan, index) => (
+            <SplitVisualPanel
               key={plan.name}
-              className={`rounded-xl p-5 ${
+              tone={
                 plan.recommended
-                  ? "border border-primary/40 bg-background shadow-[0_10px_30px_-18px_rgba(0,112,243,0.45)]"
-                  : "surface-card"
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <h3 className="text-base font-semibold">{plan.name}</h3>
-                {plan.recommended ? (
-                  <span className="inline-flex rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground">
-                    Recommended
-                  </span>
-                ) : null}
-              </div>
-              <p className="mt-2 text-lg font-semibold">{plan.price}</p>
-              <p className="mt-2 text-sm text-muted-foreground">{plan.description}</p>
-              <ul className="mt-4 space-y-2 text-sm">
-                {plan.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2">
-                    <BadgeCheck className="mt-0.5 size-4 text-primary" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
+                  ? "sky"
+                  : index % 3 === 0
+                    ? "amber"
+                    : index % 3 === 1
+                      ? "emerald"
+                      : "rose"
+              }
+              reverse={index % 2 === 1}
+              content={
+                <>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/75 px-3 py-1 text-ui-label text-foreground/70 dark:border-white/10 dark:bg-white/5">
+                      <Store className="size-3.5" />
+                      {plan.name}
+                    </div>
+                    {plan.recommended ? (
+                      <span className="inline-flex rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground">
+                        Recommended
+                      </span>
+                    ) : null}
+                  </div>
+                  <h3 className="mt-4 text-2xl font-semibold tracking-tight md:text-3xl">
+                    {plan.price}
+                  </h3>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground md:text-base">
+                    {plan.description}
+                  </p>
+                </>
+              }
+              visualClassName="p-6 md:p-7"
+              visual={
+                <div className="relative z-10 flex h-full flex-col justify-between">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/45">
+                    Yang Anda dapatkan
+                  </p>
+                  <ul className="mt-4 space-y-3 text-sm md:text-base">
+                    {plan.items.map((item) => (
+                      <li key={item} className="flex items-start gap-3">
+                        <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-black/8 bg-white/80 dark:border-white/10 dark:bg-white/10">
+                          <BadgeCheck className="size-4 text-primary" />
+                        </span>
+                        <span className="pt-1 text-foreground/82">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              }
+            />
           ))}
         </div>
-      </section>
+      </SectionShell>
 
       {copy.ctaLinks?.length ? (
-        <section className="container section-divider py-8" id="cta-mid">
-          <div className="rounded-2xl border border-primary/30 bg-primary/[0.06] p-5 md:p-6">
+        <SectionShell id="cta-mid" className="py-8">
+          <SectionPanel tone="sky" className="rounded-[1.75rem] p-5 md:p-6">
             <p className="text-ui-label text-primary/80">Butuh Arahan Cepat?</p>
             <h3 className="mt-2 text-lg font-semibold tracking-tight md:text-xl">
               Pilih jalur CTA yang paling sesuai kebutuhan Anda
@@ -396,81 +446,143 @@ export default function RewriteLandingSections({
                 </Button>
               ))}
             </div>
-          </div>
-        </section>
+          </SectionPanel>
+        </SectionShell>
       ) : null}
 
-      <section className="container section-divider py-12" id="fitur">
-        <div className="mb-4 flex items-center gap-2">
-          <Sparkles className="size-4 text-foreground/70" />
-          <h2 className="text-xl font-semibold md:text-2xl">Fitur Unggulan</h2>
-        </div>
+      <SectionShell id="fitur">
+        <SectionIntro
+          eyebrow="Core Features"
+          title="Fitur Unggulan"
+          description="Formatnya saya ubah dari card biasa menjadi panel modular, jadi tiap fitur punya pemisah, tint, dan hirarki visual yang lebih hidup."
+        />
         <div className="grid gap-4 md:grid-cols-2">
-          {features.map((feature) => {
+          {features.map((feature, index) => {
             const Icon =
               ICON_MAP[(feature.icon as keyof typeof ICON_MAP) || "default"] ||
               ICON_MAP.default;
             return (
-              <article key={feature.title} className="surface-card rounded-xl p-5">
+              <SectionPanel
+                key={feature.title}
+                tone={index % 4 === 0 ? "sky" : index % 4 === 1 ? "amber" : index % 4 === 2 ? "emerald" : "rose"}
+                className="rounded-[1.5rem] p-5 md:p-6"
+              >
                 <div className="flex items-start gap-3">
-                    <span className="inline-flex size-9 items-center justify-center rounded-lg border border-violet-300/40 bg-violet-100/70 dark:bg-violet-950/30">
+                  <span className="inline-flex size-10 items-center justify-center rounded-xl border border-black/8 bg-white/80 dark:border-white/10 dark:bg-white/10">
                     <Icon className="size-4 text-foreground/75" />
                   </span>
                   <div>
                     <h3 className="text-base font-semibold">{feature.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{feature.description}</p>
+                    <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                      {feature.description}
+                    </p>
                   </div>
                 </div>
-              </article>
+              </SectionPanel>
             );
           })}
         </div>
-      </section>
+      </SectionShell>
 
-      <section className="container section-divider py-12" id="portfolio">
-        <div className="mb-4 flex items-center gap-2">
-          <LayoutTemplate className="size-4 text-foreground/70" />
-          <h2 className="text-xl font-semibold md:text-2xl">Portfolio & Bukti Kerja</h2>
-        </div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {proofItems.map((item) => (
-            <article key={item.title} className="surface-card overflow-hidden rounded-xl">
-              <div className="relative aspect-[16/9]">
+      <SectionShell id="portfolio">
+        <SectionIntro
+          eyebrow="Proof"
+          title="Portfolio & Bukti Kerja"
+          description="Bagian ini juga digeser ke format visual-driven, sehingga setiap bukti kerja terasa seperti scene yang berdiri sendiri."
+        />
+        <div className="space-y-5">
+          {proofItems.map((item, index) => (
+            <SplitVisualPanel
+              key={item.title}
+              tone={index % 2 === 0 ? "rose" : "sky"}
+              reverse={index % 2 === 1}
+              content={
+                <>
+                  <div className="inline-flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white/75 px-3 py-1 text-ui-label text-foreground/70 dark:border-white/10 dark:bg-white/5">
+                    <LayoutTemplate className="size-3.5" />
+                    Bukti kerja
+                  </div>
+                  <h3 className="mt-4 text-2xl font-semibold tracking-tight md:text-3xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground md:text-base">
+                    {item.description}
+                  </p>
+                </>
+              }
+              visual={
                 <Image
                   src={item.image || KOTACOM_SPLIT_DEFAULT_ILLUSTRATION}
                   alt={item.title}
                   fill
                   className="object-cover"
+                  sizes="(min-width: 768px) 45vw, 100vw"
                 />
-              </div>
-              <div className="p-4">
-                <h3 className="text-sm font-semibold">{item.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
-              </div>
-            </article>
+              }
+            />
           ))}
         </div>
-      </section>
+      </SectionShell>
 
-      <section className="container section-divider py-12" id="testimoni">
-        <div className="mb-4 flex items-center gap-2">
-          <Star className="size-4 text-foreground/70" />
-          <h2 className="text-xl font-semibold md:text-2xl">Apa Kata Klien</h2>
-        </div>
-        <div className="grid gap-4 md:grid-cols-2">
-          {testimonials.map((item) => (
-            <blockquote key={`${item.name}-${item.role}`} className="surface-card rounded-xl p-5">
-              <p className="text-sm text-foreground/85">“{item.quote}”</p>
-              <footer className="mt-3 text-xs text-muted-foreground">
-                <span className="font-medium text-foreground">{item.name}</span> · {item.role}
-              </footer>
-            </blockquote>
+      <SectionShell id="testimoni">
+        <SectionIntro
+          eyebrow="Testimonials"
+          title="Apa Kata Klien"
+          description="Bukti sosial juga saya dorong ke format scene, supaya tidak tenggelam sebagai kotak testimoni generik."
+        />
+        <div className="space-y-5">
+          {testimonials.map((item, index) => (
+            <SplitVisualPanel
+              key={`${item.name}-${item.role}`}
+              tone={index % 2 === 0 ? "neutral" : "rose"}
+              reverse={index % 2 === 1}
+              content={
+                <>
+                  <div className="inline-flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white/75 px-3 py-1 text-ui-label text-foreground/70 dark:border-white/10 dark:bg-white/5">
+                    <Star className="size-3.5" />
+                    Testimoni klien
+                  </div>
+                  <blockquote className="mt-4 text-xl leading-9 font-medium text-foreground/88 md:text-2xl">
+                    “{item.quote}”
+                  </blockquote>
+                  <footer className="mt-5 text-sm text-muted-foreground">
+                    <span className="font-semibold text-foreground">{item.name}</span>
+                    <span className="mx-2">·</span>
+                    {item.role}
+                  </footer>
+                </>
+              }
+              visualClassName="p-6 md:p-7"
+              visual={
+                <div className="relative z-10 flex h-full flex-col justify-between">
+                  <div className="grid gap-3">
+                    <div className="rounded-2xl border border-black/8 bg-white/80 p-4 dark:border-white/10 dark:bg-white/10">
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/45">
+                        Delivery
+                      </p>
+                      <p className="mt-2 text-sm text-foreground/82">
+                        Proses yang rapi, cepat, dan tetap mudah diikuti tim internal.
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-black/8 bg-white/80 p-4 dark:border-white/10 dark:bg-white/10">
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/45">
+                        Impact
+                      </p>
+                      <p className="mt-2 text-sm text-foreground/82">
+                        Fokus pada hasil yang bisa langsung dipakai untuk lead, campaign, atau operasional.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-4 h-24 rounded-[1.4rem] border border-white/40 bg-[linear-gradient(90deg,rgba(255,184,76,0.42),rgba(255,104,104,0.32),rgba(118,217,255,0.34))] dark:border-white/10" />
+                </div>
+              }
+            />
           ))}
         </div>
-      </section>
+      </SectionShell>
 
       {copy.longGuide?.length ? (
-        <section className="container section-divider py-12" id="panduan">
+        <SectionShell id="panduan">
           <div className="mb-4 flex items-center gap-2">
             <BookOpenText className="size-4 text-foreground/70" />
             <h2 className="text-xl font-semibold md:text-2xl">
@@ -490,36 +602,72 @@ export default function RewriteLandingSections({
               </article>
             ))}
           </div>
-        </section>
+        </SectionShell>
       ) : null}
 
-      <section className="container section-divider py-12" id="cta-final">
-        <div className="rounded-2xl border border-primary/30 bg-background p-6 shadow-[0_16px_44px_-26px_rgba(0,112,243,0.5)] md:p-9">
-          <div className="max-w-3xl">
-            <h2 className="text-2xl font-semibold tracking-tight">
-              {copy.finalCtaTitle || `Siap Mulai ${copy.primaryKeyword}?`}
-            </h2>
-            <p className="mt-3 text-sm text-muted-foreground md:text-base">
-              {copy.finalCtaDescription ||
-                "Diskusikan kebutuhan Anda sekarang. Tim kami akan membantu menyusun scope, timeline, dan strategi implementasi yang realistis untuk bisnis Anda."}
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <Link href={copy.ctaHref}>{copy.ctaLabel || "Konsultasi Gratis Sekarang"}</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="#paket">Lihat Paket</Link>
-              </Button>
-              <Button asChild size="lg" variant="secondary">
-                <Link href="/percetakan">Lihat Layanan Percetakan</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="#faq">Lihat FAQ</Link>
-              </Button>
+      <SectionShell id="cta-final">
+        <SplitVisualPanel
+          tone="amber"
+          className="rounded-[1.9rem] shadow-[0_16px_44px_-26px_rgba(0,112,243,0.5)]"
+          contentClassName="max-w-3xl"
+          content={
+            <>
+              <p className="text-ui-label text-foreground/55">Closeout CTA</p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight md:text-4xl">
+                {copy.finalCtaTitle || `Siap Mulai ${copy.primaryKeyword}?`}
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground md:text-base">
+                {copy.finalCtaDescription ||
+                  "Diskusikan kebutuhan Anda sekarang. Tim kami akan membantu menyusun scope, timeline, dan strategi implementasi yang realistis untuk bisnis Anda."}
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button asChild size="lg">
+                  <Link href={copy.ctaHref}>
+                    {copy.ctaLabel || "Konsultasi Gratis Sekarang"}
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline">
+                  <Link href="#paket">Lihat Paket</Link>
+                </Button>
+                <Button asChild size="lg" variant="secondary">
+                  <Link href="/percetakan">Lihat Layanan Percetakan</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline">
+                  <Link href="#faq">Lihat FAQ</Link>
+                </Button>
+              </div>
+            </>
+          }
+          visualClassName="p-6 md:p-8"
+          visual={
+            <div className="relative z-10 flex h-full flex-col justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/45">
+                  Conversion path
+                </p>
+                <div className="mt-4 space-y-3">
+                  {[
+                    "Masuk lewat brief awal",
+                    "Scope dan prioritas jadi jelas",
+                    "Tim sales bisa follow-up lebih cepat",
+                  ].map((item, index) => (
+                    <div
+                      key={item}
+                      className="flex items-center gap-3 rounded-2xl border border-black/8 bg-white/80 px-4 py-3 dark:border-white/10 dark:bg-white/10"
+                    >
+                      <span className="inline-flex size-7 items-center justify-center rounded-full border border-black/8 bg-white text-xs font-semibold dark:border-white/10 dark:bg-black/20">
+                        {index + 1}
+                      </span>
+                      <span className="text-sm text-foreground/82">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-5 h-28 rounded-[1.5rem] border border-white/40 bg-[linear-gradient(135deg,rgba(255,184,76,0.52),rgba(255,104,104,0.32),rgba(118,217,255,0.3))] dark:border-white/10" />
             </div>
-          </div>
-        </div>
-      </section>
+          }
+        />
+      </SectionShell>
     </>
   );
 }

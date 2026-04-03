@@ -23,7 +23,6 @@ type NavChild = {
   _key?: string;
   icon?: string | null;
   title?: string | null;
-  description?: string | null;
   badge?: string | null;
   href?: string | null;
   target?: boolean | null;
@@ -71,20 +70,12 @@ export default function MobileNav({
     ) || null;
   const headerCta = navDoc.headerCta || fallbackCta;
   const utilityLinks = utilityItems.filter((item) => item._key !== headerCta?._key);
-  const defaultOpenGroupKeys = useMemo(
-    () =>
-      primaryItems
-        .filter((item) => (item.children?.filter((child) => child?.title && child?.href).length || 0) > 0)
-        .map((item) => item._key || item.title || "menu-item"),
-    [primaryItems],
-  );
-
   return (
     <Sheet
       open={open}
       onOpenChange={(nextOpen) => {
         setOpen(nextOpen);
-        setOpenGroups(nextOpen ? defaultOpenGroupKeys : []);
+        setOpenGroups([]);
       }}
     >
       <SheetTrigger asChild>
@@ -184,11 +175,6 @@ export default function MobileNav({
                                         </span>
                                       )}
                                     </span>
-                                    {child.description && (
-                                      <span className="text-xs text-foreground/55 dark:text-white/55">
-                                        {child.description}
-                                      </span>
-                                    )}
                                   </span>
                                   {ChildIcon && <ChildIcon className="size-4 text-foreground/65 dark:text-white/58" />}
                                 </Link>
