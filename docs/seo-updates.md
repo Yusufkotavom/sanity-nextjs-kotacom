@@ -3961,3 +3961,18 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter studio run typecheck` passed.
   - `pnpm --filter studio run build` completed without reporting an action-level type or bundle error during the refactor pass.
+
+## 2026-04-03 - Page Custom Actions Disabled in Studio
+- Changed files:
+  - `studio/sanity.config.ts`
+  - `docs/seo-updates.md`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Removed the `page`-specific custom document actions (`Apply Hybrid Preset` and `Convert Page to Post`) from the active Studio action registry.
+  - This is a temporary rollback to restore Studio stability while the action API mismatch affecting Task creation is debugged separately.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: editors temporarily lose the two `page` action buttons in Studio, but normal page editing/publishing remains available and Task creation should no longer execute those custom actions.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` passed after the rollback.
