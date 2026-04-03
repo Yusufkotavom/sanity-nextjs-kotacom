@@ -17,6 +17,9 @@
     "astro-nav:import": "node scripts/import-astro-navigation.mjs",
     "sanity:pages:audit": "node scripts/audit-sanity-page-arrays.mjs",
     "sanity:pages:normalize": "node scripts/normalize-sanity-page-arrays.mjs --write",
+    "hybrid:create": "node scripts/create-hybrid-page.mjs",
+    "hybrid:route:create": "node scripts/create-hybrid-route.mjs",
+    "page:to-post": "node scripts/convert-page-to-post.mjs",
     "typegen": "npx sanity schema extract && npx sanity typegen generate",
     "typecheck": "tsc --noEmit"
   },

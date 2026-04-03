@@ -9,6 +9,8 @@ import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
 import ProductGrid from "@/components/products/product-grid";
 import InlineMetaList from "@/components/ui/inline-meta-list";
 import TaxonomyBadgeList from "@/components/ui/taxonomy-badge-list";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
+import GlobalWhatsAppPanel from "@/components/global-whatsapp-panel";
 import {
   fetchSanityCategoryBySlug,
   fetchSanityProductBySlug,
@@ -184,19 +186,20 @@ export default async function ProductSlugPage(props: {
           />
 
           {product.body && <PortableTextRenderer value={product.body} />}
-          {product.cta?.href && (
-            <div className="mt-8">
-              <Button asChild>
-                <Link
-                  href={product.cta.href}
-                  target={product.cta.target ? "_blank" : undefined}
-                  rel={product.cta.target ? "noopener noreferrer" : undefined}
-                >
-                  {product.cta.title || "Get Product"}
-                </Link>
-              </Button>
+          <GlobalWhatsAppPanel
+            title={`Tanya detail ${product.title} via WhatsApp`}
+            description="Cocok untuk cek ketersediaan, harga terbaru, kebutuhan custom, atau rekomendasi produk sebelum Anda ambil keputusan."
+            secondaryHref={product.cta?.href || undefined}
+            secondaryLabel={product.cta?.title || undefined}
+          />
+          {product.cta?.href ? (
+            <div className="mt-4">
+              <GlobalWhatsAppButton
+                fallbackHref={product.cta.href}
+                fallbackLabel={product.cta.title || "Tanya Produk"}
+              />
             </div>
-          )}
+          ) : null}
         </article>
       </div>
     </section>

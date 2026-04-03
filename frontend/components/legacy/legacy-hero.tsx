@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 import { Button, buttonVariants } from "@/components/ui/button";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import { cn } from "@/lib/utils";
 
 type LegacyHeroProps = {
@@ -11,7 +12,7 @@ type LegacyHeroProps = {
   sectionHref: string;
 };
 
-export default function LegacyHero({
+export default async function LegacyHero({
   page,
   copy,
   sectionLabel,
@@ -42,9 +43,11 @@ export default function LegacyHero({
         </div>
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <Button asChild size="lg">
-            <Link href={copy.ctaHref}>{copy.ctaLabel}</Link>
-          </Button>
+          <GlobalWhatsAppButton
+            fallbackHref={copy.ctaHref}
+            fallbackLabel={copy.ctaLabel}
+            size="lg"
+          />
           <Link
             href={sectionHref}
             className={cn(buttonVariants({ variant: "outline", size: "lg" }))}

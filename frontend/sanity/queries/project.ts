@@ -19,6 +19,11 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
   completionYear,
   projectUrl,
   featured,
+  categories[]->{
+    _id,
+    title,
+    slug
+  },
   cta{
     ${linkQuery}
   },
@@ -38,7 +43,12 @@ export const PROJECTS_QUERY = groq`*[_type == "project" && defined(slug)] | orde
   industry,
   completionYear,
   projectUrl,
-  featured
+  featured,
+  categories[]->{
+    _id,
+    title,
+    slug
+  }
 }`;
 
 export const PROJECTS_SLUGS_QUERY = groq`*[_type == "project" && defined(slug)]{slug}`;

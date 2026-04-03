@@ -13,6 +13,8 @@ import { cn } from "@/lib/utils";
 import Logo from "@/components/logo";
 import SocialLinks from "@/components/header/social-links";
 import { NAVIGATION_ICON_MAP } from "@/components/icons/navigation-icons";
+import WhatsAppIcon from "@/components/whatsapp-icon";
+import WhatsAppLink from "@/components/whatsapp-link";
 import { useMemo, useState } from "react";
 import { AlignRight, ChevronDown, Moon, Sun, Monitor } from "lucide-react";
 import { SETTINGS_QUERY_RESULT, NAVIGATION_QUERY_RESULT } from "@/sanity.types";
@@ -70,6 +72,10 @@ export default function MobileNav({
     ) || null;
   const headerCta = navDoc.headerCta || fallbackCta;
   const utilityLinks = utilityItems.filter((item) => item._key !== headerCta?._key);
+  const whatsApp = settings?.whatsApp;
+  const whatsAppPhoneNumber = whatsApp?.phoneNumber || "";
+  const showWhatsAppCta = Boolean(whatsApp?.enabled && whatsAppPhoneNumber);
+  const whatsAppLabel = whatsApp?.ctaText?.trim() || "Chat via WhatsApp";
   return (
     <Sheet
       open={open}
@@ -208,6 +214,26 @@ export default function MobileNav({
               </Link>
             </div>
           )}
+          {showWhatsAppCta ? (
+            <div className="section-divider mt-6 pt-4">
+              <WhatsAppLink
+                phoneNumber={whatsAppPhoneNumber}
+                predefinedText={whatsApp?.predefinedText}
+                sourceUrl={whatsApp?.sourceUrl}
+                ariaLabel={whatsAppLabel}
+                onClick={() => setOpen(false)}
+                className={cn(
+                  buttonVariants({
+                    variant: "outline",
+                  }),
+                  "h-10 w-full justify-center rounded-lg border-green-500/25 bg-green-500/12 text-green-700 hover:border-green-500/40 hover:bg-green-500/18 dark:border-green-400/25 dark:bg-green-500/15 dark:text-green-300 dark:hover:border-green-400/40 dark:hover:bg-green-500/22",
+                )}
+              >
+                <WhatsAppIcon className="size-4" />
+                {whatsAppLabel}
+              </WhatsAppLink>
+            </div>
+          ) : null}
           {!!utilityLinks.length && (
             <div className="section-divider mt-6 pt-4">
               <p className="mb-2 px-3 text-left text-xs uppercase tracking-wide text-foreground/50">

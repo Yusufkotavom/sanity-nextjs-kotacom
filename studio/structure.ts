@@ -10,6 +10,7 @@ import {
   Quote,
   Menu,
   Settings,
+  Palette,
   SearchCheck,
   Link2,
   Blocks,
@@ -119,6 +120,15 @@ export const structure = (S: any, context: any) =>
             .id("settings")
             .schemaType("settings")
             .documentId("settings")
+        ),
+      S.listItem()
+        .title("Theme Settings")
+        .icon(Palette)
+        .child(
+          S.editor()
+            .id("themeSettings")
+            .schemaType("themeSettings")
+            .documentId("themeSettings")
         ),
       S.listItem()
         .title("SEO Settings")

@@ -37,9 +37,9 @@ export default defineType({
       {
         _key: "link-2",
         _type: "link",
-        isExternal: true,
-        title: "Konsultasi WhatsApp",
-        href: "https://wa.me/6281335275219",
+        isExternal: false,
+        title: "Diskusikan Kebutuhan",
+        target: false,
         buttonVariant: "outline",
       },
     ],

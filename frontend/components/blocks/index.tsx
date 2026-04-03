@@ -8,6 +8,7 @@ import Carousel1 from "@/components/blocks/carousel/carousel-1";
 import Carousel2 from "@/components/blocks/carousel/carousel-2";
 import TimelineRow from "@/components/blocks/timeline/timeline-row";
 import Cta1 from "@/components/blocks/cta/cta-1";
+import WhatsAppCta from "@/components/blocks/cta/whatsapp-cta";
 import LogoCloud1 from "@/components/blocks/logo-cloud/logo-cloud-1";
 import FAQs from "@/components/blocks/faqs";
 import FormNewsletter from "@/components/blocks/forms/newsletter";
@@ -26,6 +27,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   "carousel-2": Carousel2,
   "timeline-row": TimelineRow,
   "cta-1": Cta1,
+  "whatsapp-cta": WhatsAppCta,
   "logo-cloud-1": LogoCloud1,
   faqs: FAQs,
   "form-newsletter": FormNewsletter,

@@ -6,6 +6,8 @@ import PortableTextRenderer from "@/components/portable-text-renderer";
 import { Button } from "@/components/ui/button";
 import { urlFor } from "@/sanity/lib/image";
 import InlineMetaList from "@/components/ui/inline-meta-list";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
+import GlobalWhatsAppPanel from "@/components/global-whatsapp-panel";
 import {
   fetchSanityProjectBySlug,
   fetchSanityProjectsStaticParams,
@@ -105,19 +107,20 @@ export default async function ProjectPage(props: {
               </Button>
             </div>
           )}
-          {project.cta?.href && (
-            <div className="mt-3">
-              <Button asChild>
-                <Link
-                  href={project.cta.href}
-                  target={project.cta.target ? "_blank" : undefined}
-                  rel={project.cta.target ? "noopener noreferrer" : undefined}
-                >
-                  {project.cta.title || "Contact Us"}
-                </Link>
-              </Button>
+          <GlobalWhatsAppPanel
+            title={`Ingin proyek seperti ${project.title}?`}
+            description="Kirim konteks bisnis Anda lewat WhatsApp. Kami bisa bantu memetakan kebutuhan, fitur prioritas, dan estimasi implementasi yang relevan dari studi kasus ini."
+            secondaryHref={project.projectUrl || undefined}
+            secondaryLabel={project.projectUrl ? "Visit Project" : undefined}
+          />
+          {project.cta?.href ? (
+            <div className="mt-4">
+              <GlobalWhatsAppButton
+                fallbackHref={project.cta.href}
+                fallbackLabel={project.cta.title || "Konsultasi via WhatsApp"}
+              />
             </div>
-          )}
+          ) : null}
         </article>
       </div>
     </section>

@@ -37,9 +37,9 @@ export default defineType({
       {
         _key: "link-2",
         _type: "link",
-        isExternal: true,
+        isExternal: false,
         title: "Hubungi Tim",
-        href: "/contact-us",
+        target: false,
         buttonVariant: "link",
       },
     ],

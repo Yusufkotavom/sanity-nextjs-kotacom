@@ -94,6 +94,15 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
+      name: "categories",
+      title: "Categories",
+      type: "array",
+      group: "settings",
+      of: [{ type: "reference", to: { type: "category" } }],
+      description:
+        "Choose existing categories or create a new one directly from this selector.",
+    }),
+    defineField({
       name: "cta",
       title: "Primary CTA",
       type: "link",

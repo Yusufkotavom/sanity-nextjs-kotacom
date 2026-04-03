@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Building2, CheckCircle2, MapPin, Phone, Quote, Sparkles } from "lucide-react";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import JsonLd from "@/components/seo/json-ld";
 import { Button } from "@/components/ui/button";
 import type { JsonUsahaPage } from "@/lib/local-content/json-usaha";
@@ -33,7 +34,7 @@ function SectionHeading({
   );
 }
 
-export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
+export default async function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "Layanan", path: "/layanan" },
@@ -70,12 +71,17 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <Button asChild size="lg">
-                  <Link href={heroPrimaryCta}>{heroPrimaryLabel}</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline">
-                  <Link href="/contact">Minta Estimasi</Link>
-                </Button>
+                <GlobalWhatsAppButton
+                  fallbackHref={heroPrimaryCta}
+                  fallbackLabel={heroPrimaryLabel}
+                  size="lg"
+                />
+                <GlobalWhatsAppButton
+                  fallbackHref="/contact"
+                  fallbackLabel="Minta Estimasi"
+                  size="lg"
+                  variant="outline"
+                />
               </div>
 
               {(page.businessType || page.businessAddress || page.businessPhone) ? (
@@ -181,9 +187,11 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
                     <Button asChild variant="outline" size="sm">
                       <Link href={item.href}>Pelajari Detail</Link>
                     </Button>
-                    <Button asChild size="sm">
-                      <Link href="/contact">Diskusikan Scope</Link>
-                    </Button>
+                    <GlobalWhatsAppButton
+                      fallbackHref="/contact"
+                      fallbackLabel="Diskusikan Scope"
+                      size="sm"
+                    />
                   </div>
                 ) : null}
               </article>
@@ -232,9 +240,11 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
               Perlu validasi cepat sebelum mulai? Kami bisa bantu mapping prioritas eksekusi agar biaya dan timeline tetap realistis.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <Button asChild size="sm">
-                <Link href="/contact">Konsultasi Prioritas</Link>
-              </Button>
+              <GlobalWhatsAppButton
+                fallbackHref="/contact"
+                fallbackLabel="Konsultasi Prioritas"
+                size="sm"
+              />
               <Button asChild size="sm" variant="outline">
                 <Link href="#faq">Lihat FAQ Implementasi</Link>
               </Button>
@@ -273,9 +283,11 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
                   </ul>
                 ) : null}
                 <div className="mt-4">
-                  <Button asChild size="sm">
-                    <Link href="/contact">Pilih Paket Ini</Link>
-                  </Button>
+                  <GlobalWhatsAppButton
+                    fallbackHref="/contact"
+                    fallbackLabel="Pilih Paket Ini"
+                    size="sm"
+                  />
                 </div>
               </article>
             ))}
@@ -317,12 +329,12 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
             ))}
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button asChild>
-              <Link href="/contact">Ajukan Pertanyaan Lain</Link>
-            </Button>
-            <Button asChild variant="outline">
-              <Link href={heroPrimaryCta}>{heroPrimaryLabel}</Link>
-            </Button>
+            <GlobalWhatsAppButton fallbackHref="/contact" fallbackLabel="Ajukan Pertanyaan Lain" />
+            <GlobalWhatsAppButton
+              fallbackHref={heroPrimaryCta}
+              fallbackLabel={heroPrimaryLabel}
+              variant="outline"
+            />
           </div>
         </section>
       ) : null}
@@ -357,22 +369,26 @@ export default function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
             ) : null}
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               {page.finalCta.primaryLabel ? (
-                <Button asChild size="lg">
-                  <Link href={page.finalCta.primaryHref || "/contact"}>
-                    {page.finalCta.primaryLabel}
-                  </Link>
-                </Button>
+                <GlobalWhatsAppButton
+                  fallbackHref={page.finalCta.primaryHref || "/contact"}
+                  fallbackLabel={page.finalCta.primaryLabel}
+                  size="lg"
+                />
               ) : null}
               {page.finalCta.secondaryLabel ? (
-                <Button asChild size="lg" variant="outline">
-                  <Link href={page.finalCta.secondaryHref || "/contact"}>
-                    {page.finalCta.secondaryLabel}
-                  </Link>
-                </Button>
+                <GlobalWhatsAppButton
+                  fallbackHref={page.finalCta.secondaryHref || "/contact"}
+                  fallbackLabel={page.finalCta.secondaryLabel}
+                  size="lg"
+                  variant="outline"
+                />
               ) : (
-                <Button asChild size="lg" variant="outline">
-                  <Link href="/contact">Minta Rekomendasi Paket</Link>
-                </Button>
+                <GlobalWhatsAppButton
+                  fallbackHref="/contact"
+                  fallbackLabel="Minta Rekomendasi Paket"
+                  size="lg"
+                  variant="outline"
+                />
               )}
             </div>
           </div>

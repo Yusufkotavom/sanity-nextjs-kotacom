@@ -38,7 +38,7 @@ export default defineType({
       name: "headerCta",
       title: "Header CTA Button",
       description:
-        "Primary call-to-action shown at the right side of desktop header.",
+        "Primary call-to-action shown in the header alongside the global WhatsApp CTA from Settings when WhatsApp is enabled.",
       type: "link",
       validation: (Rule) => Rule.required(),
     }),

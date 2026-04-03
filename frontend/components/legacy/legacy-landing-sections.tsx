@@ -15,6 +15,7 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 import {
@@ -245,7 +246,7 @@ const DEFAULT_TESTIMONIALS = [
   },
 ];
 
-export default function LegacyLandingSections({
+export default async function LegacyLandingSections({
   page,
   copy,
 }: LegacyLandingSectionsProps) {
@@ -489,9 +490,11 @@ export default function LegacyLandingSections({
                 "Diskusikan kebutuhan Anda sekarang. Tim kami akan membantu menyusun scope, timeline, dan strategi implementasi yang realistis untuk bisnis Anda."}
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <Link href={copy.ctaHref}>{copy.ctaLabel || "Konsultasi Gratis Sekarang"}</Link>
-              </Button>
+              <GlobalWhatsAppButton
+                fallbackHref={copy.ctaHref}
+                fallbackLabel={copy.ctaLabel || "Konsultasi Gratis Sekarang"}
+                size="lg"
+              />
               <Button asChild size="lg" variant="outline">
                 <Link href="#paket">Lihat Paket</Link>
               </Button>

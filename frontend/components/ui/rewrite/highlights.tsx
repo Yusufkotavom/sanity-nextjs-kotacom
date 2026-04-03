@@ -1,13 +1,14 @@
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import { SectionIntro, SectionPanel, SectionShell } from "@/components/ui/section-shell";
 
 type RewriteHighlightsProps = {
   copy: LegacyRewriteCopy;
 };
 
-export default function RewriteHighlights({ copy }: RewriteHighlightsProps) {
+export default async function RewriteHighlights({ copy }: RewriteHighlightsProps) {
   return (
     <SectionShell id="keunggulan" className="py-14 md:py-16">
       <SectionIntro
@@ -28,9 +29,7 @@ export default function RewriteHighlights({ copy }: RewriteHighlightsProps) {
         ))}
       </div>
       <div className="mt-6 flex flex-wrap gap-3">
-        <Button asChild>
-          <Link href={copy.ctaHref}>{copy.ctaLabel}</Link>
-        </Button>
+        <GlobalWhatsAppButton fallbackHref={copy.ctaHref} fallbackLabel={copy.ctaLabel} />
         <Button asChild variant="outline">
           <Link href="#faq">Lihat FAQ Implementasi</Link>
         </Button>

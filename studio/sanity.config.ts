@@ -9,6 +9,8 @@ import { structure } from "./structure";
 import { defaultDocumentNode } from "./defaultDocumentNode";
 import { codeInput } from "@sanity/code-input";
 import { aiRewriteAction } from "./document-actions/ai-rewrite-action";
+import { applyHybridPresetAction } from "./document-actions/apply-hybrid-preset-action";
+import { convertPageToPostAction } from "./document-actions/convert-page-to-post-action";
 
 // Define the actions that should be available for singleton documents
 const singletonActions = new Set([
@@ -55,6 +57,10 @@ export default defineConfig({
 
       if (["post", "service", "project"].includes(context.schemaType)) {
         return [aiRewriteAction, ...input];
+      }
+
+      if (context.schemaType === "page") {
+        return [applyHybridPresetAction, convertPageToPostAction, ...input];
       }
 
       return input;

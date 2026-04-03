@@ -4,6 +4,7 @@ import PostHero from "@/components/blocks/post-hero";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import BlogTableOfContents from "@/components/ui/blog-table-of-contents";
 import TaxonomyBadgeList from "@/components/ui/taxonomy-badge-list";
+import GlobalWhatsAppPanel from "@/components/global-whatsapp-panel";
 import { extractTableOfContents } from "@/lib/table-of-contents";
 import {
   fetchSanityPostBySlug,
@@ -109,6 +110,12 @@ export default async function PostPage(props: {
             {post.body && (
               <PortableTextRenderer value={post.body} headingIdMap={headingIdMap} />
             )}
+            <GlobalWhatsAppPanel
+              title="Butuh bantuan menerapkan insight ini?"
+              description="Bahas kebutuhan bisnis Anda via WhatsApp. Tim kami bisa bantu menjembatani insight dari artikel ini menjadi langkah implementasi yang lebih konkret."
+              secondaryHref="/services"
+              secondaryLabel="Lihat Layanan"
+            />
           </article>
           <BlogTableOfContents items={tocItems} variant="desktop" />
         </div>

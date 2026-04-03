@@ -1,6 +1,6 @@
 import { groq } from "next-sanity";
 
-export const THEME_SETTINGS_QUERY = groq`*[_type == "settings"][0]{
+export const THEME_SETTINGS_QUERY = groq`*[_type == "themeSettings"][0]{
   themeColors{
     themePreset,
     lightPrimary,

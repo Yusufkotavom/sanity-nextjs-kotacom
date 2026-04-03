@@ -9,6 +9,8 @@ import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
 import ServiceGrid from "@/components/services/service-grid";
 import InlineMetaList from "@/components/ui/inline-meta-list";
 import TaxonomyBadgeList from "@/components/ui/taxonomy-badge-list";
+import GlobalWhatsAppPanel from "@/components/global-whatsapp-panel";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import {
   fetchSanityCategoryBySlug,
   fetchSanitySeoSettings,
@@ -193,19 +195,20 @@ export default async function ServiceSlugPage(props: {
             </div>
           )}
           {service.body && <PortableTextRenderer value={service.body} />}
-          {service.cta?.href && (
-            <div className="mt-8">
-              <Button asChild>
-                <Link
-                  href={service.cta.href}
-                  target={service.cta.target ? "_blank" : undefined}
-                  rel={service.cta.target ? "noopener noreferrer" : undefined}
-                >
-                  {service.cta.title || "Contact Us"}
-                </Link>
-              </Button>
+          <GlobalWhatsAppPanel
+            title={`Diskusikan ${service.title} via WhatsApp`}
+            description="Jelaskan kebutuhan, target, dan kendala utama Anda. Tim kami akan bantu mengarahkan scope, estimasi, dan langkah implementasi yang paling masuk akal."
+            secondaryHref={service.cta?.href || undefined}
+            secondaryLabel={service.cta?.title || undefined}
+          />
+          {service.cta?.href ? (
+            <div className="mt-4">
+              <GlobalWhatsAppButton
+                fallbackHref={service.cta.href}
+                fallbackLabel={service.cta.title || "Konsultasi via WhatsApp"}
+              />
             </div>
-          )}
+          ) : null}
         </article>
       </div>
     </section>

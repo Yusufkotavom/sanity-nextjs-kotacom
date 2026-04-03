@@ -81,6 +81,26 @@ export async function createSanityWriteClient() {
   });
 }
 
+export async function createSanityReadClient() {
+  const env = await loadSanityEnv();
+  const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+  const dataset = env.NEXT_PUBLIC_SANITY_DATASET;
+  const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-03-23";
+
+  if (!projectId || !dataset) {
+    throw new Error(
+      "Missing Sanity read config. Expected NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET.",
+    );
+  }
+
+  return createClient({
+    projectId,
+    dataset,
+    apiVersion,
+    useCdn: false,
+  });
+}
+
 export function normalizeLinkObject(link, fallbackKey) {
   if (!link || typeof link !== "object" || Array.isArray(link)) return link;
 
@@ -267,8 +287,10 @@ export async function fetchSanityPages(client, slug) {
   return client.fetch(
     `*[_type == "page"${slug ? " && slug.current == $slug" : ""}]{
       _id,
+      _type,
       title,
       slug,
+      topBlockCount,
       blocks
     } | order(_updatedAt desc)`,
     slug ? { slug } : {},

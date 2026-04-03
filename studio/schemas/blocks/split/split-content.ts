@@ -30,9 +30,9 @@ export default defineType({
     ],
     link: {
       _type: "link",
-      isExternal: true,
+      isExternal: false,
       title: "Diskusikan Kebutuhan",
-      href: "/contact-us",
+      target: false,
       buttonVariant: "default",
     },
   },

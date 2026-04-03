@@ -3,6 +3,14 @@ import { Files } from "lucide-react";
 import { orderRankField } from "@sanity/orderable-document-list";
 import meta from "../blocks/shared/meta";
 
+const HYBRID_PAGE_SLUGS = new Set([
+  "index",
+  "layanan",
+  "pembuatan-website",
+  "percetakan",
+  "software",
+]);
+
 export default defineType({
   name: "page",
   type: "document",
@@ -49,6 +57,7 @@ export default defineType({
         { type: "carousel-2" },
         { type: "timeline-row" },
         { type: "cta-1" },
+        { type: "whatsapp-cta" },
         { type: "logo-cloud-1" },
         { type: "faqs" },
         { type: "form-newsletter" },
@@ -96,7 +105,7 @@ export default defineType({
             {
               name: "cta",
               title: "CTA",
-              of: ["cta-1"],
+              of: ["cta-1", "whatsapp-cta"],
             },
             {
               name: "faqs",
@@ -142,4 +151,23 @@ export default defineType({
     meta,
     orderRankField({ type: "page" }),
   ],
+  preview: {
+    select: {
+      title: "title",
+      slug: "slug.current",
+      topBlockCount: "topBlockCount",
+    },
+    prepare({ title, slug, topBlockCount }) {
+      const isHybrid = typeof slug === "string" && HYBRID_PAGE_SLUGS.has(slug);
+      const splitCount =
+        typeof topBlockCount === "number" && Number.isFinite(topBlockCount)
+          ? Math.max(0, topBlockCount)
+          : 0;
+
+      return {
+        title: title || slug || "Untitled page",
+        subtitle: isHybrid ? `Hybrid · Top ${splitCount}` : slug || "Page",
+      };
+    },
+  },
 });

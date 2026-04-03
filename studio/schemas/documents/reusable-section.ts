@@ -60,6 +60,7 @@ export default defineType({
         { type: "carousel-2" },
         { type: "timeline-row" },
         { type: "cta-1" },
+        { type: "whatsapp-cta" },
         { type: "logo-cloud-1" },
         { type: "faqs" },
         { type: "form-newsletter" },
@@ -106,7 +107,7 @@ export default defineType({
             {
               name: "cta",
               title: "CTA",
-              of: ["cta-1"],
+              of: ["cta-1", "whatsapp-cta"],
             },
             {
               name: "faqs",

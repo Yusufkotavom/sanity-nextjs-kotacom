@@ -6,6 +6,8 @@ import { ModeToggle } from "@/components/menu-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import SocialLinks from "@/components/header/social-links";
+import WhatsAppIcon from "@/components/whatsapp-icon";
+import WhatsAppLink from "@/components/whatsapp-link";
 import { fetchSanitySettings, fetchSanityNavigation } from "@/sanity/lib/fetch";
 
 export default async function Header() {
@@ -24,6 +26,9 @@ export default async function Header() {
         item.buttonVariant !== "link",
     ) || null;
   const headerCta = navDoc.headerCta || fallbackCta;
+  const whatsApp = settings?.whatsApp;
+  const showWhatsAppCta = Boolean(whatsApp?.enabled && whatsApp?.phoneNumber);
+  const whatsAppLabel = whatsApp?.ctaText?.trim() || "Chat via WhatsApp";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/65 dark:border-white/10 dark:bg-black/85">
@@ -33,6 +38,24 @@ export default async function Header() {
             <Logo settings={settings} />
           </Link>
           <div className="flex items-center gap-1.5">
+            {showWhatsAppCta ? (
+              <WhatsAppLink
+                phoneNumber={whatsApp.phoneNumber}
+                predefinedText={whatsApp.predefinedText}
+                sourceUrl={whatsApp.sourceUrl}
+                ariaLabel={whatsAppLabel}
+                className={cn(
+                  buttonVariants({
+                    variant: "outline",
+                    size: "icon",
+                  }),
+                  "size-8 rounded-full border-green-500/25 bg-green-500/12 p-0 text-green-700 hover:border-green-500/40 hover:bg-green-500/18 dark:border-green-400/25 dark:bg-green-500/15 dark:text-green-300 dark:hover:border-green-400/40 dark:hover:bg-green-500/22",
+                )}
+              >
+                <WhatsAppIcon className="size-4" />
+                <span className="sr-only">{whatsAppLabel}</span>
+              </WhatsAppLink>
+            ) : null}
             {headerCta?.title && (
               <Link
                 href={headerCta.href || "#"}
@@ -67,6 +90,24 @@ export default async function Header() {
               className="mr-1 hidden xl:flex"
             />
             <ModeToggle />
+            {showWhatsAppCta ? (
+              <WhatsAppLink
+                phoneNumber={whatsApp.phoneNumber}
+                predefinedText={whatsApp.predefinedText}
+                sourceUrl={whatsApp.sourceUrl}
+                ariaLabel={whatsAppLabel}
+                className={cn(
+                  buttonVariants({
+                    variant: "outline",
+                    size: "sm",
+                  }),
+                  "h-8 rounded-full border-green-500/25 bg-green-500/12 px-3.5 text-xs font-medium text-green-700 hover:border-green-500/40 hover:bg-green-500/18 dark:border-green-400/25 dark:bg-green-500/15 dark:text-green-300 dark:hover:border-green-400/40 dark:hover:bg-green-500/22",
+                )}
+              >
+                <WhatsAppIcon className="size-4" />
+                {whatsAppLabel}
+              </WhatsAppLink>
+            ) : null}
             {headerCta?.title && (
               <Link
                 href={headerCta.href || "#"}

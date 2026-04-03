@@ -10,6 +10,7 @@ import faq from "./schemas/documents/faq";
 import testimonial from "./schemas/documents/testimonial";
 import navigation from "./schemas/documents/navigation";
 import settings from "./schemas/documents/settings";
+import themeSettings from "./schemas/documents/theme-settings";
 import seoSettings from "./schemas/documents/seo-settings";
 import redirect from "./schemas/documents/redirect";
 import reusableSection from "./schemas/documents/reusable-section";
@@ -44,6 +45,7 @@ import carousel2 from "./schemas/blocks/carousel/carousel-2";
 import timelineRow from "./schemas/blocks/timeline/timeline-row";
 import timelinesOne from "./schemas/blocks/timeline/timelines-1";
 import cta1 from "./schemas/blocks/cta/cta-1";
+import whatsappCta from "./schemas/blocks/cta/whatsapp-cta";
 import logoCloud1 from "./schemas/blocks/logo-cloud/logo-cloud-1";
 import faqs from "./schemas/blocks/faqs";
 import newsletter from "./schemas/blocks/forms/newsletter";
@@ -63,6 +65,7 @@ export const schemaTypes = [
   testimonial,
   navigation,
   settings,
+  themeSettings,
   seoSettings,
   seoOpsSettings,
   aiWriterSettings,
@@ -96,6 +99,7 @@ export const schemaTypes = [
   timelineRow,
   timelinesOne,
   cta1,
+  whatsappCta,
   logoCloud1,
   faqs,
   newsletter,

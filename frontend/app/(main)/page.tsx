@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Blocks from "@/components/blocks";
-import HomePageView from "@/components/ui/home/home-page";
 import { fetchSanityPageBySlug } from "@/sanity/lib/fetch";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
+import PageHybridShell from "@/components/hybrid/page-hybrid-shell";
+import HomeMiddleSection from "@/components/hybrid/home-middle-section";
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await fetchSanityPageBySlug({ slug: "index" });
@@ -24,11 +24,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function IndexPage() {
-  const page = await fetchSanityPageBySlug({ slug: "index" });
-
-  if (page) {
-    return <Blocks blocks={page.blocks ?? []} pageTitle={page.title} />;
-  }
-
-  return <HomePageView />;
+  return (
+    <PageHybridShell slug="index">
+      <HomeMiddleSection />
+    </PageHybridShell>
+  );
 }

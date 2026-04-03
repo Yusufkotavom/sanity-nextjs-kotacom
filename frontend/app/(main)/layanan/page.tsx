@@ -1,3 +1,4 @@
+import PageHybridShell from "@/components/hybrid/page-hybrid-shell";
 import RewritePageShell from "@/components/ui/rewrite/page-shell";
 import { getLegacySinglePage } from "@/lib/legacy-pages/astro-static";
 import { generateLegacyPageMetadata } from "@/lib/legacy-pages/metadata";
@@ -10,5 +11,9 @@ export async function generateMetadata() {
 export default function LayananPage() {
   const page = getLegacySinglePage("layanan");
   if (!page) notFound();
-  return <RewritePageShell page={page} />;
+  return (
+    <PageHybridShell slug="layanan">
+      <RewritePageShell page={page} />
+    </PageHybridShell>
+  );
 }

@@ -42,6 +42,29 @@ Create or extend a hybrid main page where the route shell stays code-owned, whil
 8. Update `docs/seo-updates.md`.
 9. If the work affects migration/redesign status, update `docs/astro-migration-megaplan.md`.
 
+## CLI Shortcut
+- Use `pnpm --filter frontend run hybrid:create -- --slug=<slug> --preset=<preset>` for a dry-run preview.
+- Use `pnpm --filter frontend run hybrid:route:create -- --slug=<slug> --preset=<preset>` when the route file does not exist yet and you want repo scaffold + Sanity seed in one step.
+- Add `--write` to commit the document to Sanity after review.
+- Supported modes:
+  - `--mode=seed-missing` (default): only fills missing `title`, `topBlockCount`, and `blocks`
+  - `--mode=upsert`: replaces the seeded hybrid fields with the selected preset
+  - `--mode=create`: fails if the page slug already exists
+- Supported presets:
+  - `main-landing`
+  - `homepage`
+- Example:
+  - `pnpm --filter frontend run hybrid:create -- --slug=percetakan --preset=main-landing --mode=seed-missing --write`
+- Operational doc:
+  - `docs/hybrid-page-cli-workflow.md`
+
+## CLI Guarantees
+- Uses dev-first Sanity credentials (`SANITY_DEV`, fallback `SANITY_AUTH_TOKEN`).
+- Refuses unwired slugs unless `--allow-unwired` is supplied.
+- Uses public-safe page IDs without dots for newly created documents.
+- Normalizes generated block payloads through the same `_key` and `isExternal` guards used by the audit/normalizer scripts.
+- Verifies public-read after a write so the created hybrid page is immediately usable by the frontend runtime.
+
 ## Recommended Seed Shape
 - Use light support blocks first:
   - `section-header`

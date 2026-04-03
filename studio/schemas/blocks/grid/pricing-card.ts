@@ -22,9 +22,9 @@ export default defineType({
       "Paket praktis untuk memulai kehadiran digital bisnis Anda dengan timeline yang cepat.",
     link: {
       _type: "link",
-      isExternal: true,
-      title: "Konsultasi Paket",
-      href: "https://wa.me/6281335275219",
+      isExternal: false,
+      title: "Diskusikan Paket",
+      target: false,
       buttonVariant: "default",
     },
   },

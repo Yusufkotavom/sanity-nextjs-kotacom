@@ -56,7 +56,7 @@ export default async function RewriteHero({
 
   return (
     <section className="relative overflow-hidden border-b border-border/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(255,255,255,1))] dark:bg-[linear-gradient(180deg,rgba(10,10,10,0.98),rgba(10,10,10,1))]">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top,rgba(255,190,92,0.24),transparent_52%),radial-gradient(circle_at_20%_30%,rgba(255,120,92,0.22),transparent_34%),radial-gradient(circle_at_82%_35%,rgba(110,198,255,0.22),transparent_32%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,190,92,0.24),transparent_52%),radial-gradient(circle_at_20%_30%,rgba(255,120,92,0.22),transparent_34%),radial-gradient(circle_at_82%_35%,rgba(110,198,255,0.22),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0)_42%,rgba(255,184,76,0.18)_68%,rgba(255,104,104,0.16)_78%,rgba(118,217,255,0.18)_88%,rgba(96,255,182,0.14)_100%)] dark:bg-[radial-gradient(circle_at_top,rgba(255,190,92,0.16),transparent_52%),radial-gradient(circle_at_20%_30%,rgba(255,120,92,0.14),transparent_34%),radial-gradient(circle_at_82%_35%,rgba(110,198,255,0.14),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0)_42%,rgba(255,184,76,0.10)_68%,rgba(255,104,104,0.10)_78%,rgba(118,217,255,0.12)_88%,rgba(96,255,182,0.08)_100%)]" />
       <div className="container relative py-16 md:py-24">
         <div className="mx-auto max-w-5xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-4 py-1.5 text-ui-label text-foreground/80 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
@@ -115,10 +115,7 @@ export default async function RewriteHero({
 
         <div className="mx-auto mt-12 max-w-5xl">
           <div className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-white/80 p-5 shadow-[0_24px_90px_rgba(15,23,42,0.08)] backdrop-blur dark:border-white/10 dark:bg-white/5 md:p-8">
-            <div className="absolute inset-x-10 bottom-0 h-40 rounded-full bg-[radial-gradient(circle,rgba(255,188,92,0.36),rgba(255,255,255,0)_60%)] blur-2xl" />
-            <div className="absolute inset-x-0 bottom-0 h-[68%] bg-[linear-gradient(90deg,rgba(255,184,76,0.72),rgba(255,104,104,0.6),rgba(118,217,255,0.62),rgba(96,255,182,0.66))]" />
-            <div className="absolute inset-x-0 bottom-0 h-[68%] bg-[linear-gradient(rgba(255,255,255,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.18)_1px,transparent_1px)] bg-[size:32px_32px]" />
-            <div className="relative rounded-[1.5rem] border border-black/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(255,255,255,0.72))] p-6 dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))]">
+            <div className="relative rounded-[1.5rem] border border-black/8 bg-white p-6 dark:border-white/10 dark:bg-black/20">
               {heroImage ? (
                 <div className="relative mx-auto aspect-[16/9] max-w-3xl overflow-hidden rounded-[1.5rem] border border-white/50 bg-white/60 shadow-[0_18px_60px_rgba(15,23,42,0.14)] dark:border-white/10 dark:bg-black/20">
                   <Image

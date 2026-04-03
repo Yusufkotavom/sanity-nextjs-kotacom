@@ -16,6 +16,224 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-03 - Move Theme Colors into Dedicated Theme Settings Document
+- Changed files:
+  - `studio/schemas/documents/theme-settings.ts`
+  - `studio/schemas/documents/settings.ts`
+  - `studio/schema-types.ts`
+  - `studio/structure.ts`
+  - `studio/schema.json`
+  - `frontend/sanity/queries/theme-settings.ts`
+  - `frontend/sanity.types.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Moved website color configuration out of the general `settings` document into a dedicated singleton `themeSettings` document so theme editing has its own focused editor surface.
+  - Kept the existing `themeColors` data contract intact inside the new document, including the swatch picker, in-Studio guide, preset previews, and combination tips.
+  - Updated the Studio desk structure and frontend theme-settings query to read from the new `themeSettings` document instead of the generic `settings` singleton.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: frontend theme token loading now reads from the dedicated `themeSettings` document; theme color field shape remains unchanged so runtime token mapping stays compatible.
+- Verification:
+  - `pnpm typegen`
+  - `pnpm --filter frontend run typecheck`
+  - `pnpm --filter studio run typecheck`
+
+## 2026-04-03 - Add In-Studio Theme Color Guide, Preview, and Combination Tips
+- Changed files:
+  - `studio/schemas/inputs/theme-colors-input.tsx`
+  - `studio/schemas/documents/settings.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a custom object input for `settings.themeColors` that displays an in-Studio guide explaining what `Primary`, `Primary Foreground`, `Accent`, and `Ring` control in the UI.
+  - Added short preset previews inside Studio for `neutral`, `ocean`, `sunset`, and the existing tricolor presets so editors can compare the overall direction before changing individual fields.
+  - Added a compact list of recommended theme combinations in Studio to help non-technical users choose safer brand directions without needing to understand HEX values first.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: Studio-only guidance enhancement for the existing theme settings editor; no frontend query, runtime token mapping, or metadata behavior changes.
+- Verification:
+  - `pnpm --filter studio run typecheck`
+
+## 2026-04-03 - Add Color Swatch Picker to Theme Colors in Studio
+- Changed files:
+  - `studio/schemas/inputs/color-option-input.tsx`
+  - `studio/schemas/documents/settings.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced the plain dropdown-only editing experience for `Theme Colors` in Studio with a visual color option picker that shows a swatch next to each preset value.
+  - Kept the stored data format unchanged as the same HEX string values, so frontend theme handling does not need any query or runtime changes.
+  - Applied the custom swatch input to all theme color override fields in `settings.themeColors`, making it easier for editors to pick colors without understanding HEX values first.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: Studio-only editing improvement for existing `settings.themeColors` fields; no schema shape, GROQ query, or frontend metadata/runtime contract changes.
+- Verification:
+  - `pnpm --filter studio run typecheck`
+
+## 2026-04-03 - Roll Out Global WhatsApp CTA Across Detail Pages and Add WhatsApp Block
+- Changed files:
+  - `frontend/app/(main)/blog/[slug]/page.tsx`
+  - `frontend/app/(main)/products/[slug]/page.tsx`
+  - `frontend/app/(main)/projects/[slug]/page.tsx`
+  - `frontend/app/(main)/services/[slug]/page.tsx`
+  - `frontend/components/global-whatsapp-button.tsx`
+  - `frontend/components/global-whatsapp-panel.tsx`
+  - `frontend/components/ui/json-usaha-page.tsx`
+  - `frontend/components/ui/rewrite/highlights.tsx`
+  - `frontend/components/ui/rewrite/process-faq.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/final-cta-section.tsx`
+  - `frontend/components/legacy/legacy-hero.tsx`
+  - `frontend/components/legacy/legacy-landing-sections.tsx`
+  - `frontend/components/blocks/cta/whatsapp-cta.tsx`
+  - `frontend/components/blocks/index.tsx`
+  - `frontend/components/whatsapp-icon.tsx`
+  - `frontend/components/whatsapp-link.tsx`
+  - `frontend/components/floating-whatsapp-client.tsx`
+  - `frontend/lib/whatsapp-settings.ts`
+  - `frontend/sanity/queries/cta/whatsapp-cta.ts`
+  - `frontend/sanity/queries/page.ts`
+  - `frontend/sanity/queries/reusable-section.ts`
+  - `frontend/sanity.types.ts`
+  - `studio/schemas/blocks/cta/whatsapp-cta.ts`
+  - `studio/schemas/blocks/cta/cta-1.ts`
+  - `studio/schemas/blocks/hero/hero-1.ts`
+  - `studio/schemas/blocks/hero/hero-2.ts`
+  - `studio/schemas/blocks/grid/pricing-card.ts`
+  - `studio/schemas/blocks/split/split-row.ts`
+  - `studio/schemas/blocks/split/split-content.ts`
+  - `studio/schema-types.ts`
+  - `studio/schema.json`
+  - `studio/schemas/documents/page.ts`
+  - `studio/schemas/documents/reusable-section.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable global WhatsApp CTA helpers so server-rendered pages and sections can use the same `settings.whatsApp` source as the floating WhatsApp widget, including phone number, predefined text, CTA label, and source URL context.
+  - Rolled more aggressive WhatsApp CTA placement into `post`, `product`, `service`, and `project` detail pages, and replaced generic contact-oriented CTA buttons in rewrite, legacy, and JSON-usaha components with the global WhatsApp CTA fallback pattern.
+  - Added a dedicated Sanity page-builder block `whatsapp-cta` and registered it across Studio schema, insert menus, GROQ queries, generated types, and frontend block rendering.
+  - Removed stale hardcoded `wa.me` and `/contact-us` defaults from older seed block schemas so new Studio content no longer drifts away from the global WhatsApp configuration.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: CTA behavior is now centralized around `settings.whatsApp` across floating UI, header/mobile nav, content surfaces, and the new Sanity block, reducing CTA drift between Studio defaults and frontend rendering.
+- Verification:
+  - `pnpm typegen`
+  - `pnpm --filter frontend run typecheck`
+  - `pnpm --filter studio run typecheck`
+  - `rg -n 'wa.me/|/contact-us|Contact Us|Get Product' frontend/components frontend/app studio/schemas -g '!**/node_modules/**'`
+
+## 2026-04-03 - Add Header WhatsApp CTA from Global Settings
+- Changed files:
+  - `frontend/components/header/index.tsx`
+  - `frontend/components/header/mobile-nav.tsx`
+  - `frontend/components/floating-whatsapp-client.tsx`
+  - `frontend/components/whatsapp-link.tsx`
+  - `frontend/components/whatsapp-icon.tsx`
+  - `studio/schemas/documents/navigation.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated WhatsApp CTA to the header and mobile navigation using the same global `settings.whatsApp` source already used by the floating WhatsApp button.
+  - Reused the full WhatsApp parameter set for link generation, including phone number, predefined text, source URL context, and CTA label, so header and floating CTA behavior stay aligned.
+  - Extracted reusable `WhatsAppLink` and `WhatsAppIcon` components, and updated the navigation schema description so editors know `headerCta` now appears alongside the global WhatsApp CTA when enabled.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: keeps header CTA behavior consistent across global settings, navigation UI, and floating WhatsApp UI without changing metadata or public route contracts.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+  - `pnpm --filter studio run typecheck`
+
+## 2026-04-03 - Split Rewrite Landing Sections into Maintainable Modules
+- Changed files:
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/index.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/types.ts`
+  - `frontend/components/ui/rewrite/landing-sections/defaults.ts`
+  - `frontend/components/ui/rewrite/landing-sections/utility-strip.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/service-types-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/pricing-plans-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/features-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/proof-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/testimonials-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/long-guide-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/final-cta-section.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Split the large `RewriteLandingSections` implementation into focused section modules so navigation, defaults, type contracts, and each landing block live in smaller files.
+  - Kept the existing public import path by turning `frontend/components/ui/rewrite/landing-sections.tsx` into a thin re-export wrapper over the new folder entrypoint.
+  - Preserved the compact landing-section behavior from the previous UI pass while making future edits less risky and easier to review.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: frontend-only maintainability refactor; no Sanity schema, GROQ query, fetch helper, route behavior, or metadata contract changes.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Refactor Universal Trust Badges to Glass Icon Cards
+- Changed files:
+  - `frontend/components/micro-badges.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced the universal trust badge image gallery with icon-led glass cards using `lucide-react` icons and shadcn-style badge/panel treatment.
+  - Added short explanatory copy per badge so the section communicates value clearly without relying on embedded text inside artwork images.
+  - Removed the old image-based badge dependency to avoid duplicated wording and align the section with the newer rewrite-shell visual language.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: frontend-only presentation refactor for the universal trust badge section; no Sanity schema, query, or metadata contract changes.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Compact Trust Badge Header Layout
+- Changed files:
+  - `frontend/components/micro-badges.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Tightened the universal trust badge cards so the icon and title now sit on a single row for a denser, cleaner header rhythm.
+  - Reduced each supporting line to a short 3-4 word phrase to keep the strip concise and closer to a modern Vercel-style utility rail.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: frontend-only refinement to the shared trust badge presentation; no Sanity schema, query, or metadata contract changes.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Remove Local Root Homepage Fallback
+- Changed files:
+  - `frontend/app/(main)/page.tsx`
+  - `frontend/components/ui/home/home-page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Removed the last code-owned homepage fallback so the `/` route now depends entirely on the Sanity `page` document with slug `index`.
+  - Deleted the orphaned `components/ui/home/home-page.tsx` implementation because it is no longer referenced by any route.
+  - Kept the existing page query and metadata path aligned to the Sanity `page` contract while changing the runtime fallback from local UI rendering to `notFound()`.
+- SEO impact:
+  - Direct SEO impact: keeps the homepage fully bound to Sanity-managed content instead of silently rendering a separate code-owned fallback experience.
+  - Integration impact: frontend root route, metadata resolution, and runtime rendering now consistently depend on the same Sanity `page` source for `/`.
+- Verification:
+  - `rg -n "components/ui/home|HomePageView|home-page" frontend -g '!**/node_modules/**'`
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Restore Project Categories Schema Contract
+- Changed files:
+  - `studio/schemas/documents/project.ts`
+  - `frontend/sanity/queries/project.ts`
+  - `frontend/sanity.types.ts`
+  - `studio/schema.json`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Restored the `categories` field on the Sanity `project` document schema so existing project documents no longer show `Unknown field found` for stored category references.
+  - Updated project GROQ queries to include dereferenced categories, bringing the frontend data contract back in sync with the Studio schema.
+  - Regenerated extracted schema and generated frontend Sanity types so the cross-layer contract reflects the restored field.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: fixes Studio/frontend contract drift for `project` documents by aligning schema, query output, and generated types around `categories`.
+- Verification:
+  - `pnpm --filter studio run typegen`
+  - `pnpm --filter frontend run typecheck`
+
 ## 2026-04-03 - Restore CMS-Driven Root Homepage
 - Changed files:
   - `frontend/app/(main)/page.tsx`
@@ -118,6 +336,52 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter frontend run typecheck`
   - `pnpm --filter studio run typecheck`
+
+## 2026-04-03 - Rewrite Hero WhatsApp CTA and Unified Background
+- Changed files:
+  - `frontend/components/ui/rewrite/hero.tsx`
+  - `frontend/components/ui/rewrite/hero-primary-cta.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Swapped the rewrite hero primary CTA from a generic chat icon to an explicit WhatsApp brand icon and matching green button styling whenever the CTA resolves to WhatsApp.
+  - Moved the large color gradient that previously lived behind the hero image panel into the main hero section background so the text area and visual area share one unified atmosphere.
+  - Simplified the image panel treatment by removing the extra gradient and grid overlay layers from the lower visual frame while keeping the softer glow effect for depth.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: frontend-only visual/CTA refinement for the rewrite hero; no Sanity schema, query, or metadata contract changes.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Simplify Rewrite Hero Image Frame Background
+- Changed files:
+  - `frontend/components/ui/rewrite/hero.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Reduced the rewrite hero image frame to a single inner background treatment by removing the remaining glow layer behind the visual panel.
+  - Kept the hero image container and outer shell intact while simplifying the inner frame from layered glass/gradient treatment to a cleaner single-surface background.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: frontend-only visual simplification for the rewrite hero frame; no CMS/schema/query changes.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Compact Rewrite Landing Sections and Refresh Component UI
+- Changed files:
+  - `frontend/components/ui/rewrite/landing-sections.tsx`
+  - `frontend/app/(main)/component-ui/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Compressed the rewrite landing flow by merging the TOC and quick-action strip, removing the mid-page CTA interruption, and converting several long stacked split panels into denser grid/lane compositions.
+  - Reworked service, pricing, proof, and testimonial sections so they scan faster and no longer feel excessively wide and fragmented across repeated full-width scenes.
+  - Updated `/component-ui` copy so the internal audit page reflects the newer, more compact landing-section pattern.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: frontend-only layout and audit-page refresh for rewrite sections; no Sanity schema, query, or metadata changes.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
 
 ## 2026-04-03 - Remove Internal Rewrite Shell Copy from Public Pages
 - Changed files:
@@ -3269,3 +3533,175 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Public Sanity queries returned valid `page` documents for `pembuatan-website`, `percetakan`, and `software`, each with `topBlockCount` and public block data.
   - `pnpm --filter frontend run build` passed.
   - `pnpm --filter frontend run typecheck` passed after build regenerated `.next/types`.
+
+## 2026-04-03 - Homepage and Layanan Moved to Hybrid Page Shell
+- Changed files:
+  - `frontend/app/(main)/page.tsx`
+  - `frontend/app/(main)/layanan/page.tsx`
+  - `frontend/components/hybrid/home-middle-section.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Converted the root homepage `/` from a fully Sanity-rendered `Blocks` page into a hybrid route that keeps Sanity-managed top and bottom block zones while inserting a new code-owned middle section describing Kotacom's operating model and service lanes.
+  - Switched `/layanan` to the shared `PageHybridShell` so the route now follows the same top/bottom Sanity block pattern around the existing rewrite shell used by other main landing pages.
+  - Seeded the public `layanan` page document and updated the existing public `index` page document with `topBlockCount` so editors can continue reordering a single `blocks[]` array while deciding how much renders above the code-owned middle section.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: `/`, `/layanan`, `/pembuatan-website`, `/percetakan`, and `/software` now share one hybrid main-page contract, reducing route drift while preserving route-specific metadata and fallback behavior.
+- Verification:
+  - Public Sanity query confirmed `index` now exposes `topBlockCount: 5`.
+  - Public Sanity query confirmed `layanan` resolves as a published page with `topBlockCount: 2`.
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Hybrid Indicator Added to Sanity Page List
+- Changed files:
+  - `studio/schemas/documents/page.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a preview rule to Sanity `page` documents so hybrid main pages now show a simple list subtitle such as `Hybrid · Top 2` directly in the Studio page list.
+  - The indicator is computed from the route-owned hybrid slug whitelist and `topBlockCount`, so editors can recognize hybrid pages and their current split without opening each document or maintaining a manual toggle field.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: improves Studio editorial clarity for the hybrid main-page workflow without changing frontend rendering or the Sanity content contract.
+- Verification:
+  - `pnpm --filter studio run build` passed.
+
+## 2026-04-03 - Hybrid Page CLI Scaffolder Added
+- Changed files:
+  - `frontend/package.json`
+  - `frontend/scripts/create-hybrid-page.mjs`
+  - `frontend/scripts/lib/hybrid-page-presets.mjs`
+  - `frontend/scripts/lib/sanity-page-guards.mjs`
+  - `skills/hybrid-content-page-workflow/SKILL.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a new preset-based CLI at `pnpm --filter frontend run hybrid:create -- ...` to scaffold or patch hybrid Sanity `page` documents quickly for main landing routes.
+  - The new script supports `create`, `upsert`, and safe default `seed-missing` modes, uses dev-first write credentials, generates public-safe IDs, normalizes block payloads through the existing page guardrails, and verifies public-read after writes.
+  - Added a small preset registry for `main-landing` and `homepage`, plus updated the hybrid workflow skill to document the new command and its guarantees.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: reduces manual setup friction when converting a route to hybrid while preserving the public-read, `_key`, and `link.isExternal` rules already required by the frontend and Studio contracts.
+- Verification:
+  - `pnpm --filter frontend run hybrid:create -- --slug=layanan --preset=main-landing` passed as a dry run.
+  - `pnpm --filter frontend run hybrid:create -- --slug=layanan --preset=main-landing --write` passed and confirmed public-read for `page-layanan`.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Hybrid CLI Workflow Documented
+- Changed files:
+  - `docs/hybrid-page-cli-workflow.md`
+  - `skills/hybrid-content-page-workflow/SKILL.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated operational document for the hybrid page CLI workflow, covering purpose, presets, modes, dry-run versus write behavior, whitelist rules, rollout examples, troubleshooting, and linked source files.
+  - Linked the hybrid workflow skill to the new document so both agent-driven and human-driven usage point to the same instructions.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: reduces ambiguity for future hybrid rollout work and makes the preset-based CLI safer to use consistently across the team.
+- Verification:
+  - Manual review confirmed the new document matches the current CLI behavior, preset names, and write-verification contract.
+
+## 2026-04-03 - Hybrid Route Bootstrap Generator Added
+- Changed files:
+  - `frontend/package.json`
+  - `frontend/scripts/create-hybrid-route.mjs`
+  - `docs/hybrid-page-cli-workflow.md`
+  - `skills/hybrid-content-page-workflow/SKILL.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added `pnpm --filter frontend run hybrid:route:create -- ...` to scaffold a new hybrid route in the repo, generate a starter code-owned middle section component, register the slug in the hybrid registries, and hand off to the Sanity page seed flow.
+  - The new bootstrap command is dry-run by default and includes anti-duplicate checks so it refuses to overwrite an existing route file or generated middle-section component.
+  - Extended the hybrid CLI documentation to explain when to use `hybrid:create` versus `hybrid:route:create`.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: reduces manual route-scaffolding work for new hybrid main pages while keeping Studio list indicators, CLI whitelist behavior, and Sanity seeding aligned.
+- Verification:
+  - `pnpm --filter frontend run hybrid:route:create -- --slug=demo-hybrid-route --preset=main-landing` passed as a dry run and reported the expected route file, component file, registry targets, and Sanity seed command.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Sanity Studio Hybrid Preset Action Added
+- Changed files:
+  - `studio/document-actions/apply-hybrid-preset-action.ts`
+  - `studio/sanity.config.ts`
+  - `docs/hybrid-page-cli-workflow.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a new Sanity Studio document action, `Apply Hybrid Preset`, for eligible `page` documents so editors can apply `main-landing` or `homepage` hybrid seeds directly from Studio without using the CLI.
+  - The action only appears on known hybrid slugs, writes to the draft document instead of publishing immediately, and supports both `seed-missing` and `upsert` modes so editors can choose between safe fill-in behavior and deliberate overwrite.
+  - Updated the hybrid workflow document to explain when to use the Studio action versus the CLI scaffolding commands.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: reduces dependence on terminal access for hybrid page seeding while preserving the draft-review workflow and existing route/render contracts.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` passed.
+
+## 2026-04-03 - Hybrid Workflow Terminology Clarified and Smoke-Tested
+- Changed files:
+  - `frontend/scripts/create-hybrid-page.mjs`
+  - `docs/hybrid-page-cli-workflow.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced the vague `eligible` wording with the clearer `supported hybrid slug` terminology, explicitly tying support to routes that already use `PageHybridShell` or are bootstrapped through the route generator.
+  - Expanded the operational document with concrete smoke-test scenarios covering unsupported slugs, supported existing slugs, new slug dry-run, new slug write, duplicate-route protection, and cleanup behavior.
+  - Ran an end-to-end temporary test slug (`hybrid-e2e-smoke`) through the bootstrap flow, verified the generated route and Sanity page, verified duplicate protection, and then cleaned the test slug back out of both the repo and the Sanity dataset.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: the hybrid rollout workflow is now both clearer for operators and validated against the main failure scenarios that matter in practice.
+- Verification:
+  - `pnpm --filter frontend run hybrid:create -- --slug=unsupported-hybrid-probe --preset=main-landing` failed as expected for an unsupported slug.
+  - `pnpm --filter frontend run hybrid:create -- --slug=layanan --preset=main-landing` passed as a dry run for a supported existing slug.
+  - `pnpm --filter frontend run hybrid:route:create -- --slug=hybrid-e2e-smoke --preset=main-landing` passed as a dry run.
+  - `pnpm --filter frontend run hybrid:route:create -- --slug=hybrid-e2e-smoke --preset=main-landing --write` passed, including public-read verification for `page-hybrid-e2e-smoke`.
+  - Re-running the same route bootstrap failed as expected due to duplicate protection.
+  - Cleanup verification confirmed `hybrid-e2e-smoke` no longer exists in repo registries or public Sanity reads.
+  - `pnpm --filter frontend run typecheck` passed after cleanup.
+  - `pnpm --filter studio run typecheck` passed after cleanup.
+
+## 2026-04-03 - Page to Post Conversion CLI Added
+- Changed files:
+  - `frontend/package.json`
+  - `frontend/scripts/convert-page-to-post.mjs`
+  - `docs/page-to-post-conversion-workflow.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a non-destructive CLI to convert a Sanity `page` document into a `post` document by copying and mapping title, slug, excerpt, meta, image, and body content into the blog schema.
+  - The script prefers reusing `legacy-rich-content` blocks in `post.body`; if none exist, it falls back to hero and section-header text so root-page blog content can be moved into `/blog/[slug]` quickly without rewriting every block type first.
+  - Added a dedicated workflow document that explains the mapping rules, dry-run/write behavior, `create` versus `upsert`, optional author/category refs, and the smoke-test pattern using a temporary post slug.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: provides a faster migration path for blog/article content that still lives in `page` documents, while keeping the source page untouched until redirect or cleanup decisions are made separately.
+- Verification:
+  - `pnpm --filter frontend run page:to-post -- --slug=test-page-hybrid` passed as a dry run and reported `bodySource: fallback-portable-text`.
+  - `pnpm --filter frontend run page:to-post -- --slug=test-page-hybrid --post-slug=page-to-post-smoke --write` passed and created a publicly readable post for smoke testing.
+  - Cleanup verification confirmed `page-to-post-smoke` was removed again and public-read returned `null`.
+  - `pnpm --filter frontend run typecheck` passed after cleanup.
+
+## 2026-04-03 - Sanity Studio Convert Page to Post Action Added
+- Changed files:
+  - `studio/document-actions/convert-page-to-post-action.ts`
+  - `studio/sanity.config.ts`
+  - `docs/page-to-post-conversion-workflow.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a new Sanity Studio document action, `Convert Page to Post`, so editors can bootstrap a `post` draft directly from a `page` document without using the CLI.
+  - The action intentionally skips main hybrid landing pages, prompts for target slug and mode (`create` or `upsert`), reuses the same page-to-post mapping strategy as the CLI, and creates or updates a draft `post` while leaving the source `page` untouched.
+  - Extended the page-to-post workflow document to explain when to use the Studio action versus the CLI workflow.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: reduces dependence on terminal access for one-off blog migrations from `page` to `post` while preserving the safer non-destructive conversion pattern.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` passed.
+  - `pnpm --filter frontend run page:to-post -- --slug=test-page-hybrid` still passed after adding the Studio action.
+  - `pnpm --filter frontend run page:to-post -- --slug=test-page-hybrid --post-slug=page-to-post-smoke --write` still passed.
+  - Cleanup verification confirmed `page-to-post-smoke` was removed and public-read returned `null`.
+  - `pnpm --filter frontend run typecheck` passed after cleanup.

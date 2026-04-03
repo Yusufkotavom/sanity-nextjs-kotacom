@@ -35,9 +35,9 @@ export default defineType({
         ],
         link: {
           _type: "link",
-          isExternal: true,
-          title: "Konsultasi Gratis",
-          href: "https://wa.me/6281335275219",
+          isExternal: false,
+          title: "Diskusikan Kebutuhan",
+          target: false,
           buttonVariant: "default",
         },
       },

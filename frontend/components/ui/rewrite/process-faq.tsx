@@ -7,13 +7,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import { SectionPanel, SectionShell } from "@/components/ui/section-shell";
 
 type RewriteProcessFaqProps = {
   copy: LegacyRewriteCopy;
 };
 
-export default function RewriteProcessFaq({ copy }: RewriteProcessFaqProps) {
+export default async function RewriteProcessFaq({ copy }: RewriteProcessFaqProps) {
   return (
     <SectionShell id="faq" className="py-10 md:py-12">
       <SectionPanel
@@ -58,9 +59,11 @@ export default function RewriteProcessFaq({ copy }: RewriteProcessFaqProps) {
               Butuh jawaban yang lebih spesifik untuk konteks bisnis Anda?
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <Button asChild size="sm">
-                <Link href={copy.ctaHref}>Diskusi Kebutuhan</Link>
-              </Button>
+              <GlobalWhatsAppButton
+                fallbackHref={copy.ctaHref}
+                fallbackLabel="Diskusi Kebutuhan"
+                size="sm"
+              />
               <Button asChild size="sm" variant="outline">
                 <Link href="#cta-mid">Lanjut ke CTA Cepat</Link>
               </Button>

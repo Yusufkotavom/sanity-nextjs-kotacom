@@ -8,6 +8,7 @@ import { carousel1Query } from "./carousel/carousel-1";
 import { carousel2Query } from "./carousel/carousel-2";
 import { timelineQuery } from "./timeline";
 import { cta1Query } from "./cta/cta-1";
+import { whatsappCtaQuery } from "./cta/whatsapp-cta";
 import { logoCloud1Query } from "./logo-cloud/logo-cloud-1";
 import { faqsQuery } from "./faqs";
 import { formNewsletterQuery } from "./forms/newsletter";
@@ -29,6 +30,7 @@ export const REUSABLE_SECTIONS_QUERY = groq`
       ${carousel2Query},
       ${timelineQuery},
       ${cta1Query},
+      ${whatsappCtaQuery},
       ${logoCloud1Query},
       ${faqsQuery},
       ${formNewsletterQuery},

@@ -316,7 +316,7 @@ export default function ComponentUiPage() {
         <SectionIntro
           eyebrow="Catalogue"
           title="Daftar komponen yang sedang dipakai di sistem rewrite."
-          description="Setiap blok di bawah ini menampilkan komponen aktual, lalu diberi kartu info supaya tim bisa membaca nama dan peran komponennya per section."
+          description="Saya rapikan katalog ini agar lebih dekat ke bentuk produksi: lebih padat, lebih sedikit section yang patah, dan lebih mudah discan per primitive."
         />
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {[
@@ -463,7 +463,7 @@ export default function ComponentUiPage() {
         <ComponentMeta
           title="RewriteLandingSections"
           file="frontend/components/ui/rewrite/landing-sections.tsx"
-          role="Komponen section utama untuk layanan, pricing, fitur, proof, testimonial, dan CTA closeout."
+          role="Komponen section utama yang sekarang dipadatkan menjadi lane grids dan utility strip yang lebih rapat untuk layanan, pricing, proof, testimonial, dan CTA closeout."
         />
         <RewriteLandingSections page={demoPage} copy={demoCopy} />
       </div>
