@@ -3926,3 +3926,22 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - Workflow files updated without changing build/install command paths.
   - Follow-up push is required to trigger fresh Actions runs under the new workflow environment settings.
+
+## 2026-04-03 - GitHub Actions Core Action Versions Updated
+- Changed files:
+  - `.github/workflows/ci.yml`
+  - `.github/workflows/deploy-studio.yml`
+  - `.github/workflows/validate.yml`
+  - `docs/seo-updates.md`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Upgraded `actions/checkout` from `v4` to `v6` across CI, Studio deploy, and template validation workflows.
+  - Upgraded `actions/setup-node` from `v4` to `v6` in CI and Studio deploy workflows.
+  - Upgraded `dorny/paths-filter` from `v3` to `v4` in CI change detection.
+  - This reduces GitHub Actions runtime deprecation noise further after the initial Node 24 opt-in pass.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: cleaner CI/CD baseline for the frontend/studio stack and lower operational noise while hybrid homepage and Studio schema work continues.
+- Verification:
+  - Workflow references updated consistently across all three active workflow files.
+  - A fresh push is required to confirm whether any remaining warnings are only from third-party vendor actions that have not yet published Node 24-native releases.

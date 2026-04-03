@@ -25,11 +25,11 @@ jobs:
       studio: ${{ steps.filter.outputs.studio }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Detect changed paths
         id: filter
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         with:
           filters: |
             frontend:
@@ -57,7 +57,7 @@ jobs:
       SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN || secrets.SANITY_AUTH_TOKEN }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -65,7 +65,7 @@ jobs:
           version: 10.19.0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: pnpm
@@ -110,7 +110,7 @@ jobs:
       SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID || 'ci-studio' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -118,7 +118,7 @@ jobs:
           version: 10.19.0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: pnpm
