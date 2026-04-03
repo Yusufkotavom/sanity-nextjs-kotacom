@@ -14,6 +14,9 @@ Dokumen ini merangkum variabel yang dipakai project ini, mana yang wajib, mana o
 - `SANITY_API_READ_TOKEN`
 - `REVALIDATE_SECRET`
 
+Catatan:
+- `SANITY_API_READ_TOKEN` dipakai juga oleh build-time redirect loader di `frontend/next.config.mjs` jika dokumen `redirect` tidak terbaca secara anonymous pada dataset published.
+
 ### Wajib jika pakai fitur newsletter
 
 - `RESEND_API_KEY`
@@ -25,6 +28,13 @@ Dokumen ini merangkum variabel yang dipakai project ini, mana yang wajib, mana o
 
 - `SEO_SESSION_SECRET`
 - `SANITY_AUTH_TOKEN` (agar dashboard bisa simpan setting ke dokumen `seoOpsSettings`)
+
+Catatan build/deploy:
+- Redirect build-time akan mencoba token dengan prioritas:
+  - `SANITY_API_READ_TOKEN`
+  - `SANITY_DEPLOY`
+  - `SANITY_AUTH_TOKEN`
+  - `SANITY_DEV`
 
 ### Wajib/opsional jika pakai AI Writer custom
 
@@ -106,6 +116,11 @@ Dokumen ini merangkum variabel yang dipakai project ini, mana yang wajib, mana o
 - `SANITY_DEV`
 - `SANITY_DEPLOY`
 - `SANITY_STUDIO_AI_WRITER_ACTION_SECRET` (harus sama dengan `AI_WRITER_ACTION_SECRET` di frontend)
+
+Catatan operasional agent/script:
+- Untuk otomasi import/mutasi Sanity oleh agent, gunakan kredensial **dev** terlebih dulu.
+- `SANITY_DEV` dapat diisi token write dataset dev (bukan sekadar boolean flag).
+- Prioritas token write yang dipakai script/agent: `SANITY_DEV` -> `SANITY_AUTH_TOKEN`.
 
 ---
 
@@ -198,7 +213,7 @@ SANITY_STUDIO_DATASET=production
 SANITY_STUDIO_HOSTNAME=replace-with-hostname
 SANITY_AUTH_TOKEN=replace-with-deploy-token
 
-SANITY_DEV=true
+SANITY_DEV=replace-with-sanity-dev-write-token
 SANITY_DEPLOY=false
 # SANITY_STUDIO_APP_ID=replace-with-studio-app-id
 SANITY_STUDIO_AI_WRITER_ACTION_SECRET=replace-with-strong-shared-secret

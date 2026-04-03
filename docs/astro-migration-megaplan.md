@@ -112,9 +112,12 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Content quality pass v3 shipped for JSON-usaha money pages (`/layanan/[slug]`): intent-based headline/description/CTA normalization, FAQ enrichment, and higher CTA density in frontend renderer
 - [x] Astro header navigation snapshot normalized and imported into the live Sanity `navigation` document, including grouped submenu migration, legacy-route sanitization, and GSC-informed/live-page submenu curation
 - [x] Navigation contract now supports footer-only top-level links via Studio-controlled `showInHeader` + `showInFooter` flags, and header rendering respects that split
+- [x] Header navigation interaction tightened: submenu descriptions removed for cleaner information density and mobile accordion now opens in fully collapsed state by default
 - [x] Manual money-page rewrite pass v4 shipped for additional commercial slugs (`pembuatan-website` + `percetakan` details) with intent-specific intro/CTA/final CTA/FAQ overrides beyond rule-based enrichment
 - [x] Software funnel pass completed: stage-specific CTA links added for `software`/`pembuatan-software`/`implementasi-software`/`instalasi-software`/`sistem-pos` plus reusable CTA blocks in rewrite highlights and process-FAQ sections
 - [x] Override-safe SEO enrichment fix shipped: priority slug overrides now merge before enrichment so FAQ/CTA coverage stays consistent (`99/99` commercial routes pass source-level coverage checks)
+- [x] Agent communication policy now enforces Sanity dev-first credential usage (`SANITY_DEV` -> `SANITY_AUTH_TOKEN`) and env documentation/examples are aligned for safer CMS automation
+- [x] Redirect rollout hardening added: build-time Next.js redirect loader now supports authenticated Sanity fetch for private `redirect` documents, plus diagnostics to expose redirect count/token mode in deployment logs
 
 ## Workstream A - Platform & Data Foundation
 
@@ -207,6 +210,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - 2026-04-02 execution: added Astro navigation importer, sanitized legacy header routes (`/posts` -> `/blog`, `/categories/percetakan` -> `/percetakan`, generic archive placeholders to canonical archive roots), and synced grouped submenu structure into the active Sanity `navigation` document.
   - 2026-04-02 execution update: enriched submenu with live dataset-backed `project`/`product` links plus GSC-priority pages (`jasa-cetak-buku-surabaya`, `jasa-instal-aplikasi-surabaya`, `jasa-install-software-macbook`, `jasa-recovery-data-surabaya`, `service-komputer-surabaya-panggilan`, and high-traffic PC guide posts) so the header reflects current demand instead of Astro placeholder-only links.
   - 2026-04-02 execution update: added footer-only support for top-level navigation through Studio flags, and moved lower-priority top-level links (`About`, `Contact`) out of the header while preserving them in the footer.
+  - 2026-04-02 execution update: removed submenu description text from header UI and changed mobile nav to keep all accordion groups closed when the sheet opens.
 - [x] Apply shared icon-only social pattern for footer/navigation shell using reusable component contract.
 - [x] Apply compact sticky header rhythm with single CTA focus and icon actions (dark mode + social) across desktop/mobile shell.
 - [x] Apply Vercel-like visual shell tokens and reusable surface/separator utilities across shared layout blocks (`globals.css`, header, footer, section container, legacy landing shell).

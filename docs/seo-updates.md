@@ -16,6 +16,53 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-03 - Build-Time Sanity Redirect Diagnostics
+- Changed files:
+  - `frontend/next.config.mjs`
+  - `docs/env-reference.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Checked redirect contract sync across Studio and frontend:
+    - Studio schema uses `source`, `destination`, `permanent`, `isEnabled`
+    - `next.config.mjs` queries and normalizes the same fields
+  - Added build-time diagnostics to the Sanity redirect loader in `next.config.mjs`.
+  - The loader now logs when required Sanity env vars are missing, when the redirect query returns a non-array payload, and when redirect fetch succeeds with a compact summary (`projectId`, `dataset`, `apiVersion`, token mode, redirect count, sample redirects).
+  - Added authenticated redirect-fetch fallback for build/deploy by reading token envs in this order:
+    - `SANITY_API_READ_TOKEN`
+    - `SANITY_DEPLOY`
+    - `SANITY_AUTH_TOKEN`
+    - `SANITY_DEV`
+  - This addresses the verified case where `redirect` documents were readable with token but returned `[]` over anonymous published API access.
+- SEO impact:
+  - Direct SEO impact: restores expected delivery path for managed `301` redirects during deploy/build when redirect documents are private, reducing false `404` outcomes on curated legacy aliases.
+  - Integration impact: improves observability for Sanity-backed redirect loading during build and aligns env expectations for redirect hydration.
+- Verification:
+  - Schema/query contract reviewed manually: frontend loader and Studio redirect document remain aligned.
+  - Local verification:
+    - anonymous redirect query returned `0`
+    - authenticated redirect query returned `28`
+    - local `next.config.mjs` redirect loader previously returned only static redirect in anonymous mode, confirming the root cause before auth fallback was added.
+
+## 2026-04-02 - Sanity Dev Key Policy for Agent Communication
+- Changed files:
+  - `AGENTS.md`
+  - `docs/env-reference.md`
+  - `frontend/.env.example`
+  - `studio/.env.example`
+  - `frontend/scripts/import-astro-navigation.mjs`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added explicit agent policy to use Sanity **development credentials first** for CMS communication (read/write/query/import/mutation), with token priority `SANITY_DEV` -> `SANITY_AUTH_TOKEN`.
+  - Clarified env documentation and examples so `SANITY_DEV` is treated as a dev write token value (not boolean) for automation contexts.
+  - Updated navigation import script write-config error message to mention `SANITY_DEV` fallback explicitly.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: safer CMS operation boundary for migration/content automation by defaulting agent workflows to dev credentials.
+- Verification:
+  - Manual config review completed across agent rule + env reference + env examples + script message alignment.
+
 ## 2026-04-02 - Override-Safe Enrichment Fix (FAQ/CTA Coverage Lock)
 - Changed files:
   - `frontend/lib/legacy-pages/rewrite-content.ts`
@@ -2458,6 +2505,8 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Added curated live/GSC submenu entries for high-value routes such as `jasa-cetak-buku-surabaya`, `jasa-instal-aplikasi-surabaya`, `jasa-install-software-macbook`, `jasa-recovery-data-surabaya`, `service-komputer-surabaya-panggilan`, `rekomendasi-rakit-pc-5-jutaan`, and other PC-guide posts.
   - Added Studio-controlled `showInHeader` support so top-level nav items can be footer-only; header rendering now excludes links with `showInHeader: false` while footer keeps using `showInFooter`.
   - Applied the new footer-only behavior to secondary top-level links imported from Astro so `About` and `Contact` stay available in the footer without adding more pressure to the main header.
+  - Removed submenu description copy from header rendering and importer output so dropdowns stay denser and more scannable.
+  - Updated mobile nav interaction so accordion groups stay collapsed when the menu opens instead of expanding all sections immediately.
   - Added `pnpm --filter frontend astro-nav:import` for repeatable dry-run and write execution.
 - SEO/integration impact:
   - No direct SEO impact.
