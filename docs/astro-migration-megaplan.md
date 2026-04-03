@@ -103,9 +103,14 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Rewrite section foundation v2 completed the visual-first pass across remaining commercial sections: hero intro panel, pricing, features, testimonials, and closeout CTA now follow the same split-panel rhythm
 - [x] Missing Vercel-pattern primitives v1 added to rewrite system: metrics rail, inline phrase strip, product stage, quote spotlight, and rewrite logo wall are now available and wired into the shared rewrite page shell
 - [x] Public rewrite routes no longer mount `SanityLive` outside Draft Mode, avoiding live-preview client errors on public city landing pages while preserving draft visual editing flows
+- [x] Internal `/component-ui` route added as a noindex UI canvas for auditing rewrite primitives and visual-system components without affecting search index coverage
+- [x] Public rewrite shell cleanup completed: internal/demo hero copy and visual-system explanation blocks were removed from commercial pages so business routes render only user-facing content
+- [x] Selected rewrite modules were reintegrated for the public `percetakan` route with percetakan-specific business copy, replacing the earlier generic/demo messaging
 - [x] Metadata and JSON-LD fallback images switched from legacy `/images/og-image.jpg` to centralized split-pack SEO fallback asset for consistent brand imagery in link previews and structured data
 - [x] Rewrite content SEO power layer implemented: semantic keyword expansion, conversion-oriented intro/description strengthening, FAQ enrichment, and section-level long-guide defaults applied centrally through `buildLegacyRewriteCopy`
 - [x] Intent-based rewrite SEO enrichment shipped (slug-pattern keyword packs, intent FAQ packs, default quick CTA link set, and final CTA normalization) for stronger commercial search alignment on high-intent routes
+- [x] Live-site comparison pass completed for priority rewrite money pages (`pembuatan-website`, `software`, `sistem-pos`, `percetakan`, `company-profile`, `cetak-buku`) and source rewrite copy was extended with stronger geo/commercial intent plus deeper FAQ/guide coverage
+- [x] Live-site comparison pass v2 completed for city/detail commercial routes (`website` city pages, `cetak-brosur`, `cetak-company-profile`, `pembuatan-software`, `implementasi-software`) with extended geo intent and richer supporting rewrite coverage
 - [x] Astro repo MDX content import completed for missing database items only: `posts` (20), `services` (3), `projects` (12), `products` (1), plus required taxonomy categories (89)
 - [x] Legacy `layanan/[slug]` Astro JSON-business pages are now covered by a code-driven Next route backed by repo-local `json_usaha` source copies (`3/3` slug coverage)
 - [x] Repo-local Astro source pack for `jasa-cetak-buku-(kota)` imported into Sanity `page` documents via idempotent importer, with root-slug route now preferring CMS docs over local fallback
@@ -126,7 +131,11 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Override-safe SEO enrichment fix shipped: priority slug overrides now merge before enrichment so FAQ/CTA coverage stays consistent (`99/99` commercial routes pass source-level coverage checks)
 - [x] Agent communication policy now enforces Sanity dev-first credential usage (`SANITY_DEV` -> `SANITY_AUTH_TOKEN`) and env documentation/examples are aligned for safer CMS automation
 - [x] Redirect rollout hardening added: build-time Next.js redirect loader now supports authenticated Sanity fetch for private `redirect` documents, plus diagnostics to expose redirect count/token mode in deployment logs
-- [x] Standalone `/home` landing page shipped as a Vercel-style code-driven showcase route using reusable UI sections and expanded messaging derived from the live `kotacom.id` homepage; legacy `/home -> /` Sanity redirect was disabled so the route can resolve directly, and related client CTA hooks were adjusted to stay prerender-safe under Next 16
+- [x] Product-led homepage now owns `/` using reusable UI sections and expanded messaging derived from the live `kotacom.id` homepage; `/home` and `/product-home` act as redirect aliases, and related client CTA hooks stay prerender-safe under Next 16
+- [x] Legacy rewrite content architecture split into modular registry-based content sources (`content/core`, `website`, `printing`, `software`, `misc`, `registry`) so route discovery, shared SEO enrichment, and per-cluster copy no longer depend on a single monolithic generator file
+- [x] Priority slug override source also split by cluster (`website-overrides`, `printing-overrides`, `software-overrides`) so page-specific tuning is no longer stored in one mixed override map
+- [x] Percetakan anchor pages (`/percetakan`, `/percetakan/cetak-buku`, `/percetakan/cetak-brosur`, `/percetakan/cetak-company-profile`) now resolve through dedicated page modules under `content/printing-pages/*` instead of living only as branches inside the cluster builder
+- [x] Remaining `percetakan` detail presets and `cetak-buku` city-intent overrides are now stored in dedicated `printing-pages/*` modules, leaving `printing.ts` as a smaller resolver/fallback orchestrator
 
 ## Workstream A - Platform & Data Foundation
 
@@ -199,6 +208,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Manual city rewrite v1 shipped for top 20 `jasa-cetak-buku-<kota>` routes (based on local GSC priority file) through centralized city override map in rewrite content engine.
 - [x] Money-page SEO length pass confirmed on frontend source layer (14 money routes + top 20 city routes; title 30-60 and description 120-155 after normalization, `TOTAL_FAIL=0`).
 - [x] Manual money-page rewrite v4 completed for 12 additional high-intent slugs in `pembuatan-website` and `percetakan` clusters with tailored conversion copy (headline/intro/CTA/final CTA/FAQ).
+- [x] Live-vs-local rewrite alignment pass completed on priority money pages to capture stronger `Surabaya` geo intent and expand decision-stage SEO support content in rewrite source.
+- [x] Live-vs-local rewrite alignment pass v2 completed on city/detail commercial pages to capture stronger local-intent and service-variant query coverage in rewrite source.
 - Blocker note (2026-04-02): Live SEO sample audit (`120` URLs) still reports unresolved issues outside migrated frontend scope (`meta_description_too_long: 106`, `title_too_long: 22`, `http_status_not_200: 10`) dominated by legacy live pages/redirect gaps; requires content import/redirect wave plus metadata cleanup on production routes.
 
 ### C2. Structured Data
@@ -226,14 +237,16 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - 2026-04-03 execution update: extended the new visual-first rewrite system into the remaining high-intent blocks so pricing, features, testimonials, final CTA, and the hero description area now share the same panel/separator language.
   - 2026-04-03 execution update: closed several remaining component gaps versus the Vercel reference set by adding reusable metrics/proof rail, phrase-strip heading, product-stage scene, quote spotlight, and logo-wall modules to the rewrite shell.
   - 2026-04-03 execution update: constrained `SanityLive` to Draft Mode only in the main layout so public landing pages stop hitting client-side live-preview parsing failures during dev/runtime.
+  - 2026-04-03 execution update: created a dedicated noindex `/component-ui` route to review the current rewrite primitive set in one place without polluting production indexable navigation.
 - [x] Apply shared icon-only social pattern for footer/navigation shell using reusable component contract.
 - [x] Apply compact sticky header rhythm with single CTA focus and icon actions (dark mode + social) across desktop/mobile shell.
 - [x] Apply Vercel-like visual shell tokens and reusable surface/separator utilities across shared layout blocks (`globals.css`, header, footer, section container, legacy landing shell).
 - [x] Integrate official Kotacom brand logo asset as default UI logo fallback and expose brand preview/reference in `/style-guide`.
+- [x] Public commercial rewrite pages no longer expose internal component-demo messaging; shell output is trimmed to business-facing hero and content sections only.
 
 ### D2. Template Refactor Priority
 - [ ] Homepage
-- [x] Standalone `/home` showcase landing added as a reusable code-driven preview path (does not replace CMS-driven `/` homepage yet)
+- [x] Product-led homepage promoted to `/` using shared UI primitives; `/home` and `/product-home` now act as redirect aliases instead of separate preview destinations
 - [ ] Blog detail/list/category
 - [ ] Service detail/list
 - [x] Product detail/list
@@ -255,6 +268,10 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Rewrite/legacy landing sections now include additional mid-page conversion CTA block (`#cta-mid`) and expanded final CTA action set to increase action opportunities on commercial pages.
 - [x] JSON-usaha service templates now include stronger conversion CTA placement (hero, service cards, mid CTA, pricing cards, FAQ closeout, final CTA fallback) plus intent-based copy normalization from local source parser.
 - [x] Rewrite shared sections now include extra CTA placements in `highlights` and `process-faq` to reinforce conversion paths on money pages using reusable UI blocks.
+- [x] Legacy rewrite content source is now registry-driven and split by cluster, reducing single-file coupling while preserving existing route/render contracts.
+- [x] Legacy rewrite override maps are now separated per cluster so high-intent page tuning can be maintained without cross-domain merge noise.
+- [x] `percetakan` cluster has started moving from cluster-branch content to page-specific modules for top anchor routes, establishing the per-page pattern for the next migration wave.
+- [x] `percetakan` cluster now uses a split submodule layout for anchor pages, remaining detail presets, and city-intent overrides, reducing cluster-level file size and coupling.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.
 - Blocker note (2026-04-02): Regenerated `v2` assets are ready, but final selection/approval and route-level wiring are still pending.

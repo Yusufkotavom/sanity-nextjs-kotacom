@@ -5,10 +5,14 @@ export default function QuoteSpotlight({
   quote,
   author,
   role,
+  highlights = ["Brief jelas", "Eksekusi cepat", "CTA lebih siap closing"],
+  eyebrow = "Customer story",
 }: {
   quote: string;
   author: string;
   role: string;
+  highlights?: string[];
+  eyebrow?: string;
 }) {
   return (
     <SectionShell>
@@ -19,7 +23,7 @@ export default function QuoteSpotlight({
           <>
             <div className="inline-flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white/75 px-3 py-1 text-ui-label text-foreground/70 dark:border-white/10 dark:bg-white/5">
               <Quote className="size-3.5" />
-              Customer story
+              {eyebrow}
             </div>
             <blockquote className="mt-4 text-2xl leading-10 font-medium text-foreground/88 md:text-4xl md:leading-[1.2]">
               “{quote}”
@@ -35,7 +39,7 @@ export default function QuoteSpotlight({
         visual={
           <div className="relative z-10 flex h-full flex-col justify-between">
             <div className="space-y-3">
-              {["Brief jelas", "Eksekusi cepat", "CTA lebih siap closing"].map((item) => (
+              {highlights.map((item) => (
                 <div
                   key={item}
                   className="rounded-2xl border border-black/8 bg-white/80 px-4 py-3 text-sm text-foreground/82 dark:border-white/10 dark:bg-white/10"

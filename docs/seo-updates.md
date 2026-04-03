@@ -16,6 +16,159 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-03 - Remove Internal Rewrite Shell Copy from Public Pages
+- Changed files:
+  - `frontend/components/ui/rewrite/hero.tsx`
+  - `frontend/components/ui/rewrite/page-shell.tsx`
+  - `frontend/lib/legacy-pages/content/printing-overrides.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Removed public-facing internal/demo copy from the commercial rewrite shell, including hero helper text and visual-system presentation text that did not belong on business landing pages.
+  - Simplified the rewrite shell so public commercial pages render user-facing content only: hero, landing sections, badges, highlights, FAQ/process, and related links.
+  - Replaced the `percetakan` intro override with a direct user-facing commercial message instead of editorial/internal rewrite wording.
+- SEO impact:
+  - Direct SEO impact: reduces off-intent/internal wording on public money pages and improves message relevance for search visitors.
+  - Integration impact: UI-shell/content cleanup only; no Sanity schema/query contract changes.
+- Verification:
+  - Source grep confirms the removed internal strings no longer exist in the frontend codebase.
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Reintegrate Rewrite Modules for Percetakan with User-Facing Copy
+- Changed files:
+  - `frontend/components/ui/rewrite/page-shell.tsx`
+  - `frontend/components/ui/rewrite/quote-spotlight.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Reintroduced selected rewrite-shell modules for the public `percetakan` page only: metrics rail, phrase strip, stage panels, quote spotlight, and logo wall.
+  - Replaced demo/system-oriented copy with percetakan-specific business copy focused on specs, production control, quality assurance, and delivery readiness.
+  - Added percetakan-specific hero image mapping and made `QuoteSpotlight` configurable so section messaging can stay user-facing by route.
+- SEO impact:
+  - Direct SEO impact: improves topical depth and commercial relevance on `/percetakan` without reintroducing internal/dev wording.
+  - Integration impact: frontend-only shell/content composition update; no Sanity schema/query contract changes.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Legacy Rewrite Content Registry Split
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `frontend/lib/legacy-pages/content/index.ts`
+  - `frontend/lib/legacy-pages/content/types.ts`
+  - `frontend/lib/legacy-pages/content/constants.ts`
+  - `frontend/lib/legacy-pages/content/utils.ts`
+  - `frontend/lib/legacy-pages/content/overrides.ts`
+  - `frontend/lib/legacy-pages/content/core.ts`
+  - `frontend/lib/legacy-pages/content/website.ts`
+  - `frontend/lib/legacy-pages/content/printing.ts`
+  - `frontend/lib/legacy-pages/content/software.ts`
+  - `frontend/lib/legacy-pages/content/misc.ts`
+  - `frontend/lib/legacy-pages/content/registry.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced the monolithic legacy rewrite generator with a modular content layer split into shared SEO/core helpers, per-cluster content modules, and a registry-based resolver.
+  - Kept the existing public API surface intact by preserving `buildLegacyRewriteCopy` and `buildPercetakanCetakBukuCityCopy` as the runtime entrypoints used by routes/components.
+  - Formalized route-to-content resolution so `pembuatan-website`, `percetakan`, `software`, `sistem-pos`, and supporting misc sections resolve through explicit builders instead of one growing conditional file.
+- SEO impact:
+  - No direct SEO output change intended.
+  - Integration impact: improves maintainability of the legacy rewrite content source while preserving the existing metadata fallback path (`generateBasicMetadata` -> `seoSettings`) and route behavior.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+  - Manual contract check on runtime entrypoints (`buildLegacyRewriteCopy`, `buildPercetakanCetakBukuCityCopy`) and existing route consumers.
+
+## 2026-04-03 - Legacy Rewrite Override Split by Cluster
+- Changed files:
+  - `frontend/lib/legacy-pages/content/overrides.ts`
+  - `frontend/lib/legacy-pages/content/website-overrides.ts`
+  - `frontend/lib/legacy-pages/content/printing-overrides.ts`
+  - `frontend/lib/legacy-pages/content/software-overrides.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Split the previously mixed `PRIORITY_SLUG_OVERRIDES` map into dedicated override files for website, printing, and software clusters.
+  - Reduced the shared `overrides.ts` file to a thin composition layer so page-specific tuning can be maintained within its own business domain.
+  - Preserved the existing enrichment/runtime contract by keeping the merged `PRIORITY_SLUG_OVERRIDES` export unchanged for callers.
+- SEO impact:
+  - No direct SEO output change intended.
+  - Integration impact: lowers maintenance risk for manual money-page overrides while preserving the same frontend rewrite metadata/copy behavior.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+  - `pnpm --filter frontend run build`
+
+## 2026-04-03 - Percetakan Anchor Pages Split into Dedicated Modules
+- Changed files:
+  - `frontend/lib/legacy-pages/content/printing.ts`
+  - `frontend/lib/legacy-pages/content/registry.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/percetakan-index.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-buku.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-brosur.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-company-profile.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Extracted four high-value `percetakan` routes into dedicated page content modules: section index, `cetak-buku`, `cetak-brosur`, and `cetak-company-profile`.
+  - Updated the legacy content registry so those routes are explicitly classified and resolved as page-specific sources instead of remaining implicit branches inside the cluster builder.
+  - Kept the existing rendering and metadata contracts intact by leaving `buildLegacyRewriteCopy` as the shared runtime entrypoint.
+- SEO impact:
+  - No direct SEO output change intended.
+  - Integration impact: improves maintainability and page-level ownership for priority printing routes while preserving current route behavior and the existing `seoSettings` fallback pipeline.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+  - `pnpm --filter frontend run build`
+
+## 2026-04-03 - Percetakan Detail Presets and City Overrides Split
+- Changed files:
+  - `frontend/lib/legacy-pages/content/printing.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/detail-presets.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-buku-city-overrides.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Moved remaining `percetakan` detail preset content out of the main cluster builder into `printing-pages/detail-presets.ts`.
+  - Moved `jasa-cetak-buku-(kota)` intent overrides into `printing-pages/cetak-buku-city-overrides.ts`.
+  - Reduced `printing.ts` to a smaller orchestrator that delegates to page modules, preset modules, and city override data instead of storing all content inline.
+- SEO impact:
+  - No direct SEO output change intended.
+  - Integration impact: lowers maintenance risk for the `percetakan` rewrite cluster while preserving existing route output and metadata fallback behavior.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+  - `pnpm --filter frontend run build`
+
+## 2026-04-03 - Live-Site SEO Rewrite Comparison Pass
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Compared key live money pages against local rewrite coverage for `pembuatan-website`, `software`, `sistem-pos`, `percetakan`, `pembuatan-website/jasa-pembuatan-website-company-profile`, and `percetakan/cetak-buku`.
+  - Extended rewrite SEO copy with stronger commercial phrasing, Surabaya geo intent, richer FAQ/supporting content, and more targeted CTA/internal-link coverage for high-value rewrite routes.
+  - Expanded `cetak-buku`, `percetakan`, and `sistem-pos` supporting long-guide/intent depth so rewrite pages cover more live-site search themes while improving decision-stage relevance.
+- SEO impact:
+  - Direct SEO impact: strengthens title/description keyword alignment, geo relevance, and topical depth for high-intent rewrite clusters compared with the live site baseline.
+  - Integration impact: frontend rewrite-content layer only; no Sanity schema/query contract changes.
+- Verification:
+  - Live-site comparison via direct fetch of current production pages (`title`, `meta description`, `h1`) for the target cluster.
+  - `pnpm dlx tsx` source validation of rewrite outputs for target routes.
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Live-Site SEO Rewrite Comparison Pass v2
+- Changed files:
+  - `frontend/lib/legacy-pages/rewrite-content.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Continued live-vs-local rewrite comparison on city and detail money pages: `pembuatan-website/surabaya`, `pembuatan-website/bandung`, `percetakan/cetak-brosur`, `percetakan/cetak-company-profile`, `software/pembuatan-software`, and `software/implementasi-software`.
+  - Expanded city-page rewrite coverage with stronger `SEO friendly`, `company profile`, and `toko online` intent plus richer FAQ/internal CTA support.
+  - Strengthened detail money-page rewrite copy for `cetak-brosur`, `cetak-company-profile`, `pembuatan-software`, and `implementasi-software` with sharper geo/commercial phrasing aligned to live search themes.
+- SEO impact:
+  - Direct SEO impact: improves keyword/theme coverage for city and detail commercial routes by better matching live-site query patterns while extending conversion-stage support content.
+  - Integration impact: frontend rewrite-content layer only; no Sanity schema/query contract changes.
+- Verification:
+  - Live-site comparison via direct fetch of current production pages (`title`, `meta description`, `h1`) for the target routes.
+  - `pnpm dlx tsx` source validation of rewrite outputs for the updated routes.
+  - `pnpm --filter frontend run typecheck`
+
 ## 2026-04-03 - Product Card Compact Desktop Pass
 - Changed files:
   - `frontend/components/ui/product-card.tsx`
@@ -109,6 +262,46 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Integration impact: preserves the CMS-driven `/` homepage while adding a controlled experimental/preview route for redesign comparison; build-safe client CTA hook cleanup does not change CMS/schema contracts.
 - Verification:
   - Local Sanity verification: redirect document `redirect.kotacom.fb365c1216b59e1c` now has `isEnabled: false`.
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Product-Home Preview Route Swap
+- Changed files:
+  - `frontend/app/(main)/product-home/page.tsx`
+  - `frontend/app/(main)/home/page.tsx`
+  - `frontend/components/ui/home/home-page.tsx`
+  - `frontend/lib/local-content/home-page.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Moved the product-style preview landing from `/home` to `/product-home` to avoid path-level conflicts in live environments.
+  - Converted `/home` into a direct route-level redirect to `/product-home` so previous references still resolve.
+  - Removed hardcoded `/home` wording from the shared landing copy so the same component can be reused under a different preview path.
+- SEO impact:
+  - Direct SEO impact: canonical preview path for the experimental landing is now `/product-home`; `/home` becomes a supporting redirect path instead of a standalone destination.
+  - Integration impact: no Sanity schema/query contract changes; this is route-level wiring only.
+- Verification:
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Product-Led Homepage Promotion
+- Changed files:
+  - `frontend/app/(main)/page.tsx`
+  - `frontend/app/(main)/home/page.tsx`
+  - `frontend/app/(main)/product-home/page.tsx`
+  - `frontend/components/ui/home/home-page.tsx`
+  - `frontend/lib/local-content/home-page.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Promoted the product-led landing from preview status into the primary `/` homepage.
+  - Turned both `/home` and `/product-home` into redirect aliases back to `/` so the new homepage owns the canonical route.
+  - Refactored the homepage view to use shared `component ui` primitives (`SectionShell`, `SectionIntro`, `SectionPanel`) so its spacing, surfaces, and rhythm match the rest of the rewrite/UI system.
+  - Updated homepage copy to read as the main site experience instead of an experimental alternative.
+- SEO impact:
+  - Direct SEO impact: root homepage metadata and canonical behavior now follow the new product-led homepage instead of the previous Sanity `index` block page.
+  - Integration impact: this intentionally overrides the CMS-driven homepage rendering at `/` while leaving Sanity schema/query contracts untouched elsewhere.
+- Verification:
   - `pnpm --filter frontend run build` passed.
   - `pnpm --filter frontend run typecheck` passed.
 
@@ -2676,3 +2869,45 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Integration impact: public frontend rendering is now isolated from Sanity live-preview client behavior unless the session explicitly enters Draft Mode.
 - Verification:
   - Pending manual route retest in local dev after layout change.
+
+## 2026-04-03 - Noindex Component UI Canvas Route
+- Changed files:
+  - `frontend/app/(main)/component-ui/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated internal route at `/component-ui` to preview the current rewrite primitive system in one place.
+  - The page showcases section shell, tinted panels, split visual sections, metrics rail, phrase strip, product stage, quote spotlight, and logo wall.
+  - Metadata for the route is explicitly marked `noindex` so the UI sandbox stays out of the public search surface.
+- SEO/integration impact:
+  - Direct SEO impact: route is intentionally excluded from indexing through metadata `noindex`.
+  - Integration impact: provides a stable internal review page for ongoing component-system work without coupling the audit flow to production landing pages.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Hero Description Surface Simplified
+- Changed files:
+  - `frontend/components/ui/rewrite/hero.tsx`
+  - `docs/seo-updates.md`
+- Summary:
+  - Removed the background panel treatment behind the main rewrite hero description so the intro copy renders as plain text again.
+  - Kept the supporting conversion note below the intro without the framed surface.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: visual change only within the shared rewrite hero component.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Component UI Route Expanded into Sectioned Component Catalogue
+- Changed files:
+  - `frontend/app/(main)/component-ui/page.tsx`
+  - `docs/seo-updates.md`
+- Summary:
+  - Expanded `/component-ui` from a simple visual sandbox into a structured component catalogue page.
+  - Added per-section component metadata panels so each showcased block now explains the component name, source file, and intended role in the rewrite system.
+  - Included the main rewrite components directly on the page: `RewriteHero`, `MetricsRail`, `InlinePhraseStrip`, `SectionShell` primitives, `ProductStage`, `RewriteLandingSections`, `MicroBadges`, `QuoteSpotlight`, `LogoWall`, `RewriteHighlights`, `RewriteProcessFaq`, and `RewriteRelatedLinks`.
+- SEO/integration impact:
+  - Direct SEO impact: none beyond the existing `noindex` behavior for the internal route.
+  - Integration impact: `/component-ui` now acts as a clearer internal reference surface for the active rewrite component system.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.

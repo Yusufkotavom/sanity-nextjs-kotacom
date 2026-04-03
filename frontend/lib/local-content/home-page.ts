@@ -31,7 +31,7 @@ export const homePageContent = {
   badge: "KOTACOM / HOME",
   title: "IT, software, website, dan percetakan dalam satu sistem kerja yang ringkas.",
   description:
-    "Halaman ini merangkum pesan utama kotacom.id menjadi satu pengalaman yang lebih tenang, lebih tajam, dan lebih dekat ke gaya produk modern. Fokusnya tetap sama: membantu bisnis bergerak lebih cepat lewat website, software custom, infrastruktur IT, dan produksi materi promosi.",
+    "Homepage ini merangkum pesan utama kotacom.id menjadi satu pengalaman yang lebih tenang, lebih tajam, dan lebih dekat ke gaya produk modern. Fokusnya tetap sama: membantu bisnis bergerak lebih cepat lewat website, software custom, infrastruktur IT, dan produksi materi promosi.",
   primaryCta: {
     label: "Diskusikan Kebutuhan",
     href: "/contact",
@@ -125,9 +125,9 @@ export const homePageContent = {
     { name: "Laravel", detail: "Structured backend workflows for internal systems and dashboards." },
   ] satisfies HomeTech[],
   finalCta: {
-    title: "Jika halaman utama terasa terlalu generik, /home ini dibuat untuk menunjukkan arah yang lebih tajam.",
+    title: "Homepage ini dirancang untuk menunjukkan arah Kotacom yang lebih tajam, lebih modern, dan lebih mudah dipahami.",
     description:
-      "Gunakan halaman ini sebagai landing alternatif: lebih ringkas, lebih product-led, dan lebih dekat ke ekspektasi desain modern tanpa meninggalkan isi inti kotacom.id.",
+      "Halaman ini memadatkan website, software, IT support, dan percetakan ke dalam satu narasi yang lebih product-led tanpa meninggalkan isi inti kotacom.id.",
     primary: {
       label: "Buka Kontak",
       href: "/contact",

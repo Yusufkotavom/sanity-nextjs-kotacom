@@ -1,32 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, Layers3, MoveRight, Orbit, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SectionIntro, SectionPanel, SectionShell } from "@/components/ui/section-shell";
 import { kotacomSplitIllustrations } from "@/lib/illustrations/kotacom-split";
 import { homePageContent } from "@/lib/local-content/home-page";
-
-function SectionIntro({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="max-w-3xl">
-      <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-foreground/52">
-        {eyebrow}
-      </p>
-      <h2 className="mt-4 text-3xl font-semibold tracking-tight text-foreground md:text-5xl">
-        {title}
-      </h2>
-      <p className="mt-4 text-base leading-7 text-foreground/70 md:text-lg">
-        {description}
-      </p>
-    </div>
-  );
-}
 
 export default function HomePageView() {
   return (
@@ -118,11 +95,12 @@ export default function HomePageView() {
         </div>
       </section>
 
-      <section className="container py-18 md:py-24">
+      <SectionShell className="py-18 md:py-24">
         <SectionIntro
           eyebrow="System"
           title="Empat jalur inti, satu bahasa delivery."
-          description="Konten di halaman live kotacom.id cukup kaya, tapi tersebar menjadi beberapa blok layanan, portfolio, dan produk. Di /home ini, isinya ditata ulang menjadi satu sistem yang lebih mudah dipahami dalam sekali scroll."
+          description="Konten di halaman live kotacom.id cukup kaya, tapi tersebar menjadi beberapa blok layanan, portfolio, dan produk. Di homepage ini, isinya ditata ulang menjadi satu sistem yang lebih mudah dipahami dalam sekali scroll."
+          className="max-w-3xl"
         />
         <div className="mt-10 grid gap-x-10 gap-y-12 lg:grid-cols-2">
           {homePageContent.pillars.map((pillar) => (
@@ -141,16 +119,17 @@ export default function HomePageView() {
             </article>
           ))}
         </div>
-      </section>
+      </SectionShell>
 
       <section className="border-y border-border/60 bg-muted/20">
-        <div className="container py-18 md:py-24">
+        <SectionShell className="py-18 md:py-24" divider={false}>
           <SectionIntro
             eyebrow="Proof"
             title="Bagian terbaik dari home lama tetap dipakai: bukti, bukan janji."
             description="Portfolio, layanan unggulan, dan pesan operasional dari kotacom.id diperluas menjadi blok proof yang lebih rapat, supaya pengunjung cepat melihat relevansi sebelum membaca semua detail layanan."
+            className="max-w-3xl"
           />
-          <div className="mt-10 grid gap-px overflow-hidden rounded-[28px] border border-border/70 bg-border/60 lg:grid-cols-3">
+          <SectionPanel className="mt-10 grid gap-px overflow-hidden rounded-[28px] border border-border/70 bg-border/60 lg:grid-cols-3">
             {homePageContent.proofs.map((item) => (
               <Link
                 key={item.title}
@@ -170,16 +149,17 @@ export default function HomePageView() {
                 </span>
               </Link>
             ))}
-          </div>
-        </div>
+          </SectionPanel>
+        </SectionShell>
       </section>
 
-      <section className="container py-18 md:py-24">
+      <SectionShell className="py-18 md:py-24">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <SectionIntro
             eyebrow="Workflow"
             title="Bukan marketplace layanan. Ini sistem kerja."
             description="Gaya Vercel yang Anda minta terasa kuat saat halaman bergerak seperti product narrative. Karena itu bagian ini disusun sebagai tiga langkah, bukan katalog card yang saling berebut perhatian."
+            className="max-w-3xl"
           />
           <div className="space-y-6">
             {homePageContent.workflow.map((step, index) => (
@@ -197,16 +177,17 @@ export default function HomePageView() {
             ))}
           </div>
         </div>
-      </section>
+      </SectionShell>
 
       <section className="border-y border-border/60 bg-[linear-gradient(180deg,rgba(245,245,245,0.8)_0%,rgba(255,255,255,1)_100%)]">
-        <div className="container py-18 md:py-24">
+        <SectionShell className="py-18 md:py-24" divider={false}>
           <SectionIntro
             eyebrow="Tech Stack"
             title="Stack yang disebut di kotacom.id tetap dipertahankan, tapi dibingkai sebagai kapasitas delivery."
             description="Alih-alih sekadar daftar logo, bagian ini menunjukkan kenapa stack itu relevan: untuk delivery website modern, software custom, dan infrastruktur operasional yang lebih stabil."
+            className="max-w-3xl"
           />
-          <div className="mt-10 grid gap-px overflow-hidden rounded-[28px] border border-border/70 bg-border/60 md:grid-cols-2 xl:grid-cols-4">
+          <SectionPanel className="mt-10 grid gap-px overflow-hidden rounded-[28px] border border-border/70 bg-border/60 md:grid-cols-2 xl:grid-cols-4">
             {homePageContent.tech.map((item) => (
               <div key={item.name} className="bg-background px-5 py-5">
                 <div className="flex items-center gap-3">
@@ -216,11 +197,11 @@ export default function HomePageView() {
                 <p className="mt-3 text-sm leading-6 text-foreground/66">{item.detail}</p>
               </div>
             ))}
-          </div>
-        </div>
+          </SectionPanel>
+        </SectionShell>
       </section>
 
-      <section className="container py-18 md:py-24">
+      <SectionShell className="py-18 md:py-24">
         <div className="overflow-hidden rounded-[34px] border border-border/70 bg-[linear-gradient(135deg,#0d1117_0%,#151b25_48%,#0d1117_100%)] px-6 py-10 text-white md:px-10 md:py-12">
           <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <div className="max-w-3xl">
@@ -255,7 +236,7 @@ export default function HomePageView() {
             </div>
           </div>
         </div>
-      </section>
+      </SectionShell>
     </main>
   );
 }

@@ -9,14 +9,14 @@ import {
 import { getStrategicLinks } from "@/lib/legacy-pages/internal-links";
 import RewriteHero from "@/components/ui/rewrite/hero";
 import InlinePhraseStrip from "@/components/ui/rewrite/inline-phrase-strip";
-import RewriteLandingSections from "@/components/ui/rewrite/landing-sections";
 import MetricsRail from "@/components/ui/rewrite/metrics-rail";
 import ProductStage from "@/components/ui/rewrite/product-stage";
 import QuoteSpotlight from "@/components/ui/rewrite/quote-spotlight";
+import RewriteLandingSections from "@/components/ui/rewrite/landing-sections";
+import LogoWall from "@/components/ui/rewrite/logo-wall";
 import RewriteHighlights from "@/components/ui/rewrite/highlights";
 import RewriteProcessFaq from "@/components/ui/rewrite/process-faq";
 import RewriteRelatedLinks from "@/components/ui/rewrite/related-links";
-import LogoWall from "@/components/ui/rewrite/logo-wall";
 import MicroBadges from "@/components/micro-badges";
 import { kotacomSplitIllustrations } from "@/lib/illustrations/kotacom-split";
 
@@ -82,6 +82,12 @@ export default function RewritePageShell({
         alt: `${copy.primaryKeyword} - KOTACOM`,
       };
     }
+    if (page.section === "percetakan") {
+      return {
+        src: kotacomSplitIllustrations.hero.cetakBukuV2,
+        alt: `${copy.primaryKeyword} - KOTACOM`,
+      };
+    }
     if (page.section === "software") {
       return {
         src: kotacomSplitIllustrations.services.it.softwareCustom,
@@ -102,60 +108,77 @@ export default function RewritePageShell({
     }
     return undefined;
   })();
-  const metricItems = [
-    { value: "24h", label: "respons awal untuk brief yang jelas dan siap ditindaklanjuti", brand: "KOTACOM" },
-    { value: "3x", label: "jalur CTA lebih fokus agar lead tidak tercecer ke banyak arah", brand: "Sales-ready" },
-    { value: "100%", label: "struktur halaman diarahkan ke intent komersial dan konsultasi", brand: "Landing flow" },
-    { value: "1 scope", label: "satu page diarahkan ke satu pesan dan satu langkah lanjut utama", brand: "Conversion" },
-  ];
-  const phraseStrip = [
-    "Visual lebih terarah",
-    "Lead lebih siap ditindaklanjuti",
-    "CTA lebih dekat ke closing",
-  ];
-  const productStageItems = [
+
+  const percetakanMetrics = [
     {
-      eyebrow: "Stage 1",
-      title: "Struktur halaman diarahkan ke kebutuhan buyer, bukan sekadar layout cantik.",
+      value: "Pre-press",
+      label: "file, ukuran, bleed, dan spesifikasi dicek lebih dulu sebelum produksi berjalan",
+      brand: "QC",
+    },
+    {
+      value: "Custom",
+      label: "banner, brosur, company profile, buku, stiker, dan materi promosi bisa disesuaikan kebutuhan",
+      brand: "Print",
+    },
+    {
+      value: "Terukur",
+      label: "timeline produksi dan estimasi pengerjaan dibuat lebih jelas agar campaign tidak meleset",
+      brand: "Deadline",
+    },
+    {
+      value: "Nasional",
+      label: "hasil produksi disiapkan untuk pengiriman Surabaya maupun luar kota dengan packing yang aman",
+      brand: "Delivery",
+    },
+  ];
+
+  const percetakanPhraseStrip = [
+    "Spesifikasi lebih jelas",
+    "Produksi lebih terkontrol",
+    "Materi cetak lebih siap dipakai",
+  ];
+
+  const percetakanStageItems = [
+    {
+      eyebrow: "Tahap 1",
+      title: "Kebutuhan cetak dipetakan dari fungsi, jumlah, material, dan deadline.",
       description:
-        "Kami susun section berdasarkan intent dan pertanyaan yang biasanya muncul sebelum prospek siap kontak ke sales.",
-      image: heroImageBySection?.src,
+        "Sebelum produksi dimulai, tim menurunkan kebutuhan Anda ke spesifikasi teknis supaya hasil cetak tidak sekadar bagus, tapi juga tepat guna untuk promosi atau operasional.",
+      image: kotacomSplitIllustrations.services.printing.kartuNamaBrosur,
       bullets: [
-        "Headline menjawab value utama",
-        "Proof dan trust ditempatkan lebih awal",
-        "CTA mengikuti kesiapan user",
+        "Menentukan jenis materi cetak yang paling relevan",
+        "Menyesuaikan kertas, ukuran, dan finishing dengan tujuan pakai",
+        "Mengurangi risiko revisi dari spesifikasi yang kurang lengkap",
       ],
     },
     {
-      eyebrow: "Stage 2",
-      title: "Setiap visual sekarang jadi pembawa konteks, bukan dekorasi yang berdiri sendiri.",
+      eyebrow: "Tahap 2",
+      title: "Produksi dijalankan dengan quality control agar hasil akhir tetap rapi dan konsisten.",
       description:
-        "Pola split text + visual dipakai berulang agar ritme halaman lebih jelas dan tiap section punya scene yang mudah dipindai.",
+        "Setelah file dan spesifikasi disetujui, fokus berpindah ke ketepatan warna, kerapian trimming, finishing, serta kesiapan barang untuk diserahterimakan atau dikirim.",
+      image: kotacomSplitIllustrations.services.printing.cetakBukuCustom,
       bullets: [
-        "Separator antar section lebih tegas",
-        "Frame tipis dan tint saling nyambung",
-        "Hierarchy mobile tetap terjaga",
+        "Pre-press checking sebelum mesin berjalan",
+        "Pengecekan hasil cetak dan finishing per batch",
+        "Packing dan pengiriman disesuaikan dengan jenis produk",
       ],
     },
   ];
-  const trustStackItems = [
-    "Website",
-    "SEO",
-    "WhatsApp",
-    "CRM",
-    "Analytics",
-    "Content",
-    "Speed",
-    "Security",
-    "Sales",
-    "Support",
+
+  const percetakanTrustItems = [
+    "Banner",
+    "Brosur",
+    "Company Profile",
+    "Kartu Nama",
+    "Stiker",
+    "Buku",
+    "Kalender",
+    "Kemasan",
+    "Undangan",
+    "Merchandise",
   ];
-  const spotlight = copy.testimonials?.[0] || {
-    name: "Tim Bisnis",
-    role: "Commercial Team",
-    quote:
-      "Halaman jadi lebih mudah dijelaskan ke calon klien dan jalur konsultasinya terasa jauh lebih siap untuk ditindaklanjuti tim sales.",
-  };
+
+  const shouldRenderPercetakanModules = page.section === "percetakan";
 
   return (
     <>
@@ -170,24 +193,34 @@ export default function RewritePageShell({
         sectionHref={sectionHref}
         heroImage={heroImageBySection}
       />
-      <MetricsRail items={metricItems} />
-      <InlinePhraseStrip phrases={phraseStrip} />
-      <ProductStage
-        title="Section sekarang dibangun sebagai rangkaian scene, bukan tumpukan blok."
-        description="Ini menutup gap utama dari referensi Vercel: tiap area punya visual state, pesan utama, dan arah interaksi yang lebih jelas."
-        items={productStageItems}
-      />
+      {shouldRenderPercetakanModules ? (
+        <>
+          <MetricsRail items={percetakanMetrics} />
+          <InlinePhraseStrip phrases={percetakanPhraseStrip} />
+          <ProductStage
+            title="Alur percetakan dibangun supaya kebutuhan bisnis lebih cepat masuk ke spesifikasi yang bisa diproduksi."
+            description="Bukan sekadar menerima file lalu cetak, tetapi memastikan material, finishing, dan timeline cocok dengan tujuan promosi atau operasional Anda."
+            items={percetakanStageItems}
+          />
+        </>
+      ) : null}
       <RewriteLandingSections page={page} copy={copy} />
-      <QuoteSpotlight
-        quote={spotlight.quote}
-        author={spotlight.name}
-        role={spotlight.role}
-      />
-      <LogoWall
-        title="Komponen baru untuk ritme visual-driven sudah mulai lengkap."
-        description="Layer ini menutup primitive yang sebelumnya belum kita miliki untuk pola section ala Vercel."
-        items={trustStackItems}
-      />
+      {shouldRenderPercetakanModules ? (
+        <>
+          <QuoteSpotlight
+            eyebrow="Cerita klien"
+            quote="Yang kami butuhkan bukan cuma cetak cepat, tapi hasil yang rapi dan enak dibagikan ke calon klien. Tim Kotacom bantu cek file, rapikan spesifikasi, lalu kirim hasil yang siap dipakai."
+            author="Tim Marketing"
+            role="B2B & Promotion Materials"
+            highlights={["Spesifikasi rapi", "QC produksi", "Pengiriman aman"]}
+          />
+          <LogoWall
+            title="Kebutuhan cetak yang biasa ditangani tidak berhenti di satu jenis materi."
+            description="Halaman percetakan ini diarahkan untuk bisnis yang butuh partner produksi lintas kebutuhan, dari materi promosi cepat sampai dokumen brand yang lebih formal."
+            items={percetakanTrustItems}
+          />
+        </>
+      ) : null}
       <MicroBadges />
       <RewriteHighlights copy={copy} />
       <RewriteProcessFaq copy={copy} />

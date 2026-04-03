@@ -71,14 +71,10 @@ export default async function RewriteHero({
               </span>
             ) : null}
           </h1>
-          <div className="mx-auto mt-6 max-w-3xl rounded-[1.4rem] border border-black/8 bg-white/70 p-5 shadow-[0_16px_50px_rgba(15,23,42,0.06)] backdrop-blur dark:border-white/10 dark:bg-white/5 md:p-6">
+          <div className="mx-auto mt-6 max-w-3xl">
             <p className="text-pretty text-ui-body leading-8 text-foreground/72">
               {copy.intro}
             </p>
-            <span className="mt-3 block text-sm font-medium text-sky-700 dark:text-sky-300">
-              Brief lebih cepat, scope lebih jelas, dan CTA utama langsung ke
-              WhatsApp.
-            </span>
           </div>
 
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -123,18 +119,8 @@ export default async function RewriteHero({
             <div className="absolute inset-x-0 bottom-0 h-[68%] bg-[linear-gradient(90deg,rgba(255,184,76,0.72),rgba(255,104,104,0.6),rgba(118,217,255,0.62),rgba(96,255,182,0.66))]" />
             <div className="absolute inset-x-0 bottom-0 h-[68%] bg-[linear-gradient(rgba(255,255,255,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.18)_1px,transparent_1px)] bg-[size:32px_32px]" />
             <div className="relative rounded-[1.5rem] border border-black/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(255,255,255,0.72))] p-6 dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))]">
-              <div className="mx-auto max-w-2xl text-center">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-foreground/55">
-                  Conversion-focused hero
-                </p>
-                <p className="mt-3 text-pretty text-sm leading-7 text-foreground/68 md:text-base">
-                  Tampilan rata tengah, dua CTA yang tegas, dan jalur kontak utama
-                  diprioritaskan ke WhatsApp agar intent komersial tidak tercecer.
-                </p>
-              </div>
-
               {heroImage ? (
-                <div className="relative mx-auto mt-8 aspect-[16/9] max-w-3xl overflow-hidden rounded-[1.5rem] border border-white/50 bg-white/60 shadow-[0_18px_60px_rgba(15,23,42,0.14)] dark:border-white/10 dark:bg-black/20">
+                <div className="relative mx-auto aspect-[16/9] max-w-3xl overflow-hidden rounded-[1.5rem] border border-white/50 bg-white/60 shadow-[0_18px_60px_rgba(15,23,42,0.14)] dark:border-white/10 dark:bg-black/20">
                   <Image
                     src={heroImage.src}
                     alt={heroImage.alt}
@@ -145,7 +131,7 @@ export default async function RewriteHero({
                   />
                 </div>
               ) : (
-                <div className="relative mx-auto mt-10 h-48 max-w-3xl rounded-[1.5rem] border border-white/45 bg-white/55 shadow-[0_18px_60px_rgba(15,23,42,0.14)] dark:border-white/10 dark:bg-black/20" />
+                <div className="relative mx-auto h-48 max-w-3xl rounded-[1.5rem] border border-white/45 bg-white/55 shadow-[0_18px_60px_rgba(15,23,42,0.14)] dark:border-white/10 dark:bg-black/20" />
               )}
             </div>
           </div>
