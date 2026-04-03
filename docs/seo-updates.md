@@ -3976,3 +3976,19 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter studio run typecheck` passed.
   - `pnpm --filter studio run build` passed after the rollback.
+
+## 2026-04-03 - Sanity Studio Core Upgraded for Task Stability
+- Changed files:
+  - `studio/package.json`
+  - `pnpm-lock.yaml`
+  - `docs/seo-updates.md`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Upgraded the Studio core packages from `sanity@5.17.1` / `@sanity/vision@5.17.1` / `@sanity/types@5.17.1` to `5.19.0`.
+  - This follows the Task UI crash continuing after the `page` custom actions were removed, indicating the remaining fault is likely inside the Studio core/runtime rather than our action registry.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: newer Studio runtime and bundled Sanity internals for hosted Studio, intended to resolve the `useDocumentDivergences` Task error path while keeping the existing schema and editing model intact.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed after the upgrade.
+  - `pnpm --filter studio run build` passed after the upgrade.
