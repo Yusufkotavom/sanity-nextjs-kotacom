@@ -338,6 +338,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Homepage migration can now be rehearsed on a dedicated `/home-pepar` hybrid route seeded from the `homepage` preset, reducing pressure on the live `/` path during theme/content convergence.
 - [x] Archive guidance is now explicit at `frontend/components/archive/README.md`, so the rewrite/hybrid stack remains the visible active source while historical component sets stay documented but quarantined.
 - [x] Hybrid preset helpers now default internal links to `isExternal: false`, keeping generated Sanity data aligned with Studio link expectations during broader homepage and landing-page rollout.
+- [x] GitHub Actions workflows now opt JavaScript actions into Node 24, reducing CI/deploy noise while the hybrid homepage and Studio schema rollout continues on `main`.
 - [x] Existing Sanity `page` documents can now be audited and normalized for `_key` and `isExternal` consistency, and the current dataset has been brought back to zero findings after running the normalizer.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.

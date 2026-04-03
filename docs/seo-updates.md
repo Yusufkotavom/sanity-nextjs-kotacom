@@ -3909,3 +3909,20 @@ This file is the canonical changelog for all repository updates, with explicit S
   - `curl -I http://127.0.0.1:3200/home-pepar` returned `200 OK` on the rebuilt local runtime.
   - `curl http://127.0.0.1:3200/home-pepar` confirmed the new hero copy, final readiness copy, and `noindex, nofollow` robots output.
   - Full-page desktop screenshot captured from the rebuilt local runtime: `home-pepar-desktop-final.png`.
+
+## 2026-04-03 - GitHub Actions Node 24 Opt-In Added
+- Changed files:
+  - `.github/workflows/ci.yml`
+  - `.github/workflows/deploy-studio.yml`
+  - `.github/workflows/validate.yml`
+  - `docs/seo-updates.md`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Added `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true` at the workflow level for CI, Studio deploy, and template validation so the repository no longer relies on deprecated Node 20 execution for JavaScript-based GitHub Actions.
+  - This keeps the existing workflow logic intact while removing the platform deprecation warning that was polluting recent runs on `main`.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: cleaner and more future-proof CI/CD behavior for the frontend/studio workflow stack that now carries the hybrid homepage rollout and Studio schema changes.
+- Verification:
+  - Workflow files updated without changing build/install command paths.
+  - Follow-up push is required to trigger fresh Actions runs under the new workflow environment settings.
