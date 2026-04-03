@@ -15,11 +15,13 @@ export default defineType({
     title: "Ceritakan kebutuhan bisnis Anda, kami siapkan solusi yang relevan",
     body: [
       {
+        _key: "body-1",
         _type: "block",
         style: "normal",
         markDefs: [],
         children: [
           {
+            _key: "body-1-span-1",
             _type: "span",
             marks: [],
             text: "Dapatkan rekomendasi teknis, estimasi budget, dan langkah implementasi yang realistis untuk tim Anda.",
@@ -29,6 +31,7 @@ export default defineType({
     ],
     links: [
       {
+        _key: "link-1",
         _type: "link",
         isExternal: true,
         title: "Konsultasi via WhatsApp",
@@ -36,6 +39,7 @@ export default defineType({
         buttonVariant: "default",
       },
       {
+        _key: "link-2",
         _type: "link",
         isExternal: true,
         title: "Lihat Semua Layanan",

@@ -1,3 +1,4 @@
+import PageHybridShell from "@/components/hybrid/page-hybrid-shell";
 import RewritePageShell from "@/components/ui/rewrite/page-shell";
 import {
   getLegacySectionChildren,
@@ -15,9 +16,11 @@ export default function PercetakanPage() {
   if (!page) notFound();
 
   return (
-    <RewritePageShell
-      page={page}
-      siblings={getLegacySectionChildren("percetakan")}
-    />
+    <PageHybridShell slug="percetakan">
+      <RewritePageShell
+        page={page}
+        siblings={getLegacySectionChildren("percetakan")}
+      />
+    </PageHybridShell>
   );
 }

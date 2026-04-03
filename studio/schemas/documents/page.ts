@@ -129,6 +129,16 @@ export default defineType({
         },
       },
     }),
+    defineField({
+      name: "topBlockCount",
+      title: "Top Block Count",
+      description:
+        "Untuk page hybrid, tentukan berapa block pertama yang dirender sebelum section code-owned di tengah halaman.",
+      type: "number",
+      group: "settings",
+      initialValue: 3,
+      validation: (Rule) => Rule.integer().min(0),
+    }),
     meta,
     orderRankField({ type: "page" }),
   ],

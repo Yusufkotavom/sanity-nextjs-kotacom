@@ -47,3 +47,29 @@
   2. `SANITY_AUTH_TOKEN`
 - Do **not** target production credentials by default for routine migration/content automation tasks unless explicitly requested by the user.
 - Agent outputs/logs must never print raw token values.
+
+## Sanity Public Content Guardrails
+
+- For any agent task that seeds, inserts, imports, patches, or rewires **publicly rendered Sanity content**, the agent must follow:
+  - `docs/sanity-seed-guardrails.md`
+  - `skills/sanity-public-content-guardrails/SKILL.md`
+  - `skills/hybrid-content-page-workflow/SKILL.md` when the task is creating or extending a hybrid main page
+- Minimum required rules:
+  - Public document `_id` values must not contain dots (`.`).
+  - This applies both to primary documents such as `page` and referenced documents such as `faq`.
+  - Every array item must include `_key`.
+  - Every `link` object must explicitly set `isExternal`.
+  - Internal links must use `isExternal: false` with `internalLink`.
+  - External links must use `isExternal: true` with `href`.
+- After agent-driven Sanity writes that affect public `page` content, the agent must audit the result and confirm public-read behavior, not only token-authenticated reads.
+
+## Hybrid Main Page Rule
+
+- For main landing pages that should remain code-owned but allow CMS-managed support content, prefer the repo hybrid pattern over full page replacement.
+- Current preferred pattern:
+  - route shell remains code-owned
+  - Sanity `page` document is optional and public-readable
+  - `topBlockCount` splits `blocks[]` into top and bottom zones around the code-owned middle shell
+- Before adding a new hybrid main page, review:
+  - `skills/hybrid-content-page-workflow/SKILL.md`
+  - `docs/sanity-seed-guardrails.md`

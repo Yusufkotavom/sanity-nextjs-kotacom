@@ -12,15 +12,18 @@ export default defineType({
   initialValue: {
     list: [
       {
+        _key: "info-1",
         _type: "split-info",
         title: "IT Support",
         body: [
           {
+            _key: "body-1",
             _type: "block",
             style: "normal",
             markDefs: [],
             children: [
               {
+                _key: "body-1-span-1",
                 _type: "span",
                 marks: [],
                 text: "Maintenance, monitoring, dan troubleshooting untuk menjaga sistem tetap andal.",
@@ -31,15 +34,18 @@ export default defineType({
         tags: ["Support", "Maintenance", "Monitoring"],
       },
       {
+        _key: "info-2",
         _type: "split-info",
         title: "Software Development",
         body: [
           {
+            _key: "body-1",
             _type: "block",
             style: "normal",
             markDefs: [],
             children: [
               {
+                _key: "body-1-span-1",
                 _type: "span",
                 marks: [],
                 text: "Aplikasi custom berbasis kebutuhan proses bisnis dan target produktivitas tim.",
@@ -50,15 +56,18 @@ export default defineType({
         tags: ["Custom App", "Automation", "Dashboard"],
       },
       {
+        _key: "info-3",
         _type: "split-info",
         title: "Printing Services",
         body: [
           {
+            _key: "body-1",
             _type: "block",
             style: "normal",
             markDefs: [],
             children: [
               {
+                _key: "body-1-span-1",
                 _type: "span",
                 marks: [],
                 text: "Kebutuhan cetak promosi dan administrasi dengan output tajam dan konsisten.",

@@ -14,12 +14,19 @@ type FAQProps = Extract<
 >;
 
 export default function FAQs({ padding, colorVariant, faqs }: FAQProps) {
+  const validFaqs = (faqs || []).filter(
+    (faq): faq is NonNullable<typeof faq> => Boolean(faq?._id || faq?.title),
+  );
+
   return (
     <SectionContainer color={colorVariant} padding={padding}>
-      {faqs && faqs?.length > 0 && (
+      {validFaqs.length > 0 && (
         <Accordion className="space-y-4" type="multiple">
-          {faqs.map((faq) => (
-            <AccordionItem key={faq.title} value={`item-${faq._id}`}>
+          {validFaqs.map((faq, index) => (
+            <AccordionItem
+              key={faq._id || faq.title || `faq-${index}`}
+              value={`item-${faq._id || faq.title || index}`}
+            >
               <AccordionTrigger>{faq.title}</AccordionTrigger>
               <AccordionContent>
                 <PortableTextRenderer value={faq.body || []} />

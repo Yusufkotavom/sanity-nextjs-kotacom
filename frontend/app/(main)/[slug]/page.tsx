@@ -61,7 +61,7 @@ export default async function Page(props: {
   const page = await fetchSanityPageBySlug({ slug: params.slug });
 
   if (page) {
-    return <Blocks blocks={page?.blocks ?? []} />;
+    return <Blocks blocks={page?.blocks ?? []} pageTitle={page.title} />;
   }
 
   const cityPage = getJasaCetakBukuCityBySlugOrFallback(params.slug);

@@ -6,9 +6,19 @@ import { PAGE_QUERY_RESULT } from "@/sanity.types";
 type Hero2Props = Extract<
   NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number],
   { _type: "hero-2" }
->;
+> & {
+  pageTitle?: string | null;
+};
 
-export default function Hero2({ tagLine, title, body, links }: Hero2Props) {
+export default function Hero2({
+  tagLine,
+  title,
+  body,
+  links,
+  pageTitle,
+}: Hero2Props) {
+  const resolvedTitle = title?.trim() || pageTitle?.trim() || undefined;
+
   return (
     <div className="container dark:bg-background py-20 lg:pt-40 text-center">
       {tagLine && (
@@ -16,9 +26,9 @@ export default function Hero2({ tagLine, title, body, links }: Hero2Props) {
           <span className="text-ui-label">{tagLine}</span>
         </h1>
       )}
-      {title && (
+      {resolvedTitle && (
         <h2 className="text-display-xl mt-6 animate-fade-up [animation-delay:200ms] opacity-0">
-          {title}
+          {resolvedTitle}
         </h2>
       )}
       {body && (

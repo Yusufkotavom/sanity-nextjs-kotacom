@@ -11,11 +11,13 @@ export default defineType({
     title: "Website, Software, dan IT Support dalam satu tim",
     body: [
       {
+        _key: "body-1",
         _type: "block",
         style: "normal",
         markDefs: [],
         children: [
           {
+            _key: "body-1-span-1",
             _type: "span",
             marks: [],
             text: "Pendekatan one-stop untuk operasional dan pemasaran digital: mulai dari development hingga support harian.",
@@ -25,6 +27,7 @@ export default defineType({
     ],
     links: [
       {
+        _key: "link-1",
         _type: "link",
         isExternal: true,
         title: "Lihat Portofolio",
@@ -32,6 +35,7 @@ export default defineType({
         buttonVariant: "default",
       },
       {
+        _key: "link-2",
         _type: "link",
         isExternal: true,
         title: "Hubungi Tim",
@@ -48,6 +52,7 @@ export default defineType({
     defineField({
       name: "title",
       type: "string",
+      description: "Optional custom title override. Leave empty to use the page title in frontend.",
     }),
     defineField({
       name: "body",

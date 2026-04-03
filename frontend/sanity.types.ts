@@ -23,6 +23,9 @@ export type Price = {
 export type Meta = {
   title?: string;
   description?: string;
+  canonicalUrl?: string;
+  focusKeyword?: string;
+  secondaryKeywords?: Array<string>;
   noindex?: boolean;
   image?: MetaImage;
 };
@@ -39,7 +42,16 @@ export type MetaImage = {
   media?: unknown; // Unable to locate the referenced type "image.media" in schema
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
+  alt?: string;
   _type: "image";
+};
+
+export type LegacyRichContent = {
+  _type: "legacy-rich-content";
+  title?: string;
+  excerpt?: string;
+  contentFormat?: "markdown" | "html";
+  contentRaw?: string;
 };
 
 export type AllPosts = {
@@ -349,6 +361,30 @@ export type SectionPadding = {
   bottom?: boolean;
 };
 
+export type NavigationIcon =
+  | "home"
+  | "grid"
+  | "product"
+  | "service"
+  | "blog"
+  | "docs"
+  | "page"
+  | "company"
+  | "contact"
+  | "pricing"
+  | "growth"
+  | "rocket"
+  | "ai"
+  | "magic"
+  | "workflow"
+  | "security"
+  | "search"
+  | "support"
+  | "help"
+  | "global"
+  | "labs"
+  | "program";
+
 export type ButtonVariant =
   | "default"
   | "destructive"
@@ -373,14 +409,76 @@ export type PageReference = {
   [internalGroqTypeReferenceTo]?: "page";
 };
 
+export type CategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "category";
+};
+
+export type ProductReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "product";
+};
+
+export type ServiceReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "service";
+};
+
+export type ProjectReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "project";
+};
+
+export type NavigationLinkChild = {
+  _type: "navigation-link-child";
+  isExternal?: boolean;
+  internalLink?:
+    | PageReference
+    | PostReference
+    | CategoryReference
+    | ProductReference
+    | ServiceReference
+    | ProjectReference;
+  title?: string;
+  description?: string;
+  badge?: string;
+  group?: string;
+  icon?: NavigationIcon;
+  href?: string;
+  target?: boolean;
+};
+
 export type Link = {
   _type: "link";
   isExternal?: boolean;
-  internalLink?: PageReference | PostReference;
+  internalLink?:
+    | PageReference
+    | PostReference
+    | CategoryReference
+    | ProductReference
+    | ServiceReference
+    | ProjectReference;
   title?: string;
   href?: string;
   target?: boolean;
   buttonVariant?: ButtonVariant;
+  navLocation?: "primary" | "utility";
+  showInFooter?: boolean;
+  showInHeader?: boolean;
+  icon?: NavigationIcon;
+  children?: Array<
+    {
+      _key: string;
+    } & NavigationLinkChild
+  >;
 };
 
 export type BlockContent = Array<
@@ -395,7 +493,12 @@ export type BlockContent = Array<
       listItem?: "bullet" | "number";
       markDefs?: Array<{
         isExternal?: boolean;
-        internalLink?: PageReference | PostReference;
+        internalLink?:
+          | PageReference
+          | PostReference
+          | ServiceReference
+          | ProductReference
+          | ProjectReference;
         href?: string;
         target?: boolean;
         _type: "link";
@@ -422,7 +525,163 @@ export type BlockContent = Array<
   | ({
       _key: string;
     } & Code)
+  | ({
+      _key: string;
+    } & LegacyRichContent)
 >;
+
+export type ReusableSection = {
+  _id: string;
+  _type: "reusableSection";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  isActive?: boolean;
+  priority?: number;
+  placements?: Array<string>;
+  blocks?: Array<
+    | ({
+        _key: string;
+      } & Hero1)
+    | ({
+        _key: string;
+      } & Hero2)
+    | ({
+        _key: string;
+      } & SectionHeader)
+    | ({
+        _key: string;
+      } & SplitRow)
+    | ({
+        _key: string;
+      } & GridRow)
+    | ({
+        _key: string;
+      } & Carousel1)
+    | ({
+        _key: string;
+      } & Carousel2)
+    | ({
+        _key: string;
+      } & TimelineRow)
+    | ({
+        _key: string;
+      } & Cta1)
+    | ({
+        _key: string;
+      } & LogoCloud1)
+    | ({
+        _key: string;
+      } & Faqs)
+    | ({
+        _key: string;
+      } & FormNewsletter)
+    | ({
+        _key: string;
+      } & AllPosts)
+  >;
+  orderRank?: string;
+};
+
+export type Redirect = {
+  _id: string;
+  _type: "redirect";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  source?: string;
+  destination?: string;
+  permanent?: boolean;
+  isEnabled?: boolean;
+};
+
+export type AiWriterSettings = {
+  _id: string;
+  _type: "aiWriterSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  enabled?: boolean;
+  mode?: "gateway" | "direct-gemini" | "direct-groq";
+  defaultModel?: string;
+  fallbackModels?: Array<string>;
+  gatewayProviderOrder?: Array<string>;
+  temperature?: number;
+  maxOutputTokens?: number;
+  gatewayApiKeyEncrypted?: string;
+  geminiApiKeysEncrypted?: string;
+  groqApiKeysEncrypted?: string;
+  prompts?: {
+    globalSystem?: string;
+    postRewrite?: string;
+    serviceRewrite?: string;
+    projectRewrite?: string;
+  };
+  notes?: string;
+};
+
+export type SeoOpsSettings = {
+  _id: string;
+  _type: "seoOpsSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  googleEnabled?: boolean;
+  googleAggressiveMode?: boolean;
+  googleServiceAccountEncrypted?: string;
+  indexNowEnabled?: boolean;
+  indexNowHost?: string;
+  indexNowEndpoint?: string;
+  indexNowKeyEncrypted?: string;
+  indexNowKeyLocation?: string;
+  autoSubmitOnRevalidate?: boolean;
+  maxBatchSize?: number;
+  retryAttempts?: number;
+  dashboardPasswordHash?: string;
+  notes?: string;
+};
+
+export type SeoSettings = {
+  _id: string;
+  _type: "seoSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  titleSuffix?: string;
+  defaultTitle?: string;
+  defaultDescription?: string;
+  defaultNoIndex?: boolean;
+  noIndexBlogCategories?: boolean;
+  noIndexProductCategories?: boolean;
+  noIndexServiceCategories?: boolean;
+  robotsDisallowPaths?: Array<string>;
+  twitterHandle?: string;
+  defaultImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
 
 export type Settings = {
   _id: string;
@@ -448,24 +707,154 @@ export type Settings = {
     width?: number;
     height?: number;
   };
-  siteName?: string;
+  brandName?: string;
   copyright?: BlockContent;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
+  themeColors?: {
+    themePreset?:
+      | "neutral"
+      | "ocean"
+      | "sunset"
+      | "brand-tricolor-a"
+      | "brand-tricolor-b"
+      | "brand-tricolor-c";
+    lightPrimary?:
+      | ""
+      | "#171717"
+      | "#404040"
+      | "#525252"
+      | "#EBEBEB"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#0070F3"
+      | "#3291FF"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#F59E0B"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#FB7185";
+    lightPrimaryForeground?:
+      | ""
+      | "#FAFAFA"
+      | "#F5F5F5"
+      | "#EBEBEB"
+      | "#404040"
+      | "#171717"
+      | "#0A0A0A"
+      | "#111111";
+    lightAccent?:
+      | ""
+      | "#171717"
+      | "#404040"
+      | "#525252"
+      | "#EBEBEB"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#0070F3"
+      | "#3291FF"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#F59E0B"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#FB7185";
+    lightRing?:
+      | ""
+      | "#171717"
+      | "#404040"
+      | "#525252"
+      | "#EBEBEB"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#0070F3"
+      | "#3291FF"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#F59E0B"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#FB7185";
+    darkPrimary?:
+      | ""
+      | "#171717"
+      | "#404040"
+      | "#525252"
+      | "#EBEBEB"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#0070F3"
+      | "#3291FF"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#F59E0B"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#FB7185";
+    darkPrimaryForeground?:
+      | ""
+      | "#FAFAFA"
+      | "#F5F5F5"
+      | "#EBEBEB"
+      | "#404040"
+      | "#171717"
+      | "#0A0A0A"
+      | "#111111";
+    darkAccent?:
+      | ""
+      | "#171717"
+      | "#404040"
+      | "#525252"
+      | "#EBEBEB"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#0070F3"
+      | "#3291FF"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#F59E0B"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#FB7185";
+    darkRing?:
+      | ""
+      | "#171717"
+      | "#404040"
+      | "#525252"
+      | "#EBEBEB"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#0070F3"
+      | "#3291FF"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#F59E0B"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#FB7185";
+  };
+  socialLinks?: Array<{
+    platform?:
+      | "x"
+      | "instagram"
+      | "linkedin"
+      | "youtube"
+      | "facebook"
+      | "tiktok"
+      | "github"
+      | "website";
+    url?: string;
+    target?: boolean;
+    _type: "item";
+    _key: string;
+  }>;
+  whatsApp?: {
+    enabled?: boolean;
+    phoneNumber?: string;
+    predefinedText?: string;
+    ctaText?: string;
+    enableAnimation?: boolean;
+    sourceUrl?: string;
+  };
 };
 
 export type Navigation = {
@@ -479,6 +868,7 @@ export type Navigation = {
       _key: string;
     } & Link
   >;
+  headerCta?: Link;
 };
 
 export type Testimonial = {
@@ -519,7 +909,16 @@ export type Category = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  slug?: Slug;
+  description?: string;
+  meta?: Meta;
   orderRank?: string;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type Page = {
@@ -570,7 +969,11 @@ export type Page = {
     | ({
         _key: string;
       } & AllPosts)
+    | ({
+        _key: string;
+      } & LegacyRichContent)
   >;
+  topBlockCount?: number;
   meta?: Meta;
   orderRank?: string;
 };
@@ -580,13 +983,6 @@ export type AuthorReference = {
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "author";
-};
-
-export type CategoryReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "category";
 };
 
 export type Post = {
@@ -616,6 +1012,108 @@ export type Post = {
   meta?: Meta;
 };
 
+export type Service = {
+  _id: string;
+  _type: "service";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  excerpt?: string;
+  body?: BlockContent;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  deliverables?: Array<string>;
+  duration?: string;
+  startingPrice?: number;
+  currency?: "IDR" | "USD" | "EUR";
+  featured?: boolean;
+  categories?: Array<
+    {
+      _key: string;
+    } & CategoryReference
+  >;
+  cta?: Link;
+  meta?: Meta;
+  orderRank?: string;
+};
+
+export type Product = {
+  _id: string;
+  _type: "product";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  excerpt?: string;
+  body?: BlockContent;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  gallery?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  price?: number;
+  currency?: "IDR" | "USD" | "EUR";
+  availability?: "in-stock" | "pre-order" | "out-of-stock";
+  featured?: boolean;
+  categories?: Array<
+    {
+      _key: string;
+    } & CategoryReference
+  >;
+  cta?: Link;
+  meta?: Meta;
+  orderRank?: string;
+};
+
+export type Project = {
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  excerpt?: string;
+  body?: BlockContent;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  clientName?: string;
+  industry?: string;
+  completionYear?: number;
+  projectUrl?: string;
+  featured?: boolean;
+  cta?: Link;
+  meta?: Meta;
+  orderRank?: string;
+};
+
 export type Author = {
   _id: string;
   _type: "author";
@@ -633,12 +1131,6 @@ export type Author = {
     _type: "image";
   };
   orderRank?: string;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type MediaTag = {
@@ -760,6 +1252,7 @@ export type AllSanitySchemaTypes =
   | Meta
   | SanityImageAssetReference
   | MetaImage
+  | LegacyRichContent
   | AllPosts
   | FormNewsletter
   | FaqReference
@@ -787,24 +1280,37 @@ export type AllSanitySchemaTypes =
   | Hero2
   | Hero1
   | SectionPadding
+  | NavigationIcon
   | ButtonVariant
   | ColorVariant
   | PageReference
+  | CategoryReference
+  | ProductReference
+  | ServiceReference
+  | ProjectReference
+  | NavigationLinkChild
   | Link
   | BlockContent
-  | Settings
+  | ReusableSection
+  | Redirect
+  | AiWriterSettings
+  | SeoOpsSettings
+  | SeoSettings
   | SanityImageCrop
   | SanityImageHotspot
+  | Settings
   | Navigation
   | Testimonial
   | Faq
   | Category
+  | Slug
   | Page
   | AuthorReference
-  | CategoryReference
   | Post
+  | Service
+  | Product
+  | Project
   | Author
-  | Slug
   | MediaTag
   | Code
   | SanityImagePaletteSwatch
@@ -816,23 +1322,211 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: ../frontend/sanity/queries/ai-writer-settings.ts
+// Variable: AI_WRITER_SETTINGS_PUBLIC_QUERY
+// Query: *[_type == "aiWriterSettings"][0]{  enabled,  mode,  defaultModel,  fallbackModels,  gatewayProviderOrder,  temperature,  maxOutputTokens,  prompts,  notes}
+export type AI_WRITER_SETTINGS_PUBLIC_QUERY_RESULT = {
+  enabled: boolean | null;
+  mode: "direct-gemini" | "direct-groq" | "gateway" | null;
+  defaultModel: string | null;
+  fallbackModels: Array<string> | null;
+  gatewayProviderOrder: Array<string> | null;
+  temperature: number | null;
+  maxOutputTokens: number | null;
+  prompts: {
+    globalSystem?: string;
+    postRewrite?: string;
+    serviceRewrite?: string;
+    projectRewrite?: string;
+  } | null;
+  notes: string | null;
+} | null;
+
+// Source: ../frontend/sanity/queries/ai-writer-settings.ts
+// Variable: AI_WRITER_SETTINGS_PRIVATE_QUERY
+// Query: *[_type == "aiWriterSettings"][0]{  enabled,  mode,  defaultModel,  fallbackModels,  gatewayProviderOrder,  temperature,  maxOutputTokens,  gatewayApiKeyEncrypted,  geminiApiKeysEncrypted,  groqApiKeysEncrypted,  prompts,  notes}
+export type AI_WRITER_SETTINGS_PRIVATE_QUERY_RESULT = {
+  enabled: boolean | null;
+  mode: "direct-gemini" | "direct-groq" | "gateway" | null;
+  defaultModel: string | null;
+  fallbackModels: Array<string> | null;
+  gatewayProviderOrder: Array<string> | null;
+  temperature: number | null;
+  maxOutputTokens: number | null;
+  gatewayApiKeyEncrypted: string | null;
+  geminiApiKeysEncrypted: string | null;
+  groqApiKeysEncrypted: string | null;
+  prompts: {
+    globalSystem?: string;
+    postRewrite?: string;
+    serviceRewrite?: string;
+    projectRewrite?: string;
+  } | null;
+  notes: string | null;
+} | null;
+
+// Source: ../frontend/sanity/queries/category.ts
+// Variable: CATEGORIES_QUERY
+// Query: *[_type == "category" && defined(slug)] | order(title asc){  _id,  title,  slug,  description,  "postCount": count(*[_type == "post" && references(^._id)])}
+export type CATEGORIES_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: Slug;
+  description: string | null;
+  postCount: number;
+}>;
+
+// Source: ../frontend/sanity/queries/category.ts
+// Variable: BLOG_CATEGORIES_QUERY
+// Query: *[_type == "category" && defined(slug) && count(*[_type == "post" && references(^._id)]) > 0] | order(title asc){  _id,  title,  slug,  description,  "postCount": count(*[_type == "post" && references(^._id)])}
+export type BLOG_CATEGORIES_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  description: string | null;
+  postCount: number;
+}>;
+
+// Source: ../frontend/sanity/queries/category.ts
+// Variable: PRODUCT_CATEGORIES_QUERY
+// Query: *[_type == "category" && defined(slug) && count(*[_type == "product" && references(^._id)]) > 0] | order(title asc){  _id,  title,  slug,  description,  "productCount": count(*[_type == "product" && references(^._id)])}
+export type PRODUCT_CATEGORIES_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  description: string | null;
+  productCount: number;
+}>;
+
+// Source: ../frontend/sanity/queries/category.ts
+// Variable: SERVICE_CATEGORIES_QUERY
+// Query: *[_type == "category" && defined(slug) && count(*[_type == "service" && references(^._id)]) > 0] | order(title asc){  _id,  title,  slug,  description,  "serviceCount": count(*[_type == "service" && references(^._id)])}
+export type SERVICE_CATEGORIES_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  description: string | null;
+  serviceCount: number;
+}>;
+
+// Source: ../frontend/sanity/queries/category.ts
+// Variable: CATEGORY_QUERY
+// Query: *[_type == "category" && slug.current == $slug][0]{  _id,  title,  slug,  description,    meta{    title,    description,    canonicalUrl,    focusKeyword,    secondaryKeywords,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },  "postCount": count(*[_type == "post" && references(^._id)])}
+export type CATEGORY_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  description: string | null;
+  meta: {
+    title: string | null;
+    description: string | null;
+    canonicalUrl: string | null;
+    focusKeyword: string | null;
+    secondaryKeywords: Array<string> | null;
+    noindex: boolean | null;
+    image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        mimeType: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown; // Unable to locate the referenced type "image.media" in schema
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+  postCount: number;
+} | null;
+
+// Source: ../frontend/sanity/queries/category.ts
+// Variable: CATEGORIES_SLUGS_QUERY
+// Query: *[_type == "category" && defined(slug)]{slug}
+export type CATEGORIES_SLUGS_QUERY_RESULT = Array<{
+  slug: Slug;
+}>;
+
 // Source: ../frontend/sanity/queries/navigation.ts
 // Variable: NAVIGATION_QUERY
-// Query: *[_type == "navigation"]{    _type,    _key,    links  }
+// Query: *[_type == "navigation"] | order(_updatedAt desc)[0...1]{    _type,    _key,    headerCta{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },    "links": coalesce(links, [])[]{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    ),      "children": coalesce(children, [])[]{        _key,        group,        description,        badge,        icon,        title,        target,        "href": select(          isExternal => href,          defined(href) && !defined(internalLink) => href,          @.internalLink->slug.current == "index" => "/",          @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,          @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,          @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,          @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,          @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,          "/" + @.internalLink->slug.current        )      }    }  }
 export type NAVIGATION_QUERY_RESULT = Array<{
   _type: "navigation";
   _key: null;
-  links: Array<
-    {
-      _key: string;
-    } & Link
-  > | null;
+  headerCta: {
+    _key: null;
+    _type: "link";
+    isExternal?: boolean;
+    internalLink?:
+      | CategoryReference
+      | PageReference
+      | PostReference
+      | ProductReference
+      | ProjectReference
+      | ServiceReference;
+    title?: string;
+    href: string | "/" | null;
+    target?: boolean;
+    buttonVariant?: ButtonVariant;
+    navLocation?: "primary" | "utility";
+    showInFooter?: boolean;
+    showInHeader?: boolean;
+    icon?: NavigationIcon;
+    children?: Array<
+      {
+        _key: string;
+      } & NavigationLinkChild
+    >;
+  } | null;
+  links:
+    | Array<{
+        _key: string;
+        _type: "link";
+        isExternal?: boolean;
+        internalLink?:
+          | CategoryReference
+          | PageReference
+          | PostReference
+          | ProductReference
+          | ProjectReference
+          | ServiceReference;
+        title?: string;
+        href: string | "/" | null;
+        target?: boolean;
+        buttonVariant?: ButtonVariant;
+        navLocation?: "primary" | "utility";
+        showInFooter?: boolean;
+        showInHeader?: boolean;
+        icon?: NavigationIcon;
+        children:
+          | Array<{
+              _key: string;
+              group: string | null;
+              description: string | null;
+              badge: string | null;
+              icon: NavigationIcon | null;
+              title: string | null;
+              target: boolean | null;
+              href: string | "/" | null;
+            }>
+          | Array<never>;
+      }>
+    | Array<never>;
 }>;
 
 // Source: ../frontend/sanity/queries/page.ts
 // Variable: PAGE_QUERY
-// Query: *[_type == "page" && slug.current == $slug][0]{    blocks[]{        _type == "hero-1" => {    _type,    _key,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    links[]{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "hero-2" => {    _type,    _key,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    links[]{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "section-header" => {    _type,    _key,    padding,    colorVariant,    sectionWidth,    stackAlign,    tagLine,    title,    description,    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "split-row" => {    _type,    _key,    padding,    colorVariant,    noGap,    splitColumns[]{        _type == "split-content" => {    _type,    _key,    sticky,    padding,    colorVariant,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "split-cards-list" => {    _type,    _key,    list[]{      tagLine,      title,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },    },  },        _type == "split-image" => {    _type,    _key,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },  },        _type == "split-info-list" => {    _type,    _key,    list[]{      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      title,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },      tags[],    },  },    },  },        _type == "grid-row" => {    _type,    _key,    padding,    colorVariant,    gridColumns,    columns[]{        _type == "grid-card" => {    _type,    _key,    title,    excerpt,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "pricing-card" => {    _type,    _key,    title,    tagLine,    price,    list[],    excerpt,    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "grid-post" => {    _type,    _key,    post->{      title,      slug,      excerpt,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      categories[]->{        _id,        title,      },    },  },    },  },        _type == "carousel-1" => {    _type,    _key,    padding,    colorVariant,    size,    orientation,    indicators,    images[]{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },  },        _type == "carousel-2" => {    _type,    _key,    padding,    colorVariant,    testimonial[]->{      _id,      name,      title,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },      rating,    },  },        _type == "timeline-row" => {    _type,    _key,    padding,    colorVariant,    timelines[]{      title,      tagLine,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },    },  },        _type == "cta-1" => {    _type,    _key,    padding,    colorVariant,    sectionWidth,    stackAlign,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    links[]{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "logo-cloud-1" => {    _type,    _key,    padding,    colorVariant,    title,    images[]{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },  },        _type == "faqs" => {    _type,    _key,    padding,    colorVariant,    faqs[]->{      _id,      title,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },    },  },        _type == "form-newsletter" => {    _type,    _key,    padding,    colorVariant,    stackAlign,    consentText,    buttonText,    successMessage,  },        _type == "all-posts" => {    _type,    _key,    padding,    colorVariant,  },    },      meta{    title,    description,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },  }
+// Query: *[_type == "page" && slug.current == $slug][0]{    title,    topBlockCount,    blocks[]{        _type == "hero-1" => {    _type,    _key,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    links[]{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "hero-2" => {    _type,    _key,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    links[]{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "section-header" => {    _type,    _key,    padding,    colorVariant,    sectionWidth,    stackAlign,    tagLine,    title,    description,    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "split-row" => {    _type,    _key,    padding,    colorVariant,    noGap,    splitColumns[]{        _type == "split-content" => {    _type,    _key,    sticky,    padding,    colorVariant,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "split-cards-list" => {    _type,    _key,    list[]{      tagLine,      title,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },    },  },        _type == "split-image" => {    _type,    _key,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },  },        _type == "split-info-list" => {    _type,    _key,    list[]{      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      title,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },      tags[],    },  },    },  },        _type == "grid-row" => {    _type,    _key,    padding,    colorVariant,    gridColumns,    columns[]{        _type == "grid-card" => {    _type,    _key,    title,    excerpt,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "pricing-card" => {    _type,    _key,    title,    tagLine,    price,    list[],    excerpt,    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "grid-post" => {    _type,    _key,    post->{      title,      slug,      excerpt,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      categories[]->{        _id,        title,      },    },  },    },  },        _type == "carousel-1" => {    _type,    _key,    padding,    colorVariant,    size,    orientation,    indicators,    images[]{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },  },        _type == "carousel-2" => {    _type,    _key,    padding,    colorVariant,    testimonial[]->{      _id,      name,      title,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },      rating,    },  },        _type == "timeline-row" => {    _type,    _key,    padding,    colorVariant,    timelines[]{      title,      tagLine,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },    },  },        _type == "cta-1" => {    _type,    _key,    padding,    colorVariant,    sectionWidth,    stackAlign,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    links[]{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "logo-cloud-1" => {    _type,    _key,    padding,    colorVariant,    title,    images[]{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },  },        _type == "faqs" => {    _type,    _key,    padding,    colorVariant,    faqs[]->{      _id,      title,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },    },  },        _type == "form-newsletter" => {    _type,    _key,    padding,    colorVariant,    stackAlign,    consentText,    buttonText,    successMessage,  },        _type == "all-posts" => {    _type,    _key,    padding,    colorVariant,  },        _type == "legacy-rich-content" => {    _type,    _key,    title,    excerpt,    contentFormat,    contentRaw,  },    },      meta{    title,    description,    canonicalUrl,    focusKeyword,    secondaryKeywords,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },  }
 export type PAGE_QUERY_RESULT = {
+  title: string | null;
+  topBlockCount: number | null;
   blocks: Array<
     | {
         _type: "all-posts";
@@ -908,7 +1602,12 @@ export type PAGE_QUERY_RESULT = {
                 listItem?: "bullet" | "number";
                 markDefs: Array<{
                   isExternal?: boolean;
-                  internalLink?: PageReference | PostReference;
+                  internalLink?:
+                    | PageReference
+                    | PostReference
+                    | ProductReference
+                    | ProjectReference
+                    | ServiceReference;
                   href: string | "/" | null;
                   target?: boolean;
                   _type: "link";
@@ -949,6 +1648,15 @@ export type PAGE_QUERY_RESULT = {
                 markDefs: null;
               }
             | {
+                _key: string;
+                _type: "legacy-rich-content";
+                title?: string;
+                excerpt?: string;
+                contentFormat?: "html" | "markdown";
+                contentRaw?: string;
+                markDefs: null;
+              }
+            | {
                 videoId?: string;
                 _type: "youtube";
                 _key: string;
@@ -979,7 +1687,12 @@ export type PAGE_QUERY_RESULT = {
               listItem?: "bullet" | "number";
               markDefs: Array<{
                 isExternal?: boolean;
-                internalLink?: PageReference | PostReference;
+                internalLink?:
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
                 href: string | "/" | null;
                 target?: boolean;
                 _type: "link";
@@ -1020,6 +1733,15 @@ export type PAGE_QUERY_RESULT = {
               markDefs: null;
             }
           | {
+              _key: string;
+              _type: "legacy-rich-content";
+              title?: string;
+              excerpt?: string;
+              contentFormat?: "html" | "markdown";
+              contentRaw?: string;
+              markDefs: null;
+            }
+          | {
               videoId?: string;
               _type: "youtube";
               _key: string;
@@ -1030,11 +1752,26 @@ export type PAGE_QUERY_RESULT = {
           _key: string;
           _type: "link";
           isExternal?: boolean;
-          internalLink?: PageReference | PostReference;
+          internalLink?:
+            | CategoryReference
+            | PageReference
+            | PostReference
+            | ProductReference
+            | ProjectReference
+            | ServiceReference;
           title?: string;
           href: string | "/" | null;
           target?: boolean;
           buttonVariant?: ButtonVariant;
+          navLocation?: "primary" | "utility";
+          showInFooter?: boolean;
+          showInHeader?: boolean;
+          icon?: NavigationIcon;
+          children?: Array<
+            {
+              _key: string;
+            } & NavigationLinkChild
+          >;
         }> | null;
       }
     | {
@@ -1057,7 +1794,12 @@ export type PAGE_QUERY_RESULT = {
                 listItem?: "bullet" | "number";
                 markDefs: Array<{
                   isExternal?: boolean;
-                  internalLink?: PageReference | PostReference;
+                  internalLink?:
+                    | PageReference
+                    | PostReference
+                    | ProductReference
+                    | ProjectReference
+                    | ServiceReference;
                   href: string | "/" | null;
                   target?: boolean;
                   _type: "link";
@@ -1095,6 +1837,15 @@ export type PAGE_QUERY_RESULT = {
                 alt?: string;
                 _type: "image";
                 _key: string;
+                markDefs: null;
+              }
+            | {
+                _key: string;
+                _type: "legacy-rich-content";
+                title?: string;
+                excerpt?: string;
+                contentFormat?: "html" | "markdown";
+                contentRaw?: string;
                 markDefs: null;
               }
             | {
@@ -1151,11 +1902,26 @@ export type PAGE_QUERY_RESULT = {
                 _key: null;
                 _type: "link";
                 isExternal?: boolean;
-                internalLink?: PageReference | PostReference;
+                internalLink?:
+                  | CategoryReference
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
                 title?: string;
                 href: string | "/" | null;
                 target?: boolean;
                 buttonVariant?: ButtonVariant;
+                navLocation?: "primary" | "utility";
+                showInFooter?: boolean;
+                showInHeader?: boolean;
+                icon?: NavigationIcon;
+                children?: Array<
+                  {
+                    _key: string;
+                  } & NavigationLinkChild
+                >;
               } | null;
             }
           | {
@@ -1202,11 +1968,26 @@ export type PAGE_QUERY_RESULT = {
                 _key: null;
                 _type: "link";
                 isExternal?: boolean;
-                internalLink?: PageReference | PostReference;
+                internalLink?:
+                  | CategoryReference
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
                 title?: string;
                 href: string | "/" | null;
                 target?: boolean;
                 buttonVariant?: ButtonVariant;
+                navLocation?: "primary" | "utility";
+                showInFooter?: boolean;
+                showInHeader?: boolean;
+                icon?: NavigationIcon;
+                children?: Array<
+                  {
+                    _key: string;
+                  } & NavigationLinkChild
+                >;
               } | null;
             }
         > | null;
@@ -1228,7 +2009,12 @@ export type PAGE_QUERY_RESULT = {
               listItem?: "bullet" | "number";
               markDefs: Array<{
                 isExternal?: boolean;
-                internalLink?: PageReference | PostReference;
+                internalLink?:
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
                 href: string | "/" | null;
                 target?: boolean;
                 _type: "link";
@@ -1266,6 +2052,15 @@ export type PAGE_QUERY_RESULT = {
               alt?: string;
               _type: "image";
               _key: string;
+              markDefs: null;
+            }
+          | {
+              _key: string;
+              _type: "legacy-rich-content";
+              title?: string;
+              excerpt?: string;
+              contentFormat?: "html" | "markdown";
+              contentRaw?: string;
               markDefs: null;
             }
           | {
@@ -1298,11 +2093,26 @@ export type PAGE_QUERY_RESULT = {
           _key: string;
           _type: "link";
           isExternal?: boolean;
-          internalLink?: PageReference | PostReference;
+          internalLink?:
+            | CategoryReference
+            | PageReference
+            | PostReference
+            | ProductReference
+            | ProjectReference
+            | ServiceReference;
           title?: string;
           href: string | "/" | null;
           target?: boolean;
           buttonVariant?: ButtonVariant;
+          navLocation?: "primary" | "utility";
+          showInFooter?: boolean;
+          showInHeader?: boolean;
+          icon?: NavigationIcon;
+          children?: Array<
+            {
+              _key: string;
+            } & NavigationLinkChild
+          >;
         }> | null;
       }
     | {
@@ -1322,7 +2132,12 @@ export type PAGE_QUERY_RESULT = {
               listItem?: "bullet" | "number";
               markDefs: Array<{
                 isExternal?: boolean;
-                internalLink?: PageReference | PostReference;
+                internalLink?:
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
                 href: string | "/" | null;
                 target?: boolean;
                 _type: "link";
@@ -1363,6 +2178,15 @@ export type PAGE_QUERY_RESULT = {
               markDefs: null;
             }
           | {
+              _key: string;
+              _type: "legacy-rich-content";
+              title?: string;
+              excerpt?: string;
+              contentFormat?: "html" | "markdown";
+              contentRaw?: string;
+              markDefs: null;
+            }
+          | {
               videoId?: string;
               _type: "youtube";
               _key: string;
@@ -1373,11 +2197,1920 @@ export type PAGE_QUERY_RESULT = {
           _key: string;
           _type: "link";
           isExternal?: boolean;
-          internalLink?: PageReference | PostReference;
+          internalLink?:
+            | CategoryReference
+            | PageReference
+            | PostReference
+            | ProductReference
+            | ProjectReference
+            | ServiceReference;
           title?: string;
           href: string | "/" | null;
           target?: boolean;
           buttonVariant?: ButtonVariant;
+          navLocation?: "primary" | "utility";
+          showInFooter?: boolean;
+          showInHeader?: boolean;
+          icon?: NavigationIcon;
+          children?: Array<
+            {
+              _key: string;
+            } & NavigationLinkChild
+          >;
+        }> | null;
+      }
+    | {
+        _type: "legacy-rich-content";
+        _key: string;
+        title: string | null;
+        excerpt: string | null;
+        contentFormat: "html" | "markdown" | null;
+        contentRaw: string | null;
+      }
+    | {
+        _type: "logo-cloud-1";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+        title: string | null;
+        images: Array<{
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+          _key: string;
+        }> | null;
+      }
+    | {
+        _type: "section-header";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+        sectionWidth: "default" | "narrow" | null;
+        stackAlign: "center" | "left" | null;
+        tagLine: string | null;
+        title: string | null;
+        description: string | null;
+        link: null;
+      }
+    | {
+        _type: "split-row";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+        noGap: boolean | null;
+        splitColumns: Array<
+          | {
+              _type: "split-cards-list";
+              _key: string;
+              list: Array<{
+                tagLine: string | null;
+                title: string | null;
+                body: Array<
+                  | {
+                      children?: Array<{
+                        marks?: Array<string>;
+                        text?: string;
+                        _type: "span";
+                        _key: string;
+                      }>;
+                      style?:
+                        | "blockquote"
+                        | "h1"
+                        | "h2"
+                        | "h3"
+                        | "h4"
+                        | "normal";
+                      listItem?: "bullet" | "number";
+                      markDefs: Array<{
+                        isExternal?: boolean;
+                        internalLink?:
+                          | PageReference
+                          | PostReference
+                          | ProductReference
+                          | ProjectReference
+                          | ServiceReference;
+                        href: string | "/" | null;
+                        target?: boolean;
+                        _type: "link";
+                        _key: string;
+                      }> | null;
+                      level?: number;
+                      _type: "block";
+                      _key: string;
+                    }
+                  | {
+                      _key: string;
+                      _type: "code";
+                      language?: string;
+                      filename?: string;
+                      code?: string;
+                      highlightedLines?: Array<number>;
+                      markDefs: null;
+                    }
+                  | {
+                      asset: {
+                        _id: string;
+                        url: string | null;
+                        mimeType: string | null;
+                        metadata: {
+                          lqip: string | null;
+                          dimensions: {
+                            width: number | null;
+                            height: number | null;
+                          } | null;
+                        } | null;
+                      } | null;
+                      media?: unknown;
+                      hotspot?: SanityImageHotspot;
+                      crop?: SanityImageCrop;
+                      alt?: string;
+                      _type: "image";
+                      _key: string;
+                      markDefs: null;
+                    }
+                  | {
+                      _key: string;
+                      _type: "legacy-rich-content";
+                      title?: string;
+                      excerpt?: string;
+                      contentFormat?: "html" | "markdown";
+                      contentRaw?: string;
+                      markDefs: null;
+                    }
+                  | {
+                      videoId?: string;
+                      _type: "youtube";
+                      _key: string;
+                      markDefs: null;
+                    }
+                > | null;
+              }> | null;
+            }
+          | {
+              _type: "split-content";
+              _key: string;
+              sticky: boolean | null;
+              padding: SectionPadding | null;
+              colorVariant: ColorVariant | null;
+              tagLine: string | null;
+              title: string | null;
+              body: Array<
+                | {
+                    children?: Array<{
+                      marks?: Array<string>;
+                      text?: string;
+                      _type: "span";
+                      _key: string;
+                    }>;
+                    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+                    listItem?: "bullet" | "number";
+                    markDefs: Array<{
+                      isExternal?: boolean;
+                      internalLink?:
+                        | PageReference
+                        | PostReference
+                        | ProductReference
+                        | ProjectReference
+                        | ServiceReference;
+                      href: string | "/" | null;
+                      target?: boolean;
+                      _type: "link";
+                      _key: string;
+                    }> | null;
+                    level?: number;
+                    _type: "block";
+                    _key: string;
+                  }
+                | {
+                    _key: string;
+                    _type: "code";
+                    language?: string;
+                    filename?: string;
+                    code?: string;
+                    highlightedLines?: Array<number>;
+                    markDefs: null;
+                  }
+                | {
+                    asset: {
+                      _id: string;
+                      url: string | null;
+                      mimeType: string | null;
+                      metadata: {
+                        lqip: string | null;
+                        dimensions: {
+                          width: number | null;
+                          height: number | null;
+                        } | null;
+                      } | null;
+                    } | null;
+                    media?: unknown;
+                    hotspot?: SanityImageHotspot;
+                    crop?: SanityImageCrop;
+                    alt?: string;
+                    _type: "image";
+                    _key: string;
+                    markDefs: null;
+                  }
+                | {
+                    _key: string;
+                    _type: "legacy-rich-content";
+                    title?: string;
+                    excerpt?: string;
+                    contentFormat?: "html" | "markdown";
+                    contentRaw?: string;
+                    markDefs: null;
+                  }
+                | {
+                    videoId?: string;
+                    _type: "youtube";
+                    _key: string;
+                    markDefs: null;
+                  }
+              > | null;
+              link: {
+                _key: null;
+                _type: "link";
+                isExternal?: boolean;
+                internalLink?:
+                  | CategoryReference
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
+                title?: string;
+                href: string | "/" | null;
+                target?: boolean;
+                buttonVariant?: ButtonVariant;
+                navLocation?: "primary" | "utility";
+                showInFooter?: boolean;
+                showInHeader?: boolean;
+                icon?: NavigationIcon;
+                children?: Array<
+                  {
+                    _key: string;
+                  } & NavigationLinkChild
+                >;
+              } | null;
+            }
+          | {
+              _type: "split-image";
+              _key: string;
+              image: {
+                asset: {
+                  _id: string;
+                  url: string | null;
+                  mimeType: string | null;
+                  metadata: {
+                    lqip: string | null;
+                    dimensions: {
+                      width: number | null;
+                      height: number | null;
+                    } | null;
+                  } | null;
+                } | null;
+                media?: unknown;
+                hotspot?: SanityImageHotspot;
+                crop?: SanityImageCrop;
+                alt?: string;
+                _type: "image";
+              } | null;
+            }
+          | {
+              _type: "split-info-list";
+              _key: string;
+              list: Array<{
+                image: {
+                  asset: {
+                    _id: string;
+                    url: string | null;
+                    mimeType: string | null;
+                    metadata: {
+                      lqip: string | null;
+                      dimensions: {
+                        width: number | null;
+                        height: number | null;
+                      } | null;
+                    } | null;
+                  } | null;
+                  media?: unknown;
+                  hotspot?: SanityImageHotspot;
+                  crop?: SanityImageCrop;
+                  alt?: string;
+                  _type: "image";
+                } | null;
+                title: string | null;
+                body: Array<
+                  | {
+                      children?: Array<{
+                        marks?: Array<string>;
+                        text?: string;
+                        _type: "span";
+                        _key: string;
+                      }>;
+                      style?:
+                        | "blockquote"
+                        | "h1"
+                        | "h2"
+                        | "h3"
+                        | "h4"
+                        | "normal";
+                      listItem?: "bullet" | "number";
+                      markDefs: Array<{
+                        isExternal?: boolean;
+                        internalLink?:
+                          | PageReference
+                          | PostReference
+                          | ProductReference
+                          | ProjectReference
+                          | ServiceReference;
+                        href: string | "/" | null;
+                        target?: boolean;
+                        _type: "link";
+                        _key: string;
+                      }> | null;
+                      level?: number;
+                      _type: "block";
+                      _key: string;
+                    }
+                  | {
+                      _key: string;
+                      _type: "code";
+                      language?: string;
+                      filename?: string;
+                      code?: string;
+                      highlightedLines?: Array<number>;
+                      markDefs: null;
+                    }
+                  | {
+                      asset: {
+                        _id: string;
+                        url: string | null;
+                        mimeType: string | null;
+                        metadata: {
+                          lqip: string | null;
+                          dimensions: {
+                            width: number | null;
+                            height: number | null;
+                          } | null;
+                        } | null;
+                      } | null;
+                      media?: unknown;
+                      hotspot?: SanityImageHotspot;
+                      crop?: SanityImageCrop;
+                      alt?: string;
+                      _type: "image";
+                      _key: string;
+                      markDefs: null;
+                    }
+                  | {
+                      _key: string;
+                      _type: "legacy-rich-content";
+                      title?: string;
+                      excerpt?: string;
+                      contentFormat?: "html" | "markdown";
+                      contentRaw?: string;
+                      markDefs: null;
+                    }
+                  | {
+                      videoId?: string;
+                      _type: "youtube";
+                      _key: string;
+                      markDefs: null;
+                    }
+                > | null;
+                tags: Array<string> | null;
+              }> | null;
+            }
+        > | null;
+      }
+    | {
+        _type: "timeline-row";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+        timelines: Array<{
+          title: string | null;
+          tagLine: string | null;
+          body: Array<
+            | {
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+                listItem?: "bullet" | "number";
+                markDefs: Array<{
+                  isExternal?: boolean;
+                  internalLink?:
+                    | PageReference
+                    | PostReference
+                    | ProductReference
+                    | ProjectReference
+                    | ServiceReference;
+                  href: string | "/" | null;
+                  target?: boolean;
+                  _type: "link";
+                  _key: string;
+                }> | null;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }
+            | {
+                _key: string;
+                _type: "code";
+                language?: string;
+                filename?: string;
+                code?: string;
+                highlightedLines?: Array<number>;
+                markDefs: null;
+              }
+            | {
+                asset: {
+                  _id: string;
+                  url: string | null;
+                  mimeType: string | null;
+                  metadata: {
+                    lqip: string | null;
+                    dimensions: {
+                      width: number | null;
+                      height: number | null;
+                    } | null;
+                  } | null;
+                } | null;
+                media?: unknown;
+                hotspot?: SanityImageHotspot;
+                crop?: SanityImageCrop;
+                alt?: string;
+                _type: "image";
+                _key: string;
+                markDefs: null;
+              }
+            | {
+                _key: string;
+                _type: "legacy-rich-content";
+                title?: string;
+                excerpt?: string;
+                contentFormat?: "html" | "markdown";
+                contentRaw?: string;
+                markDefs: null;
+              }
+            | {
+                videoId?: string;
+                _type: "youtube";
+                _key: string;
+                markDefs: null;
+              }
+          > | null;
+        }> | null;
+      }
+  > | null;
+  meta: {
+    title: string | null;
+    description: string | null;
+    canonicalUrl: string | null;
+    focusKeyword: string | null;
+    secondaryKeywords: Array<string> | null;
+    noindex: boolean | null;
+    image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        mimeType: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown; // Unable to locate the referenced type "image.media" in schema
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+} | null;
+
+// Source: ../frontend/sanity/queries/page.ts
+// Variable: PAGES_SLUGS_QUERY
+// Query: *[_type == "page" && defined(slug)]{slug}
+export type PAGES_SLUGS_QUERY_RESULT = Array<{
+  slug: Slug;
+}>;
+
+// Source: ../frontend/sanity/queries/post.ts
+// Variable: POST_QUERY
+// Query: *[_type == "post" && slug.current == $slug][0]{    title,    slug,    excerpt,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    author->{      name,      image {        ...,        asset->{          _id,          url,          mimeType,          metadata {            lqip,            dimensions {              width,              height            }          }        },        alt      }    },    categories[]->{      _id,      title,      slug    },    _createdAt,    _updatedAt,      meta{    title,    description,    canonicalUrl,    focusKeyword,    secondaryKeywords,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },}
+export type POST_QUERY_RESULT = {
+  title: string | null;
+  slug: Slug | null;
+  excerpt: string | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs: Array<{
+          isExternal?: boolean;
+          internalLink?:
+            | PageReference
+            | PostReference
+            | ProductReference
+            | ProjectReference
+            | ServiceReference;
+          href: string | "/" | null;
+          target?: boolean;
+          _type: "link";
+          _key: string;
+        }> | null;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "code";
+        language?: string;
+        filename?: string;
+        code?: string;
+        highlightedLines?: Array<number>;
+        markDefs: null;
+      }
+    | {
+        asset: {
+          _id: string;
+          url: string | null;
+          mimeType: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+        markDefs: null;
+      }
+    | {
+        _key: string;
+        _type: "legacy-rich-content";
+        title?: string;
+        excerpt?: string;
+        contentFormat?: "html" | "markdown";
+        contentRaw?: string;
+        markDefs: null;
+      }
+    | {
+        videoId?: string;
+        _type: "youtube";
+        _key: string;
+        markDefs: null;
+      }
+  > | null;
+  author: {
+    name: string | null;
+    image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        mimeType: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string | null;
+      _type: "image";
+    } | null;
+  } | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: Slug | null;
+  }> | null;
+  _createdAt: string;
+  _updatedAt: string;
+  meta: {
+    title: string | null;
+    description: string | null;
+    canonicalUrl: string | null;
+    focusKeyword: string | null;
+    secondaryKeywords: Array<string> | null;
+    noindex: boolean | null;
+    image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        mimeType: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown; // Unable to locate the referenced type "image.media" in schema
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+} | null;
+
+// Source: ../frontend/sanity/queries/post.ts
+// Variable: POSTS_QUERY
+// Query: *[_type == "post" && defined(slug)] | order(_createdAt desc){    title,    slug,    excerpt,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    categories[]->{      _id,      title,      slug    },}
+export type POSTS_QUERY_RESULT = Array<{
+  title: string | null;
+  slug: Slug;
+  excerpt: string | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: Slug | null;
+  }> | null;
+}>;
+
+// Source: ../frontend/sanity/queries/post.ts
+// Variable: POSTS_BY_CATEGORY_QUERY
+// Query: *[_type == "post" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(_createdAt desc){    title,    slug,    excerpt,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    categories[]->{      _id,      title,      slug    },}
+export type POSTS_BY_CATEGORY_QUERY_RESULT = Array<{
+  title: string | null;
+  slug: Slug | null;
+  excerpt: string | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: Slug | null;
+  }> | null;
+}>;
+
+// Source: ../frontend/sanity/queries/post.ts
+// Variable: POSTS_SLUGS_QUERY
+// Query: *[_type == "post" && defined(slug)]{slug}
+export type POSTS_SLUGS_QUERY_RESULT = Array<{
+  slug: Slug;
+}>;
+
+// Source: ../frontend/sanity/queries/product.ts
+// Variable: PRODUCT_QUERY
+// Query: *[_type == "product" && slug.current == $slug][0]{  title,  slug,  excerpt,  body[]{      ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }  },  image{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  gallery[]{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  price,  currency,  availability,  featured,  categories[]->{    _id,    title,    slug  },  cta{        _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )  },  _createdAt,  _updatedAt,    meta{    title,    description,    canonicalUrl,    focusKeyword,    secondaryKeywords,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },}
+export type PRODUCT_QUERY_RESULT = {
+  title: string | null;
+  slug: Slug | null;
+  excerpt: string | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs: Array<{
+          isExternal?: boolean;
+          internalLink?:
+            | PageReference
+            | PostReference
+            | ProductReference
+            | ProjectReference
+            | ServiceReference;
+          href: string | "/" | null;
+          target?: boolean;
+          _type: "link";
+          _key: string;
+        }> | null;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "code";
+        language?: string;
+        filename?: string;
+        code?: string;
+        highlightedLines?: Array<number>;
+        markDefs: null;
+      }
+    | {
+        asset: {
+          _id: string;
+          url: string | null;
+          mimeType: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+        markDefs: null;
+      }
+    | {
+        _key: string;
+        _type: "legacy-rich-content";
+        title?: string;
+        excerpt?: string;
+        contentFormat?: "html" | "markdown";
+        contentRaw?: string;
+        markDefs: null;
+      }
+    | {
+        videoId?: string;
+        _type: "youtube";
+        _key: string;
+        markDefs: null;
+      }
+  > | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  gallery: Array<{
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  price: number | null;
+  currency: "EUR" | "IDR" | "USD" | null;
+  availability: "in-stock" | "out-of-stock" | "pre-order" | null;
+  featured: boolean | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: Slug | null;
+  }> | null;
+  cta: {
+    _key: null;
+    _type: "link";
+    isExternal?: boolean;
+    internalLink?:
+      | CategoryReference
+      | PageReference
+      | PostReference
+      | ProductReference
+      | ProjectReference
+      | ServiceReference;
+    title?: string;
+    href: string | "/" | null;
+    target?: boolean;
+    buttonVariant?: ButtonVariant;
+    navLocation?: "primary" | "utility";
+    showInFooter?: boolean;
+    showInHeader?: boolean;
+    icon?: NavigationIcon;
+    children?: Array<
+      {
+        _key: string;
+      } & NavigationLinkChild
+    >;
+  } | null;
+  _createdAt: string;
+  _updatedAt: string;
+  meta: {
+    title: string | null;
+    description: string | null;
+    canonicalUrl: string | null;
+    focusKeyword: string | null;
+    secondaryKeywords: Array<string> | null;
+    noindex: boolean | null;
+    image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        mimeType: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown; // Unable to locate the referenced type "image.media" in schema
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+} | null;
+
+// Source: ../frontend/sanity/queries/product.ts
+// Variable: PRODUCTS_QUERY
+// Query: *[_type == "product" && defined(slug)] | order(featured desc, _createdAt desc){  title,  slug,  excerpt,  image{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  price,  currency,  availability,  featured,  categories[]->{    _id,    title,    slug  }}
+export type PRODUCTS_QUERY_RESULT = Array<{
+  title: string | null;
+  slug: Slug;
+  excerpt: string | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  price: number | null;
+  currency: "EUR" | "IDR" | "USD" | null;
+  availability: "in-stock" | "out-of-stock" | "pre-order" | null;
+  featured: boolean | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: Slug | null;
+  }> | null;
+}>;
+
+// Source: ../frontend/sanity/queries/product.ts
+// Variable: PRODUCTS_BY_CATEGORY_QUERY
+// Query: *[_type == "product" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(featured desc, _createdAt desc){  title,  slug,  excerpt,  image{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  price,  currency,  availability,  featured,  categories[]->{    _id,    title,    slug  }}
+export type PRODUCTS_BY_CATEGORY_QUERY_RESULT = Array<{
+  title: string | null;
+  slug: Slug | null;
+  excerpt: string | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  price: number | null;
+  currency: "EUR" | "IDR" | "USD" | null;
+  availability: "in-stock" | "out-of-stock" | "pre-order" | null;
+  featured: boolean | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: Slug | null;
+  }> | null;
+}>;
+
+// Source: ../frontend/sanity/queries/product.ts
+// Variable: PRODUCTS_SLUGS_QUERY
+// Query: *[_type == "product" && defined(slug)]{slug}
+export type PRODUCTS_SLUGS_QUERY_RESULT = Array<{
+  slug: Slug;
+}>;
+
+// Source: ../frontend/sanity/queries/project.ts
+// Variable: PROJECT_QUERY
+// Query: *[_type == "project" && slug.current == $slug][0]{  title,  slug,  excerpt,  body[]{      ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }  },  image{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  clientName,  industry,  completionYear,  projectUrl,  featured,  cta{        _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )  },  _createdAt,  _updatedAt,    meta{    title,    description,    canonicalUrl,    focusKeyword,    secondaryKeywords,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },}
+export type PROJECT_QUERY_RESULT = {
+  title: string | null;
+  slug: Slug | null;
+  excerpt: string | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs: Array<{
+          isExternal?: boolean;
+          internalLink?:
+            | PageReference
+            | PostReference
+            | ProductReference
+            | ProjectReference
+            | ServiceReference;
+          href: string | "/" | null;
+          target?: boolean;
+          _type: "link";
+          _key: string;
+        }> | null;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "code";
+        language?: string;
+        filename?: string;
+        code?: string;
+        highlightedLines?: Array<number>;
+        markDefs: null;
+      }
+    | {
+        asset: {
+          _id: string;
+          url: string | null;
+          mimeType: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+        markDefs: null;
+      }
+    | {
+        _key: string;
+        _type: "legacy-rich-content";
+        title?: string;
+        excerpt?: string;
+        contentFormat?: "html" | "markdown";
+        contentRaw?: string;
+        markDefs: null;
+      }
+    | {
+        videoId?: string;
+        _type: "youtube";
+        _key: string;
+        markDefs: null;
+      }
+  > | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  clientName: string | null;
+  industry: string | null;
+  completionYear: number | null;
+  projectUrl: string | null;
+  featured: boolean | null;
+  cta: {
+    _key: null;
+    _type: "link";
+    isExternal?: boolean;
+    internalLink?:
+      | CategoryReference
+      | PageReference
+      | PostReference
+      | ProductReference
+      | ProjectReference
+      | ServiceReference;
+    title?: string;
+    href: string | "/" | null;
+    target?: boolean;
+    buttonVariant?: ButtonVariant;
+    navLocation?: "primary" | "utility";
+    showInFooter?: boolean;
+    showInHeader?: boolean;
+    icon?: NavigationIcon;
+    children?: Array<
+      {
+        _key: string;
+      } & NavigationLinkChild
+    >;
+  } | null;
+  _createdAt: string;
+  _updatedAt: string;
+  meta: {
+    title: string | null;
+    description: string | null;
+    canonicalUrl: string | null;
+    focusKeyword: string | null;
+    secondaryKeywords: Array<string> | null;
+    noindex: boolean | null;
+    image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        mimeType: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown; // Unable to locate the referenced type "image.media" in schema
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+} | null;
+
+// Source: ../frontend/sanity/queries/project.ts
+// Variable: PROJECTS_QUERY
+// Query: *[_type == "project" && defined(slug)] | order(featured desc, _createdAt desc){  title,  slug,  excerpt,  image{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  clientName,  industry,  completionYear,  projectUrl,  featured}
+export type PROJECTS_QUERY_RESULT = Array<{
+  title: string | null;
+  slug: Slug;
+  excerpt: string | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  clientName: string | null;
+  industry: string | null;
+  completionYear: number | null;
+  projectUrl: string | null;
+  featured: boolean | null;
+}>;
+
+// Source: ../frontend/sanity/queries/project.ts
+// Variable: PROJECTS_SLUGS_QUERY
+// Query: *[_type == "project" && defined(slug)]{slug}
+export type PROJECTS_SLUGS_QUERY_RESULT = Array<{
+  slug: Slug;
+}>;
+
+// Source: ../frontend/sanity/queries/reusable-section.ts
+// Variable: REUSABLE_SECTIONS_QUERY
+// Query: *[_type == "reusableSection" && isActive == true] | order(priority asc, _createdAt asc){    _id,    title,    priority,    placements,    blocks[]{        _type == "hero-1" => {    _type,    _key,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    links[]{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "hero-2" => {    _type,    _key,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    links[]{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "section-header" => {    _type,    _key,    padding,    colorVariant,    sectionWidth,    stackAlign,    tagLine,    title,    description,    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "split-row" => {    _type,    _key,    padding,    colorVariant,    noGap,    splitColumns[]{        _type == "split-content" => {    _type,    _key,    sticky,    padding,    colorVariant,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "split-cards-list" => {    _type,    _key,    list[]{      tagLine,      title,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },    },  },        _type == "split-image" => {    _type,    _key,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },  },        _type == "split-info-list" => {    _type,    _key,    list[]{      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      title,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },      tags[],    },  },    },  },        _type == "grid-row" => {    _type,    _key,    padding,    colorVariant,    gridColumns,    columns[]{        _type == "grid-card" => {    _type,    _key,    title,    excerpt,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "pricing-card" => {    _type,    _key,    title,    tagLine,    price,    list[],    excerpt,    link{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "grid-post" => {    _type,    _key,    post->{      title,      slug,      excerpt,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      categories[]->{        _id,        title,      },    },  },    },  },        _type == "carousel-1" => {    _type,    _key,    padding,    colorVariant,    size,    orientation,    indicators,    images[]{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },  },        _type == "carousel-2" => {    _type,    _key,    padding,    colorVariant,    testimonial[]->{      _id,      name,      title,      image{          ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }      },      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },      rating,    },  },        _type == "timeline-row" => {    _type,    _key,    padding,    colorVariant,    timelines[]{      title,      tagLine,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },    },  },        _type == "cta-1" => {    _type,    _key,    padding,    colorVariant,    sectionWidth,    stackAlign,    tagLine,    title,    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    links[]{          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    },  },        _type == "logo-cloud-1" => {    _type,    _key,    padding,    colorVariant,    title,    images[]{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },  },        _type == "faqs" => {    _type,    _key,    padding,    colorVariant,    faqs[]->{      _id,      title,      body[]{          ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }      },    },  },        _type == "form-newsletter" => {    _type,    _key,    padding,    colorVariant,    stackAlign,    consentText,    buttonText,    successMessage,  },        _type == "all-posts" => {    _type,    _key,    padding,    colorVariant,  },    }  }
+export type REUSABLE_SECTIONS_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  priority: number | null;
+  placements: Array<string> | null;
+  blocks: Array<
+    | {
+        _type: "all-posts";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+      }
+    | {
+        _type: "carousel-1";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+        size: "one" | "three" | "two" | null;
+        orientation: null;
+        indicators: "count" | "dots" | "none" | null;
+        images: Array<{
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+          _key: string;
+        }> | null;
+      }
+    | {
+        _type: "carousel-2";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+        testimonial: Array<{
+          _id: string;
+          name: string | null;
+          title: string | null;
+          image: {
+            asset: {
+              _id: string;
+              url: string | null;
+              mimeType: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+          } | null;
+          body: Array<
+            | {
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+                listItem?: "bullet" | "number";
+                markDefs: Array<{
+                  isExternal?: boolean;
+                  internalLink?:
+                    | PageReference
+                    | PostReference
+                    | ProductReference
+                    | ProjectReference
+                    | ServiceReference;
+                  href: string | "/" | null;
+                  target?: boolean;
+                  _type: "link";
+                  _key: string;
+                }> | null;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }
+            | {
+                _key: string;
+                _type: "code";
+                language?: string;
+                filename?: string;
+                code?: string;
+                highlightedLines?: Array<number>;
+                markDefs: null;
+              }
+            | {
+                asset: {
+                  _id: string;
+                  url: string | null;
+                  mimeType: string | null;
+                  metadata: {
+                    lqip: string | null;
+                    dimensions: {
+                      width: number | null;
+                      height: number | null;
+                    } | null;
+                  } | null;
+                } | null;
+                media?: unknown;
+                hotspot?: SanityImageHotspot;
+                crop?: SanityImageCrop;
+                alt?: string;
+                _type: "image";
+                _key: string;
+                markDefs: null;
+              }
+            | {
+                _key: string;
+                _type: "legacy-rich-content";
+                title?: string;
+                excerpt?: string;
+                contentFormat?: "html" | "markdown";
+                contentRaw?: string;
+                markDefs: null;
+              }
+            | {
+                videoId?: string;
+                _type: "youtube";
+                _key: string;
+                markDefs: null;
+              }
+          > | null;
+          rating: number | null;
+        }> | null;
+      }
+    | {
+        _type: "cta-1";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+        sectionWidth: "default" | "narrow" | null;
+        stackAlign: "center" | "left" | null;
+        tagLine: string | null;
+        title: string | null;
+        body: Array<
+          | {
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+              listItem?: "bullet" | "number";
+              markDefs: Array<{
+                isExternal?: boolean;
+                internalLink?:
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
+                href: string | "/" | null;
+                target?: boolean;
+                _type: "link";
+                _key: string;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }
+          | {
+              _key: string;
+              _type: "code";
+              language?: string;
+              filename?: string;
+              code?: string;
+              highlightedLines?: Array<number>;
+              markDefs: null;
+            }
+          | {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+              _key: string;
+              markDefs: null;
+            }
+          | {
+              _key: string;
+              _type: "legacy-rich-content";
+              title?: string;
+              excerpt?: string;
+              contentFormat?: "html" | "markdown";
+              contentRaw?: string;
+              markDefs: null;
+            }
+          | {
+              videoId?: string;
+              _type: "youtube";
+              _key: string;
+              markDefs: null;
+            }
+        > | null;
+        links: Array<{
+          _key: string;
+          _type: "link";
+          isExternal?: boolean;
+          internalLink?:
+            | CategoryReference
+            | PageReference
+            | PostReference
+            | ProductReference
+            | ProjectReference
+            | ServiceReference;
+          title?: string;
+          href: string | "/" | null;
+          target?: boolean;
+          buttonVariant?: ButtonVariant;
+          navLocation?: "primary" | "utility";
+          showInFooter?: boolean;
+          showInHeader?: boolean;
+          icon?: NavigationIcon;
+          children?: Array<
+            {
+              _key: string;
+            } & NavigationLinkChild
+          >;
+        }> | null;
+      }
+    | {
+        _type: "faqs";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+        faqs: Array<{
+          _id: string;
+          title: string | null;
+          body: Array<
+            | {
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+                listItem?: "bullet" | "number";
+                markDefs: Array<{
+                  isExternal?: boolean;
+                  internalLink?:
+                    | PageReference
+                    | PostReference
+                    | ProductReference
+                    | ProjectReference
+                    | ServiceReference;
+                  href: string | "/" | null;
+                  target?: boolean;
+                  _type: "link";
+                  _key: string;
+                }> | null;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }
+            | {
+                _key: string;
+                _type: "code";
+                language?: string;
+                filename?: string;
+                code?: string;
+                highlightedLines?: Array<number>;
+                markDefs: null;
+              }
+            | {
+                asset: {
+                  _id: string;
+                  url: string | null;
+                  mimeType: string | null;
+                  metadata: {
+                    lqip: string | null;
+                    dimensions: {
+                      width: number | null;
+                      height: number | null;
+                    } | null;
+                  } | null;
+                } | null;
+                media?: unknown;
+                hotspot?: SanityImageHotspot;
+                crop?: SanityImageCrop;
+                alt?: string;
+                _type: "image";
+                _key: string;
+                markDefs: null;
+              }
+            | {
+                _key: string;
+                _type: "legacy-rich-content";
+                title?: string;
+                excerpt?: string;
+                contentFormat?: "html" | "markdown";
+                contentRaw?: string;
+                markDefs: null;
+              }
+            | {
+                videoId?: string;
+                _type: "youtube";
+                _key: string;
+                markDefs: null;
+              }
+          > | null;
+        }> | null;
+      }
+    | {
+        _type: "form-newsletter";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+        stackAlign: "center" | "left" | null;
+        consentText: string | null;
+        buttonText: string | null;
+        successMessage: string | null;
+      }
+    | {
+        _type: "grid-row";
+        _key: string;
+        padding: SectionPadding | null;
+        colorVariant: ColorVariant | null;
+        gridColumns: "grid-cols-2" | "grid-cols-3" | "grid-cols-4" | null;
+        columns: Array<
+          | {
+              _type: "grid-card";
+              _key: string;
+              title: string | null;
+              excerpt: string | null;
+              image: {
+                asset: {
+                  _id: string;
+                  url: string | null;
+                  mimeType: string | null;
+                  metadata: {
+                    lqip: string | null;
+                    dimensions: {
+                      width: number | null;
+                      height: number | null;
+                    } | null;
+                  } | null;
+                } | null;
+                media?: unknown;
+                hotspot?: SanityImageHotspot;
+                crop?: SanityImageCrop;
+                alt?: string;
+                _type: "image";
+              } | null;
+              link: {
+                _key: null;
+                _type: "link";
+                isExternal?: boolean;
+                internalLink?:
+                  | CategoryReference
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
+                title?: string;
+                href: string | "/" | null;
+                target?: boolean;
+                buttonVariant?: ButtonVariant;
+                navLocation?: "primary" | "utility";
+                showInFooter?: boolean;
+                showInHeader?: boolean;
+                icon?: NavigationIcon;
+                children?: Array<
+                  {
+                    _key: string;
+                  } & NavigationLinkChild
+                >;
+              } | null;
+            }
+          | {
+              _type: "grid-post";
+              _key: string;
+              post: {
+                title: string | null;
+                slug: Slug | null;
+                excerpt: string | null;
+                image: {
+                  asset: {
+                    _id: string;
+                    url: string | null;
+                    mimeType: string | null;
+                    metadata: {
+                      lqip: string | null;
+                      dimensions: {
+                        width: number | null;
+                        height: number | null;
+                      } | null;
+                    } | null;
+                  } | null;
+                  media?: unknown;
+                  hotspot?: SanityImageHotspot;
+                  crop?: SanityImageCrop;
+                  alt?: string;
+                  _type: "image";
+                } | null;
+                categories: Array<{
+                  _id: string;
+                  title: string | null;
+                }> | null;
+              } | null;
+            }
+          | {
+              _type: "pricing-card";
+              _key: string;
+              title: string | null;
+              tagLine: string | null;
+              price: Price | null;
+              list: Array<string> | null;
+              excerpt: string | null;
+              link: {
+                _key: null;
+                _type: "link";
+                isExternal?: boolean;
+                internalLink?:
+                  | CategoryReference
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
+                title?: string;
+                href: string | "/" | null;
+                target?: boolean;
+                buttonVariant?: ButtonVariant;
+                navLocation?: "primary" | "utility";
+                showInFooter?: boolean;
+                showInHeader?: boolean;
+                icon?: NavigationIcon;
+                children?: Array<
+                  {
+                    _key: string;
+                  } & NavigationLinkChild
+                >;
+              } | null;
+            }
+        > | null;
+      }
+    | {
+        _type: "hero-1";
+        _key: string;
+        tagLine: string | null;
+        title: string | null;
+        body: Array<
+          | {
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+              listItem?: "bullet" | "number";
+              markDefs: Array<{
+                isExternal?: boolean;
+                internalLink?:
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
+                href: string | "/" | null;
+                target?: boolean;
+                _type: "link";
+                _key: string;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }
+          | {
+              _key: string;
+              _type: "code";
+              language?: string;
+              filename?: string;
+              code?: string;
+              highlightedLines?: Array<number>;
+              markDefs: null;
+            }
+          | {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+              _key: string;
+              markDefs: null;
+            }
+          | {
+              _key: string;
+              _type: "legacy-rich-content";
+              title?: string;
+              excerpt?: string;
+              contentFormat?: "html" | "markdown";
+              contentRaw?: string;
+              markDefs: null;
+            }
+          | {
+              videoId?: string;
+              _type: "youtube";
+              _key: string;
+              markDefs: null;
+            }
+        > | null;
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            mimeType: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        links: Array<{
+          _key: string;
+          _type: "link";
+          isExternal?: boolean;
+          internalLink?:
+            | CategoryReference
+            | PageReference
+            | PostReference
+            | ProductReference
+            | ProjectReference
+            | ServiceReference;
+          title?: string;
+          href: string | "/" | null;
+          target?: boolean;
+          buttonVariant?: ButtonVariant;
+          navLocation?: "primary" | "utility";
+          showInFooter?: boolean;
+          showInHeader?: boolean;
+          icon?: NavigationIcon;
+          children?: Array<
+            {
+              _key: string;
+            } & NavigationLinkChild
+          >;
+        }> | null;
+      }
+    | {
+        _type: "hero-2";
+        _key: string;
+        tagLine: string | null;
+        title: string | null;
+        body: Array<
+          | {
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+              listItem?: "bullet" | "number";
+              markDefs: Array<{
+                isExternal?: boolean;
+                internalLink?:
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
+                href: string | "/" | null;
+                target?: boolean;
+                _type: "link";
+                _key: string;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }
+          | {
+              _key: string;
+              _type: "code";
+              language?: string;
+              filename?: string;
+              code?: string;
+              highlightedLines?: Array<number>;
+              markDefs: null;
+            }
+          | {
+              asset: {
+                _id: string;
+                url: string | null;
+                mimeType: string | null;
+                metadata: {
+                  lqip: string | null;
+                  dimensions: {
+                    width: number | null;
+                    height: number | null;
+                  } | null;
+                } | null;
+              } | null;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+              _key: string;
+              markDefs: null;
+            }
+          | {
+              _key: string;
+              _type: "legacy-rich-content";
+              title?: string;
+              excerpt?: string;
+              contentFormat?: "html" | "markdown";
+              contentRaw?: string;
+              markDefs: null;
+            }
+          | {
+              videoId?: string;
+              _type: "youtube";
+              _key: string;
+              markDefs: null;
+            }
+        > | null;
+        links: Array<{
+          _key: string;
+          _type: "link";
+          isExternal?: boolean;
+          internalLink?:
+            | CategoryReference
+            | PageReference
+            | PostReference
+            | ProductReference
+            | ProjectReference
+            | ServiceReference;
+          title?: string;
+          href: string | "/" | null;
+          target?: boolean;
+          buttonVariant?: ButtonVariant;
+          navLocation?: "primary" | "utility";
+          showInFooter?: boolean;
+          showInHeader?: boolean;
+          icon?: NavigationIcon;
+          children?: Array<
+            {
+              _key: string;
+            } & NavigationLinkChild
+          >;
         }> | null;
       }
     | {
@@ -1450,7 +4183,12 @@ export type PAGE_QUERY_RESULT = {
                       listItem?: "bullet" | "number";
                       markDefs: Array<{
                         isExternal?: boolean;
-                        internalLink?: PageReference | PostReference;
+                        internalLink?:
+                          | PageReference
+                          | PostReference
+                          | ProductReference
+                          | ProjectReference
+                          | ServiceReference;
                         href: string | "/" | null;
                         target?: boolean;
                         _type: "link";
@@ -1491,6 +4229,15 @@ export type PAGE_QUERY_RESULT = {
                       markDefs: null;
                     }
                   | {
+                      _key: string;
+                      _type: "legacy-rich-content";
+                      title?: string;
+                      excerpt?: string;
+                      contentFormat?: "html" | "markdown";
+                      contentRaw?: string;
+                      markDefs: null;
+                    }
+                  | {
                       videoId?: string;
                       _type: "youtube";
                       _key: string;
@@ -1519,7 +4266,12 @@ export type PAGE_QUERY_RESULT = {
                     listItem?: "bullet" | "number";
                     markDefs: Array<{
                       isExternal?: boolean;
-                      internalLink?: PageReference | PostReference;
+                      internalLink?:
+                        | PageReference
+                        | PostReference
+                        | ProductReference
+                        | ProjectReference
+                        | ServiceReference;
                       href: string | "/" | null;
                       target?: boolean;
                       _type: "link";
@@ -1560,6 +4312,15 @@ export type PAGE_QUERY_RESULT = {
                     markDefs: null;
                   }
                 | {
+                    _key: string;
+                    _type: "legacy-rich-content";
+                    title?: string;
+                    excerpt?: string;
+                    contentFormat?: "html" | "markdown";
+                    contentRaw?: string;
+                    markDefs: null;
+                  }
+                | {
                     videoId?: string;
                     _type: "youtube";
                     _key: string;
@@ -1570,11 +4331,26 @@ export type PAGE_QUERY_RESULT = {
                 _key: null;
                 _type: "link";
                 isExternal?: boolean;
-                internalLink?: PageReference | PostReference;
+                internalLink?:
+                  | CategoryReference
+                  | PageReference
+                  | PostReference
+                  | ProductReference
+                  | ProjectReference
+                  | ServiceReference;
                 title?: string;
                 href: string | "/" | null;
                 target?: boolean;
                 buttonVariant?: ButtonVariant;
+                navLocation?: "primary" | "utility";
+                showInFooter?: boolean;
+                showInHeader?: boolean;
+                icon?: NavigationIcon;
+                children?: Array<
+                  {
+                    _key: string;
+                  } & NavigationLinkChild
+                >;
               } | null;
             }
           | {
@@ -1642,7 +4418,12 @@ export type PAGE_QUERY_RESULT = {
                       listItem?: "bullet" | "number";
                       markDefs: Array<{
                         isExternal?: boolean;
-                        internalLink?: PageReference | PostReference;
+                        internalLink?:
+                          | PageReference
+                          | PostReference
+                          | ProductReference
+                          | ProjectReference
+                          | ServiceReference;
                         href: string | "/" | null;
                         target?: boolean;
                         _type: "link";
@@ -1683,6 +4464,15 @@ export type PAGE_QUERY_RESULT = {
                       markDefs: null;
                     }
                   | {
+                      _key: string;
+                      _type: "legacy-rich-content";
+                      title?: string;
+                      excerpt?: string;
+                      contentFormat?: "html" | "markdown";
+                      contentRaw?: string;
+                      markDefs: null;
+                    }
+                  | {
                       videoId?: string;
                       _type: "youtube";
                       _key: string;
@@ -1714,7 +4504,12 @@ export type PAGE_QUERY_RESULT = {
                 listItem?: "bullet" | "number";
                 markDefs: Array<{
                   isExternal?: boolean;
-                  internalLink?: PageReference | PostReference;
+                  internalLink?:
+                    | PageReference
+                    | PostReference
+                    | ProductReference
+                    | ProjectReference
+                    | ServiceReference;
                   href: string | "/" | null;
                   target?: boolean;
                   _type: "link";
@@ -1755,6 +4550,15 @@ export type PAGE_QUERY_RESULT = {
                 markDefs: null;
               }
             | {
+                _key: string;
+                _type: "legacy-rich-content";
+                title?: string;
+                excerpt?: string;
+                contentFormat?: "html" | "markdown";
+                contentRaw?: string;
+                markDefs: null;
+              }
+            | {
                 videoId?: string;
                 _type: "youtube";
                 _key: string;
@@ -1764,45 +4568,57 @@ export type PAGE_QUERY_RESULT = {
         }> | null;
       }
   > | null;
-  meta: {
-    title: string | null;
-    description: string | null;
-    noindex: boolean | null;
-    image: {
-      asset: {
-        _id: string;
-        url: string | null;
-        mimeType: string | null;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number | null;
-            height: number | null;
-          } | null;
-        } | null;
-      } | null;
-      media?: unknown; // Unable to locate the referenced type "image.media" in schema
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    } | null;
-  } | null;
-} | null;
-
-// Source: ../frontend/sanity/queries/page.ts
-// Variable: PAGES_SLUGS_QUERY
-// Query: *[_type == "page" && defined(slug)]{slug}
-export type PAGES_SLUGS_QUERY_RESULT = Array<{
-  slug: Slug;
 }>;
 
-// Source: ../frontend/sanity/queries/post.ts
-// Variable: POST_QUERY
-// Query: *[_type == "post" && slug.current == $slug][0]{    title,    slug,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },    body[]{        ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }    },    author->{      name,      image {        ...,        asset->{          _id,          url,          mimeType,          metadata {            lqip,            dimensions {              width,              height            }          }        },        alt      }    },    _createdAt,    _updatedAt,      meta{    title,    description,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },}
-export type POST_QUERY_RESULT = {
-  title: string | null;
-  slug: Slug | null;
-  image: {
+// Source: ../frontend/sanity/queries/seo-ops-settings.ts
+// Variable: SEO_OPS_SETTINGS_PUBLIC_QUERY
+// Query: *[_type == "seoOpsSettings"][0]{  googleEnabled,  googleAggressiveMode,  indexNowEnabled,  indexNowHost,  indexNowEndpoint,  indexNowKeyLocation,  autoSubmitOnRevalidate,  maxBatchSize,  retryAttempts,  notes}
+export type SEO_OPS_SETTINGS_PUBLIC_QUERY_RESULT = {
+  googleEnabled: boolean | null;
+  googleAggressiveMode: boolean | null;
+  indexNowEnabled: boolean | null;
+  indexNowHost: string | null;
+  indexNowEndpoint: string | null;
+  indexNowKeyLocation: string | null;
+  autoSubmitOnRevalidate: boolean | null;
+  maxBatchSize: number | null;
+  retryAttempts: number | null;
+  notes: string | null;
+} | null;
+
+// Source: ../frontend/sanity/queries/seo-ops-settings.ts
+// Variable: SEO_OPS_SETTINGS_PRIVATE_QUERY
+// Query: *[_type == "seoOpsSettings"][0]{  googleEnabled,  googleAggressiveMode,  googleServiceAccountEncrypted,  indexNowEnabled,  indexNowHost,  indexNowEndpoint,  indexNowKeyEncrypted,  indexNowKeyLocation,  autoSubmitOnRevalidate,  maxBatchSize,  retryAttempts,  dashboardPasswordHash,  notes}
+export type SEO_OPS_SETTINGS_PRIVATE_QUERY_RESULT = {
+  googleEnabled: boolean | null;
+  googleAggressiveMode: boolean | null;
+  googleServiceAccountEncrypted: string | null;
+  indexNowEnabled: boolean | null;
+  indexNowHost: string | null;
+  indexNowEndpoint: string | null;
+  indexNowKeyEncrypted: string | null;
+  indexNowKeyLocation: string | null;
+  autoSubmitOnRevalidate: boolean | null;
+  maxBatchSize: number | null;
+  retryAttempts: number | null;
+  dashboardPasswordHash: string | null;
+  notes: string | null;
+} | null;
+
+// Source: ../frontend/sanity/queries/seo-settings.ts
+// Variable: SEO_SETTINGS_QUERY
+// Query: *[_type == "seoSettings"][0]{  titleSuffix,  defaultTitle,  defaultDescription,  defaultNoIndex,  noIndexBlogCategories,  noIndexProductCategories,  noIndexServiceCategories,  robotsDisallowPaths,  twitterHandle,  defaultImage{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }}
+export type SEO_SETTINGS_QUERY_RESULT = {
+  titleSuffix: string | null;
+  defaultTitle: string | null;
+  defaultDescription: string | null;
+  defaultNoIndex: boolean | null;
+  noIndexBlogCategories: boolean | null;
+  noIndexProductCategories: boolean | null;
+  noIndexServiceCategories: boolean | null;
+  robotsDisallowPaths: Array<string> | null;
+  twitterHandle: string | null;
+  defaultImage: {
     asset: {
       _id: string;
       url: string | null;
@@ -1821,6 +4637,15 @@ export type POST_QUERY_RESULT = {
     alt?: string;
     _type: "image";
   } | null;
+} | null;
+
+// Source: ../frontend/sanity/queries/service.ts
+// Variable: SERVICE_QUERY
+// Query: *[_type == "service" && slug.current == $slug][0]{  title,  slug,  excerpt,  body[]{      ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }  },  image{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  deliverables,  duration,  startingPrice,  currency,  featured,  categories[]->{    _id,    title,    slug  },  cta{        _key,    ...,    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )  },  _createdAt,  _updatedAt,    meta{    title,    description,    canonicalUrl,    focusKeyword,    secondaryKeywords,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },}
+export type SERVICE_QUERY_RESULT = {
+  title: string | null;
+  slug: Slug | null;
+  excerpt: string | null;
   body: Array<
     | {
         children?: Array<{
@@ -1833,7 +4658,12 @@ export type POST_QUERY_RESULT = {
         listItem?: "bullet" | "number";
         markDefs: Array<{
           isExternal?: boolean;
-          internalLink?: PageReference | PostReference;
+          internalLink?:
+            | PageReference
+            | PostReference
+            | ProductReference
+            | ProjectReference
+            | ServiceReference;
           href: string | "/" | null;
           target?: boolean;
           _type: "link";
@@ -1874,39 +4704,83 @@ export type POST_QUERY_RESULT = {
         markDefs: null;
       }
     | {
+        _key: string;
+        _type: "legacy-rich-content";
+        title?: string;
+        excerpt?: string;
+        contentFormat?: "html" | "markdown";
+        contentRaw?: string;
+        markDefs: null;
+      }
+    | {
         videoId?: string;
         _type: "youtube";
         _key: string;
         markDefs: null;
       }
   > | null;
-  author: {
-    name: string | null;
-    image: {
-      asset: {
-        _id: string;
-        url: string | null;
-        mimeType: string | null;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number | null;
-            height: number | null;
-          } | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
         } | null;
       } | null;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string | null;
-      _type: "image";
     } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  deliverables: Array<string> | null;
+  duration: string | null;
+  startingPrice: number | null;
+  currency: "EUR" | "IDR" | "USD" | null;
+  featured: boolean | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: Slug | null;
+  }> | null;
+  cta: {
+    _key: null;
+    _type: "link";
+    isExternal?: boolean;
+    internalLink?:
+      | CategoryReference
+      | PageReference
+      | PostReference
+      | ProductReference
+      | ProjectReference
+      | ServiceReference;
+    title?: string;
+    href: string | "/" | null;
+    target?: boolean;
+    buttonVariant?: ButtonVariant;
+    navLocation?: "primary" | "utility";
+    showInFooter?: boolean;
+    showInHeader?: boolean;
+    icon?: NavigationIcon;
+    children?: Array<
+      {
+        _key: string;
+      } & NavigationLinkChild
+    >;
   } | null;
   _createdAt: string;
   _updatedAt: string;
   meta: {
     title: string | null;
     description: string | null;
+    canonicalUrl: string | null;
+    focusKeyword: string | null;
+    secondaryKeywords: Array<string> | null;
     noindex: boolean | null;
     image: {
       asset: {
@@ -1924,15 +4798,16 @@ export type POST_QUERY_RESULT = {
       media?: unknown; // Unable to locate the referenced type "image.media" in schema
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
+      alt?: string;
       _type: "image";
     } | null;
   } | null;
 } | null;
 
-// Source: ../frontend/sanity/queries/post.ts
-// Variable: POSTS_QUERY
-// Query: *[_type == "post" && defined(slug)] | order(_createdAt desc){    title,    slug,    excerpt,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    },}
-export type POSTS_QUERY_RESULT = Array<{
+// Source: ../frontend/sanity/queries/service.ts
+// Variable: SERVICES_QUERY
+// Query: *[_type == "service" && defined(slug)] | order(featured desc, _createdAt desc){  title,  slug,  excerpt,  image{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  duration,  startingPrice,  currency,  featured,  categories[]->{    _id,    title,    slug  }}
+export type SERVICES_QUERY_RESULT = Array<{
   title: string | null;
   slug: Slug;
   excerpt: string | null;
@@ -1955,21 +4830,68 @@ export type POSTS_QUERY_RESULT = Array<{
     alt?: string;
     _type: "image";
   } | null;
+  duration: string | null;
+  startingPrice: number | null;
+  currency: "EUR" | "IDR" | "USD" | null;
+  featured: boolean | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: Slug | null;
+  }> | null;
 }>;
 
-// Source: ../frontend/sanity/queries/post.ts
-// Variable: POSTS_SLUGS_QUERY
-// Query: *[_type == "post" && defined(slug)]{slug}
-export type POSTS_SLUGS_QUERY_RESULT = Array<{
+// Source: ../frontend/sanity/queries/service.ts
+// Variable: SERVICES_BY_CATEGORY_QUERY
+// Query: *[_type == "service" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(featured desc, _createdAt desc){  title,  slug,  excerpt,  image{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  duration,  startingPrice,  currency,  featured,  categories[]->{    _id,    title,    slug  }}
+export type SERVICES_BY_CATEGORY_QUERY_RESULT = Array<{
+  title: string | null;
+  slug: Slug | null;
+  excerpt: string | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  duration: string | null;
+  startingPrice: number | null;
+  currency: "EUR" | "IDR" | "USD" | null;
+  featured: boolean | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: Slug | null;
+  }> | null;
+}>;
+
+// Source: ../frontend/sanity/queries/service.ts
+// Variable: SERVICES_SLUGS_QUERY
+// Query: *[_type == "service" && defined(slug)]{slug}
+export type SERVICES_SLUGS_QUERY_RESULT = Array<{
   slug: Slug;
 }>;
 
 // Source: ../frontend/sanity/queries/settings.ts
 // Variable: SETTINGS_QUERY
-// Query: *[_type == "settings"][0]{  _type,  siteName,  logo{    dark{      ...,      asset->{        _id,        url,        mimeType,        metadata {          lqip,          dimensions {            width,            height          }        }      }    },    light{      ...,      asset->{        _id,        url,        mimeType,        metadata {          lqip,          dimensions {            width,            height          }        }      }    },    width,    height,  },  copyright}
+// Query: *[_type == "settings"][0]{  _type,  "siteName": coalesce(brandName, siteName, "Schema UI"),  brandName,  logo{    dark{      ...,      asset->{        _id,        url,        mimeType,        metadata {          lqip,          dimensions {            width,            height          }        }      }    },    light{      ...,      asset->{        _id,        url,        mimeType,        metadata {          lqip,          dimensions {            width,            height          }        }      }    },    width,    height,  },  copyright,  socialLinks[]{    _key,    platform,    url,    target  },  whatsApp{    enabled,    phoneNumber,    predefinedText,    ctaText,    enableAnimation,    sourceUrl  }}
 export type SETTINGS_QUERY_RESULT = {
   _type: "settings";
-  siteName: string | null;
+  siteName: string | "Schema UI";
+  brandName: string | null;
   logo: {
     dark: {
       asset: {
@@ -2011,18 +4933,204 @@ export type SETTINGS_QUERY_RESULT = {
     height: number | null;
   } | null;
   copyright: BlockContent | null;
+  socialLinks: Array<{
+    _key: string;
+    platform:
+      | "facebook"
+      | "github"
+      | "instagram"
+      | "linkedin"
+      | "tiktok"
+      | "website"
+      | "x"
+      | "youtube"
+      | null;
+    url: string | null;
+    target: boolean | null;
+  }> | null;
+  whatsApp: {
+    enabled: boolean | null;
+    phoneNumber: string | null;
+    predefinedText: string | null;
+    ctaText: string | null;
+    enableAnimation: boolean | null;
+    sourceUrl: string | null;
+  } | null;
+} | null;
+
+// Source: ../frontend/sanity/queries/theme-settings.ts
+// Variable: THEME_SETTINGS_QUERY
+// Query: *[_type == "settings"][0]{  themeColors{    themePreset,    lightPrimary,    lightPrimaryForeground,    lightAccent,    lightRing,    darkPrimary,    darkPrimaryForeground,    darkAccent,    darkRing  }}
+export type THEME_SETTINGS_QUERY_RESULT = {
+  themeColors: {
+    themePreset:
+      | "brand-tricolor-a"
+      | "brand-tricolor-b"
+      | "brand-tricolor-c"
+      | "neutral"
+      | "ocean"
+      | "sunset"
+      | null;
+    lightPrimary:
+      | ""
+      | "#0070F3"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#171717"
+      | "#3291FF"
+      | "#404040"
+      | "#525252"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#EBEBEB"
+      | "#F59E0B"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#FB7185"
+      | null;
+    lightPrimaryForeground:
+      | ""
+      | "#0A0A0A"
+      | "#111111"
+      | "#171717"
+      | "#404040"
+      | "#EBEBEB"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | null;
+    lightAccent:
+      | ""
+      | "#0070F3"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#171717"
+      | "#3291FF"
+      | "#404040"
+      | "#525252"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#EBEBEB"
+      | "#F59E0B"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#FB7185"
+      | null;
+    lightRing:
+      | ""
+      | "#0070F3"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#171717"
+      | "#3291FF"
+      | "#404040"
+      | "#525252"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#EBEBEB"
+      | "#F59E0B"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#FB7185"
+      | null;
+    darkPrimary:
+      | ""
+      | "#0070F3"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#171717"
+      | "#3291FF"
+      | "#404040"
+      | "#525252"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#EBEBEB"
+      | "#F59E0B"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#FB7185"
+      | null;
+    darkPrimaryForeground:
+      | ""
+      | "#0A0A0A"
+      | "#111111"
+      | "#171717"
+      | "#404040"
+      | "#EBEBEB"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | null;
+    darkAccent:
+      | ""
+      | "#0070F3"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#171717"
+      | "#3291FF"
+      | "#404040"
+      | "#525252"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#EBEBEB"
+      | "#F59E0B"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#FB7185"
+      | null;
+    darkRing:
+      | ""
+      | "#0070F3"
+      | "#00A86B"
+      | "#14B8A6"
+      | "#171717"
+      | "#3291FF"
+      | "#404040"
+      | "#525252"
+      | "#8B5CF6"
+      | "#E5484D"
+      | "#EBEBEB"
+      | "#F59E0B"
+      | "#F5F5F5"
+      | "#FAFAFA"
+      | "#FB7185"
+      | null;
+  } | null;
 } | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "navigation"]{\n    _type,\n    _key,\n    links\n  }\n': NAVIGATION_QUERY_RESULT;
-    '\n  *[_type == "page" && slug.current == $slug][0]{\n    blocks[]{\n      \n  _type == "hero-1" => {\n    _type,\n    _key,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    links[]{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "hero-2" => {\n    _type,\n    _key,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    links[]{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "section-header" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    sectionWidth,\n    stackAlign,\n    tagLine,\n    title,\n    description,\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "split-row" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    noGap,\n    splitColumns[]{\n      \n  _type == "split-content" => {\n    _type,\n    _key,\n    sticky,\n    padding,\n    colorVariant,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "split-cards-list" => {\n    _type,\n    _key,\n    list[]{\n      tagLine,\n      title,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n    },\n  }\n,\n      \n  _type == "split-image" => {\n    _type,\n    _key,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n  }\n,\n      \n  _type == "split-info-list" => {\n    _type,\n    _key,\n    list[]{\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      title,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n      tags[],\n    },\n  }\n,\n    },\n  }\n,\n      \n  _type == "grid-row" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    gridColumns,\n    columns[]{\n      \n  _type == "grid-card" => {\n    _type,\n    _key,\n    title,\n    excerpt,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "pricing-card" => {\n    _type,\n    _key,\n    title,\n    tagLine,\n    price,\n    list[],\n    excerpt,\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "grid-post" => {\n    _type,\n    _key,\n    post->{\n      title,\n      slug,\n      excerpt,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      categories[]->{\n        _id,\n        title,\n      },\n    },\n  }\n,\n    },\n  }\n,\n      \n  _type == "carousel-1" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    size,\n    orientation,\n    indicators,\n    images[]{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n  }\n,\n      \n  _type == "carousel-2" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    testimonial[]->{\n      _id,\n      name,\n      title,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n      rating,\n    },\n  }\n,\n      \n  _type == "timeline-row" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    timelines[]{\n      title,\n      tagLine,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n    },\n  }\n,\n      \n  _type == "cta-1" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    sectionWidth,\n    stackAlign,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    links[]{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "logo-cloud-1" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    title,\n    images[]{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n  }\n,\n      \n  _type == "faqs" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    faqs[]->{\n      _id,\n      title,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n    },\n  }\n,\n      \n  _type == "form-newsletter" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    stackAlign,\n    consentText,\n    buttonText,\n    successMessage,\n  }\n,\n      \n  _type == "all-posts" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n  }\n,\n    },\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n  }\n': PAGE_QUERY_RESULT;
+    '*[_type == "aiWriterSettings"][0]{\n  enabled,\n  mode,\n  defaultModel,\n  fallbackModels,\n  gatewayProviderOrder,\n  temperature,\n  maxOutputTokens,\n  prompts,\n  notes\n}': AI_WRITER_SETTINGS_PUBLIC_QUERY_RESULT;
+    '*[_type == "aiWriterSettings"][0]{\n  enabled,\n  mode,\n  defaultModel,\n  fallbackModels,\n  gatewayProviderOrder,\n  temperature,\n  maxOutputTokens,\n  gatewayApiKeyEncrypted,\n  geminiApiKeysEncrypted,\n  groqApiKeysEncrypted,\n  prompts,\n  notes\n}': AI_WRITER_SETTINGS_PRIVATE_QUERY_RESULT;
+    '*[_type == "category" && defined(slug)] | order(title asc){\n  _id,\n  title,\n  slug,\n  description,\n  "postCount": count(*[_type == "post" && references(^._id)])\n}': CATEGORIES_QUERY_RESULT;
+    '*[_type == "category" && defined(slug) && count(*[_type == "post" && references(^._id)]) > 0] | order(title asc){\n  _id,\n  title,\n  slug,\n  description,\n  "postCount": count(*[_type == "post" && references(^._id)])\n}': BLOG_CATEGORIES_QUERY_RESULT;
+    '*[_type == "category" && defined(slug) && count(*[_type == "product" && references(^._id)]) > 0] | order(title asc){\n  _id,\n  title,\n  slug,\n  description,\n  "productCount": count(*[_type == "product" && references(^._id)])\n}': PRODUCT_CATEGORIES_QUERY_RESULT;
+    '*[_type == "category" && defined(slug) && count(*[_type == "service" && references(^._id)]) > 0] | order(title asc){\n  _id,\n  title,\n  slug,\n  description,\n  "serviceCount": count(*[_type == "service" && references(^._id)])\n}': SERVICE_CATEGORIES_QUERY_RESULT;
+    '*[_type == "category" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  description,\n  \n  meta{\n    title,\n    description,\n    canonicalUrl,\n    focusKeyword,\n    secondaryKeywords,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n  "postCount": count(*[_type == "post" && references(^._id)])\n}': CATEGORY_QUERY_RESULT;
+    '*[_type == "category" && defined(slug)]{slug}': CATEGORIES_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "navigation"] | order(_updatedAt desc)[0...1]{\n    _type,\n    _key,\n    headerCta{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n    "links": coalesce(links, [])[]{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n,\n      "children": coalesce(children, [])[]{\n        _key,\n        group,\n        description,\n        badge,\n        icon,\n        title,\n        target,\n        "href": select(\n          isExternal => href,\n          defined(href) && !defined(internalLink) => href,\n          @.internalLink->slug.current == "index" => "/",\n          @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n          @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n          @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n          @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n          @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n          "/" + @.internalLink->slug.current\n        )\n      }\n    }\n  }\n': NAVIGATION_QUERY_RESULT;
+    '\n  *[_type == "page" && slug.current == $slug][0]{\n    title,\n    topBlockCount,\n    blocks[]{\n      \n  _type == "hero-1" => {\n    _type,\n    _key,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    links[]{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "hero-2" => {\n    _type,\n    _key,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    links[]{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "section-header" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    sectionWidth,\n    stackAlign,\n    tagLine,\n    title,\n    description,\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "split-row" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    noGap,\n    splitColumns[]{\n      \n  _type == "split-content" => {\n    _type,\n    _key,\n    sticky,\n    padding,\n    colorVariant,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "split-cards-list" => {\n    _type,\n    _key,\n    list[]{\n      tagLine,\n      title,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n    },\n  }\n,\n      \n  _type == "split-image" => {\n    _type,\n    _key,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n  }\n,\n      \n  _type == "split-info-list" => {\n    _type,\n    _key,\n    list[]{\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      title,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n      tags[],\n    },\n  }\n,\n    },\n  }\n,\n      \n  _type == "grid-row" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    gridColumns,\n    columns[]{\n      \n  _type == "grid-card" => {\n    _type,\n    _key,\n    title,\n    excerpt,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "pricing-card" => {\n    _type,\n    _key,\n    title,\n    tagLine,\n    price,\n    list[],\n    excerpt,\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "grid-post" => {\n    _type,\n    _key,\n    post->{\n      title,\n      slug,\n      excerpt,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      categories[]->{\n        _id,\n        title,\n      },\n    },\n  }\n,\n    },\n  }\n,\n      \n  _type == "carousel-1" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    size,\n    orientation,\n    indicators,\n    images[]{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n  }\n,\n      \n  _type == "carousel-2" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    testimonial[]->{\n      _id,\n      name,\n      title,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n      rating,\n    },\n  }\n,\n      \n  _type == "timeline-row" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    timelines[]{\n      title,\n      tagLine,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n    },\n  }\n,\n      \n  _type == "cta-1" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    sectionWidth,\n    stackAlign,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    links[]{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "logo-cloud-1" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    title,\n    images[]{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n  }\n,\n      \n  _type == "faqs" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    faqs[]->{\n      _id,\n      title,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n    },\n  }\n,\n      \n  _type == "form-newsletter" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    stackAlign,\n    consentText,\n    buttonText,\n    successMessage,\n  }\n,\n      \n  _type == "all-posts" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n  }\n,\n      \n  _type == "legacy-rich-content" => {\n    _type,\n    _key,\n    title,\n    excerpt,\n    contentFormat,\n    contentRaw,\n  }\n,\n    },\n    \n  meta{\n    title,\n    description,\n    canonicalUrl,\n    focusKeyword,\n    secondaryKeywords,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n  }\n': PAGE_QUERY_RESULT;
     '*[_type == "page" && defined(slug)]{slug}': PAGES_SLUGS_QUERY_RESULT;
-    '*[_type == "post" && slug.current == $slug][0]{\n    title,\n    slug,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    author->{\n      name,\n      image {\n        ...,\n        asset->{\n          _id,\n          url,\n          mimeType,\n          metadata {\n            lqip,\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      }\n    },\n    _createdAt,\n    _updatedAt,\n    \n  meta{\n    title,\n    description,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n}': POST_QUERY_RESULT;
-    '*[_type == "post" && defined(slug)] | order(_createdAt desc){\n    title,\n    slug,\n    excerpt,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n}': POSTS_QUERY_RESULT;
+    '*[_type == "post" && slug.current == $slug][0]{\n    title,\n    slug,\n    excerpt,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    author->{\n      name,\n      image {\n        ...,\n        asset->{\n          _id,\n          url,\n          mimeType,\n          metadata {\n            lqip,\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      }\n    },\n    categories[]->{\n      _id,\n      title,\n      slug\n    },\n    _createdAt,\n    _updatedAt,\n    \n  meta{\n    title,\n    description,\n    canonicalUrl,\n    focusKeyword,\n    secondaryKeywords,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n}': POST_QUERY_RESULT;
+    '*[_type == "post" && defined(slug)] | order(_createdAt desc){\n    title,\n    slug,\n    excerpt,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    categories[]->{\n      _id,\n      title,\n      slug\n    },\n}': POSTS_QUERY_RESULT;
+    '*[_type == "post" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(_createdAt desc){\n    title,\n    slug,\n    excerpt,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    categories[]->{\n      _id,\n      title,\n      slug\n    },\n}': POSTS_BY_CATEGORY_QUERY_RESULT;
     '*[_type == "post" && defined(slug)]{slug}': POSTS_SLUGS_QUERY_RESULT;
-    '*[_type == "settings"][0]{\n  _type,\n  siteName,\n  logo{\n    dark{\n      ...,\n      asset->{\n        _id,\n        url,\n        mimeType,\n        metadata {\n          lqip,\n          dimensions {\n            width,\n            height\n          }\n        }\n      }\n    },\n    light{\n      ...,\n      asset->{\n        _id,\n        url,\n        mimeType,\n        metadata {\n          lqip,\n          dimensions {\n            width,\n            height\n          }\n        }\n      }\n    },\n    width,\n    height,\n  },\n  copyright\n}': SETTINGS_QUERY_RESULT;
+    '*[_type == "product" && slug.current == $slug][0]{\n  title,\n  slug,\n  excerpt,\n  body[]{\n    \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n  },\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  gallery[]{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  price,\n  currency,\n  availability,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  },\n  cta{\n    \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n  },\n  _createdAt,\n  _updatedAt,\n  \n  meta{\n    title,\n    description,\n    canonicalUrl,\n    focusKeyword,\n    secondaryKeywords,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n}': PRODUCT_QUERY_RESULT;
+    '*[_type == "product" && defined(slug)] | order(featured desc, _createdAt desc){\n  title,\n  slug,\n  excerpt,\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  price,\n  currency,\n  availability,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  }\n}': PRODUCTS_QUERY_RESULT;
+    '*[_type == "product" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(featured desc, _createdAt desc){\n  title,\n  slug,\n  excerpt,\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  price,\n  currency,\n  availability,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  }\n}': PRODUCTS_BY_CATEGORY_QUERY_RESULT;
+    '*[_type == "product" && defined(slug)]{slug}': PRODUCTS_SLUGS_QUERY_RESULT;
+    '*[_type == "project" && slug.current == $slug][0]{\n  title,\n  slug,\n  excerpt,\n  body[]{\n    \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n  },\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  clientName,\n  industry,\n  completionYear,\n  projectUrl,\n  featured,\n  cta{\n    \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n  },\n  _createdAt,\n  _updatedAt,\n  \n  meta{\n    title,\n    description,\n    canonicalUrl,\n    focusKeyword,\n    secondaryKeywords,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n}': PROJECT_QUERY_RESULT;
+    '*[_type == "project" && defined(slug)] | order(featured desc, _createdAt desc){\n  title,\n  slug,\n  excerpt,\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  clientName,\n  industry,\n  completionYear,\n  projectUrl,\n  featured\n}': PROJECTS_QUERY_RESULT;
+    '*[_type == "project" && defined(slug)]{slug}': PROJECTS_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "reusableSection" && isActive == true] | order(priority asc, _createdAt asc){\n    _id,\n    title,\n    priority,\n    placements,\n    blocks[]{\n      \n  _type == "hero-1" => {\n    _type,\n    _key,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    links[]{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "hero-2" => {\n    _type,\n    _key,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    links[]{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "section-header" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    sectionWidth,\n    stackAlign,\n    tagLine,\n    title,\n    description,\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "split-row" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    noGap,\n    splitColumns[]{\n      \n  _type == "split-content" => {\n    _type,\n    _key,\n    sticky,\n    padding,\n    colorVariant,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "split-cards-list" => {\n    _type,\n    _key,\n    list[]{\n      tagLine,\n      title,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n    },\n  }\n,\n      \n  _type == "split-image" => {\n    _type,\n    _key,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n  }\n,\n      \n  _type == "split-info-list" => {\n    _type,\n    _key,\n    list[]{\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      title,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n      tags[],\n    },\n  }\n,\n    },\n  }\n,\n      \n  _type == "grid-row" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    gridColumns,\n    columns[]{\n      \n  _type == "grid-card" => {\n    _type,\n    _key,\n    title,\n    excerpt,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "pricing-card" => {\n    _type,\n    _key,\n    title,\n    tagLine,\n    price,\n    list[],\n    excerpt,\n    link{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "grid-post" => {\n    _type,\n    _key,\n    post->{\n      title,\n      slug,\n      excerpt,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      categories[]->{\n        _id,\n        title,\n      },\n    },\n  }\n,\n    },\n  }\n,\n      \n  _type == "carousel-1" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    size,\n    orientation,\n    indicators,\n    images[]{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n  }\n,\n      \n  _type == "carousel-2" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    testimonial[]->{\n      _id,\n      name,\n      title,\n      image{\n        \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n      },\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n      rating,\n    },\n  }\n,\n      \n  _type == "timeline-row" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    timelines[]{\n      title,\n      tagLine,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n    },\n  }\n,\n      \n  _type == "cta-1" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    sectionWidth,\n    stackAlign,\n    tagLine,\n    title,\n    body[]{\n      \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n    },\n    links[]{\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    },\n  }\n,\n      \n  _type == "logo-cloud-1" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    title,\n    images[]{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    },\n  }\n,\n      \n  _type == "faqs" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    faqs[]->{\n      _id,\n      title,\n      body[]{\n        \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n      },\n    },\n  }\n,\n      \n  _type == "form-newsletter" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n    stackAlign,\n    consentText,\n    buttonText,\n    successMessage,\n  }\n,\n      \n  _type == "all-posts" => {\n    _type,\n    _key,\n    padding,\n    colorVariant,\n  }\n,\n    }\n  }\n': REUSABLE_SECTIONS_QUERY_RESULT;
+    '*[_type == "seoOpsSettings"][0]{\n  googleEnabled,\n  googleAggressiveMode,\n  indexNowEnabled,\n  indexNowHost,\n  indexNowEndpoint,\n  indexNowKeyLocation,\n  autoSubmitOnRevalidate,\n  maxBatchSize,\n  retryAttempts,\n  notes\n}': SEO_OPS_SETTINGS_PUBLIC_QUERY_RESULT;
+    '*[_type == "seoOpsSettings"][0]{\n  googleEnabled,\n  googleAggressiveMode,\n  googleServiceAccountEncrypted,\n  indexNowEnabled,\n  indexNowHost,\n  indexNowEndpoint,\n  indexNowKeyEncrypted,\n  indexNowKeyLocation,\n  autoSubmitOnRevalidate,\n  maxBatchSize,\n  retryAttempts,\n  dashboardPasswordHash,\n  notes\n}': SEO_OPS_SETTINGS_PRIVATE_QUERY_RESULT;
+    '*[_type == "seoSettings"][0]{\n  titleSuffix,\n  defaultTitle,\n  defaultDescription,\n  defaultNoIndex,\n  noIndexBlogCategories,\n  noIndexProductCategories,\n  noIndexServiceCategories,\n  robotsDisallowPaths,\n  twitterHandle,\n  defaultImage{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n}': SEO_SETTINGS_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n  title,\n  slug,\n  excerpt,\n  body[]{\n    \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n  },\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  deliverables,\n  duration,\n  startingPrice,\n  currency,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  },\n  cta{\n    \n    _key,\n    ...,\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n  },\n  _createdAt,\n  _updatedAt,\n  \n  meta{\n    title,\n    description,\n    canonicalUrl,\n    focusKeyword,\n    secondaryKeywords,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n}': SERVICE_QUERY_RESULT;
+    '*[_type == "service" && defined(slug)] | order(featured desc, _createdAt desc){\n  title,\n  slug,\n  excerpt,\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  duration,\n  startingPrice,\n  currency,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  }\n}': SERVICES_QUERY_RESULT;
+    '*[_type == "service" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(featured desc, _createdAt desc){\n  title,\n  slug,\n  excerpt,\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  duration,\n  startingPrice,\n  currency,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  }\n}': SERVICES_BY_CATEGORY_QUERY_RESULT;
+    '*[_type == "service" && defined(slug)]{slug}': SERVICES_SLUGS_QUERY_RESULT;
+    '*[_type == "settings"][0]{\n  _type,\n  "siteName": coalesce(brandName, siteName, "Schema UI"),\n  brandName,\n  logo{\n    dark{\n      ...,\n      asset->{\n        _id,\n        url,\n        mimeType,\n        metadata {\n          lqip,\n          dimensions {\n            width,\n            height\n          }\n        }\n      }\n    },\n    light{\n      ...,\n      asset->{\n        _id,\n        url,\n        mimeType,\n        metadata {\n          lqip,\n          dimensions {\n            width,\n            height\n          }\n        }\n      }\n    },\n    width,\n    height,\n  },\n  copyright,\n  socialLinks[]{\n    _key,\n    platform,\n    url,\n    target\n  },\n  whatsApp{\n    enabled,\n    phoneNumber,\n    predefinedText,\n    ctaText,\n    enableAnimation,\n    sourceUrl\n  }\n}': SETTINGS_QUERY_RESULT;
+    '*[_type == "settings"][0]{\n  themeColors{\n    themePreset,\n    lightPrimary,\n    lightPrimaryForeground,\n    lightAccent,\n    lightRing,\n    darkPrimary,\n    darkPrimaryForeground,\n    darkAccent,\n    darkRing\n  }\n}': THEME_SETTINGS_QUERY_RESULT;
   }
 }

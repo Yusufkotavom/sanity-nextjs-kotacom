@@ -16,6 +16,109 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-03 - Restore CMS-Driven Root Homepage
+- Changed files:
+  - `frontend/app/(main)/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Restored the `/` route to read the Sanity `page` document with slug `index` for both rendering and metadata generation.
+  - Kept the product-led local homepage component as a fallback so the root route still renders safely if the `index` document is missing in Sanity.
+  - Re-aligned the route behavior with the existing `page` schema/query/fetch contract instead of bypassing CMS content at the root.
+- SEO impact:
+  - Direct SEO impact: root homepage metadata and content can now follow the managed Sanity `index` page again, while still preserving global `seoSettings` fallback behavior when CMS meta is incomplete.
+  - Integration impact: frontend root route is back in sync with the Studio `page` schema, GROQ `PAGE_QUERY`, and frontend fetch/metadata helpers.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+
+## 2026-04-03 - Fix Missing Keys in Sanity Block Initial Values
+- Changed files:
+  - `studio/schemas/blocks/cta/cta-1.ts`
+  - `studio/schemas/blocks/grid/grid-row.ts`
+  - `studio/schemas/blocks/hero/hero-1.ts`
+  - `studio/schemas/blocks/hero/hero-2.ts`
+  - `studio/schemas/blocks/split/split-card.ts`
+  - `studio/schemas/blocks/split/split-cards-list.ts`
+  - `studio/schemas/blocks/split/split-content.ts`
+  - `studio/schemas/blocks/split/split-info-list.ts`
+  - `studio/schemas/blocks/split/split-info.ts`
+  - `studio/schemas/blocks/split/split-row.ts`
+  - `studio/schemas/blocks/timeline/timeline-row.ts`
+  - `studio/schemas/blocks/timeline/timelines-1.ts`
+  - `skills/sanity-seo-integration/SKILL.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added explicit `_key` values to object-array `initialValue` payloads across seeded Sanity blocks, including nested Portable Text blocks/spans and block-array items used by hero, CTA, grid, split, and timeline presets.
+  - Removed the main source of Sanity Studio `Missing keys` errors when editors open or modify newly inserted predefined blocks.
+  - Updated the local Sanity integration skill so future schema edits keep `_key` coverage on array-based defaults.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: improves Studio editor stability without changing frontend query shapes, metadata behavior, or public page rendering contracts.
+- Verification:
+  - `pnpm --filter studio run typecheck`
+
+## 2026-04-03 - Vendor Sanity Agent Toolkit Skills into Repo
+- Changed files:
+  - `skills/content-experimentation-best-practices`
+  - `skills/content-modeling-best-practices`
+  - `skills/sanity-best-practices`
+  - `skills/seo-aeo-best-practices`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Copied the installed `sanity-io/agent-toolkit` skills into the repository `skills/` directory so they are available as versioned local project guidance.
+  - Added the toolkit skill folders without modifying their contents, preserving the upstream structure for later review or customization.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: improves local agent workflow consistency for Sanity content modeling, experimentation, and SEO/AEO practices without changing runtime code or schema behavior.
+- Verification:
+  - Manual path check confirmed the four toolkit skill directories now exist under `skills/`.
+
+## 2026-04-03 - Add Hero 2 Soft Binding to Page Title
+- Changed files:
+  - `frontend/sanity/queries/page.ts`
+  - `frontend/components/blocks/index.tsx`
+  - `frontend/components/blocks/hero/hero-2.tsx`
+  - `frontend/app/(main)/page.tsx`
+  - `frontend/app/(main)/[slug]/page.tsx`
+  - `frontend/app/(main)/pembuatan-website/page.tsx`
+  - `frontend/app/(main)/test-page-hybrid/page.tsx`
+  - `studio/schemas/blocks/hero/hero-2.ts`
+  - `frontend/sanity.types.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added soft binding for `hero-2` so the frontend falls back to the parent `page.title` whenever the block's own `title` field is empty.
+  - Updated the shared page query and block renderer flow to pass `page.title` into block components, then applied the fallback in the `hero-2` component only.
+  - Added editor-facing schema guidance on `hero-2.title` so CMS users know they can leave the field empty to inherit the page title.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: reduces duplicated title content between page documents and `hero-2` blocks while keeping manual title override support intact.
+- Verification:
+  - `pnpm typegen`
+  - `pnpm --filter frontend run typecheck`
+  - `pnpm --filter studio run typecheck`
+
+## 2026-04-03 - Extend Page Title Soft Binding to Hero 1 and Section Header
+- Changed files:
+  - `frontend/components/blocks/hero/hero-1.tsx`
+  - `frontend/components/blocks/section-header.tsx`
+  - `studio/schemas/blocks/hero/hero-1.ts`
+  - `studio/schemas/blocks/section-header.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Extended the existing page-title soft binding pattern so `hero-1` and `section-header` now fall back to the parent `page.title` when their local `title` field is empty.
+  - Kept manual override behavior intact by resolving `block.title || page.title` in the frontend renderer instead of removing the block fields.
+  - Added editor-facing descriptions to both Studio schemas so content editors know the block title field is optional and can inherit from the page title.
+- SEO impact:
+  - No direct SEO impact.
+  - Integration impact: reduces repeated heading content across page documents and two additional block types while preserving explicit override support for custom layouts.
+- Verification:
+  - `pnpm --filter frontend run typecheck`
+  - `pnpm --filter studio run typecheck`
+
 ## 2026-04-03 - Remove Internal Rewrite Shell Copy from Public Pages
 - Changed files:
   - `frontend/components/ui/rewrite/hero.tsx`
@@ -2911,3 +3014,258 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Integration impact: `/component-ui` now acts as a clearer internal reference surface for the active rewrite component system.
 - Verification:
   - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Software Rewrite Cluster Split into Page Modules
+- Changed files:
+  - `frontend/lib/legacy-pages/content/software.ts`
+  - `frontend/lib/legacy-pages/content/software-overrides.ts`
+  - `frontend/lib/legacy-pages/content/registry.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/software-index.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/pembuatan-software.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/implementasi-software.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/instalasi-software.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/sistem-pos.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/overrides.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Moved the main `software` anchor routes and `sistem-pos` into dedicated page modules under `content/software-pages/*` so they no longer live only as inline branches inside the cluster resolver.
+  - Updated the legacy page registry to resolve `/software`, `/software/pembuatan-software`, `/software/implementasi-software`, `/software/instalasi-software`, and `/sistem-pos` as page-specific sources.
+  - Reduced `software.ts` to shared fallback/detail orchestration and turned `software-overrides.ts` into a thinner composer around page-focused overrides.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: legacy software rewrite content is now maintained per page/module, reducing divergence risk between route-level intent and the runtime resolver while preserving the existing route contract.
+- Verification:
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed after regenerating `.next/types` via the successful build.
+
+## 2026-04-03 - Website Rewrite Cluster Started Moving to Page Modules
+- Changed files:
+  - `frontend/lib/legacy-pages/content/website.ts`
+  - `frontend/lib/legacy-pages/content/website-overrides.ts`
+  - `frontend/lib/legacy-pages/content/registry.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/website-index.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/harga.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/company-profile.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/toko-online.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/overrides.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated `website-pages/*` content layer for the main `pembuatan-website` anchor routes instead of keeping those page definitions only inside the mixed cluster builder.
+  - Updated the legacy route registry so `/pembuatan-website`, `/pembuatan-website/harga`, `/pembuatan-website/jasa-pembuatan-website-company-profile`, and `/pembuatan-website/jasa-pembuatan-website-toko-online` resolve as page-specific sources.
+  - Reduced `website.ts` and `website-overrides.ts` by delegating anchor-page content and priority overrides to page-focused modules while preserving city/service fallback behavior.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: high-value website landing routes are now maintained closer to route ownership, reducing mixed-cluster coupling while keeping existing route, metadata, and fallback contracts intact.
+- Verification:
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed after regenerating `.next/types` via the successful build.
+
+## 2026-04-03 - Website Service Routes Completed into Page Modules
+- Changed files:
+  - `frontend/lib/legacy-pages/content/website.ts`
+  - `frontend/lib/legacy-pages/content/website-overrides.ts`
+  - `frontend/lib/legacy-pages/content/registry.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/migrasi-wordpress.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/dokter-klinik.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/expedisi.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/komunitas-ngo.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/konstruksi.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/sekolah.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/template.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/overrides.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added dedicated page modules for the remaining non-city `pembuatan-website` service routes so the website cluster no longer stores those page definitions inside one mixed preset object.
+  - Expanded registry-level page resolution to cover the remaining website service routes, leaving city pages as the main parametric-template path.
+  - Moved the corresponding page-level override copy into `website-pages/overrides.ts` and reduced `website-overrides.ts` to a thinner composer plus non-route-specific leftovers such as `portfolio`.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: website rewrite content ownership is now much closer to route boundaries, reducing mixed-cluster drift and making Astro-vs-Next parity work easier to do per page.
+- Verification:
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed after regenerating `.next/types` via the successful build.
+
+## 2026-04-03 - Website Page Parity Pass for Company Profile and Toko Online
+- Changed files:
+  - `frontend/lib/legacy-pages/content/website-pages/company-profile.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/toko-online.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Compared the legacy Astro sources for `jasa-pembuatan-website-company-profile` and `jasa-pembuatan-website-toko-online` against the new Next page modules.
+  - Expanded the Next page-content modules so they now carry more of the original Astro intent: enterprise system integration for company profile, and payment/inventory/customer-management analytics for toko online.
+  - Added more specific highlights, process steps, FAQs, and CTA links so these pages are less generic and closer to the business story expressed in the old Astro versions.
+- SEO/integration impact:
+  - Direct SEO impact: richer long-form intent alignment for two high-value landing pages, with stronger keyword/context coverage that better matches the original Astro source.
+  - Integration impact: no contract changes; this is content-level parity refinement inside the existing page-module system.
+- Verification:
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed after regenerating `.next/types` via the successful build.
+
+## 2026-04-03 - Hybrid Sanity Plus Code-Driven Demo Page Added
+- Changed files:
+  - `frontend/app/(main)/test-page-hybrid/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated demo route at `/test-page-hybrid` to show the recommended hybrid pattern for important landing pages.
+  - The route keeps the overall shell, explanatory sections, and source-status panels in code, while fetching and rendering Sanity `page` blocks for the editable middle sections.
+  - Seeded a matching Sanity `page` document with slug `test-page-hybrid` plus two FAQ documents using dev-first credentials, so the route now demonstrates live `hero-1`, `section-header`, `grid-row`, `cta-1`, and `faqs` blocks coming from Sanity.
+- SEO/integration impact:
+  - Direct SEO impact: route metadata is forced to `noindex` because this page is an internal demo only.
+  - Integration impact: proves that a money-page-safe hybrid delivery model can work with the existing `page` schema and block renderer, without moving entire route ownership into the CMS.
+- Verification:
+  - Sanity verification query confirmed slug `test-page-hybrid` with block types `hero-1`, `section-header`, `grid-row`, `cta-1`, and `faqs`.
+  - `pnpm --filter frontend run build` passed with new route count `1145/1145`.
+  - `pnpm --filter frontend run typecheck` passed after regenerating `.next/types` via the successful build.
+
+## 2026-04-03 - Sanity Page Guardrails Added for _key and isExternal
+- Changed files:
+  - `frontend/package.json`
+  - `frontend/scripts/lib/sanity-page-guards.mjs`
+  - `frontend/scripts/audit-sanity-page-arrays.mjs`
+  - `frontend/scripts/normalize-sanity-page-arrays.mjs`
+  - `docs/sanity-seed-guardrails.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable Sanity page-guard helpers plus two commands: one audit script to detect missing `_key` and missing `link.isExternal`, and one normalizer script to patch `page` documents in place.
+  - Standardized the write-token priority inside the new scripts to prefer `SANITY_DEV` before `SANITY_AUTH_TOKEN`, matching the repository's dev-first Sanity policy.
+  - Ran the normalizer against the current dataset, which fixed legacy issues on existing `page` documents such as `index` and `blog`, then re-ran the audit to confirm the current dataset is clean.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: Sanity page content edited or seeded through scripts now has a repeatable safety net for list `_key` integrity and explicit internal-vs-external link behavior.
+- Verification:
+  - `pnpm --filter frontend run sanity:pages:audit -- --slug=test-page-hybrid` returned `affectedPageCount: 0`.
+  - `node frontend/scripts/normalize-sanity-page-arrays.mjs --slug=test-page-hybrid` dry run returned `targetPageCount: 0`.
+  - `pnpm --filter frontend run sanity:pages:normalize` patched affected legacy `page` documents and reduced their issue counts to zero.
+  - `pnpm --filter frontend run sanity:pages:audit` returned `affectedPageCount: 0`.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Sanity Seed Rules Documented
+- Changed files:
+  - `docs/sanity-seed-guardrails.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated guardrail document for Sanity seed/insert workflows.
+  - Documented the mandatory rules that every array item must include `_key` and every `link` object must explicitly set `isExternal`.
+  - Included the expected audit and normalize commands to run after scripted writes.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: lowers the chance of future Studio editing failures or ambiguous link behavior during scripted Sanity writes.
+- Verification:
+  - Rule document reviewed against the current `link` schema and the working page-audit/normalize commands.
+
+## 2026-04-03 - Hybrid FAQ Public Read Fix and Renderer Hardening
+- Changed files:
+  - `frontend/components/blocks/faqs.tsx`
+  - `docs/sanity-seed-guardrails.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Hardened the FAQ block renderer to skip null references instead of throwing when a dereferenced FAQ is missing.
+  - Traced the `/test-page-hybrid` runtime error to Sanity document IDs that used dots in public-facing referenced `faq` documents, which caused public dereference results to return `null` even though token-authenticated queries succeeded.
+  - Migrated the demo FAQ documents and their page references to safe hyphenated IDs, and documented the no-dot rule for public Sanity documents and references.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: hybrid Sanity blocks on `/test-page-hybrid` now render correctly in public mode, and future public `page`/`faq` seed workflows have an explicit ID-safety rule.
+- Verification:
+  - Public Sanity query for slug `test-page-hybrid` now returns the page and all expected block types without a token.
+  - Public Sanity query for the `faqs` block no longer returns `null` references.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
+
+## 2026-04-03 - AGENTS and Skill Updated for Public Sanity Guardrails
+- Changed files:
+  - `AGENTS.md`
+  - `skills/sanity-public-content-guardrails/SKILL.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added repo-level agent instructions that require public Sanity seed/import work to follow the documented hybrid/public-content guardrails.
+  - Added a reusable local skill for public Sanity content workflows, covering safe document IDs, `_key`, `link.isExternal`, public-read verification, and frontend null-safety checks.
+  - Linked the new execution guidance into the migration megaplan so future agent-driven CMS work uses the same rules by default.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: reduces recurrence of public-read failures for Sanity-backed pages and references during agent-driven content automation.
+- Verification:
+  - Manual review of `AGENTS.md`, `docs/sanity-seed-guardrails.md`, and the new skill confirmed the rules are aligned.
+
+## 2026-04-03 - Test Page Hybrid Blueprint Refined
+- Changed files:
+  - `frontend/app/(main)/test-page-hybrid/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Refactored `/test-page-hybrid` into a clearer hybrid blueprint with explicit code-owned intro and diagnostics, separate Sanity hero/proof and conversion zones, ownership mapping, and a stronger fallback explanation section.
+  - Replaced the previous generic card-stack layout with a more deliberate sequence that better demonstrates how a real money page should split responsibility between route logic and CMS blocks.
+  - Preserved the existing hybrid fetch/metadata behavior while making the route more useful as a reference implementation for `/pembuatan-website`.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: makes the hybrid delivery pattern easier to validate and reuse for production landing pages without changing the underlying Sanity contract.
+- Verification:
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed after build regenerated `.next/types`.
+
+## 2026-04-03 - Page-Level Hybrid Split Control Added
+- Changed files:
+  - `studio/schemas/documents/page.ts`
+  - `frontend/sanity/queries/page.ts`
+  - `frontend/app/(main)/test-page-hybrid/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a new `topBlockCount` field to Sanity `page` documents so editors can keep one freeform `blocks[]` array while controlling how many blocks render before the code-owned middle section on hybrid pages.
+  - Updated the shared page query to fetch `topBlockCount` and refactored `/test-page-hybrid` to split on `blocks.slice(0, topBlockCount)` and `blocks.slice(topBlockCount)` instead of using hardcoded block-type zones.
+  - Patched the live `test-page-hybrid` Sanity document to set `topBlockCount: 3`, keeping the demo immediately usable from Studio.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: hybrid page layout control now lives at the `page` document level, which is more flexible for editors and simpler than per-block placement fields.
+- Verification:
+  - Public Sanity query for `test-page-hybrid` returned `topBlockCount: 3`.
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed after build regenerated `.next/types`.
+
+## 2026-04-03 - Pembuatan Website Main Route Hybrid Wrapper Added
+- Changed files:
+  - `frontend/app/(main)/pembuatan-website/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Upgraded `/pembuatan-website` main route from pure local rewrite output to a hybrid wrapper that fetches the Sanity `page` document for slug `pembuatan-website` and renders top/bottom block zones around the existing `RewritePageShell`.
+  - Kept metadata and the core local rewrite funnel unchanged so the route preserves its current internal-linking, schema, and conversion structure while still allowing Sanity-driven support/proof and CTA layers.
+  - Seeded a public-safe Sanity `page` document for `pembuatan-website` with `topBlockCount: 2`, a support `section-header`, a `grid-row` of website offer cards, and a bottom `cta-1` block to make the hybrid behavior immediately testable.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: `/pembuatan-website` now supports Sanity-managed supplemental content without replacing the stable local rewrite shell or changing fallback metadata behavior.
+- Verification:
+  - Public Sanity query for slug `pembuatan-website` returned `_id: page-pembuatan-website`, `topBlockCount: 2`, and block types `section-header`, `grid-row`, `cta-1`.
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `curl http://168.110.210.101:3000/pembuatan-website` did not yet show the new seeded strings, indicating the live server likely is not running the latest repo build yet.
+
+## 2026-04-03 - Reusable Main-Route Hybrid Wrapper and Workflow Added
+- Changed files:
+  - `frontend/components/hybrid/page-hybrid-shell.tsx`
+  - `frontend/app/(main)/pembuatan-website/page.tsx`
+  - `frontend/app/(main)/percetakan/page.tsx`
+  - `frontend/app/(main)/software/page.tsx`
+  - `AGENTS.md`
+  - `skills/hybrid-content-page-workflow/SKILL.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Extracted the main-route hybrid behavior into a shared `PageHybridShell` that fetches a Sanity `page`, splits `blocks[]` using `topBlockCount`, and renders top/bottom zones around an existing code-owned route shell.
+  - Switched the main routes for `pembuatan-website`, `percetakan`, and `software` to use the shared wrapper instead of route-local hybrid logic.
+  - Seeded public-safe Sanity `page` documents for `percetakan` and `software` with conservative support/proof plus CTA blocks, and confirmed all three main hybrid slugs are publicly readable.
+  - Added a dedicated hybrid-content workflow skill and referenced it from `AGENTS.md` so future agent work follows the same “create page in Sanity first, then wire wrapper” pattern.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: the hybrid main-page contract is now reusable across multiple primary landing pages without duplicating route logic, while keeping legacy rewrite shells and metadata behavior intact.
+- Verification:
+  - Public Sanity queries returned valid `page` documents for `pembuatan-website`, `percetakan`, and `software`, each with `topBlockCount` and public block data.
+  - `pnpm --filter frontend run build` passed.
+  - `pnpm --filter frontend run typecheck` passed after build regenerated `.next/types`.

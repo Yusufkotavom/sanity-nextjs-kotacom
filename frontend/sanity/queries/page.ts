@@ -17,6 +17,8 @@ import { legacyRichContentQuery } from "./legacy/legacy-rich-content";
 
 export const PAGE_QUERY = groq`
   *[_type == "page" && slug.current == $slug][0]{
+    title,
+    topBlockCount,
     blocks[]{
       ${hero1Query},
       ${hero2Query},

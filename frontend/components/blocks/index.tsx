@@ -34,7 +34,13 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   "rich-content": RichContent,
 };
 
-export default function Blocks({ blocks }: { blocks: Block[] }) {
+export default function Blocks({
+  blocks,
+  pageTitle,
+}: {
+  blocks: Block[];
+  pageTitle?: string | null;
+}) {
   return (
     <>
       {blocks?.map((block) => {
@@ -46,7 +52,7 @@ export default function Blocks({ blocks }: { blocks: Block[] }) {
           );
           return <div data-type={block._type} key={block._key} />;
         }
-        return <Component {...(block as any)} key={block._key} />;
+        return <Component {...(block as any)} key={block._key} pageTitle={pageTitle} />;
       })}
     </>
   );

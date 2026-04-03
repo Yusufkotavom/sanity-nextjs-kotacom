@@ -13,11 +13,13 @@ export default defineType({
     title: "Implementasi cepat, hasil terukur",
     body: [
       {
+        _key: "body-1",
         _type: "block",
         style: "normal",
         markDefs: [],
         children: [
           {
+            _key: "body-1-span-1",
             _type: "span",
             marks: [],
             text: "Mulai dari audit kebutuhan hingga delivery, setiap langkah dirancang agar efisien dan mudah dipahami oleh tim non-teknis.",

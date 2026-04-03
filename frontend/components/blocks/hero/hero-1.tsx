@@ -8,7 +8,9 @@ import { PAGE_QUERY_RESULT } from "@/sanity.types";
 type Hero1Props = Extract<
   NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number],
   { _type: "hero-1" }
->;
+> & {
+  pageTitle?: string | null;
+};
 
 export default function Hero1({
   tagLine,
@@ -16,7 +18,10 @@ export default function Hero1({
   body,
   image,
   links,
+  pageTitle,
 }: Hero1Props) {
+  const resolvedTitle = title?.trim() || pageTitle?.trim() || undefined;
+
   return (
     <div className="container dark:bg-background py-20 lg:pt-40">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -26,9 +31,9 @@ export default function Hero1({
               <span className="text-ui-label">{tagLine}</span>
             </h1>
           )}
-          {title && (
+          {resolvedTitle && (
             <h2 className="text-display-xl mt-6 animate-fade-up [animation-delay:200ms] opacity-0">
-              {title}
+              {resolvedTitle}
             </h2>
           )}
           {body && (

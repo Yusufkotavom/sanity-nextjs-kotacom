@@ -9,11 +9,13 @@ export default defineType({
     tagLine: "Minggu 1",
     body: [
       {
+        _key: "body-1",
         _type: "block",
         style: "normal",
         markDefs: [],
         children: [
           {
+            _key: "body-1-span-1",
             _type: "span",
             marks: [],
             text: "Analisis kebutuhan bisnis, audit proses eksisting, dan prioritas fitur untuk fase implementasi.",

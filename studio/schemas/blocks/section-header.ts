@@ -55,6 +55,7 @@ export default defineType({
     defineField({
       name: "title",
       type: "string",
+      description: "Optional custom title override. Leave empty to use the page title in frontend.",
     }),
     defineField({
       name: "description",

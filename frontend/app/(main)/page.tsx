@@ -1,8 +1,20 @@
 import type { Metadata } from "next";
+import Blocks from "@/components/blocks";
 import HomePageView from "@/components/ui/home/home-page";
+import { fetchSanityPageBySlug } from "@/sanity/lib/fetch";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
+import { generatePageMetadata } from "@/sanity/lib/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const page = await fetchSanityPageBySlug({ slug: "index" });
+
+  if (page) {
+    return generatePageMetadata({
+      page,
+      slug: "index",
+    });
+  }
+
   return generateBasicMetadata({
     title: "Kotacom - Website, Software, IT Support, dan Percetakan",
     description:
@@ -11,6 +23,12 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default function IndexPage() {
+export default async function IndexPage() {
+  const page = await fetchSanityPageBySlug({ slug: "index" });
+
+  if (page) {
+    return <Blocks blocks={page.blocks ?? []} pageTitle={page.title} />;
+  }
+
   return <HomePageView />;
 }

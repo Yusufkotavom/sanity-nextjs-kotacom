@@ -28,6 +28,7 @@ export default async function AllPosts({
               title={post?.title ?? ""}
               excerpt={post?.excerpt ?? ""}
               image={post?.image ?? null}
+              categories={post?.categories ?? []}
             />
           </Link>
         ))}

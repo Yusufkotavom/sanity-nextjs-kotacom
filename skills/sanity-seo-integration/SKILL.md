@@ -8,12 +8,13 @@ Keep SEO schema in Sanity Studio synchronized with frontend metadata behavior.
 
 ## Workflow
 1. Update Studio schema documents/objects.
-2. Update frontend query/fetch contracts.
-3. Update metadata mapping in `frontend/sanity/lib/metadata.ts`.
-4. Validate route-level metadata usage.
-5. Ensure revalidation coverage if content model changed.
-6. Run build checks.
-7. Append entry to `docs/seo-updates.md`.
+2. If a Sanity schema uses `initialValue` for any array of objects, include stable `_key` values on every array item, including nested Portable Text blocks/spans, so Studio editors do not hit `Missing keys`.
+3. Update frontend query/fetch contracts.
+4. Update metadata mapping in `frontend/sanity/lib/metadata.ts`.
+5. Validate route-level metadata usage.
+6. Ensure revalidation coverage if content model changed.
+7. Run build checks.
+8. Append entry to `docs/seo-updates.md`.
 
 ## Verification
 - `pnpm --filter studio run build`

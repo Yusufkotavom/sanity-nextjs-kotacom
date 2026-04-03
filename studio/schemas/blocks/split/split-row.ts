@@ -13,16 +13,19 @@ export default defineType({
     noGap: false,
     splitColumns: [
       {
+        _key: "column-1",
         _type: "split-content",
         tagLine: "Keunggulan",
         title: "Satu partner untuk eksekusi teknis end-to-end",
         body: [
           {
+            _key: "body-1",
             _type: "block",
             style: "normal",
             markDefs: [],
             children: [
               {
+                _key: "body-1-span-1",
                 _type: "span",
                 marks: [],
                 text: "Dari kebutuhan website, aplikasi, IT support, hingga desain dan percetakan, semuanya bisa dikelola dalam satu alur kerja.",
@@ -39,18 +42,22 @@ export default defineType({
         },
       },
       {
+        _key: "column-2",
         _type: "split-info-list",
         list: [
           {
+            _key: "info-1",
             _type: "split-info",
             title: "One-Stop Solution",
             body: [
               {
+                _key: "body-1",
                 _type: "block",
                 style: "normal",
                 markDefs: [],
                 children: [
                   {
+                    _key: "body-1-span-1",
                     _type: "span",
                     marks: [],
                     text: "Semua kebutuhan digital dan IT dalam satu vendor yang terkoordinasi.",
@@ -61,15 +68,18 @@ export default defineType({
             tags: ["Efisien", "Terintegrasi"],
           },
           {
+            _key: "info-2",
             _type: "split-info",
             title: "Fast Delivery",
             body: [
               {
+                _key: "body-1",
                 _type: "block",
                 style: "normal",
                 markDefs: [],
                 children: [
                   {
+                    _key: "body-1-span-1",
                     _type: "span",
                     marks: [],
                     text: "Timeline implementasi jelas, progress transparan, dan komunikasi cepat.",

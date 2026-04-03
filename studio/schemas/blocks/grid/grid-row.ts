@@ -12,6 +12,7 @@ export default defineType({
     gridColumns: "grid-cols-3",
     columns: [
       {
+        _key: "column-1",
         _type: "grid-card",
         title: "IT Support",
         excerpt:
@@ -25,6 +26,7 @@ export default defineType({
         },
       },
       {
+        _key: "column-2",
         _type: "grid-card",
         title: "Software Development",
         excerpt:
@@ -38,6 +40,7 @@ export default defineType({
         },
       },
       {
+        _key: "column-3",
         _type: "grid-card",
         title: "Printing Services",
         excerpt:

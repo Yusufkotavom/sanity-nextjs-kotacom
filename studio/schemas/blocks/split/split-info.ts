@@ -13,11 +13,13 @@ export default defineType({
     title: "Website Development",
     body: [
       {
+        _key: "body-1",
         _type: "block",
         style: "normal",
         markDefs: [],
         children: [
           {
+            _key: "body-1-span-1",
             _type: "span",
             marks: [],
             text: "Website modern yang cepat, SEO-friendly, dan dirancang untuk mendukung tujuan bisnis.",

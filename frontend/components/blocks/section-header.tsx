@@ -6,7 +6,9 @@ import { PAGE_QUERY_RESULT } from "@/sanity.types";
 type SectionHeaderProps = Extract<
   NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number],
   { _type: "section-header" }
->;
+> & {
+  pageTitle?: string | null;
+};
 
 export default function SectionHeader({
   padding,
@@ -16,8 +18,10 @@ export default function SectionHeader({
   tagLine,
   title,
   description,
+  pageTitle,
 }: SectionHeaderProps) {
   const isNarrow = sectionWidth === "narrow";
+  const resolvedTitle = title?.trim() || pageTitle?.trim() || undefined;
 
   return (
     <SectionContainer color={colorVariant} padding={padding}>
@@ -39,7 +43,7 @@ export default function SectionHeader({
               <span className="text-ui-label">{tagLine}</span>
             </h1>
           )}
-          <h2 className="text-display-lg mb-4">{title}</h2>
+          {resolvedTitle ? <h2 className="text-display-lg mb-4">{resolvedTitle}</h2> : null}
         </div>
         <p className="text-ui-body">{description}</p>
       </div>

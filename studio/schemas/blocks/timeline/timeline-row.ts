@@ -11,16 +11,19 @@ export default defineType({
     colorVariant: "background",
     timelines: [
       {
+        _key: "timeline-1",
         _type: "timelines-1",
         title: "Discovery & Audit",
         tagLine: "Minggu 1",
         body: [
           {
+            _key: "body-1",
             _type: "block",
             style: "normal",
             markDefs: [],
             children: [
               {
+                _key: "body-1-span-1",
                 _type: "span",
                 marks: [],
                 text: "Sesi kickoff, pemetaan kebutuhan, dan validasi target bisnis.",
@@ -30,16 +33,19 @@ export default defineType({
         ],
       },
       {
+        _key: "timeline-2",
         _type: "timelines-1",
         title: "Implementation",
         tagLine: "Minggu 2-4",
         body: [
           {
+            _key: "body-1",
             _type: "block",
             style: "normal",
             markDefs: [],
             children: [
               {
+                _key: "body-1-span-1",
                 _type: "span",
                 marks: [],
                 text: "Pengerjaan fitur prioritas, review berkala, dan QA bertahap.",
@@ -49,16 +55,19 @@ export default defineType({
         ],
       },
       {
+        _key: "timeline-3",
         _type: "timelines-1",
         title: "Launch & Support",
         tagLine: "Minggu 5+",
         body: [
           {
+            _key: "body-1",
             _type: "block",
             style: "normal",
             markDefs: [],
             children: [
               {
+                _key: "body-1-span-1",
                 _type: "span",
                 marks: [],
                 text: "Go-live, monitoring performa, dan dukungan operasional pasca rilis.",

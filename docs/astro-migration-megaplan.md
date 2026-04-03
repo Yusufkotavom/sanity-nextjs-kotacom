@@ -132,10 +132,27 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Agent communication policy now enforces Sanity dev-first credential usage (`SANITY_DEV` -> `SANITY_AUTH_TOKEN`) and env documentation/examples are aligned for safer CMS automation
 - [x] Redirect rollout hardening added: build-time Next.js redirect loader now supports authenticated Sanity fetch for private `redirect` documents, plus diagnostics to expose redirect count/token mode in deployment logs
 - [x] Product-led homepage now owns `/` using reusable UI sections and expanded messaging derived from the live `kotacom.id` homepage; `/home` and `/product-home` act as redirect aliases, and related client CTA hooks stay prerender-safe under Next 16
+- [x] Root homepage `/` now prefers the Sanity `page` document with slug `index` again, while preserving the product-led local homepage as a safe fallback when the CMS document is absent
+- [x] Sanity block schema defaults now include `_key` values for object-array `initialValue` payloads, preventing Studio `Missing keys` editor errors on seeded CTA/hero/grid/split/timeline blocks
+- [x] Sanity agent-toolkit skills have been vendored into the repository under `skills/` so CMS/content-modeling guidance is versioned alongside the codebase
+- [x] `hero-2` now supports soft binding to `page.title`: when the block title is empty, frontend resolves the displayed heading from the parent page document instead of requiring duplicated CMS content
+- [x] `hero-1` and `section-header` now follow the same soft binding pattern to `page.title`, so three core heading blocks can inherit the page title without duplicating CMS fields
 - [x] Legacy rewrite content architecture split into modular registry-based content sources (`content/core`, `website`, `printing`, `software`, `misc`, `registry`) so route discovery, shared SEO enrichment, and per-cluster copy no longer depend on a single monolithic generator file
 - [x] Priority slug override source also split by cluster (`website-overrides`, `printing-overrides`, `software-overrides`) so page-specific tuning is no longer stored in one mixed override map
 - [x] Percetakan anchor pages (`/percetakan`, `/percetakan/cetak-buku`, `/percetakan/cetak-brosur`, `/percetakan/cetak-company-profile`) now resolve through dedicated page modules under `content/printing-pages/*` instead of living only as branches inside the cluster builder
 - [x] Remaining `percetakan` detail presets and `cetak-buku` city-intent overrides are now stored in dedicated `printing-pages/*` modules, leaving `printing.ts` as a smaller resolver/fallback orchestrator
+- [x] Software anchor pages (`/software`, `/software/pembuatan-software`, `/software/implementasi-software`, `/software/instalasi-software`, `/sistem-pos`) now resolve through dedicated `content/software-pages/*` modules, with `software.ts` reduced to shared fallback logic and overrides partially moved into page-focused modules
+- [x] `pembuatan-website` anchor pages (`/pembuatan-website`, `/pembuatan-website/harga`, `/pembuatan-website/jasa-pembuatan-website-company-profile`, `/pembuatan-website/jasa-pembuatan-website-toko-online`) now resolve through dedicated `content/website-pages/*` modules, with website-specific overrides starting to move out of the mixed cluster file
+- [x] Remaining non-city `pembuatan-website` service routes (`jasa-migrasi-wordpress`, `dokter-klinik`, `expedisi`, `komunitas-ngo`, `konstruksi`, `sekolah`, `template`) now also use dedicated `content/website-pages/*` modules, leaving city routes as the primary parametric fallback path
+- [x] Slow parity pass started for `pembuatan-website` page modules by comparing Astro source against Next page-content modules; `company-profile` and `toko-online` now carry more of their original enterprise/e-commerce intent instead of generic website-copy fallback
+- [x] Hybrid delivery pattern is now demonstrated end-to-end on `/test-page-hybrid`: code-driven route shell plus Sanity `page` blocks (`hero`, proof via `grid-row`, `cta`, `faqs`) seeded through dev-first credentials for concrete evaluation before applying the model to money pages
+- [x] Sanity page-array guardrails are now scripted: page audits detect missing `_key` and missing `link.isExternal`, while a normalizer can patch legacy `page` documents in place to keep Studio editing safe
+- [x] Hybrid demo public-read issue resolved: `/test-page-hybrid` now uses public-safe hyphenated document IDs for the `page` and referenced `faq` docs, and the FAQ renderer skips null dereference results instead of crashing if a referenced document is unavailable
+- [x] Repo-level execution guidance now codifies public Sanity guardrails in `AGENTS.md` and a reusable `skills/sanity-public-content-guardrails` skill, so future agent-driven seed/import work follows the same public-read-safe rules by default
+- [x] `/test-page-hybrid` now uses a clearer blueprint layout: code-owned intro/source diagnostics, separated Sanity hero/proof and conversion zones, explicit ownership mapping, and a fallback-oriented explanation section that is closer to the intended money-page hybrid pattern
+- [x] Hybrid demo now supports page-level split control via `topBlockCount`, allowing editors to keep one freeform `blocks[]` array while choosing how many blocks render before the code-owned middle section
+- [x] `/pembuatan-website` main route now has a real hybrid wrapper: top and bottom Sanity `page` blocks are split by `topBlockCount` around the existing rewrite shell, and a seeded public `page` document provides an initial support/proof + CTA layer without replacing the live local funnel logic
+- [x] The main-route hybrid pattern is now reusable: `pembuatan-website`, `percetakan`, and `software` use a shared `PageHybridShell`, seeded public `page` documents exist for all three slugs, and repo guidance includes a dedicated hybrid-content workflow skill
 
 ## Workstream A - Platform & Data Foundation
 
@@ -247,6 +264,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ### D2. Template Refactor Priority
 - [ ] Homepage
 - [x] Product-led homepage promoted to `/` using shared UI primitives; `/home` and `/product-home` now act as redirect aliases instead of separate preview destinations
+- [x] Root homepage route restored to CMS-first behavior by resolving Sanity `page:index` before the local product-led fallback view, keeping `/home` and `/product-home` as aliases only
 - [ ] Blog detail/list/category
 - [ ] Service detail/list
 - [x] Product detail/list
@@ -272,6 +290,12 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Legacy rewrite override maps are now separated per cluster so high-intent page tuning can be maintained without cross-domain merge noise.
 - [x] `percetakan` cluster has started moving from cluster-branch content to page-specific modules for top anchor routes, establishing the per-page pattern for the next migration wave.
 - [x] `percetakan` cluster now uses a split submodule layout for anchor pages, remaining detail presets, and city-intent overrides, reducing cluster-level file size and coupling.
+- [x] `software` cluster now follows the same per-page module pattern for anchor routes and `sistem-pos`, with registry-level page resolution and a thinner cluster fallback builder.
+- [x] `pembuatan-website` cluster has started following the same per-page module pattern for key money pages, with registry-level route resolution for anchor/index pages and a new `website-pages/*` content layer.
+- [x] `pembuatan-website` non-city service routes are now almost fully page-module driven, so the cluster fallback is largely reserved for city templates and unforeseen slugs.
+- [x] `pembuatan-website` parity refinement has begun at the content level, with page modules gradually absorbing Astro-specific business intent instead of only generic rewrite scaffolding.
+- [x] Hybrid code-plus-Sanity pattern has a live demo route and a seeded Sanity page document, reducing ambiguity before deciding whether main cluster pages should stay code-owned, CMS-owned, or hybrid.
+- [x] Existing Sanity `page` documents can now be audited and normalized for `_key` and `isExternal` consistency, and the current dataset has been brought back to zero findings after running the normalizer.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.
 - Blocker note (2026-04-02): Regenerated `v2` assets are ready, but final selection/approval and route-level wiring are still pending.

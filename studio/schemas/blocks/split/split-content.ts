@@ -14,11 +14,13 @@ export default defineType({
     title: "One-stop partner untuk kebutuhan teknis bisnis modern",
     body: [
       {
+        _key: "body-1",
         _type: "block",
         style: "normal",
         markDefs: [],
         children: [
           {
+            _key: "body-1-span-1",
             _type: "span",
             marks: [],
             text: "Kami membantu bisnis tetap fokus ke growth dengan menangani website, software, IT support, dan kebutuhan digital secara terintegrasi.",

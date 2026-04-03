@@ -12,8 +12,24 @@ import { buildPercetakanCetakBrosurPageCopy } from "./printing-pages/cetak-brosu
 import { buildPercetakanCetakBukuPageCopy } from "./printing-pages/cetak-buku";
 import { buildPercetakanCetakCompanyProfilePageCopy } from "./printing-pages/cetak-company-profile";
 import { buildPercetakanIndexPageCopy } from "./printing-pages/percetakan-index";
+import { buildImplementasiSoftwarePageCopy } from "./software-pages/implementasi-software";
+import { buildInstalasiSoftwarePageCopy } from "./software-pages/instalasi-software";
+import { buildPembuatanSoftwarePageCopy } from "./software-pages/pembuatan-software";
+import { buildSistemPosPageCopy } from "./software-pages/sistem-pos";
+import { buildSoftwareIndexPageCopy } from "./software-pages/software-index";
 import { buildSoftwareCopy, buildSoftwareDetailCopy } from "./software";
 import type { LegacyRewriteCopy } from "./types";
+import { buildWebsiteCompanyProfilePageCopy } from "./website-pages/company-profile";
+import { buildWebsiteDokterKlinikPageCopy } from "./website-pages/dokter-klinik";
+import { buildWebsiteExpedisiPageCopy } from "./website-pages/expedisi";
+import { buildWebsiteHargaPageCopy } from "./website-pages/harga";
+import { buildWebsiteIndexPageCopy } from "./website-pages/website-index";
+import { buildWebsiteKonstruksiPageCopy } from "./website-pages/konstruksi";
+import { buildWebsiteKomunitasNgoPageCopy } from "./website-pages/komunitas-ngo";
+import { buildWebsiteMigrasiWordpressPageCopy } from "./website-pages/migrasi-wordpress";
+import { buildWebsiteSekolahPageCopy } from "./website-pages/sekolah";
+import { buildWebsiteTemplatePageCopy } from "./website-pages/template";
+import { buildWebsiteTokoOnlinePageCopy } from "./website-pages/toko-online";
 import {
   buildWebsiteCityCopy,
   buildWebsiteIndexCopy,
@@ -34,6 +50,50 @@ export type LegacyPageResolution = {
 };
 
 function resolveWebsite(page: LegacyAstroPage): LegacyPageResolution {
+  if (page.route === "/pembuatan-website") {
+    return { source: "page", builder: () => buildWebsiteIndexPageCopy() };
+  }
+
+  if (page.route === "/pembuatan-website/harga") {
+    return { source: "page", builder: () => buildWebsiteHargaPageCopy() };
+  }
+
+  if (page.route === "/pembuatan-website/jasa-pembuatan-website-company-profile") {
+    return { source: "page", builder: () => buildWebsiteCompanyProfilePageCopy() };
+  }
+
+  if (page.route === "/pembuatan-website/jasa-migrasi-wordpress") {
+    return { source: "page", builder: () => buildWebsiteMigrasiWordpressPageCopy() };
+  }
+
+  if (page.route === "/pembuatan-website/jasa-pembuatan-website-dokter-klinik") {
+    return { source: "page", builder: () => buildWebsiteDokterKlinikPageCopy() };
+  }
+
+  if (page.route === "/pembuatan-website/jasa-pembuatan-website-expedisi") {
+    return { source: "page", builder: () => buildWebsiteExpedisiPageCopy() };
+  }
+
+  if (page.route === "/pembuatan-website/jasa-pembuatan-website-komunitas-ngo") {
+    return { source: "page", builder: () => buildWebsiteKomunitasNgoPageCopy() };
+  }
+
+  if (page.route === "/pembuatan-website/jasa-pembuatan-website-konstruksi") {
+    return { source: "page", builder: () => buildWebsiteKonstruksiPageCopy() };
+  }
+
+  if (page.route === "/pembuatan-website/jasa-pembuatan-website-sekolah") {
+    return { source: "page", builder: () => buildWebsiteSekolahPageCopy() };
+  }
+
+  if (page.route === "/pembuatan-website/jasa-pembuatan-website-toko-online") {
+    return { source: "page", builder: () => buildWebsiteTokoOnlinePageCopy() };
+  }
+
+  if (page.route === "/pembuatan-website/template") {
+    return { source: "page", builder: () => buildWebsiteTemplatePageCopy() };
+  }
+
   if (page.sourceFile.includes("[kota]") || page.slug === "sidoarjo") {
     return { source: "parametric-template", builder: buildWebsiteCityCopy };
   }
@@ -74,26 +134,23 @@ function resolvePrinting(page: LegacyAstroPage): LegacyPageResolution {
 
 function resolveSoftware(page: LegacyAstroPage): LegacyPageResolution {
   if (page.section === "sistem-pos") {
-    return {
-      source: "page",
-      builder: (currentPage) => {
-        const softwareCopy = buildSoftwareCopy(currentPage);
-        return {
-          ...softwareCopy,
-          primaryKeyword: "Software Sistem POS",
-          secondaryKeywords: [
-            "Aplikasi kasir online",
-            "Sistem POS retail",
-            "Software POS restoran",
-            "POS terintegrasi stok",
-            "Sistem point of sale",
-          ],
-          description:
-            "Software sistem POS untuk bisnis retail dan F&B yang membutuhkan transaksi cepat, kontrol stok akurat, dan laporan real-time.",
-          ctaLabel: "Konsultasi Sistem POS",
-        };
-      },
-    };
+    return { source: "page", builder: () => buildSistemPosPageCopy() };
+  }
+
+  if (page.route === "/software") {
+    return { source: "page", builder: () => buildSoftwareIndexPageCopy() };
+  }
+
+  if (page.route === "/software/pembuatan-software") {
+    return { source: "page", builder: () => buildPembuatanSoftwarePageCopy() };
+  }
+
+  if (page.route === "/software/implementasi-software") {
+    return { source: "page", builder: () => buildImplementasiSoftwarePageCopy() };
+  }
+
+  if (page.route === "/software/instalasi-software") {
+    return { source: "page", builder: () => buildInstalasiSoftwarePageCopy() };
   }
 
   if (page.slug !== "software") {
