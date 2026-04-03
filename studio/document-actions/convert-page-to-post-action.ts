@@ -1,4 +1,4 @@
-import { useClient } from "sanity";
+import type { SanityClient } from "@sanity/client";
 import type { DocumentActionComponent, SanityDocumentLike } from "sanity";
 
 const NON_CONVERTIBLE_PAGE_SLUGS = new Set([
@@ -15,6 +15,7 @@ type ConvertActionProps = {
   draft?: SanityDocumentLike | null;
   published?: SanityDocumentLike | null;
   onComplete: () => void;
+  getClient: (options: { apiVersion: string }) => SanityClient;
 };
 
 type PageDocument = {
@@ -234,7 +235,7 @@ function buildPostFromPage({
   };
 }
 
-async function fetchExistingPost(client: ReturnType<typeof useClient>, slug: string) {
+async function fetchExistingPost(client: SanityClient, slug: string) {
   return client.fetch(
     `*[_type == "post" && slug.current == $slug] | order(_updatedAt desc)[0]{
       _id,
@@ -255,7 +256,7 @@ async function fetchExistingPost(client: ReturnType<typeof useClient>, slug: str
 export const convertPageToPostAction: DocumentActionComponent = (props) => {
   const typed = props as unknown as ConvertActionProps;
   const { type, draft, published, onComplete } = typed;
-  const client = useClient({ apiVersion: "2026-03-23" });
+  const client = typed.getClient({ apiVersion: "2026-03-23" });
 
   if (type !== "page") {
     return null;

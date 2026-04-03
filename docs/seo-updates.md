@@ -3945,3 +3945,19 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - Workflow references updated consistently across all three active workflow files.
   - A fresh push is required to confirm whether any remaining warnings are only from third-party vendor actions that have not yet published Node 24-native releases.
+
+## 2026-04-03 - Studio Document Actions Hardened for Task UI
+- Changed files:
+  - `studio/document-actions/apply-hybrid-preset-action.ts`
+  - `studio/document-actions/convert-page-to-post-action.ts`
+  - `docs/seo-updates.md`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Removed `useClient()` from the custom page document actions and switched both actions to `context.getClient(...)` from the Sanity document action props.
+  - This avoids relying on a React hook context that is not guaranteed inside newer Studio surfaces such as Task creation and related document panels.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: Studio page actions are now less coupled to editor-only React context, reducing the chance that hybrid/page-to-post tooling crashes unrelated Studio workflows.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` completed without reporting an action-level type or bundle error during the refactor pass.

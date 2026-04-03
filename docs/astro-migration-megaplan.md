@@ -341,6 +341,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] GitHub Actions workflows now opt JavaScript actions into Node 24, reducing CI/deploy noise while the hybrid homepage and Studio schema rollout continues on `main`.
 - [x] Core GitHub Actions references have also been moved forward (`actions/checkout@v6`, `actions/setup-node@v6`, `dorny/paths-filter@v4`) so the remaining CI warnings should be limited to vendor actions that have not yet published newer runtimes.
 - [x] Existing Sanity `page` documents can now be audited and normalized for `_key` and `isExternal` consistency, and the current dataset has been brought back to zero findings after running the normalizer.
+- [x] Custom Studio page document actions no longer rely on `useClient()`, reducing coupling to editor-only React contexts and preventing Task UI crashes while hybrid/page-to-post tools remain enabled.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.
 - Blocker note (2026-04-02): Regenerated `v2` assets are ready, but final selection/approval and route-level wiring are still pending.
