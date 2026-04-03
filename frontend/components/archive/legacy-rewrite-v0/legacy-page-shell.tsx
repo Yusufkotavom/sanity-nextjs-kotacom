@@ -7,11 +7,11 @@ import {
   buildServiceJsonLd,
 } from "@/lib/seo-jsonld";
 import { getStrategicLinks } from "@/lib/legacy-pages/internal-links";
-import LegacyHero from "@/components/legacy/legacy-hero";
-import LegacyLandingSections from "@/components/legacy/legacy-landing-sections";
-import LegacyHighlights from "@/components/legacy/legacy-highlights";
-import LegacyProcessFaq from "@/components/legacy/legacy-process-faq";
-import LegacyRelatedLinks from "@/components/legacy/legacy-related-links";
+import LegacyHero from "./legacy-hero";
+import LegacyLandingSections from "./legacy-landing-sections";
+import LegacyHighlights from "./legacy-highlights";
+import LegacyProcessFaq from "./legacy-process-faq";
+import LegacyRelatedLinks from "./legacy-related-links";
 import MicroBadges from "@/components/micro-badges";
 
 type LegacyPageShellProps = {

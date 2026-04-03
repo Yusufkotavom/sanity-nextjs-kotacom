@@ -22,6 +22,7 @@ export default function SplitCardsList({ color, list }: SplitCardsListProps) {
             key={index}
             color={color}
             tagLine={item.tagLine}
+            uiIcon={item.uiIcon}
             title={item.title}
             body={item.body}
           />

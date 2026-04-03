@@ -586,6 +586,14 @@
           },
           "optional": true
         },
+        "uiIcon": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "ui-icon"
+          },
+          "optional": true
+        },
         "title": {
           "type": "objectAttribute",
           "value": {
@@ -679,6 +687,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "uiIcon": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "ui-icon"
           },
           "optional": true
         },
@@ -1217,6 +1233,14 @@
             "value": "pricing-card"
           }
         },
+        "uiIcon": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "ui-icon"
+          },
+          "optional": true
+        },
         "title": {
           "type": "objectAttribute",
           "value": {
@@ -1279,6 +1303,14 @@
             "type": "string",
             "value": "grid-card"
           }
+        },
+        "uiIcon": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "ui-icon"
+          },
+          "optional": true
         },
         "title": {
           "type": "objectAttribute",
@@ -1423,6 +1455,14 @@
                 }
               }
             }
+          },
+          "optional": true
+        },
+        "uiIcon": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "ui-icon"
           },
           "optional": true
         },
@@ -1579,6 +1619,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "uiIcon": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "ui-icon"
           },
           "optional": true
         },
@@ -1925,6 +1973,14 @@
           },
           "optional": true
         },
+        "uiIcon": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "ui-icon"
+          },
+          "optional": true
+        },
         "title": {
           "type": "objectAttribute",
           "value": {
@@ -1982,6 +2038,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "uiIcon": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "ui-icon"
           },
           "optional": true
         },
@@ -2107,6 +2171,14 @@
           "optional": true
         }
       }
+    }
+  },
+  {
+    "name": "ui-icon",
+    "type": "type",
+    "value": {
+      "type": "inline",
+      "name": "iconPicker"
     }
   },
   {
@@ -2515,6 +2587,14 @@
           },
           "optional": true
         },
+        "uiIcon": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "ui-icon"
+          },
+          "optional": true
+        },
         "href": {
           "type": "objectAttribute",
           "value": {
@@ -2625,6 +2705,10 @@
               },
               {
                 "type": "string",
+                "value": "more"
+              },
+              {
+                "type": "string",
                 "value": "utility"
               }
             ]
@@ -2650,6 +2734,14 @@
           "value": {
             "type": "inline",
             "name": "navigation-icon"
+          },
+          "optional": true
+        },
+        "uiIcon": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "ui-icon"
           },
           "optional": true
         },
@@ -6473,6 +6565,43 @@
           "type": "string"
         },
         "optional": true
+      }
+    }
+  },
+  {
+    "name": "iconPicker",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "iconPicker"
+          }
+        },
+        "provider": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "svg": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
       }
     }
   },

@@ -1,6 +1,7 @@
 const DEFAULT_WHATSAPP_URL = "https://wa.me/6281335275219";
 
 export const HYBRID_ELIGIBLE_SLUGS = new Set([
+  "home-pepar",
   "index",
   "layanan",
   "pembuatan-website",
@@ -27,12 +28,15 @@ function createPortableTextBlock(text, keyPrefix) {
   ];
 }
 
-function createLink({ key, title, href, isExternal = true, buttonVariant = "link" }) {
+function createLink({ key, title, href, isExternal, buttonVariant = "link" }) {
+  const resolvedIsExternal =
+    typeof isExternal === "boolean" ? isExternal : /^https?:\/\//i.test(href);
+
   return {
     _key: key,
     _type: "link",
     title,
-    isExternal,
+    isExternal: resolvedIsExternal,
     href,
     buttonVariant,
   };
@@ -66,7 +70,6 @@ function createGridRow({ key, columns, gridColumns = "grid-cols-3" }) {
         key: `${key}-column-link-${index}`,
         title: column.linkTitle || "Lihat detail",
         href: column.href,
-        isExternal: true,
         buttonVariant: "link",
       }),
     })),
@@ -95,7 +98,6 @@ function createCta({ key, tagLine, title, body, primaryHref, primaryTitle, secon
         key: `${key}-link-secondary`,
         title: secondaryTitle,
         href: secondaryHref,
-        isExternal: true,
         buttonVariant: "outline",
       }),
     ],

@@ -20,7 +20,7 @@ export default defineType({
       name: "links",
       title: "Links",
       description:
-        "Navigation links for header and footer. Use Navigation Location to split Primary vs Utility/CTA links.",
+        "Navigation links for header and footer. Keep primary desktop nav at 8 items max, then move overflow into More Menu or Utility/CTA.",
       type: "array",
       of: [
         defineArrayMember({
@@ -32,7 +32,29 @@ export default defineType({
           },
         }),
       ],
-      validation: (Rule) => Rule.max(10),
+      validation: (Rule) => [
+        Rule.max(16),
+        Rule.custom((value) => {
+          const links = Array.isArray(value) ? value : [];
+          const primaryCount = links.filter((link) => {
+            const nextLink = link as
+              | {
+                  showInHeader?: boolean;
+                  navLocation?: "primary" | "more" | "utility";
+                }
+              | undefined;
+            if (!nextLink) return false;
+            if (nextLink.showInHeader === false) return false;
+            return !nextLink.navLocation || nextLink.navLocation === "primary";
+          }).length;
+
+          if (primaryCount > 8) {
+            return "Desktop primary navigation should stay at 8 items max. Move overflow into More Menu or Utility/CTA.";
+          }
+
+          return true;
+        }).warning(),
+      ],
     }),
     defineField({
       name: "headerCta",

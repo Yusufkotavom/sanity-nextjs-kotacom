@@ -68,6 +68,9 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Shared `legacy-rich-content` block contract added for Markdown/HTML raw rendering and wired to both `page.blocks` and `post.body` (`block-content`)
 - [x] Sanity import smoke test completed with safe ID strategy (no dots): 2 pages + 2 posts published and visible in both public and authenticated published reads
 - [x] Legacy content renderer finetuned with parser/sanitizer pipeline plus `legacy-prose` styles so HTML/Markdown lists, numbering, tables, and headings render consistently
+- [x] Dedicated hybrid preview route `/home-pepar` now exists as a homepage-preparation surface, so the next live home iteration can be tested with real Sanity top/bottom zones before replacing `/`
+- [x] `/home-pepar` now carries a fuller homepage-candidate middle section aligned to the live `kotacom.id` information architecture, giving the migration a realistic rehearsal surface instead of a scaffold placeholder
+- [x] `/home-pepar` has now been polished into a more realistic live-candidate flow: one CMS hero above the shell, a less repetitive code-owned middle section, and CMS proof/CTA blocks below with preview-safe metadata
 - [x] Next.js dev tooling warnings reduced by setting explicit Turbopack root and migrating `middleware.ts` to `proxy.ts`
 - [x] Environment contract sync completed for frontend/studio examples + deploy env templates (missing keys added, AI Writer action secret parity documented)
 - [x] Footer navigation visual cleanup shipped by removing card container style for a cleaner flat footer link section
@@ -104,6 +107,10 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Missing Vercel-pattern primitives v1 added to rewrite system: metrics rail, inline phrase strip, product stage, quote spotlight, and rewrite logo wall are now available and wired into the shared rewrite page shell
 - [x] Public rewrite routes no longer mount `SanityLive` outside Draft Mode, avoiding live-preview client errors on public city landing pages while preserving draft visual editing flows
 - [x] Internal `/component-ui` route added as a noindex UI canvas for auditing rewrite primitives and visual-system components without affecting search index coverage
+- [x] Reusable Sanity Studio `ui-icon` system is now integrated via icon-picker plugin with Lucide + Simple Icons support, legacy-nav fallback fields, and frontend SVG/icon resolution for CMS-driven navigation surfaces
+- [x] Navigation overflow handling is now formalized with a desktop `More` lane, Studio warning for >8 primary items, and a completed dev-dataset migration from legacy nav icon tokens to `uiIcon`
+- [x] Hero and CTA blocks now expose reusable `uiIcon` fields and render icon-aware eyebrow rows plus icon-aware CTA buttons through the shared Sanity icon contract
+- [x] Grid and split card/list blocks now expose reusable `uiIcon` fields, with icon-aware card headings and button labels wired through the shared Sanity icon renderer
 - [x] Public rewrite shell cleanup completed: internal/demo hero copy and visual-system explanation blocks were removed from commercial pages so business routes render only user-facing content
 - [x] Selected rewrite modules were reintegrated for the public `percetakan` route with percetakan-specific business copy, replacing the earlier generic/demo messaging
 - [x] Metadata and JSON-LD fallback images switched from legacy `/images/og-image.jpg` to centralized split-pack SEO fallback asset for consistent brand imagery in link previews and structured data
@@ -170,6 +177,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Hybrid rollout terminology and operational coverage are now sharper: the workflow uses the clearer `supported hybrid slug` concept, and smoke tests have validated unsupported-slug rejection, dry-run behavior, bootstrap writes, duplicate protection, and cleanup
 - [x] Root-page blog backlog now has a dedicated `page -> post` conversion CLI with documented dry-run/write workflow, allowing temporary `page` articles to be copied into the `post` schema and `/blog/[slug]` routes without destructive type changes
 - [x] Root-page blog backlog no longer depends on CLI only: Sanity Studio now exposes a draft-safe `Convert Page to Post` action so editors can bootstrap post documents from page documents directly inside Studio
+- [x] Rewrite is now more clearly the active visual reference: unused pre-rewrite duplicate shells have been archived, and the core Sanity block components used by generic pages have been restyled toward the rewrite section/panel language
 - [x] Universal trust badge strip now uses icon-led glass cards instead of text-in-image artwork, bringing the shared rewrite shell closer to the current shadcn/Vercel visual direction and removing duplicated badge wording
 - [x] Universal trust badge cards have been compacted further so icon + title sit on one line and the supporting copy stays ultra-short, improving density without falling back to image-based labels
 - [x] `project` documents now include `categories` again in the Studio schema and frontend query contract, resolving Sanity `Unknown field found` warnings on legacy project docs that still store category references
@@ -327,6 +335,9 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Hybrid code-plus-Sanity pattern has a live demo route and a seeded Sanity page document, reducing ambiguity before deciding whether main cluster pages should stay code-owned, CMS-owned, or hybrid.
 - [x] Homepage and primary landing shells now share one hybrid rendering contract (`/`, `/layanan`, `/pembuatan-website`, `/percetakan`, `/software`), reducing route-level divergence while keeping code-owned funnel sections where needed.
 - [x] Main-route hybrid setup is now operationalized through a CLI scaffold with `main-landing` and `homepage` presets, making it faster to convert eligible routes without hand-crafting every Sanity page seed.
+- [x] Homepage migration can now be rehearsed on a dedicated `/home-pepar` hybrid route seeded from the `homepage` preset, reducing pressure on the live `/` path during theme/content convergence.
+- [x] Archive guidance is now explicit at `frontend/components/archive/README.md`, so the rewrite/hybrid stack remains the visible active source while historical component sets stay documented but quarantined.
+- [x] Hybrid preset helpers now default internal links to `isExternal: false`, keeping generated Sanity data aligned with Studio link expectations during broader homepage and landing-page rollout.
 - [x] Existing Sanity `page` documents can now be audited and normalized for `_key` and `isExternal` consistency, and the current dataset has been brought back to zero findings after running the normalizer.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.

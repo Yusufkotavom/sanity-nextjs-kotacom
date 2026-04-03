@@ -12,6 +12,11 @@ export const whatsappCtaQuery = groq`
     sectionWidth,
     stackAlign,
     tagLine,
+    uiIcon{
+      provider,
+      name,
+      svg
+    },
     title,
     body[]{
       ${bodyQuery}

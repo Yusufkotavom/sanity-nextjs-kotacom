@@ -3,7 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import PortableTextRenderer from "@/components/portable-text-renderer";
+import SanityIcon from "@/components/icons/sanity-icon";
 import { PAGE_QUERY_RESULT } from "@/sanity.types";
+import {
+  SectionIntro,
+  SectionPanel,
+  SectionShell,
+} from "@/components/ui/section-shell";
 
 type Hero1Props = Extract<
   NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number],
@@ -14,6 +20,7 @@ type Hero1Props = Extract<
 
 export default function Hero1({
   tagLine,
+  uiIcon,
   title,
   body,
   image,
@@ -23,26 +30,29 @@ export default function Hero1({
   const resolvedTitle = title?.trim() || pageTitle?.trim() || undefined;
 
   return (
-    <div className="container dark:bg-background py-20 lg:pt-40">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <SectionShell className="pt-16 lg:pt-24">
+      <SectionPanel
+        tone="neutral"
+        className="grid gap-8 overflow-hidden rounded-[1.75rem] p-5 md:grid-cols-[minmax(0,1fr)_minmax(320px,0.92fr)] md:p-7 lg:gap-10 lg:p-8"
+      >
         <div className="flex flex-col justify-center">
-          {tagLine && (
-            <h1 className="leading-[0] font-sans animate-fade-up [animation-delay:100ms] opacity-0">
-              <span className="text-ui-label">{tagLine}</span>
-            </h1>
-          )}
-          {resolvedTitle && (
-            <h2 className="text-display-xl mt-6 animate-fade-up [animation-delay:200ms] opacity-0">
-              {resolvedTitle}
-            </h2>
-          )}
-          {body && (
-            <div className="text-ui-body mt-6 animate-fade-up [animation-delay:300ms] opacity-0">
+          {tagLine || uiIcon ? (
+            <div className="mb-3 inline-flex items-center gap-2 text-ui-label text-foreground/55">
+              <SanityIcon icon={uiIcon} className="size-4" />
+              {tagLine ? <span>{tagLine}</span> : null}
+            </div>
+          ) : null}
+          <SectionIntro
+            title={resolvedTitle || ""}
+            className="mb-0 max-w-3xl"
+          />
+          {body ? (
+            <div className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
               <PortableTextRenderer value={body} />
             </div>
-          )}
-          {links && links.length > 0 && (
-            <div className="mt-10 flex flex-wrap gap-4 animate-fade-up [animation-delay:400ms] opacity-0">
+          ) : null}
+          {links && links.length > 0 ? (
+            <div className="mt-8 flex flex-wrap gap-3">
               {links.map((link) => (
                 <Button key={link.title} variant={link?.buttonVariant} asChild>
                   <Link
@@ -50,28 +60,31 @@ export default function Hero1({
                     target={link.target ? "_blank" : undefined}
                     rel={link.target ? "noopener" : undefined}
                   >
+                    <SanityIcon icon={link.uiIcon || link.icon} className="size-4" />
                     {link.title}
                   </Link>
                 </Button>
               ))}
             </div>
-          )}
+          ) : null}
         </div>
         <div className="flex flex-col justify-center">
           {image && image.asset?._id && (
-            <Image
-              className="rounded-xl animate-fade-up [animation-delay:500ms] opacity-0"
-              src={urlFor(image).url()}
-              alt={image.alt || ""}
-              width={image.asset?.metadata?.dimensions?.width || 800}
-              height={image.asset?.metadata?.dimensions?.height || 800}
-              placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
-              blurDataURL={image?.asset?.metadata?.lqip || ""}
-              quality={100}
-            />
+            <div className="overflow-hidden rounded-[1.5rem] border border-white/45 bg-white/70 shadow-[0_18px_48px_rgba(15,23,42,0.1)] dark:border-white/12 dark:bg-white/5">
+              <Image
+                className="h-full w-full object-cover"
+                src={urlFor(image).url()}
+                alt={image.alt || ""}
+                width={image.asset?.metadata?.dimensions?.width || 800}
+                height={image.asset?.metadata?.dimensions?.height || 800}
+                placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
+                blurDataURL={image?.asset?.metadata?.lqip || ""}
+                quality={100}
+              />
+            </div>
           )}
         </div>
-      </div>
-    </div>
+      </SectionPanel>
+    </SectionShell>
   );
 }

@@ -1,9 +1,9 @@
 import JsonLd from "@/components/seo/json-ld";
-import LegacyHero from "@/components/legacy/legacy-hero";
-import LegacyHighlights from "@/components/legacy/legacy-highlights";
-import LegacyLandingSections from "@/components/legacy/legacy-landing-sections";
-import LegacyProcessFaq from "@/components/legacy/legacy-process-faq";
-import LegacyRelatedLinks from "@/components/legacy/legacy-related-links";
+import LegacyHero from "./legacy-hero";
+import LegacyHighlights from "./legacy-highlights";
+import LegacyLandingSections from "./legacy-landing-sections";
+import LegacyProcessFaq from "./legacy-process-faq";
+import LegacyRelatedLinks from "./legacy-related-links";
 import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import { getLegacySectionChildren } from "@/lib/legacy-pages/astro-static";
 import { getStrategicLinks } from "@/lib/legacy-pages/internal-links";

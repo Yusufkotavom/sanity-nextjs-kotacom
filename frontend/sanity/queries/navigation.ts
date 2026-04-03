@@ -16,6 +16,11 @@ export const NAVIGATION_QUERY = groq`
         description,
         badge,
         icon,
+        uiIcon{
+          provider,
+          name,
+          svg
+        },
         title,
         target,
         "href": select(

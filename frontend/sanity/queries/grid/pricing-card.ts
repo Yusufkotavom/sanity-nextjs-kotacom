@@ -6,6 +6,11 @@ export const pricingCardQuery = groq`
   _type == "pricing-card" => {
     _type,
     _key,
+    uiIcon{
+      provider,
+      name,
+      svg
+    },
     title,
     tagLine,
     price,

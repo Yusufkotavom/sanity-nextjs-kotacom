@@ -12,7 +12,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Logo from "@/components/logo";
 import SocialLinks from "@/components/header/social-links";
-import { NAVIGATION_ICON_MAP } from "@/components/icons/navigation-icons";
+import SanityIcon, { type SanityIconValue } from "@/components/icons/sanity-icon";
 import WhatsAppIcon from "@/components/whatsapp-icon";
 import WhatsAppLink from "@/components/whatsapp-link";
 import { useMemo, useState } from "react";
@@ -24,6 +24,7 @@ type SanityLink = NonNullable<NAVIGATION_QUERY_RESULT[0]["links"]>[number];
 type NavChild = {
   _key?: string;
   icon?: string | null;
+  uiIcon?: SanityIconValue;
   title?: string | null;
   badge?: string | null;
   href?: string | null;
@@ -31,8 +32,9 @@ type NavChild = {
 };
 type NavLinkWithChildren = SanityLink & {
   icon?: string | null;
+  uiIcon?: SanityIconValue;
   children?: NavChild[] | null;
-  navLocation?: "primary" | "utility" | null;
+  navLocation?: "primary" | "more" | "utility" | null;
   showInHeader?: boolean | null;
   buttonVariant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null;
 };
@@ -56,7 +58,11 @@ export default function MobileNav({
   );
   const navDoc = (navigation[0] as { headerCta?: NavLinkWithChildren | null } | undefined) || {};
   const primaryItems = useMemo(
-    () => navItems.filter((item) => item.navLocation !== "utility"),
+    () => navItems.filter((item) => !item.navLocation || item.navLocation === "primary"),
+    [navItems],
+  );
+  const moreItems = useMemo(
+    () => navItems.filter((item) => item.navLocation === "more"),
     [navItems],
   );
   const utilityItems = useMemo(
@@ -109,7 +115,7 @@ export default function MobileNav({
         <div className="flex-1 overflow-y-auto px-6 py-6">
           <ul className="list-none space-y-2">
             {primaryItems.map((item) => {
-              const ItemIcon = item.icon ? NAVIGATION_ICON_MAP[item.icon] : null;
+              const resolvedItemIcon = item.uiIcon || item.icon;
               const children = item.children?.filter((child) => child?.title && child?.href) || [];
               const hasChildren = children.length > 0;
               const key = item._key || item.title || "menu-item";
@@ -133,7 +139,10 @@ export default function MobileNav({
                       )}
                     >
                       <span>{item.title}</span>
-                      {ItemIcon && <ItemIcon className="size-4 text-foreground/65 dark:text-white/60" />}
+                      <SanityIcon
+                        icon={resolvedItemIcon}
+                        className="size-4 text-foreground/65 dark:text-white/60"
+                      />
                     </Link>
                   ) : (
                     <>
@@ -149,7 +158,7 @@ export default function MobileNav({
                         className="inline-flex h-10 w-full items-center justify-between gap-2 rounded-lg border border-transparent px-3 text-left text-sm font-medium text-foreground/82 hover:border-border/80 hover:bg-accent/80 dark:text-white/84 dark:hover:border-white/15 dark:hover:bg-white/[0.07] dark:hover:text-white"
                       >
                         <span className="inline-flex items-center gap-2">
-                          {ItemIcon && <ItemIcon className="size-4" />}
+                          <SanityIcon icon={resolvedItemIcon} className="size-4" />
                           {item.title}
                         </span>
                         <ChevronDown
@@ -162,7 +171,7 @@ export default function MobileNav({
                       {groupOpen && (
                         <ul className="ml-3 mt-1 space-y-1 border-l border-border/70 pl-3 dark:border-white/12">
                           {children.map((child) => {
-                            const ChildIcon = child.icon ? NAVIGATION_ICON_MAP[child.icon] : null;
+                            const resolvedChildIcon = child.uiIcon || child.icon;
                             return (
                               <li key={child._key || child.href || child.title}>
                                 <Link
@@ -182,7 +191,10 @@ export default function MobileNav({
                                       )}
                                     </span>
                                   </span>
-                                  {ChildIcon && <ChildIcon className="size-4 text-foreground/65 dark:text-white/58" />}
+                                  <SanityIcon
+                                    icon={resolvedChildIcon}
+                                    className="size-4 text-foreground/65 dark:text-white/58"
+                                  />
                                 </Link>
                               </li>
                             );
@@ -195,6 +207,98 @@ export default function MobileNav({
               );
             })}
           </ul>
+          {!!moreItems.length && (
+            <div className="section-divider mt-6 pt-4">
+              <p className="mb-2 px-3 text-left text-xs uppercase tracking-wide text-foreground/50">
+                More
+              </p>
+              <ul className="list-none space-y-2">
+                {moreItems.map((item) => {
+                  const resolvedItemIcon = item.uiIcon || item.icon;
+                  const children = item.children?.filter((child) => child?.title && child?.href) || [];
+                  const hasChildren = children.length > 0;
+                  const key = item._key || item.title || "more-item";
+                  const groupOpen = openGroups.includes(key);
+
+                  if (hasChildren) {
+                    return (
+                      <li key={key} className="rounded-lg">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setOpenGroups((current) =>
+                              current.includes(key)
+                                ? current.filter((itemKey) => itemKey !== key)
+                                : [...current, key],
+                            )
+                          }
+                          className="inline-flex h-10 w-full items-center justify-between gap-2 rounded-lg border border-transparent px-3 text-left text-sm font-medium text-foreground/82 hover:border-border/80 hover:bg-accent/80 dark:text-white/84 dark:hover:border-white/15 dark:hover:bg-white/[0.07] dark:hover:text-white"
+                        >
+                          <span className="inline-flex items-center gap-2">
+                            <SanityIcon icon={resolvedItemIcon} className="size-4" />
+                            {item.title}
+                          </span>
+                          <ChevronDown
+                            className={cn(
+                              "size-4 transition-transform",
+                              groupOpen && "rotate-180",
+                            )}
+                          />
+                        </button>
+                        {groupOpen && (
+                          <ul className="ml-3 mt-1 space-y-1 border-l border-border/70 pl-3 dark:border-white/12">
+                            {children.map((child) => {
+                              const resolvedChildIcon = child.uiIcon || child.icon;
+                              return (
+                                <li key={child._key || child.href || child.title}>
+                                  <Link
+                                    onClick={() => setOpen(false)}
+                                    href={child.href || "#"}
+                                    target={child.target ? "_blank" : undefined}
+                                    rel={child.target ? "noopener noreferrer" : undefined}
+                                    className="inline-flex w-full items-center justify-between gap-2 rounded-md px-3 py-2 text-left text-sm text-foreground/75 hover:bg-accent/70 hover:text-foreground dark:text-white/74 dark:hover:bg-white/[0.07] dark:hover:text-white"
+                                  >
+                                    <span>{child.title}</span>
+                                    <SanityIcon
+                                      icon={resolvedChildIcon}
+                                      className="size-4 text-foreground/65 dark:text-white/58"
+                                    />
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </li>
+                    );
+                  }
+
+                  return (
+                    <li key={item._key || item.title}>
+                      <Link
+                        onClick={() => setOpen(false)}
+                        href={item.href || "#"}
+                        target={item.target ? "_blank" : undefined}
+                        rel={item.target ? "noopener noreferrer" : undefined}
+                        className={cn(
+                          buttonVariants({
+                            variant: item.buttonVariant || "ghost",
+                          }),
+                          "h-10 w-full justify-between rounded-lg border border-transparent px-3 text-left text-sm font-medium text-foreground/82 hover:border-border/80 hover:bg-accent/80 hover:text-foreground dark:text-white/84 dark:hover:border-white/15 dark:hover:bg-white/[0.07] dark:hover:text-white",
+                        )}
+                      >
+                        <span>{item.title}</span>
+                        <SanityIcon
+                          icon={resolvedItemIcon}
+                          className="size-4 text-foreground/65 dark:text-white/60"
+                        />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
           {!!headerCta?.title && (
             <div className="section-divider mt-6 pt-4">
               <Link
@@ -241,7 +345,7 @@ export default function MobileNav({
               </p>
               <div className="space-y-2">
                 {utilityLinks.map((item) => {
-                  const ItemIcon = item.icon ? NAVIGATION_ICON_MAP[item.icon] : null;
+                  const resolvedItemIcon = item.uiIcon || item.icon;
                   return (
                     <Link
                       key={item._key}
@@ -256,7 +360,7 @@ export default function MobileNav({
                         "h-10 w-full justify-center rounded-lg",
                       )}
                     >
-                      {ItemIcon && <ItemIcon className="size-4" />}
+                      <SanityIcon icon={resolvedItemIcon} className="size-4" />
                       {item.title}
                     </Link>
                   );

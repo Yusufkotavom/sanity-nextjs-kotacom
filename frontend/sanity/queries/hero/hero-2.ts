@@ -8,6 +8,11 @@ export const hero2Query = groq`
     _type,
     _key,
     tagLine,
+    uiIcon{
+      provider,
+      name,
+      svg
+    },
     title,
     body[]{
       ${bodyQuery}

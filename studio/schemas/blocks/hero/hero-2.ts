@@ -50,6 +50,12 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "uiIcon",
+      title: "UI Icon",
+      type: "ui-icon",
+      description: "Optional icon shown beside the hero tagline.",
+    }),
+    defineField({
       name: "title",
       type: "string",
       description: "Optional custom title override. Leave empty to use the page title in frontend.",

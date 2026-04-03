@@ -8,6 +8,11 @@ export const splitCardsListQuery = groq`
     _key,
     list[]{
       tagLine,
+      uiIcon{
+        provider,
+        name,
+        svg
+      },
       title,
       body[]{
         ${bodyQuery}

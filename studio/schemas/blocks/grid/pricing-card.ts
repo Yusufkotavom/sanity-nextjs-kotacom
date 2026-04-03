@@ -30,6 +30,12 @@ export default defineType({
   },
   fields: [
     defineField({
+      name: "uiIcon",
+      title: "UI Icon",
+      type: "ui-icon",
+      description: "Optional icon shown in the pricing card heading.",
+    }),
+    defineField({
       name: "title",
       type: "string",
     }),

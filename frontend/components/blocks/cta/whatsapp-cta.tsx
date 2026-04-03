@@ -3,6 +3,7 @@ import SectionContainer from "@/components/ui/section-container";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import { Button } from "@/components/ui/button";
+import SanityIcon from "@/components/icons/sanity-icon";
 import { PAGE_QUERY_RESULT } from "@/sanity.types";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +18,7 @@ export default async function WhatsAppCta({
   sectionWidth = "default",
   stackAlign = "left",
   tagLine,
+  uiIcon,
   title,
   body,
   secondaryLink,
@@ -32,10 +34,11 @@ export default async function WhatsAppCta({
         )}
       >
         <div className={cn(colorVariant === "primary" ? "text-background" : undefined)}>
-          {tagLine ? (
-            <h1 className="mb-4 leading-[0]">
-              <span className="text-base font-semibold">{tagLine}</span>
-            </h1>
+          {tagLine || uiIcon ? (
+            <div className="mb-4 inline-flex items-center gap-2">
+              <SanityIcon icon={uiIcon} className="size-4" />
+              {tagLine ? <span className="text-base font-semibold">{tagLine}</span> : null}
+            </div>
           ) : null}
           <h2 className="mb-4">{title}</h2>
           {body ? <PortableTextRenderer value={body} /> : null}
@@ -54,6 +57,10 @@ export default async function WhatsAppCta({
                 target={secondaryLink.target ? "_blank" : undefined}
                 rel={secondaryLink.target ? "noopener noreferrer" : undefined}
               >
+                <SanityIcon
+                  icon={secondaryLink.uiIcon || secondaryLink.icon}
+                  className="size-4"
+                />
                 {secondaryLink.title}
               </Link>
             </Button>

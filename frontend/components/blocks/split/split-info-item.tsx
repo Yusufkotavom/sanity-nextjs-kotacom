@@ -1,5 +1,6 @@
 "use client";
 import PortableTextRenderer from "@/components/portable-text-renderer";
+import SanityIcon from "@/components/icons/sanity-icon";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
@@ -18,6 +19,7 @@ type SplitInfoItem = NonNullable<SplitInfoList["list"]>[number];
 
 export default function SplitCardsItem({
   image,
+  uiIcon,
   title,
   body,
   tags,
@@ -59,8 +61,16 @@ export default function SplitCardsItem({
               />
             </div>
           )}
+          {!image?.asset?._id ? (
+            <div className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full border border-primary/25 bg-primary/10">
+              <SanityIcon icon={uiIcon} className="size-5" />
+            </div>
+          ) : null}
           {title && (
-            <div className="text-xl font-semibold leading-[1.1]">{title}</div>
+            <div className="inline-flex items-center gap-2 text-xl font-semibold leading-[1.1]">
+              {image?.asset?._id ? <SanityIcon icon={uiIcon} className="size-4" /> : null}
+              <span>{title}</span>
+            </div>
           )}
         </div>
         {body && <PortableTextRenderer value={body} />}

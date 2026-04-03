@@ -88,6 +88,7 @@ export default defineType({
       options: {
         list: [
           { title: "Primary (center)", value: "primary" },
+          { title: "More Menu (desktop dropdown)", value: "more" },
           { title: "Utility / CTA (right)", value: "utility" },
         ],
         layout: "radio",
@@ -120,8 +121,18 @@ export default defineType({
       name: "icon",
       title: "Icon",
       type: "navigation-icon",
-      description: "Optional icon shown near the navigation label.",
-      hidden: ({ document }) => document?._type !== "navigation",
+      description:
+        "Legacy curated icon. Keep for older navigation items, but prefer UI Icon for Lucide and Simple Icons.",
+      hidden: ({ document, parent }) =>
+        document?._type !== "navigation" || Boolean(parent?.uiIcon?.provider || parent?.uiIcon?.name),
+    }),
+    defineField({
+      name: "uiIcon",
+      title: "UI Icon",
+      type: "ui-icon",
+      description:
+        "Preferred reusable icon picker for navigation. Supports Lucide and Simple Icons, and stores the SVG for frontend rendering.",
+      hidden: ({ document, parent }) => document?._type !== "navigation" || Boolean(parent?.icon),
     }),
     defineField({
       name: "children",

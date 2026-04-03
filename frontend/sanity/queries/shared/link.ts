@@ -1,6 +1,11 @@
 export const linkQuery = `
     _key,
     ...,
+    uiIcon{
+      provider,
+      name,
+      svg
+    },
     "href": select(
       isExternal => href,
       defined(href) && !defined(internalLink) => href,

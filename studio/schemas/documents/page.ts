@@ -4,6 +4,7 @@ import { orderRankField } from "@sanity/orderable-document-list";
 import meta from "../blocks/shared/meta";
 
 const HYBRID_PAGE_SLUGS = new Set([
+  "home-pepar",
   "index",
   "layanan",
   "pembuatan-website",

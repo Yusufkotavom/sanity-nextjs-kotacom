@@ -1,5 +1,6 @@
 "use client";
 import PortableTextRenderer from "@/components/portable-text-renderer";
+import SanityIcon from "@/components/icons/sanity-icon";
 import { cn } from "@/lib/utils";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
@@ -20,6 +21,7 @@ interface SplitCardsItemProps extends SplitCardItem {
 export default function SplitCardsItem({
   color,
   tagLine,
+  uiIcon,
   title,
   body,
 }: SplitCardsItemProps) {
@@ -40,11 +42,12 @@ export default function SplitCardsItem({
       {tagLine && (
         <div
           className={cn(
-            "font-bold text-2xl lg:text-3xl transition-colors duration-1000 ease-in-out",
+            "inline-flex items-center gap-2 font-bold text-2xl lg:text-3xl transition-colors duration-1000 ease-in-out",
             isInView ? "text-background" : "text-foreground",
             color === "primary" ? "text-background" : undefined,
           )}
         >
+          <SanityIcon icon={uiIcon} className="size-5" />
           {tagLine}
         </div>
       )}

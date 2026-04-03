@@ -24,6 +24,7 @@ import navigationLinkChild from "./schemas/blocks/shared/navigation-link-child";
 import { colorVariant } from "./schemas/blocks/shared/color-variant";
 import { buttonVariant } from "./schemas/blocks/shared/button-variant";
 import { navigationIcon } from "./schemas/blocks/shared/navigation-icon";
+import { uiIcon } from "./schemas/blocks/shared/ui-icon";
 import sectionPadding from "./schemas/blocks/shared/section-padding";
 // Schema UI objects
 import hero1 from "./schemas/blocks/hero/hero-1";
@@ -78,6 +79,7 @@ export const schemaTypes = [
   colorVariant,
   buttonVariant,
   navigationIcon,
+  uiIcon as any,
   sectionPadding,
   // blocks
   hero1,

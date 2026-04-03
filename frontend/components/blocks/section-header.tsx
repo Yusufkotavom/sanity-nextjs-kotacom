@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import SectionContainer from "@/components/ui/section-container";
+import { SectionIntro, SectionShell } from "@/components/ui/section-shell";
 
 import { PAGE_QUERY_RESULT } from "@/sanity.types";
 
@@ -11,7 +11,6 @@ type SectionHeaderProps = Extract<
 };
 
 export default function SectionHeader({
-  padding,
   colorVariant,
   sectionWidth = "default",
   stackAlign = "left",
@@ -22,31 +21,28 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
   const isNarrow = sectionWidth === "narrow";
   const resolvedTitle = title?.trim() || pageTitle?.trim() || undefined;
+  const toneClassName =
+    colorVariant === "primary"
+      ? "surface-panel surface-panel-sky rounded-[1.6rem] px-5 py-6 md:px-7 md:py-8"
+      : "";
 
   return (
-    <SectionContainer color={colorVariant} padding={padding}>
+    <SectionShell>
       <div
         className={cn(
-          stackAlign === "center"
-            ? "max-w-[48rem] text-center mx-auto"
-            : undefined,
-          isNarrow ? "max-w-[48rem] mx-auto" : undefined,
+          stackAlign === "center" ? "mx-auto text-center" : undefined,
+          isNarrow ? "mx-auto max-w-[48rem]" : "max-w-3xl",
+          toneClassName,
         )}
       >
-        <div
-          className={cn(
-            colorVariant === "primary" ? "text-background" : undefined,
-          )}
-        >
-          {tagLine && (
-            <h1 className="leading-[0] mb-4">
-              <span className="text-ui-label">{tagLine}</span>
-            </h1>
-          )}
-          {resolvedTitle ? <h2 className="text-display-lg mb-4">{resolvedTitle}</h2> : null}
-        </div>
-        <p className="text-ui-body">{description}</p>
+        <SectionIntro
+          eyebrow={tagLine || undefined}
+          title={resolvedTitle || ""}
+          description={description || undefined}
+          align={stackAlign === "center" ? "center" : "left"}
+          className="mb-0"
+        />
       </div>
-    </SectionContainer>
+    </SectionShell>
   );
 }

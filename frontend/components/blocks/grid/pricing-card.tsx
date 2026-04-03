@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
 import { PAGE_QUERY_RESULT, ColorVariant } from "@/sanity.types";
+import { SectionPanel } from "@/components/ui/section-shell";
+import SanityIcon from "@/components/icons/sanity-icon";
 
 type Block = NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 type GridRow = Extract<Block, { _type: "grid-row" }>;
@@ -16,6 +18,7 @@ interface PricingCardProps extends Omit<PricingCard, "_type" | "_key"> {
 
 export default function PricingCard({
   color,
+  uiIcon,
   title,
   tagLine,
   excerpt,
@@ -24,23 +27,25 @@ export default function PricingCard({
   link,
 }: PricingCardProps) {
   return (
-    <div
-      key={title}
-      className="flex w-full rounded-3xl ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 group"
+    <SectionPanel
+      tone={color === "primary" ? "sky" : "neutral"}
+      className="flex w-full flex-col justify-between rounded-[1.5rem] p-6 md:p-8"
     >
-      <div className="flex w-full flex-col justify-between border rounded-3xl p-8">
         <div
           className={cn(color === "primary" ? "text-background" : undefined)}
         >
           {title && (
             <div className="flex justify-between items-center">
-              <h3 className="font-bold text-xl leading-[1.2]">{title}</h3>
-              {tagLine && <Badge>{tagLine}</Badge>}
+              <div className="inline-flex items-center gap-2">
+                <SanityIcon icon={uiIcon} className="size-5" />
+                <h3 className="text-xl font-semibold leading-[1.2]">{title}</h3>
+              </div>
+              {tagLine ? <Badge className="rounded-full">{tagLine}</Badge> : null}
             </div>
           )}
           {price && price.value !== null && price.value !== undefined && (
             <div className="flex items-end my-8 gap-1">
-              <div className="text-3xl font-bold leading-none">
+              <div className="text-3xl font-semibold leading-none">
                 ${price.value}
               </div>
               {price.period && <div className="text-sm">{price.period}</div>}
@@ -49,17 +54,21 @@ export default function PricingCard({
           {list && list.length > 0 && (
             <ul className="flex flex-col gap-2 my-8">
               {list.map((item) => (
-                <li key={item} className="flex items-center gap-2">
+                <li key={item} className="flex items-center gap-2 text-sm leading-6">
                   <Check size={16} />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           )}
-          {excerpt && <p>{excerpt}</p>}
+          {excerpt ? (
+            <p className="text-sm leading-6 text-muted-foreground md:text-base">
+              {excerpt}
+            </p>
+          ) : null}
         </div>
         <Button
-          className="mt-6"
+          className="mt-6 self-start rounded-full"
           size="lg"
           variant={link?.buttonVariant}
           asChild
@@ -68,10 +77,10 @@ export default function PricingCard({
             href={link?.href ? link.href : "#"}
             target={link?.target ? "_blank" : undefined}
           >
+            <SanityIcon icon={link?.uiIcon || link?.icon} className="size-4" />
             {link?.title}
           </Link>
         </Button>
-      </div>
-    </div>
+    </SectionPanel>
   );
 }

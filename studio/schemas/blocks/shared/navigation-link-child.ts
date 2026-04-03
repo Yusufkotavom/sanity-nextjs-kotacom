@@ -73,7 +73,17 @@ export default defineType({
       name: "icon",
       title: "Icon",
       type: "navigation-icon",
-      description: "Optional icon shown in mobile/desktop nav dropdown links.",
+      description:
+        "Legacy curated icon. Keep for older nav items, but prefer UI Icon for Lucide and Simple Icons.",
+      hidden: ({ parent }) => Boolean(parent?.uiIcon?.provider || parent?.uiIcon?.name),
+    }),
+    defineField({
+      name: "uiIcon",
+      title: "UI Icon",
+      type: "ui-icon",
+      description:
+        "Preferred reusable icon picker for submenu items. Supports Lucide and Simple Icons.",
+      hidden: ({ parent }) => Boolean(parent?.icon),
     }),
     defineField({
       name: "href",

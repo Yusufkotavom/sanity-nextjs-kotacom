@@ -84,6 +84,12 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "uiIcon",
+      title: "UI Icon",
+      type: "ui-icon",
+      description: "Optional icon shown beside the CTA tagline.",
+    }),
+    defineField({
       name: "title",
       type: "string",
     }),

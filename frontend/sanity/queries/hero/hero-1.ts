@@ -9,6 +9,11 @@ export const hero1Query = groq`
     _type,
     _key,
     tagLine,
+    uiIcon{
+      provider,
+      name,
+      svg
+    },
     title,
     body[]{
       ${bodyQuery}

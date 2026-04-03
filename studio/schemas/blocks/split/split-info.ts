@@ -42,6 +42,12 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "uiIcon",
+      title: "UI Icon",
+      type: "ui-icon",
+      description: "Optional icon shown beside the info title.",
+    }),
+    defineField({
       name: "title",
       type: "string",
     }),

@@ -3705,3 +3705,207 @@ This file is the canonical changelog for all repository updates, with explicit S
   - `pnpm --filter frontend run page:to-post -- --slug=test-page-hybrid --post-slug=page-to-post-smoke --write` still passed.
   - Cleanup verification confirmed `page-to-post-smoke` was removed and public-read returned `null`.
   - `pnpm --filter frontend run typecheck` passed after cleanup.
+
+## 2026-04-03 - Rewrite Theme Promoted and Legacy Duplicate Components Archived
+- Changed files:
+  - `frontend/components/blocks/hero/hero-1.tsx`
+  - `frontend/components/blocks/hero/hero-2.tsx`
+  - `frontend/components/blocks/section-header.tsx`
+  - `frontend/components/blocks/grid/grid-card.tsx`
+  - `frontend/components/blocks/grid/pricing-card.tsx`
+  - `frontend/components/blocks/cta/cta-1.tsx`
+  - `frontend/components/archive/legacy-rewrite-v0/README.md`
+  - `frontend/components/archive/legacy-rewrite-v0/*`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Archived the unused pre-rewrite `frontend/components/legacy/*` family into `frontend/components/archive/legacy-rewrite-v0/` so the active source of truth is clearer and route code no longer competes with duplicate legacy shells.
+  - Restyled the core Sanity block components used by generic page rendering (`hero-1`, `hero-2`, `section-header`, `grid-card`, `pricing-card`, and `cta-1`) to use the same rounded panel, spacing, and section-shell language that now defines the rewrite system.
+  - Added an archive README that explicitly marks the archived legacy rewrite stack as historical reference only, not the active visual baseline.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: generic Sanity-rendered pages now read closer to the rewrite visual system, reducing the gap between `Blocks`-driven pages and rewrite/hybrid landing pages while lowering duplicate-component maintenance noise.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed after archiving the old legacy files and updating the active block theme.
+
+## 2026-04-03 - Reusable Sanity UI Icon Picker Added
+- Changed files:
+  - `frontend/components/header/desktop-nav.tsx`
+  - `frontend/components/header/mobile-nav.tsx`
+  - `frontend/components/icons/sanity-icon.tsx`
+  - `frontend/package.json`
+  - `frontend/sanity.types.ts`
+  - `frontend/sanity/queries/navigation.ts`
+  - `frontend/sanity/queries/shared/link.ts`
+  - `studio/package.json`
+  - `studio/sanity.config.ts`
+  - `studio/schema-types.ts`
+  - `studio/schema.json`
+  - `studio/schemas/blocks/shared/link.ts`
+  - `studio/schemas/blocks/shared/navigation-link-child.ts`
+  - `studio/schemas/blocks/shared/ui-icon.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Integrated `sanity-plugin-icon-picker-v2` into Studio and added a reusable `ui-icon` schema alias restricted to Lucide and Simple Icons.
+  - Added `uiIcon` fields to navigation links and submenu links while preserving the existing legacy `icon` string field for backward compatibility during migration.
+  - Added a frontend `SanityIcon` renderer that prioritizes stored SVG from Studio, falls back to Lucide and Simple Icons by provider/name, and still supports legacy nav icon tokens.
+  - Updated shared link and navigation GROQ contracts so CMS-driven navigation surfaces can consume the new icon object shape.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: Sanity Studio and frontend now share a reusable cross-surface icon contract for navigation items, enabling Lucide and Simple Icons without breaking existing legacy icon values.
+- Verification:
+  - `pnpm typegen` passed.
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Navigation More Menu and UI Icon Migration Completed
+- Changed files:
+  - `frontend/components/header/desktop-nav.tsx`
+  - `frontend/components/header/mobile-nav.tsx`
+  - `frontend/package.json`
+  - `frontend/sanity.types.ts`
+  - `frontend/scripts/migrate-navigation-ui-icons.mjs`
+  - `studio/schema.json`
+  - `studio/schemas/blocks/shared/link.ts`
+  - `studio/schemas/documents/navigation.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added a dedicated `More` navigation lane for desktop overflow items so primary navbar width can stay constrained without forcing editors to misuse utility CTA slots.
+  - Updated mobile navigation to render `More` items as their own section while preserving child-link accordions.
+  - Added a Studio warning when more than 8 header-visible links remain in the primary navigation lane, guiding editors to move overflow into `More` or `Utility`.
+  - Added and executed a dev-dataset migration script that converts legacy navigation icon tokens into `uiIcon` objects; current navigation document migrated 56 icon usages with zero unmapped values.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: navigation editing now has a clearer structure for overflow items, and CMS navigation icon data is standardized onto the new reusable `uiIcon` contract.
+- Verification:
+  - `pnpm --filter frontend run nav:icons:migrate` passed as dry run.
+  - `pnpm --filter frontend run nav:icons:migrate -- --write` passed and updated the dev Sanity navigation document.
+  - `pnpm typegen` passed.
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Hero and CTA Blocks Adopted Reusable UI Icons
+- Changed files:
+  - `frontend/components/blocks/cta/cta-1.tsx`
+  - `frontend/components/blocks/cta/whatsapp-cta.tsx`
+  - `frontend/components/blocks/hero/hero-1.tsx`
+  - `frontend/components/blocks/hero/hero-2.tsx`
+  - `frontend/sanity.types.ts`
+  - `frontend/sanity/queries/cta/cta-1.ts`
+  - `frontend/sanity/queries/cta/whatsapp-cta.ts`
+  - `frontend/sanity/queries/hero/hero-1.ts`
+  - `frontend/sanity/queries/hero/hero-2.ts`
+  - `studio/schema.json`
+  - `studio/schemas/blocks/cta/cta-1.ts`
+  - `studio/schemas/blocks/cta/whatsapp-cta.ts`
+  - `studio/schemas/blocks/hero/hero-1.ts`
+  - `studio/schemas/blocks/hero/hero-2.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added reusable `uiIcon` fields to `hero-1`, `hero-2`, `cta-1`, and `whatsapp-cta` so editors can assign Lucide or Simple Icons at the block level.
+  - Updated block GROQ queries and generated types so the new icon object is available to frontend renderers.
+  - Updated Hero and CTA components to render icon-aware eyebrow/tagline rows and to show icon-aware CTA buttons using the shared `SanityIcon` renderer and existing link-level `uiIcon` data.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: Hero and CTA blocks now share the same icon contract as navigation, reducing one-off icon implementations across CMS-driven surfaces.
+- Verification:
+  - `pnpm typegen` passed.
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter frontend run typecheck` passed.
+
+## 2026-04-03 - Grid and Split Card Blocks Adopted Reusable UI Icons
+- Changed files:
+  - `frontend/components/blocks/grid/grid-card.tsx`
+  - `frontend/components/blocks/grid/pricing-card.tsx`
+  - `frontend/components/blocks/split/split-cards-item.tsx`
+  - `frontend/components/blocks/split/split-info-item.tsx`
+  - `frontend/sanity.types.ts`
+  - `frontend/sanity/queries/grid/grid-card.ts`
+  - `frontend/sanity/queries/grid/pricing-card.ts`
+  - `frontend/sanity/queries/split/split-cards-list.ts`
+  - `frontend/sanity/queries/split/split-info-list.ts`
+  - `studio/schemas/blocks/grid/grid-card.ts`
+  - `studio/schemas/blocks/grid/pricing-card.ts`
+  - `studio/schemas/blocks/split/split-card.ts`
+  - `studio/schemas/blocks/split/split-info.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Added `uiIcon` fields to `grid-card`, `pricing-card`, `split-card`, and `split-info` content models so editors can assign Lucide or Simple Icons to card/list blocks.
+  - Updated nested grid and split GROQ queries so card/list item unions carry the new icon object into generated frontend types.
+  - Updated grid and split renderers to display icons in card headings and CTA labels, with `split-info` using the icon as a fallback badge when no image is present.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: reusable icon support now spans navigation, hero, CTA, and core card/list page-builder blocks under one Sanity/frontend contract.
+- Verification:
+  - `pnpm typegen` passed.
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter frontend exec next typegen` passed.
+  - `pnpm --filter frontend run typecheck` is currently blocked by an existing `.next/types/**/*.ts` route-type mismatch in `frontend/tsconfig.json`; the latest failure is not from the new `uiIcon` fields, which are present in regenerated `frontend/sanity.types.ts`.
+
+## 2026-04-03 - Home Prepare Hybrid Route Scaffolded
+- Changed files:
+  - `frontend/app/(main)/home-pepar/page.tsx`
+  - `frontend/components/hybrid/generated/home-pepar-middle-section.tsx`
+  - `frontend/scripts/lib/hybrid-page-presets.mjs`
+  - `studio/schemas/documents/page.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Scaffolded a new hybrid preview route at `/home-pepar` so the team can prepare the next homepage iteration without disturbing the live `/` contract.
+  - Registered `home-pepar` as a supported hybrid slug in both the frontend scaffold registry and the Studio page preview registry.
+  - Seeded a public Sanity `page` document (`page-home-pepar`) with the `homepage` preset and `topBlockCount: 2`, so the route already has top/bottom CMS zones plus a generated code-owned middle section.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: adds a separate hybrid homepage preparation route that uses the same page-shell and Sanity split contract as the main hybrid landing pages, making it safer to iterate on homepage migration before changing `/`.
+- Verification:
+  - `pnpm --filter frontend run hybrid:route:create -- --slug=home-pepar --preset=homepage --title='Home Prepare' --write` passed.
+  - Seed verification confirmed public-read for `page-home-pepar` with `slug: home-pepar`, `blockCount: 3`, and `topBlockCount: 2`.
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter studio run typecheck` passed.
+
+## 2026-04-03 - Home Prepare Candidate Content Expanded
+- Changed files:
+  - `frontend/components/hybrid/generated/home-pepar-middle-section.tsx`
+  - `frontend/lib/local-content/home-prepare.ts`
+  - `frontend/components/archive/README.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Replaced the generated placeholder middle section for `/home-pepar` with a fuller homepage candidate that mirrors the live `kotacom.id` structure more closely: one-stop positioning, tech-stack trust strip, four core service lanes, a refined why-Kotacom block, and three commercial service clusters.
+  - Moved the candidate homepage copy into a dedicated local content module so the route can evolve without turning the generated component into a hard-to-maintain blob.
+  - Added a top-level archive README so archived components are explicitly documented as historical references rather than active UI sources.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: `/home-pepar` is now a materially more realistic hybrid rehearsal surface for the eventual homepage migration, and the archive folder now has explicit guardrails that reinforce the rewrite/hybrid stack as the active theme source.
+- Verification:
+  - `pnpm --filter frontend run build` passed and included static route generation for `/home-pepar`.
+  - `pnpm --filter frontend run typecheck` passed after `.next/types` was regenerated by build.
+  - `rg -n "components/archive|components/legacy" frontend -g '!**/.next/**'` returned no active imports outside the archive itself.
+
+## 2026-04-03 - Home Prepare Hybrid Candidate Polished with Final Sanity Split
+- Changed files:
+  - `frontend/components/hybrid/generated/home-pepar-middle-section.tsx`
+  - `frontend/lib/local-content/home-prepare.ts`
+  - `frontend/scripts/lib/hybrid-page-presets.mjs`
+  - `frontend/components/blocks/split/split-cards-list.tsx`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Refined `/home-pepar` again so the code-owned middle section no longer repeats the same proposition as the top CMS hero, and instead focuses on service architecture, trust stack, lane breakdown, and final readiness framing.
+  - Fixed the hybrid preset link helper so internal links default to `isExternal: false` while absolute URLs remain external, aligning the generator with the Sanity link contract already documented elsewhere in the repo.
+  - Fixed a latent `split-cards-list` typing issue that blocked full production builds during the homepage candidate verification pass.
+  - Updated the live `home-pepar` Sanity document so the split is now `topBlockCount: 1`, leaving only the CMS hero above the code-owned shell and moving proof + CTA below; also set preview metadata with `noindex: true` for safer pre-live iteration.
+- SEO/integration impact:
+  - Direct SEO impact: `/home-pepar` now resolves with preview metadata and `noindex, nofollow`, which is safer for a rehearsal route that is not yet intended as the canonical homepage.
+  - Integration impact: the hybrid generator now produces link objects that respect internal/external behavior automatically, and the homepage candidate flow is more realistic because the top/bottom CMS zones no longer compete with the code-owned middle section.
+- Verification:
+  - `pnpm --filter frontend run build` passed after clearing `.next` and rebuilding from scratch.
+  - `pnpm --filter frontend run typecheck` passed after the clean rebuild regenerated `.next/types`.
+  - `pnpm --filter studio run typecheck` passed.
+  - `curl -I http://127.0.0.1:3200/home-pepar` returned `200 OK` on the rebuilt local runtime.
+  - `curl http://127.0.0.1:3200/home-pepar` confirmed the new hero copy, final readiness copy, and `noindex, nofollow` robots output.
+  - Full-page desktop screenshot captured from the rebuilt local runtime: `home-pepar-desktop-final.png`.

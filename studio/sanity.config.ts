@@ -3,6 +3,7 @@ import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { presentationTool } from "sanity/presentation";
 import { media } from "sanity-plugin-media";
+import { iconPicker } from "sanity-plugin-icon-picker-v2";
 import { schemaTypes } from "./schema-types";
 import { resolve } from "./presentation/resolve";
 import { structure } from "./structure";
@@ -27,6 +28,7 @@ const singletonTypes = new Set([
   "seoSettings",
   "seoOpsSettings",
   "aiWriterSettings",
+  "themeSettings",
 ]);
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || "your-project-id";
@@ -82,5 +84,6 @@ export default defineConfig({
     visionTool({ defaultApiVersion: apiVersion }),
     codeInput(),
     media(),
+    iconPicker(),
   ],
 });

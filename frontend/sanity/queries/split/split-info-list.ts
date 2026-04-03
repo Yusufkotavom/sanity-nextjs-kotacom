@@ -11,6 +11,11 @@ export const splitInfoListQuery = groq`
       image{
         ${imageQuery}
       },
+      uiIcon{
+        provider,
+        name,
+        svg
+      },
       title,
       body[]{
         ${bodyQuery}

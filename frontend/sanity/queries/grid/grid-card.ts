@@ -7,6 +7,11 @@ export const gridCardQuery = groq`
   _type == "grid-card" => {
     _type,
     _key,
+    uiIcon{
+      provider,
+      name,
+      svg
+    },
     title,
     excerpt,
     image{

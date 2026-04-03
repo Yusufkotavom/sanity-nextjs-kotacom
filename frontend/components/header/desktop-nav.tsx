@@ -1,13 +1,23 @@
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { NAVIGATION_QUERY_RESULT } from "@/sanity.types";
-import { NAVIGATION_ICON_MAP } from "@/components/icons/navigation-icons";
+import SanityIcon, { type SanityIconValue } from "@/components/icons/sanity-icon";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type SanityLink = NonNullable<NAVIGATION_QUERY_RESULT[0]["links"]>[number];
 type NavChild = {
   _key?: string;
   group?: string | null;
   icon?: string | null;
+  uiIcon?: SanityIconValue;
   title?: string | null;
   badge?: string | null;
   href?: string | null;
@@ -15,8 +25,9 @@ type NavChild = {
 };
 type NavLinkWithChildren = SanityLink & {
   icon?: string | null;
+  uiIcon?: SanityIconValue;
   children?: NavChild[] | null;
-  navLocation?: "primary" | "utility" | null;
+  navLocation?: "primary" | "more" | "utility" | null;
   showInHeader?: boolean | null;
 };
 
@@ -41,12 +52,14 @@ export default function DesktopNav({
     .map((item) => item as NavLinkWithChildren);
 
   const primaryItems = navItems.filter((item) => item.navLocation !== "utility");
+  const mainItems = primaryItems.filter((item) => item.navLocation !== "more");
+  const moreItems = navItems.filter((item) => item.navLocation === "more");
 
   return (
     <nav className="hidden min-w-0 flex-1 items-center lg:flex" aria-label="Primary">
       <ul className="flex min-w-0 items-center gap-1">
-        {primaryItems.map((item) => {
-          const ItemIcon = item.icon ? NAVIGATION_ICON_MAP[item.icon] : null;
+        {mainItems.map((item) => {
+          const resolvedItemIcon = item.uiIcon || item.icon;
           const children = item.children?.filter((child) => child?.title && child?.href) || [];
           const hasChildren = children.length > 0;
           const groupedChildren = groupChildren(children);
@@ -59,7 +72,10 @@ export default function DesktopNav({
                 rel={item.target ? "noopener noreferrer" : undefined}
                 className="inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium text-foreground/75 transition-colors hover:bg-accent/70 hover:text-foreground dark:text-white/72 dark:hover:bg-white/[0.07] dark:hover:text-white"
               >
-                {ItemIcon && <ItemIcon className="size-4 text-foreground/70 dark:text-white/60" />}
+                <SanityIcon
+                  icon={resolvedItemIcon}
+                  className="size-4 text-foreground/70 dark:text-white/60"
+                />
                 <span>{item.title}</span>
                 {hasChildren && <ChevronDown className="size-3.5 text-foreground/50 dark:text-white/45" />}
               </Link>
@@ -76,9 +92,7 @@ export default function DesktopNav({
                         )}
                         <ul className="space-y-1">
                           {links.map((child) => {
-                            const ChildIcon = child.icon
-                              ? NAVIGATION_ICON_MAP[child.icon]
-                              : null;
+                            const resolvedChildIcon = child.uiIcon || child.icon;
                             return (
                               <li key={child._key || child.href || child.title}>
                                 <Link
@@ -88,9 +102,10 @@ export default function DesktopNav({
                                   className="block rounded-lg border border-transparent px-2.5 py-2.5 transition-colors hover:border-border/70 hover:bg-accent/65 dark:hover:border-white/15 dark:hover:bg-white/[0.06]"
                                 >
                                   <div className="flex items-center gap-2">
-                                    {ChildIcon && (
-                                      <ChildIcon className="size-3.5 text-foreground/60 dark:text-white/55" />
-                                    )}
+                                    <SanityIcon
+                                      icon={resolvedChildIcon}
+                                      className="size-3.5 text-foreground/60 dark:text-white/55"
+                                    />
                                     <span className="text-sm font-medium text-foreground dark:text-white/92">
                                       {child.title}
                                     </span>
@@ -113,6 +128,84 @@ export default function DesktopNav({
             </li>
           );
         })}
+        {moreItems.length > 0 && (
+          <li className="relative">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium text-foreground/75 transition-colors hover:bg-accent/70 hover:text-foreground dark:text-white/72 dark:hover:bg-white/[0.07] dark:hover:text-white"
+                >
+                  <span>More</span>
+                  <ChevronDown className="size-3.5 text-foreground/50 dark:text-white/45" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="start"
+                className="w-72 rounded-2xl border-border/70 bg-background/95 p-2 shadow-[0_24px_70px_-28px_rgba(0,0,0,0.45)] backdrop-blur-xl dark:border-white/12 dark:bg-black/96 dark:shadow-[0_28px_90px_-30px_rgba(0,0,0,0.85)]"
+              >
+                {moreItems.map((item) => {
+                  const resolvedItemIcon = item.uiIcon || item.icon;
+                  const children =
+                    item.children?.filter((child) => child?.title && child?.href) || [];
+                  const hasChildren = children.length > 0;
+
+                  if (hasChildren) {
+                    return (
+                      <DropdownMenuSub key={item._key || item.title}>
+                        <DropdownMenuSubTrigger className="rounded-xl px-3 py-2 text-sm font-medium">
+                          <SanityIcon
+                            icon={resolvedItemIcon}
+                            className="size-4 text-foreground/60 dark:text-white/55"
+                          />
+                          <span>{item.title}</span>
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuSubContent className="w-72 rounded-2xl border-border/70 bg-background/95 p-2 dark:border-white/12 dark:bg-black/96">
+                          {children.map((child) => {
+                            const resolvedChildIcon = child.uiIcon || child.icon;
+                            return (
+                              <DropdownMenuItem key={child._key || child.href || child.title} asChild>
+                                <Link
+                                  href={child.href || "#"}
+                                  target={child.target ? "_blank" : undefined}
+                                  rel={child.target ? "noopener noreferrer" : undefined}
+                                  className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-foreground dark:text-white/90"
+                                >
+                                  <SanityIcon
+                                    icon={resolvedChildIcon}
+                                    className="size-4 text-foreground/60 dark:text-white/55"
+                                  />
+                                  <span>{child.title}</span>
+                                </Link>
+                              </DropdownMenuItem>
+                            );
+                          })}
+                        </DropdownMenuSubContent>
+                      </DropdownMenuSub>
+                    );
+                  }
+
+                  return (
+                    <DropdownMenuItem key={item._key || item.title} asChild>
+                      <Link
+                        href={item.href || "#"}
+                        target={item.target ? "_blank" : undefined}
+                        rel={item.target ? "noopener noreferrer" : undefined}
+                        className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-foreground dark:text-white/90"
+                      >
+                        <SanityIcon
+                          icon={resolvedItemIcon}
+                          className="size-4 text-foreground/60 dark:text-white/55"
+                        />
+                        <span>{item.title}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  );
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </li>
+        )}
       </ul>
     </nav>
   );

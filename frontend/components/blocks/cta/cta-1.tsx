@@ -1,9 +1,10 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import SectionContainer from "@/components/ui/section-container";
 import Link from "next/link";
 import PortableTextRenderer from "@/components/portable-text-renderer";
+import SanityIcon from "@/components/icons/sanity-icon";
 import { PAGE_QUERY_RESULT } from "@/sanity.types";
+import { SectionPanel, SectionShell } from "@/components/ui/section-shell";
 
 type Cta1Props = Extract<
   NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number],
@@ -11,11 +12,11 @@ type Cta1Props = Extract<
 >;
 
 export default function Cta1({
-  padding,
   colorVariant,
   sectionWidth = "default",
   stackAlign = "left",
   tagLine,
+  uiIcon,
   title,
   body,
   links,
@@ -23,32 +24,44 @@ export default function Cta1({
   const isNarrow = sectionWidth === "narrow";
 
   return (
-    <SectionContainer color={colorVariant} padding={padding}>
+    <SectionShell>
       <div
         className={cn(
-          stackAlign === "center"
-            ? "max-w-[48rem] text-center mx-auto"
-            : undefined,
-          isNarrow ? "max-w-[48rem] mx-auto" : undefined,
+          stackAlign === "center" ? "mx-auto text-center" : undefined,
+          isNarrow ? "mx-auto max-w-[48rem]" : "max-w-4xl",
         )}
       >
-        <div
+        <SectionPanel
+          tone={colorVariant === "primary" ? "sky" : "neutral"}
           className={cn(
+            "rounded-[1.75rem] px-5 py-6 md:px-7 md:py-8",
             colorVariant === "primary" ? "text-background" : undefined,
           )}
         >
-          {tagLine && (
-            <h1 className="leading-[0] mb-4">
-              <span className="text-base font-semibold">{tagLine}</span>
-            </h1>
-          )}
-          <h2 className="mb-4">{title}</h2>
-          {body && <PortableTextRenderer value={body} />}
-        </div>
+          {tagLine || uiIcon ? (
+            <div
+              className={cn(
+                "inline-flex items-center gap-2 text-ui-label text-current/70",
+                stackAlign === "center" ? "justify-center" : undefined,
+              )}
+            >
+              <SanityIcon icon={uiIcon} className="size-4" />
+              {tagLine ? <span>{tagLine}</span> : null}
+            </div>
+          ) : null}
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight md:text-3xl">
+            {title}
+          </h2>
+          {body ? (
+            <div className="mt-4 text-sm leading-7 text-current/80 md:text-base">
+              <PortableTextRenderer value={body} />
+            </div>
+          ) : null}
+        </SectionPanel>
         {links && links.length > 0 && (
           <div
             className={cn(
-              "mt-10 flex flex-wrap gap-4",
+              "mt-6 flex flex-wrap gap-3",
               stackAlign === "center" ? "justify-center" : undefined,
             )}
           >
@@ -57,17 +70,18 @@ export default function Cta1({
               links.map((link) => (
                 <Button key={link.title} variant={link?.buttonVariant} asChild>
                   <Link
-                    href={link.href || "#"}
-                    target={link.target ? "_blank" : undefined}
-                    rel={link.target ? "noopener" : undefined}
-                  >
-                    {link.title}
-                  </Link>
-                </Button>
+                  href={link.href || "#"}
+                  target={link.target ? "_blank" : undefined}
+                  rel={link.target ? "noopener" : undefined}
+                >
+                  <SanityIcon icon={link.uiIcon || link.icon} className="size-4" />
+                  {link.title}
+                </Link>
+              </Button>
               ))}
           </div>
         )}
       </div>
-    </SectionContainer>
+    </SectionShell>
   );
 }
