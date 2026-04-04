@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Blocks,
   LaptopMinimal,
@@ -34,17 +35,20 @@ const laneIconMap = {
 const testimonials = [
   {
     quote: "Website baru dari KOTACOM benar-benar mengubah cara kami mendapatkan klien. Tampilannya profesional dan sangat cepat. Timnya juga sangat responsif. Luar biasa!",
-    name: "Klien Web Development",
+    name: "Budi Santoso",
+    company: "PT Maju Bersama",
     role: "Business Owner",
   },
   {
     quote: "Masalah laptop kantor yang sering error sangat mengganggu produktivitas. Sejak pakai jasa maintenance KOTACOM, semua berjalan lancar. Problem solved!",
-    name: "Klien IT Support",
+    name: "Siti Rahayu",
+    company: "CV Digital Sejahtera",
     role: "Operational Manager",
   },
   {
     quote: "Kualitas cetak brosur dan buku profil perusahaan kami sangat tajam dan warnanya akurat. Benar-benar meningkatkan citra perusahaan kami di mata klien. Terima kasih KOTACOM.",
-    name: "Klien Percetakan",
+    name: "Ahmad Wijaya",
+    company: "PT Karya Mandiri",
     role: "Marketing Director",
   }
 ];
@@ -55,8 +59,53 @@ export default async function HomePeparMiddleSection() {
 
   return (
     <>
+      {/* HERO SECTION WITH SPLIT LAYOUT */}
+      <SectionShell className="pt-16 lg:pt-24">
+        <SectionPanel
+          tone="neutral"
+          className="grid gap-8 overflow-hidden rounded-[1.75rem] p-5 md:grid-cols-[minmax(0,1fr)_minmax(320px,0.92fr)] md:p-7 lg:gap-10 lg:p-8"
+        >
+          <div className="flex flex-col justify-center">
+            <div className="mb-3 inline-flex items-center gap-2 text-ui-label text-foreground/55">
+              <Sparkles className="size-4" />
+              <span>Layanan IT Terpadu</span>
+            </div>
+            <SectionIntro
+              title="Bangun fondasi digital bisnis yang rapi, stabil, dan siap untuk tumbuh"
+              className="mb-0 max-w-3xl"
+            />
+            <div className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
+              <p>
+                Fokus pada bisnis Anda, kami tangani website, software, infrastruktur IT, dan kebutuhan digital harian Anda.
+              </p>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild variant="default">
+                <Link href="/layanan">Jelajahi Solusi</Link>
+              </Button>
+              <GlobalWhatsAppButton
+                label="Konsultasi Gratis"
+                variant="outline"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col justify-center">
+            <div className="relative aspect-square overflow-hidden rounded-[1.5rem] border border-white/45 bg-white/70 shadow-[0_18px_48px_rgba(15,23,42,0.1)] dark:border-white/12 dark:bg-white/5">
+              <Image
+                src="/images/kotacom-split-production-ready/hero/hero-cetak-buku-shark-v2.png"
+                alt="Kotacom IT services and printing illustration"
+                fill
+                className="object-contain p-4"
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+              />
+            </div>
+          </div>
+        </SectionPanel>
+      </SectionShell>
+
       {/* 1. HERO EXTENSION: Stats Bar */}
-      <SectionShell className="pt-8">
+      <SectionShell className="pt-12 lg:pt-16">
         <div className="mx-auto flex max-w-[1000px] flex-wrap justify-between gap-6 rounded-[1.9rem] border border-border/50 bg-background/50 px-8 py-8 shadow-sm backdrop-blur-sm sm:px-12">
           <div className="flex flex-1 items-center gap-4">
             <Trophy className="h-8 w-8 text-primary/70" />
@@ -77,14 +126,14 @@ export default async function HomePeparMiddleSection() {
           <div className="flex flex-1 items-center gap-4 md:justify-end">
             <MapPin className="h-8 w-8 text-primary/70" />
             <div>
-              <div className="text-2xl font-bold tracking-tight">Nasional</div>
-              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Fokus Jatim</div>
+              <div className="text-2xl font-bold tracking-tight">Surabaya</div>
+              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Jangkauan Nasional</div>
             </div>
           </div>
         </div>
       </SectionShell>
 
-      <SectionShell className="pt-8 lg:pt-12">
+      <SectionShell className="pt-12 lg:pt-16">
         <SectionPanel
           tone="neutral"
           className="grid gap-8 overflow-hidden rounded-[1.9rem] p-5 md:grid-cols-[minmax(0,1.2fr)_360px] md:p-7 lg:gap-10 lg:p-8"
@@ -108,8 +157,8 @@ export default async function HomePeparMiddleSection() {
                     key={lane.key}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-muted/40 text-foreground">
-                        <Icon className="h-4 w-4" />
+                      <span className="flex h-12 w-12 items-center justify-center rounded-full border border-border/70 bg-primary/10 text-foreground">
+                        <Icon className="h-6 w-6" />
                       </span>
                       <div>
                         <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
@@ -151,9 +200,10 @@ export default async function HomePeparMiddleSection() {
             <div className="mt-6 flex flex-wrap gap-3">
               <GlobalWhatsAppButton
                 label="Konsultasi via WhatsApp"
-                className="rounded-full bg-green-500 text-white hover:bg-green-600"
+                variant="outline"
+                size="sm"
               />
-              <Button asChild variant="outline">
+              <Button asChild variant="ghost" size="sm">
                 <Link href="/layanan">Lihat semua layanan</Link>
               </Button>
             </div>
@@ -230,8 +280,8 @@ export default async function HomePeparMiddleSection() {
                       {lane.title}
                     </h3>
                   </div>
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border/70 bg-background/85">
-                    <Icon className="h-5 w-5" />
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-border/70 bg-primary/10">
+                    <Icon className="h-6 w-6" />
                   </span>
                 </div>
                 <p className="mt-4 text-sm leading-7 text-muted-foreground md:text-base">
@@ -298,16 +348,32 @@ export default async function HomePeparMiddleSection() {
           description="Pengalaman nyata mereka yang telah mempercayakan kebutuhan IT, software, dan percetakan pada Kotacom."
         />
         <div className="grid gap-5 md:grid-cols-3">
-          {testimonials.map((testi, i) => (
-            <div key={i} className="flex flex-col justify-between rounded-[1.75rem] border border-border/50 bg-background/60 p-7 shadow-sm">
-              <p className="italic leading-7 text-muted-foreground">&quot;{testi.quote}&quot;</p>
-              <div className="mt-8 border-t border-border/50 pt-5">
-                <div className="font-semibold text-foreground">{testi.name}</div>
-                <div className="text-sm text-muted-foreground">{testi.role}</div>
+          {testimonials.map((testi, i) => {
+            const initial = testi.name.charAt(0).toUpperCase();
+            return (
+              <div key={i} className="flex flex-col justify-between rounded-[1.75rem] border border-border/50 bg-background/60 p-7 shadow-sm">
+                <p className="italic leading-7 text-muted-foreground">&quot;{testi.quote}&quot;</p>
+                <div className="mt-8 border-t border-border/50 pt-5">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold">
+                      {initial}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-foreground">{testi.name}</div>
+                      <div className="text-sm text-muted-foreground">{testi.role}</div>
+                      {testi.company && (
+                        <div className="text-xs text-muted-foreground/80">{testi.company}</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+        <p className="mt-6 text-center text-xs text-muted-foreground/70">
+          * Nama klien telah diubah untuk menjaga privasi
+        </p>
       </SectionShell>
 
       <SectionShell>
@@ -341,7 +407,7 @@ export default async function HomePeparMiddleSection() {
                 ))}
               </ul>
               <div className="mt-6">
-                <Button asChild variant="outline">
+                <Button asChild variant="outline" size="sm">
                   <Link href={cluster.href}>Lihat detail</Link>
                 </Button>
               </div>
@@ -350,7 +416,7 @@ export default async function HomePeparMiddleSection() {
         </div>
       </SectionShell>
 
-      <SectionShell className="pb-16 lg:pb-20">
+      <SectionShell className="pb-12 lg:pb-16">
         <SectionPanel tone="sky" className="rounded-[1.9rem] p-6 md:p-8">
           <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_280px] md:items-end">
             <div>

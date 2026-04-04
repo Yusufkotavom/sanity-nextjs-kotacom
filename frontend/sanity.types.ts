@@ -3617,6 +3617,43 @@ export type PRODUCTS_SLUGS_QUERY_RESULT = Array<{
   slug: Slug;
 }>;
 
+// Source: ../frontend/sanity/queries/product.ts
+// Variable: RELATED_PRODUCTS_QUERY
+// Query: *[  _type == "product"   && defined(slug)   && slug.current != $slug  && count((categories[]->_id)[@ in $categoryIds]) > 0] | order(featured desc, _createdAt desc) [0...4]{  title,  slug,  excerpt,  image{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  price,  currency,  availability,  featured,  categories[]->{    _id,    title,    slug  }}
+export type RELATED_PRODUCTS_QUERY_RESULT = Array<{
+  title: string | null;
+  slug: Slug | null;
+  excerpt: string | null;
+  image: {
+    asset: {
+      _id: string;
+      url: string | null;
+      mimeType: string | null;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  price: number | null;
+  currency: "EUR" | "IDR" | "USD" | null;
+  availability: "in-stock" | "out-of-stock" | "pre-order" | null;
+  featured: boolean | null;
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: Slug | null;
+  }> | null;
+}>;
+
 // Source: ../frontend/sanity/queries/project.ts
 // Variable: PROJECT_QUERY
 // Query: *[_type == "project" && slug.current == $slug][0]{  title,  slug,  excerpt,  body[]{      ...,  markDefs[]{    ...,    _type == "link" => {          _key,    ...,    uiIcon{      provider,      name,      svg    },    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )    }  },  _type == "image" => {      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  }  },  image{      ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }  },  clientName,  industry,  completionYear,  projectUrl,  featured,  categories[]->{    _id,    title,    slug  },  cta{        _key,    ...,    uiIcon{      provider,      name,      svg    },    "href": select(      isExternal => href,      defined(href) && !defined(internalLink) => href,      @.internalLink->slug.current == "index" => "/",      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,      "/" + @.internalLink->slug.current    )  },  _createdAt,  _updatedAt,    meta{    title,    description,    canonicalUrl,    focusKeyword,    secondaryKeywords,    noindex,    image{        ...,  asset->{    _id,    url,    mimeType,    metadata {      lqip,      dimensions {        width,        height      }    }  }    }  },}
@@ -5758,6 +5795,7 @@ declare module "@sanity/client" {
     '*[_type == "product" && defined(slug)] | order(featured desc, _createdAt desc){\n  title,\n  slug,\n  excerpt,\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  price,\n  currency,\n  availability,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  }\n}': PRODUCTS_QUERY_RESULT;
     '*[_type == "product" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(featured desc, _createdAt desc){\n  title,\n  slug,\n  excerpt,\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  price,\n  currency,\n  availability,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  }\n}': PRODUCTS_BY_CATEGORY_QUERY_RESULT;
     '*[_type == "product" && defined(slug)]{slug}': PRODUCTS_SLUGS_QUERY_RESULT;
+    '*[\n  _type == "product" \n  && defined(slug) \n  && slug.current != $slug\n  && count((categories[]->_id)[@ in $categoryIds]) > 0\n] | order(featured desc, _createdAt desc) [0...4]{\n  title,\n  slug,\n  excerpt,\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  price,\n  currency,\n  availability,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  }\n}': RELATED_PRODUCTS_QUERY_RESULT;
     '*[_type == "project" && slug.current == $slug][0]{\n  title,\n  slug,\n  excerpt,\n  body[]{\n    \n  ...,\n  markDefs[]{\n    ...,\n    _type == "link" => {\n      \n    _key,\n    ...,\n    uiIcon{\n      provider,\n      name,\n      svg\n    },\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n    }\n  },\n  _type == "image" => {\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  }\n\n  },\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  clientName,\n  industry,\n  completionYear,\n  projectUrl,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  },\n  cta{\n    \n    _key,\n    ...,\n    uiIcon{\n      provider,\n      name,\n      svg\n    },\n    "href": select(\n      isExternal => href,\n      defined(href) && !defined(internalLink) => href,\n      @.internalLink->slug.current == "index" => "/",\n      @.internalLink->_type == "post" => "/blog/" + @.internalLink->slug.current,\n      @.internalLink->_type == "category" => "/blog/category/" + @.internalLink->slug.current,\n      @.internalLink->_type == "product" => "/products/" + @.internalLink->slug.current,\n      @.internalLink->_type == "service" => "/services/" + @.internalLink->slug.current,\n      @.internalLink->_type == "project" => "/projects/" + @.internalLink->slug.current,\n      "/" + @.internalLink->slug.current\n    )\n\n  },\n  _createdAt,\n  _updatedAt,\n  \n  meta{\n    title,\n    description,\n    canonicalUrl,\n    focusKeyword,\n    secondaryKeywords,\n    noindex,\n    image{\n      \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n    }\n  }\n,\n}': PROJECT_QUERY_RESULT;
     '*[_type == "project" && defined(slug)] | order(featured desc, _createdAt desc){\n  title,\n  slug,\n  excerpt,\n  image{\n    \n  ...,\n  asset->{\n    _id,\n    url,\n    mimeType,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height\n      }\n    }\n  }\n\n  },\n  clientName,\n  industry,\n  completionYear,\n  projectUrl,\n  featured,\n  categories[]->{\n    _id,\n    title,\n    slug\n  }\n}': PROJECTS_QUERY_RESULT;
     '*[_type == "project" && defined(slug)]{slug}': PROJECTS_SLUGS_QUERY_RESULT;

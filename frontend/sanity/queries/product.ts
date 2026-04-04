@@ -71,3 +71,26 @@ export const PRODUCTS_BY_CATEGORY_QUERY = groq`*[_type == "product" && defined(s
 }`;
 
 export const PRODUCTS_SLUGS_QUERY = groq`*[_type == "product" && defined(slug)]{slug}`;
+
+export const RELATED_PRODUCTS_QUERY = groq`*[
+  _type == "product" 
+  && defined(slug) 
+  && slug.current != $slug
+  && count((categories[]->_id)[@ in $categoryIds]) > 0
+] | order(featured desc, _createdAt desc) [0...4]{
+  title,
+  slug,
+  excerpt,
+  image{
+    ${imageQuery}
+  },
+  price,
+  currency,
+  availability,
+  featured,
+  categories[]->{
+    _id,
+    title,
+    slug
+  }
+}`;

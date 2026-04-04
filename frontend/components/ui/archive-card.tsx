@@ -16,7 +16,7 @@ const densityStyles: Record<Density, string> = {
 };
 
 const mediaHeightStyles: Record<HeightVariant, string> = {
-  compact: "h-40 sm:h-44 lg:h-48",
+  compact: "aspect-square lg:h-48",
   regular: "h-44 sm:h-48 lg:h-56",
   tall: "h-[15rem] sm:h-[20rem] md:h-[25rem] lg:h-[9.5rem] xl:h-[12rem]",
 };
@@ -65,6 +65,8 @@ export function ArchiveCardMedia({
     return null;
   }
 
+  const isCompact = heightVariant === "compact";
+
   return (
     <div
       className={cn(
@@ -76,7 +78,9 @@ export function ArchiveCardMedia({
       <Image
         src={urlFor(image).url()}
         alt={image?.alt || altFallback}
-        fill
+        fill={!isCompact}
+        width={isCompact ? 400 : undefined}
+        height={isCompact ? 400 : undefined}
         style={{ objectFit: "cover" }}
         placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
         blurDataURL={image?.asset?.metadata?.lqip || ""}

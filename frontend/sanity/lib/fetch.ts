@@ -26,6 +26,7 @@ import {
   PRODUCTS_BY_CATEGORY_QUERY,
   PRODUCTS_QUERY,
   PRODUCTS_SLUGS_QUERY,
+  RELATED_PRODUCTS_QUERY,
 } from "@/sanity/queries/product";
 import {
   SERVICE_QUERY,
@@ -456,6 +457,21 @@ export const fetchSanityProductBySlug = async ({
 export const fetchSanityProductsStaticParams = async (): Promise<any[]> => {
   const data = await fetchPublished<any[]>({
     query: PRODUCTS_SLUGS_QUERY,
+  });
+
+  return data || [];
+};
+
+export const fetchSanityRelatedProducts = async ({
+  slug,
+  categoryIds,
+}: {
+  slug: string;
+  categoryIds: string[];
+}): Promise<any[]> => {
+  const data = await fetchPublished<any[]>({
+    query: RELATED_PRODUCTS_QUERY,
+    params: { slug, categoryIds },
   });
 
   return data || [];

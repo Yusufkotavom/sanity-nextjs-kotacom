@@ -17,6 +17,7 @@ import {
   fetchSanityProductCategories,
   fetchSanityProductsByCategorySlug,
   fetchSanityProductsStaticParams,
+  fetchSanityRelatedProducts,
   fetchSanitySeoSettings,
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
@@ -135,6 +136,17 @@ export default async function ProductSlugPage(props: {
 
   if (!product) notFound();
 
+  const categoryIds = (product.categories || [])
+    .map((cat: any) => cat?._id)
+    .filter(Boolean);
+
+  const relatedProducts = categoryIds.length > 0
+    ? await fetchSanityRelatedProducts({
+        slug: params.slug,
+        categoryIds,
+      })
+    : [];
+
   const links: BreadcrumbLink[] = [
     { label: "Home", href: "/" },
     { label: "Products", href: "/products" },
@@ -213,6 +225,13 @@ export default async function ProductSlugPage(props: {
             </div>
           ) : null}
         </article>
+
+        {relatedProducts.length > 0 && (
+          <div className="mx-auto mt-16 max-w-6xl">
+            <h2 className="mb-6 text-2xl font-bold lg:text-3xl">Produk Terkait</h2>
+            <ProductGrid products={relatedProducts} initialCount={4} step={4} />
+          </div>
+        )}
       </div>
     </section>
   );

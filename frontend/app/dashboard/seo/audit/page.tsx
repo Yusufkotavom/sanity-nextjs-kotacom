@@ -7,6 +7,8 @@ type AuditItem = {
   url: string;
   statusCode: number;
   indexability: string;
+  internalLinks: number;
+  externalLinks: number;
   issues: string[];
 };
 
@@ -64,6 +66,8 @@ export default function SeoAuditPage() {
               <th className="text-left p-2">URL</th>
               <th className="text-left p-2">Status</th>
               <th className="text-left p-2">Indexability</th>
+              <th className="text-left p-2">Int. Links</th>
+              <th className="text-left p-2">Ext. Links</th>
               <th className="text-left p-2">Issues</th>
             </tr>
           </thead>
@@ -73,6 +77,8 @@ export default function SeoAuditPage() {
                 <td className="p-2 break-all">{item.url}</td>
                 <td className="p-2">{item.statusCode || "-"}</td>
                 <td className="p-2">{item.indexability}</td>
+                <td className="p-2">{item.internalLinks ?? "-"}</td>
+                <td className="p-2">{item.externalLinks ?? "-"}</td>
                 <td className="p-2">{item.issues.join(", ") || "-"}</td>
               </tr>
             ))}

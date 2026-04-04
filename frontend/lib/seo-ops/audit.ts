@@ -9,6 +9,8 @@ export type SeoAuditItem = {
   descriptionPresent: boolean;
   ogImagePresent: boolean;
   jsonLdPresent: boolean;
+  internalLinks: number;
+  externalLinks: number;
   issues: string[];
 };
 
@@ -98,6 +100,28 @@ export async function runSeoAudit({
       if (response.status >= 400) issues.push(`http_${response.status}`);
       if (canonical && canonical !== url) issues.push("canonical_mismatch");
 
+      // Menghitung Internal & External Links
+      let internalLinks = 0;
+      let externalLinks = 0;
+      const linkMatches = Array.from(html.matchAll(/<a[^>]+href=["']([^"']+)["']/gi));
+      const normalizedBaseUrl = baseUrl.replace(/\/+$/, "");
+      
+      for (const match of linkMatches) {
+        const href = match[1].trim();
+        // Ignore anchors, mailto, tel scripts
+        if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) {
+          continue;
+        }
+        
+        if (href.startsWith('http://') || href.startsWith('https://')) {
+           if (href.startsWith(normalizedBaseUrl)) internalLinks++;
+           else externalLinks++;
+        } else {
+           // Relative urls are internal
+           internalLinks++;
+        }
+      }
+
       items.push({
         url,
         statusCode: response.status,
@@ -107,6 +131,8 @@ export async function runSeoAudit({
         descriptionPresent,
         ogImagePresent,
         jsonLdPresent,
+        internalLinks,
+        externalLinks,
         issues,
       });
     } catch (error) {
@@ -119,6 +145,8 @@ export async function runSeoAudit({
         descriptionPresent: false,
         ogImagePresent: false,
         jsonLdPresent: false,
+        internalLinks: 0,
+        externalLinks: 0,
         issues: [error instanceof Error ? error.message : "request_failed"],
       });
     }

@@ -2,6 +2,8 @@ import { MetadataRoute } from "next";
 import { groq } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 import { fetchSanitySeoSettings } from "@/sanity/lib/fetch";
+import { getJasaCetakBukuCityStaticParams } from "@/lib/local-content/jasa-cetak-buku-kota";
+import { getJsonUsahaStaticParams } from "@/lib/local-content/json-usaha";
 
 type SitemapItem = {
   _type: "page" | "post" | "product" | "service" | "project";
@@ -73,20 +75,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   if (seo?.defaultNoIndex) return [];
 
-  const [{ data: contentData }, { data: categoryData }] = await Promise.all([
+  const [
+    { data: contentData }, 
+    { data: categoryData },
+    jsonUsahaParams
+  ] = await Promise.all([
     sanityFetch({ query: CONTENT_SITEMAP_QUERY }),
     sanityFetch({ query: CATEGORY_SITEMAP_QUERY }),
+    getJsonUsahaStaticParams(),
   ]);
+
+  const cityParams = getJasaCetakBukuCityStaticParams();
 
   const contentItems = (contentData || []) as SitemapItem[];
   const categoryItems = (categoryData || []) as CategorySitemapItem[];
 
   const entries: MetadataRoute.Sitemap = [];
+  const addedUrls = new Set<string>();
+
+  const addEntry = (entry: MetadataRoute.Sitemap[number]) => {
+    if (!addedUrls.has(entry.url)) {
+      addedUrls.add(entry.url);
+      entries.push(entry);
+    }
+  };
 
   for (const item of contentItems) {
     const path = mapContentPath(item);
     if (!path) continue;
-    entries.push({
+    addEntry({
       url: makeAbsoluteUrl(baseUrl, path),
       lastModified: item._updatedAt || undefined,
       changeFrequency: item._type === "page" ? "daily" : "weekly",
@@ -99,7 +116,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (!slug) continue;
 
     if ((category.postCount || 0) > 0 && !seo?.noIndexBlogCategories) {
-      entries.push({
+      addEntry({
         url: makeAbsoluteUrl(baseUrl, `/blog/category/${slug}`),
         lastModified: category._updatedAt || undefined,
         changeFrequency: "weekly",
@@ -107,7 +124,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
     if ((category.productCount || 0) > 0 && !seo?.noIndexProductCategories) {
-      entries.push({
+      addEntry({
         url: makeAbsoluteUrl(baseUrl, `/products/${slug}`),
         lastModified: category._updatedAt || undefined,
         changeFrequency: "weekly",
@@ -115,13 +132,58 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
     if ((category.serviceCount || 0) > 0 && !seo?.noIndexServiceCategories) {
-      entries.push({
+      addEntry({
         url: makeAbsoluteUrl(baseUrl, `/services/${slug}`),
         lastModified: category._updatedAt || undefined,
         changeFrequency: "weekly",
         priority: 0.6,
       });
     }
+  }
+
+  // Include static core routes that might not exist in Sanity
+  const localStaticRoutes = [
+    "/about",
+    "/contact",
+    "/privacy",
+    "/layanan",
+    "/pembuatan-website",
+    "/percetakan",
+    "/software",
+    "/sistem-pos",
+    "/blog",
+    "/products",
+    "/projects",
+    "/services"
+  ];
+
+  for (const route of localStaticRoutes) {
+    addEntry({
+      url: makeAbsoluteUrl(baseUrl, route),
+      lastModified: new Date().toISOString(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    });
+  }
+
+  // Add JSON Usaha routes
+  for (const usaha of jsonUsahaParams) {
+    addEntry({
+      url: makeAbsoluteUrl(baseUrl, `/layanan/${usaha.slug}`),
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    });
+  }
+
+  // Add Jasa Cetak Buku Kota local routes
+  for (const city of cityParams) {
+    addEntry({
+      url: makeAbsoluteUrl(baseUrl, `/${city.slug}`),
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    });
   }
 
   return entries.sort((a, b) => a.url.localeCompare(b.url));
