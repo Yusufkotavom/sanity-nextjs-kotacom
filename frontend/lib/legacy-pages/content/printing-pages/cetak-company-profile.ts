@@ -1,5 +1,4 @@
 import { DEFAULT_CTA } from "../constants";
-import { buildGenericCopy } from "../core";
 import type { LegacyRewriteCopy } from "../types";
 import type { LegacyAstroPage } from "../../astro-static";
 
@@ -10,18 +9,18 @@ export function buildPercetakanCetakCompanyProfilePageCopy(
     ...buildGenericCopy(page),
     primaryKeyword: "Jasa Cetak Company Profile Surabaya",
     secondaryKeywords: [
-      "Cetak profil perusahaan",
-      "Buku company profile",
-      "Company profile premium",
-      "Percetakan corporate profile",
-      "Cetak katalog perusahaan",
-      "Cetak company profile Surabaya",
+      "Cetak company profile murah",
+      "Percetakan profil perusahaan",
+      "Company profile cetak berkualitas",
+      "Jasa cetak company profile cepat",
+      "Percetakan company profile online",
+      "Cetak company profile Surabaya"
     ],
     description:
-      "Jasa cetak company profile Surabaya untuk memperkuat citra profesional perusahaan melalui profil perusahaan, katalog produk, dan materi presentasi brand yang rapi dan berkualitas.",
+      "Layanan cetak company profile Surabaya untuk memperlihatkan keprofesionalan bisnis Anda melalui bahan promosi yang rapi, informatif, dan sesuai identitas brand perusahaan.",
     intro:
-      "Kami menyiapkan cetak company profile dengan struktur material dan finishing yang mendukung kebutuhan presentasi bisnis dan tender. Coverage ini juga kami extend untuk menangkap intent katalog produk dan materi branding perusahaan yang kuat di live site.",
-    ctaLabel: "Diskusi Company Profile",
+      "Butuh company profile yang bagus untuk presentasi ke klien, tender, atau keperluan bisnis? Kami bisa bantu cetak company profile Anda dengan bahan berkualitas, finishing rapi, dan desain yang selaras dengan brand perusahaan Anda. Cukup kirim desain atau konsep Anda, kami yang akanuruskan proses cetaknya.",
+    ctaLabel: "Konsultasi Cetak Company Profile",
     ctaHref: DEFAULT_CTA,
   };
 }

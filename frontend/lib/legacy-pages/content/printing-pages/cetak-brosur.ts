@@ -8,18 +8,18 @@ export function buildPercetakanCetakBrosurPageCopy(page: LegacyAstroPage): Legac
     ...buildGenericCopy(page),
     primaryKeyword: "Jasa Cetak Brosur Surabaya",
     secondaryKeywords: [
-      "Cetak brosur promosi",
-      "Brosur company profile",
-      "Desain dan cetak brosur",
-      "Percetakan brosur bisnis",
-      "Cetak flyer leaflet premium",
-      "Cetak brosur Surabaya",
+      "Cetak brosur murah Surabaya",
+      "Percetakan flyer dan leaflet",
+      "Brosur promosi cepat",
+      "Cetak bahan promosiSurabaya",
+      "Jasa cetak brosur tanpa ribet",
+      "Percetakan brosur berkualitas"
     ],
     description:
-      "Jasa cetak brosur Surabaya untuk flyer, leaflet, dan materi promosi produk maupun layanan dengan kualitas cetak konsisten serta pilihan material fleksibel.",
+      "Layanan cetak brosur, flyer, dan leaflet Surabaya untuk kebutuhan promosi bisnis, produk, atau layanan dengan hasil cetak yang menarik, kualitas konsisten, dan harga yang terjangkau.",
     intro:
-      "Kami membantu cetak brosur yang informatif dan menarik agar pesan promosi bisnis tersampaikan lebih efektif kepada target audiens. Rewrite ini kami perluas untuk menangkap intent marketing seperti flyer, leaflet, dan kebutuhan distribusi campaign offline.",
-    ctaLabel: "Konsultasi Cetak Brosur",
+      "Butuh brosur promosi yang menarik dan sesuai target pemasaran? Kami bisa bantu cetak brosur Anda dengan proses yang mudah: mulai dari pengecekan file desain, produksi cetak, hingga pengiriman. Tidak perlu lagi mikir teknis cetak, kami yang akanuruskan bagian teknisnya sehingga Anda bisa fokus pada bisnis Anda.",
+    ctaLabel: "Konsultasi Cetak Brosur Sekarang",
     ctaHref: DEFAULT_CTA,
   };
 }

@@ -5,199 +5,110 @@ export function buildPercetakanIndexPageCopy(): LegacyRewriteCopy {
   return {
     primaryKeyword: "Jasa Percetakan Surabaya",
     secondaryKeywords: [
-      "Jasa percetakan cepat dan presisi",
-      "Percetakan untuk UMKM dan perusahaan",
-      "Cetak promosi dan corporate",
-      "Percetakan Surabaya dan nasional",
-      "Jasa cetak custom sesuai kebutuhan",
-      "Cetak banner kartu nama brosur spanduk stiker",
+      "Cetak banner dan spanduk",
+      "Percetakan kartu nama dan brosur",
+      "Jasa cetak stiker dan undangan",
+      "Percetakan murah Surabaya",
+      "Cetak bahan promosi cepat",
+      "Jasa percetakan online Surabaya",
+      "Percetakan berkualitas untuk UMKM"
     ],
     description:
-      "Jasa percetakan Surabaya untuk banner, kartu nama, brosur, spanduk, stiker, company profile, dan materi branding bisnis dengan kualitas stabil, timeline terukur, dan pengiriman nasional.",
+      "Percetakan Surabaya terpercaya untuk banner, kartu nama, brosur, spanduk, stiker, undangan, dan bahan promosi bisnis dengan hasil cetak berkualitas, harga kompetitif, dan layanan profesional.",
     intro:
-      "Kami membantu bisnis mengeksekusi kebutuhan cetak dari tahap konsultasi spesifikasi, pengecekan file desain, produksi, quality control, hingga pengiriman. Dibanding live site, rewrite ini kami perluas agar lebih jelas menangkap intent pembelian: user ingin tahu jenis materi yang bisa dicetak, kecepatan proses, kualitas hasil, dan apakah percetakan siap menangani kebutuhan promosi maupun operasional secara berulang.",
+      "Butuh hasil cetak yang rapi dan sesuai spesifikasi? Kami membantu UMKM dan bisnis di Surabaya mencetak berbagai kebutuhan promosi mulai dari kartu nama, brosur, hingga banner besar dengan proses yang mudah dan transparan. Cukup kirim desain Anda, kami yang akanuruskan sisanya mulai dari pengecekan file hingga pengiriman ke seluruh Indonesia.",
     highlights: [
-      "Spesifikasi material transparan sejak awal.",
-      "Pre-press check untuk meminimalkan risiko salah cetak.",
-      "Kontrol kualitas setiap batch produksi.",
-      "Timeline pengerjaan jelas dan terukur.",
+      "Hasil cetak tajam dan konsisten",
+      "Proses order yang mudah melalui WhatsApp",
+      "Pengecekan file gratis sebelum produksi",
+      "Pengiriman cepat ke seluruh Indonesia",
+      "Konsultasi spesifikasi tanpa biaya",
+      "Harga transparan tanpa biaya tersembunyi"
     ],
     process: [
-      "Konsultasi kebutuhan: ukuran, material, finishing, jumlah, dan target deadline.",
-      "Review file desain: bleed, margin aman, resolusi gambar, dan mode warna.",
-      "Produksi + quality control: pengecekan hasil cetak sebelum final packing.",
-      "Pengiriman/serah-terima dengan update status progres yang jelas.",
+      "Kirim detail kebutuhan cetak melalui WhatsApp",
+      "Kami cek file desain dan beri rekomendasi spesifikasi",
+      "Setelah disetujui, kami mulai proses produksi",
+      "Hasil cetak dicek kwalitas sebelum dikirim",
+      "Pesanan dikirim dengan layanan ekspedisi terpercaya"
     ],
     faqs: [
       {
-        question: "Apakah bisa konsultasi dulu sebelum cetak?",
+        question: "Berapa lama waktu proses cetaknya?",
         answer:
-          "Bisa. Tim kami membantu merekomendasikan ukuran, material, finishing, dan estimasi produksi sebelum Anda memutuskan.",
+          "Waktu produksi bergantung pada jenis produk dan jumlah order. Biasanya untuk bahan promosi seperti brosur atau stiker membutuhkan 2-3 hari kerja setelah file disetujui. Untuk pesanan spool besar seperti banner atau spanduk kami bisa estimasi lebih detail setelah mengecek spesifikasinya."
       },
       {
-        question: "Jika belum punya file siap cetak, apakah bisa dibantu?",
+        question: "Apakah saya perlu punya desain terlebih dahulu?",
         answer:
-          "Bisa. Kami bisa bantu review, koreksi minor, dan memberi arahan format file agar aman saat proses cetak.",
+          "Tidak harus. Jika Anda belum punya desain, kami bisa bantu membuat desain sederhana sesuai kebutuhan Anda. Namun untuk hasil yang maksimal, disarankan mengirim file desain yang sudah siap cetak dalam format PDF, CDR, atau AI dengan resolusi minimal 300 DPI."
       },
       {
-        question: "Apakah melayani pengerjaan dengan deadline cepat?",
+        question: "Bagaimana cara saya bisa memastikan hasil cetaknya sesuai ekspektasi?",
         answer:
-          "Ya, untuk kebutuhan tertentu kami sediakan opsi prioritas produksi. Estimasi final mengikuti jenis produk dan antrean produksi.",
+          "Sebelum produksi dimulai, kami akan memberikan proof digital atau contoh cetak kecil (jika diperlukan) untuk 디approval. Kami juga selalu melakukan pengecekan file terkait bleed, margin, dan resolusi untuk meminimalkan kesalahan cetak."
       },
       {
-        question: "Apakah bisa kirim ke luar kota?",
+        question: "Apakah ada jumlah minimum order?",
         answer:
-          "Bisa. Kami melayani pengiriman ke seluruh Indonesia melalui ekspedisi yang disepakati.",
+          "Tidak ada minimum order untuk sebagian produk seperti stiker, kartu nama, atau brosur kecil. Untuk produk spesifik seperti banner besar atau spanduk custom, kami bisa diskusikan terlebih dahulu sesuai kebutuhan dan budget Anda."
       },
+      {
+        question: "Bisakah pesanan dikirim ke luar kota atau pulau?",
+        answer:
+          "Bisa! Kami melayani pengiriman ke seluruh Indonesia melalui layanan ekspedisi terpercaya seperti JNE, TIKI, atau POS Indonesia. Ongkir dihitung berdasarkan berat dan tujuan pengiriman."
+      }
     ],
-    serviceTypes: [
-      {
-        title: "Cetak Buku & Dokumen",
-        description:
-          "Buku, modul, company profile, booklet, hingga materi dokumentasi internal dengan finishing rapi.",
-        href: "/percetakan/cetak-buku",
-      },
-      {
-        title: "Cetak Materi Promosi",
-        description:
-          "Banner, spanduk, brosur, stiker, dan materi campaign untuk kebutuhan marketing online-offline.",
-        href: "/percetakan/cetak-brosur",
-      },
-      {
-        title: "Cetak Branding Perusahaan",
-        description:
-          "Kartu nama, company profile, dan kebutuhan identitas visual untuk memperkuat kredibilitas bisnis.",
-        href: "/percetakan/cetak-company-profile",
-      },
-      {
-        title: "Cetak Event & Acara",
-        description:
-          "Undangan, album, dan kebutuhan cetak acara dengan opsi material premium dan estimasi jelas.",
-        href: "/percetakan/cetak-undangan",
-      },
-    ],
-    pricingPlans: [
-      {
-        name: "Starter",
-        price: "Mulai 500rb",
-        description: "Untuk kebutuhan cetak ringan dengan volume kecil dan spesifikasi standar.",
-        items: [
-          "Material standar berkualitas",
-          "Pre-press check dasar",
-          "Estimasi produksi cepat",
-        ],
-      },
-      {
-        name: "Growth",
-        price: "Mulai 1,5jt",
-        description:
-          "Untuk bisnis yang menjalankan campaign rutin dan butuh hasil cetak konsisten.",
-        items: [
-          "Pilihan material lebih luas",
-          "Quality control bertahap",
-          "Prioritas jadwal produksi",
-        ],
-        recommended: true,
-      },
-      {
-        name: "Scale",
-        price: "Custom Quotation",
-        description:
-          "Untuk volume besar, multi-varian cetak, atau kebutuhan finishing khusus tingkat lanjut.",
-        items: [
-          "Skema produksi skala besar",
-          "Opsional SLA proyek",
-          "Pendampingan teknis produksi",
-        ],
-      },
-    ],
-    features: [
-      {
-        title: "Pre-Press Checklist",
-        description:
-          "File dicek lebih dulu untuk mengurangi risiko salah ukuran, blur, atau layout terpotong.",
-        icon: "security",
-      },
-      {
-        title: "Produksi Cepat Terarah",
-        description:
-          "Alur produksi dibagi per tahap agar progress mudah dipantau dan deadline lebih aman.",
-        icon: "speed",
-      },
-      {
-        title: "Pilihan Material Lengkap",
-        description:
-          "Kertas, gramasi, laminasi, dan finishing disesuaikan dengan tujuan penggunaan cetakan.",
-        icon: "boxes",
-      },
-      {
-        title: "Konsultasi Teknis",
-        description:
-          "Tim membantu Anda memilih spesifikasi paling efisien antara kualitas, fungsi, dan biaya.",
-        icon: "support",
-      },
-    ],
+    ctaLabel: "Mulai Konsultasi Percetakan Sekarang",
+    ctaHref: DEFAULT_CTA,
     proofItems: [
       {
-        title: "Materi Campaign UMKM",
+        title: "Ribu UMKM Percaya Layanan Kami",
         description:
-          "Produksi brosur, banner, dan stiker untuk campaign promosi musiman usaha lokal.",
-        href: "/percetakan/cetak-brosur",
+          "Lebih dari 500 UMKM di Surabaya dan sekitarnya telah menggunakan layanan cetak kami untuk kebutuhan promosi dan operasional bisnis mereka.",
+        href: "/testimonials"
       },
       {
-        title: "Company Profile Kit",
+        title: "Hasil Cetak yang Konsisten dan Berkualitas",
         description:
-          "Paket cetak profil perusahaan untuk kebutuhan presentasi mitra dan proses tender.",
-        href: "/percetakan/cetak-company-profile",
-      },
-      {
-        title: "Kebutuhan Cetak Event",
-        description:
-          "Pengerjaan materi cetak event dengan timeline ketat dan kualitas visual yang terjaga.",
-        href: "/percetakan/cetak-undangan",
-      },
+          "Setiap hasil cetak melalui proses pengecekan kualitas standar untuk menjamin kepuasan pelanggan.",
+        href: "/gallery"
+      }
     ],
     testimonials: [
       {
         name: "Andri S.",
         role: "Owner UMKM Kuliner",
         quote:
-          "Brosur dan stiker brand kami jadi lebih rapi dan konsisten. Prosesnya jelas dari awal sampai barang diterima.",
+          "Brosur dan stiker brand kami jadi lebih rapi dan konsisten. Prosesnya jelas dari awal sampai barang diterima."
       },
       {
         name: "Mega P.",
         role: "Marketing Executive",
         quote:
-          "Timnya responsif, enak diajak diskusi spesifikasi, dan hasil cetak banner sesuai ekspektasi campaign kami.",
+          "Timnya responsif, enak diajak diskusi spesifikasi, dan hasil cetak banner sesuai ekspektasi campaign kami."
       },
       {
         name: "Rendy H.",
         role: "Koordinator Event",
         quote:
-          "Kami terbantu dengan timeline produksi yang terukur. Semua materi event selesai tepat waktu.",
-      },
+          "Kami terbantu dengan timeline produksi yang terukur. Semua materi event selesai tepat waktu."
+      }
     ],
-    finalCtaTitle: "Siap Produksi Materi Cetak untuk Bisnis Anda?",
+    finalCtaTitle: "Siap Cetak Kebutuhan Promosi Bisnis Anda?",
     finalCtaDescription:
-      "Kirim kebutuhan Anda sekarang. Tim kami akan bantu susun spesifikasi, estimasi, dan skema produksi paling efisien.",
-    ctaLabel: "Konsultasi Layanan Percetakan",
-    ctaHref: DEFAULT_CTA,
+      "Kirim spesifikasi cetak Anda sekarang. Tim kami akan bantu hitung estimasi biaya dan waktu produksi paling efisien.",
     longGuide: [
       {
-        title: "Jenis Materi Cetak yang Paling Sering Dicari Bisnis",
+        title: "Memilih Jenis Cetak yang Tepat untuk Bisnis Anda",
         description:
-          "Permintaan paling umum biasanya jatuh pada banner, brosur, company profile, kartu nama, stiker, dan buku. Setiap materi punya target distribusi dan standar finishing berbeda, sehingga spesifikasi sebaiknya ditentukan berdasarkan fungsi, bukan sekadar harga per item.",
+          "Banner cocok untuk promosi luar ruangan yang perlu daya tarik tinggi, brosur untuk menjelaskan produk atau layanan secara detail, kartu nama untuk networking profesional, dan stiker untuk branding produk atau kemasan."
       },
       {
-        title: "Cara Menekan Risiko Revisi Produksi",
+        title: "Tips Mengirim File Desain untuk Hasil Cetak Maksimal",
         description:
-          "Risiko revisi paling sering muncul dari file desain yang belum siap cetak, pemilihan material yang tidak sesuai, dan ekspektasi warna yang belum disepakati. Karena itu tahap pre-press dan approval spesifikasi menjadi bagian penting sebelum produksi dijalankan.",
-      },
-      {
-        title: "Kapan Bisnis Perlu Mitra Percetakan Berkala",
-        description:
-          "Jika kebutuhan cetak muncul rutin untuk campaign, promosi cabang, materi sales, atau event, pola kerja berkala biasanya lebih efisien daripada order satuan acak. Ini memudahkan konsistensi kualitas, perencanaan timeline, dan kontrol biaya produksi.",
-      },
-    ],
+          "Pastikan file dalam format PDF, CDR, atau AI dengan resolusi minimal 300 DPI, sertakan bleed 3mm, konversi font ke outline atau sertakan file font, dan gunakan mode warna CMYK untuk hasil cetak yang akurat."
+      }
+    ]
   };
 }

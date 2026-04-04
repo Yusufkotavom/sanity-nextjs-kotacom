@@ -17,6 +17,16 @@
 - If a field is added/changed in Studio SEO documents, update related query/fetch/metadata usage in Frontend in the same task.
 - Preserve global fallback behavior from `seoSettings` when per-document meta is empty.
 
+## Local Claude SEO Bundle Rule
+
+- This repository vendors a local Claude SEO toolkit under `skills/claude-seo/`.
+- For SEO audit, technical SEO, on-page, schema, sitemap, image SEO, GEO, local SEO, maps, hreflang, backlinks, or SEO planning tasks, agents must review the relevant local skill first:
+  - `skills/claude-seo/skills/seo/SKILL.md`
+  - matching sub-skill under `skills/claude-seo/skills/seo-*/SKILL.md`
+  - matching agent prompt under `skills/claude-seo/agents/seo-*.md` when delegation or role guidance is useful
+- Prefer this repo-local bundle over machine-global SEO skills so the workflow stays versioned with the codebase.
+- If a local Claude SEO skill references helper scripts, references, or docs, use the vendored paths under `skills/claude-seo/` instead of external or home-directory copies.
+
 ## Frontend-Backend Sync Rule
 
 - Any frontend change that depends on CMS/config data must be cross-checked against Studio schemas, GROQ queries, and fetch helpers in the same task.

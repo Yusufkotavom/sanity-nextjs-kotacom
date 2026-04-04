@@ -141,6 +141,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Root homepage `/` no longer relies on a full-Sanity body render; it now uses the shared hybrid shell with Sanity-managed top/bottom block zones around a code-owned middle section, while `/home` and `/product-home` remain redirect aliases to `/`
 - [x] Sanity block schema defaults now include `_key` values for object-array `initialValue` payloads, preventing Studio `Missing keys` editor errors on seeded CTA/hero/grid/split/timeline blocks
 - [x] Sanity agent-toolkit skills have been vendored into the repository under `skills/` so CMS/content-modeling guidance is versioned alongside the codebase
+- [x] Claude SEO has been vendored locally under `skills/claude-seo`, so repo-level SEO audits and planning can use pinned local skills, agents, scripts, references, and docs instead of machine-global installs
 - [x] `hero-2` now supports soft binding to `page.title`: when the block title is empty, frontend resolves the displayed heading from the parent page document instead of requiring duplicated CMS content
 - [x] `hero-1` and `section-header` now follow the same soft binding pattern to `page.title`, so three core heading blocks can inherit the page title without duplicating CMS fields
 - [x] Header and mobile navigation now expose a dedicated WhatsApp CTA sourced from global `settings.whatsApp`, while the existing `navigation.headerCta` remains available as a separate action from the navigation document
@@ -255,6 +256,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Manual money-page rewrite v4 completed for 12 additional high-intent slugs in `pembuatan-website` and `percetakan` clusters with tailored conversion copy (headline/intro/CTA/final CTA/FAQ).
 - [x] Live-vs-local rewrite alignment pass completed on priority money pages to capture stronger `Surabaya` geo intent and expand decision-stage SEO support content in rewrite source.
 - [x] Live-vs-local rewrite alignment pass v2 completed on city/detail commercial pages to capture stronger local-intent and service-variant query coverage in rewrite source.
+- [x] Repo-level SEO operations guidance now points future agents at the vendored Claude SEO toolkit in `skills/claude-seo`, keeping audit workflows versioned with the codebase instead of depending on home-directory skill installs.
 - Blocker note (2026-04-02): Live SEO sample audit (`120` URLs) still reports unresolved issues outside migrated frontend scope (`meta_description_too_long: 106`, `title_too_long: 22`, `http_status_not_200: 10`) dominated by legacy live pages/redirect gaps; requires content import/redirect wave plus metadata cleanup on production routes.
 
 ### C2. Structured Data

@@ -16,6 +16,133 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-04 - Vendor Claude SEO Toolkit into the Repository
+- Changed files:
+  - `AGENTS.md`
+  - `skills/claude-seo/CLAUDE.md`
+  - `skills/claude-seo/README.md`
+  - `skills/claude-seo/LICENSE`
+  - `skills/claude-seo/requirements.txt`
+  - `skills/claude-seo/agents/seo-backlinks.md`
+  - `skills/claude-seo/agents/seo-content.md`
+  - `skills/claude-seo/agents/seo-dataforseo.md`
+  - `skills/claude-seo/agents/seo-geo.md`
+  - `skills/claude-seo/agents/seo-google.md`
+  - `skills/claude-seo/agents/seo-image-gen.md`
+  - `skills/claude-seo/agents/seo-local.md`
+  - `skills/claude-seo/agents/seo-maps.md`
+  - `skills/claude-seo/agents/seo-performance.md`
+  - `skills/claude-seo/agents/seo-schema.md`
+  - `skills/claude-seo/agents/seo-sitemap.md`
+  - `skills/claude-seo/agents/seo-technical.md`
+  - `skills/claude-seo/agents/seo-visual.md`
+  - `skills/claude-seo/docs/ARCHITECTURE.md`
+  - `skills/claude-seo/docs/COMMANDS.md`
+  - `skills/claude-seo/docs/INSTALLATION.md`
+  - `skills/claude-seo/docs/MCP-INTEGRATION.md`
+  - `skills/claude-seo/docs/TROUBLESHOOTING.md`
+  - `skills/claude-seo/extensions/banana/README.md`
+  - `skills/claude-seo/extensions/banana/install.sh`
+  - `skills/claude-seo/extensions/banana/uninstall.sh`
+  - `skills/claude-seo/extensions/dataforseo/README.md`
+  - `skills/claude-seo/extensions/dataforseo/field-config.json`
+  - `skills/claude-seo/extensions/dataforseo/install.ps1`
+  - `skills/claude-seo/extensions/dataforseo/install.sh`
+  - `skills/claude-seo/extensions/dataforseo/uninstall.ps1`
+  - `skills/claude-seo/extensions/dataforseo/uninstall.sh`
+  - `skills/claude-seo/extensions/firecrawl/README.md`
+  - `skills/claude-seo/extensions/firecrawl/install.ps1`
+  - `skills/claude-seo/extensions/firecrawl/install.sh`
+  - `skills/claude-seo/extensions/firecrawl/uninstall.ps1`
+  - `skills/claude-seo/extensions/firecrawl/uninstall.sh`
+  - `skills/claude-seo/hooks/hooks.json`
+  - `skills/claude-seo/hooks/validate-schema.py`
+  - `skills/claude-seo/schema/templates.json`
+  - `skills/claude-seo/scripts/analyze_visual.py`
+  - `skills/claude-seo/scripts/backlinks_auth.py`
+  - `skills/claude-seo/scripts/bing_webmaster.py`
+  - `skills/claude-seo/scripts/capture_screenshot.py`
+  - `skills/claude-seo/scripts/commoncrawl_graph.py`
+  - `skills/claude-seo/scripts/crux_history.py`
+  - `skills/claude-seo/scripts/fetch_page.py`
+  - `skills/claude-seo/scripts/ga4_report.py`
+  - `skills/claude-seo/scripts/google_auth.py`
+  - `skills/claude-seo/scripts/google_report.py`
+  - `skills/claude-seo/scripts/gsc_inspect.py`
+  - `skills/claude-seo/scripts/gsc_query.py`
+  - `skills/claude-seo/scripts/indexing_notify.py`
+  - `skills/claude-seo/scripts/keyword_planner.py`
+  - `skills/claude-seo/scripts/moz_api.py`
+  - `skills/claude-seo/scripts/nlp_analyze.py`
+  - `skills/claude-seo/scripts/pagespeed_check.py`
+  - `skills/claude-seo/scripts/parse_html.py`
+  - `skills/claude-seo/scripts/validate_backlink_report.py`
+  - `skills/claude-seo/scripts/verify_backlinks.py`
+  - `skills/claude-seo/scripts/youtube_search.py`
+  - `skills/claude-seo/skills/seo/SKILL.md`
+  - `skills/claude-seo/skills/seo-audit/SKILL.md`
+  - `skills/claude-seo/skills/seo-backlinks/SKILL.md`
+  - `skills/claude-seo/skills/seo-competitor-pages/SKILL.md`
+  - `skills/claude-seo/skills/seo-content/SKILL.md`
+  - `skills/claude-seo/skills/seo-dataforseo/SKILL.md`
+  - `skills/claude-seo/skills/seo-geo/SKILL.md`
+  - `skills/claude-seo/skills/seo-google/SKILL.md`
+  - `skills/claude-seo/skills/seo-google/references/google-api-endpoints.md`
+  - `skills/claude-seo/skills/seo-google/references/google-api-scope-reference.md`
+  - `skills/claude-seo/skills/seo-google/references/google-api-setup.md`
+  - `skills/claude-seo/skills/seo-google/references/google-indexing-api-guide.md`
+  - `skills/claude-seo/skills/seo-google/references/google-keyword-planner-guide.md`
+  - `skills/claude-seo/skills/seo-google/references/google-page-speed-api-guide.md`
+  - `skills/claude-seo/skills/seo-google/references/google-search-console-guide.md`
+  - `skills/claude-seo/skills/seo-google/references/google-seo-quick-reference.md`
+  - `skills/claude-seo/skills/seo-google/references/google-url-inspection-guide.md`
+  - `skills/claude-seo/skills/seo-google/references/google-youtube-data-api-guide.md`
+  - `skills/claude-seo/skills/seo-hreflang/SKILL.md`
+  - `skills/claude-seo/skills/seo-image-gen/SKILL.md`
+  - `skills/claude-seo/skills/seo-image-gen/references/banana-api.md`
+  - `skills/claude-seo/skills/seo-image-gen/references/compression-guide.md`
+  - `skills/claude-seo/skills/seo-image-gen/references/og-playbook.md`
+  - `skills/claude-seo/skills/seo-image-gen/references/product-photo-guide.md`
+  - `skills/claude-seo/skills/seo-image-gen/references/safety-and-publishing.md`
+  - `skills/claude-seo/skills/seo-image-gen/references/seo-image-guidelines.md`
+  - `skills/claude-seo/skills/seo-image-gen/references/usage-reference.md`
+  - `skills/claude-seo/skills/seo-images/SKILL.md`
+  - `skills/claude-seo/skills/seo-local/SKILL.md`
+  - `skills/claude-seo/skills/seo-maps/SKILL.md`
+  - `skills/claude-seo/skills/seo-page/SKILL.md`
+  - `skills/claude-seo/skills/seo-plan/SKILL.md`
+  - `skills/claude-seo/skills/seo-plan/assets/local-rankings-strategy.md`
+  - `skills/claude-seo/skills/seo-plan/assets/publisher-content-plan.md`
+  - `skills/claude-seo/skills/seo-plan/assets/saas-growth-plan.md`
+  - `skills/claude-seo/skills/seo-plan/assets/services-leadgen-plan.md`
+  - `skills/claude-seo/skills/seo-programmatic/SKILL.md`
+  - `skills/claude-seo/skills/seo-schema/SKILL.md`
+  - `skills/claude-seo/skills/seo-sitemap/SKILL.md`
+  - `skills/claude-seo/skills/seo-technical/SKILL.md`
+  - `skills/claude-seo/skills/seo/references/cwv-thresholds.md`
+  - `skills/claude-seo/skills/seo/references/eeat-framework.md`
+  - `skills/claude-seo/skills/seo/references/local-schema-types.md`
+  - `skills/claude-seo/skills/seo/references/local-seo-signals.md`
+  - `skills/claude-seo/skills/seo/references/maps-api-endpoints.md`
+  - `skills/claude-seo/skills/seo/references/maps-free-apis.md`
+  - `skills/claude-seo/skills/seo/references/maps-gbp-checklist.md`
+  - `skills/claude-seo/skills/seo/references/maps-geo-grid.md`
+  - `skills/claude-seo/skills/seo/references/quality-gates.md`
+  - `skills/claude-seo/skills/seo/references/schema-types.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Vendored the Claude SEO toolkit into `skills/claude-seo/` so the repository now carries the upstream skill set locally, including orchestrator skills, sub-skills, agent markdown prompts, helper scripts, references, docs, schema templates, hooks, and extension install notes.
+  - Kept the vendored package inside the repository instead of installing it into a machine-global directory, so future SEO workflows can be reviewed, versioned, and updated alongside application code.
+  - Updated `AGENTS.md` to explicitly direct future agents to prefer the repo-local Claude SEO bundle for SEO audit, schema, sitemap, GEO, local SEO, backlinks, and planning tasks.
+- SEO impact:
+  - No direct SEO impact on frontend runtime or metadata output.
+  - Integration impact: future SEO audits and strategy work can now use a versioned, repo-local toolkit and local agent prompts instead of relying on server-level skill installs.
+- Verification:
+  - `find skills/claude-seo -maxdepth 3 -type f`
+  - `sed -n '1,160p' AGENTS.md`
+  - Manual check that the vendored bundle contains `skills/`, `agents/`, `scripts/`, `schema/`, `docs/`, `hooks/`, and `extensions/`
+
 ## 2026-04-03 - Move Theme Colors into Dedicated Theme Settings Document
 - Changed files:
   - `studio/schemas/documents/theme-settings.ts`
