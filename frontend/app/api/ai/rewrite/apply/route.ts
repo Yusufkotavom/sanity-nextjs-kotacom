@@ -113,6 +113,48 @@ function extractTextBody(document: Record<string, unknown>) {
   return lines.join("\n\n");
 }
 
+/**
+ * Attempt to repair a truncated JSON string where the "body" field got cut off.
+ * Strategy: close the open string → close the object.
+ */
+function repairTruncatedJson(raw: string): string {
+  let inString = false;
+  let escaped = false;
+
+  for (let i = 0; i < raw.length; i++) {
+    const c = raw[i];
+    if (escaped) { escaped = false; continue; }
+    if (c === "\\" && inString) { escaped = true; continue; }
+    if (c === '"') inString = !inString;
+  }
+
+  // If we ended inside a string value, close it and the object.
+  // Trim trailing partial word (cut at last whitespace) for cleaner text.
+  if (inString) {
+    const trimmed = raw.replace(/\s\S*$/, ""); // drop last incomplete word
+    return trimmed + '"}';
+  }
+
+  // Already outside a string but object not closed
+  if (!raw.trimEnd().endsWith("}")) return raw.trimEnd() + "}";
+
+  return raw;
+}
+
+/**
+ * Regex-based fallback: pull title / excerpt / body directly from the raw text
+ * without relying on JSON.parse at all.
+ */
+function extractFieldsFallback(raw: string): { title: string; excerpt: string; body: string } {
+  const get = (key: string) => {
+    const m = raw.match(new RegExp(`"${key}"\\s*:\\s*"((?:[^"\\\\]|\\\\[\\s\\S])*)`));
+    if (!m) return "";
+    // Unescape basic JSON escapes
+    return m[1].replace(/\\n/g, "\n").replace(/\\t/g, "\t").replace(/\\"/g, '"').replace(/\\\\/g, "\\").trim();
+  };
+  return { title: get("title"), excerpt: get("excerpt"), body: get("body") };
+}
+
 function parseRewriteResponse(raw: string) {
   const cleaned = raw
     .replace(/^```json\s*/i, "")
@@ -120,11 +162,27 @@ function parseRewriteResponse(raw: string) {
     .replace(/\s*```$/i, "")
     .trim();
 
-  const parsed = JSON.parse(cleaned) as {
-    title?: string;
-    excerpt?: string;
-    body?: string;
-  };
+  let parsed: { title?: string; excerpt?: string; body?: string } = {};
+
+  // 1st attempt: standard JSON.parse
+  try {
+    parsed = JSON.parse(cleaned) as typeof parsed;
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+
+    // 2nd attempt: repair truncated JSON
+    if (msg.toLowerCase().includes("unterminated") || msg.toLowerCase().includes("unexpected end")) {
+      try {
+        parsed = JSON.parse(repairTruncatedJson(cleaned)) as typeof parsed;
+      } catch {
+        // 3rd attempt: regex extraction
+        parsed = extractFieldsFallback(cleaned);
+      }
+    } else {
+      // 3rd attempt: regex extraction for other parse errors
+      parsed = extractFieldsFallback(cleaned);
+    }
+  }
 
   const title = (parsed.title || "").trim();
   const excerpt = (parsed.excerpt || "").trim();
@@ -276,11 +334,13 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    // Ensure enough tokens for a complete JSON response (title + excerpt + body)
     const ai = await generateAiText({
       prompt: buildPrompt({ type, title, excerpt, body, instruction }),
       model: undefined,
       userId: "studio-action",
       tags: [`docType:${type}`, "route:ai-rewrite-apply"],
+      minOutputTokens: 2000,
     });
 
     const rewritten = parseRewriteResponse(ai.text);

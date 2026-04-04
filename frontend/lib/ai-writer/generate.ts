@@ -8,6 +8,8 @@ export type AiGenerateInput = {
   model?: string;
   userId?: string;
   tags?: string[];
+  /** Override floor for output tokens (caller can demand more than the global setting) */
+  minOutputTokens?: number;
 };
 
 type AiGenerateResult = {
@@ -48,7 +50,7 @@ async function generateViaGateway(input: AiGenerateInput): Promise<AiGenerateRes
     prompt: input.prompt,
     system: input.system,
     temperature: settings.temperature,
-    maxOutputTokens: settings.maxOutputTokens,
+    maxOutputTokens: Math.max(settings.maxOutputTokens, input.minOutputTokens ?? 0),
     providerOptions: {
       gateway: {
         order:
@@ -91,7 +93,7 @@ async function generateViaGemini(input: AiGenerateInput): Promise<AiGenerateResu
         body: JSON.stringify({
           generationConfig: {
             temperature: settings.temperature,
-            maxOutputTokens: settings.maxOutputTokens,
+            maxOutputTokens: Math.max(settings.maxOutputTokens, input.minOutputTokens ?? 0),
           },
           systemInstruction: input.system
             ? { parts: [{ text: input.system }] }
@@ -145,7 +147,7 @@ async function generateViaGroq(input: AiGenerateInput): Promise<AiGenerateResult
       body: JSON.stringify({
         model,
         temperature: settings.temperature,
-        max_tokens: settings.maxOutputTokens,
+        max_tokens: Math.max(settings.maxOutputTokens, input.minOutputTokens ?? 0),
         messages: [
           ...(input.system ? [{ role: "system", content: input.system }] : []),
           { role: "user", content: input.prompt },

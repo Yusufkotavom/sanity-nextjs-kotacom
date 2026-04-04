@@ -270,8 +270,9 @@ export const fetchSanityAiWriterSettings = async (): Promise<{
   enabled?: boolean;
   mode?: "gateway" | "direct-gemini" | "direct-groq";
   defaultModel?: string;
+  defaultModelGemini?: string;
+  defaultModelGroq?: string;
   fallbackModels?: string[];
-  gatewayProviderOrder?: string[];
   temperature?: number;
   maxOutputTokens?: number;
   prompts?: {
@@ -286,8 +287,9 @@ export const fetchSanityAiWriterSettings = async (): Promise<{
     enabled?: boolean;
     mode?: "gateway" | "direct-gemini" | "direct-groq";
     defaultModel?: string;
+    defaultModelGemini?: string;
+    defaultModelGroq?: string;
     fallbackModels?: string[];
-    gatewayProviderOrder?: string[];
     temperature?: number;
     maxOutputTokens?: number;
     prompts?: {
@@ -308,13 +310,11 @@ export const fetchSanityAiWriterSettingsPrivate = async (): Promise<{
   enabled?: boolean;
   mode?: "gateway" | "direct-gemini" | "direct-groq";
   defaultModel?: string;
+  defaultModelGemini?: string;
+  defaultModelGroq?: string;
   fallbackModels?: string[];
-  gatewayProviderOrder?: string[];
   temperature?: number;
   maxOutputTokens?: number;
-  gatewayApiKeyEncrypted?: string;
-  geminiApiKeysEncrypted?: string;
-  groqApiKeysEncrypted?: string;
   prompts?: {
     globalSystem?: string;
     postRewrite?: string;
@@ -327,13 +327,11 @@ export const fetchSanityAiWriterSettingsPrivate = async (): Promise<{
     enabled?: boolean;
     mode?: "gateway" | "direct-gemini" | "direct-groq";
     defaultModel?: string;
+    defaultModelGemini?: string;
+    defaultModelGroq?: string;
     fallbackModels?: string[];
-    gatewayProviderOrder?: string[];
     temperature?: number;
     maxOutputTokens?: number;
-    gatewayApiKeyEncrypted?: string;
-    geminiApiKeysEncrypted?: string;
-    groqApiKeysEncrypted?: string;
     prompts?: {
       globalSystem?: string;
       postRewrite?: string;

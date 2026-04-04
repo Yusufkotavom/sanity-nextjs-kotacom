@@ -1,20 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
-import { canEncryptSeoSettings, encryptSeoSecret } from "@/lib/seo-ops/crypto";
 import { canWriteAiWriterSettings, upsertAiWriterSettings } from "@/lib/ai-writer/sanity-write";
-import { fetchSanityAiWriterSettingsPrivate } from "@/sanity/lib/fetch";
 
 type SaveBody = {
   enabled?: boolean;
   mode?: "gateway" | "direct-gemini" | "direct-groq";
   defaultModel?: string;
+  defaultModelGemini?: string;
+  defaultModelGroq?: string;
   fallbackModels?: string[];
-  gatewayProviderOrder?: string[];
   temperature?: number;
   maxOutputTokens?: number;
-  gatewayApiKey?: string;
-  geminiApiKeys?: string;
-  groqApiKeys?: string;
   prompts?: {
     globalSystem?: string;
     postRewrite?: string;
@@ -62,23 +58,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (!canEncryptSeoSettings()) {
-    return NextResponse.json(
-      {
-        ok: false,
-        message:
-          "Encryption secret is missing. Set SEO_SETTINGS_ENCRYPTION_KEY or SEO_SESSION_SECRET.",
-      },
-      { status: 503 },
-    );
-  }
-
   const body = (await request.json().catch(() => ({}))) as SaveBody;
-  const existing = await fetchSanityAiWriterSettingsPrivate();
-
-  const gatewayApiKey = normalizeString(body.gatewayApiKey);
-  const geminiApiKeys = normalizeString(body.geminiApiKeys);
-  const groqApiKeys = normalizeString(body.groqApiKeys);
 
   const modeInput = normalizeString(body.mode);
   const mode =
@@ -111,19 +91,11 @@ export async function POST(request: NextRequest) {
     enabled: normalizeBool(body.enabled, false),
     mode,
     defaultModel,
+    defaultModelGemini: normalizeString(body.defaultModelGemini),
+    defaultModelGroq: normalizeString(body.defaultModelGroq),
     fallbackModels,
-    gatewayProviderOrder: normalizeList(body.gatewayProviderOrder),
     temperature: normalizeNumber(body.temperature, 0.4, 0, 2),
     maxOutputTokens: Math.round(normalizeNumber(body.maxOutputTokens, 1400, 128, 8192)),
-    gatewayApiKeyEncrypted: gatewayApiKey
-      ? encryptSeoSecret(gatewayApiKey)
-      : existing?.gatewayApiKeyEncrypted || "",
-    geminiApiKeysEncrypted: geminiApiKeys
-      ? encryptSeoSecret(geminiApiKeys)
-      : existing?.geminiApiKeysEncrypted || "",
-    groqApiKeysEncrypted: groqApiKeys
-      ? encryptSeoSecret(groqApiKeys)
-      : existing?.groqApiKeysEncrypted || "",
     prompts: {
       globalSystem: normalizeString(prompts.globalSystem),
       postRewrite: normalizeString(prompts.postRewrite),

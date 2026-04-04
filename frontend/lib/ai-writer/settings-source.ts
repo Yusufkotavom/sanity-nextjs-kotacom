@@ -1,37 +1,40 @@
-import { decryptSeoSecret } from "@/lib/seo-ops/crypto";
 import { fetchSanityAiWriterSettingsPrivate } from "@/sanity/lib/fetch";
 
 export type AiWriterMode = "gateway" | "direct-gemini" | "direct-groq";
 
-function parseList(value?: string | null) {
-  if (!value) return [] as string[];
-  return value
-    .split(/\r?\n|,/g)
-    .map((item) => item.trim())
-    .filter(Boolean);
-}
-
 export async function getAiWriterResolvedSettings() {
   const studio = await fetchSanityAiWriterSettingsPrivate();
 
-  const gatewayApiKey = decryptSeoSecret(studio?.gatewayApiKeyEncrypted || "");
-  const geminiStudio = parseList(decryptSeoSecret(studio?.geminiApiKeysEncrypted || ""));
-  const groqStudio = parseList(decryptSeoSecret(studio?.groqApiKeysEncrypted || ""));
-  const geminiKeys =
-    geminiStudio.length > 0 ? geminiStudio : parseList(process.env.AI_WRITER_GEMINI_KEYS || "");
-  const groqKeys =
-    groqStudio.length > 0 ? groqStudio : parseList(process.env.AI_WRITER_GROQ_KEYS || "");
-
   const mode = (studio?.mode || "gateway") as AiWriterMode;
   const enabled = Boolean(studio?.enabled);
-  const defaultModel = (studio?.defaultModel || "").trim();
+
+  // Resolve the correct default model based on the active mode
+  let defaultModel = "";
+  if (mode === "direct-gemini") {
+    defaultModel = (studio?.defaultModelGemini || "gemini-2.5-flash").trim();
+  } else if (mode === "direct-groq") {
+    defaultModel = (studio?.defaultModelGroq || "meta-llama/llama-4-scout-17b-16e-instruct").trim();
+  } else {
+    defaultModel = (studio?.defaultModel || "google/gemini-2.5-flash").trim();
+  }
+
+  // API keys are always sourced from Vercel environment variables only
+  const gatewayApiKey = process.env.AI_GATEWAY_API_KEY || "";
+  const geminiKeys = (process.env.AI_WRITER_GEMINI_KEYS || "")
+    .split(/\r?\n|,/g)
+    .map((k) => k.trim())
+    .filter(Boolean);
+  const groqKeys = (process.env.AI_WRITER_GROQ_KEYS || "")
+    .split(/\r?\n|,/g)
+    .map((k) => k.trim())
+    .filter(Boolean);
 
   return {
     enabled,
     mode,
     defaultModel,
     fallbackModels: (studio?.fallbackModels || []).filter(Boolean),
-    gatewayProviderOrder: (studio?.gatewayProviderOrder || []).filter(Boolean),
+    gatewayProviderOrder: [] as string[],
     temperature:
       typeof studio?.temperature === "number" && Number.isFinite(studio.temperature)
         ? studio.temperature

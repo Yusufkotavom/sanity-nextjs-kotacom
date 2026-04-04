@@ -1,16 +1,45 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { Sparkles } from "lucide-react";
 
+const GATEWAY_MODELS = [
+  { title: "── Google ──────────────────", value: "" },
+  { title: "Google Gemini 2.5 Flash", value: "google/gemini-2.5-flash" },
+  { title: "Google Gemini 2.5 Pro", value: "google/gemini-2.5-pro" },
+  { title: "Google Gemini 2.0 Flash", value: "google/gemini-2.0-flash" },
+  { title: "── OpenAI ──────────────────", value: "" },
+  { title: "OpenAI GPT-4o", value: "openai/gpt-4o" },
+  { title: "OpenAI GPT-4o Mini", value: "openai/gpt-4o-mini" },
+  { title: "OpenAI o4-mini", value: "openai/o4-mini" },
+  { title: "── Anthropic ───────────────", value: "" },
+  { title: "Claude 3.7 Sonnet", value: "anthropic/claude-3-7-sonnet-20250219" },
+  { title: "Claude 3.5 Haiku", value: "anthropic/claude-3-5-haiku-20241022" },
+  { title: "── Meta (via Gateway) ──────", value: "" },
+  { title: "Llama 4 Scout (17B)", value: "meta/llama-4-scout-17b-16e-instruct" },
+];
+
+const GEMINI_MODELS = [
+  { title: "Gemini 2.5 Flash (Rekomendasi)", value: "gemini-2.5-flash" },
+  { title: "Gemini 2.5 Pro", value: "gemini-2.5-pro" },
+  { title: "Gemini 2.0 Flash", value: "gemini-2.0-flash" },
+  { title: "Gemini 1.5 Flash", value: "gemini-1.5-flash" },
+];
+
+const GROQ_MODELS = [
+  { title: "Llama 4 Scout (17B) — Sangat Cepat", value: "meta-llama/llama-4-scout-17b-16e-instruct" },
+  { title: "Llama 3.3 (70B)", value: "llama-3.3-70b-versatile" },
+  { title: "Mixtral 8x7B", value: "mixtral-8x7b-32768" },
+  { title: "Gemma 2 (9B)", value: "gemma2-9b-it" },
+];
+
 export default defineType({
   name: "aiWriterSettings",
   title: "AI Writer Settings",
   type: "document",
   icon: Sparkles,
   groups: [
-    { name: "general", title: "🔌 Aktifkan & Mode" },
+    { name: "general", title: "🔌 Aktifkan & Mode", default: true },
     { name: "model", title: "🤖 Model AI" },
-    { name: "prompts", title: "✍️ Template Prompt" },
-    { name: "keys", title: "🔑 API Keys (Terenkripsi)" },
+    { name: "prompts", title: "✍️ Template Prompt SEO" },
     { name: "notes", title: "📝 Catatan" },
   ],
   fields: [
@@ -28,21 +57,21 @@ export default defineType({
       name: "mode",
       title: "Sumber AI yang Digunakan",
       description:
-        "Pilih dari mana AI akan dijalankan. Rekomendasi: gunakan 'Direct Gemini' jika Anda punya Google API Key gratis. Gunakan 'Vercel AI Gateway' jika sudah dikonfigurasi di dashboard Vercel.",
+        "Pilih dari mana AI dijalankan. Sesuaikan dengan API Key yang sudah Anda masukkan di environment variables Vercel.",
       type: "string",
       initialValue: "gateway",
       options: {
         list: [
           {
-            title: "🌐 Vercel AI Gateway (gunakan AI_GATEWAY_API_KEY di Vercel)",
+            title: "🌐 Vercel AI Gateway  →  env: AI_GATEWAY_API_KEY",
             value: "gateway",
           },
           {
-            title: "✨ Direct Gemini — Google AI (gunakan AI_WRITER_GEMINI_KEYS di Vercel)",
+            title: "✨ Direct Google Gemini  →  env: AI_WRITER_GEMINI_KEYS",
             value: "direct-gemini",
           },
           {
-            title: "⚡ Direct Groq — Model Cepat (gunakan AI_WRITER_GROQ_KEYS di Vercel)",
+            title: "⚡ Direct Groq (Model Cepat & Gratis)  →  env: AI_WRITER_GROQ_KEYS",
             value: "direct-groq",
           },
         ],
@@ -54,18 +83,48 @@ export default defineType({
     // ── MODEL ─────────────────────────────────────────────────────────────────
     defineField({
       name: "defaultModel",
-      title: "Model AI Default",
+      title: "Model AI — Mode Gateway (Vercel)",
       description:
-        "Nama model yang digunakan. Untuk Gemini: 'gemini-2.5-flash'. Untuk Gateway Vercel: 'google/gemini-2.5-flash' atau 'openai/gpt-4o'. Biarkan kosong untuk menggunakan default sistem.",
+        "Hanya aktif jika mode 'Vercel AI Gateway' dipilih. Pilih model utama yang akan digunakan.",
       type: "string",
       initialValue: "google/gemini-2.5-flash",
+      hidden: ({ document }) => document?.mode !== "gateway",
+      options: {
+        list: GATEWAY_MODELS.filter((m) => m.value !== ""),
+      },
+      group: "model",
+    }),
+    defineField({
+      name: "defaultModelGemini",
+      title: "Model AI — Mode Direct Gemini",
+      description:
+        "Hanya aktif jika mode 'Direct Google Gemini' dipilih. Rekomendasi: Gemini 2.5 Flash.",
+      type: "string",
+      initialValue: "gemini-2.5-flash",
+      hidden: ({ document }) => document?.mode !== "direct-gemini",
+      options: {
+        list: GEMINI_MODELS,
+      },
+      group: "model",
+    }),
+    defineField({
+      name: "defaultModelGroq",
+      title: "Model AI — Mode Direct Groq",
+      description:
+        "Hanya aktif jika mode 'Direct Groq' dipilih. Rekomendasi: Llama 4 Scout untuk kecepatan.",
+      type: "string",
+      initialValue: "meta-llama/llama-4-scout-17b-16e-instruct",
+      hidden: ({ document }) => document?.mode !== "direct-groq",
+      options: {
+        list: GROQ_MODELS,
+      },
       group: "model",
     }),
     defineField({
       name: "temperature",
       title: "Kreativitas AI (Temperature)",
       description:
-        "Angka 0 = sangat konsisten & faktual. Angka 1–2 = lebih kreatif & bereksperimen. Rekomendasi: 0.4 untuk konten bisnis.",
+        "0 = konsisten & faktual. 0.4 = seimbang (rekomendasi untuk konten bisnis). 1+ = lebih kreatif.",
       type: "number",
       initialValue: 0.4,
       validation: (Rule) => Rule.min(0).max(2),
@@ -73,9 +132,9 @@ export default defineType({
     }),
     defineField({
       name: "maxOutputTokens",
-      title: "Batas Panjang Hasil AI (Token)",
+      title: "Batas Panjang Hasil (Token)",
       description:
-        "1 token ≈ sekitar ¾ kata. Nilai 1400 menghasilkan sekitar 3–4 paragraf. Naikkan ke 3000–5000 untuk artikel panjang.",
+        "1 token ≈ ¾ kata. 1400 ≈ 3–4 paragraf. Gunakan 2000–4000 untuk artikel panjang.",
       type: "number",
       initialValue: 1400,
       validation: (Rule) => Rule.min(128).max(8192),
@@ -83,22 +142,13 @@ export default defineType({
     }),
     defineField({
       name: "fallbackModels",
-      title: "Model Cadangan (opsional)",
+      title: "Model Cadangan (opsional — hanya mode Gateway)",
       description:
-        "Jika model utama tidak tersedia, AI akan mencoba model berikutnya secara berurutan. Contoh: 'google/gemini-2.0-flash', 'openai/gpt-4o-mini'.",
+        "Jika model utama tidak tersedia, sistem akan mencoba model berikutnya. Tulis ID model lengkap, contoh: 'openai/gpt-4o-mini'.",
       type: "array",
       of: [defineArrayMember({ type: "string" })],
       options: { sortable: true },
-      group: "model",
-    }),
-    defineField({
-      name: "gatewayProviderOrder",
-      title: "Urutan Prioritas Penyedia AI (opsional)",
-      description:
-        "Hanya berlaku untuk mode Vercel Gateway. Isi nama penyedia yang diprioritaskan, contoh: 'google', 'openai', 'anthropic'.",
-      type: "array",
-      of: [defineArrayMember({ type: "string" })],
-      options: { sortable: true },
+      hidden: ({ document }) => document?.mode !== "gateway",
       group: "model",
     }),
 
@@ -107,113 +157,79 @@ export default defineType({
       name: "prompts",
       title: "Template Prompt AI",
       description:
-        "Atur instruksi dasar yang diberikan ke AI sebelum menulis ulang konten. Jika dikosongkan, sistem akan menggunakan prompt bawaan.",
+        "Instruksi yang dikirim ke AI sebelum menulis ulang. Template sudah diisi dengan standar SEO. Kosongkan field jika ingin menggunakan prompt bawaan sistem.",
       type: "object",
       group: "prompts",
       fields: [
         defineField({
           name: "globalSystem",
-          title: "🌐 Instruksi Dasar (Berlaku untuk Semua)",
-          description:
-            "Karakter dan aturan umum AI. Ini dibaca AI sebelum semua jenis penulisan.",
+          title: "🌐 Instruksi Karakter AI (Berlaku Untuk Semua Jenis Konten)",
+          description: "Kepribadian dan aturan dasar AI saat menulis ulang konten.",
           type: "text",
-          rows: 6,
-          initialValue: `Kamu adalah penulis konten profesional untuk website bisnis di Indonesia bernama Kotacom. Kamu ahli dalam SEO, copywriting, dan komunikasi pemasaran digital.
+          rows: 7,
+          initialValue: `Kamu adalah pakar copywriting dan SEO profesional untuk website bisnis di Indonesia bernama Kotacom, yang bergerak di bidang pembuatan website, software, percetakan, dan sistem digital.
 
-Selalu tulis dalam Bahasa Indonesia yang baik, jelas, dan meyakinkan. Gunakan gaya bahasa yang hangat namun profesional — seperti konsultan bisnis yang berbicara langsung kepada calon klien.
+Gaya penulisanmu: hangat namun profesional, seperti konsultan bisnis berpengalaman yang berbicara langsung kepada calon klien.
 
-Hindari istilah teknis yang membingungkan. Fokuslah pada manfaat nyata bagi pembaca.`,
+Selalu tulis dalam Bahasa Indonesia yang baku, jelas, dan meyakinkan. Hindari kata-kata klise, jargon teknis yang membingungkan, dan kalimat pasif yang lemah.
+
+Setiap konten harus memenuhi prinsip E-E-A-T Google: tunjukkan Pengalaman, Keahlian, Otoritas, dan Kepercayaan secara alami dalam tulisan.`,
         }),
         defineField({
           name: "postRewrite",
-          title: "📰 Prompt Penulisan Ulang Artikel Blog (Post)",
+          title: "📰 Prompt Artikel Blog (Post)",
           description:
-            "Instruksi khusus saat AI menulis ulang dokumen bertipe 'Post' (artikel blog).",
+            "Template penulisan ulang untuk halaman blog/artikel. Fokus pada informasi dan search intent.",
           type: "text",
-          rows: 7,
-          initialValue: `Tulis ulang artikel blog ini dalam Bahasa Indonesia yang menarik dan informatif.
+          rows: 10,
+          initialValue: `Tulis ulang artikel blog berikut sesuai standar SEO modern untuk pasar Indonesia.
 
-Panduan:
-- Pertahankan topik dan informasi utamanya, namun buat lebih mudah dibaca.
-- Buat judul yang menarik perhatian (maks. 70 karakter).
-- Buat ringkasan (excerpt) singkat yang mengundang rasa ingin tahu pembaca (maks. 180 karakter).
-- Susun isi artikel dalam beberapa paragraf yang mengalir dengan baik.
-- Sisipkan kata kunci secara alami — jangan dipaksakan.
-- Akhiri dengan kalimat ajakan bertindak (call to action) yang relevan.`,
+ATURAN WAJIB:
+- Judul (title): maksimal 60 karakter, mengandung kata kunci utama di awal kalimat, menggunakan angka atau kata daya tarik jika relevan (contoh: "5 Cara...", "Panduan Lengkap...", "Mengapa...")
+- Ringkasan (excerpt): 120–155 karakter, rangkuman manfaat artikel yang mengundang klik, mengandung kata kunci utama
+- Isi artikel (body): minimal 300 kata, dibagi dalam 3–5 paragraf yang mengalir. Paragraf pertama harus menjawab search intent pembaca secara langsung. Sisipkan kata kunci pendukung secara alami setiap 100–150 kata. Gunakan kalimat aktif dan konkret.
+- Akhiri dengan kalimat penutup yang membangun kepercayaan dan mendorong pembaca mengambil langkah berikutnya.
+- Jangan gunakan bullet points berlebihan — gunakan paragraf naratif.`,
         }),
         defineField({
           name: "serviceRewrite",
-          title: "🛠️ Prompt Penulisan Ulang Halaman Layanan (Service)",
+          title: "🛠️ Prompt Halaman Layanan (Service)",
           description:
-            "Instruksi khusus saat AI menulis ulang dokumen bertipe 'Service' (halaman jasa/layanan).",
+            "Template penulisan ulang untuk halaman layanan/jasa. Fokus pada manfaat klien dan konversi.",
           type: "text",
-          rows: 7,
-          initialValue: `Tulis ulang halaman layanan ini agar lebih meyakinkan dan berorientasi pada pelanggan.
+          rows: 10,
+          initialValue: `Tulis ulang halaman layanan ini agar persuasif, berorientasi pada kebutuhan klien, dan optimal untuk mesin pencari.
 
-Panduan:
-- Fokus pada manfaat yang dirasakan klien, bukan sekadar daftar fitur teknis.
-- Gunakan bahasa yang membangun kepercayaan: "kami membantu Anda...", "bersama kami...".
-- Judul harus mencerminkan solusi konkret (maks. 70 karakter).
-- Ringkasan (excerpt) harus langsung menyentuh kebutuhan calon klien (maks. 180 karakter).
-- Isi konten terdiri dari paragraf yang jelas manfaatnya untuk bisnis klien.
-- Sertakan ajakan bertindak seperti konsultasi gratis atau hubungi kami.`,
+ATURAN WAJIB:
+- Judul (title): maksimal 60 karakter, mencantumkan nama layanan + lokasi atau manfaat utama jika memungkinkan (contoh: "Jasa Pembuatan Website Profesional Surabaya")
+- Ringkasan (excerpt): 120–155 karakter, menyebutkan layanan utama + keunggulan/keuntungan utama bagi klien
+- Isi konten (body): 250–400 kata. Mulai dengan kalimat yang langsung menyentuh masalah atau kebutuhan klien. Jelaskan solusi yang ditawarkan dengan bahasa manfaat (bukan fitur). Sisipkan sinyal kepercayaan seperti pengalaman, jaminan, atau angka nyata jika ada. Tutup dengan ajakan bertindak yang mengandung kata kunci utama (contoh: "Konsultasikan kebutuhan website Anda sekarang").
+- Gunakan kata kunci berbasis lokasi dan layanan secara alami (contoh: "di Surabaya", "untuk bisnis UMKM").`,
         }),
         defineField({
           name: "projectRewrite",
-          title: "🏆 Prompt Penulisan Ulang Halaman Proyek (Project)",
+          title: "🏆 Prompt Halaman Proyek / Portofolio (Project)",
           description:
-            "Instruksi khusus saat AI menulis ulang dokumen bertipe 'Project' (studi kasus / portofolio).",
+            "Template penulisan ulang untuk halaman studi kasus atau portofolio. Fokus pada bukti dan hasil nyata.",
           type: "text",
-          rows: 7,
-          initialValue: `Tulis ulang halaman studi kasus / portofolio proyek ini agar terlihat profesional dan meyakinkan.
+          rows: 10,
+          initialValue: `Tulis ulang halaman portofolio/studi kasus ini seperti kisah sukses yang membangun kepercayaan dan mendorong konversi.
 
-Panduan:
-- Ceritakan proyek ini seperti sebuah kisah sukses: tantangan → solusi → hasil.
-- Judul harus singkat dan menggambarkan hasil yang dicapai (maks. 70 karakter).
-- Ringkasan (excerpt) menggambarkan ikhtisar proyek secara menarik (maks. 180 karakter).
-- Isi konten harus mencerminkan keahlian tim dan dampak positif bagi klien.
-- Gunakan angka atau fakta konkret jika tersedia (contoh: "meningkatkan penjualan 30%").
-- Tutup dengan kalimat yang mengundang calon klien baru untuk menghubungi kami.`,
+ATURAN WAJIB:
+- Judul (title): maksimal 60 karakter, menyebutkan jenis proyek + hasil atau nama klien (contoh: "Website Toko Online untuk Brand Fashion Lokal Surabaya")
+- Ringkasan (excerpt): 120–155 karakter, gambaran singkat proyek: apa yang dibuat, untuk siapa, dan hasilnya
+- Isi konten (body): 200–350 kata. Susun dalam format narasi: (1) Latar belakang & kebutuhan klien, (2) Solusi yang kami rancang, (3) Hasil & dampak nyata yang dicapai. Gunakan angka konkret jika tersedia (contoh: "meningkatkan traffic 40%", "selesai dalam 14 hari"). Tutup dengan kalimat yang mengundang calon klien baru untuk menghubungi Kotacom.
+- Sertakan kata kunci kategori layanan dan lokasi secara alami untuk mendukung SEO halaman portofolio.`,
         }),
       ],
-    }),
-
-    // ── API KEYS (ENCRYPTED) ──────────────────────────────────────────────────
-    defineField({
-      name: "gatewayApiKeyEncrypted",
-      title: "🔑 API Key Vercel Gateway (Terenkripsi)",
-      description:
-        "Diisi otomatis oleh sistem. Jangan edit manual. Gunakan variabel lingkungan AI_GATEWAY_API_KEY di Vercel untuk mode Gateway.",
-      type: "string",
-      readOnly: true,
-      group: "keys",
-    }),
-    defineField({
-      name: "geminiApiKeysEncrypted",
-      title: "🔑 API Keys Google Gemini (Terenkripsi)",
-      description:
-        "Diisi otomatis oleh sistem. Masukkan kunci asli Anda via variabel lingkungan AI_WRITER_GEMINI_KEYS di Vercel (bukan di sini).",
-      type: "text",
-      rows: 3,
-      readOnly: true,
-      group: "keys",
-    }),
-    defineField({
-      name: "groqApiKeysEncrypted",
-      title: "🔑 API Keys Groq (Terenkripsi)",
-      description:
-        "Diisi otomatis oleh sistem. Masukkan kunci asli Anda via variabel lingkungan AI_WRITER_GROQ_KEYS di Vercel (bukan di sini).",
-      type: "text",
-      rows: 3,
-      readOnly: true,
-      group: "keys",
     }),
 
     // ── NOTES ─────────────────────────────────────────────────────────────────
     defineField({
       name: "notes",
-      title: "Catatan Internal",
-      description: "Catatan operasional tim. Jangan simpan API Key mentah di sini.",
+      title: "Catatan Internal Tim",
+      description:
+        "Untuk keperluan internal saja. Jangan tulis API Key atau data sensitif di sini.",
       type: "text",
       rows: 4,
       group: "notes",
@@ -223,7 +239,7 @@ Panduan:
     prepare() {
       return {
         title: "AI Writer Settings",
-        subtitle: "Konfigurasi provider AI, model, dan template prompt penulisan ulang konten",
+        subtitle: "Mode provider, model AI, dan template prompt SEO untuk penulisan ulang konten",
       };
     },
   },
