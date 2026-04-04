@@ -5,31 +5,32 @@ export function buildPercetakanCetakBukuPageCopy(): LegacyRewriteCopy {
   return {
     primaryKeyword: "Jasa Cetak Buku Surabaya Profesional",
     secondaryKeywords: [
-      "Cetak buku murah Surabaya",
-      "Percetakan buku untuk pemula",
-      "Jasa cetak buku tanpa ribet",
-      "Cetak buku Surabaya cepat",
+      "Cetak buku Surabaya",
+      "Percetakan buku untuk penulis dan institusi",
+      "Print on demand buku",
+      "Cetak buku satuan dan massal",
       "Percetakan buku berkualitas",
-      "Jasa cetak buku online Surabaya"
+      "Jasa cetak buku online Surabaya",
+      "Cetak katalog dan buku tahunan",
     ],
     description:
-      "Layanan cetak buku Surabaya untuk penulis, sekolah, komunitas, dan produsen konten yang butuh hasil cetak berkualitas dengan proses yang mudah dipahami. Kami menangani segala hal mulai dari pengecekan file hingga pengiriman ke seluruh Indonesia.",
+      "Layanan cetak buku Surabaya untuk penulis, sekolah, komunitas, dan perusahaan yang membutuhkan hasil cetak rapi, pilihan metode produksi yang jelas, dan proses yang lebih mudah dipahami dari awal.",
     intro:
-      "Punya naskah siap dicetak tapi bingung mulai dari mana? Kami bantu Anda cetak buku dengan proses yang sederhana: mulai dari konsultasi spesifikasi, pengecekan file, produksi, hingga pengiriman. Anda tidak perlu repot memikirkan detail teknis cetak, karena kami bantu mengarahkan prosesnya dari awal.",
+      "Punya naskah atau materi siap dicetak tapi belum yakin harus mulai dari mana? Kami bantu menyiapkan proses cetak buku dari konsultasi spesifikasi, pengecekan file, pemilihan metode produksi, hingga pengiriman agar hasilnya sesuai kebutuhan dan target distribusi Anda.",
     highlights: [
-      "Proses cetak yang jelas dan mudah dipahami",
-      "Pengecekan file gratis sebelum produksi",
-      "Hasil cetak sesuai spesifikasi yang disetujui",
-      "Pengiriman ke seluruh Indonesia dengan layanan terpercaya",
-      "Konsultasi spesifikasi tanpa biaya",
-      "Pilihan kertas dan jilid sesuai budget"
+      "Pilihan POD maupun offset dapat disesuaikan dengan jumlah dan target penggunaan.",
+      "Pengecekan file dilakukan sebelum produksi untuk menekan risiko revisi.",
+      "Pilihan kertas, jilid, dan finishing bisa disesuaikan dengan budget dan kualitas yang diinginkan.",
+      "Cocok untuk novel, buku profil, katalog, majalah, dan buku tahunan.",
+      "Pengiriman bisa disiapkan untuk Surabaya maupun luar kota.",
+      "Konsultasi awal membantu menentukan spesifikasi yang paling efisien."
     ],
     process: [
-      "Kirim detail spesifikasi buku Anda (ukuran, jumlah halaman, dll)",
-      "Kami cek file desain Anda dan beri feedback jika diperlukan",
-      "Setelah file disetujui, kami mulai proses produksi",
-      "Setiap hasil cetak dicek kualitas sebelum dikirim",
-      "Buku Anda dikirim dengan pengamanan yang baik"
+      "Kirim detail buku seperti ukuran, jumlah halaman, kuantitas, dan target deadline.",
+      "Kami cek file desain dan bantu arahkan spesifikasi yang paling sesuai.",
+      "Metode produksi dipilih berdasarkan jumlah, budget, dan target distribusi.",
+      "Buku diproduksi lalu dicek kualitasnya sebelum dikirim.",
+      "Pesanan dikemas dengan aman untuk menjaga hasil cetak tetap rapi saat sampai."
     ],
     faqs: [
       {
@@ -40,7 +41,7 @@ export function buildPercetakanCetakBukuPageCopy(): LegacyRewriteCopy {
       {
         question: "Saya belum punya desain cover, bisakah Anda bantu?",
         answer:
-          "Tentu! Kami bisa memberikan panduan desain cover sederhana atau menghubungkan Anda dengan desainer kami yang bisa membuat desain cover profesional dengan biaya tambahan sesuai kesepakatan."
+          "Bisa. Kami dapat memberi panduan desain cover sederhana atau membantu mengarahkan kebutuhan desain sebelum file masuk ke tahap produksi."
       },
       {
         question: "Format file apa yang harus saya kirim untuk cetak buku?",
@@ -56,15 +57,20 @@ export function buildPercetakanCetakBukuPageCopy(): LegacyRewriteCopy {
         question: "Apakah kami melayani pengiriman ke luar pulau Jawa?",
         answer:
           "Tentu! Kami melayani pengiriman ke seluruh Indonesia melalui layanan ekspedisi terpercaya. Ongkir akan dihitung berdasarkan berat total pesanan dan tujuan pengiriman."
+      },
+      {
+        question: "Apakah layanan ini hanya untuk buku satuan?",
+        answer:
+          "Tidak. Kami melayani cetak buku satuan untuk kebutuhan proof atau jumlah kecil, sekaligus produksi massal untuk distribusi yang lebih luas."
       }
     ],
     ctaLabel: "Konsultasi Cetak Buku Sekarang",
     ctaHref: DEFAULT_CTA,
     ctaLinks: [
-      { label: "Hubungi Kami Sekarang", href: DEFAULT_CTA },
-      { label: "Tanya di Sini", href: DEFAULT_CTA },
-      { label: "Minta Penawaran Akurat di Sini", href: DEFAULT_CTA },
-      { label: "Chat & Cetak Sekarang", href: DEFAULT_CTA }
+      { label: "Konsultasi Cetak Buku", href: DEFAULT_CTA },
+      { label: "Minta Simulasi POD vs Offset", href: DEFAULT_CTA },
+      { label: "Lihat FAQ Cetak Buku", href: "#faq" },
+      { label: "Bandingkan dengan Cetak Company Profile", href: "/percetakan/cetak-company-profile" }
     ],
     finalCtaTitle: "Punya Naskah dan Siap Terbit?",
     finalCtaDescription:

@@ -4304,3 +4304,67 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Integration impact: restores successful frontend build/deploy for the legacy printing rewrite stack.
 - Verification:
   - `pnpm --filter frontend run build` passed after restoring the import.
+
+## 2026-04-04 - Deepen Percetakan Money-Page Copy
+- Changed files:
+  - `frontend/lib/legacy-pages/content/printing.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/percetakan-index.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-buku.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-company-profile.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-brosur.ts`
+  - `docs/seo-updates.md`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Strengthened the shared `percetakan` fallback copy with clearer Surabaya intent, safer print-process wording, and a stronger consultation FAQ.
+  - Rewrote `/percetakan` to better cover business print demand across books, company profiles, brochures, banners, and promo materials while replacing weaker proof and guide copy with more relevant internal journeys.
+  - Expanded `/percetakan/cetak-buku`, `/percetakan/cetak-company-profile`, and `/percetakan/cetak-brosur` with sharper commercial keywords, richer highlights/process/FAQ sections, and more specific CTA link sets tied to the actual print decision being made.
+- SEO/integration impact:
+  - Improves topical specificity and commercial relevance for high-intent printing pages.
+  - No schema/query contract change; this is a local content refinement pass only.
+- Verification:
+  - Local TypeScript transpile check for the edited printing content modules passed.
+
+## 2026-04-04 - Implement SEO Parity Fixes (llms.txt, hreflang, JSON-LD)
+- Changed files:
+  - `frontend/sanity/lib/metadata.ts`
+  - `frontend/app/layout.tsx`
+  - `frontend/public/llms.txt`
+  - `frontend/public/llms-full.txt`
+  - `FULL-AUDIT-REPORT.md`
+  - `ACTION-PLAN.md`
+- Summary:
+  - Generated full SEO audit using Agentic-SEO-Skill for live site and dev site.
+  - Added `llms.txt` and `llms-full.txt` for AI crawler optimization (GEO).
+  - Added `id-ID` hreflang tag to global metadata configuration.
+  - Added `LocalBusiness` JSON-LD schema to the root layout to restore rich snippets.
+- SEO impact:
+  - Direct SEO impact: Restores Answer Engine Optimization (AEO) readiness, enables local business rich snippets, and corrects regional indexing via hreflang.
+- Verification:
+  - Checked layout.tsx and metadata.ts structure.
+  - Next.js build verification pending.
+
+
+## 2026-04-04 - Sanity Content Mismatch Fix for Kotacom Migration
+- Changed files:
+  - Sanity Studio Database (`seoSettings` & `page` with slug `index`) via API script
+- Summary:
+  - Executed a mutation script to override the default "Next.js Sanity CMS Starter" placeholder text.
+  - Set `seoSettings.defaultTitle` to "kotacom.id - IT Service & Publications Terpercaya".
+  - Set `seoSettings.defaultDescription` to the live site's commercial IT & printing description.
+  - Updated `page` (index) title and metadata to match the live site intent ("Solusi IT & Digital Terpadu").
+- SEO impact:
+  - Direct SEO impact: Critical fix to ensure the Next.js target site does not index for starter template developer terms. Aligns the dev environment's primary SERP snippet with the live site.
+- Verification:
+  - Mutation completed successfully and verified via script logs.
+
+
+## 2026-04-04 - Update Sanity Content Mismatch to KOTACOM
+- Changed files:
+  - Sanity Studio Database (`seoSettings` & `page` with slug `index`) via API script
+- Summary:
+  - Updated `seoSettings.defaultTitle` and `page` (index) `meta.title` from "kotacom.id - IT Service..." to "KOTACOM - IT Service...".
+- SEO impact:
+  - Direct SEO impact: Ensures branding in metadata uses KOTACOM instead of the domain name.
+- Verification:
+  - Mutation completed successfully and verified via script logs.
+

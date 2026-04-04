@@ -28,20 +28,21 @@ export function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
       `${service} cepat`,
       `${service} untuk bisnis`,
       `${service} custom`,
+      `${service} Surabaya`,
     ],
     description: `${primaryKeyword} untuk kebutuhan promosi dan branding dengan hasil cetak konsisten, material jelas, serta proses produksi terukur.`,
-    intro: `${service} kami dirancang untuk membantu bisnis menjaga kualitas materi promosi dan dokumen brand dengan hasil akhir yang presisi serta siap distribusi.`,
+    intro: `${service} kami siapkan untuk membantu bisnis menjaga kualitas materi promosi, dokumen brand, dan kebutuhan distribusi dengan hasil akhir yang lebih rapi, lebih presisi, dan lebih siap dipakai.`,
     highlights: [
-      "Pilihan material dan finishing transparan.",
-      "Kontrol kualitas sebelum final produksi.",
-      "Format file dipastikan aman untuk cetak.",
-      "Dukungan konsultasi desain dan layout.",
+      "Pilihan material dan finishing dijelaskan sejak awal.",
+      "Kontrol kualitas dilakukan sebelum hasil akhir dikirim.",
+      "File dicek lebih dulu agar aman masuk produksi.",
+      "Konsultasi spesifikasi membantu keputusan cetak lebih tepat.",
     ],
     process: [
-      "Validasi kebutuhan, ukuran, dan material.",
-      "Pemeriksaan file desain pre-press.",
-      "Produksi dan quality check sebelum pengiriman.",
-      "Finalisasi, packing, dan pengiriman.",
+      "Validasi kebutuhan, ukuran, jumlah, dan material yang paling sesuai.",
+      "Pemeriksaan file desain pada tahap pre-press sebelum produksi dimulai.",
+      "Produksi dijalankan lalu hasilnya dicek sebelum pengiriman.",
+      "Finalisasi, packing, dan pengiriman mengikuti target timeline yang disepakati.",
     ],
     faqs: [
       {
@@ -53,6 +54,11 @@ export function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
         question: "Apakah tersedia opsi custom spesifikasi?",
         answer:
           "Tersedia. Spesifikasi material, jumlah, dan finishing dapat disesuaikan dengan kebutuhan kampanye Anda.",
+      },
+      {
+        question: "Apakah bisa konsultasi dulu sebelum menentukan metode cetak?",
+        answer:
+          "Bisa. Konsultasi awal membantu menentukan material, finishing, jumlah produksi, dan target penggunaan agar hasil cetak lebih tepat sasaran.",
       },
     ],
     ctaLabel:

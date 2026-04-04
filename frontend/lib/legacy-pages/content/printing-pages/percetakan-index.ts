@@ -11,26 +11,27 @@ export function buildPercetakanIndexPageCopy(): LegacyRewriteCopy {
       "Percetakan murah Surabaya",
       "Cetak bahan promosi cepat",
       "Jasa percetakan online Surabaya",
-      "Percetakan berkualitas untuk UMKM"
+      "Percetakan berkualitas untuk UMKM",
+      "Percetakan company profile dan buku",
     ],
     description:
-      "Percetakan Surabaya terpercaya untuk banner, kartu nama, brosur, spanduk, stiker, undangan, dan bahan promosi bisnis dengan hasil cetak berkualitas, harga kompetitif, dan layanan profesional.",
+      "Percetakan Surabaya untuk banner, buku, company profile, brosur, spanduk, stiker, undangan, dan materi promosi bisnis dengan hasil cetak rapi, spesifikasi jelas, dan proses produksi terukur.",
     intro:
-      "Butuh hasil cetak yang rapi dan sesuai spesifikasi? Kami membantu UMKM dan bisnis di Surabaya mencetak berbagai kebutuhan promosi mulai dari kartu nama, brosur, hingga banner besar dengan proses yang mudah dan transparan. Cukup kirim desain Anda, lalu kami bantu lanjutkan dari pengecekan file sampai pengiriman ke seluruh Indonesia.",
+      "Butuh hasil cetak yang rapi dan sesuai spesifikasi? Kami membantu bisnis di Surabaya menyiapkan berbagai kebutuhan percetakan mulai dari company profile, buku, brosur, sampai banner dan materi promosi dengan proses yang lebih mudah, lebih jelas, dan lebih aman untuk produksi.",
     highlights: [
-      "Hasil cetak tajam dan konsisten",
-      "Proses order yang mudah melalui WhatsApp",
-      "Pengecekan file gratis sebelum produksi",
-      "Pengiriman cepat ke seluruh Indonesia",
-      "Konsultasi spesifikasi tanpa biaya",
-      "Harga transparan tanpa biaya tersembunyi"
+      "Hasil cetak tajam dan konsisten untuk kebutuhan promosi maupun operasional.",
+      "Pengecekan file dilakukan sebelum produksi dimulai.",
+      "Konsultasi spesifikasi membantu memilih material dan finishing yang tepat.",
+      "Pengiriman dapat diatur untuk Surabaya maupun luar kota.",
+      "Pilihan produk cetak bisa disusun sesuai campaign, event, atau kebutuhan brand.",
+      "Harga lebih mudah dipetakan berdasarkan jumlah, material, dan target timeline."
     ],
     process: [
-      "Kirim detail kebutuhan cetak melalui WhatsApp",
-      "Kami cek file desain dan beri rekomendasi spesifikasi",
-      "Setelah disetujui, kami mulai proses produksi",
-      "Hasil cetak dicek kualitas sebelum dikirim",
-      "Pesanan dikirim dengan layanan ekspedisi terpercaya"
+      "Kirim detail kebutuhan cetak, target penggunaan, dan deadline yang diinginkan.",
+      "Kami cek file desain lalu bantu arahkan spesifikasi yang paling sesuai.",
+      "Produksi dijalankan setelah file dan detail pekerjaan disetujui.",
+      "Hasil cetak dicek kualitasnya sebelum packing dan pengiriman.",
+      "Pesanan dikirim sesuai skema yang paling aman untuk lokasi tujuan."
     ],
     faqs: [
       {
@@ -42,6 +43,11 @@ export function buildPercetakanIndexPageCopy(): LegacyRewriteCopy {
         question: "Apakah saya perlu punya desain terlebih dahulu?",
         answer:
           "Tidak harus. Jika Anda belum punya desain, kami bisa bantu menyiapkan desain sederhana sesuai kebutuhan. Namun untuk hasil yang maksimal, kami sarankan file siap cetak dalam format PDF, CDR, atau AI dengan resolusi minimal 300 DPI."
+      },
+      {
+        question: "Produk percetakan apa yang paling sering dipesan bisnis?",
+        answer:
+          "Biasanya meliputi company profile, buku, brosur, banner, stiker, kartu nama, dan materi promosi untuk event atau aktivitas penjualan.",
       },
       {
         question: "Bagaimana cara saya bisa memastikan hasil cetaknya sesuai ekspektasi?",
@@ -63,16 +69,16 @@ export function buildPercetakanIndexPageCopy(): LegacyRewriteCopy {
     ctaHref: DEFAULT_CTA,
     proofItems: [
       {
-        title: "Ribu UMKM Percaya Layanan Kami",
+        title: "Material promosi untuk kebutuhan bisnis harian",
         description:
-          "Lebih dari 500 UMKM di Surabaya dan sekitarnya telah menggunakan layanan cetak kami untuk kebutuhan promosi dan operasional bisnis mereka.",
-        href: "/testimonials"
+          "Mulai dari banner, brosur, kartu nama, sampai company profile dapat diproduksi dengan spesifikasi yang disesuaikan kebutuhan lapangan.",
+        href: "/percetakan/cetak-company-profile"
       },
       {
-        title: "Hasil Cetak yang Konsisten dan Berkualitas",
+        title: "Produksi buku dan materi presentasi yang lebih rapi",
         description:
-          "Setiap hasil cetak melalui proses pengecekan kualitas standar untuk menjamin kepuasan pelanggan.",
-        href: "/gallery"
+          "Kebutuhan buku, company profile, dan materi branding bisa diarahkan dengan alur produksi yang lebih jelas dari awal.",
+        href: "/percetakan/cetak-buku"
       }
     ],
     testimonials: [
@@ -100,14 +106,14 @@ export function buildPercetakanIndexPageCopy(): LegacyRewriteCopy {
       "Kirim spesifikasi cetak Anda sekarang. Tim kami akan bantu hitung estimasi biaya dan waktu produksi paling efisien.",
     longGuide: [
       {
-        title: "Memilih Jenis Cetak yang Tepat untuk Bisnis Anda",
+        title: "Memilih Produk Cetak yang Tepat untuk Tujuan Bisnis",
         description:
-          "Banner cocok untuk promosi luar ruangan yang perlu daya tarik tinggi, brosur untuk menjelaskan produk atau layanan secara detail, kartu nama untuk networking profesional, dan stiker untuk branding produk atau kemasan."
+          "Banner cocok untuk promosi luar ruangan, brosur untuk menjelaskan layanan secara ringkas, company profile untuk presentasi bisnis, dan buku atau katalog untuk kebutuhan distribusi konten yang lebih panjang."
       },
       {
-        title: "Tips Mengirim File Desain untuk Hasil Cetak Maksimal",
+        title: "Persiapan File Desain agar Produksi Lebih Aman",
         description:
-          "Pastikan file dalam format PDF, CDR, atau AI dengan resolusi minimal 300 DPI, sertakan bleed 3mm, konversi font ke outline atau sertakan file font, dan gunakan mode warna CMYK untuk hasil cetak yang akurat."
+          "Pastikan file dalam format PDF, CDR, atau AI dengan resolusi minimal 300 DPI, sertakan bleed 3mm, dan gunakan mode warna CMYK agar proses cetak berjalan lebih aman dan hasil warna lebih konsisten."
       }
     ]
   };

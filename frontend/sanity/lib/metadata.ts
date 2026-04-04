@@ -147,6 +147,9 @@ const buildMetadata = ({
     robots: robotsValue,
     alternates: {
       canonical: resolvedCanonical,
+      languages: {
+        'id-ID': 'https://kotacom.id/',
+      },
     },
   };
 };

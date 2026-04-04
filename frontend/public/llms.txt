@@ -1,0 +1,24 @@
+# Kotacom IT Service & Publications
+> Solusi IT & Digital Terpadu untuk Bisnis Anda
+
+Website: https://kotacom.id
+Location: Surabaya, Indonesia
+
+## Core Services
+1. **IT Support & Maintenance**
+   - Jasa service komputer & instalasi jaringan
+   - Recovery data & upgrade infrastruktur IT
+2. **Website & Software Development**
+   - Jasa pembuatan website company profile, e-commerce, custom web apps
+   - Pembuatan software custom (POS, ERP, SIMRS, Koperasi)
+3. **Printing Services (Percetakan)**
+   - Cetak buku (POD & offset), cetak kalender, brosur, map ijazah
+
+## Technology Stack
+- Frontend: Next.js, React, Astro, Tailwind CSS
+- Backend: Node.js, Laravel, Python, PostgreSQL, MongoDB
+- CMS: Sanity.io
+
+## Additional Notes
+- Target clients include UMKM, corporations, schools, and hospitals in Surabaya and across Indonesia.
+- Kotacom also provides hardware procurement (Pengadaan) and social media management.
