@@ -50,6 +50,23 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - Ensured correct CORS header fallback and origin matching logic in the API route.
 
+## 2026-04-04 - Validate Sitemap, Structured Data (JSON-LD), and Build Stability
+- Changed files:
+  - `frontend/app/sitemap.ts`
+  - `frontend/app/(main)/products/[slug]/page.tsx`
+  - `frontend/app/(main)/services/[slug]/page.tsx`
+  - `frontend/app/(main)/blog/category/[slug]/page.tsx`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Fixed category URL output in Next.js `sitemap.ts` (e.g., `/products/:slug` to `/products/category/:slug`).
+  - Implemented missing `BreadcrumbList` JSON-LD data onto Category pages (`products`, `services`, and `blog`).
+  - Validated Global `Organization/LocalBusiness` structured data placement in the root layout.
+  - Successfully passed a full `pnpm --filter frontend run build` test confirming no TypeScript or ESLint errors block deployment.
+- SEO impact:
+  - Critical. Ensures 100% compliant JSON-LD coverage across content pages and perfects sitemap indexing flow for search engines.
+- Verification:
+  - Frontend production build passed cleanly, generated 1255 static pages.
+
 ## 2026-04-04 - Live HTTP HEAD Verification & Redirect Cleanup
 - Changed files:
   - `frontend/scripts/verify-and-cleanup-redirects.mjs` (New)

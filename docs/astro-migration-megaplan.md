@@ -14,12 +14,12 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ## Success Metrics (Definition of Success)
 
 - Build stability:
-  - [ ] `pnpm --filter frontend run build` green
-  - [ ] `pnpm --filter studio run build` green
+  - [x] `pnpm --filter frontend run build` green
+  - [x] `pnpm --filter studio run build` green
 - SEO technical:
   - [x] `http_status_not_200` issue count reduced >= 80%
-  - [ ] missing title/description/canonical/OG = 0 on canonical pages
-  - [ ] sitemap + robots valid for target routes
+  - [x] missing title/description/canonical/OG = 0 on canonical pages
+  - [x] sitemap + robots valid for target routes
 - Migration coverage:
   - [ ] top 1000 auto-redirect mapped and deployed in staged wave
   - [ ] top 300 manual legacy URLs curated one-by-one

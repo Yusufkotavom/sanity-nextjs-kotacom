@@ -100,8 +100,16 @@ export default async function ProductSlugPage(props: {
     ]);
     if (!category) notFound();
 
+    const categoryPath = `/products/category/${params.slug}`;
+    const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Products", path: "/products" },
+      { name: category.title || "Category", path: categoryPath },
+    ]);
+
     return (
       <section>
+        <JsonLd data={breadcrumbJsonLd} />
         <div className="container py-16 xl:py-20">
           <div className="mb-10">
             <h1 className="text-4xl font-bold md:text-5xl">{category.title}</h1>

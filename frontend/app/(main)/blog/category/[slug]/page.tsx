@@ -12,6 +12,8 @@ import {
   fetchSanitySeoSettings,
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
+import JsonLd from "@/components/seo/json-ld";
+import { buildBreadcrumbJsonLd } from "@/lib/seo-jsonld";
 
 export async function generateStaticParams() {
   const categories = await fetchSanityCategoriesStaticParams();
@@ -54,8 +56,16 @@ export default async function BlogCategoryDetailPage(props: {
   const categories = await fetchSanityBlogCategories();
   const posts = await fetchSanityPostsByCategorySlug({ slug: params.slug });
 
+  const categoryPath = `/blog/category/${params.slug}`;
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog" },
+    { name: category.title || "Category", path: categoryPath },
+  ]);
+
   return (
     <section>
+      <JsonLd data={breadcrumbJsonLd} />
       <div className="container py-16 xl:py-20">
         <div className="mb-10">
           <Link

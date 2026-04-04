@@ -108,7 +108,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
     if ((category.productCount || 0) > 0 && !seo?.noIndexProductCategories) {
       entries.push({
-        url: makeAbsoluteUrl(baseUrl, `/products/${slug}`),
+        url: makeAbsoluteUrl(baseUrl, `/products/category/${slug}`),
         lastModified: category._updatedAt || undefined,
         changeFrequency: "weekly",
         priority: 0.6,
@@ -116,7 +116,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
     if ((category.serviceCount || 0) > 0 && !seo?.noIndexServiceCategories) {
       entries.push({
-        url: makeAbsoluteUrl(baseUrl, `/services/${slug}`),
+        url: makeAbsoluteUrl(baseUrl, `/services/category/${slug}`),
         lastModified: category._updatedAt || undefined,
         changeFrequency: "weekly",
         priority: 0.6,
