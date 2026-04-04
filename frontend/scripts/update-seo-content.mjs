@@ -16,8 +16,8 @@ async function main() {
     await client
       .patch(seoSettings._id)
       .set({
-        defaultTitle: "KOTACOM - IT Service & Publications Terpercaya",
-        defaultDescription: "IT Service & Publications - Pengadaan, Service, Penjualan, Website Development, Software Development, Social Media Management",
+        defaultTitle: "KOTACOM - IT Service & Percetakan Terpercaya",
+        defaultDescription: "IT Service & Percetakan - Pengadaan, Service, Penjualan, Website Development, Software Development, Social Media Management",
         titleSuffix: "Kotacom",
       })
       .commit();
@@ -26,8 +26,8 @@ async function main() {
     console.log("seoSettings document not found, creating it...");
     await client.create({
       _type: "seoSettings",
-      defaultTitle: "KOTACOM - IT Service & Publications Terpercaya",
-      defaultDescription: "IT Service & Publications - Pengadaan, Service, Penjualan, Website Development, Software Development, Social Media Management",
+      defaultTitle: "KOTACOM - IT Service & Percetakan Terpercaya",
+      defaultDescription: "IT Service & Percetakan - Pengadaan, Service, Penjualan, Website Development, Software Development, Social Media Management",
       titleSuffix: "Kotacom",
     });
     console.log("Created seoSettings.");
@@ -41,8 +41,8 @@ async function main() {
       .patch(homePage._id)
       .set({
         title: "Solusi IT & Digital Terpadu",
-        "meta.title": "KOTACOM - IT Service & Publications Terpercaya",
-        "meta.description": "IT Service & Publications - Pengadaan, Service, Penjualan, Website Development, Software Development, Social Media Management",
+        "meta.title": "KOTACOM - IT Service & Percetakan Terpercaya",
+        "meta.description": "IT Service & Percetakan - Pengadaan, Service, Penjualan, Website Development, Software Development, Social Media Management",
       })
       .commit();
     console.log("Updated home page metadata.");

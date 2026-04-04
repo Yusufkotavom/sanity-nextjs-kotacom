@@ -4368,3 +4368,19 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - Mutation completed successfully and verified via script logs.
 
+
+## 2026-04-04 - Rename Publications to Percetakan and update to www URL
+- Changed files:
+  - `frontend/public/llms.txt`
+  - `frontend/public/llms-full.txt`
+  - `frontend/app/layout.tsx`
+  - `frontend/sanity/lib/metadata.ts`
+  - Sanity Studio Database (`seoSettings` & `page` with slug `index`) via API script
+- Summary:
+  - Replaced "Publications" with "Percetakan" across llms text files, layout JSON-LD schema, and Sanity SEO/Page metadata settings.
+  - Updated website URL from `https://kotacom.id` to `https://www.kotacom.id` across llms text files, layout JSON-LD schema, and hreflang tag in metadata.
+- SEO impact:
+  - Direct SEO impact: Consistent branding emphasizing "Percetakan" and aligning canonical / primary target URL to the www subdomain.
+- Verification:
+  - Frontend build passed. Script logs verified Sanity document patches.
+

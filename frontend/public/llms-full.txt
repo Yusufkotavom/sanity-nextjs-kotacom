@@ -1,7 +1,7 @@
-# Kotacom IT Service & Publications - Full
+# Kotacom IT Service & Percetakan - Full
 > Solusi IT & Digital Terpadu untuk Bisnis Anda
 
-Website: https://kotacom.id
+Website: https://www.kotacom.id
 Location: Surabaya, Indonesia
 WhatsApp: +6285799520350
 
@@ -39,6 +39,6 @@ Kotacom provides end-to-end digital solutions ranging from hardware procurement 
 - Sistem Manajemen Apotek Digital (Apotek Sehat Mandiri)
 
 ## Address & Contact
-Kotacom IT Service & Publications
+Kotacom IT Service & Percetakan
 Email: admin@kotacom.id
 WhatsApp: 085799520350

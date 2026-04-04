@@ -170,11 +170,11 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "name": "Kotacom IT Service & Publications",
-              "url": "https://kotacom.id",
-              "logo": "https://kotacom.id/assets/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
-              "image": "https://kotacom.id/assets/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
-              "description": "Solusi IT & Digital Terpadu untuk Bisnis Anda. IT Service & Publications - Pengadaan, Service, Penjualan, Website Development, Software Development, Percetakan, Social Media Management.",
+              "name": "Kotacom IT Service & Percetakan",
+              "url": "https://www.kotacom.id",
+              "logo": "https://www.kotacom.id/assets/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
+              "image": "https://www.kotacom.id/assets/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
+              "description": "Solusi IT & Digital Terpadu untuk Bisnis Anda. IT Service & Percetakan - Pengadaan, Service, Penjualan, Website Development, Software Development, Percetakan, Social Media Management.",
               "telephone": "+6285799520350",
               "address": {
                 "@type": "PostalAddress",
