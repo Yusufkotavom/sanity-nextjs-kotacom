@@ -14,6 +14,19 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 - Verification:
   - ...
+```
+
+## 2026-04-04 - Fix Vercel Build Crash Due to Undefined Code Block
+- Changed files:
+  - `frontend/components/portable-text-renderer.tsx`
+- Summary:
+  - Added a fallback empty string `value.code || ""` for the Prism React Syntax Highlighter component.
+  - This prevents `prism-react-renderer` from crashing with `TypeError: Cannot read properties of undefined (reading 'length')` inside its `tokenize` function when rendering Sanity code blocks that have been created but left empty.
+- SEO impact:
+  - No direct SEO impact. Allows the static site generation build to succeed, preventing deployment failures.
+- Verification:
+  - Safe navigation for `code={value.code || ""}` during SSR build.
+
 ## 2026-04-04 - Fix AI Rewrite CORS Origin Matching
 - Changed files:
   - `frontend/app/api/ai/rewrite/apply/route.ts`

@@ -45,11 +45,11 @@ const createPortableTextComponents = (
             <div className="text-muted-foreground font-mono">
               {value.filename || ""}
             </div>
-            <CopyButton code={value.code} />
+            <CopyButton code={value.code || ""} />
           </div>
           <Highlight
             theme={themes.vsDark}
-            code={value.code}
+            code={value.code || ""}
             language={value.language || "typescript"}
           >
             {({ style, tokens, getLineProps, getTokenProps }) => (
