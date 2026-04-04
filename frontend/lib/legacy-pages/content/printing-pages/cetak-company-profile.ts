@@ -1,4 +1,5 @@
 import { DEFAULT_CTA } from "../constants";
+import { buildGenericCopy } from "../core";
 import type { LegacyRewriteCopy } from "../types";
 import type { LegacyAstroPage } from "../../astro-static";
 

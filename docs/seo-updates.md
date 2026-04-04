@@ -16,6 +16,27 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-04 - Rewrite Public Copy for `/pembuatan-website` Cluster
+- Changed files:
+  - `frontend/lib/legacy-pages/content/website.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/website-index.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/company-profile.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/toko-online.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/overrides.ts`
+  - `frontend/components/ui/rewrite/landing-sections/defaults.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Rewrote the core `/pembuatan-website` copy generators so public pages now speak in customer-facing language instead of internal editorial/process phrasing such as "rewritten from live site", "intent user", or implementation-note style messaging.
+  - Simplified the main website, city-template, company profile, and toko online messaging to emphasize lead generation, credibility, inquiry flow, checkout clarity, and business outcomes instead of internal system terminology that was not relevant for most public visitors.
+  - Updated shared landing-section defaults for the website cluster so service cards and feature bullets now use clearer public wording around SEO setup, content maintenance, and custom website positioning.
+- SEO impact:
+  - Direct SEO impact: improves on-page clarity and keyword alignment for `/pembuatan-website` and key descendants by shifting copy toward public search intent, conversion messaging, and clearer service positioning.
+  - Integration impact: content-generator-only update for the website rewrite cluster; no Studio schema, GROQ query, or route contract changes.
+- Verification:
+  - `rg -n "live site|ditulis ulang|intent user|dashboard admin|dashboard internal|CRM|ERP|HR|workflow operasional|roadmap implementasi" frontend/lib/legacy-pages/content/website.ts frontend/lib/legacy-pages/content/website-pages frontend/components/ui/rewrite/landing-sections/defaults.ts`
+  - `node` + local frontend `typescript` transpile check for the edited modules
+
 ## 2026-04-04 - Vendor Claude SEO Toolkit into the Repository
 - Changed files:
   - `AGENTS.md`
@@ -4196,3 +4217,17 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter frontend run build` passed.
   - `pnpm --filter frontend run typecheck` passed after build regenerated `.next/types`.
+
+## 2026-04-04 - Restore Missing Printing Helper Import
+- Changed files:
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-company-profile.ts`
+  - `docs/seo-updates.md`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Restored the missing `buildGenericCopy` import in the printing company profile page module.
+  - This fixes the frontend production build failure that appeared in Vercel when `buildGenericCopy(page)` was referenced without a matching import.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: restores successful frontend build/deploy for the legacy printing rewrite stack.
+- Verification:
+  - `pnpm --filter frontend run build` passed after restoring the import.

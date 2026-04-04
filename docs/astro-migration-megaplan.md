@@ -151,6 +151,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Theme configuration is now isolated in a dedicated singleton `Theme Settings` document instead of the general `Settings` document, reducing editor confusion while preserving the same `themeColors` contract for frontend consumption
 - [x] Rewrite hero CTA now uses explicit WhatsApp branding when the primary CTA resolves to WhatsApp, and the hero visual background has been consolidated so the image panel no longer carries a separate large gradient layer
 - [x] Rewrite hero image frame has been reduced to a single background treatment, removing the remaining layered glow panel so the visual block reads cleaner and lighter
+- [x] The `/pembuatan-website` cluster copy has been cleaned of internal editorial/process language and refocused on public-facing lead, trust, inquiry, and sales messaging across the core page, city template, company profile, toko online, and shared landing defaults
+- [x] The `/pembuatan-website` specialist descendants (`harga`, `migrasi-wordpress`, `dokter-klinik`, `expedisi`, `sekolah`, `konstruksi`, `komunitas-ngo`, `template`) now also carry richer page-specific keyword, FAQ, process, and CTA copy instead of relying on thinner generic website-page defaults
 - [x] Rewrite landing sections have been compacted from long stacked split scenes into denser lane/grid compositions, and `/component-ui` now documents the updated, less fragmented section pattern
 - [x] Rewrite landing sections have been split into focused modules under `components/ui/rewrite/landing-sections/*`, keeping the public component entry stable while making the section system easier to maintain
 - [x] Legacy rewrite content architecture split into modular registry-based content sources (`content/core`, `website`, `printing`, `software`, `misc`, `registry`) so route discovery, shared SEO enrichment, and per-cluster copy no longer depend on a single monolithic generator file
@@ -257,6 +259,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Live-vs-local rewrite alignment pass completed on priority money pages to capture stronger `Surabaya` geo intent and expand decision-stage SEO support content in rewrite source.
 - [x] Live-vs-local rewrite alignment pass v2 completed on city/detail commercial pages to capture stronger local-intent and service-variant query coverage in rewrite source.
 - [x] Repo-level SEO operations guidance now points future agents at the vendored Claude SEO toolkit in `skills/claude-seo`, keeping audit workflows versioned with the codebase instead of depending on home-directory skill installs.
+- [x] `/pembuatan-website` and key descendants now use cleaner customer-facing copy, with internal notes such as "rewritten from live site", editorial intent phrasing, and overly internal system language removed from public messaging.
+- [x] `/pembuatan-website` specialist pages now also expose stronger SEO-supporting section copy (secondary keywords, highlights, process steps, and FAQs) for price, migration, vertical-specific, and template routes.
 - Blocker note (2026-04-02): Live SEO sample audit (`120` URLs) still reports unresolved issues outside migrated frontend scope (`meta_description_too_long: 106`, `title_too_long: 22`, `http_status_not_200: 10`) dominated by legacy live pages/redirect gaps; requires content import/redirect wave plus metadata cleanup on production routes.
 
 ### C2. Structured Data
@@ -350,6 +354,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Historical migration planning docs and worker prompt files are now moved under `docs/archive/`, leaving `docs/` focused on current operational guidance and active workflows.
 - [x] Rewrite landing sections now have stronger service/pricing interaction polish, and pricing cards can route package-specific WhatsApp leads through the shared global WhatsApp settings path.
 - [x] `/home-pepar` has been rewritten away from prototype/internal explanatory language and now reads as a customer-facing homepage candidate that is materially closer to live use.
+- [x] Printing rewrite modules are back to a deployable state after restoring the missing `buildGenericCopy` import for the company profile page module.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.
 - Blocker note (2026-04-02): Regenerated `v2` assets are ready, but final selection/approval and route-level wiring are still pending.
