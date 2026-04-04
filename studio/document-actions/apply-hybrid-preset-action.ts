@@ -1,4 +1,4 @@
-import type { SanityClient } from "@sanity/client";
+import { useClient } from "sanity";
 import type { DocumentActionComponent, SanityDocumentLike } from "sanity";
 
 const HYBRID_PAGE_SLUGS = new Set([
@@ -18,7 +18,6 @@ type HybridActionProps = {
   draft?: SanityDocumentLike | null;
   published?: SanityDocumentLike | null;
   onComplete: () => void;
-  getClient: (options: { apiVersion: string }) => SanityClient;
 };
 
 type PageDocument = {
@@ -366,7 +365,7 @@ function mergeHybridDocument({
 export const applyHybridPresetAction: DocumentActionComponent = (props) => {
   const typed = props as unknown as HybridActionProps;
   const { type, draft, published, onComplete } = typed;
-  const client = typed.getClient({ apiVersion: "2026-03-23" });
+  const client = useClient({ apiVersion: "2026-03-23" });
 
   if (type !== "page") {
     return null;

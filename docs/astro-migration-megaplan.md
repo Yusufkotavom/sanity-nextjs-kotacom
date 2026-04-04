@@ -344,6 +344,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Custom Studio page document actions no longer rely on `useClient()`, reducing coupling to editor-only React contexts and preventing Task UI crashes while hybrid/page-to-post tools remain enabled.
 - [x] `page`-specific Studio actions are temporarily rolled back from the active action registry so Task creation and core editing flows stay stable while the custom action API mismatch is debugged separately.
 - [x] Studio core packages are now upgraded to `5.19.0`, so the hosted Studio can pick up newer Task/document runtime fixes after the custom-action rollback proved insufficient on its own.
+- [x] `page`-specific Studio actions are now re-enabled on top of the upgraded `5.19.0` runtime, restoring the hybrid preset and page-to-post conversion workflow in Studio.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.
 - Blocker note (2026-04-02): Regenerated `v2` assets are ready, but final selection/approval and route-level wiring are still pending.

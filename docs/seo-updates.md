@@ -3992,3 +3992,20 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter studio run typecheck` passed after the upgrade.
   - `pnpm --filter studio run build` passed after the upgrade.
+
+## 2026-04-04 - Page Studio Actions Re-enabled After Core Upgrade
+- Changed files:
+  - `studio/sanity.config.ts`
+  - `studio/document-actions/apply-hybrid-preset-action.ts`
+  - `studio/document-actions/convert-page-to-post-action.ts`
+  - `docs/seo-updates.md`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Re-enabled the `page` custom Studio actions (`Apply Hybrid Preset` and `Convert Page to Post`) after the Studio core upgrade to `5.19.0`.
+  - Restored the action implementation to the standard `useClient()` approach now that the underlying Task/document runtime issue appears resolved.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: the page-level hybrid/content migration tooling is available in Studio again without keeping the earlier temporary registry rollback.
+- Verification:
+  - `pnpm --filter studio run typecheck` passed.
+  - `pnpm --filter studio run build` passed.
