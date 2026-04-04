@@ -14,7 +14,7 @@ export function ServiceTypesSection({
       <SectionIntro
         eyebrow="Service Focus"
         title="Jenis Layanan Utama"
-        description="Area layanan utama saya padatkan menjadi lane cards yang lebih cepat discan daripada deretan panel panjang."
+        description="Kami mengategorikan layanan berdasarkan kebutuhan spesifik Anda untuk mempermudah eksekusi dan meningkatkan hasil kampanye bisnis."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {serviceTypes.map((item, index) => (

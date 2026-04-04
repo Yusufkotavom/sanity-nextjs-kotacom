@@ -33,7 +33,7 @@ export default function Hero1({
     <SectionShell className="pt-16 lg:pt-24">
       <SectionPanel
         tone="neutral"
-        className="grid gap-8 overflow-hidden rounded-[1.75rem] p-5 md:grid-cols-[minmax(0,1fr)_minmax(320px,0.92fr)] md:p-7 lg:gap-10 lg:p-8 !bg-none !bg-white/40 dark:!bg-white/5 backdrop-blur-md"
+        className="grid gap-8 overflow-hidden rounded-[1.75rem] p-5 md:grid-cols-[minmax(0,1fr)_minmax(320px,0.92fr)] md:p-7 lg:gap-10 lg:p-8"
       >
         <div className="flex flex-col justify-center">
           {tagLine || uiIcon ? (

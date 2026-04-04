@@ -60,5 +60,27 @@ export function buildPercetakanCetakBrosurPageCopy(page: LegacyAstroPage): Legac
     finalCtaTitle: "Siapkan Brosur yang Lebih Siap Dibagikan dan Lebih Mudah Dipahami",
     finalCtaDescription:
       "Kirim detail campaign atau materi Anda, lalu kami bantu memilih format brosur yang paling tepat untuk distribusi dan promosi.",
+    testimonials: [
+      {
+        name: "Lina M.",
+        role: "Event Organizer",
+        quote: "Hasil cetak brosurnya tajam, kertas tebal pas sesuai rekomendasi, dan yang paling penting selesai sehari sebelum event dimulai."
+      },
+      {
+        name: "Budi T.",
+        role: "Pemilik Toko Retail",
+        quote: "Brosur promosi bulanan kami selalu cetak di sini karena kualitas stabil dan potongannya presisi. Sangat memuaskan."
+      }
+    ],
+    longGuide: [
+      {
+        title: "Pemilihan Kertas Art Paper vs Art Carton untuk Brosur",
+        description: "Art Paper 120gsm atau 150gsm ideal untuk distribusi brosur massal yang dilipat, karena lentur namun tetap glossy. Jika butuh brosur VIP yang dibagikan dari tangan ke tangan tanpa lipatan, Art Carton 210gsm akan memberikan kesan lebih tebal dan premium."
+      },
+      {
+        title: "Pentingnya Resolusi dan Margin Aman pada File Brosur",
+        description: "Pastikan gambar yang Anda gunakan minimal beresolusi 300 DPI agar cetakan tidak pecah. Sisakan 'bleed' atau margin aman sekitar 3-5mm di tepi desain untuk mengantisipasi pisau potong, sehingga teks penting tidak ikut terpotong."
+      }
+    ]
   };
 }

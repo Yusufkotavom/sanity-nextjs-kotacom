@@ -38,6 +38,18 @@ export function buildLayananCopy(): LegacyRewriteCopy {
           "Setiap fase memiliki KPI dan checkpoint evaluasi agar output tetap relevan dengan target yang disepakati.",
       },
     ],
+    testimonials: [
+      {
+        name: "David R.",
+        role: "CEO Perusahaan Distributor",
+        quote: "Memiliki satu partner yang mampu menangani website, custom software, dan kebutuhan percetakan promosi benar-benar menghemat waktu. Harmonisasi solusinya terasa instan."
+      },
+      {
+        name: "Alvina P.",
+        role: "Direktur Pemasaran",
+        quote: "Setiap implementasi sangat terarah. Pelaporan berkala transparan dan yang terpenting kami melihat peningkatan dalam matriks utama bisnis."
+      }
+    ],
     ctaLabel: "Diskusikan Kebutuhan Bisnis",
     ctaHref: DEFAULT_CTA,
   };

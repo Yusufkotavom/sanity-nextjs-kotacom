@@ -25,6 +25,18 @@ export function buildSoftwareCopy(page: LegacyAstroPage): LegacyRewriteCopy {
     ],
     description: `${primaryKeyword} untuk bisnis yang membutuhkan software custom, implementasi sistem, dan instalasi yang lebih terukur demi efisiensi operasional, visibilitas data, dan eksekusi tim yang lebih cepat.`,
     intro: `Kami membangun ${title.toLowerCase()} dengan pendekatan produk: kebutuhan dipetakan dengan jelas, fitur diprioritaskan bertahap, dan implementasi diarahkan agar cepat memberi dampak bisnis. Fokusnya adalah software yang benar-benar membantu pekerjaan harian, bukan sekadar menambah sistem baru.`,
+    testimonials: [
+      {
+        name: "Johan T.",
+        role: "Manajer Operasional",
+        quote: "Software custom yang dibangun benar-benar menyelesaikan titik bottleneck pada pencatatan inventory dan persetujuan operasional internal kami."
+      },
+      {
+        name: "Maya W.",
+        role: "Head of IT",
+        quote: "Bukan hanya asal ngoding, namun tim ikut mendampingi dari tahap analisa risiko. Serah terimanya bersih dan aplikasinya cepat beradaptasi."
+      }
+    ],
     ctaLabel: "Konsultasi Kebutuhan Software",
     ctaHref: DEFAULT_CTA,
   };

@@ -216,7 +216,7 @@ export default function RewritePageShell({
           />
           <LogoWall
             title="Kebutuhan cetak yang biasa ditangani tidak berhenti di satu jenis materi."
-            description="Halaman percetakan ini diarahkan untuk bisnis yang butuh partner produksi lintas kebutuhan, dari materi promosi cepat sampai dokumen brand yang lebih formal."
+            description="Kami hadir sebagai partner strategis untuk mendampingi lini bisnis Anda menangani pelbagai variasi produksi, mulai dari pamflet promosi kilat hingga buku profil representatif perusahaan."
             items={percetakanTrustItems}
           />
         </>

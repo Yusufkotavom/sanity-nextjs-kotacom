@@ -16,6 +16,69 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-04 - Unify City-by-City Local SEO Intent for Website and Printing
+- Changed files:
+  - `frontend/lib/legacy-pages/content/website-pages/city-overrides.ts` (New)
+  - `frontend/lib/legacy-pages/content/printing-pages/city-overrides.ts` (New)
+  - `frontend/lib/legacy-pages/content/website.ts`
+  - `frontend/lib/legacy-pages/content/printing.ts`
+- Summary:
+  - Extracted dynamic city-based copy into dedicated overrides for both `Pembuatan Website` and general `Percetakan` services.
+  - Added customized intro texts, CTA labels, and final CTA descriptions for 8 high-traffic cities per service (Surabaya, Sidoarjo, Mojokerto, Jakarta, Malang, Bali, Makassar, Medan).
+  - Integrated the overrides into `buildWebsiteCityCopy` and `buildPrintingCopy` to automatically serve unique localized intent per route.
+- SEO impact:
+  - High. Deepens localized context to avoid duplicate content flags across dynamically generated city pages and boosts relevance for "Jasa [Service] [Kota]" search intents.
+- Verification:
+  - Verified static dict mapping via TypeScript integration in base generator functions.
+
+## 2026-04-04 - Inject E-E-A-T Signals Across All Service Clusters
+- Changed files:
+  - `frontend/lib/legacy-pages/content/printing.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-brosur.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-company-profile.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-buku.ts`
+  - `frontend/lib/legacy-pages/content/website.ts`
+  - `frontend/lib/legacy-pages/content/software.ts`
+  - `frontend/lib/legacy-pages/content/misc.ts`
+- Summary:
+  - Injected explicit Trust elements (`testimonials`, `longGuide` educational panels) into primary conversion pages (`cetak-brosur`, `cetak-company-profile`, `cetak-buku`).
+  - Added global fallback testimonials to `buildPrintingCopy`, `buildWebsiteCityCopy`, `buildWebsiteServiceCopy`, `buildSoftwareCopy`, and `buildLayananCopy` to ensure no service cluster suffers from thin proof.
+- SEO impact:
+  - High. Enhances on-page E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) score signals by preventing generic or thin content indexing on downstream dynamic pages.
+- Verification:
+  - TypeScript object inspection ensures correct propagation of the new arrays.
+
+## 2026-04-04 - Sweep Internal Placeholder Text from Rewrite Landing Sections
+- Changed files:
+  - `frontend/components/ui/rewrite/landing-sections/service-types-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/pricing-plans-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/testimonials-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/proof-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/features-section.tsx`
+  - `frontend/components/ui/rewrite/page-shell.tsx`
+- Summary:
+  - Swept through the modern rewrite components to remove remaining internal developer instructions and UX logic notes posing as live descriptions.
+  - Replaced internal wording (e.g., "Harga saya ubah ke lane cards...") with outward-facing, professional SEO copy targeted at leads and clients.
+- SEO impact:
+  - Moderate to High. Replaces low-value internal text with contextually relevant, keyword-aligned sales copy thereby increasing topic relevance on high-priority landing pages.
+- Verification:
+  - Grep search for "saya " inside UI components yielded 0 unauthorized hits.
+
+
+## 2026-04-04 - Unify Glassmorphism Theme Across All Panels
+- Changed files:
+  - `frontend/app/globals.css`
+  - `frontend/components/blocks/hero/hero-1.tsx`
+  - `frontend/components/blocks/hero/hero-2.tsx`
+- Summary:
+  - Promoted the translucent backdrop-blur (glassmorphism) background styling from the hero components directly into the global `.surface-panel` CSS utility.
+  - Reverted inline style overrides in `hero-1` and `hero-2`.
+  - This ensures all blocks utilizing `SectionPanel`, including `grid-card`, `pricing-card`, and `cta-1`, now share the exact same modern, harmonious transparent theme.
+- SEO impact:
+  - No direct SEO impact. Ensures UI visual consistency across all block variants.
+- Verification:
+  - Verified global CSS inheritance using manual review.
+
 ## 2026-04-04 - Remove Submenu Item Limit from Navigation
 - Changed files:
   - `studio/schemas/blocks/shared/link.ts`

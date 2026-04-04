@@ -14,7 +14,7 @@ export function ProofSection({
       <SectionIntro
         eyebrow="Proof"
         title="Portfolio & Bukti Kerja"
-        description="Bukti kerja saya kompres ke format gallery cards supaya ritmenya tetap visual, tapi tidak memanjang per item."
+        description="Rekam jejak dan hasil pekerjaan kami yang menunjukkan standar visual serta kualitas cetak dalam memenuhi ragam kebutuhan industri."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {proofItems.map((item, index) => (

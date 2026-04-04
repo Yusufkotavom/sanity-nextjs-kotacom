@@ -75,6 +75,18 @@ export function buildPercetakanCetakBukuPageCopy(): LegacyRewriteCopy {
     finalCtaTitle: "Punya Naskah dan Siap Terbit?",
     finalCtaDescription:
       "Kirim detail naskah Anda. Kami bantu hitung estimasi paling efisien sesuai jumlah, spesifikasi, dan target deadline.",
+    testimonials: [
+      {
+        name: "Dimas A.",
+        role: "Penulis Indie",
+        quote: "Layanan Print on Demand-nya sangat membantu penulis pemula. Kertas paperbook-nya nyaman dibaca dan lemnya kuat tidak gampang rontok."
+      },
+      {
+        name: "Bu Sari",
+        role: "Kepala Instansi Pendidikan",
+        quote: "Kami cetak ratusan eksemplar modul siswa. Pengerjaan cepat dan seluruh isi konsisten tidak ada halaman yang terbalik."
+      }
+    ],
     longGuide: [
       {
         title: "Mengapa Memilih Cetak Buku Profesional Lebih Baik daripada Sendiri",

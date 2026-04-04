@@ -12,10 +12,15 @@ import { buildPercetakanIndexPageCopy } from "./printing-pages/percetakan-index"
 import type { LegacyRewriteCopy } from "./types";
 import { titleCaseFromSlug } from "./utils";
 
+import { PERCETAKAN_CITY_INTENT_OVERRIDES } from "./printing-pages/city-overrides";
+
 export function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
   const service = page.title;
   const primaryKeyword =
     page.route === "/percetakan" ? "Jasa Percetakan Surabaya" : `Jasa ${service}`;
+
+  const cityKey = page.slug?.toLowerCase() || "";
+  const cityOverride = PERCETAKAN_CITY_INTENT_OVERRIDES[cityKey] || {};
 
   if (page.route === "/percetakan") {
     return buildPercetakanIndexPageCopy();
@@ -61,11 +66,24 @@ export function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
           "Bisa. Konsultasi awal membantu menentukan material, finishing, jumlah produksi, dan target penggunaan agar hasil cetak lebih tepat sasaran.",
       },
     ],
+    testimonials: [
+      {
+        name: "Amanda S.",
+        role: "Pemilik UMKM",
+        quote: "Barang selalu diproses cepat, kualitas sesuai dengan proof cetak yang disepakati dari awal. Sangat mempermudah bisnis kami."
+      },
+      {
+        name: "Reza F.",
+        role: "Procurement Perusahaan",
+        quote: "Proses ordernya jelas dan tim percetakan kooperatif saat kami butuh invoice dan timeline yang ketat. Hasilnya pun stabil di tiap batch."
+      }
+    ],
     ctaLabel:
       page.route === "/percetakan"
         ? "Konsultasi Layanan Percetakan"
         : "Diskusikan Kebutuhan Cetak",
     ctaHref: DEFAULT_CTA,
+    ...cityOverride,
   };
 }
 

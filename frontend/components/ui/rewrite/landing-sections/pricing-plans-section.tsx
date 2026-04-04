@@ -29,7 +29,7 @@ export async function PricingPlansSection({
       <SectionIntro
         eyebrow="Investment"
         title="Paket & Investasi"
-        description="Harga saya ubah ke lane cards yang lebih ketat, jadi pembacaan antar paket tidak bergantung pada panel split yang terlalu panjang."
+        description="Pilihan investasi layanan dirancang secara transparan agar Anda dapat menyesuaikan cakupan dengan anggaran operasional tim."
       />
       <div className="grid gap-4 xl:grid-cols-3">
         {pricingPlans.map((plan, index) => (

@@ -32,7 +32,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 
 - [x] **GSC MIGRATION 100% DONE:** All Top 300 manual curations + Top 1000 auto-redirects fully synced, seeded, and mapped via Sanity and Next.js wildcards.
 - [x] Removed the 8-item validation cap from navigation submenus in the Sanity schema (`link.ts`), permitting expanded menu structures.
-- [x] Adjusted `hero-1` and `hero-2` block backgrounds to be more transparent via backdrop blur, improving visual layering over layout backgrounds.
+- [x] Standardized `surface-panel` global CSS utility to enforce a unified transparent glassmorphism background across all components (Hero, CTA, Grid Cards, Split Panels).
 - [x] Fixed `cta-1` block layout: buttons are now fully encapsulated by the section panel background and are properly centered alongside the text content.
 - [x] GSC export + migration curation pipeline built
 - [x] metadata audit script built and executed

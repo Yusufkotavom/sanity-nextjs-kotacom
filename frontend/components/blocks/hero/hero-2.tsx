@@ -30,7 +30,7 @@ export default function Hero2({
     <SectionShell className="pt-16 lg:pt-24">
       <SectionPanel
         tone="sky"
-        className="mx-auto max-w-5xl rounded-[1.9rem] px-5 py-10 text-center md:px-10 md:py-14 !bg-none !bg-white/40 dark:!bg-white/5 backdrop-blur-md"
+        className="mx-auto max-w-5xl rounded-[1.9rem] px-5 py-10 text-center md:px-10 md:py-14"
       >
         {tagLine || uiIcon ? (
           <div className="mb-3 inline-flex items-center justify-center gap-2 text-ui-label text-foreground/55">

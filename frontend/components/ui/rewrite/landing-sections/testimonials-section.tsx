@@ -12,7 +12,7 @@ export function TestimonialsSection({
       <SectionIntro
         eyebrow="Testimonials"
         title="Apa Kata Klien"
-        description="Testimoni saya rapatkan jadi dua panel proof yang lebih mudah dibaca cepat tanpa memecah ritme halaman."
+        description="Kumpulan pengalaman klien B2B dan UMKM yang telah membuktikan kualitas serta konsistensi kami di setiap lini produksi."
       />
       <div className="grid gap-4 lg:grid-cols-2">
         {testimonials.map((item, index) => (

@@ -62,5 +62,27 @@ export function buildPercetakanCetakCompanyProfilePageCopy(
     finalCtaTitle: "Siapkan Company Profile yang Lebih Meyakinkan untuk Presentasi Bisnis",
     finalCtaDescription:
       "Kirim desain atau konsep Anda, lalu kami bantu memilih spesifikasi cetak yang paling pas untuk kebutuhan presentasi, tender, atau partnership.",
+    testimonials: [
+      {
+        name: "Irfan W.",
+        role: "Business Development Manager",
+        quote: "Buku company profile produksi di sini punya warna corporate yang akurat, laminasinya rapi banget. Mantap untuk presentasi tender."
+      },
+      {
+        name: "Anita F.",
+        role: "Direktur Agensi",
+        quote: "Pilihan kertas isi dan hardcover-nya premium. Klien kami langsung terkesan hanya dari menyentuh buku profil kami."
+      }
+    ],
+    longGuide: [
+      {
+        title: "Finishing Premium untuk Menonjolkan Identitas Perusahaan",
+        description: "Gunakan Spot UV pada logo perusahaan di cover untuk memberikan efek timbul yang mengkilap, atau tambahkan laminasi Doff/Matte agar terasa lebih halus elegan saat dipegang klien. Keputusan finishing ini sangat mempengaruhi kesan pertama pembaca."
+      },
+      {
+        title: "Standar Format File untuk Toleransi Jilid",
+        description: "Pastikan margin bagian dalam (Gutter margins) dilebihkan minimal 1-2 cm agar teks tidak tenggelam saat company profile dijilid, khususnya pada penjilidan lem panas atau jahit benang."
+      }
+    ]
   };
 }

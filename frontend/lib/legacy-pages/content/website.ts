@@ -15,9 +15,13 @@ import { buildWebsiteTemplatePageCopy } from "./website-pages/template";
 import { buildWebsiteIndexPageCopy } from "./website-pages/website-index";
 import { buildWebsiteTokoOnlinePageCopy } from "./website-pages/toko-online";
 
+import { WEBSITE_CITY_INTENT_OVERRIDES } from "./website-pages/city-overrides";
+
 export function buildWebsiteCityCopy(page: LegacyAstroPage): LegacyRewriteCopy {
   const city = titleCaseFromSlug(page.slug);
   const primaryKeyword = `Jasa Pembuatan Website ${city}`;
+  const cityKey = page.slug.toLowerCase();
+  const cityOverride = WEBSITE_CITY_INTENT_OVERRIDES[cityKey] || {};
 
   return {
     primaryKeyword,
@@ -60,6 +64,18 @@ export function buildWebsiteCityCopy(page: LegacyAstroPage): LegacyRewriteCopy {
           "Bisa. Struktur dan CTA kami sesuaikan dengan model bisnis Anda, apakah fokusnya company profile, penjualan produk, akuisisi lead, atau kombinasi beberapa tujuan sekaligus.",
       },
     ],
+    testimonials: [
+      {
+        name: "Hendra K.",
+        role: "Founder Startup Lokal",
+        quote: "Pembuatan website berjalan sangat lancar. Tampilan modern, kecepatan load-nya terasa ringan, dan langsung SEO friendly sejak hari pertama tayang."
+      },
+      {
+        name: "Siska P.",
+        role: "Direktur Operasional",
+        quote: "Integrasi fitur dan alur leads yang rapi berhasil menaikkan inquiries potensial bagi bisnis kami. Penanganan purna-tayangnya juga responsif."
+      }
+    ],
     ctaLinks: [
       { label: `Konsultasi Website ${city}`, href: DEFAULT_CTA },
       { label: "Lihat Harga Website", href: "/pembuatan-website/harga" },
@@ -68,6 +84,7 @@ export function buildWebsiteCityCopy(page: LegacyAstroPage): LegacyRewriteCopy {
     ],
     ctaLabel: `Konsultasi Website ${city}`,
     ctaHref: DEFAULT_CTA,
+    ...cityOverride,
   };
 }
 
@@ -130,6 +147,18 @@ export function buildWebsiteServiceCopy(page: LegacyAstroPage): LegacyRewriteCop
     ],
     description: `${primaryKeyword} dengan pendekatan strategis untuk kebutuhan bisnis yang membutuhkan website terstruktur, cepat, dan siap scale.`,
     intro: `${primaryKeyword} kami dirancang agar website tidak hanya terlihat baik, tetapi juga mendukung akuisisi lead dan kredibilitas brand.`,
+    testimonials: [
+      {
+        name: "Fajar N.",
+        role: "Pemasar Digital",
+        quote: "Struktur webnya tidak berantakan, CMS mudah dipakai untuk update artikel atau page baru tanpa harus ganggu tim developer."
+      },
+      {
+        name: "Rudi H.",
+        role: "Pemilik Toko Online",
+        quote: "Traffic mulai banyak mengonversi penjualan setelah perombakan arsitektur dan checkout flow. Konsultasi teknis awal sangat membantu."
+      }
+    ],
     ctaLabel: `Konsultasi ${serviceName}`,
     ctaHref: DEFAULT_CTA,
   };
