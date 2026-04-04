@@ -4400,3 +4400,17 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - Verified JSON syntax inside layout.
 
+
+## 2026-04-04 - Update Business Addresses and Locations
+- Changed files:
+  - `frontend/app/layout.tsx`
+  - Sanity Studio Database (`seoSettings` & `page` with slug `index`) via API script
+- Summary:
+  - Updated JSON-LD schema to reflect dual locations: Graha Indraprasta Tulangan (Sidoarjo) and Jl. Tenggilis Mulya (Surabaya).
+  - Broadened `areaServed` to explicitly include both Sidoarjo and Surabaya.
+  - Refined SEO metadata descriptions in Sanity to highlight local service availability in Sidoarjo & Surabaya.
+- SEO impact:
+  - Direct SEO impact: Enhances local search visibility for both Sidoarjo and Surabaya regions. Strengthens Knowledge Graph by providing accurate, multi-location physical addresses.
+- Verification:
+  - Verified JSON-LD structure and script-based content updates.
+

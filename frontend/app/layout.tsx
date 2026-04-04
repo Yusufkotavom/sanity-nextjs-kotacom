@@ -177,17 +177,32 @@ export default async function RootLayout({
               "description": "Solusi IT & Digital Terpadu untuk Bisnis Anda. IT Service & Percetakan - Pengadaan, Service, Penjualan, Website Development, Software Development, Percetakan, Social Media Management.",
               "telephone": "+6285799520350",
               "priceRange": "$$",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Jl. Gayungan IV No.23",
-                "addressLocality": "Surabaya",
-                "addressRegion": "Jawa Timur",
-                "addressCountry": "ID"
-              },
+              "address": [
+                {
+                  "@type": "PostalAddress",
+                  "streetAddress": "Graha Indraprasta G7/15",
+                  "addressLocality": "Tulangan",
+                  "addressRegion": "Sidoarjo",
+                  "postalCode": "61273",
+                  "addressCountry": "ID"
+                },
+                {
+                  "@type": "PostalAddress",
+                  "streetAddress": "Jl. Tenggilis Mulya 76",
+                  "addressLocality": "Surabaya",
+                  "addressRegion": "Jawa Timur",
+                  "postalCode": "60292",
+                  "addressCountry": "ID"
+                }
+              ],
               "areaServed": [
                 {
                   "@type": "City",
                   "name": "Surabaya"
+                },
+                {
+                  "@type": "City",
+                  "name": "Sidoarjo"
                 },
                 {
                   "@type": "Country",
