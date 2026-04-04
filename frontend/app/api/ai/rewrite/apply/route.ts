@@ -19,16 +19,23 @@ function getSanityWriteConfig() {
   };
 }
 
-function getAllowedStudioOrigin() {
-  return (process.env.NEXT_PUBLIC_STUDIO_URL || "").replace(/\/+$/, "");
+function getAllowedStudioOrigins() {
+  const envOrigin = (process.env.NEXT_PUBLIC_STUDIO_URL || "").replace(/\/+$/, "");
+  const origins = ["https://studio.kotacom.id", "http://localhost:3333"];
+  if (envOrigin && !origins.includes(envOrigin)) {
+    origins.push(envOrigin);
+  }
+  return origins;
 }
 
 function withCorsHeaders(origin?: string | null) {
-  const allowed = getAllowedStudioOrigin();
-  if (!allowed) return {} as Record<string, string>;
-  if (!origin || origin !== allowed) return {} as Record<string, string>;
+  const allowedOrigins = getAllowedStudioOrigins();
+  
+  // Use the exact origin if valid, otherwise fallback to the first valid one
+  const matchedOrigin = (origin && allowedOrigins.includes(origin)) ? origin : allowedOrigins[0];
+  
   return {
-    "Access-Control-Allow-Origin": allowed,
+    "Access-Control-Allow-Origin": matchedOrigin,
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers":
       "Content-Type, x-ai-writer-action-secret, Authorization",

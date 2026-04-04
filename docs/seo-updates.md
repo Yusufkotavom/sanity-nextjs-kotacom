@@ -14,7 +14,15 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 - Verification:
   - ...
-```
+## 2026-04-04 - Fix AI Rewrite CORS Origin Matching
+- Changed files:
+  - `frontend/app/api/ai/rewrite/apply/route.ts`
+- Summary:
+  - Updated the CORS header logic for the Sanity Studio AI rewrite endpoint to natively accept requests from both `https://studio.kotacom.id` and localhost origins, preventing CORS blocks during Studio usage.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - Ensured correct CORS header fallback and origin matching logic in the API route.
 
 ## 2026-04-04 - Live HTTP HEAD Verification & Redirect Cleanup
 - Changed files:
