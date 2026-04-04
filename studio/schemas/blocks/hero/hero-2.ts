@@ -65,6 +65,18 @@ export default defineType({
       type: "block-content",
     }),
     defineField({
+      name: "image",
+      title: "Image",
+      type: "image",
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alternative Text",
+        },
+      ],
+    }),
+    defineField({
       name: "links",
       type: "array",
       of: [{ type: "link" }],

@@ -1,5 +1,6 @@
 import { groq } from "next-sanity";
 import { metaQuery } from "./shared/meta";
+import { imageQuery } from "./shared/image";
 import { hero1Query } from "./hero/hero-1";
 import { hero2Query } from "./hero/hero-2";
 import { sectionHeaderQuery } from "./section-header";
@@ -20,6 +21,9 @@ export const PAGE_QUERY = groq`
   *[_type == "page" && slug.current == $slug][0]{
     title,
     topBlockCount,
+    thumbnail{
+      ${imageQuery}
+    },
     blocks[]{
       ${hero1Query},
       ${hero2Query},

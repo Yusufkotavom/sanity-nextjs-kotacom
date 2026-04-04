@@ -10,6 +10,8 @@ type GlobalWhatsAppPanelProps = {
   className?: string;
   secondaryHref?: string;
   secondaryLabel?: string;
+  predefinedText?: string;
+  sourceUrl?: string;
 };
 
 export default async function GlobalWhatsAppPanel({
@@ -19,6 +21,8 @@ export default async function GlobalWhatsAppPanel({
   className,
   secondaryHref,
   secondaryLabel,
+  predefinedText,
+  sourceUrl,
 }: GlobalWhatsAppPanelProps) {
   return (
     <div
@@ -37,6 +41,8 @@ export default async function GlobalWhatsAppPanel({
           size="lg"
           className="rounded-full bg-green-600 text-white hover:bg-green-700 dark:bg-green-500 dark:text-black dark:hover:bg-green-400"
           fallbackLabel="Chat via WhatsApp"
+          predefinedText={predefinedText}
+          sourceUrl={sourceUrl}
         />
         {secondaryHref && secondaryLabel ? (
           <Button asChild size="lg" variant="outline">

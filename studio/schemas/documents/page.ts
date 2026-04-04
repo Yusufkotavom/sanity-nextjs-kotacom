@@ -45,6 +45,19 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "thumbnail",
+      title: "Thumbnail",
+      type: "image",
+      group: "content",
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alternative Text",
+        },
+      ],
+    }),
+    defineField({
       name: "blocks",
       type: "array",
       group: "content",

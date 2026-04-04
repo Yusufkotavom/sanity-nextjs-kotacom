@@ -199,12 +199,16 @@ export default async function ProductSlugPage(props: {
             description="Cocok untuk cek ketersediaan, harga terbaru, kebutuhan custom, atau rekomendasi produk sebelum Anda ambil keputusan."
             secondaryHref={product.cta?.href || undefined}
             secondaryLabel={product.cta?.title || undefined}
+            predefinedText={`Halo, saya tertarik dengan produk *${product.title}*. Boleh minta info detail dan harganya?`}
+            sourceUrl={productPath}
           />
           {product.cta?.href ? (
             <div className="mt-4">
               <GlobalWhatsAppButton
                 fallbackHref={product.cta.href}
                 fallbackLabel={product.cta.title || "Tanya Produk"}
+                predefinedText={`Halo, saya tertarik dengan produk *${product.title}*.`}
+                sourceUrl={productPath}
               />
             </div>
           ) : null}

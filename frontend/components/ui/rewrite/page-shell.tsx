@@ -23,11 +23,13 @@ import { kotacomSplitIllustrations } from "@/lib/illustrations/kotacom-split";
 type RewritePageShellProps = {
   page: LegacyAstroPage;
   siblings?: LegacyAstroPage[];
+  children?: React.ReactNode;
 };
 
 export default function RewritePageShell({
   page,
   siblings = [],
+  children,
 }: RewritePageShellProps) {
   const copy = buildLegacyRewriteCopy(page);
   const sectionHref = page.section ? `/${page.section}` : page.route;
@@ -84,7 +86,7 @@ export default function RewritePageShell({
     }
     if (page.section === "percetakan") {
       return {
-        src: kotacomSplitIllustrations.hero.cetakBukuV2,
+        src: "/images/products/cetak_percetakan_thumb_1775318012761.png",
         alt: `${copy.primaryKeyword} - KOTACOM`,
       };
     }
@@ -193,6 +195,7 @@ export default function RewritePageShell({
         sectionHref={sectionHref}
         heroImage={heroImageBySection}
       />
+      {children}
       {shouldRenderPercetakanModules ? (
         <>
           <MetricsRail items={percetakanMetrics} />

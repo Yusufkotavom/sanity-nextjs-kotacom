@@ -113,25 +113,19 @@ export default async function RewriteHero({
           ) : null}
         </div>
 
-        <div className="mx-auto mt-12 max-w-5xl">
-          <div className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-white/80 p-5 shadow-[0_24px_90px_rgba(15,23,42,0.08)] backdrop-blur dark:border-white/10 dark:bg-white/5 md:p-8">
-            <div className="relative rounded-[1.5rem] border border-black/8 bg-white p-6 dark:border-white/10 dark:bg-black/20">
-              {heroImage ? (
-                <div className="relative mx-auto aspect-[16/9] max-w-3xl overflow-hidden rounded-[1.5rem] border border-white/50 bg-white/60 shadow-[0_18px_60px_rgba(15,23,42,0.14)] dark:border-white/10 dark:bg-black/20">
-                  <Image
-                    src={heroImage.src}
-                    alt={heroImage.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 56rem, 100vw"
-                    priority
-                  />
-                </div>
-              ) : (
-                <div className="relative mx-auto h-48 max-w-3xl rounded-[1.5rem] border border-white/45 bg-white/55 shadow-[0_18px_60px_rgba(15,23,42,0.14)] dark:border-white/10 dark:bg-black/20" />
-              )}
+        <div className="mx-auto mt-12 max-w-4xl px-4">
+          {heroImage ? (
+            <div className="relative aspect-video w-full overflow-hidden rounded-[1.5rem] border border-black/10 shadow-2xl dark:border-white/10">
+              <Image
+                src={heroImage.src}
+                alt={heroImage.alt}
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 56rem, 100vw"
+                priority
+              />
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
     </section>

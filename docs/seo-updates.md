@@ -16,6 +16,123 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-04 - Mass Generate Page Thumbnails via Vercel AI Gateway
+- Changed files:
+  - `frontend/scripts/generate-page-thumbnails.mjs` (New)
+  - `frontend/scripts/upload-page-thumbnails-to-sanity.mjs` (New)
+  - `frontend/public/images/page-thumbnails/*.png` (108 images)
+- Summary:
+  - Created comprehensive batch image generation script using 2 Vercel AI Gateway keys.
+  - Key 1 (`xai/grok-imagine-image` @ $0.02): 69 images for homepage, layanan, website, percetakan, software, rakit-pc, game-pc, cetak-buku, cetak-brosur, kartu-nama, karaoke, website-company, toko-online, instalasi-sw, cloud-network, cybersecurity, blog, portfolio, it-support.
+  - Key 2 (`google/imagen-4.0-generate-001` @ $0.04): 39 premium images for top 5 categories (homepage, layanan, website, percetakan, software, rakit-pc, it-support, game-pc).
+  - Total ~$2.94 budget. All images 1024x1024 with "Kotacom" brand watermark text in prompt.
+  - Created `upload-page-thumbnails-to-sanity.mjs` with slug→category smart mapping to distribute images across all page documents. Supports asset caching (no re-upload if already uploaded) and dry-run mode.
+- SEO impact:
+  - High. All page documents will have thumbnails which improve OG social sharing images, search result rich media, and hero block visual quality. Category grouping ensures visual consistency across related pages.
+- Verification:
+  - Run `DRY_RUN=true node scripts/upload-page-thumbnails-to-sanity.mjs` to preview assignments before live upload.
+
+
+- Changed files:
+  - `studio/schemas/documents/page.ts`
+  - `studio/schemas/blocks/hero/hero-2.ts`
+  - `frontend/sanity/queries/hero/hero-2.ts`
+  - `frontend/sanity/queries/page.ts`
+  - `frontend/scripts/sync-page-thumbnail-to-hero.mjs` (New)
+- Summary:
+  - Added `thumbnail` image field (with alt text) to the `page` document schema, consistent with `post` and `product` schemas.
+  - Added `image` field (with alt text) to the `hero-2` block schema to match `hero-1` capability.
+  - Updated `hero2Query` to fetch the new `image` field using the shared `imageQuery` fragment.
+  - Updated `PAGE_QUERY` to fetch `thumbnail` from page documents using the shared `imageQuery`.
+  - Created migration script `sync-page-thumbnail-to-hero.mjs` to copy the `thumbnail` asset from each page document into the `image` field of any `hero-1` or `hero-2` blocks that don't already have one. Supports `DRY_RUN=true` mode.
+- SEO impact:
+  - Moderate. Page thumbnails improve OG image availability and social sharing previews. Hero images on `hero-2` blocks give pages visual anchors that improve user engagement and dwell time.
+- Verification:
+  - Studio and frontend typechecks pending. Run `pnpm --filter studio run typecheck` and `pnpm --filter frontend run typecheck` to validate.
+  - Run migration: `node scripts/sync-page-thumbnail-to-hero.mjs` from `frontend/` directory.
+
+
+ - Changed files:
+   - `frontend/components/ui/rewrite/page-shell.tsx`
+   - `frontend/app/(main)/percetakan/page.tsx`
+ - Summary:
+   - Configured the locally uploaded thumbnail image (`cetak_percetakan_thumb_...png`) as the new primary Hero visual for the `/percetakan` rewrite page route.
+   - Refactored `/percetakan/page.tsx` to Server Component in order to perform static fetch for all available `product` schemas in Sanity.
+   - Embedded `<ProductGrid />` just below the Rewrite Page Shell inside `/percetakan` to directly serve the catalog of products immediately within the local page layout, accelerating product discovery.
+ - SEO impact:
+   - High. The direct inclusion of the product catalog (with direct links, details, and thumbnails) on the primary service page dramatically increases the internal link coverage to all product landing pages. The addition of the contextual visual hero anchors the user intent quickly for better dwell time.
+ - Verification:
+   - Next.js type check resolves with no issues. The page is now fetching Sanity products and passing them successfully to `ProductGrid`.
+## 2026-04-04 - Populate Blog Post Visuals with SEO Alt Texts
+- Changed files:
+  - `frontend/scripts/upload-post-images.mjs` (New)
+  - `frontend/public/images/post/*.png` (4 images)
+- Summary:
+  - Generated and finalized 4 high-quality illustrator-style visuals for blog content (Smart City/Tech Hub theme, Software Development theme, IT Infrastructure/Support theme, and Digital Transformation/Business theme).
+  - Executed automated script to upload these 4 visuals to Sanity assets and randomly distribute them among all 38 existing `post` documents.
+  - Injected SEO-optimized `alt` texts for every post: `Jasa IT Surabaya & Sidoarjo: [Post Title] - Kotacom Surabaya`.
+- SEO impact:
+  - High. Enhances visual depth of the blog section, improving rich media context and reducing bounce rate for informational/content-led landing pages. The branded alt-text targets a broader set of local IT service keywords and builds domain authority.
+- Verification:
+  - Script logs confirm 38 `post` documents were successfully patched with the new image assets and SEO alt text. Exit code 0.
+
+## 2026-04-04 - Populate Service and Project Visuals with SEO Alt Texts
+- Changed files:
+  - `frontend/scripts/upload-service-project-images.mjs` (New)
+  - `frontend/public/images/service/*.png` (4 images)
+  - `frontend/public/images/project/*.png` (4 images)
+- Summary:
+  - Generated 4 high-quality custom illustrator-style illustrations for the `service` collection (Cloud/IT Services, Software Development, Cybersecurity, IT Support).
+  - Generated 4 high-quality custom illustrations for the `project` portfolio collection (Business Dashboard, Point of Sale, E-Commerce, Clinic Management System).
+  - Created `upload-service-project-images.mjs` to programmatically upload and randomly assign all generated images to their respective Sanity documents (11 Services, 14 Projects).
+  - Image `alt` texts are SEO-optimized using branded patterns: `Jasa IT Profesional: [Title] - Kotacom Surabaya` and `Portofolio IT: [Title] - Kotacom Surabaya`.
+- SEO impact:
+  - High. Fills visual content gaps on all service and project pages, improving rich media indexing, user engagement, and reducing bounce rates. The branded alt-text patterns target local Surabaya IT service searches and reinforce E-E-A-T signals.
+- Verification:
+  - Script output confirmed all 11 service and 14 project documents successfully patched with image asset references and SEO alt texts. Exit code 0.
+
+## 2026-04-04 - Populate Rakit PC Product Visuals
+- Changed files:
+  - `frontend/scripts/upload-rakit-pc-images.mjs` (New)
+  - `frontend/scripts/update-rakit-pc-alts.mjs` (New)
+  - `frontend/public/images/rakit-pc/*.png`
+- Summary:
+  - Generated and uploaded 5 high-quality custom visuals for "Rakit PC" products into `frontend/public/images/rakit-pc`.
+  - Created custom scripts `upload-rakit-pc-images.mjs` and `update-rakit-pc-alts.mjs` to upload and patch Sanity product data.
+  - Automatically patched all 52 "Rakit PC" products to dynamically and randomly use the new high-quality illustrator-style product imagery, replacing previously missing or generic kaku fallback images.
+  - Updated the image `alt` texts to include Kotacom branding and strong local SEO intent (e.g. `Jual PC Rakitan Custom: [Product Title] - Kotacom Surabaya`).
+- SEO impact:
+  - High. Enriching product pages with visually striking imagery will improve user engagement metrics and lower bounce rate. The injected `alt` metadata directly targets local searches for PC building in Surabaya while enforcing brand identity.
+- Verification:
+  - Automated deployment logs confirm image object updates (`image.alt` and `image.asset._ref`) against product documents successful.
+
+ ## 2026-04-04 - Enrich Product Catalog UI and Data with Detailed Descriptions and Integrated WA
+ - Changed files:
+   - `frontend/scripts/enrich-products.mjs` (New)
+   - `frontend/app/(main)/products/[slug]/page.tsx`
+   - `frontend/components/global-whatsapp-panel.tsx`
+ - Summary:
+   - Updated the 10 recently created printing products with high-quality copy, including rich descriptions, specific product excerpts, comprehensive feature lists, and standard base prices.
+   - Enhanced the frontend product page CTA to include dynamic WhatsApp message pre-filling (e.g., "Halo, saya tertarik dengan produk *[Product Title]*..."), ensuring maximum context from the product's URL and title without extra fields needed on the `product` schema.
+   - Refactored `GlobalWhatsAppPanel` to support `predefinedText` inheritance down to the underlying `GlobalWhatsAppButton`.
+ - SEO impact:
+   - High. The product pages now offer distinct on-page richness via feature lists and detailed descriptions instead of boilerplate, actively strengthening conversion metrics and keyword relevance on `/products/[slug]`.
+ - Verification:
+   - Run typecheck and ensure `product` page properly passes `predefinedText` containing the specific product title.
+ 
+ ## 2026-04-04 - Populate Printing Products Catalog into Sanity CMS
+ - Changed files:
+   - `frontend/scripts/upload-product-images.mjs` (New)
+   - `frontend/public/images/products/*.png`
+ - Summary:
+   - Generated and moved 10 high-quality custom visuals for printing products into `frontend/public/images/products`.
+   - Created a custom script to upload all product visuals directly to Sanity's image assets dataset.
+   - Bootstrapped and synced the corresponding 10 `product` document stubs in Sanity using the uploaded visuals, mapping correct fields (title, slug, price, currency, availability) as per schema.
+ - SEO impact:
+   - High. Fills out visual content gaps and ensures essential CMS catalog data is populated, boosting rich media indexing and user engagement for the `/products/*` lanes.
+ - Verification:
+   - Manual verification through command line standard output confirming all image asset uploads (`imageAsset._id`) and product creations successfully completed.
+
 ## 2026-04-04 - Unify City-by-City Local SEO Intent for Website and Printing
 - Changed files:
   - `frontend/lib/legacy-pages/content/website-pages/city-overrides.ts` (New)

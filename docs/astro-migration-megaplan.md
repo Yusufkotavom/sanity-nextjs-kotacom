@@ -191,7 +191,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Universal trust badge strip now uses icon-led glass cards instead of text-in-image artwork, bringing the shared rewrite shell closer to the current shadcn/Vercel visual direction and removing duplicated badge wording
 - [x] Universal trust badge cards have been compacted further so icon + title sit on one line and the supporting copy stays ultra-short, improving density without falling back to image-based labels
 - [x] `project` documents now include `categories` again in the Studio schema and frontend query contract, resolving Sanity `Unknown field found` warnings on legacy project docs that still store category references
-
+- [x] Printing products catalog is now populated in Sanity CMS using 10 custom generated high-quality visuals, ensuring proper product coverage and visual continuity on `/products` routes
 ## Workstream A - Platform & Data Foundation
 
 ### A1. CMS Contract Freeze
