@@ -6,8 +6,11 @@ type SaveBody = {
   enabled?: boolean;
   mode?: "gateway" | "direct-gemini" | "direct-groq";
   defaultModel?: string;
+  customModelGateway?: string;
   defaultModelGemini?: string;
+  customModelGemini?: string;
   defaultModelGroq?: string;
+  customModelGroq?: string;
   fallbackModels?: string[];
   temperature?: number;
   maxOutputTokens?: number;
@@ -66,7 +69,7 @@ export async function POST(request: NextRequest) {
 
   const prompts = body.prompts || {};
   const defaultModel = normalizeString(body.defaultModel);
-  if (mode === "gateway" && defaultModel && !isGatewayModel(defaultModel)) {
+  if (mode === "gateway" && defaultModel && defaultModel !== "custom" && !isGatewayModel(defaultModel)) {
     return NextResponse.json(
       {
         ok: false,
@@ -91,8 +94,11 @@ export async function POST(request: NextRequest) {
     enabled: normalizeBool(body.enabled, false),
     mode,
     defaultModel,
+    customModelGateway: normalizeString(body.customModelGateway),
     defaultModelGemini: normalizeString(body.defaultModelGemini),
+    customModelGemini: normalizeString(body.customModelGemini),
     defaultModelGroq: normalizeString(body.defaultModelGroq),
+    customModelGroq: normalizeString(body.customModelGroq),
     fallbackModels,
     temperature: normalizeNumber(body.temperature, 0.4, 0, 2),
     maxOutputTokens: Math.round(normalizeNumber(body.maxOutputTokens, 1400, 128, 8192)),

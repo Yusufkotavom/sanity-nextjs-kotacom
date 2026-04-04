@@ -1996,6 +1996,60 @@
           },
           "optional": true
         },
+        "image": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "object",
+            "attributes": {
+              "asset": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageAsset.reference"
+                },
+                "optional": true
+              },
+              "media": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "unknown"
+                },
+                "optional": true
+              },
+              "hotspot": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageHotspot"
+                },
+                "optional": true
+              },
+              "crop": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageCrop"
+                },
+                "optional": true
+              },
+              "alt": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "image"
+                }
+              }
+            }
+          },
+          "optional": true
+        },
         "links": {
           "type": "objectAttribute",
           "value": {
@@ -3538,27 +3592,128 @@
       "defaultModel": {
         "type": "objectAttribute",
         "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "google/gemini-2.5-flash"
+            },
+            {
+              "type": "string",
+              "value": "google/gemini-2.5-pro"
+            },
+            {
+              "type": "string",
+              "value": "google/gemini-2.0-flash"
+            },
+            {
+              "type": "string",
+              "value": "openai/gpt-4o"
+            },
+            {
+              "type": "string",
+              "value": "openai/gpt-4o-mini"
+            },
+            {
+              "type": "string",
+              "value": "openai/o4-mini"
+            },
+            {
+              "type": "string",
+              "value": "anthropic/claude-3-7-sonnet-20250219"
+            },
+            {
+              "type": "string",
+              "value": "anthropic/claude-3-5-haiku-20241022"
+            },
+            {
+              "type": "string",
+              "value": "meta/llama-4-scout-17b-16e-instruct"
+            },
+            {
+              "type": "string",
+              "value": "custom"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "customModelGateway": {
+        "type": "objectAttribute",
+        "value": {
           "type": "string"
         },
         "optional": true
       },
-      "fallbackModels": {
+      "defaultModelGemini": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "string"
-          }
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "gemini-2.5-flash"
+            },
+            {
+              "type": "string",
+              "value": "gemini-2.5-pro"
+            },
+            {
+              "type": "string",
+              "value": "gemini-2.0-flash"
+            },
+            {
+              "type": "string",
+              "value": "gemini-1.5-flash"
+            },
+            {
+              "type": "string",
+              "value": "custom"
+            }
+          ]
         },
         "optional": true
       },
-      "gatewayProviderOrder": {
+      "customModelGemini": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "string"
-          }
+          "type": "string"
+        },
+        "optional": true
+      },
+      "defaultModelGroq": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "meta-llama/llama-4-scout-17b-16e-instruct"
+            },
+            {
+              "type": "string",
+              "value": "llama-3.3-70b-versatile"
+            },
+            {
+              "type": "string",
+              "value": "mixtral-8x7b-32768"
+            },
+            {
+              "type": "string",
+              "value": "gemma2-9b-it"
+            },
+            {
+              "type": "string",
+              "value": "custom"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "customModelGroq": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -3576,24 +3731,13 @@
         },
         "optional": true
       },
-      "gatewayApiKeyEncrypted": {
+      "fallbackModels": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "geminiApiKeysEncrypted": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "groqApiKeysEncrypted": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
+          "type": "array",
+          "of": {
+            "type": "string"
+          }
         },
         "optional": true
       },
@@ -5293,6 +5437,60 @@
         "value": {
           "type": "inline",
           "name": "slug"
+        },
+        "optional": true
+      },
+      "thumbnail": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "asset": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageAsset.reference"
+              },
+              "optional": true
+            },
+            "media": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "unknown"
+              },
+              "optional": true
+            },
+            "hotspot": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageHotspot"
+              },
+              "optional": true
+            },
+            "crop": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageCrop"
+              },
+              "optional": true
+            },
+            "alt": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "image"
+              }
+            }
+          }
         },
         "optional": true
       },

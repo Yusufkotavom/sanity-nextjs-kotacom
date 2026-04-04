@@ -9,13 +9,17 @@ export async function getAiWriterResolvedSettings() {
   const enabled = Boolean(studio?.enabled);
 
   // Resolve the correct default model based on the active mode
+  // Priority: custom override field > dropdown field
   let defaultModel = "";
   if (mode === "direct-gemini") {
-    defaultModel = (studio?.defaultModelGemini || "gemini-2.5-flash").trim();
+    const customOverride = (studio?.customModelGemini || "").trim();
+    defaultModel = customOverride || (studio?.defaultModelGemini || "gemini-2.5-flash").trim();
   } else if (mode === "direct-groq") {
-    defaultModel = (studio?.defaultModelGroq || "meta-llama/llama-4-scout-17b-16e-instruct").trim();
+    const customOverride = (studio?.customModelGroq || "").trim();
+    defaultModel = customOverride || (studio?.defaultModelGroq || "meta-llama/llama-4-scout-17b-16e-instruct").trim();
   } else {
-    defaultModel = (studio?.defaultModel || "google/gemini-2.5-flash").trim();
+    const customOverride = (studio?.customModelGateway || "").trim();
+    defaultModel = customOverride || (studio?.defaultModel || "google/gemini-2.5-flash").trim();
   }
 
   // API keys are always sourced from Vercel environment variables only

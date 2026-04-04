@@ -45,7 +45,12 @@ export default function AiWriterSettingsPage() {
 
   const [enabled, setEnabled] = useState(false);
   const [mode, setMode] = useState<"gateway" | "direct-gemini" | "direct-groq">("gateway");
-  const [defaultModel, setDefaultModel] = useState("openai/gpt-5.4");
+  const [defaultModel, setDefaultModel] = useState("google/gemini-2.5-flash");
+  const [customModelGateway, setCustomModelGateway] = useState("");
+  const [defaultModelGemini, setDefaultModelGemini] = useState("gemini-2.5-flash");
+  const [customModelGemini, setCustomModelGemini] = useState("");
+  const [defaultModelGroq, setDefaultModelGroq] = useState("meta-llama/llama-4-scout-17b-16e-instruct");
+  const [customModelGroq, setCustomModelGroq] = useState("");
   const [fallbackModelsText, setFallbackModelsText] = useState("");
   const [providerOrderText, setProviderOrderText] = useState("");
   const [temperature, setTemperature] = useState(0.4);
@@ -67,14 +72,19 @@ export default function AiWriterSettingsPage() {
   useEffect(() => {
     fetch("/api/ai/config/status")
       .then(async (response) => {
-        const json = (await response.json()) as StatusPayload & { message?: string };
+        const json = (await response.json()) as any;
         if (!response.ok) throw new Error(json.message || "Failed to load AI settings");
         setStatus(json);
 
         const config = json.studioSettings || {};
         setEnabled(Boolean(config.enabled));
         setMode(config.mode || "gateway");
-        setDefaultModel(config.defaultModel || "openai/gpt-5.4");
+        setDefaultModel(config.defaultModel || "google/gemini-2.5-flash");
+        setCustomModelGateway(config.customModelGateway || "");
+        setDefaultModelGemini(config.defaultModelGemini || "gemini-2.5-flash");
+        setCustomModelGemini(config.customModelGemini || "");
+        setDefaultModelGroq(config.defaultModelGroq || "meta-llama/llama-4-scout-17b-16e-instruct");
+        setCustomModelGroq(config.customModelGroq || "");
         setFallbackModelsText((config.fallbackModels || []).join("\n"));
         setProviderOrderText((config.gatewayProviderOrder || []).join("\n"));
         setTemperature(
@@ -108,6 +118,11 @@ export default function AiWriterSettingsPage() {
         enabled,
         mode,
         defaultModel,
+        customModelGateway,
+        defaultModelGemini,
+        customModelGemini,
+        defaultModelGroq,
+        customModelGroq,
         fallbackModels: fallbackModelsText
           .split(/\r?\n|,/g)
           .map((item) => item.trim())
@@ -246,11 +261,56 @@ export default function AiWriterSettingsPage() {
             </label>
           </div>
 
-          <Input
-            value={defaultModel}
-            onChange={(event) => setDefaultModel(event.target.value)}
-            placeholder="Default model"
-          />
+          <div className="space-y-3">
+            {mode === "gateway" && (
+              <>
+                <Input
+                  value={defaultModel}
+                  onChange={(event) => setDefaultModel(event.target.value)}
+                  placeholder="Gateway Default model (e.g. google/gemini-2.5-flash)"
+                />
+                {defaultModel === "custom" && (
+                  <Input
+                    value={customModelGateway}
+                    onChange={(event) => setCustomModelGateway(event.target.value)}
+                    placeholder="Custom Gateway Model ID"
+                  />
+                )}
+              </>
+            )}
+            {mode === "direct-gemini" && (
+              <>
+                <Input
+                  value={defaultModelGemini}
+                  onChange={(event) => setDefaultModelGemini(event.target.value)}
+                  placeholder="Gemini Default model (e.g. gemini-2.5-flash)"
+                />
+                {defaultModelGemini === "custom" && (
+                  <Input
+                    value={customModelGemini}
+                    onChange={(event) => setCustomModelGemini(event.target.value)}
+                    placeholder="Custom Gemini Model ID"
+                  />
+                )}
+              </>
+            )}
+            {mode === "direct-groq" && (
+              <>
+                <Input
+                  value={defaultModelGroq}
+                  onChange={(event) => setDefaultModelGroq(event.target.value)}
+                  placeholder="Groq Default model"
+                />
+                {defaultModelGroq === "custom" && (
+                  <Input
+                    value={customModelGroq}
+                    onChange={(event) => setCustomModelGroq(event.target.value)}
+                    placeholder="Custom Groq Model ID"
+                  />
+                )}
+              </>
+            )}
+          </div>
 
           <div className="grid gap-3 md:grid-cols-2">
             <textarea

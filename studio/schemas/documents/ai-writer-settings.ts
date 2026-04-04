@@ -15,6 +15,8 @@ const GATEWAY_MODELS = [
   { title: "Claude 3.5 Haiku", value: "anthropic/claude-3-5-haiku-20241022" },
   { title: "── Meta (via Gateway) ──────", value: "" },
   { title: "Llama 4 Scout (17B)", value: "meta/llama-4-scout-17b-16e-instruct" },
+  { title: "── Custom ──────────────────", value: "" },
+  { title: "⚙️ Input Manual (Custom Model)", value: "custom" },
 ];
 
 const GEMINI_MODELS = [
@@ -22,6 +24,7 @@ const GEMINI_MODELS = [
   { title: "Gemini 2.5 Pro", value: "gemini-2.5-pro" },
   { title: "Gemini 2.0 Flash", value: "gemini-2.0-flash" },
   { title: "Gemini 1.5 Flash", value: "gemini-1.5-flash" },
+  { title: "⚙️ Input Manual (Custom Model)", value: "custom" },
 ];
 
 const GROQ_MODELS = [
@@ -29,6 +32,7 @@ const GROQ_MODELS = [
   { title: "Llama 3.3 (70B)", value: "llama-3.3-70b-versatile" },
   { title: "Mixtral 8x7B", value: "mixtral-8x7b-32768" },
   { title: "Gemma 2 (9B)", value: "gemma2-9b-it" },
+  { title: "⚙️ Input Manual (Custom Model)", value: "custom" },
 ];
 
 export default defineType({
@@ -95,6 +99,15 @@ export default defineType({
       group: "model",
     }),
     defineField({
+      name: "customModelGateway",
+      title: "Input Model Manual (Override Dropdown)",
+      description:
+        "Isi untuk mengoverride pilihan dropdown di atas. Contoh: 'google/gemini-2.5-pro', 'openai/gpt-4o', 'anthropic/claude-3-7-sonnet-20250219'",
+      type: "string",
+      hidden: ({ document }) => document?.mode !== "gateway",
+      group: "model",
+    }),
+    defineField({
       name: "defaultModelGemini",
       title: "Model AI — Mode Direct Gemini",
       description:
@@ -108,6 +121,15 @@ export default defineType({
       group: "model",
     }),
     defineField({
+      name: "customModelGemini",
+      title: "Input Model Manual (Override Dropdown)",
+      description:
+        "Isi untuk mengoverride pilihan dropdown di atas. Contoh: 'gemini-1.5-pro', 'gemini-2.0-flash'",
+      type: "string",
+      hidden: ({ document }) => document?.mode !== "direct-gemini",
+      group: "model",
+    }),
+    defineField({
       name: "defaultModelGroq",
       title: "Model AI — Mode Direct Groq",
       description:
@@ -118,6 +140,15 @@ export default defineType({
       options: {
         list: GROQ_MODELS,
       },
+      group: "model",
+    }),
+    defineField({
+      name: "customModelGroq",
+      title: "Input Model Manual (Override Dropdown)",
+      description:
+        "Isi untuk mengoverride pilihan dropdown di atas. Contoh: 'mixtral-8x7b-32768', 'gemma2-9b-it'",
+      type: "string",
+      hidden: ({ document }) => document?.mode !== "direct-groq",
       group: "model",
     }),
     defineField({
