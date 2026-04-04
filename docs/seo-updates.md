@@ -16,6 +16,26 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-04 - Implement Sanity Redirect Management & Wildcard Fallbacks
+- Changed files:
+  - `frontend/next.config.mjs`
+  - `AGENTS.md`
+  - `docs/sanity-redirect-management.md` (New)
+  - `frontend/scripts/check-sanity-redirects.mjs` (New)
+  - `frontend/scripts/update-curation-with-sanity.mjs` (New)
+  - `frontend/scripts/import-approved-redirects.mjs` (New)
+- Summary:
+  - Integrated Sanity as the Source of Truth for redireksi.
+  - Implemented structural wildcard redirects in `next.config.mjs` (`/product/`, `/service/`, `/digital-product/`, `/it-services/`).
+  - Created automation scripts to fetch, audit, and import approved redirects from curation CSVs to Sanity with backend validation.
+  - Imported 81 approved redirects to Sanity after validating destination availability.
+- SEO impact:
+  - High. Recovers link equity for legacy URLs by implementing 301 redirects.
+  - Reduces 404 errors for high-traffic legacy product and service pages.
+  - Ensures no "broken redirects" by validating destinations against live Sanity/Local content.
+- Verification:
+  - Manual script execution confirmed 81 successful imports and validated against 467 Sanity documents.
+
 ## 2026-04-04 - Rewrite Public Copy for `/pembuatan-website` Cluster
 - Changed files:
   - `frontend/lib/legacy-pages/content/website.ts`

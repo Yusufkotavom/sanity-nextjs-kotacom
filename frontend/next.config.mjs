@@ -21,6 +21,46 @@ const STATIC_REDIRECTS = [
     destination: "/",
     permanent: true,
   },
+  {
+    source: "/product/:slug",
+    destination: "/products/:slug",
+    permanent: true,
+  },
+  {
+    source: "/service/:slug",
+    destination: "/services/:slug",
+    permanent: true,
+  },
+  {
+    source: "/digital-product/:slug",
+    destination: "/products/:slug",
+    permanent: true,
+  },
+  {
+    source: "/it-services/:slug",
+    destination: "/services/:slug",
+    permanent: true,
+  },
+  {
+    source: "/product-tag/:slug*",
+    destination: "/products",
+    permanent: true,
+  },
+  {
+    source: "/product-category/:slug*",
+    destination: "/products",
+    permanent: true,
+  },
+  {
+    source: "/tag/:slug*",
+    destination: "/blog",
+    permanent: true,
+  },
+  {
+    source: "/blog/page/:page",
+    destination: "/blog",
+    permanent: true,
+  },
 ];
 
 const REDIRECTS_QUERY = `*[

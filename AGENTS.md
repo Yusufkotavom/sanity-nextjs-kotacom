@@ -49,6 +49,16 @@
   - Frontend query/fetch contract
   - Frontend rendering/metadata output
 
+## Redirect Management Rule
+
+- **Sanity as Source of Truth:** All specific path-to-path redirects must be managed in Sanity CMS using the `redirect` document type.
+- **Structural Wildcards:** Structural redirects (e.g., `/product/:slug` -> `/products/:slug`) are managed in `frontend/next.config.mjs` via the `STATIC_REDIRECTS` array.
+- **Validation Before Import:** Before importing or creating new redirects, agents MUST verify that the destination URL is valid (exists in Sanity or Local Repo).
+- **Documentation:** For detailed workflow, refer to `docs/sanity-redirect-management.md`.
+- **Scripts:**
+  - Use `frontend/scripts/import-approved-redirects.mjs` to sync approved CSVs to Sanity.
+  - Use `frontend/scripts/update-curation-with-sanity.mjs` to audit coverage.
+
 ## Sanity Dev Communication Rule
 
 - For all **agent-driven Sanity communication** (read/write/query/import/mutation via scripts/CLI), default to **development credentials first**.
