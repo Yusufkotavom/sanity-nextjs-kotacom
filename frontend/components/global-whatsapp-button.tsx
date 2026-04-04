@@ -13,6 +13,8 @@ type GlobalWhatsAppButtonProps = {
   fallbackLabel?: string;
   fallbackTarget?: boolean;
   label?: string;
+  predefinedText?: string;
+  sourceUrl?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
   className?: string;
@@ -25,6 +27,8 @@ export default async function GlobalWhatsAppButton({
   fallbackLabel = "Hubungi Kami",
   fallbackTarget = false,
   label,
+  predefinedText,
+  sourceUrl,
   variant = "default",
   size = "default",
   className,
@@ -40,8 +44,8 @@ export default async function GlobalWhatsAppButton({
     return (
       <WhatsAppLink
         phoneNumber={whatsApp.phoneNumber}
-        predefinedText={whatsApp.predefinedText}
-        sourceUrl={whatsApp.sourceUrl}
+        predefinedText={predefinedText ?? whatsApp.predefinedText}
+        sourceUrl={sourceUrl ?? whatsApp.sourceUrl}
         ariaLabel={ariaLabel || resolvedLabel}
         className={baseClassName}
       >

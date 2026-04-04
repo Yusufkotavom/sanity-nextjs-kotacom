@@ -21,7 +21,7 @@ export function ServiceTypesSection({
           <SectionPanel
             key={item.title}
             tone={index % 3 === 0 ? "amber" : index % 3 === 1 ? "sky" : "emerald"}
-            className="overflow-hidden rounded-[1.65rem] p-4 md:p-5"
+            className="group overflow-hidden rounded-[1.65rem] p-4 transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(15,23,42,0.14)] md:p-5"
           >
             <div className="flex h-full flex-col">
               <div className="inline-flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white/75 px-3 py-1 text-ui-label text-foreground/70 dark:border-white/10 dark:bg-white/5">
@@ -38,7 +38,7 @@ export function ServiceTypesSection({
                     src={item.image}
                     alt={item.title}
                     fill
-                    className="object-cover"
+                    className="object-cover transition duration-500 group-hover:scale-[1.04]"
                     sizes="(min-width: 1280px) 28vw, (min-width: 768px) 45vw, 100vw"
                   />
                 </div>
@@ -47,7 +47,7 @@ export function ServiceTypesSection({
                 <div className="mt-5">
                   <Link
                     href={item.href}
-                    className="inline-flex rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-white dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+                    className="inline-flex rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium text-foreground transition duration-300 hover:bg-white group-hover:border-black/20 group-hover:translate-x-1 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 dark:group-hover:border-white/20"
                   >
                     Lihat detail
                   </Link>

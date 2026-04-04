@@ -1,11 +1,28 @@
+import { cn } from "@/lib/utils";
 import { BadgeCheck } from "lucide-react";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import { SectionIntro, SectionPanel, SectionShell } from "@/components/ui/section-shell";
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 
-export function PricingPlansSection({
+function buildPricingPlanPrompt({
+  planName,
+  serviceTitle,
+}: {
+  planName: string;
+  serviceTitle: string;
+}) {
+  return [
+    `Halo Kotacom, saya tertarik dengan paket ${planName} untuk layanan ${serviceTitle}.`,
+    "Mohon kirim detail scope, estimasi timeline, dan langkah mulai yang paling sesuai.",
+  ].join("\n\n");
+}
+
+export async function PricingPlansSection({
   pricingPlans,
+  serviceTitle,
 }: {
   pricingPlans: NonNullable<LegacyRewriteCopy["pricingPlans"]>;
+  serviceTitle: string;
 }) {
   return (
     <SectionShell id="paket" className="py-10 md:py-12">
@@ -27,7 +44,11 @@ export function PricingPlansSection({
                     ? "emerald"
                     : "rose"
             }
-            className="rounded-[1.65rem] p-5 md:p-6"
+            className={cn(
+              "group rounded-[1.65rem] p-5 transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_90px_rgba(15,23,42,0.16)] md:p-6",
+              plan.recommended &&
+                "relative overflow-hidden border-2 border-primary/35 bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.18),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.76),rgba(255,255,255,0.62))] shadow-[0_30px_100px_rgba(37,99,235,0.18)] ring-1 ring-primary/15 dark:bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.18),transparent_36%),linear-gradient(180deg,rgba(15,23,42,0.72),rgba(15,23,42,0.56))]",
+            )}
           >
             <div className="flex h-full flex-col">
               <div className="flex flex-wrap items-center gap-3">
@@ -35,7 +56,7 @@ export function PricingPlansSection({
                   {plan.name}
                 </div>
                 {plan.recommended ? (
-                  <span className="inline-flex rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground">
+                  <span className="inline-flex rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-foreground shadow-sm">
                     Recommended
                   </span>
                 ) : null}
@@ -56,6 +77,21 @@ export function PricingPlansSection({
                   </li>
                 ))}
               </ul>
+              <div className="mt-6">
+                <GlobalWhatsAppButton
+                  label={`Pilih ${plan.name}`}
+                  predefinedText={buildPricingPlanPrompt({
+                    planName: plan.name,
+                    serviceTitle,
+                  })}
+                  className={cn(
+                    "rounded-full border-0 bg-green-500 text-white shadow-lg transition duration-300 hover:bg-green-600 hover:shadow-[0_18px_50px_rgba(34,197,94,0.32)]",
+                    plan.recommended &&
+                      "bg-green-500/95 ring-2 ring-white/65 ring-offset-2 ring-offset-transparent dark:ring-white/20",
+                  )}
+                  ariaLabel={`Chat WhatsApp untuk paket ${plan.name}`}
+                />
+              </div>
             </div>
           </SectionPanel>
         ))}

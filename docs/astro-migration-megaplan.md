@@ -36,11 +36,11 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] sitemap-driven export run with `sitemap-0.xml`
 - [x] Astro source repository discovered and inventoried
 - [x] baseline migration blueprint documented
-- [x] route contract v1 published (`docs/astro-next-route-contract.md`)
+- [x] route contract v1 published (`docs/archive/2026-04-historical-plans/astro-next-route-contract.md`)
 - [x] top-300 manual curation worklist initialized (`docs/curation/manual-top300-worklist-v1.csv`)
 - [x] Astro static-page clusters scaffolded in Next.js (code-driven placeholder routes, non-Sanity)
 - [x] Legacy route rewrite shell v1 applied with reusable components for service/trust clusters (`pembuatan-website`, `percetakan`, `software`, `layanan`, `about`, `contact`, `privacy`, `sistem-pos`)
-- [x] 3-worker rewrite orchestration contract published (`docs/rewrite-worker-orchestration.md`)
+- [x] 3-worker rewrite orchestration contract published (`docs/archive/2026-04-historical-plans/rewrite-worker-orchestration.md`)
 - [x] Legacy route metadata moved to centralized helper with `seoSettings` global fallback; hardcoded `noindex` removed from rewrite clusters
 - [x] Footer social area aligned to shared icon-only reusable pattern (`frontend/components/footer.tsx`)
 - [x] Worker 2 contract hardening shipped for navigation links (Studio schema validation + frontend query fallback sync)
@@ -310,7 +310,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Legacy Astro static service/trust clusters switched to reusable rewrite template shell (Wave 1)
 - [x] Root slug static generation expanded for `jasa-cetak-buku-<kota>` pages using deduplicated local dataset adapter
 - [x] `layanan/[slug]` legacy Astro JSON pages now served from code-driven local adapter route with normalized section renderer (`agency-landing`, `biro-jasa-perizinan`, `jasa-pengukuhan-pkp`)
-- Blocker note (2026-04-02): Remaining template refactors depend on final shared UI shell lock from orchestration (`docs/rewrite-worker-orchestration.md`) before broader homepage/blog/product rollout.
+- Blocker note (2026-04-02): Remaining template refactors depend on final shared UI shell lock from orchestration (`docs/archive/2026-04-historical-plans/rewrite-worker-orchestration.md`) before broader homepage/blog/product rollout.
 
 ### D3. Content UX Upgrade
 - [x] Improve readability modules (TOC, CTA in-content, related links, FAQ blocks).
@@ -345,6 +345,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] `page`-specific Studio actions are temporarily rolled back from the active action registry so Task creation and core editing flows stay stable while the custom action API mismatch is debugged separately.
 - [x] Studio core packages are now upgraded to `5.19.0`, so the hosted Studio can pick up newer Task/document runtime fixes after the custom-action rollback proved insufficient on its own.
 - [x] `page`-specific Studio actions are now re-enabled on top of the upgraded `5.19.0` runtime, restoring the hybrid preset and page-to-post conversion workflow in Studio.
+- [x] Historical migration planning docs and worker prompt files are now moved under `docs/archive/`, leaving `docs/` focused on current operational guidance and active workflows.
+- [x] Rewrite landing sections now have stronger service/pricing interaction polish, and pricing cards can route package-specific WhatsApp leads through the shared global WhatsApp settings path.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.
 - Blocker note (2026-04-02): Regenerated `v2` assets are ready, but final selection/approval and route-level wiring are still pending.
@@ -411,6 +413,6 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - `frontend/tmp/gsc-kotacom-full-sitemap0/gsc-redirect-auto-top1000.csv`
   - `frontend/tmp/gsc-kotacom-full-sitemap0/gsc-manual-priority-top300.csv`
 - Plan and execution docs:
-  - `docs/astro-to-next-migration-plan.md`
+  - `docs/archive/2026-04-historical-plans/astro-to-next-migration-plan.md`
   - `docs/astro-migration-megaplan.md`
   - `docs/seo-updates.md`

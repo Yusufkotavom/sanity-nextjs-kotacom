@@ -43,7 +43,7 @@ export default function RewriteLandingSections({
     <>
       <UtilityStrip tocItems={tocItems} ctaLinks={copy.ctaLinks} />
       <ServiceTypesSection serviceTypes={serviceTypes} />
-      <PricingPlansSection pricingPlans={pricingPlans} />
+      <PricingPlansSection pricingPlans={pricingPlans} serviceTitle={page.title} />
       <FeaturesSection features={features} />
       <ProofSection proofItems={proofItems} />
       <TestimonialsSection testimonials={testimonials} />

@@ -4009,3 +4009,45 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter studio run typecheck` passed.
   - `pnpm --filter studio run build` passed.
+
+## 2026-04-04 - Historical Docs Archived
+- Changed files:
+  - `docs/archive/README.md`
+  - `docs/archive/2026-04-historical-plans/astro-next-route-contract.md`
+  - `docs/archive/2026-04-historical-plans/astro-to-next-migration-plan.md`
+  - `docs/archive/2026-04-historical-plans/rewrite-content-progress.md`
+  - `docs/archive/2026-04-historical-plans/rewrite-worker-orchestration.md`
+  - `docs/archive/2026-04-worker-prompts/worker-1-ui-shell.md`
+  - `docs/archive/2026-04-worker-prompts/worker-2-cms-contract.md`
+  - `docs/archive/2026-04-worker-prompts/worker-3-rewrite-pages.md`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Archived one-off migration planning docs, rewrite orchestration notes, and worker prompt files that were no longer referenced by active repo workflows.
+  - Added `docs/archive/README.md` to distinguish active operational docs from historical planning artifacts.
+  - Updated the migration megaplan to point at the archived paths for historical references that are still worth retaining.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: lower documentation noise and clearer separation between active workflow docs and historical migration notes.
+- Verification:
+  - Manual audit of `docs/` completed.
+  - Active references in `docs/astro-migration-megaplan.md` updated to the new archive paths.
+
+## 2026-04-04 - Rewrite Service Focus and Pricing Cards Polished
+- Changed files:
+  - `frontend/components/global-whatsapp-button.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/index.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/service-types-section.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/pricing-plans-section.tsx`
+  - `docs/seo-updates.md`
+  - `docs/astro-migration-megaplan.md`
+- Summary:
+  - Added stronger hover motion and image/link lift behavior to the rewrite `Service Focus` lane cards.
+  - Added per-plan WhatsApp CTA buttons to rewrite pricing cards using the global WhatsApp settings, while overriding the predefined message so each click references the selected pricing plan and current service page.
+  - Gave the recommended pricing card a more prominent visual treatment with a brighter surface, stronger ring/shadow treatment, and a clearer recommended badge.
+- SEO/integration impact:
+  - No direct SEO impact.
+  - Integration impact: pricing conversion CTAs now inherit the global WhatsApp configuration path while sending more contextual lead messages tied to the selected package.
+- Verification:
+  - `pnpm --filter frontend run typecheck` passed.
+  - `pnpm --filter frontend run build` passed.
