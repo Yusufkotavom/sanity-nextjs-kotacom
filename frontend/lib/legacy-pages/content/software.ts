@@ -19,12 +19,12 @@ export function buildSoftwareCopy(page: LegacyAstroPage): LegacyRewriteCopy {
     primaryKeyword,
     secondaryKeywords: [
       `${title} custom`,
-      `${title} untuk operasional`,
+      `${title} untuk bisnis`,
       "Software bisnis terintegrasi",
-      "Aplikasi internal perusahaan",
+      "Aplikasi custom untuk perusahaan",
     ],
     description: `${primaryKeyword} untuk bisnis yang membutuhkan software custom, implementasi sistem, dan instalasi yang lebih terukur demi efisiensi operasional, visibilitas data, dan eksekusi tim yang lebih cepat.`,
-    intro: `Kami membangun ${title.toLowerCase()} dengan pendekatan produk: requirement jelas, prioritas fitur terukur, dan implementasi bertahap agar cepat memberi dampak bisnis. Dibanding live site, rewrite ini kami perluas agar intent pencarian software custom, implementasi enterprise, dan instalasi operasional tertangkap lebih jelas dalam satu cluster SEO.`,
+    intro: `Kami membangun ${title.toLowerCase()} dengan pendekatan produk: kebutuhan dipetakan dengan jelas, fitur diprioritaskan bertahap, dan implementasi diarahkan agar cepat memberi dampak bisnis. Fokusnya adalah software yang benar-benar membantu pekerjaan harian, bukan sekadar menambah sistem baru.`,
     ctaLabel: "Konsultasi Kebutuhan Software",
     ctaHref: DEFAULT_CTA,
   };

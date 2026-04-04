@@ -22,7 +22,7 @@ export const CETAK_BUKU_CITY_INTENT_OVERRIDES: Record<
   },
   mojokerto: {
     intro:
-      "Halaman ini dirancang untuk kebutuhan cetak buku Mojokerto yang menuntut efisiensi biaya tanpa menurunkan mutu. Kami bantu dari penentuan spesifikasi sampai kontrol hasil cetak.",
+      "Layanan cetak buku Mojokerto ini dirancang untuk kebutuhan yang menuntut efisiensi biaya tanpa menurunkan mutu. Kami bantu dari penentuan spesifikasi sampai kontrol hasil cetak.",
     ctaLabel: "Konsultasi Cetak Buku Mojokerto",
     finalCtaTitle: "Cetak Buku Mojokerto dengan Skema Produksi Lebih Efisien",
     finalCtaDescription:
@@ -70,7 +70,7 @@ export const CETAK_BUKU_CITY_INTENT_OVERRIDES: Record<
   },
   kendari: {
     intro:
-      "Halaman ini difokuskan untuk kebutuhan cetak buku Kendari yang mengutamakan kualitas visual, durabilitas buku, dan efisiensi biaya produksi.",
+      "Layanan cetak buku Kendari ini difokuskan pada kebutuhan yang mengutamakan kualitas visual, durabilitas buku, dan efisiensi biaya produksi.",
     ctaLabel: "Konsultasi Cetak Buku Kendari",
     finalCtaTitle: "Butuh Cetak Buku Kendari dengan Kualitas Konsisten?",
     finalCtaDescription:

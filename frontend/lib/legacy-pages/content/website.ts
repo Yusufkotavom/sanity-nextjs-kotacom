@@ -30,18 +30,18 @@ export function buildWebsiteCityCopy(page: LegacyAstroPage): LegacyRewriteCopy {
       `Website toko online ${city}`,
     ],
     description: `${primaryKeyword} untuk bisnis lokal yang membutuhkan website modern, SEO friendly, cepat diakses, dan siap dipakai untuk lead generation, company profile, maupun toko online.`,
-    intro: `Kami membantu bisnis di ${city} membangun website yang fokus ke konversi, kecepatan, dan kredibilitas brand agar lebih mudah menangkap peluang dari traffic organik maupun iklan. Coverage ini juga kami perluas untuk intent yang sering muncul di live site seperti company profile, toko online, dan landing page bisnis lokal.`,
+    intro: `Kami membantu bisnis di ${city} membangun website yang fokus ke konversi, kecepatan, dan kredibilitas brand agar lebih mudah menangkap peluang dari traffic organik maupun iklan. Solusinya bisa diarahkan untuk website company profile, toko online, maupun landing page sesuai kebutuhan bisnis lokal Anda.`,
     highlights: [
-      "Arsitektur halaman dibuat sesuai intent pencarian.",
-      "Optimasi performa dan struktur SEO on-page sejak awal.",
-      "Komponen konten reusable agar update lebih cepat.",
-      "CTA dan alur kontak dioptimalkan untuk lead.",
+      "Struktur halaman disusun sesuai kebutuhan pencarian calon pelanggan di kota Anda.",
+      "Optimasi performa dan SEO on-page disiapkan sejak awal pengerjaan.",
+      "Konten dibuat mudah diperbarui saat promosi, layanan, atau penawaran berubah.",
+      "CTA dan alur kontak diarahkan agar inquiry lebih cepat masuk.",
     ],
     process: [
-      "Audit kebutuhan bisnis dan kompetitor lokal.",
-      "Penyusunan struktur halaman dan copy framework.",
-      "Implementasi UI, konten, dan optimasi teknis.",
-      "Go-live, monitoring, dan iterasi konversi.",
+      "Pelajari kebutuhan bisnis, target pasar, dan persaingan lokal di kota Anda.",
+      "Susun struktur halaman, pesan utama, dan CTA untuk halaman inti.",
+      "Kerjakan desain, konten, dan optimasi teknis agar website siap live.",
+      "Pantau performa awal lalu lanjutkan penyempurnaan untuk meningkatkan konversi.",
     ],
     faqs: [
       {
@@ -52,7 +52,7 @@ export function buildWebsiteCityCopy(page: LegacyAstroPage): LegacyRewriteCopy {
       {
         question: "Apakah website sudah siap SEO dari awal?",
         answer:
-          "Ya. Struktur heading, metadata, internal linking, dan kecepatan halaman disiapkan dari tahap build.",
+          "Ya. Struktur heading, metadata, internal linking, dan kecepatan halaman disiapkan sejak awal agar website lebih siap bersaing di pencarian.",
       },
       {
         question: `Apakah bisa dibuat website company profile, toko online, atau landing page untuk bisnis di ${city}?`,

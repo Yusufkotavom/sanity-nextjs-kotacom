@@ -6,7 +6,7 @@ export const WEBSITE_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCop
   ...WEBSITE_PAGE_OVERRIDES,
   portfolio: {
     intro:
-      "Portfolio tidak hanya untuk pajangan visual. Copy halaman ini dipoles agar calon klien bisa menilai pendekatan kerja, relevansi hasil, dan potensi dampak bisnis dari proyek yang sudah pernah dikerjakan.",
+      "Portfolio tidak hanya berfungsi sebagai pajangan visual. Halaman ini membantu calon klien menilai pendekatan kerja, relevansi hasil, dan potensi dampak bisnis dari proyek yang sudah pernah dikerjakan.",
     ctaLabel: "Diskusikan Proyek Serupa",
     finalCtaTitle: "Ingin Hasil Sejenis untuk Bisnis Anda?",
     finalCtaDescription:

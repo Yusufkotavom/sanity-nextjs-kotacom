@@ -240,7 +240,7 @@ const SLUG_INTENT_FAQS: Array<{
     match: (page) => page.slug.includes("implementasi") || page.slug.includes("instalasi"),
     faqs: [
       {
-        question: "Bagaimana memastikan tim internal cepat beradaptasi dengan sistem baru?",
+        question: "Bagaimana memastikan tim cepat beradaptasi dengan sistem baru?",
         answer:
           "Implementasi disertai panduan alur, training, dan fase transisi agar proses adopsi lebih lancar dan minim hambatan operasional.",
       },
@@ -421,7 +421,7 @@ export function buildGenericCopy(page: LegacyAstroPage): LegacyRewriteCopy {
     highlights: [
       "Scope pekerjaan jelas sejak awal.",
       "Timeline produksi terstruktur.",
-      "Kualitas output dipantau dengan QA internal.",
+      "Kualitas output dipantau dengan proses QA sebelum hasil akhir dikirim atau digunakan.",
       "Handover dan support pasca-launch tersedia.",
     ],
     process: [

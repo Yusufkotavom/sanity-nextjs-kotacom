@@ -8,14 +8,14 @@ export function buildPercetakanCetakBukuPageCopy(): LegacyRewriteCopy {
       "Cetak buku murah Surabaya",
       "Percetakan buku untuk pemula",
       "Jasa cetak buku tanpa ribet",
-      "Cetak bokus Surabaya cepat",
+      "Cetak buku Surabaya cepat",
       "Percetakan buku berkualitas",
       "Jasa cetak buku online Surabaya"
     ],
     description:
       "Layanan cetak buku Surabaya untuk penulis, sekolah, komunitas, dan produsen konten yang butuh hasil cetak berkualitas dengan proses yang mudah dipahami. Kami menangani segala hal mulai dari pengecekan file hingga pengiriman ke seluruh Indonesia.",
     intro:
-      "Punya naskah siap dicetak tapi bingung mulai dari mana? Kami bantu Anda cetak buku dengan proses yang sederhana: mulai dari konsultasi spesifikasi, pengecekan file, produksi, hingga pengiriman. Tidak perlu lagi mikir teknis cetak, kami yang akanuruskan bagian teknisnya.",
+      "Punya naskah siap dicetak tapi bingung mulai dari mana? Kami bantu Anda cetak buku dengan proses yang sederhana: mulai dari konsultasi spesifikasi, pengecekan file, produksi, hingga pengiriman. Anda tidak perlu repot memikirkan detail teknis cetak, karena kami bantu mengarahkan prosesnya dari awal.",
     highlights: [
       "Proses cetak yang jelas dan mudah dipahami",
       "Pengecekan file gratis sebelum produksi",
@@ -50,7 +50,7 @@ export function buildPercetakanCetakBukuPageCopy(): LegacyRewriteCopy {
       {
         question: "Bisakah saya lihat contoh hasil cetak sebelum order besar?",
         answer:
-          "Bisa! Kami menyediakan layanan proof cetak untuk 1-2 buah buku dengan biaya produksi normal. Ini Cocok untuk memastikan hasil cetak sesuai ekspektasi sebelum melakukan order jumlah besar."
+          "Bisa. Kami menyediakan layanan proof cetak untuk 1-2 buku dengan biaya produksi normal. Ini cocok untuk memastikan hasil cetak sesuai ekspektasi sebelum melakukan order dalam jumlah besar."
       },
       {
         question: "Apakah kami melayani pengiriman ke luar pulau Jawa?",
@@ -73,12 +73,12 @@ export function buildPercetakanCetakBukuPageCopy(): LegacyRewriteCopy {
       {
         title: "Mengapa Memilih Cetak Buku Profesional Lebih Baik daripada Sendiri",
         description:
-          "Meskipun ada opsi cetak sendiri, menggunakan jasa cetak profesional seperti kami menjamin hasil cetak yang konsisten dan berkualitas. Kami memiliki mesin cetak profesional yang terawat secara rutin, sehingga hasil cetak tidak bercak atau bersyarap yang sering terjadi pada printer biasa."
+          "Meskipun ada opsi cetak sendiri, menggunakan jasa cetak profesional membantu menjaga hasil cetak tetap konsisten dan berkualitas. Proses produksi yang lebih stabil juga mengurangi risiko hasil bercak, potongan tidak presisi, atau warna yang tidak merata."
       },
       {
         title: "Memilih Tipe Jilid yang Tepat untuk Buku Anda",
         description:
-          "Untuk buku tebal (di atas 50 halaman), jilid lem panas atau jahit benang lebih cocok. Untuk buku tipis (di bawah 50 halaman), opsi saddle stitch atau spirale lebih ekonomis dan fungsional. Konsultasikan dengan kami untuk rekomendasi sesuai jenis buku Anda."
+          "Untuk buku tebal, jilid lem panas atau jahit benang biasanya lebih cocok. Untuk buku tipis, opsi saddle stitch atau spiral bisa lebih ekonomis dan fungsional. Rekomendasi terbaik tetap mengikuti jenis buku, frekuensi pemakaian, dan target kualitas yang Anda inginkan."
       }
     ]
   };

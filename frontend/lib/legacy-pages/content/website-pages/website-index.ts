@@ -9,23 +9,23 @@ export function buildWebsiteIndexPageCopy(): LegacyRewriteCopy {
       "Pembuatan website bisnis",
       "Website company profile",
       "Website siap SEO",
-      "Jasa web developer Indonesia",
+      "Jasa website untuk lead dan penjualan",
     ],
     description:
-      "Jasa pembuatan website untuk bisnis yang membutuhkan tampilan kredibel, performa cepat, dan struktur SEO yang siap dikembangkan.",
+      "Jasa pembuatan website untuk bisnis yang membutuhkan tampilan kredibel, loading cepat, struktur SEO rapi, dan CTA yang siap menghasilkan lead.",
     intro:
-      "Kami membantu bisnis membangun website yang tidak hanya menarik secara visual, tetapi juga siap mendukung traffic organik, campaign iklan, dan konversi lead.",
+      "Kami membantu bisnis membangun website yang tidak hanya enak dilihat, tetapi juga jelas pesannya, cepat diakses, dan siap dipakai untuk menangkap inquiry, lead, dan penjualan.",
     highlights: [
-      "Struktur halaman disusun berdasarkan intent pencarian.",
-      "Desain dan copy diarahkan untuk meningkatkan konversi.",
-      "Optimasi performa, metadata, dan internal linking sejak awal.",
-      "Website mudah dikembangkan untuk kebutuhan jangka panjang.",
+      "Struktur halaman disusun agar pengunjung cepat paham layanan dan langkah berikutnya.",
+      "Desain dan pesan utama diarahkan untuk meningkatkan inquiry, lead, dan penjualan.",
+      "Optimasi performa, metadata, dan SEO on-page disiapkan sejak awal.",
+      "Website mudah dikembangkan saat bisnis membutuhkan halaman atau fitur tambahan.",
     ],
     process: [
-      "Audit tujuan bisnis, audience, dan positioning layanan.",
-      "Penyusunan arsitektur halaman serta keyword mapping.",
-      "Eksekusi desain, development, dan QA teknis.",
-      "Launch, monitoring performa, dan iterasi konversi.",
+      "Pahami tujuan bisnis, target pasar, dan layanan yang paling ingin ditonjolkan.",
+      "Susun struktur halaman, pesan utama, dan arah keyword untuk tiap halaman inti.",
+      "Kerjakan desain, development, dan pengecekan teknis sebelum website live.",
+      "Lanjutkan optimasi setelah launch berdasarkan performa halaman dan respon pengunjung.",
     ],
     faqs: [
       {
@@ -36,7 +36,7 @@ export function buildWebsiteIndexPageCopy(): LegacyRewriteCopy {
       {
         question: "Apakah website sudah siap untuk SEO dan iklan?",
         answer:
-          "Ya. Struktur teknis, kecepatan, metadata, dan alur CTA disiapkan agar mendukung akuisisi dari organik maupun paid traffic.",
+          "Ya. Struktur teknis, kecepatan, metadata, dan alur CTA disiapkan agar website lebih siap mendukung traffic organik maupun iklan.",
       },
     ],
     ctaLabel: "Mulai Proyek Website",

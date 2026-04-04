@@ -116,7 +116,7 @@ export const PRINTING_DETAIL_PRESETS: Record<string, Partial<LegacyRewriteCopy>>
   },
   "cetak-al-quran": {
     intro:
-      "Halaman ini dioptimasi untuk kebutuhan cetak mushaf dengan standar ketelitian lebih tinggi: keterbacaan teks, ketahanan jilid, dan kualitas finishing yang nyaman dipakai jangka panjang.",
+      "Layanan ini difokuskan untuk kebutuhan cetak mushaf dengan standar ketelitian lebih tinggi: keterbacaan teks, ketahanan jilid, dan kualitas finishing yang nyaman dipakai jangka panjang.",
     ctaLabel: "Konsultasi Cetak Al-Quran",
     finalCtaTitle: "Butuh Cetak Al-Quran dengan Hasil Rapi dan Presisi?",
     finalCtaDescription:
@@ -136,7 +136,7 @@ export const PRINTING_DETAIL_PRESETS: Record<string, Partial<LegacyRewriteCopy>>
   },
   "cetak-buku-kenangan-sekolah": {
     intro:
-      "Halaman ini dioptimasi untuk kebutuhan institusi pendidikan yang ingin menghasilkan buku kenangan dengan visual konsisten, layout rapi, dan proses produksi yang terkoordinasi lintas kelas atau angkatan.",
+      "Layanan ini difokuskan untuk institusi pendidikan yang ingin menghasilkan buku kenangan dengan visual konsisten, layout rapi, dan proses produksi yang terkoordinasi lintas kelas atau angkatan.",
     ctaLabel: "Konsultasi Buku Kenangan",
     finalCtaTitle: "Siap Produksi Buku Kenangan Sekolah yang Lebih Berkesan?",
     finalCtaDescription:

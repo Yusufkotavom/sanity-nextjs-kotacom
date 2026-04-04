@@ -37,7 +37,7 @@ export const SOFTWARE_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCo
       {
         title: "Fitur POS yang Paling Berdampak untuk Outlet Harian",
         description:
-          "Di lapangan, fitur yang paling sering menentukan keberhasilan implementasi bukan jumlah menu di dashboard, melainkan kecepatan transaksi, akurasi stok, kemudahan koreksi, dan kualitas laporan yang bisa dipahami owner setiap hari.",
+          "Di lapangan, hal yang paling sering menentukan keberhasilan implementasi bukan banyaknya menu di sistem, melainkan kecepatan transaksi, akurasi stok, kemudahan koreksi, dan kualitas laporan yang bisa dipahami owner setiap hari.",
       },
       {
         title: "POS untuk UMKM vs Multi-Outlet",

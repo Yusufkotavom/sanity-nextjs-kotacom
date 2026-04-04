@@ -40,7 +40,7 @@ export function buildPrintingCopy(page: LegacyAstroPage): LegacyRewriteCopy {
     process: [
       "Validasi kebutuhan, ukuran, dan material.",
       "Pemeriksaan file desain pre-press.",
-      "Produksi dan quality check internal.",
+      "Produksi dan quality check sebelum pengiriman.",
       "Finalisasi, packing, dan pengiriman.",
     ],
     faqs: [

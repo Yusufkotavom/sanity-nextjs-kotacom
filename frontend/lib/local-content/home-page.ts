@@ -31,7 +31,7 @@ export const homePageContent = {
   badge: "KOTACOM / HOME",
   title: "IT, software, website, dan percetakan dalam satu sistem kerja yang ringkas.",
   description:
-    "Homepage ini merangkum pesan utama kotacom.id menjadi satu pengalaman yang lebih tenang, lebih tajam, dan lebih dekat ke gaya produk modern. Fokusnya tetap sama: membantu bisnis bergerak lebih cepat lewat website, software custom, infrastruktur IT, dan produksi materi promosi.",
+    "Kotacom membantu bisnis bergerak lebih cepat lewat website, software custom, infrastruktur IT, dan produksi materi promosi yang tersusun lebih rapi dalam satu alur layanan.",
   primaryCta: {
     label: "Diskusikan Kebutuhan",
     href: "/contact",
@@ -50,28 +50,28 @@ export const homePageContent = {
       eyebrow: "Website",
       title: "Website yang cepat dipahami, cepat dimuat, dan mudah dikembangkan.",
       description:
-        "Expanded from the current site’s website-development messaging into a clearer product promise: responsive build, stronger information hierarchy, and a cleaner path from landing page to conversion.",
+        "Website bisnis yang responsif, pesannya jelas, dan alur halamannya membantu pengunjung bergerak lebih cepat dari kunjungan ke inquiry.",
       href: "/pembuatan-website",
     },
     {
       eyebrow: "Software",
       title: "Software custom untuk proses yang terlalu spesifik untuk template generik.",
       description:
-        "Built around the software-development narrative from kotacom.id, then rewritten into a productized lane for POS, internal tools, operations flow, and tailored business systems.",
+        "Software custom untuk POS, otomasi proses, dan sistem kerja yang perlu mengikuti alur bisnis nyata, bukan memaksa tim mengikuti template umum.",
       href: "/software",
     },
     {
       eyebrow: "IT Support",
       title: "Dukungan teknis yang menutup celah operasional sebelum berubah jadi bottleneck.",
       description:
-        "Includes support, network setup, administration, and consultation as one continuity layer rather than disconnected service bullets.",
+        "Mencakup support, network setup, administrasi server, dan konsultasi teknis sebagai satu jalur dukungan yang saling menyambung.",
       href: "/services",
     },
     {
       eyebrow: "Printing",
       title: "Percetakan yang diposisikan sebagai output bisnis, bukan sekadar daftar produk cetak.",
       description:
-        "Expanded from the current printing offers into a stronger service frame for books, brochures, calendars, and branded materials that actually support sales and trust.",
+        "Layanan percetakan untuk buku, brosur, kalender, dan materi brand yang benar-benar mendukung penjualan, presentasi, dan trust bisnis.",
       href: "/percetakan",
     },
   ] satisfies HomePillar[],
@@ -80,21 +80,21 @@ export const homePageContent = {
       meta: "Case focus",
       title: "Restaurant Management System",
       description:
-        "Current portfolio language on kotacom.id already points to integrated operations. Here it is reframed as proof that Kotacom can connect front-of-house, stock, and reporting into one system.",
+        "Contoh implementasi yang menunjukkan bagaimana operasional, stok, dan pelaporan bisa disatukan dalam satu sistem yang lebih rapi.",
       href: "/projects/restaurant-management-system",
     },
     {
       meta: "Delivery focus",
       title: "Website & software delivery lane",
       description:
-        "The live site speaks about website, e-commerce, and software separately. This page brings them into one delivery model: discover, scope, build, stabilize, then scale.",
+        "Website, e-commerce, dan software dijelaskan sebagai satu alur delivery yang lebih utuh: pahami kebutuhan, susun scope, bangun, stabilkan, lalu kembangkan.",
       href: "/services",
     },
     {
       meta: "Operational focus",
       title: "IT support and infrastructure continuity",
       description:
-        "Support, network, and administration offers are grouped as operational assurance so prospects can understand what happens after launch, not just before it.",
+        "Support, network, dan administrasi infrastruktur dijelaskan sebagai dukungan operasional berkelanjutan, bukan hanya pekerjaan sebelum launch.",
       href: "/services/it-support-terbaik",
     },
   ] satisfies HomeProof[],
@@ -102,17 +102,17 @@ export const homePageContent = {
     {
       title: "Map the bottleneck",
       description:
-        "Start from the actual friction inside marketing, sales, ops, or publishing. The page positions Kotacom as an execution partner, not a generic feature vendor.",
+        "Mulai dari hambatan nyata di marketing, sales, operasional, atau distribusi agar solusi yang dipilih benar-benar menjawab kebutuhan bisnis.",
     },
     {
       title: "Assemble the lane",
       description:
-        "Website, software, support, and print are combined only where they help the business move faster. The structure is modular but the delivery story stays coherent.",
+        "Website, software, support, dan print digabungkan hanya jika memang membantu bisnis bergerak lebih cepat. Strukturnya modular, tetapi alur layanannya tetap utuh.",
     },
     {
       title: "Ship with follow-through",
       description:
-        "The expanded rewrite emphasizes post-launch support, iteration, and operational handoff so the offer feels complete instead of one-off.",
+        "Setelah launch, dukungan, iterasi, dan pendampingan tetap dijaga agar hasilnya terasa lengkap, bukan sekadar proyek sekali jalan.",
     },
   ] satisfies HomeWorkflowStep[],
   tech: [
@@ -122,12 +122,12 @@ export const homePageContent = {
     { name: "Angular", detail: "Enterprise-grade application delivery when teams need structure." },
     { name: "Nuxt.js", detail: "Alternative front-end lane for Vue ecosystems." },
     { name: "Node.js", detail: "API and service runtime for custom operational tooling." },
-    { name: "Laravel", detail: "Structured backend workflows for internal systems and dashboards." },
+    { name: "Laravel", detail: "Backend yang rapi untuk aplikasi bisnis, dashboard, dan alur data yang perlu dikembangkan lebih lanjut." },
   ] satisfies HomeTech[],
   finalCta: {
     title: "Homepage ini dirancang untuk menunjukkan arah Kotacom yang lebih tajam, lebih modern, dan lebih mudah dipahami.",
     description:
-      "Halaman ini memadatkan website, software, IT support, dan percetakan ke dalam satu narasi yang lebih product-led tanpa meninggalkan isi inti kotacom.id.",
+      "Kotacom merangkum website, software, IT support, dan percetakan ke dalam satu narasi layanan yang lebih jelas, lebih modern, dan lebih mudah dipahami calon klien.",
     primary: {
       label: "Buka Kontak",
       href: "/contact",

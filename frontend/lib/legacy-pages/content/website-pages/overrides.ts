@@ -14,7 +14,7 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
     description:
       "Jasa pembuatan website Surabaya untuk bisnis yang membutuhkan tampilan kredibel, performa cepat, struktur SEO kuat, dan CTA yang siap menghasilkan lead.",
     intro:
-      "Halaman ini kami tulis ulang setelah dibandingkan dengan live site untuk menangkap intent komersial yang lebih jelas: bisnis di Surabaya dan sekitarnya butuh website yang bukan hanya menarik, tetapi juga membantu penjualan, inquiry, dan follow-up tim sales. Fokusnya pada struktur halaman, pesan nilai, CTA, dan fondasi SEO yang siap dikembangkan.",
+      "Bisnis di Surabaya dan sekitarnya membutuhkan website yang bukan hanya menarik, tetapi juga membantu penjualan, inquiry, dan follow-up tim sales. Karena itu kami menekankan struktur halaman yang jelas, pesan nilai yang kuat, CTA yang tegas, dan fondasi SEO yang siap dikembangkan.",
     ctaLabel: "Minta Strategi Website",
     ctaLinks: [
       { label: "Lihat Harga Pembuatan Website", href: "/pembuatan-website/harga" },
@@ -25,12 +25,12 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
     ],
     finalCtaTitle: "Siap Ubah Website Menjadi Mesin Akuisisi Lead?",
     finalCtaDescription:
-      "Ceritakan target lead Anda. Tim Kotacom akan memetakan struktur halaman, prioritas konten, dan roadmap implementasi yang realistis untuk bisnis Anda.",
+      "Ceritakan target lead Anda. Kami bantu menyiapkan struktur halaman, prioritas konten, dan langkah implementasi yang paling relevan untuk bisnis Anda.",
     faqs: [
       {
         question: "Apa bedanya website biasa dengan website yang fokus konversi?",
         answer:
-          "Website konversi menyusun alur informasi, bukti sosial, dan CTA berdasarkan intent user agar kunjungan berubah jadi lead yang siap di-follow-up.",
+          "Website yang fokus konversi menyusun alur informasi, bukti sosial, dan CTA dengan lebih jelas agar kunjungan lebih mudah berubah menjadi inquiry atau lead.",
       },
       {
         question: "Apakah bisa mulai dari halaman inti dulu?",
@@ -41,7 +41,7 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
   },
   harga: {
     intro:
-      "Intent user di halaman harga adalah kepastian budget dan scope. Karena itu kami memprioritaskan transparansi komponen biaya, pilihan paket, serta skenario implementasi bertahap supaya keputusan investasi digital lebih aman.",
+      "Halaman harga ini menekankan hal yang paling dicari calon klien: kepastian budget, gambaran scope, dan pilihan paket yang masuk akal untuk tahap bisnis Anda saat ini.",
     ctaLabel: "Minta Estimasi Final",
     finalCtaTitle: "Ingin Estimasi Biaya yang Benar-Benar Relevan?",
     finalCtaDescription:
@@ -64,20 +64,20 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
     secondaryKeywords: [
       "Website company profile Surabaya",
       "Website profil perusahaan profesional",
-      "Website company profile dengan dashboard admin",
-      "Website perusahaan dengan client portal",
-      "Website company profile dan sistem manajemen",
+      "Website perusahaan profesional",
+      "Website company profile untuk lead",
+      "Website profil perusahaan terpercaya",
     ],
     description:
-      "Jasa pembuatan website company profile Surabaya untuk perusahaan yang ingin tampil lebih kredibel, mudah dihubungi, dan siap dikembangkan ke CRM, dashboard admin, atau client portal.",
+      "Jasa pembuatan website company profile Surabaya untuk perusahaan yang ingin tampil lebih kredibel, mudah dihubungi, dan lebih meyakinkan di mata calon klien.",
     intro:
-      "Halaman ini ditulis untuk user yang membutuhkan kredibilitas bisnis di mata calon klien, investor, atau partner. Setelah dibandingkan dengan live site, copy kami diperluas agar tidak hanya menonjolkan trust signal dan positioning, tetapi juga membuka intent enterprise seperti dashboard admin, client portal, dan integrasi sistem manajemen perusahaan.",
+      "Website company profile yang baik membantu perusahaan tampil lebih profesional di mata calon klien, partner, maupun investor. Fokus halaman ini adalah kredibilitas, kejelasan layanan, dan jalur kontak yang memudahkan inquiry masuk.",
     ctaLabel: "Rancang Website Company Profile",
     ctaLinks: [
       { label: "Konsultasi Website Company Profile", href: DEFAULT_CTA },
       { label: "Lihat Portfolio Website", href: "/pembuatan-website/portfolio" },
       { label: "Bandingkan dengan Website Sekolah", href: "/pembuatan-website/jasa-pembuatan-website-sekolah" },
-      { label: "Diskusikan Integrasi Dashboard", href: DEFAULT_CTA },
+      { label: "Diskusikan Kebutuhan Website", href: DEFAULT_CTA },
     ],
     finalCtaTitle: "Bangun Kredibilitas Perusahaan Sejak Kunjungan Pertama",
     finalCtaDescription:
@@ -94,15 +94,15 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
           "Bisa. Dengan CTA yang tepat, halaman ini bisa menjadi pintu awal konsultasi dari calon klien berkualitas.",
       },
       {
-        question: "Apakah website company profile bisa dikembangkan ke dashboard admin atau client portal?",
+        question: "Apakah website company profile bisa dikembangkan lagi di masa depan?",
         answer:
-          "Bisa. Fondasi website dapat disiapkan agar mudah diperluas ke area login, dashboard internal, formulir lead, atau portal klien sesuai kebutuhan operasional perusahaan.",
+          "Bisa. Fondasi website dapat disiapkan agar lebih mudah menambah halaman, formulir, area privat, atau kebutuhan lanjutan lain saat bisnis berkembang.",
       },
     ],
   },
   "jasa-pembuatan-website-toko-online": {
     intro:
-      "Copy halaman toko online disusun untuk intent transaksional: mempercepat user menemukan produk, memahami value, dan menyelesaikan pembelian dengan friksi minimal.",
+      "Halaman toko online ini menekankan kebutuhan paling penting untuk bisnis jualan online: produk mudah ditemukan, manfaat cepat dipahami, dan proses pembelian terasa ringkas.",
     ctaLabel: "Optimalkan Toko Online Saya",
     finalCtaTitle: "Siap Dorong Penjualan dari Website Toko Online Anda?",
     finalCtaDescription:
@@ -116,13 +116,13 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
       {
         question: "Bagaimana agar traffic tidak berhenti di halaman produk saja?",
         answer:
-          "Kami mengoptimalkan copy, trust element, dan CTA pembelian agar user bergerak dari lihat produk ke aksi checkout.",
+          "Kami mengoptimalkan pesan utama, trust element, dan CTA pembelian agar pengunjung bergerak dari melihat produk ke aksi checkout.",
       },
     ],
   },
   "jasa-migrasi-wordpress": {
     intro:
-      "Untuk migrasi WordPress, user intent utamanya adalah aman, minim downtime, dan SEO tidak jatuh. Copy halaman ini difokuskan pada mitigasi risiko, checklist validasi, dan rencana rollback jika dibutuhkan.",
+      "Migrasi WordPress yang baik harus aman, minim downtime, dan menjaga performa SEO tetap stabil. Karena itu kami menekankan mitigasi risiko, checklist validasi, dan langkah pemulihan jika dibutuhkan.",
     ctaLabel: "Jadwalkan Audit Migrasi",
     finalCtaTitle: "Migrasi WordPress Tanpa Drama Operasional",
     finalCtaDescription:
@@ -142,7 +142,7 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
   },
   "jasa-pembuatan-website-dokter-klinik": {
     intro:
-      "Kami menyesuaikan copy untuk intent pasien: cepat menemukan layanan, jadwal, dan kanal konsultasi. Untuk pemilik klinik, halaman ini menekankan trust, edukasi pasien, dan efisiensi komunikasi.",
+      "Website dokter dan klinik perlu membantu pasien menemukan layanan, jadwal, dan kanal konsultasi secepat mungkin. Karena itu halaman ini menekankan trust, kejelasan informasi, dan komunikasi yang lebih efisien.",
     ctaLabel: "Bangun Website Klinik",
     finalCtaTitle: "Permudah Pasien Menemukan Klinik Anda Secara Online",
     finalCtaDescription:
@@ -156,15 +156,15 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
       {
         question: "Apakah konten medis bisa disiapkan untuk edukasi SEO?",
         answer:
-          "Bisa. Kami siapkan kerangka konten edukasi yang tetap ramah pembaca dan relevan dengan intent pencarian pasien.",
+          "Bisa. Kami siapkan kerangka konten edukasi yang tetap ramah pembaca dan relevan dengan pencarian pasien.",
       },
     ],
   },
   "jasa-pembuatan-website-sekolah": {
     intro:
-      "Intent utama halaman sekolah adalah informasi yang cepat diakses orang tua dan calon siswa. Karena itu copy difokuskan pada kejelasan program, agenda akademik, serta kanal komunikasi resmi.",
+      "Website sekolah perlu menyajikan informasi yang cepat diakses orang tua dan calon siswa. Karena itu halaman ini difokuskan pada kejelasan program, agenda akademik, serta kanal komunikasi resmi.",
     ctaLabel: "Rancang Website Sekolah",
-    finalCtaTitle: "Website Sekolah Informatif dan Mudah Dikelola Tim Internal",
+    finalCtaTitle: "Website Sekolah Informatif dan Mudah Dikelola",
     finalCtaDescription:
       "Kami bantu sekolah membangun website yang rapi untuk publikasi program, kegiatan, dan informasi penerimaan siswa.",
     faqs: [
@@ -182,7 +182,7 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
   },
   "jasa-pembuatan-website-expedisi": {
     intro:
-      "Halaman ini dipertajam untuk intent operasional logistik: calon klien ingin cek cakupan layanan, SLA pengiriman, dan cara request pickup secepat mungkin. Copy difokuskan agar inquiry B2B masuk dengan data yang siap ditindaklanjuti.",
+      "Calon klien jasa ekspedisi biasanya ingin cepat melihat cakupan layanan, SLA pengiriman, dan cara request pickup. Karena itu halaman ini diarahkan agar inquiry B2B masuk lebih cepat dan dengan data yang lebih siap ditindaklanjuti.",
     ctaLabel: "Bangun Website Expedisi",
     finalCtaTitle: "Siap Tingkatkan Inquiry Layanan Pengiriman Anda?",
     finalCtaDescription:
@@ -202,7 +202,7 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
   },
   "jasa-pembuatan-website-komunitas-ngo": {
     intro:
-      "Untuk NGO dan komunitas, intent pengunjung biasanya dua hal: memahami dampak program dan tahu bagaimana ikut berkontribusi. Karena itu copy kami menekankan kredibilitas program, transparansi aktivitas, dan CTA donasi/kolaborasi yang jelas.",
+      "Untuk NGO dan komunitas, pengunjung biasanya ingin memahami dampak program dan tahu bagaimana ikut berkontribusi. Karena itu halaman ini menekankan kredibilitas program, transparansi aktivitas, dan CTA donasi atau kolaborasi yang jelas.",
     ctaLabel: "Rancang Website NGO",
     finalCtaTitle: "Perkuat Kepercayaan Publik untuk Program Komunitas Anda",
     finalCtaDescription:
@@ -214,7 +214,7 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
           "Website perlu menampilkan program secara konkret, bukti dampak, dan CTA kontribusi yang jelas agar pengunjung tahu langkah aksi yang harus dilakukan.",
       },
       {
-        question: "Apakah tim internal bisa update konten program secara mandiri?",
+        question: "Apakah tim pengelola bisa update konten program secara mandiri?",
         answer:
           "Bisa. Struktur halaman dapat dibuat agar tim non-teknis tetap mudah mengelola update kegiatan, berita, dan agenda komunitas.",
       },
@@ -222,7 +222,7 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
   },
   "jasa-pembuatan-website-konstruksi": {
     intro:
-      "Halaman konstruksi kami arahkan untuk intent tender dan proyek B2B: visitor perlu melihat kapabilitas teknis, portofolio pekerjaan, serta cara menghubungi tim untuk diskusi scope proyek.",
+      "Halaman konstruksi ini diarahkan untuk kebutuhan tender dan proyek B2B: pengunjung perlu melihat kapabilitas teknis, portofolio pekerjaan, serta cara menghubungi tim untuk diskusi scope proyek.",
     ctaLabel: "Bangun Website Konstruksi",
     finalCtaTitle: "Tampilkan Kapabilitas Proyek Anda Lebih Meyakinkan",
     finalCtaDescription:
@@ -242,7 +242,7 @@ export const WEBSITE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> 
   },
   template: {
     intro:
-      "Template kami posisikan untuk bisnis yang butuh go-live cepat tanpa mengorbankan fondasi SEO dan konversi. Ini bukan template generik, melainkan kerangka siap produksi yang bisa dipersonalisasi.",
+      "Template ini cocok untuk bisnis yang butuh go-live cepat tanpa mengorbankan fondasi SEO dan konversi. Basisnya siap dipersonalisasi agar tetap selaras dengan brand dan target bisnis Anda.",
     ctaLabel: "Pilih Template Terbaik",
     finalCtaTitle: "Go-Live Lebih Cepat dengan Template Siap Bisnis",
     finalCtaDescription:

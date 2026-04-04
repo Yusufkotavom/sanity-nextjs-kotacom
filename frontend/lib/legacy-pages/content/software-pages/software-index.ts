@@ -6,7 +6,7 @@ export function buildSoftwareIndexPageCopy(): LegacyRewriteCopy {
     primaryKeyword: "Jasa Software Development Surabaya",
     secondaryKeywords: [
       "Software custom untuk bisnis",
-      "Pengembangan aplikasi internal",
+      "Pengembangan aplikasi custom",
       "Sistem operasional terintegrasi",
       "Jasa software house Indonesia",
       "Implementasi dan instalasi software Surabaya",
@@ -15,18 +15,18 @@ export function buildSoftwareIndexPageCopy(): LegacyRewriteCopy {
     description:
       "Jasa software development Surabaya untuk bisnis yang membutuhkan software custom, implementasi sistem, dan instalasi yang lebih terukur demi efisiensi operasional, visibilitas data, dan eksekusi tim yang lebih cepat.",
     intro:
-      "Kami membangun software dengan pendekatan produk: requirement jelas, prioritas fitur terukur, dan implementasi bertahap agar cepat memberi dampak bisnis. Dibanding live site, rewrite ini kami perluas agar intent pencarian software custom, implementasi enterprise, dan instalasi operasional tertangkap lebih jelas dalam satu cluster SEO.",
+      "Kami membangun software dengan pendekatan produk: kebutuhan dipetakan lebih dulu, fitur inti diprioritaskan, lalu implementasi dijalankan bertahap agar dampaknya lebih cepat terasa untuk bisnis.",
     highlights: [
       "Desain fitur berdasarkan alur kerja nyata tim.",
       "Skema data disiapkan agar mudah dikembangkan.",
-      "Dashboard dan reporting fokus keputusan bisnis.",
-      "Integrasi bertahap tanpa ganggu operasi berjalan.",
+      "Laporan dan tampilan data diarahkan untuk keputusan bisnis yang lebih cepat.",
+      "Integrasi dijalankan bertahap tanpa mengganggu operasi yang sedang berjalan.",
     ],
     process: [
-      "Discovery proses bisnis dan bottleneck utama.",
-      "Prioritas modul inti (MVP) untuk nilai tercepat.",
+      "Pelajari proses bisnis dan hambatan yang paling sering memperlambat tim.",
+      "Prioritaskan modul inti agar hasil awal lebih cepat memberi nilai.",
       "Pengembangan iteratif dengan demo berkala.",
-      "Handover, dokumentasi, dan rencana scale-up.",
+      "Handover, dokumentasi, dan rencana pengembangan tahap berikutnya.",
     ],
     faqs: [
       {

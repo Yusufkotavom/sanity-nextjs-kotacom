@@ -37,6 +37,79 @@ This file is the canonical changelog for all repository updates, with explicit S
   - `rg -n "live site|ditulis ulang|intent user|dashboard admin|dashboard internal|CRM|ERP|HR|workflow operasional|roadmap implementasi" frontend/lib/legacy-pages/content/website.ts frontend/lib/legacy-pages/content/website-pages frontend/components/ui/rewrite/landing-sections/defaults.ts`
   - `node` + local frontend `typescript` transpile check for the edited modules
 
+## 2026-04-04 - Expand `/pembuatan-website` SEO Copy to Specialist Descendants
+- Changed files:
+  - `frontend/lib/legacy-pages/content/website-pages/harga.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/migrasi-wordpress.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/dokter-klinik.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/expedisi.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/sekolah.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/konstruksi.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/komunitas-ngo.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/template.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/overrides.ts`
+  - `frontend/lib/legacy-pages/content/website-pages/website-index.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Expanded the rewrite copy pass from the main `/pembuatan-website` pages into specialist descendants covering pricing, WordPress migration, clinic, expedition, school, construction, NGO/community, and template routes.
+  - Added richer page-specific `secondaryKeywords`, `highlights`, `process`, and `faqs` so these routes no longer depend on thin generic defaults and now describe their service intent in more public-facing, search-aligned language.
+  - Cleaned remaining small phrasing leaks such as `user`, `copy`, and `tim internal` inside the website cluster so the public content reads more naturally.
+- SEO impact:
+  - Direct SEO impact: improves topical depth, intent coverage, and supporting on-page content for multiple `/pembuatan-website` descendants that target distinct commercial and informational queries.
+  - Integration impact: content-generator-only update within the website rewrite cluster; no Studio schema, GROQ query, or route contract changes.
+- Verification:
+  - `rg -n "live site|ditulis ulang|intent user|copy |user |CRM|ERP|HR|dashboard admin|dashboard internal|tim internal|workflow operasional|roadmap implementasi|system management|management perusahaan" frontend/lib/legacy-pages/content/website.ts frontend/lib/legacy-pages/content/website-pages frontend/components/ui/rewrite/landing-sections/defaults.ts`
+  - `node` + local frontend `typescript` transpile check for edited website-cluster modules
+
+## 2026-04-04 - Extend Public Copy Cleanup to `software` and `percetakan`
+- Changed files:
+  - `frontend/lib/legacy-pages/content/software.ts`
+  - `frontend/lib/legacy-pages/content/software-overrides.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/software-index.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/pembuatan-software.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/implementasi-software.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/instalasi-software.ts`
+  - `frontend/lib/legacy-pages/content/software-pages/overrides.ts`
+  - `frontend/lib/legacy-pages/content/printing.ts`
+  - `frontend/lib/legacy-pages/content/printing-overrides.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/detail-presets.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/percetakan-index.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-buku.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-company-profile.ts`
+  - `frontend/lib/legacy-pages/content/printing-pages/cetak-buku-city-overrides.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Extended the copy-cleanup pass beyond `/pembuatan-website` into the `software` and `percetakan` rewrite clusters so shared generators, specialist pages, and detail presets no longer expose internal editorial/process language to public visitors.
+  - Rewrote software cluster intros, highlights, FAQs, and process sections to reduce jargon such as internal-system/editorial wording while keeping search-aligned themes around efficiency, implementation, adoption, and business outcomes.
+  - Reworked key printing pages and overrides to remove “halaman ini”, live-site comparison notes, and similar editorial phrasing, while also fixing several public-facing wording issues and typos on money pages like `percetakan`, `cetak-buku`, and `cetak-company-profile`.
+- SEO impact:
+  - Direct SEO impact: improves readability, topical clarity, and visitor-facing relevance across the software and printing money-page clusters, reducing internal jargon that weakens public search intent alignment.
+  - Integration impact: rewrite-content-generator update only; no Sanity schema, GROQ query, or route contract changes.
+- Verification:
+  - `rg -n "live site|ditulis ulang|intent user|copy |user |CRM|ERP|HR|dashboard admin|dashboard internal|tim internal|workflow operasional|roadmap implementasi|system management|management perusahaan|internal perusahaan|Aplikasi internal|pengembangan aplikasi internal|rewrite ini|Halaman ini|dipoles untuk intent|difokuskan untuk intent|dibanding" frontend/lib/legacy-pages/content/website.ts frontend/lib/legacy-pages/content/website-pages frontend/lib/legacy-pages/content/software* frontend/lib/legacy-pages/content/software-pages frontend/lib/legacy-pages/content/printing* frontend/lib/legacy-pages/content/printing-pages frontend/components/ui/rewrite/landing-sections/defaults.ts`
+  - `node` + local frontend `typescript` transpile check for edited website/software/printing rewrite modules
+
+## 2026-04-04 - Sweep Remaining Internal Wording from Public Local Content
+- Changed files:
+  - `frontend/lib/local-content/home-page.ts`
+  - `frontend/lib/local-content/home-prepare.ts`
+  - `frontend/lib/legacy-pages/content/website-overrides.ts`
+  - `frontend/lib/legacy-pages/content/core.ts`
+  - `docs/astro-migration-megaplan.md`
+  - `docs/seo-updates.md`
+- Summary:
+  - Cleaned additional public-facing content sources outside the main rewrite clusters, especially homepage local-content and shared rewrite generator defaults, to remove editorial rewrite notes and internal wording that were still leaking into public copy.
+  - Replaced English/internal-origin descriptions in the homepage content with customer-facing Indonesian messaging aligned to public value propositions for website, software, support, and printing lanes.
+  - Adjusted a few shared FAQ/process strings so references like `tim internal` and `QA internal` no longer appear in generic public content generators.
+- SEO impact:
+  - Direct SEO impact: improves clarity and trust signals on homepage/local-content surfaces by removing internal/editorial wording that weakens public relevance and conversion messaging.
+  - Integration impact: content-source-only cleanup; no Studio schema, GROQ query, route contract, or metadata logic changes.
+- Verification:
+  - `rg -n "live site|ditulis ulang|rewrite ini|intent user|copy |user |source diagnostics|ownership mapping|placeholder|TODO|debug|dummy|lorem|roadmap implementasi|tim internal|dashboard admin|dashboard internal|CRM|ERP|HR management|system management|AI statement|current portfolio language|built around|reframed as|this page|this section|demo|audit page|style guide|component-ui|noindex UI canvas|internal systems|internal system|QA internal" frontend/app frontend/lib frontend/components`
+  - `node` + local frontend `typescript` transpile check for edited local-content/shared-generator modules
+
 ## 2026-04-04 - Vendor Claude SEO Toolkit into the Repository
 - Changed files:
   - `AGENTS.md`

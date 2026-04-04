@@ -74,7 +74,7 @@ export const homePrepareContent = {
       eyebrow: "Software Development",
       title: "Software custom untuk proses bisnis yang tidak bisa diselesaikan template umum.",
       description:
-        "Cocok untuk dashboard internal, POS, CRM, otomasi operasional, dan integrasi proses yang perlu sistem kerja sendiri.",
+        "Cocok untuk dashboard bisnis, POS, CRM, otomasi operasional, dan integrasi proses yang membutuhkan sistem kerja sendiri.",
       href: "/software",
       bullets: ["POS & dashboard", "CRM & operasional", "Integrasi proses"],
     },
@@ -161,7 +161,7 @@ export const homePrepareContent = {
         "Website dan software kami susun sebagai lane utama untuk bisnis yang ingin memperbaiki cara presentasi, cara kerja, dan alur penjualan sekaligus.",
       href: "/pembuatan-website",
       priceHint: "Mulai dari website bisnis hingga aplikasi custom",
-      bullets: ["Website sekolah & perusahaan", "Custom web apps", "CRM, CMS, dashboard"],
+      bullets: ["Website sekolah & perusahaan", "Custom web apps", "CRM, CMS, aplikasi bisnis"],
     },
     {
       title: "Layanan Percetakan",

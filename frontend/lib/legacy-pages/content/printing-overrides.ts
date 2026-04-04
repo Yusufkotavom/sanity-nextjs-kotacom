@@ -34,7 +34,7 @@ export const PRINTING_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCo
     description:
       "Jasa cetak buku Surabaya untuk penulis, sekolah, komunitas, dan perusahaan dengan opsi produksi satuan hingga massal untuk novel, katalog, majalah, buku tahunan, dan buku premium.",
     intro:
-      "Untuk halaman cetak buku, kami menyesuaikan copy agar menjawab intent penulis dan institusi: pilihan metode cetak, efisiensi biaya per volume, serta kepastian kualitas hasil akhir. Setelah dibandingkan dengan live site, halaman ini juga kami perluas untuk menangkap kebutuhan katalog, majalah, buku tahunan, dan buku premium.",
+      "Untuk halaman cetak buku, fokusnya adalah membantu penulis dan institusi memahami pilihan metode cetak, efisiensi biaya per volume, serta kepastian kualitas hasil akhir. Halamannya juga mencakup kebutuhan katalog, majalah, buku tahunan, dan buku premium.",
     ctaLabel: "Minta Simulasi Cetak Buku",
     ctaLinks: [
       { label: "Konsultasi Cetak Buku", href: DEFAULT_CTA },
@@ -65,7 +65,7 @@ export const PRINTING_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCo
   },
   "cetak-brosur": {
     intro:
-      "Brosur efektif saat pesan inti langsung terbaca dan visualnya konsisten dengan brand. Karena itu copy halaman ini menekankan tujuan campaign, segmentasi audiens, dan kesiapan distribusi.",
+      "Brosur efektif saat pesan inti langsung terbaca dan visualnya konsisten dengan brand. Karena itu halaman ini menekankan tujuan campaign, segmentasi audiens, dan kesiapan distribusi.",
     ctaLabel: "Diskusikan Brosur Campaign",
     finalCtaTitle: "Buat Brosur yang Benar-Benar Menggerakkan Aksi",
     finalCtaDescription:
@@ -85,7 +85,7 @@ export const PRINTING_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCo
   },
   "cetak-company-profile": {
     intro:
-      "Halaman ini difokuskan untuk intent B2B: materi company profile yang rapi, kredibel, dan siap dipakai untuk presentasi klien, partnership, maupun tender.",
+      "Fokus halaman ini adalah kebutuhan B2B: materi company profile yang rapi, kredibel, dan siap dipakai untuk presentasi klien, partnership, maupun tender.",
     ctaLabel: "Cetak Company Profile Saya",
     finalCtaTitle: "Perkuat Presentasi Bisnis dengan Company Profile Berkualitas",
     finalCtaDescription:
@@ -105,7 +105,7 @@ export const PRINTING_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCo
   },
   "cetak-kemasan-product": {
     intro:
-      "Untuk kemasan produk, intent user biasanya terkait daya tarik rak dan kekuatan identitas brand. Copy kami menekankan ketepatan ukuran, kualitas cetak, dan kesiapan untuk distribusi.",
+      "Untuk kemasan produk, fokus utamanya adalah daya tarik di rak dan kekuatan identitas brand. Karena itu kami menekankan ketepatan ukuran, kualitas cetak, dan kesiapan untuk distribusi.",
     ctaLabel: "Konsultasi Kemasan Produk",
     finalCtaTitle: "Kemasan Produk yang Siap Jual dan Konsisten dengan Brand",
     finalCtaDescription:
@@ -125,7 +125,7 @@ export const PRINTING_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCo
   },
   "cetak-kartu-nama": {
     intro:
-      "Kartu nama masih relevan untuk sales meeting, networking, dan event B2B. Halaman ini dipoles untuk intent profesional: kesan pertama yang kuat, rapi, dan konsisten dengan identitas bisnis.",
+      "Kartu nama masih relevan untuk sales meeting, networking, dan event B2B. Fokus halaman ini adalah kesan pertama yang kuat, rapi, dan konsisten dengan identitas bisnis.",
     ctaLabel: "Pesan Kartu Nama Sekarang",
     finalCtaTitle: "Kartu Nama Profesional untuk Kesan Pertama yang Kuat",
     finalCtaDescription:
@@ -145,7 +145,7 @@ export const PRINTING_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCo
   },
   "cetak-al-quran": {
     intro:
-      "Halaman ini dioptimasi untuk kebutuhan cetak mushaf dengan standar ketelitian lebih tinggi: keterbacaan teks, ketahanan jilid, dan kualitas finishing yang nyaman dipakai jangka panjang.",
+      "Fokus halaman ini adalah kebutuhan cetak mushaf dengan standar ketelitian lebih tinggi: keterbacaan teks, ketahanan jilid, dan kualitas finishing yang nyaman dipakai jangka panjang.",
     ctaLabel: "Konsultasi Cetak Al-Quran",
     finalCtaTitle: "Butuh Cetak Al-Quran dengan Hasil Rapi dan Presisi?",
     finalCtaDescription:
@@ -165,7 +165,7 @@ export const PRINTING_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCo
   },
   "cetak-album-pernikahan": {
     intro:
-      "Intent utama halaman ini adalah menjaga momen spesial tetap premium. Karena itu copy difokuskan pada ketajaman visual, pilihan material eksklusif, dan detail finishing agar hasil album benar-benar berkesan.",
+      "Fokus utama halaman ini adalah menjaga momen spesial tetap premium. Karena itu penjelasannya diarahkan pada ketajaman visual, pilihan material eksklusif, dan detail finishing agar hasil album benar-benar berkesan.",
     ctaLabel: "Konsultasi Album Pernikahan",
     finalCtaTitle: "Wujudkan Album Pernikahan yang Elegan dan Tahan Lama",
     finalCtaDescription:
@@ -225,7 +225,7 @@ export const PRINTING_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCo
   },
   "cetak-stiker": {
     intro:
-      "Halaman ini dipoles untuk intent produk dan promosi: user butuh stiker yang kuat secara visual, rapi saat ditempel, dan mudah diproduksi dengan varian ukuran yang fleksibel.",
+      "Fokus halaman ini adalah kebutuhan produk dan promosi: pengunjung membutuhkan stiker yang kuat secara visual, rapi saat ditempel, dan mudah diproduksi dengan varian ukuran yang fleksibel.",
     ctaLabel: "Pesan Cetak Stiker",
     finalCtaTitle: "Ingin Stiker Produk yang Lebih Menonjol di Rak?",
     finalCtaDescription:
@@ -285,7 +285,7 @@ export const PRINTING_PRIORITY_OVERRIDES: Record<string, Partial<LegacyRewriteCo
   },
   "cetak-buku-kenangan-sekolah": {
     intro:
-      "Halaman ini dioptimasi untuk kebutuhan institusi pendidikan yang ingin menghasilkan buku kenangan dengan visual konsisten, layout rapi, dan proses produksi yang terkoordinasi lintas kelas atau angkatan.",
+      "Fokus halaman ini adalah kebutuhan institusi pendidikan yang ingin menghasilkan buku kenangan dengan visual konsisten, layout rapi, dan proses produksi yang terkoordinasi lintas kelas atau angkatan.",
     ctaLabel: "Konsultasi Buku Kenangan",
     finalCtaTitle: "Siap Produksi Buku Kenangan Sekolah yang Lebih Berkesan?",
     finalCtaDescription:

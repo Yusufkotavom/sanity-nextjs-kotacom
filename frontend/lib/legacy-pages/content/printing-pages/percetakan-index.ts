@@ -16,7 +16,7 @@ export function buildPercetakanIndexPageCopy(): LegacyRewriteCopy {
     description:
       "Percetakan Surabaya terpercaya untuk banner, kartu nama, brosur, spanduk, stiker, undangan, dan bahan promosi bisnis dengan hasil cetak berkualitas, harga kompetitif, dan layanan profesional.",
     intro:
-      "Butuh hasil cetak yang rapi dan sesuai spesifikasi? Kami membantu UMKM dan bisnis di Surabaya mencetak berbagai kebutuhan promosi mulai dari kartu nama, brosur, hingga banner besar dengan proses yang mudah dan transparan. Cukup kirim desain Anda, kami yang akanuruskan sisanya mulai dari pengecekan file hingga pengiriman ke seluruh Indonesia.",
+      "Butuh hasil cetak yang rapi dan sesuai spesifikasi? Kami membantu UMKM dan bisnis di Surabaya mencetak berbagai kebutuhan promosi mulai dari kartu nama, brosur, hingga banner besar dengan proses yang mudah dan transparan. Cukup kirim desain Anda, lalu kami bantu lanjutkan dari pengecekan file sampai pengiriman ke seluruh Indonesia.",
     highlights: [
       "Hasil cetak tajam dan konsisten",
       "Proses order yang mudah melalui WhatsApp",
@@ -29,24 +29,24 @@ export function buildPercetakanIndexPageCopy(): LegacyRewriteCopy {
       "Kirim detail kebutuhan cetak melalui WhatsApp",
       "Kami cek file desain dan beri rekomendasi spesifikasi",
       "Setelah disetujui, kami mulai proses produksi",
-      "Hasil cetak dicek kwalitas sebelum dikirim",
+      "Hasil cetak dicek kualitas sebelum dikirim",
       "Pesanan dikirim dengan layanan ekspedisi terpercaya"
     ],
     faqs: [
       {
         question: "Berapa lama waktu proses cetaknya?",
         answer:
-          "Waktu produksi bergantung pada jenis produk dan jumlah order. Biasanya untuk bahan promosi seperti brosur atau stiker membutuhkan 2-3 hari kerja setelah file disetujui. Untuk pesanan spool besar seperti banner atau spanduk kami bisa estimasi lebih detail setelah mengecek spesifikasinya."
+          "Waktu produksi bergantung pada jenis produk dan jumlah order. Biasanya bahan promosi seperti brosur atau stiker membutuhkan 2-3 hari kerja setelah file disetujui. Untuk banner, spanduk, atau pesanan volume besar, estimasi akan kami sesuaikan setelah mengecek spesifikasinya."
       },
       {
         question: "Apakah saya perlu punya desain terlebih dahulu?",
         answer:
-          "Tidak harus. Jika Anda belum punya desain, kami bisa bantu membuat desain sederhana sesuai kebutuhan Anda. Namun untuk hasil yang maksimal, disarankan mengirim file desain yang sudah siap cetak dalam format PDF, CDR, atau AI dengan resolusi minimal 300 DPI."
+          "Tidak harus. Jika Anda belum punya desain, kami bisa bantu menyiapkan desain sederhana sesuai kebutuhan. Namun untuk hasil yang maksimal, kami sarankan file siap cetak dalam format PDF, CDR, atau AI dengan resolusi minimal 300 DPI."
       },
       {
         question: "Bagaimana cara saya bisa memastikan hasil cetaknya sesuai ekspektasi?",
         answer:
-          "Sebelum produksi dimulai, kami akan memberikan proof digital atau contoh cetak kecil (jika diperlukan) untuk 디approval. Kami juga selalu melakukan pengecekan file terkait bleed, margin, dan resolusi untuk meminimalkan kesalahan cetak."
+          "Sebelum produksi dimulai, kami dapat memberikan proof digital atau contoh cetak kecil bila diperlukan. Kami juga selalu mengecek bleed, margin, dan resolusi file untuk meminimalkan risiko kesalahan cetak."
       },
       {
         question: "Apakah ada jumlah minimum order?",

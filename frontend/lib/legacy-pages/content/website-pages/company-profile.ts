@@ -9,33 +9,33 @@ export function buildWebsiteCompanyProfilePageCopy(): LegacyRewriteCopy {
     secondaryKeywords: [
       "Website company profile profesional",
       "Website profil perusahaan",
-      "Website company profile dan sistem management perusahaan",
-      "Website company profile dengan CRM ERP HR management",
-      "Dashboard admin dan client portal perusahaan",
-      "Web branding bisnis",
+      "Website company profile perusahaan",
+      "Website profil perusahaan untuk lead",
+      "Website corporate profesional",
+      "Website branding bisnis",
       "Pembuatan website corporate",
     ],
     description:
-      "Jasa pembuatan website company profile dan sistem management perusahaan untuk memperkuat kredibilitas brand, memperjelas layanan, dan membuka integrasi CRM, ERP, HR, serta client portal.",
+      "Jasa pembuatan website company profile untuk perusahaan yang ingin tampil lebih kredibel, menjelaskan layanan dengan rapi, dan memudahkan calon klien menghubungi tim Anda.",
     intro:
-      "Kami menyusun website company profile yang tidak berhenti di tampilan profil perusahaan. Halaman ini diarahkan untuk perusahaan yang juga membutuhkan sistem management terintegrasi seperti CRM, ERP, HR management, dashboard admin, dan client portal dalam satu fondasi digital.",
+      "Kami menyusun website company profile yang membantu perusahaan tampil lebih profesional, menjelaskan layanan dengan jelas, dan memberi jalur kontak yang meyakinkan bagi calon klien, partner, maupun tim procurement.",
     highlights: [
       "Website company profile disusun untuk memperkuat trust, positioning, dan akuisisi lead.",
-      "Fondasi arsitektur siap dikembangkan ke CRM, ERP, HR management, dan dashboard internal.",
-      "Client portal dan area login dapat dirancang sesuai kebutuhan operasional perusahaan.",
-      "Struktur konten membantu calon klien, partner, dan investor memahami value perusahaan lebih cepat.",
+      "Struktur konten memudahkan calon klien memahami profil, layanan, dan keunggulan perusahaan.",
+      "Portofolio, testimoni, dan CTA kontak ditempatkan agar keputusan inquiry lebih cepat.",
+      "Fondasi website tetap bisa dikembangkan saat bisnis membutuhkan fitur tambahan di tahap berikutnya.",
     ],
     process: [
-      "Audit kebutuhan branding, sales flow, dan proses operasional yang ingin didigitalisasi.",
-      "Susun struktur company profile, trust signal, dan area fitur enterprise prioritas.",
-      "Bangun halaman publik, dashboard admin, atau portal klien secara bertahap sesuai scope.",
-      "Go-live dengan dokumentasi, handover, dan roadmap pengembangan sistem lanjutan.",
+      "Pelajari positioning bisnis, target klien, dan informasi yang paling penting untuk ditampilkan.",
+      "Susun struktur halaman company profile, layanan, portofolio, dan trust signal utama.",
+      "Bangun halaman publik yang rapi, mudah dinavigasi, dan siap menerima inquiry.",
+      "Lanjutkan pengembangan bertahap jika nantinya dibutuhkan fitur tambahan atau area privat.",
     ],
     faqs: [
       {
-        question: "Apakah website company profile bisa sekaligus terhubung ke sistem internal perusahaan?",
+        question: "Apa saja halaman penting di website company profile?",
         answer:
-          "Bisa. Fondasi website dapat disiapkan agar mudah dikembangkan ke CRM, ERP, HR management, dashboard admin, atau portal klien sesuai kebutuhan operasional.",
+          "Biasanya meliputi profil perusahaan, layanan, portofolio, testimoni, FAQ, dan halaman kontak yang jelas agar calon klien mudah memahami bisnis Anda.",
       },
       {
         question: "Siapa target utama halaman company profile seperti ini?",
@@ -43,15 +43,15 @@ export function buildWebsiteCompanyProfilePageCopy(): LegacyRewriteCopy {
           "Biasanya calon klien, partner, investor, dan tim procurement yang perlu menilai kredibilitas perusahaan sekaligus kesiapan proses bisnisnya.",
       },
       {
-        question: "Apakah implementasi harus langsung full enterprise sejak awal?",
+        question: "Apakah website company profile bisa membantu menghasilkan lead?",
         answer:
-          "Tidak. Umumnya kami mulai dari halaman company profile dan modul prioritas yang paling cepat memberi dampak bisnis, lalu dikembangkan bertahap.",
+          "Bisa. Dengan struktur layanan yang jelas, bukti kerja yang kuat, dan CTA yang tepat, website company profile dapat menjadi pintu masuk inquiry yang lebih berkualitas.",
       },
     ],
     ctaLinks: [
       { label: "Konsultasi Website Company Profile", href: DEFAULT_CTA },
-      { label: "Diskusikan CRM dan Dashboard", href: DEFAULT_CTA },
       { label: "Bandingkan Paket Website", href: "/pembuatan-website/harga" },
+      { label: "Lihat Portfolio Website", href: "/pembuatan-website/portfolio" },
       { label: "Lihat FAQ Implementasi", href: "#faq" },
     ],
     ctaLabel: "Buat Website Company Profile",

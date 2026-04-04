@@ -20,7 +20,7 @@ export function buildPercetakanCetakCompanyProfilePageCopy(
     description:
       "Layanan cetak company profile Surabaya untuk memperlihatkan keprofesionalan bisnis Anda melalui bahan promosi yang rapi, informatif, dan sesuai identitas brand perusahaan.",
     intro:
-      "Butuh company profile yang bagus untuk presentasi ke klien, tender, atau keperluan bisnis? Kami bisa bantu cetak company profile Anda dengan bahan berkualitas, finishing rapi, dan desain yang selaras dengan brand perusahaan Anda. Cukup kirim desain atau konsep Anda, kami yang akanuruskan proses cetaknya.",
+      "Butuh company profile yang rapi untuk presentasi ke klien, tender, atau kebutuhan bisnis lain? Kami bisa bantu mencetak company profile Anda dengan bahan berkualitas, finishing rapi, dan desain yang selaras dengan identitas brand. Cukup kirim desain atau konsep Anda, lalu kami bantu mengarahkan proses cetaknya.",
     ctaLabel: "Konsultasi Cetak Company Profile",
     ctaHref: DEFAULT_CTA,
   };

@@ -58,7 +58,7 @@ export function getDefaultServiceTypes(page: LegacyAstroPage) {
     {
       title: "Website Custom",
       description:
-        "Solusi website sesuai kebutuhan bisnis dan workflow operasional.",
+        "Solusi website yang disesuaikan dengan model bisnis, funnel, dan kebutuhan layanan Anda.",
       href: "/pembuatan-website/template",
       image: kotacomSplitIllustrations.services.it.softwareCustom,
     },
@@ -167,7 +167,7 @@ export function getDefaultFeatures(page: LegacyAstroPage) {
     {
       title: "Fondasi SEO On-Page",
       description:
-        "Struktur heading, metadata, dan internal linking disiapkan sejak awal.",
+        "Struktur heading, metadata, dan tautan antarhalaman disiapkan sejak awal.",
       icon: "conversion",
     },
     {
@@ -179,7 +179,7 @@ export function getDefaultFeatures(page: LegacyAstroPage) {
     {
       title: "Mudah Dikelola",
       description:
-        "Konten website dibuat mudah di-update agar tim internal lebih mandiri.",
+        "Konten website dibuat mudah diperbarui saat ada promo, layanan baru, atau perubahan informasi.",
       icon: "support",
     },
   ];

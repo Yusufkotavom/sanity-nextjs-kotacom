@@ -4,7 +4,7 @@ import type { LegacyRewriteCopy } from "../types";
 export const SOFTWARE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>> = {
   software: {
     intro:
-      "Halaman software kami arahkan ke intent decision-maker: meningkatkan efisiensi proses, menyatukan data, dan mempercepat pengambilan keputusan lewat sistem yang benar-benar dipakai tim.",
+      "Halaman software ini ditujukan untuk pemilik bisnis dan decision-maker yang ingin membuat proses kerja lebih efisien, data lebih rapi, dan pengambilan keputusan lebih cepat lewat sistem yang benar-benar dipakai tim.",
     ctaLabel: "Audit Kebutuhan Software",
     ctaLinks: [
       { label: "Audit Kebutuhan Software", href: DEFAULT_CTA },
@@ -22,7 +22,7 @@ export const SOFTWARE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>>
           "Tidak. Kami biasanya memulai dari modul inti yang paling berdampak, lalu dikembangkan bertahap.",
       },
       {
-        question: "Bagaimana memastikan software benar-benar dipakai tim internal?",
+        question: "Bagaimana memastikan software benar-benar dipakai tim?",
         answer:
           "Kami merancang alur berdasarkan proses kerja nyata dan menyiapkan fase adopsi agar transisi lebih mulus.",
       },
@@ -30,7 +30,7 @@ export const SOFTWARE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>>
   },
   "pembuatan-software": {
     intro:
-      "Copy halaman pembuatan software difokuskan pada intent eksekusi: requirement jelas, prioritas fitur inti, dan delivery iteratif agar bisnis tidak menunggu terlalu lama untuk melihat hasil.",
+      "Halaman pembuatan software ini menekankan kebutuhan paling penting di tahap awal: requirement yang jelas, prioritas fitur inti, dan delivery iteratif agar bisnis tidak menunggu terlalu lama untuk melihat hasil.",
     ctaLabel: "Mulai Pembuatan Software",
     ctaLinks: [
       { label: "Mulai Discovery Software", href: DEFAULT_CTA },
@@ -56,7 +56,7 @@ export const SOFTWARE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>>
   },
   "implementasi-software": {
     intro:
-      "Pada tahap implementasi, user intent utamanya adalah kelancaran go-live. Karena itu kami tekankan rencana transisi, training pengguna, dan monitoring awal supaya adopsi sistem lebih stabil.",
+      "Pada tahap implementasi, fokus utamanya adalah go-live yang lebih lancar. Karena itu kami menekankan rencana transisi, training pengguna, dan monitoring awal supaya adopsi sistem lebih stabil.",
     ctaLabel: "Rencanakan Implementasi",
     ctaLinks: [
       { label: "Rencanakan Go-Live", href: DEFAULT_CTA },
@@ -82,7 +82,7 @@ export const SOFTWARE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>>
   },
   "instalasi-software": {
     intro:
-      "Untuk instalasi software, fokus copy kami adalah keamanan konfigurasi, verifikasi fungsi, dan kesiapan tim operasional agar software bisa langsung dipakai tanpa kebingungan.",
+      "Untuk instalasi software, fokus utamanya adalah konfigurasi yang aman, verifikasi fungsi, dan kesiapan pengguna agar software bisa langsung dipakai tanpa kebingungan.",
     ctaLabel: "Jadwalkan Instalasi",
     ctaLinks: [
       { label: "Jadwalkan Instalasi", href: DEFAULT_CTA },
@@ -100,7 +100,7 @@ export const SOFTWARE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>>
           "Ya. Setelah instalasi kami lakukan validasi fungsi utama untuk memastikan sistem berjalan sesuai kebutuhan.",
       },
       {
-        question: "Apakah ada dokumentasi untuk tim internal?",
+        question: "Apakah ada dokumentasi untuk tim pengelola?",
         answer:
           "Ada. Kami siapkan dokumentasi dan panduan singkat agar tim dapat mengoperasikan sistem dengan lebih percaya diri.",
       },
@@ -118,6 +118,6 @@ export const SOFTWARE_PAGE_OVERRIDES: Record<string, Partial<LegacyRewriteCopy>>
     description:
       "Sistem POS Surabaya untuk UMKM, retail, dan F&B yang membutuhkan transaksi cepat, inventory akurat, laporan real-time, dan setup yang siap dipakai tim operasional.",
     intro:
-      "Halaman sistem POS ini dioptimalkan untuk intent pemilik outlet: transaksi cepat, stok akurat, dan laporan real-time untuk keputusan harian. Setelah dibandingkan dengan live site, copy kami perluas agar lebih kuat untuk keyword UMKM, retail, dan F&B dengan penekanan pada implementasi outlet, setup perangkat, dan adopsi tim kasir.",
+      "Halaman sistem POS ini menekankan kebutuhan utama pemilik outlet: transaksi cepat, stok akurat, dan laporan real-time untuk keputusan harian. Fokusnya pada implementasi outlet, setup perangkat, dan adopsi tim kasir agar sistem benar-benar dipakai di lapangan.",
   },
 };
