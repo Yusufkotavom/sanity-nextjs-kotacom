@@ -8,6 +8,7 @@ type Payload = {
   type?: DocType;
   instruction?: string;
   document?: Record<string, unknown>;
+  mode?: "rewrite" | "extend";
 };
 
 function getSanityWriteConfig() {
@@ -233,6 +234,44 @@ ${body}
 `.trim();
 }
 
+function buildExtendPrompt({
+  type,
+  title,
+  excerpt,
+  body,
+  instruction,
+}: {
+  type: DocType;
+  title: string;
+  excerpt: string;
+  body: string;
+  instruction: string;
+}) {
+  return `
+Perbaiki dan perluas isi konten berikut. Jaga agar TIDAK mengubah judul (title) dan ringkasan (excerpt).
+
+Requirements:
+- JANGAN mengubah title dan excerpt sama sekali.
+- Perbaiki dan perluas body saja.
+- Do not output markdown fences.
+- Return JSON only with keys: "body" (only body, no title/excerpt).
+- "body" must be plain text paragraphs separated by blank lines.
+- Pertahankan gaya penulisan yang konsisten.
+
+Instruksi khusus:
+${instruction || "(none)"}
+
+Judul (JANGAN UBAH):
+${title}
+
+Ringkasan (JANGAN UBAH):
+${excerpt}
+
+Body saat ini:
+${body}
+`.trim();
+}
+
 async function patchDraftDocument({
   id,
   type,
@@ -293,6 +332,56 @@ async function patchDraftDocument({
   }
 }
 
+async function patchExtendDocument({
+  id,
+  type,
+  original,
+  newBody,
+}: {
+  id: string;
+  type: DocType;
+  original: Record<string, unknown>;
+  newBody: string;
+}) {
+  const cfg = getSanityWriteConfig();
+  if (!cfg.projectId || !cfg.dataset || !cfg.token) {
+    throw new Error("Missing Sanity write config for AI rewrite apply.");
+  }
+
+  const draftId = toDraftId(id);
+
+  const url = `https://${cfg.projectId}.api.sanity.io/v${cfg.apiVersion}/data/mutate/${cfg.dataset}`;
+  const body = {
+    mutations: [
+      {
+        patch: {
+          id: draftId,
+          set: {
+            body: textToPortableText(newBody),
+          },
+        },
+      },
+    ],
+  };
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${cfg.token}`,
+    },
+    body: JSON.stringify(body),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    const json = (await response.json().catch(() => ({}))) as {
+      error?: { description?: string };
+    };
+    throw new Error(json?.error?.description || `Sanity mutation failed (${response.status})`);
+  }
+}
+
 export async function OPTIONS(request: NextRequest) {
   return new NextResponse(null, {
     status: 204,
@@ -314,6 +403,7 @@ export async function POST(request: NextRequest) {
   const id = (payload.id || "").trim();
   const type = payload.type;
   const instruction = (payload.instruction || "").trim();
+  const mode = payload.mode || "rewrite";
   const document = payload.document || {};
 
   if (!id || !type || !["post", "service", "project"].includes(type)) {
@@ -334,7 +424,45 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // Ensure enough tokens for a complete JSON response (title + excerpt + body)
+    if (mode === "extend") {
+      const extendedBody = await generateAiText({
+        prompt: buildExtendPrompt({ type, title, excerpt, body, instruction }),
+        model: undefined,
+        userId: "studio-action",
+        tags: [`docType:${type}`, "mode:extend", "route:ai-rewrite-apply"],
+        minOutputTokens: 4000,
+      });
+
+      const parsed = JSON.parse(
+        extendedBody.text
+          .replace(/^```json\s*/i, "")
+          .replace(/^```\s*/i, "")
+          .replace(/\s*```$/i, "")
+          .trim(),
+      );
+      const newBody = (parsed.body || "").trim();
+      if (!newBody) {
+        throw new Error("AI extend output missing body.");
+      }
+
+      await patchExtendDocument({
+        id,
+        type,
+        original: document,
+        newBody,
+      });
+
+      return NextResponse.json(
+        {
+          ok: true,
+          message: "AI extend applied to draft (body only).",
+          providerMode: extendedBody.providerMode,
+          model: extendedBody.model,
+        },
+        { headers: corsHeaders },
+      );
+    }
+
     const ai = await generateAiText({
       prompt: buildPrompt({ type, title, excerpt, body, instruction }),
       model: undefined,

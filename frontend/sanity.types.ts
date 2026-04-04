@@ -673,6 +673,9 @@ export type AiWriterSettings = {
     postRewrite?: string;
     serviceRewrite?: string;
     projectRewrite?: string;
+    postBodyExtend?: string;
+    serviceBodyExtend?: string;
+    projectBodyExtend?: string;
   };
   notes?: string;
 };
@@ -1456,6 +1459,9 @@ export type AI_WRITER_SETTINGS_PUBLIC_QUERY_RESULT = {
     postRewrite?: string;
     serviceRewrite?: string;
     projectRewrite?: string;
+    postBodyExtend?: string;
+    serviceBodyExtend?: string;
+    projectBodyExtend?: string;
   } | null;
   notes: string | null;
 } | null;
@@ -1503,6 +1509,9 @@ export type AI_WRITER_SETTINGS_PRIVATE_QUERY_RESULT = {
     postRewrite?: string;
     serviceRewrite?: string;
     projectRewrite?: string;
+    postBodyExtend?: string;
+    serviceBodyExtend?: string;
+    projectBodyExtend?: string;
   } | null;
   notes: string | null;
 } | null;

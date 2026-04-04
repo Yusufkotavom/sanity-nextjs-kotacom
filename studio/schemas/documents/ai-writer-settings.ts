@@ -252,6 +252,56 @@ ATURAN WAJIB:
 - Isi konten (body): 200–350 kata. Susun dalam format narasi: (1) Latar belakang & kebutuhan klien, (2) Solusi yang kami rancang, (3) Hasil & dampak nyata yang dicapai. Gunakan angka konkret jika tersedia (contoh: "meningkatkan traffic 40%", "selesai dalam 14 hari"). Tutup dengan kalimat yang mengundang calon klien baru untuk menghubungi Kotacom.
 - Sertakan kata kunci kategori layanan dan lokasi secara alami untuk mendukung SEO halaman portofolio.`,
         }),
+        defineField({
+          name: "postBodyExtend",
+          title: "📰 Extend Body - Artikel Blog (Post)",
+          description:
+            "Prompt untuk mode Extend. Hanya memperbaiki/memperluas body(isi artikel), tanpa mengubah title dan excerpt.",
+          type: "text",
+          rows: 8,
+          initialValue: `Perbaiki dan perluas isi artikel blog berikut agar lebih lengkap dan kaya informasi.
+
+ATURAN WAJIB:
+- Jaga agar TIDAK mengubah judul (title) dan ringkasan (excerpt) yang sudah ada
+- Perluas paragraf yang terlalu pendek dengan contoh konkret atau penjelasan tambahan
+- Tambahkan subtopik baru jika relevan untuk menjawab search intent lebih lengkap
+- Gunakan bahasa aktif, jelas, dan说服 dalam Bahasa Indonesia yang baku
+- Pertahankan gaya penulisan yang konsisten dengan artikel aslinya`,
+        }),
+        defineField({
+          name: "serviceBodyExtend",
+          title: "🛠️ Extend Body - Halaman Layanan (Service)",
+          description:
+            "Prompt untuk mode Extend. Hanya memperbaiki/memperluas body(isi layanan), tanpa mengubah title dan excerpt.",
+          type: "text",
+          rows: 8,
+          initialValue: `Perbaiki dan perluas isi halaman layanan ini agar lebih meyakinkan dan lengkap.
+
+ATURAN WAJIB:
+- Jaga agar TIDAK mengubah judul (title) dan ringkasan (excerpt) yang sudah ada
+- Tambahkan detail manfaat yang lebih spesifik untuk klien
+- Tambahkan bukti kepercayaan (testimoni, pengalaman, jaminan) jika ada
+- Perluas bagian cara kerja atau proses kerja agar lebih jelas
+- Gunakan bahasa manfaat (bukan fitur) yang berorientasi pada hasil klien
+- Pertahankan kata kunci lokasi dan layanan yang sudah ada`,
+        }),
+        defineField({
+          name: "projectBodyExtend",
+          title: "🏆 Extend Body - Halaman Proyek / Portofolio (Project)",
+          description:
+            "Prompt untuk mode Extend. Hanya memperbaiki/memperluas body(isi portofolio), tanpa mengubah title dan excerpt.",
+          type: "text",
+          rows: 8,
+          initialValue: `Perbaiki dan perluas halaman portofolio/studi kasus ini agar lebih persuasive.
+
+ATURAN WAJIB:
+- Jaga agar TIDAK mengubah judul (title) dan ringkasan (excerpt) yang sudah ada
+- Tambahkan detail proses kerja yang lebih lengkap
+- Tambahkan hasil dan dampak nyata yang dicapai dengan angka spesifik
+- Perluas bagian tantangan yang solved dansolusi yang diberikan
+- Tutup dengan ajakan yang sesuai untuk calon klien baru
+- Pertahankan format narasi yang membangun kepercayaan`,
+        }),
       ],
     }),
 
