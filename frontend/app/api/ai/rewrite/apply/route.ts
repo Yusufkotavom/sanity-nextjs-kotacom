@@ -28,12 +28,20 @@ function getAllowedStudioOrigins() {
   return origins;
 }
 
+/** Returns true for Vercel preview deployments of the Studio project */
+function isVercelStudioPreview(origin: string) {
+  return /^https:\/\/sanity-nextjs-kotacom-studio[^.]*\.vercel\.app$/.test(origin);
+}
+
 function withCorsHeaders(origin?: string | null) {
   const allowedOrigins = getAllowedStudioOrigins();
-  
-  // Use the exact origin if valid, otherwise fallback to the first valid one
-  const matchedOrigin = (origin && allowedOrigins.includes(origin)) ? origin : allowedOrigins[0];
-  
+
+  // Allow exact-match origins OR Vercel preview URLs for the studio project
+  const isAllowed =
+    origin && (allowedOrigins.includes(origin) || isVercelStudioPreview(origin));
+
+  const matchedOrigin = isAllowed ? origin! : allowedOrigins[0];
+
   return {
     "Access-Control-Allow-Origin": matchedOrigin,
     "Access-Control-Allow-Methods": "POST, OPTIONS",
