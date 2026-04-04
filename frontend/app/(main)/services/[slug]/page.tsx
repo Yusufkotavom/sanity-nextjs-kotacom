@@ -100,7 +100,7 @@ export default async function ServiceSlugPage(props: {
     ]);
     if (!category) notFound();
 
-    const categoryPath = `/services/category/${params.slug}`;
+    const categoryPath = `/services/${params.slug}`;
     const breadcrumbJsonLd = buildBreadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "Services", path: "/services" },

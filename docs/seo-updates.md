@@ -58,8 +58,8 @@ This file is the canonical changelog for all repository updates, with explicit S
   - `frontend/app/(main)/blog/category/[slug]/page.tsx`
   - `docs/astro-migration-megaplan.md`
 - Summary:
-  - Fixed category URL output in Next.js `sitemap.ts` (e.g., `/products/:slug` to `/products/category/:slug`).
-  - Implemented missing `BreadcrumbList` JSON-LD data onto Category pages (`products`, `services`, and `blog`).
+  - Attempted to fix category URL output in Next.js `sitemap.ts`, but quickly reverted it after realizing `products/[slug]` serves BOTH products and categories dynamically, while `products/category/[slug]` is just a legacy redirect route.
+  - Implemented missing `BreadcrumbList` JSON-LD data onto Category pages (`products`, `services`, and `blog`) using their correct canonical routes.
   - Validated Global `Organization/LocalBusiness` structured data placement in the root layout.
   - Successfully passed a full `pnpm --filter frontend run build` test confirming no TypeScript or ESLint errors block deployment.
 - SEO impact:
