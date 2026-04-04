@@ -16,6 +16,20 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-04 - Live HTTP HEAD Verification & Redirect Cleanup
+- Changed files:
+  - `frontend/scripts/verify-and-cleanup-redirects.mjs` (New)
+- Summary:
+  - Executed a live HTTP HEAD request sweep against `https://sanity.kotacom.id` for all 761 redirect sources in the CMS.
+  - Discovered that Next.js dynamic routing was natively handling 354 legacy URLs (e.g., `/jasa-cetak-buku-*`, `/pembuatan-website/*`) with 200 OK responses, despite them not being in the static Astro manifest.
+  - Automatically deleted these 354 false-positive redirects from Sanity to prevent breaking live dynamic routes.
+  - Retained 298 valid fallback redirects for genuine 404/410 legacy URLs.
+- SEO impact:
+  - Critical. Prevented 354 valid, ranking dynamic pages from being hijacked by fallback redirects.
+  - Ensures accurate 301 status codes only apply to URLs that are definitively broken.
+- Verification:
+  - Script output verified 354 deletions committed to Sanity via transaction.
+
 ## 2026-04-04 - Implement Sanity Redirect Management & Wildcard Fallbacks
 - Changed files:
   - `frontend/next.config.mjs`
