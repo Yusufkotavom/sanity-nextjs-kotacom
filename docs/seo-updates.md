@@ -16,7 +16,20 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
-## 2026-04-04 - Fix Vercel Build Crash Due to Undefined Code Block
+## 2026-04-04 - Improve AI Writer Settings UX with Predefined Prompts
+- Changed files:
+  - `studio/schemas/documents/ai-writer-settings.ts`
+- Summary:
+  - Restructured the AI Writer Settings document into tabbed field groups (Aktifkan & Mode, Model AI, Template Prompt, API Keys, Catatan) for easier navigation.
+  - Added user-friendly Indonesian labels and descriptions for all fields, replacing developer-oriented technical jargon with plain-language explanations.
+  - Added predefined `initialValue` prompt templates for all 4 prompt fields: Global System, Blog Post Rewrite, Service Page Rewrite, Project/Portfolio Rewrite — including concrete writing guidelines, character limits, and CTA instructions.
+  - Marked encrypted API key fields as `readOnly: true` to prevent accidental manual edits from Studio.
+- SEO impact:
+  - No direct SEO impact. Improves content editor experience when using AI rewrite for SEO copy quality.
+- Verification:
+  - `pnpm --filter studio run typecheck` — passed with exit code 0.
+
+
 - Changed files:
   - `frontend/components/portable-text-renderer.tsx`
 - Summary:
