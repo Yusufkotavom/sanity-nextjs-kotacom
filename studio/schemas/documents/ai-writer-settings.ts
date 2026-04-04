@@ -165,10 +165,10 @@ export default defineType({
       name: "maxOutputTokens",
       title: "Batas Panjang Hasil (Token)",
       description:
-        "1 token ≈ ¾ kata. 1400 ≈ 3–4 paragraf. Gunakan 2000–4000 untuk artikel panjang.",
+        "Total budget untuk prompt + hasil. 1 token ≈ ¾ kata. 1400 ≈ 3–4 paragraf. User bisa isi sesuai kebutuhan tanpa batas max.",
       type: "number",
       initialValue: 1400,
-      validation: (Rule) => Rule.min(128).max(8192),
+      validation: (Rule) => Rule.min(128),
       group: "model",
     }),
     defineField({
