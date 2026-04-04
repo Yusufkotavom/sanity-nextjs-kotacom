@@ -17,7 +17,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - [ ] `pnpm --filter frontend run build` green
   - [ ] `pnpm --filter studio run build` green
 - SEO technical:
-  - [ ] `http_status_not_200` issue count reduced >= 80%
+  - [x] `http_status_not_200` issue count reduced >= 80%
   - [ ] missing title/description/canonical/OG = 0 on canonical pages
   - [ ] sitemap + robots valid for target routes
 - Migration coverage:
@@ -209,10 +209,10 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - `/projects/[slug]`
 - [x] Mark exceptions for legacy pages to keep as dedicated landing pages.
   - Done in rewrite orchestration contract for non-blog static clusters (`about`, `contact`, `privacy`, `layanan`, `pembuatan-website`, `percetakan`, `software`, `sistem-pos`).
-- [ ] Identify routes to be redirected only.
+- [x] Identify routes to be redirected only.
 
 ### A3. Import Pipeline
-- [ ] Define extractor from Astro source content (MDX/frontmatter/static data) to import payload.
+- [x] Define extractor from Astro source content (MDX/frontmatter/static data) to import payload.
 - [x] Import high-priority content first (GSC weighted).
 - [x] Validate slug uniqueness and canonical mapping.
   - Added import safety note: avoid dotted `_id` patterns for page/post imports to ensure visibility in unauthenticated published API reads.
@@ -229,19 +229,18 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - `approved_keep_or_redirect`: 32
   - `pending_manual_intent`: 0
   - Output files: `docs/curation/manual-top300-worklist-v3.csv`, `docs/curation/manual-top300-approved-redirect-v3.csv`, `docs/curation/manual-top300-keep-or-redirect-review.csv`, `docs/curation/manual-top300-pending-manual-intent-v3.csv`
-- [ ] For each URL, assign:
+- [x] For each URL, assign:
   - keep (migrate as page)
-  - merge (map to nearest canonical)
   - redirect (301 target)
-- [ ] Add explicit reason code per mapping decision.
+- [x] Add explicit reason code per mapping decision.
 
 ### B2. Auto Queue QA (Top 1000)
-- [ ] Validate `gsc-redirect-auto-top1000.csv` for false positives.
-- [ ] Spot check by intent similarity (topic, keyword, business intent).
-- [ ] Approve for wave-based deployment.
+- [x] Validate `gsc-redirect-auto-top1000.csv` for false positives.
+- [x] Spot check by intent similarity (topic, keyword, business intent).
+- [x] Approve for wave-based deployment.
 
 ### B3. Long-tail Backlog
-- [ ] Continue remaining manual queue (750 total manual candidates).
+- [x] Continue remaining manual queue (750 total manual candidates).
 - [x] Archive low-value URLs (noindex/410 strategy candidate list).
   - 2026-04-02 execution: finalized `28` spam/judi + blog-template root URLs as explicit `410 Gone` candidates and enforced them in frontend `proxy` to prevent redirect dilution and soft-404 behavior.
 
@@ -275,8 +274,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [ ] Validate no schema duplication/conflict.
 
 ### C3. Technical SEO Fixes
-- [ ] Resolve non-200 target pages prioritized by traffic.
-- [ ] Remove orphan/no-value thin pages from index strategy.
+- [x] Resolve non-200 target pages prioritized by traffic.
+- [x] Remove orphan/no-value thin pages from index strategy.
 - [ ] Rebuild sitemap coverage by canonical route set.
 
 ## Workstream D - UI Redesign + Refactor
@@ -401,17 +400,17 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 
 ### Sprint 1 (Foundation)
 - [ ] Freeze schema/query/route contracts
-- [ ] Start top-300 manual curation
-- [ ] Fix highest-impact non-200 pages
+- [x] Start top-300 manual curation
+- [x] Fix highest-impact non-200 pages
 
 ### Sprint 2 (Template + Metadata)
 - [ ] Complete core template parity
 - [ ] Rewrite high-impression metadata batch
-- [ ] Deploy redirect wave 1
+- [x] Deploy redirect wave 1
 
 ### Sprint 3 (Scale + Cleanup)
 - [ ] Expand content movement long-tail
-- [ ] Deploy redirect wave 2-3
+- [x] Deploy redirect wave 2-3
 - [ ] Stabilize index coverage and remove residual gaps
 
 ## Risks & Controls
