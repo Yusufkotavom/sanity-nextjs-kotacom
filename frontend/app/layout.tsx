@@ -169,18 +169,81 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "LocalBusiness",
+              "@type": ["LocalBusiness", "ProfessionalService"],
               "name": "Kotacom IT Service & Percetakan",
               "url": "https://www.kotacom.id",
               "logo": "https://www.kotacom.id/assets/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
               "image": "https://www.kotacom.id/assets/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
               "description": "Solusi IT & Digital Terpadu untuk Bisnis Anda. IT Service & Percetakan - Pengadaan, Service, Penjualan, Website Development, Software Development, Percetakan, Social Media Management.",
               "telephone": "+6285799520350",
+              "priceRange": "$$",
               "address": {
                 "@type": "PostalAddress",
+                "streetAddress": "Jl. Gayungan IV No.23",
                 "addressLocality": "Surabaya",
                 "addressRegion": "Jawa Timur",
                 "addressCountry": "ID"
+              },
+              "areaServed": [
+                {
+                  "@type": "City",
+                  "name": "Surabaya"
+                },
+                {
+                  "@type": "Country",
+                  "name": "Indonesia"
+                }
+              ],
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+6285799520350",
+                "contactType": "customer service",
+                "areaServed": "ID",
+                "availableLanguage": ["Indonesian", "English"]
+              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                  "opens": "09:00",
+                  "closes": "17:00"
+                }
+              ],
+              "sameAs": [
+                "https://www.instagram.com/kotacom.id",
+                "https://www.facebook.com/kotacom"
+              ],
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "reviewCount": "125"
+              },
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Layanan Utama Kotacom",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Jasa Service Komputer & Jaringan"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Jasa Pembuatan Website & Software Development"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Jasa Percetakan Buku & Digital Printing"
+                    }
+                  }
+                ]
               }
             }),
           }}

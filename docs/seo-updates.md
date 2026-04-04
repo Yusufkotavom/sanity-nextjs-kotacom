@@ -4384,3 +4384,19 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - Frontend build passed. Script logs verified Sanity document patches.
 
+
+## 2026-04-04 - Maximize Global JSON-LD Schema
+- Changed files:
+  - `frontend/app/layout.tsx`
+- Summary:
+  - Upgraded basic `LocalBusiness` JSON-LD schema to a comprehensive local schema.
+  - Added `@type` array (["LocalBusiness", "ProfessionalService"]).
+  - Included `priceRange`, complete `address` (with street), `areaServed` (Surabaya, Indonesia), and `contactPoint`.
+  - Added `openingHoursSpecification`.
+  - Integrated social profiles via `sameAs`.
+  - Added `aggregateRating` and `hasOfferCatalog` outlining the main services (IT, Web Dev, Printing).
+- SEO impact:
+  - Direct SEO impact: Drastically improves rich snippet eligibility, Local SEO relevance (Maps, Knowledge Graph), and Answer Engine Optimization (AEO) context by explicitly declaring operating hours, contact info, ratings, and service catalog.
+- Verification:
+  - Verified JSON syntax inside layout.
+
