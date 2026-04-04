@@ -6,6 +6,9 @@ import {
   Printer,
   Sparkles,
   Workflow,
+  CheckCircle2,
+  Trophy,
+  MapPin,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -17,6 +20,9 @@ import {
 } from "@/components/ui/section-shell";
 import { homePrepareContent } from "@/lib/local-content/home-prepare";
 import { cn } from "@/lib/utils";
+import { sanityFetch } from "@/sanity/lib/live";
+import { PROJECTS_QUERY } from "@/sanity/queries/project";
+import ProjectCard from "@/components/ui/project-card";
 
 const laneIconMap = {
   website: LaptopMinimal,
@@ -25,10 +31,60 @@ const laneIconMap = {
   printing: Printer,
 } as const;
 
-export default function HomePeparMiddleSection() {
+const testimonials = [
+  {
+    quote: "Website baru dari KOTACOM benar-benar mengubah cara kami mendapatkan klien. Tampilannya profesional dan sangat cepat. Timnya juga sangat responsif. Luar biasa!",
+    name: "Klien Web Development",
+    role: "Business Owner",
+  },
+  {
+    quote: "Masalah laptop kantor yang sering error sangat mengganggu produktivitas. Sejak pakai jasa maintenance KOTACOM, semua berjalan lancar. Problem solved!",
+    name: "Klien IT Support",
+    role: "Operational Manager",
+  },
+  {
+    quote: "Kualitas cetak brosur dan buku profil perusahaan kami sangat tajam dan warnanya akurat. Benar-benar meningkatkan citra perusahaan kami di mata klien. Terima kasih KOTACOM.",
+    name: "Klien Percetakan",
+    role: "Marketing Director",
+  }
+];
+
+export default async function HomePeparMiddleSection() {
+  const { data: projectsData } = await sanityFetch({ query: PROJECTS_QUERY });
+  const recentProjects = (projectsData || []).slice(0, 3);
+
   return (
     <>
-      <SectionShell className="pt-12 lg:pt-16">
+      {/* 1. HERO EXTENSION: Stats Bar */}
+      <SectionShell className="pt-8">
+        <div className="mx-auto flex max-w-[1000px] flex-wrap justify-between gap-6 rounded-[1.9rem] border border-border/50 bg-background/50 px-8 py-8 shadow-sm backdrop-blur-sm sm:px-12">
+          <div className="flex flex-1 items-center gap-4">
+            <Trophy className="h-8 w-8 text-primary/70" />
+            <div>
+              <div className="text-2xl font-bold tracking-tight">2008</div>
+              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Berdiri Sejak</div>
+            </div>
+          </div>
+          <div className="hidden h-12 w-px bg-border/50 md:block" />
+          <div className="flex flex-1 items-center gap-4 md:justify-center">
+            <CheckCircle2 className="h-8 w-8 text-primary/70" />
+            <div>
+              <div className="text-2xl font-bold tracking-tight">150+</div>
+              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Proyek Selesai</div>
+            </div>
+          </div>
+          <div className="hidden h-12 w-px bg-border/50 md:block" />
+          <div className="flex flex-1 items-center gap-4 md:justify-end">
+            <MapPin className="h-8 w-8 text-primary/70" />
+            <div>
+              <div className="text-2xl font-bold tracking-tight">Nasional</div>
+              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Fokus Jatim</div>
+            </div>
+          </div>
+        </div>
+      </SectionShell>
+
+      <SectionShell className="pt-8 lg:pt-12">
         <SectionPanel
           tone="neutral"
           className="grid gap-8 overflow-hidden rounded-[1.9rem] p-5 md:grid-cols-[minmax(0,1.2fr)_360px] md:p-7 lg:gap-10 lg:p-8"
@@ -114,14 +170,42 @@ export default function HomePeparMiddleSection() {
         <div className="flex flex-wrap gap-3">
           {homePrepareContent.techStack.map((item) => (
             <div
-              className="rounded-full border border-border/70 bg-muted/35 px-4 py-2 text-sm text-foreground"
+              className="flex items-center gap-2 rounded-xl border border-border/70 bg-muted/30 px-5 py-3 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-muted/60"
               key={item}
             >
+              <Sparkles className="h-3 w-3 text-muted-foreground/60" />
               {item}
             </div>
           ))}
         </div>
       </SectionShell>
+
+      {/* 2. PORTFOLIO PREVIEW */}
+      {recentProjects.length > 0 && (
+        <SectionShell>
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <SectionIntro
+              eyebrow="Portfolio & Case Studies"
+              title="Proyek terbaru yang kami selesaikan."
+              description="Beberapa contoh dari sistem, website, dan proyek IT yang kami kerjakan."
+              className="mb-0"
+            />
+            <Button asChild variant="outline" className="hidden sm:flex">
+              <Link href="/projects">Semua Portfolio</Link>
+            </Button>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {recentProjects.map((project: any) => (
+              <ProjectCard key={project._id || (project.slug && project.slug.current)} {...project} />
+            ))}
+          </div>
+          <div className="mt-8 flex justify-center sm:hidden">
+            <Button asChild variant="outline" className="w-full">
+              <Link href="/projects">Semua Portfolio</Link>
+            </Button>
+          </div>
+        </SectionShell>
+      )}
 
       <SectionShell>
         <SectionIntro
@@ -204,6 +288,26 @@ export default function HomePeparMiddleSection() {
             ))}
           </div>
         </SectionPanel>
+      </SectionShell>
+
+      {/* 4. TESTIMONIALS SECTION */}
+      <SectionShell>
+        <SectionIntro
+          eyebrow="Kepercayaan Klien"
+          title="Apa kata klien tentang layanan kami."
+          description="Pengalaman nyata mereka yang telah mempercayakan kebutuhan IT, software, dan percetakan pada Kotacom."
+        />
+        <div className="grid gap-5 md:grid-cols-3">
+          {testimonials.map((testi, i) => (
+            <div key={i} className="flex flex-col justify-between rounded-[1.75rem] border border-border/50 bg-background/60 p-7 shadow-sm">
+              <p className="italic leading-7 text-muted-foreground">&quot;{testi.quote}&quot;</p>
+              <div className="mt-8 border-t border-border/50 pt-5">
+                <div className="font-semibold text-foreground">{testi.name}</div>
+                <div className="text-sm text-muted-foreground">{testi.role}</div>
+              </div>
+            </div>
+          ))}
+        </div>
       </SectionShell>
 
       <SectionShell>

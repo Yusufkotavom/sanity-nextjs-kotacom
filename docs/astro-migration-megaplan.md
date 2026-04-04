@@ -21,8 +21,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - [x] missing title/description/canonical/OG = 0 on canonical pages
   - [x] sitemap + robots valid for target routes
 - Migration coverage:
-  - [ ] top 1000 auto-redirect mapped and deployed in staged wave
-  - [ ] top 300 manual legacy URLs curated one-by-one
+  - [x] top 1000 auto-redirect mapped and deployed in staged wave
+  - [x] top 300 manual legacy URLs curated one-by-one
   - [ ] content parity for core templates (blog/service/product/project)
 - UX redesign:
   - [ ] new design system applied to key templates
@@ -31,6 +31,9 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ## Current Status Snapshot (Already Done)
 
 - [x] **GSC MIGRATION 100% DONE:** All Top 300 manual curations + Top 1000 auto-redirects fully synced, seeded, and mapped via Sanity and Next.js wildcards.
+- [x] Removed the 8-item validation cap from navigation submenus in the Sanity schema (`link.ts`), permitting expanded menu structures.
+- [x] Adjusted `hero-1` and `hero-2` block backgrounds to be more transparent via backdrop blur, improving visual layering over layout backgrounds.
+- [x] Fixed `cta-1` block layout: buttons are now fully encapsulated by the section panel background and are properly centered alongside the text content.
 - [x] GSC export + migration curation pipeline built
 - [x] metadata audit script built and executed
 - [x] URL inspection script built (quota-aware caveat)

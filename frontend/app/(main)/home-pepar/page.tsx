@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import PageHybridShell from "@/components/hybrid/page-hybrid-shell";
 import { fetchSanityPageBySlug } from "@/sanity/lib/fetch";
 import {
@@ -18,17 +19,67 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return generateBasicMetadata({
-    title: "Kotacom | Solusi IT, Website, Software, Support, dan Percetakan",
+    title: "Kotacom — Jasa IT, Website, Software & Percetakan Surabaya",
     description:
-      "Kotacom membantu bisnis membangun website, software, IT support, dan kebutuhan percetakan dengan pendekatan yang lebih terarah dan siap dieksekusi.",
+      "Solusi IT terpadu untuk bisnis: Jasa pembuatan website, software development custom, IT support, dan percetakan profesional di Surabaya dan sekitarnya.",
     slug: "home-pepar",
   });
 }
 
 export default async function HomePeparPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://kotacom.id/#organization",
+        name: "Kotacom",
+        url: "https://kotacom.id/",
+        logo: "https://kotacom.id/logo.png",
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: "+6285799520350",
+          contactType: "customer service",
+          areaServed: "ID",
+          availableLanguage: "Indonesian",
+        },
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://kotacom.id/#localbusiness",
+        name: "Kotacom IT Service & Percetakan",
+        url: "https://kotacom.id/",
+        telephone: "+6285799520350",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Surabaya",
+          addressRegion: "Jawa Timur",
+          addressCountry: "ID",
+        },
+        areaServed: ["Surabaya", "Sidoarjo", "Gresik"],
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://kotacom.id/#website",
+        url: "https://kotacom.id/",
+        name: "Kotacom",
+        publisher: {
+          "@id": "https://kotacom.id/#organization",
+        },
+      },
+    ],
+  };
+
   return (
-    <PageHybridShell slug="home-pepar">
-      <HomePeparMiddleSection />
-    </PageHybridShell>
+    <>
+      <Script
+        id="home-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <PageHybridShell slug="home-pepar">
+        <HomePeparMiddleSection />
+      </PageHybridShell>
+    </>
   );
 }

@@ -16,6 +16,40 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-04 - Remove Submenu Item Limit from Navigation
+- Changed files:
+  - `studio/schemas/blocks/shared/link.ts`
+- Summary:
+  - Removed the `Rule.max(8)` validation constraint from the `children` (Sub Menu) array field inside the `link` object schema.
+  - This lifts the restriction preventing editors from adding more than 8 nested submenu items under a primary navigation link.
+- SEO impact:
+  - No direct SEO impact. Enables broader content organization inside navigation menus.
+- Verification:
+  - Manual code review confirming the removal of the validation rule from the schema file.
+
+## 2026-04-04 - Make Hero 1 and Hero 2 Backgrounds More Transparent
+- Changed files:
+  - `frontend/components/blocks/hero/hero-1.tsx`
+  - `frontend/components/blocks/hero/hero-2.tsx`
+- Summary:
+  - Added utility classes `!bg-none !bg-white/40 dark:!bg-white/5 backdrop-blur-md` to both `hero-1` and `hero-2` SectionPanel wrappers.
+  - This overrides the default gradient panel background, making the hero sections cleaner and more transparent while retaining the glow effects and text legibility.
+- SEO impact:
+  - No direct SEO impact. UI and UX visual hierarchy improvement.
+- Verification:
+  - Frontend typecheck passed, manual CSS class review.
+
+## 2026-04-04 - Fix Cta1 Component Background and Alignment
+- Changed files:
+  - `frontend/components/blocks/cta/cta-1.tsx`
+- Summary:
+  - Moved CTA buttons inside the `SectionPanel` so the background color spans the entire block instead of just the text area.
+  - Adjusted flex alignment so that when `stackAlign` is set to center, both text and buttons are properly centered together within the panel.
+- SEO impact:
+  - No direct SEO impact. UI and UX improvement for conversion elements.
+- Verification:
+  - Manual code review confirms buttons are encapsulated by SectionPanel with conditional flex-col items-center.
+
 ## 2026-04-04 - Improve AI Writer Settings UX with Predefined Prompts
 - Changed files:
   - `studio/schemas/documents/ai-writer-settings.ts`

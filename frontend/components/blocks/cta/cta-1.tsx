@@ -27,15 +27,14 @@ export default function Cta1({
     <SectionShell>
       <div
         className={cn(
-          stackAlign === "center" ? "mx-auto text-center" : undefined,
-          isNarrow ? "mx-auto max-w-[48rem]" : "max-w-4xl",
+          isNarrow ? "mx-auto max-w-[48rem]" : "mx-auto max-w-4xl",
         )}
       >
         <SectionPanel
           tone={colorVariant === "primary" ? "sky" : "neutral"}
           className={cn(
-            "rounded-[1.75rem] px-5 py-6 md:px-7 md:py-8",
-            colorVariant === "primary" ? "text-background" : undefined,
+            "flex flex-col rounded-[1.75rem] px-5 py-6 md:px-7 md:py-8",
+            stackAlign === "center" ? "items-center text-center" : undefined,
           )}
         >
           {tagLine || uiIcon ? (
@@ -57,30 +56,28 @@ export default function Cta1({
               <PortableTextRenderer value={body} />
             </div>
           ) : null}
-        </SectionPanel>
-        {links && links.length > 0 && (
-          <div
-            className={cn(
-              "mt-6 flex flex-wrap gap-3",
-              stackAlign === "center" ? "justify-center" : undefined,
-            )}
-          >
-            {links &&
-              links.length > 0 &&
-              links.map((link) => (
+          {links && links.length > 0 && (
+            <div
+              className={cn(
+                "mt-6 flex flex-wrap gap-3",
+                stackAlign === "center" ? "justify-center" : undefined,
+              )}
+            >
+              {links.map((link) => (
                 <Button key={link.title} variant={link?.buttonVariant} asChild>
                   <Link
-                  href={link.href || "#"}
-                  target={link.target ? "_blank" : undefined}
-                  rel={link.target ? "noopener" : undefined}
-                >
-                  <SanityIcon icon={link.uiIcon || link.icon} className="size-4" />
-                  {link.title}
-                </Link>
-              </Button>
+                    href={link.href || "#"}
+                    target={link.target ? "_blank" : undefined}
+                    rel={link.target ? "noopener" : undefined}
+                  >
+                    <SanityIcon icon={link.uiIcon || link.icon} className="size-4" />
+                    {link.title}
+                  </Link>
+                </Button>
               ))}
-          </div>
-        )}
+            </div>
+          )}
+        </SectionPanel>
       </div>
     </SectionShell>
   );

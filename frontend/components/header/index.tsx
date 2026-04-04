@@ -83,12 +83,6 @@ export default async function Header() {
           </Link>
           <DesktopNav navigation={navigation} />
           <div className="ml-auto flex items-center gap-1.5">
-            <SocialLinks
-              links={(settings as any)?.socialLinks}
-              iconOnly
-              size="sm"
-              className="mr-1 hidden xl:flex"
-            />
             <ModeToggle />
             {showWhatsAppCta ? (
               <WhatsAppLink

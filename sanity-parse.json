@@ -1,0 +1,55 @@
+{
+  "title": "SEO Report \u2014 sanity.kotacom.id",
+  "meta_description": null,
+  "meta_robots": null,
+  "canonical": null,
+  "h1": [
+    "SEO Analysis Report"
+  ],
+  "h2": [
+    "\ud83e\udded Environment Detection (LLM-Inferred)",
+    "\ud83d\udee0\ufe0f Environment-Specific Fix Plan",
+    "\ud83d\udea8 All Issues (18)",
+    "\ud83d\udd12 Security Headers45/100",
+    "\ud83d\udcf1 Social Meta Tags85/100",
+    "\ud83e\udd16 Robots & AI Crawlers80/100",
+    "\ud83d\udd17 Broken Links1 broken / 41 total",
+    "\ud83d\udd78\ufe0f Internal Link Structure60/100",
+    "\u21aa\ufe0f Redirect Chain0 hops",
+    "\ud83e\udde0 AI Search Readiness (llms.txt)Not Found",
+    "\u26a1 Performance & Core Web Vitals0/100",
+    "\ud83d\udcdd On-Page SEO90/100",
+    "\ud83d\udcd6 Readability55/100",
+    "\ud83d\udcc4 Article Info & Keywords75/100",
+    "\ud83c\udfdb\ufe0f Entity SEO0/100",
+    "\ud83d\udd17 Link Profile35/100",
+    "\ud83c\udf0d Hreflang / International SEO0 tags",
+    "\ud83d\udccb Content Uniqueness0 dupes / 0 thin",
+    "\ud83d\udca1 All Recommendations"
+  ],
+  "h3": [
+    "Detection Signals",
+    "AI Crawler Management",
+    "Top Anchor Texts",
+    "Potential Orphan Pages",
+    "\ud83d\udca1 Recommendations",
+    "\u270d\ufe0f What To Replace (Before/After)",
+    "Extracted Keywords",
+    "\ud83d\udd0d Issues Found",
+    "\ud83d\udd0d Issues Found",
+    "\ud83d\udee0\ufe0f Environment-Specific Fixes",
+    "\ud83d\udd12 Security",
+    "\ud83d\udd78\ufe0f Internal Links",
+    "\ud83d\udcd6 Readability"
+  ],
+  "images": [],
+  "links": {
+    "internal": [],
+    "external": []
+  },
+  "schema": [],
+  "open_graph": {},
+  "twitter_card": {},
+  "word_count": 2006,
+  "hreflang": []
+}

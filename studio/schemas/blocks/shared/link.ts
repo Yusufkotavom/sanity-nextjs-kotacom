@@ -141,7 +141,6 @@ export default defineType({
       of: [defineArrayMember({ type: "navigation-link-child" })],
       description:
         "Optional nested items for dropdown/submenu navigation. Also used as full footer menu links.",
-      validation: (Rule) => Rule.max(8),
       hidden: ({ document }) => document?._type !== "navigation",
     }),
   ],

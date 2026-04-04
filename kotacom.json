@@ -1,0 +1,1432 @@
+{
+  "title": "kotacom.id - IT Service & Publications Terpercaya",
+  "meta_description": "IT Service & Publications - Pengadaan, Service, Penjualan, Website Development, Software Development, Social Media Management",
+  "meta_robots": "index, follow",
+  "canonical": "https://kotacom.id/",
+  "h1": [
+    "Solusi IT & Digital Terpadu untuk Bisnis Anda"
+  ],
+  "h2": [
+    "Tech Stack Kami",
+    "Best Service",
+    "Layanan IT Terbaru",
+    "Jasa pembuatan website",
+    "Layanan IT Support Profesional - Dukungan Teknis Terpercaya",
+    "Layanan Percetakan Profesional - Cetak Buku, Brosur, Kalender",
+    "Jasa Pembuatan Website & Software Development Profesional",
+    "Portfolio Proyek Terbaru",
+    "Sistem POS Fashion Retail - Butik Cantik Collection",
+    "Sistem Manajemen Koperasi Digital - Koperasi Maju Bersama",
+    "IT Infrastructure Upgrade - CV Maju Bersama",
+    "Sistem Manajemen Kasus Hukum - Law Firm Harapan & Partners",
+    "Website Toko Online UMKM - Batik Nusantara",
+    "Sistem Manajemen Apotek Digital - Apotek Sehat Mandiri",
+    "Produk & Solusi Terbaru",
+    "Artikel & Tips Teknologi",
+    "5 Kriteria Penting Memilih Jasa Cetak Buku Terbaik untuk Karya Anda",
+    "Printer Gagal Menarik Kertas? Ini 5 Penyebab dan Cara Mengatasinya",
+    "Digital vs Offset: Mana Metode Cetak Buku yang Tepat untuk Kebutuhan Anda?",
+    "Panduan Lengkap: Cara Menyiapkan File PDF Siap Cetak untuk Buku",
+    "Update 2025: Rincian & Estimasi Biaya Cetak Buku Satuan di Surabaya",
+    "Hindari Rugi! 5 Kesalahan Umum Penulis Pemula Saat Mencetak Buku Pertama",
+    "What Our Clients Say",
+    "Layanan IT & Digital SolutionsTerpercaya",
+    "Bergabung dengan kotacom.id",
+    "Layanan",
+    "Perusahaan",
+    "Kontak & Legal",
+    "Minta Penawaran / Diskon"
+  ],
+  "h3": [
+    "Website",
+    "IT Support & Services",
+    "Printing & Design",
+    "Proyek Terbaru",
+    "Case Studies",
+    "Digital Products",
+    "Featured Products",
+    "Website",
+    "IT Support & Services",
+    "Printing & Design",
+    "Proyek Terbaru",
+    "Case Studies",
+    "Digital Products",
+    "Featured Products",
+    "React",
+    "Astro.js",
+    "Angular",
+    "Next.js",
+    "Nuxt.js",
+    "Node.js",
+    "Laravel",
+    "Python",
+    "PHP",
+    "Java",
+    "MySQL",
+    "PostgreSQL",
+    "MongoDB",
+    "AWS",
+    "Google Cloud",
+    "React Native",
+    "Flutter",
+    "Docker",
+    "Git",
+    "Figma",
+    "TypeScript",
+    "Tailwind CSS",
+    "GraphQL",
+    "Redis",
+    "Kubernetes",
+    "React",
+    "Astro.js",
+    "Angular",
+    "Next.js",
+    "Nuxt.js",
+    "Node.js",
+    "Laravel",
+    "Python",
+    "PHP",
+    "Java",
+    "MySQL",
+    "PostgreSQL",
+    "MongoDB",
+    "AWS",
+    "Google Cloud",
+    "React Native",
+    "Flutter",
+    "Docker",
+    "Git",
+    "Figma",
+    "TypeScript",
+    "Tailwind CSS",
+    "GraphQL",
+    "Redis",
+    "Kubernetes",
+    "1. Dukungan IT Profesional",
+    "2. Jasa Pembuatan Website & Software",
+    "3. Layanan Percetakan",
+    "Mengapa Kami Ada?",
+    "Sample Product - Software Akuntansi",
+    "Rakit PC Core i5 4460 4gb 500gb PC Rakitan Office Surabaya",
+    "PC Rakitan Core i3 2gb 500gb Low Budget Rakit PC  Office   Admin",
+    "Rakit PC Gaming Ryzen 5 2200G GTX 1650 4GB SSD 120gb 8GB 500GB",
+    "Rakit PC Gaming Ryzen 3 2200G SSD GTX 1650 4gb 120gb 8GB 500GB",
+    "USB Flashdisk 64Gb 1200 Lagu Karaoke Klip Asli Software Full V 0",
+    "Konsultasi Gratis Bersama Kami",
+    "Jasa Pembuatan Website Profesional",
+    "Template Website Siap Pakai",
+    "Layanan IT Support 24/7",
+    "Sistem POS untuk UMKM",
+    "\ud83d\udcd6 Artikel & Panduan Terbaru",
+    "Siap Transformasi DigitalBisnis Anda?"
+  ],
+  "images": [
+    {
+      "src": "https://kotacom.id/assets/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
+      "alt": "kotacom.id",
+      "width": "1280",
+      "height": "1248",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dwxw1h9my/image/upload/f_auto,q_auto,w_auto,dpr_auto/v1753726244/kotacom/website-images/Web_Development_hero.jpg",
+      "alt": "Web Development",
+      "width": null,
+      "height": null,
+      "loading": "eager"
+    },
+    {
+      "src": "https://res.cloudinary.com/dxyjku3eh/image/upload/w_600,h_400,c_fill,g_auto,q_85,f_auto/v1754820661/Tanpa_judul_Presentasi__20250810_170926_0000_vdiibn.png",
+      "alt": "Jasa pembuatan website",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dnxl7wsnx/image/upload/w_600,h_400,c_fill,g_auto,q_85,f_auto/v1747306362/group-people_gsydcz.jpg",
+      "alt": "Layanan IT Support Profesional - Dukungan Teknis Terpercaya",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dnxl7wsnx/image/upload/w_600,h_400,c_fill,g_auto,q_85,f_auto/v1747306362/group-people_gsydcz.jpg",
+      "alt": "Layanan Percetakan Profesional - Cetak Buku, Brosur, Kalender",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dnxl7wsnx/image/upload/w_600,h_400,c_fill,g_auto,q_85,f_auto/v1747306362/group-people_gsydcz.jpg",
+      "alt": "Jasa Pembuatan Website & Software Development Profesional",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "alt": "Sistem POS Fashion Retail - Butik Cantik Collection",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "alt": "Sistem Manajemen Koperasi Digital - Koperasi Maju Bersama",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "alt": "IT Infrastructure Upgrade - CV Maju Bersama",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "alt": "Sistem Manajemen Kasus Hukum - Law Firm Harapan & Partners",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "alt": "Website Toko Online UMKM - Batik Nusantara",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1576602976047-174e57a47881?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "alt": "Sistem Manajemen Apotek Digital - Apotek Sehat Mandiri",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "alt": "Sample Product - Software Akuntansi",
+      "width": "400",
+      "height": "267",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dxyjku3eh/image/upload/w_400,h_267,c_fill,g_auto,q_85,f_auto/v1754820661/Tanpa_judul_Presentasi__20250810_170926_0000_vdiibn.png",
+      "alt": "Rakit PC Core i5 4460 4gb 500gb PC Rakitan Office Surabaya",
+      "width": "400",
+      "height": "267",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dxyjku3eh/image/upload/w_400,h_267,c_fill,g_auto,q_85,f_auto/v1754820661/Tanpa_judul_Presentasi__20250810_170926_0000_vdiibn.png",
+      "alt": "PC Rakitan Core i3 2gb 500gb Low Budget Rakit PC  Office   Admin",
+      "width": "400",
+      "height": "267",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dxyjku3eh/image/upload/w_400,h_267,c_fill,g_auto,q_85,f_auto/v1754820661/Tanpa_judul_Presentasi__20250810_170926_0000_vdiibn.png",
+      "alt": "Rakit PC Gaming Ryzen 5 2200G GTX 1650 4GB SSD 120gb 8GB 500GB",
+      "width": "400",
+      "height": "267",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dxyjku3eh/image/upload/w_400,h_267,c_fill,g_auto,q_85,f_auto/v1754820661/Tanpa_judul_Presentasi__20250810_170926_0000_vdiibn.png",
+      "alt": "Rakit PC Gaming Ryzen 3 2200G SSD GTX 1650 4gb 120gb 8GB 500GB",
+      "width": "400",
+      "height": "267",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dxyjku3eh/image/upload/w_400,h_267,c_fill,g_auto,q_85,f_auto/v1754820661/Tanpa_judul_Presentasi__20250810_170926_0000_vdiibn.png",
+      "alt": "USB Flashdisk 64Gb 1200 Lagu Karaoke Klip Asli Software Full V 0",
+      "width": "400",
+      "height": "267",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1660606422342-2ce59709bb14?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODQyNjJ8MHwxfHNlYXJjaHwxfHxtZW1pbGloJTIwamFzYSUyMGNldGFrJTIwYnVrdSUyMGJlcmt1YWxpdGFzJTIwJTI2JTIwYm9vayUyMCUyNiUyMGxpYnJheSUyMCUyNlBhbmR1YW4lMjAlMjYlMjBUaXBzfGVufDB8MHx8fDE3NTUyOTEzNjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "5 Kriteria Penting Memilih Jasa Cetak Buku Terbaik untuk Karya Anda",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dxyjku3eh/image/upload/w_600,h_400,c_fill,g_auto,q_85,f_auto/g_south,y_60,w_500,c_fit,co_black,b_white,r_20,o_75,l_text:Arial_30_bold_center:Printer%20Gagal%20Menarik%20Kertas%3F%20Ini%205%20Penyebab%20dan%20Cara%20Mengatasinya/v1755365355/image-fallback/website%2Cmodern%2Cillustration%2Cindonesian%2C3d%2Ccolorfull%2Chardwork.%20brand%20kotacom%20%283%29.jpg",
+      "alt": "Printer Gagal Menarik Kertas? Ini 5 Penyebab dan Cara Mengatasinya",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1724331340768-4d1fe9f11aac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODQyNjJ8MHwxfHNlYXJjaHwxfHxwcm9zZXMlMjBjZXRhayUyMGJ1a3UlMjBkaWdpdGFsJTIwdnMlMjBvZmZzZXQlMjAlMjYlMjBib29rJTIwJTI2JTIwbGlicmF5JTIwJTI2RWR1a2FzaSUyMCUyNiUyMFByb3Nlc3xlbnwwfDB8fHwxNzU1MjkxMzcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "alt": "Digital vs Offset: Mana Metode Cetak Buku yang Tepat untuk Kebutuhan Anda?",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dxyjku3eh/image/upload/w_600,h_400,c_fill,g_auto,q_85,f_auto/g_south,y_60,w_500,c_fit,co_black,b_white,r_20,o_75,l_text:Arial_30_bold_center:Panduan%20Lengkap%3A%20Cara%20Menyiapkan%20File%20PDF%20Siap%20Cetak%20untuk%20Buku/v1755365337/image-fallback/book%2Clibrary%2Cgradient%2Cmodern%20colorfull.%20brand%20kotacom%20%285%29.jpg",
+      "alt": "Panduan Lengkap: Cara Menyiapkan File PDF Siap Cetak untuk Buku",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dxyjku3eh/image/upload/w_600,h_400,c_fill,g_auto,q_85,f_auto/g_south,y_60,w_500,c_fit,co_black,b_white,r_20,o_75,l_text:Arial_30_bold_center:Update%202025%3A%20Rincian%20%26%20Estimasi%20Biaya%20Cetak%20Buku%20Satuan%20di%20Surabaya/v1755365374/image-fallback/website%2Csoftware%2Cmodern%20colorfull.%20brand%20kotacom%20%282%29.jpg",
+      "alt": "Update 2025: Rincian & Estimasi Biaya Cetak Buku Satuan di Surabaya",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://res.cloudinary.com/dxyjku3eh/image/upload/w_600,h_400,c_fill,g_auto,q_85,f_auto/g_south,y_60,w_500,c_fit,co_black,b_white,r_20,o_75,l_text:Arial_30_bold_center:Hindari%20Rugi!%205%20Kesalahan%20Umum%20Penulis%20Pemula%20Saat%20Mencetak%20Buku%20Pertama/v1755365330/image-fallback/book%2Clibrary%2Cgradient%2Cmodern%20colorfull.%20brand%20kotacom%20%2815%29.jpg",
+      "alt": "Hindari Rugi! 5 Kesalahan Umum Penulis Pemula Saat Mencetak Buku Pertama",
+      "width": "600",
+      "height": "400",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://kotacom.id/assets/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
+      "alt": "kotacom.id",
+      "width": "1280",
+      "height": "1248",
+      "loading": "lazy"
+    }
+  ],
+  "links": {
+    "internal": [
+      {
+        "href": "https://kotacom.id/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/jasa-pembuatan-website-surabaya",
+        "text": "Website DevelopmentPembuatan website profesional dan responsif untuk bisnis Anda",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/jasa-pembuatan-software",
+        "text": "Software DevelopmentPengembangan aplikasi custom sesuai kebutuhan bisnis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/pembuatan-website/",
+        "text": "Mobile App DevelopmentAplikasi mobile Android dan iOS yang user-friendly",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/ecommerce-development",
+        "text": "E-commerce SolutionsPlatform toko online lengkap dengan sistem pembayaran",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/it-support",
+        "text": "IT SupportDukungan teknis dan maintenance sistem IT perusahaan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/network-setup",
+        "text": "Network SetupInstalasi dan konfigurasi jaringan komputer",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/system-admin",
+        "text": "System AdministrationPengelolaan server dan infrastruktur IT",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/consultation",
+        "text": "Digital ConsultationPopulerKonsultasi strategi digital untuk transformasi bisnis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/categories/percetakan",
+        "text": "Printing ServicesLayanan cetak profesional untuk kebutuhan bisnis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/",
+        "text": "Graphic DesignDesain logo, brosur, dan materi marketing",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/",
+        "text": "Branding PackagePaket lengkap identitas visual perusahaan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact",
+        "text": "Konsultasi Gratis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects",
+        "text": "Semua PortfolioLihat semua proyek yang telah kami kerjakan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "Website DevelopmentProyek pengembangan website dan aplikasi web",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "Mobile ApplicationsAplikasi mobile yang telah kami develop",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "System IntegrationProyek integrasi sistem dan automation",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "Restaurant Management SystemSistem manajemen restoran terintegrasi dengan POS",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "E-learning PlatformPlatform pembelajaran online untuk institusi pendidikan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "Inventory ManagementTerbaruSistem manajemen inventori untuk UMKM",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact",
+        "text": "Konsultasi Gratis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products",
+        "text": "Semua ProdukLihat semua produk digital yang tersedia",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "Software ToolsTools dan software untuk produktivitas",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "TemplatesTemplate website dan aplikasi siap pakai",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "Digital AssetsAset digital untuk kebutuhan desain",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "POS System TemplateTerlarisTemplate sistem Point of Sale untuk UMKM",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "Website Template PackKumpulan template website profesional",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "Mobile UI KitUI Kit lengkap untuk pengembangan mobile app",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact",
+        "text": "Konsultasi Gratis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/jasa-pembuatan-website-surabaya",
+        "text": "Website DevelopmentPembuatan website profesional dan responsif untuk bisnis Anda",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/jasa-pembuatan-software",
+        "text": "Software DevelopmentPengembangan aplikasi custom sesuai kebutuhan bisnis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/pembuatan-website/",
+        "text": "Mobile App DevelopmentAplikasi mobile Android dan iOS yang user-friendly",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/ecommerce-development",
+        "text": "E-commerce SolutionsPlatform toko online lengkap dengan sistem pembayaran",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/it-support",
+        "text": "IT SupportDukungan teknis dan maintenance sistem IT perusahaan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/network-setup",
+        "text": "Network SetupInstalasi dan konfigurasi jaringan komputer",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/system-admin",
+        "text": "System AdministrationPengelolaan server dan infrastruktur IT",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/consultation",
+        "text": "Digital ConsultationPopulerKonsultasi strategi digital untuk transformasi bisnis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/categories/percetakan",
+        "text": "Printing ServicesLayanan cetak profesional untuk kebutuhan bisnis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/",
+        "text": "Graphic DesignDesain logo, brosur, dan materi marketing",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/",
+        "text": "Branding PackagePaket lengkap identitas visual perusahaan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact",
+        "text": "Konsultasi Gratis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects",
+        "text": "Semua PortfolioLihat semua proyek yang telah kami kerjakan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "Website DevelopmentProyek pengembangan website dan aplikasi web",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "Mobile ApplicationsAplikasi mobile yang telah kami develop",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "System IntegrationProyek integrasi sistem dan automation",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "Restaurant Management SystemSistem manajemen restoran terintegrasi dengan POS",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "E-learning PlatformPlatform pembelajaran online untuk institusi pendidikan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "Inventory ManagementTerbaruSistem manajemen inventori untuk UMKM",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact",
+        "text": "Konsultasi Gratis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products",
+        "text": "Semua ProdukLihat semua produk digital yang tersedia",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "Software ToolsTools dan software untuk produktivitas",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "TemplatesTemplate website dan aplikasi siap pakai",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "Digital AssetsAset digital untuk kebutuhan desain",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "POS System TemplateTerlarisTemplate sistem Point of Sale untuk UMKM",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "Website Template PackKumpulan template website profesional",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/",
+        "text": "Mobile UI KitUI Kit lengkap untuk pengembangan mobile app",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact",
+        "text": "Konsultasi Gratis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/posts",
+        "text": "Posts",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/about",
+        "text": "About-Us",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact",
+        "text": "Contact-Us",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact",
+        "text": "Free Consultation",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/posts",
+        "text": "Posts",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/about",
+        "text": "About-Us",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact",
+        "text": "Contact-Us",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact",
+        "text": "Konsultasi Gratis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services",
+        "text": "LayananOptimalkan bisnis Anda bersama kotacom.id",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services",
+        "text": "Jelajahi Layanan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/",
+        "text": "Lihat Detail",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/",
+        "text": "Lihat Detail",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/",
+        "text": "Lihat Detail",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services",
+        "text": "Lihat Semua Layanan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/jasa-pembuatan-website/",
+        "text": "\ud83c\udfacLoading animation...",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/jasa-pembuatan-website/",
+        "text": "Jasa pembuatan website",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/it-support-terbaik/",
+        "text": "\ud83c\udfacLoading animation...IT Support",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/it-support-terbaik/",
+        "text": "Layanan IT Support Profesional - Dukungan Teknis Terpercaya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/printing-service-terbaik/",
+        "text": "\ud83c\udfacLoading animation...Printing Services",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/printing-service-terbaik/",
+        "text": "Layanan Percetakan Profesional - Cetak Buku, Brosur, Kalender",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/website-software-development-terbaik/",
+        "text": "\ud83c\udfacLoading animation...Website Development",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/website-software-development-terbaik/",
+        "text": "Jasa Pembuatan Website & Software Development Profesional",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/fashion-retail-pos-system/",
+        "text": "Verified Project",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/indonesia",
+        "text": "Indonesia",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/fashion-retail-pos-system/",
+        "text": "Sistem POS Fashion Retail - Butik Cantik Collection",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/cooperative-management-system-surabaya/",
+        "text": "Verified Project",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/indonesia",
+        "text": "Indonesia",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/cooperative-management-system-surabaya/",
+        "text": "Sistem Manajemen Koperasi Digital - Koperasi Maju Bersama",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/it-infrastructure-upgrade/",
+        "text": "Verified Project",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/indonesia",
+        "text": "Indonesia",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/it-infrastructure-upgrade/",
+        "text": "IT Infrastructure Upgrade - CV Maju Bersama",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/law-firm-case-management/",
+        "text": "Verified Project",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/indonesia",
+        "text": "Indonesia",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/law-firm-case-management/",
+        "text": "Sistem Manajemen Kasus Hukum - Law Firm Harapan & Partners",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/website-toko-online-umkm/",
+        "text": "Verified Project",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/indonesia",
+        "text": "Indonesia",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/website-toko-online-umkm/",
+        "text": "Website Toko Online UMKM - Batik Nusantara",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/pharmacy-management-system/",
+        "text": "Verified Project",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/indonesia",
+        "text": "Indonesia",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/pharmacy-management-system/",
+        "text": "Sistem Manajemen Apotek Digital - Apotek Sehat Mandiri",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/sample-software-akuntansi/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/sample-software-akuntansi/",
+        "text": "Sample Product - Software Akuntansi",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/sample-software-akuntansi/",
+        "text": "Lihat Detail",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/rakit-pc-core-i5-4460-4gb-500gb-pc-rakitan-office-surabaya/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/rakit-pc-core-i5-4460-4gb-500gb-pc-rakitan-office-surabaya/",
+        "text": "Rakit PC Core i5 4460 4gb 500gb PC Rakitan Office Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/rakit-pc-core-i5-4460-4gb-500gb-pc-rakitan-office-surabaya/",
+        "text": "Lihat Detail",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/pc-rakitan-core-i3-2gb-500gb-low-budget-rakit-pc-office-admin/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/pc-rakitan-core-i3-2gb-500gb-low-budget-rakit-pc-office-admin/",
+        "text": "PC Rakitan Core i3 2gb 500gb Low Budget Rakit PC  Office   Admin",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/pc-rakitan-core-i3-2gb-500gb-low-budget-rakit-pc-office-admin/",
+        "text": "Lihat Detail",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/rakit-pc-gaming-ryzen-5-2200g-gtx-1650-4gb-ssd-120gb-8gb-500gb/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/rakit-pc-gaming-ryzen-5-2200g-gtx-1650-4gb-ssd-120gb-8gb-500gb/",
+        "text": "Rakit PC Gaming Ryzen 5 2200G GTX 1650 4GB SSD 120gb 8GB 500GB",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/rakit-pc-gaming-ryzen-5-2200g-gtx-1650-4gb-ssd-120gb-8gb-500gb/",
+        "text": "Lihat Detail",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/rakit-pc-gaming-ryzen-3-2200g-ssd-gtx-1650-4gb-120gb-8gb-500gb/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/rakit-pc-gaming-ryzen-3-2200g-ssd-gtx-1650-4gb-120gb-8gb-500gb/",
+        "text": "Rakit PC Gaming Ryzen 3 2200G SSD GTX 1650 4gb 120gb 8GB 500GB",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/rakit-pc-gaming-ryzen-3-2200g-ssd-gtx-1650-4gb-120gb-8gb-500gb/",
+        "text": "Lihat Detail",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/usb-flashdisk-64gb-1200-lagu-karaoke-klip-asli-software-full-v-0/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/usb-flashdisk-64gb-1200-lagu-karaoke-klip-asli-software-full-v-0/",
+        "text": "USB Flashdisk 64Gb 1200 Lagu Karaoke Klip Asli Software Full V 0",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/products/usb-flashdisk-64gb-1200-lagu-karaoke-klip-asli-software-full-v-0/",
+        "text": "Lihat Detail",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/5-kriteria-penting-memilih-jasa-cetak-buku-terbaik-untuk-karya-anda/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/api/",
+        "text": "api",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/javascript/",
+        "text": "javascript",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/sanity-io/",
+        "text": "sanity-io",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/5-kriteria-penting-memilih-jasa-cetak-buku-terbaik-untuk-karya-anda/",
+        "text": "5 Kriteria Penting Memilih Jasa Cetak Buku Terbaik untuk Karya Anda",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/5-kriteria-penting-memilih-jasa-cetak-buku-terbaik-untuk-karya-anda/",
+        "text": "Baca Selengkapnya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/printer-gagal-menarik-kertas-ini-5-penyebab-dan-cara-mengatasinya/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/service-printer/",
+        "text": "Service Printer",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/troubleshooting/",
+        "text": "Troubleshooting",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/printer-gagal-menarik-kertas-ini-5-penyebab-dan-cara-mengatasinya/",
+        "text": "Printer Gagal Menarik Kertas? Ini 5 Penyebab dan Cara Mengatasinya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/printer-gagal-menarik-kertas-ini-5-penyebab-dan-cara-mengatasinya/",
+        "text": "Baca Selengkapnya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/digital-vs-offset-mana-metode-cetak-buku-yang-tepat-untuk-kebutuhan-anda/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/api/",
+        "text": "api",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/javascript/",
+        "text": "javascript",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/sanity-io/",
+        "text": "sanity-io",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/digital-vs-offset-mana-metode-cetak-buku-yang-tepat-untuk-kebutuhan-anda/",
+        "text": "Digital vs Offset: Mana Metode Cetak Buku yang Tepat untuk Kebutuhan Anda?",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/digital-vs-offset-mana-metode-cetak-buku-yang-tepat-untuk-kebutuhan-anda/",
+        "text": "Baca Selengkapnya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/panduan-lengkap-cara-menyiapkan-file-pdf-siap-cetak-untuk-buku/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/persiapan-file/",
+        "text": "persiapan file",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/desain-layout/",
+        "text": "desain layout",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/panduan-lengkap-cara-menyiapkan-file-pdf-siap-cetak-untuk-buku/",
+        "text": "Panduan Lengkap: Cara Menyiapkan File PDF Siap Cetak untuk Buku",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/panduan-lengkap-cara-menyiapkan-file-pdf-siap-cetak-untuk-buku/",
+        "text": "Baca Selengkapnya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/update-2025-rincian-estimasi-biaya-cetak-buku-satuan-di-surabaya/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/biaya-cetak/",
+        "text": "biaya cetak",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/cetak-satuan/",
+        "text": "cetak satuan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/update-2025-rincian-estimasi-biaya-cetak-buku-satuan-di-surabaya/",
+        "text": "Update 2025: Rincian & Estimasi Biaya Cetak Buku Satuan di Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/update-2025-rincian-estimasi-biaya-cetak-buku-satuan-di-surabaya/",
+        "text": "Baca Selengkapnya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/hindari-rugi-5-kesalahan-umum-penulis-pemula-saat-mencetak-buku-pertama/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/tips-penulis/",
+        "text": "tips penulis",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/category/persiapan-file/",
+        "text": "persiapan file",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/hindari-rugi-5-kesalahan-umum-penulis-pemula-saat-mencetak-buku-pertama/",
+        "text": "Hindari Rugi! 5 Kesalahan Umum Penulis Pemula Saat Mencetak Buku Pertama",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/hindari-rugi-5-kesalahan-umum-penulis-pemula-saat-mencetak-buku-pertama/",
+        "text": "Baca Selengkapnya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/layanan/pembuatan-website",
+        "text": "pembuatan website profesional",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/it-support",
+        "text": "layanan IT support 24/7",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/blog/digital-transformation-umkm-surabaya",
+        "text": "transformasi digital bisnis Anda",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/pembuatan-website",
+        "text": "\ud83c\udf10Website DevelopmentJasa Pembuatan Website ProfesionalWebsite responsive dan SEO-friendly untuk bisn",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/pembuatan-website/template",
+        "text": "\u26a1Quick SolutionTemplate Website Siap Pakai15+ template premium berkualitas tinggi, siap online dalam",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/it-support",
+        "text": "\ud83d\udd27IT SupportLayanan IT Support 24/7Dukungan teknis profesional untuk semua kebutuhan IT Anda24/7 Supp",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services/sistem-pos",
+        "text": "\ud83d\udcb0Digital SolutionSistem POS untuk UMKMSolusi kasir digital modern untuk modernisasi bisnis AndaMulti",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/web-design-responsive-surabaya",
+        "text": "TutorialWeb Design Responsive Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/digital-transformation-umkm-surabaya",
+        "text": "BusinessDigital Transformation UMKM",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/software-development-surabaya",
+        "text": "DevelopmentSoftware Development Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/it-infrastructure-planning-surabaya",
+        "text": "InfrastructureIT Infrastructure Planning",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/layanan/pembuatan-website",
+        "text": "Lihat Semua Layanan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/privacy",
+        "text": "Kebijakan Privasi",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id",
+        "text": "Solusi IT & Digital Terpadu untuk Bisnis AndaFokus pada pertumbuhan, biarkan kami yang urus website,",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services",
+        "text": "IT Service & Support",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services",
+        "text": "Website Development",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services",
+        "text": "Software Development",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/services",
+        "text": "Social Media Management",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/about/",
+        "text": "Tentang Kami",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/projects/",
+        "text": "Portfolio",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/posts/",
+        "text": "Artikel & Tips",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/contact/",
+        "text": "Kontak",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/privacy",
+        "text": "Kebijakan Privasi",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/terms",
+        "text": "Syarat & Ketentuan",
+        "rel": []
+      },
+      {
+        "href": "https://kotacom.id/privacy",
+        "text": "Kebijakan Privasi",
+        "rel": []
+      }
+    ],
+    "external": [
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "WAWhatsApp",
+        "rel": []
+      },
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "WhatsApp Konsultasi",
+        "rel": []
+      },
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "Konsultasi via WhatsApp",
+        "rel": []
+      },
+      {
+        "href": "https://wa.me/6285799520350",
+        "text": "Konsultasi Gratis",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "Konsultasi Gratis",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "Konsultasi Gratis",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "Konsultasi Gratis",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "Mulai Konsultasi Gratis",
+        "rel": []
+      },
+      {
+        "href": "https://wa.me/6285799520350?text=Halo,%20saya%20tertarik%20untuk%20konsultasi%20transformasi%20digital%20bisnis",
+        "text": "Konsultasi Gratis",
+        "rel": []
+      },
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "WhatsApp: 085799520350",
+        "rel": []
+      },
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "mailto:info@kotacom.id",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://linkedin.com/company/kotacom-id",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "tel:085799520350",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://wa.me/085799520350?text=Hallo%20kak%20saya%20melihat%20https%3A%2F%2Fkotacom.id%2F.%20Nama%3A%20jelaskan%20kebutuhan",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://wa.me/62085799520350?text=Halo,%20saya%20ingin%20minta%20penawaran/diskon/konsultasi",
+        "text": "Chat WA",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      }
+    ]
+  },
+  "schema": [
+    {
+      "@type": "LocalBusiness",
+      "@context": "https://schema.org",
+      "status": "active",
+      "note": "",
+      "has_context": true,
+      "has_type": true,
+      "raw": {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "kotacom.id",
+        "description": "IT Service & Publications - Pengadaan, Service, Penjualan, Website Development, Software Development, Social Media Management",
+        "url": "https://kotacom.id/",
+        "telephone": "+62085799520350",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Surabaya",
+          "addressRegion": "Jawa Timur",
+          "addressCountry": "ID"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -7.2575,
+          "longitude": 112.7521
+        },
+        "openingHours": "Mo-Fr 09:00-17:00",
+        "priceRange": "$",
+        "areaServed": [
+          "Surabaya",
+          "Sidoarjo",
+          "Jawa Timur"
+        ],
+        "serviceType": [
+          "IT Support",
+          "Website Development",
+          "Software Development",
+          "Digital Marketing"
+        ],
+        "image": "https://res.cloudinary.com/dxyjku3eh/image/upload/v1754820661/Tanpa_judul_Presentasi__20250810_170926_0000_vdiibn.png",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://kotacom.id/kotacom-favicon.png"
+        },
+        "sameAs": [
+          "https://wa.me/62085799520350"
+        ],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": 50
+        }
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@context": "https://schema.org",
+      "status": "active",
+      "note": "",
+      "has_context": true,
+      "has_type": true,
+      "raw": {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "kotacom.id",
+        "url": "https://kotacom.id/",
+        "description": "IT Service & Publications - Pengadaan, Service, Penjualan, Website Development, Software Development, Social Media Management",
+        "publisher": {
+          "@type": "Organization",
+          "name": "kotacom.id"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://kotacom.id/search?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        },
+        "inLanguage": "id-ID"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@context": "https://schema.org",
+      "status": "active",
+      "note": "",
+      "has_context": true,
+      "has_type": true,
+      "raw": {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "kotacom.id",
+        "url": "https://kotacom.id/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://kotacom.id/kotacom-favicon.png"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+62085799520350",
+          "contactType": "customer service",
+          "areaServed": [
+            "ID"
+          ],
+          "availableLanguage": [
+            "Indonesian"
+          ]
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Surabaya",
+          "addressRegion": "Jawa Timur",
+          "addressCountry": "ID"
+        },
+        "sameAs": [
+          "https://wa.me/62085799520350"
+        ]
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@context": "https://schema.org",
+      "status": "active",
+      "note": "",
+      "has_context": true,
+      "has_type": true,
+      "raw": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "kotacom.id - IT Service & Publications Terpercaya",
+            "item": "/"
+          }
+        ]
+      }
+    }
+  ],
+  "open_graph": {
+    "og:type": "website",
+    "og:url": "https://kotacom.id/",
+    "og:title": "kotacom.id - IT Service & Publications Terpercaya",
+    "og:description": "IT Service & Publications - Pengadaan, Service, Penjualan, Website Development, Software Development, Social Media Management",
+    "og:image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "og:site_name": "kotacom.id",
+    "og:locale": "id_ID"
+  },
+  "twitter_card": {},
+  "word_count": 1986,
+  "hreflang": [
+    {
+      "lang": "id",
+      "href": "https://kotacom.id/"
+    },
+    {
+      "lang": "x-default",
+      "href": "https://kotacom.id/"
+    }
+  ]
+}

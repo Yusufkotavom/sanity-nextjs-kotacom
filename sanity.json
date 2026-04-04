@@ -1,0 +1,1180 @@
+{
+  "title": "Next.js Sanity CMS Starter | Kotacom | | KOTACOM",
+  "meta_description": "A robust starter template built with Next.js 15 and Sanity CMS, designed to seamlessly integrate with Schema UI components.",
+  "meta_robots": "index, follow",
+  "canonical": "https://sanity-nextjs-kotacom-frontend.vercel.app//",
+  "h1": [],
+  "h2": [
+    "Ship Your Content-Driven Website \u2014 Fast",
+    "Powered by the modern web stack",
+    "Everything is free. Yes, really.",
+    "Quick Start",
+    "Sistem kerja Kotacom dibangun untuk menyatukan website, software, IT support, dan percetakan dalam satu ritme delivery.",
+    "The Fastest Way to Build with Next.js + Sanity",
+    "Everything you need to launch a marketing site",
+    "Next.js 15",
+    "Sanity CMS",
+    "Built-in Features",
+    "Flexible Grid Layouts",
+    "Image Carousel",
+    "Schema UI: The Story So Far",
+    "Launch your next project in minutes",
+    "Frequently asked questions",
+    "Get notified when new templates drop",
+    "Learn from the Schema UI team",
+    "Loved by developers and teams"
+  ],
+  "h3": [
+    "Starter",
+    "Pro",
+    "i18n",
+    "Up and running in under 5 minutes",
+    "Website yang cepat dipahami, cepat dimuat, dan mudah dikembangkan.",
+    "Software custom untuk proses yang terlalu spesifik untuk template generik.",
+    "Dukungan teknis yang menutup celah operasional sebelum berubah jadi bottleneck.",
+    "Percetakan yang diposisikan sebagai output bisnis, bukan sekadar daftar produk cetak.",
+    "The React Framework for the Web",
+    "Treat content as a competitive advantage",
+    "Everything you need, nothing you don't",
+    "Next.js Sanity Starter",
+    "Docs & Components",
+    "Templates",
+    "Idea Validationv0.1",
+    "First Component Shipsv0.2",
+    "Starter Template Releasedv0.5",
+    "First Client Websitev1.0",
+    "Featured on Sanity.iov1.1",
+    "First Premium Templatev1.5",
+    "Monorepo & Hosted Studiov2.0",
+    "What is Schema UI?",
+    "Who is Schema UI designed for?",
+    "What types of components does Schema UI offer?",
+    "How does Schema UI work with Sanity CMS?",
+    "Are the components responsive?",
+    "How can I stay updated on new Schema UI features?",
+    "Is there a way to preview components before using them?",
+    "How does Schema UI integrate with Next.js?",
+    "Do I need to install any additional dependencies to use Schema UI?",
+    "How does Schema UI perform in terms of page speed and optimization?",
+    "What is Headless CMS?",
+    "Why Sanity is the Ultimate CMS Choice",
+    "Why Next.js is the Best Choice for Your Website",
+    "Alice Johnson",
+    "Bob Smith",
+    "Carol Williams",
+    "David Brown",
+    "Eva Martinez",
+    "Frank Lee"
+  ],
+  "images": [
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/898510b10973f48816d98c32491d51f79b04ace6-1280x1248.svg",
+      "alt": "KOTACOM IT SERVICE & PERCETAKAN",
+      "width": "28",
+      "height": "28",
+      "loading": null
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/898510b10973f48816d98c32491d51f79b04ace6-1280x1248.svg",
+      "alt": "KOTACOM IT SERVICE & PERCETAKAN",
+      "width": "28",
+      "height": "28",
+      "loading": null
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/130bb13e3abc575ea09f38b3626d0a7206f893a5-100x20.svg",
+      "alt": "Next.js",
+      "width": "100",
+      "height": "20",
+      "loading": null
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/af724a01bfecd0c97373bf43f95ca8eb891bcdbb-92x28.svg",
+      "alt": "React",
+      "width": "92",
+      "height": "28",
+      "loading": null
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/7200c78028afdf87af4c2ce5b30c1c6480fe2316-140x17.svg",
+      "alt": "Tailwind CSS",
+      "width": "140",
+      "height": "17",
+      "loading": null
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/a6f1dc7b2dd789527014ee3ebeb94c16f0b3ac84-914x256.svg",
+      "alt": "shadcn/ui",
+      "width": "914",
+      "height": "256",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/66bfe785c60dd5db8ad312d31f47f536dd6b53fa-90x30.svg",
+      "alt": "Sanity CMS",
+      "width": "90",
+      "height": "30",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/ee07c319f8b6cde719e9db4b3480a83821a227de-284x65.svg",
+      "alt": "Vercel",
+      "width": "284",
+      "height": "65",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/130bb13e3abc575ea09f38b3626d0a7206f893a5-100x20.svg",
+      "alt": "Next.js",
+      "width": "100",
+      "height": "20",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/af724a01bfecd0c97373bf43f95ca8eb891bcdbb-92x28.svg",
+      "alt": "React",
+      "width": "92",
+      "height": "28",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/7200c78028afdf87af4c2ce5b30c1c6480fe2316-140x17.svg",
+      "alt": "Tailwind CSS",
+      "width": "140",
+      "height": "17",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/a6f1dc7b2dd789527014ee3ebeb94c16f0b3ac84-914x256.svg",
+      "alt": "shadcn/ui",
+      "width": "914",
+      "height": "256",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/66bfe785c60dd5db8ad312d31f47f536dd6b53fa-90x30.svg",
+      "alt": "Sanity CMS",
+      "width": "90",
+      "height": "30",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/ee07c319f8b6cde719e9db4b3480a83821a227de-284x65.svg",
+      "alt": "Vercel",
+      "width": "284",
+      "height": "65",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/b4f48f3ac7f4b9299165eb0d432a3f794ccee46a-1200x630.webp?fm=webp&fit=crop",
+      "alt": "Placeholder",
+      "width": "1200",
+      "height": "630",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/d20faafbd8b43e41cb54dff6da576cc39a6bd19b-900x900.webp?fm=webp&fit=crop",
+      "alt": "Next.js",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/59f70ae3968212410fa832885e164ab16e4d15b5-900x900.webp?fm=webp&fit=crop",
+      "alt": "Sanity",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/6fcf0809e02f0cdb1f4d4c3d2556138e002ec596-800x800.svg",
+      "alt": "Next.js",
+      "width": "800",
+      "height": "800",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/7e5d621b797a81ba519ecdfdd8a836d8dee50e51-24x24.svg",
+      "alt": "Google logo",
+      "width": "24",
+      "height": "24",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/55c330df0ec31ebcf5ac69a387b448c755563be5-2500x2500.svg",
+      "alt": "Lighthouse logo",
+      "width": "2500",
+      "height": "2500",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/937187ae9f8c149e743ff9fddf411df995050dc3-569x512.svg",
+      "alt": "React logo",
+      "width": "569",
+      "height": "512",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/94a02aed7b2cc3c6a74c7fd232c968ac8e75ec5e-1920x1145.webp?fm=webp&fit=crop",
+      "alt": "Next.js + Sanity Page Builder Starter Template",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/310e0bd66af03d650e6673dc6f428dc18d6048b7-1920x1037.webp?fm=webp&fit=crop",
+      "alt": "Docs screenshot",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/9127c93e1531e2b0040546fecb59fdddf84d13ea-1920x1073.webp?fm=webp&fit=crop",
+      "alt": "Sanity Blocks Screenshot",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/314817e58a835299842554b779aab4d7a16e31f6-1920x2880.webp?fm=webp&fit=crop",
+      "alt": "Placeholder 1",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/67103cc58b3162aff5aa8e42ceb1b3039b841877-1920x1280.webp?fm=webp&fit=crop",
+      "alt": "Placeholder 2",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/f515be607a49d8d25b983967486b2b49e9354d7d-1920x2880.webp?fm=webp&fit=crop",
+      "alt": "Placeholder 3",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/9287641627c971311028194b84075f1464407be2-1920x1281.webp?fm=webp&fit=crop",
+      "alt": "Placeholder 4",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/f0e052acdb1a1f25628e3fed188ace7c9ae23294-1920x1280.webp?fm=webp&fit=crop",
+      "alt": "Placeholder 5",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/f3a23c5524597c1add42a4ce2c4415882d72c873-2048x1152.webp?fm=webp&fit=crop",
+      "alt": "What\u2019s the point of headless CMS?",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/240ffaed02641591c369afd4af0fa3e254200926-1200x630.webp?fm=webp&fit=crop",
+      "alt": "Sanity",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/92d9a689fcbc5994ca68e8a36e215e467aed74f6-1200x686.webp?fm=webp&fit=crop",
+      "alt": "The React Framework for the Web",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://cdn.sanity.io/images/b017f7tl/production/898510b10973f48816d98c32491d51f79b04ace6-1280x1248.svg",
+      "alt": "KOTACOM IT SERVICE & PERCETAKAN",
+      "width": "28",
+      "height": "28",
+      "loading": null
+    }
+  ],
+  "links": {
+    "internal": [
+      {
+        "href": "https://sanity.kotacom.id/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/",
+        "text": "Home",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Web Dev",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Pembuatan Website",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Software",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Website Development",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Software Development",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Mobile App Development",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/services/ecommerce-development",
+        "text": "E Commerce Solutions",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/layanan",
+        "text": "IT Service",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/layanan",
+        "text": "Layanan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/sistem-pos",
+        "text": "Sistem POS",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Software",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/layanan",
+        "text": "IT Support",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/services",
+        "text": "Network Setup",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/services",
+        "text": "System Administration",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/contact",
+        "text": "Digital ConsultationPopuler",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/jasa-cetak-buku-surabaya",
+        "text": "Jasa Cetak Buku Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/jasa-instal-aplikasi-surabaya",
+        "text": "Jasa Instal Aplikasi Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/jasa-install-software-macbook",
+        "text": "Jasa Install Software Macbook",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/jasa-recovery-data-surabaya",
+        "text": "Jasa Recovery Data Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/service-komputer-surabaya-panggilan",
+        "text": "Service Komputer Surabaya Panggilan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/percetakan",
+        "text": "Percetakan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/percetakan",
+        "text": "Percetakan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/percetakan",
+        "text": "Printing Services",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/services",
+        "text": "Graphic Design",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Branding Package",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/jasa-cetak-buku-surabaya",
+        "text": "Jasa Cetak Buku Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "Portfolio",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "Semua Portfolio",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "Website Development",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "Mobile Applications",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "System Integration",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/sistem-pos",
+        "text": "Restaurant Management System",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "E Learning Platform",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Inventory ManagementTerbaru",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects/cooperative-management-system-surabaya",
+        "text": "Sistem Manajemen Koperasi Digital Koperasi Maju Bersama",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects/fashion-retail-pos-system",
+        "text": "Sistem POS Fashion Retail Butik Cantik Collection",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects/it-infrastructure-upgrade",
+        "text": "IT Infrastructure Upgrade CV Maju Bersama",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products",
+        "text": "Produk",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products",
+        "text": "Semua Produk",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Software Tools",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products",
+        "text": "Templates",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products",
+        "text": "Digital Assets",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/sistem-pos",
+        "text": "POS System TemplateTerlaris",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Website Template Pack",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Mobile UI Kit",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products/sample-software-akuntansi",
+        "text": "Sample Product Software Akuntansi",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products/1-set-pc-intel-core-i7-ram-16gb-hdd-1tb-ssd-monitor-led-19-inc-pc-only-hdd-500gb-only",
+        "text": "1 Set PC Intel Core I7 Ram 16gb HDD 1TB + SSD + Monitor LED 19 Inc PC Only, HDD 500GB Only",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products/flashdisk-16-gb-karaoke-300an-lagu-update-terbaru-lagu-klip-asli-s",
+        "text": "Flashdisk 16 Gb Karaoke 300an Lagu Update Terbaru Lagu Klip Asli S",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/about",
+        "text": "About",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/contact",
+        "text": "Contact",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Buka lane",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Buka lane",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/services",
+        "text": "Buka lane",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/percetakan",
+        "text": "Buka lane",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/contact",
+        "text": "Diskusikan Kebutuhan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/services",
+        "text": "Lihat Layanan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/blog/what-is-headless-cms",
+        "text": "What is Headless CMS?DevelopmentSanityserviceNext.jsDevelopmentHeadless CMS explained in 2 minutes b",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/blog/why-sanity-is-the-ultimate-cms-choice",
+        "text": "Why Sanity is the Ultimate CMS ChoiceSanityWith unparalleled flexibility, real-time collaboration, a",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/blog/why-next-js-is-the-best-choice-for-your-website",
+        "text": "Why Next.js is the Best Choice for Your WebsiteNext.jsDevelopmentNext.js, a powerful React-based fra",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/",
+        "text": "Home",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Web Dev",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/layanan",
+        "text": "IT Service",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/percetakan",
+        "text": "Percetakan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "Portfolio",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products",
+        "text": "Produk",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/blog",
+        "text": "Blog",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/about",
+        "text": "About",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/contact",
+        "text": "Contact",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Web Dev",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Pembuatan Website",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Software",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Website Development",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Software Development",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Mobile App Development",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/services/ecommerce-development",
+        "text": "E Commerce Solutions",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/layanan",
+        "text": "IT Service",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/layanan",
+        "text": "Layanan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/sistem-pos",
+        "text": "Sistem POS",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Software",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/layanan",
+        "text": "IT Support",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/services",
+        "text": "Network Setup",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/services",
+        "text": "System Administration",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/contact",
+        "text": "Digital Consultation",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/jasa-cetak-buku-surabaya",
+        "text": "Jasa Cetak Buku Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/jasa-instal-aplikasi-surabaya",
+        "text": "Jasa Instal Aplikasi Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/jasa-install-software-macbook",
+        "text": "Jasa Install Software Macbook",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/jasa-recovery-data-surabaya",
+        "text": "Jasa Recovery Data Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/service-komputer-surabaya-panggilan",
+        "text": "Service Komputer Surabaya Panggilan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/percetakan",
+        "text": "Percetakan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/percetakan",
+        "text": "Percetakan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/percetakan",
+        "text": "Printing Services",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/services",
+        "text": "Graphic Design",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Branding Package",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/jasa-cetak-buku-surabaya",
+        "text": "Jasa Cetak Buku Surabaya",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "Portfolio",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "Semua Portfolio",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "Website Development",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "Mobile Applications",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "System Integration",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/sistem-pos",
+        "text": "Restaurant Management System",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects",
+        "text": "E Learning Platform",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Inventory Management",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects/cooperative-management-system-surabaya",
+        "text": "Sistem Manajemen Koperasi Digital Koperasi Maju Bersama",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects/fashion-retail-pos-system",
+        "text": "Sistem POS Fashion Retail Butik Cantik Collection",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/projects/it-infrastructure-upgrade",
+        "text": "IT Infrastructure Upgrade CV Maju Bersama",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products",
+        "text": "Produk",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products",
+        "text": "Semua Produk",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Software Tools",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products",
+        "text": "Templates",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products",
+        "text": "Digital Assets",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/sistem-pos",
+        "text": "POS System Template",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/pembuatan-website",
+        "text": "Website Template Pack",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/software",
+        "text": "Mobile UI Kit",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products/sample-software-akuntansi",
+        "text": "Sample Product Software Akuntansi",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products/1-set-pc-intel-core-i7-ram-16gb-hdd-1tb-ssd-monitor-led-19-inc-pc-only-hdd-500gb-only",
+        "text": "1 Set PC Intel Core I7 Ram 16gb HDD 1TB + SSD + Monitor LED 19 Inc PC Only, HDD 500GB Only",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/products/flashdisk-16-gb-karaoke-300an-lagu-update-terbaru-lagu-klip-asli-s",
+        "text": "Flashdisk 16 Gb Karaoke 300an Lagu Update Terbaru Lagu Klip Asli S",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/blog",
+        "text": "Blog",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/rekomendasi-rakit-pc-5-jutaan",
+        "text": "Rekomendasi Rakit PC 5 Jutaan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/panduan-rakit-pc-3-jutaan-terbaik-update-2025-all-new-build",
+        "text": "Panduan Rakit PC 3 Jutaan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/rakit-pc-1-jutaan-di-2025-realistis-atau-mustahil",
+        "text": "Rakit PC 1 Jutaan",
+        "rel": []
+      },
+      {
+        "href": "https://sanity.kotacom.id/blog/category",
+        "text": "Browse Categories",
+        "rel": []
+      }
+    ],
+    "external": [
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "WhatsApp",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://wa.me/085799520350",
+        "text": "WhatsApp",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.sanity.io/templates/schema-ui",
+        "text": "Use Template",
+        "rel": [
+          "noopener"
+        ]
+      },
+      {
+        "href": "https://github.com/serge-0v/next-js-sanity-starter",
+        "text": "\u2b50 Star on GitHub",
+        "rel": [
+          "noopener"
+        ]
+      },
+      {
+        "href": "https://www.sanity.io/templates/schema-ui",
+        "text": "Use Template",
+        "rel": []
+      },
+      {
+        "href": "https://schemaui.com/docs",
+        "text": "Get Started",
+        "rel": []
+      },
+      {
+        "href": "https://schemaui.com/docs/components",
+        "text": "Browse Components",
+        "rel": []
+      },
+      {
+        "href": "https://nextjs.org/docs",
+        "text": "Next.js Docs",
+        "rel": []
+      },
+      {
+        "href": "https://www.sanity.io/templates/schema-ui",
+        "text": "Explore Sanity",
+        "rel": []
+      },
+      {
+        "href": "https://github.com/serge-0v/next-js-sanity-starter",
+        "text": "\u2b50 Star on GitHub",
+        "rel": []
+      },
+      {
+        "href": "https://github.com/serge-0v/next-js-sanity-starter",
+        "text": "Next.js Sanity StarterClone the starter to get a full Next.js + Sanity project running in minutes \u2014 ",
+        "rel": []
+      },
+      {
+        "href": "https://schemaui.com/docs",
+        "text": "Docs & ComponentsComprehensive documentation with live component previews, Sanity schemas, and copy-",
+        "rel": []
+      },
+      {
+        "href": "https://schemaui.com/templates",
+        "text": "TemplatesExplore ready-made templates and experiment with components.Explore Templates",
+        "rel": []
+      },
+      {
+        "href": "https://www.sanity.io/templates/schema-ui",
+        "text": "sanity.io",
+        "rel": [
+          "noopener"
+        ]
+      },
+      {
+        "href": "https://www.shadcnblocks.com/sanity-cms",
+        "text": "shadcnblocks.com",
+        "rel": [
+          "noopener"
+        ]
+      },
+      {
+        "href": "https://schemaui.com/docs/installation",
+        "text": "Get Started",
+        "rel": []
+      },
+      {
+        "href": "https://schemaui.com/docs/components",
+        "text": "Browse Components",
+        "rel": []
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://www.kotacom.id",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      }
+    ]
+  },
+  "schema": [],
+  "open_graph": {
+    "og:title": "Next.js Sanity CMS Starter | Kotacom",
+    "og:description": "A robust starter template built with Next.js 15 and Sanity CMS, designed to seamlessly integrate with Schema UI components.",
+    "og:url": "https://sanity-nextjs-kotacom-frontend.vercel.app//",
+    "og:site_name": "KOTACOM IT SERVICE & PERCETAKAN",
+    "og:locale": "en_US",
+    "og:image": "https://sanity-nextjs-kotacom-frontend.vercel.app//images/kotacom-split-production-ready/hero/hero-cetak-buku-shark-v2.png",
+    "og:image:width": "1200",
+    "og:image:height": "630",
+    "og:type": "website"
+  },
+  "twitter_card": {
+    "twitter:card": "summary_large_image",
+    "twitter:title": "Next.js Sanity CMS Starter | Kotacom",
+    "twitter:description": "A robust starter template built with Next.js 15 and Sanity CMS, designed to seamlessly integrate with Schema UI components.",
+    "twitter:image": "https://sanity-nextjs-kotacom-frontend.vercel.app//images/kotacom-split-production-ready/hero/hero-cetak-buku-shark-v2.png"
+  },
+  "word_count": 1679,
+  "hreflang": []
+}
