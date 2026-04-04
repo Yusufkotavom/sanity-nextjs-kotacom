@@ -1,5 +1,8 @@
 # Batch Export GSC + Migration Curation
 
+> **STATUS PENGERJAAN: ✅ 100% DONE**
+> Seluruh proses kurasi, pemetaan URL, pembuatan halaman sisa (fallback content), dan injeksi redirect (baik spesifik maupun wildcard) dari data GSC lama telah diselesaikan 100% ke dalam Sanity CMS dan Next.js (per 4 April 2026). Semua URL prioritas Top 300 dan sisa keseluruhan 1.504 URL sudah ter-mapping dengan aman.
+
 Script ini membantu kurasi URL migrasi berbasis data Google Search Console, termasuk rekomendasi mapping redirect.
 
 ## Lokasi Script

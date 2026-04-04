@@ -30,6 +30,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 
 ## Current Status Snapshot (Already Done)
 
+- [x] **GSC MIGRATION 100% DONE:** All Top 300 manual curations + Top 1000 auto-redirects fully synced, seeded, and mapped via Sanity and Next.js wildcards.
 - [x] GSC export + migration curation pipeline built
 - [x] metadata audit script built and executed
 - [x] URL inspection script built (quota-aware caveat)
