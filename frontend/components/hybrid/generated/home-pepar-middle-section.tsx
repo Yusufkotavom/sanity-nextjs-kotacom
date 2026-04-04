@@ -1,16 +1,15 @@
 import Link from "next/link";
 import {
   Blocks,
-  BriefcaseBusiness,
   LaptopMinimal,
   Network,
   Printer,
-  ShieldCheck,
   Sparkles,
   Workflow,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import {
   SectionIntro,
   SectionPanel,
@@ -36,9 +35,9 @@ export default function HomePeparMiddleSection() {
         >
           <div className="space-y-6">
             <SectionIntro
-              eyebrow="Service Architecture"
-              title="Empat lane utama tetap dipertahankan, tetapi sekarang hubungannya lebih jelas dan lebih mudah dipindai."
-              description="Alih-alih mengulang hero, section ini langsung menjelaskan bagaimana website, software, support, dan printing bekerja sebagai sistem delivery yang saling menguatkan."
+              eyebrow="Layanan Utama Kotacom"
+              title="Empat layanan utama yang saling melengkapi untuk membantu bisnis bergerak lebih rapi."
+              description="Mulai dari website, software, support, hingga percetakan, setiap layanan dirancang agar bisa berdiri sendiri atau digabung menjadi sistem kerja yang lebih utuh."
               className="mb-0 max-w-4xl"
             />
 
@@ -48,7 +47,7 @@ export default function HomePeparMiddleSection() {
 
                 return (
                   <Link
-                    className="group rounded-[1.35rem] border border-border/70 bg-background/85 p-4 transition hover:border-primary/30 hover:bg-background"
+                    className="group rounded-[1.35rem] border border-border/70 bg-background/85 p-4 transition duration-300 hover:-translate-y-1 hover:border-primary/30 hover:bg-background hover:shadow-[0_20px_60px_-40px_rgba(0,0,0,0.35)]"
                     href={lane.href}
                     key={lane.key}
                   >
@@ -76,24 +75,31 @@ export default function HomePeparMiddleSection() {
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-muted/40">
                 <Workflow className="h-4 w-4" />
               </span>
-              Ritme delivery yang ingin dipertahankan
+              Cara kami bekerja
             </div>
             <div className="mt-5 space-y-4">
-              {[
-                "Pengunjung paham dulu empat lane inti Kotacom.",
-                "Prospek melihat proof dan stack tanpa tenggelam dalam noise.",
-                "CTA tetap fokus ke konsultasi dan eksplor layanan.",
-                "Block Sanity tetap bebas bergerak di atas dan bawah shell ini.",
-              ].map((item, index) => (
-                <div className="border-l border-border/70 pl-4" key={item}>
+              {homePrepareContent.workflow.map((item, index) => (
+                <div className="border-l border-border/70 pl-4" key={item.title}>
                   <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
                     Step {index + 1}
                   </div>
+                  <div className="mt-1 text-sm font-medium text-foreground">
+                    {item.title}
+                  </div>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {item}
+                    {item.description}
                   </p>
                 </div>
               ))}
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <GlobalWhatsAppButton
+                label="Konsultasi via WhatsApp"
+                className="rounded-full bg-green-500 text-white hover:bg-green-600"
+              />
+              <Button asChild variant="outline">
+                <Link href="/layanan">Lihat semua layanan</Link>
+              </Button>
             </div>
           </div>
         </SectionPanel>
@@ -101,9 +107,9 @@ export default function HomePeparMiddleSection() {
 
       <SectionShell>
         <SectionIntro
-          eyebrow="Tech Stack Kami"
-          title="Teknologi yang dipakai tetap tampil, tetapi sekarang sebagai trust strip yang lebih rapi."
-          description="Homepage live sudah kuat di area stack. Di versi prepare ini, daftar teknologi dipadatkan menjadi chip yang membantu trust tanpa mengganggu alur baca utama."
+          eyebrow="Teknologi yang Kami Gunakan"
+          title="Stack yang dipilih untuk membantu performa, stabilitas, dan kemudahan pengembangan."
+          description="Kami menggunakan teknologi yang relevan dengan kebutuhan proyek, bukan sekadar mengikuti tren."
         />
         <div className="flex flex-wrap gap-3">
           {homePrepareContent.techStack.map((item) => (
@@ -119,9 +125,9 @@ export default function HomePeparMiddleSection() {
 
       <SectionShell>
         <SectionIntro
-          eyebrow="Core Service Lanes"
-          title="Empat lane utama tetap dipertahankan karena itu inti positioning homepage live."
-          description="Bedanya, sekarang masing-masing lane punya framing yang lebih jelas: bukan hanya apa yang dikerjakan, tetapi juga peran lane tersebut dalam pertumbuhan bisnis."
+          eyebrow="Fokus Layanan"
+          title="Layanan yang bisa dipakai terpisah atau disusun menjadi solusi yang lebih lengkap."
+          description="Setiap lane dirancang untuk menjawab kebutuhan yang berbeda, tetapi tetap bisa saling terhubung saat bisnis membutuhkan alur kerja yang lebih utuh."
         />
         <div className="grid gap-5 lg:grid-cols-2">
           {homePrepareContent.lanes.map((lane) => {
@@ -176,9 +182,9 @@ export default function HomePeparMiddleSection() {
         >
           <div>
             <SectionIntro
-              eyebrow="Mengapa Kami Ada"
-              title="One-stop solution tetap jadi narasi utama, tetapi dipresentasikan lebih dewasa dan lebih product-led."
-              description="Bagian live site yang menjelaskan alasan keberadaan Kotacom sudah tepat secara intent. Di sini saya rapikan agar lebih kuat sebagai positioning bisnis dan lebih siap dikombinasikan dengan block CMS."
+              eyebrow="Kenapa Banyak Bisnis Memilih Kotacom"
+              title="Bukan hanya karena layanan yang lengkap, tetapi karena eksekusinya bisa dibuat lebih terarah."
+              description="Kami membantu bisnis menyusun prioritas, memperjelas kebutuhan, dan menyiapkan implementasi yang bisa benar-benar dipakai."
               className="mb-0 max-w-3xl"
             />
           </div>
@@ -202,9 +208,9 @@ export default function HomePeparMiddleSection() {
 
       <SectionShell>
         <SectionIntro
-          eyebrow="Best Service"
-          title="Tiga cluster offer dari homepage lama saya pertahankan karena ini blok komersial yang paling mudah dipahami."
-          description="Saya sengaja tidak menjadikannya slider atau grid yang terlalu rumit. Untuk halaman utama, tiga blok yang jelas lebih kuat daripada eksplor komponen yang terlalu ramai."
+          eyebrow="Layanan Unggulan"
+          title="Tiga penawaran yang paling sering dicari bisnis saat ingin mulai bekerja bersama Kotacom."
+          description="Blok ini membantu pengunjung memahami jalur layanan yang paling relevan tanpa harus menelusuri terlalu banyak halaman di awal."
         />
         <div className="grid gap-5 lg:grid-cols-3">
           {homePrepareContent.serviceClusters.map((cluster, index) => (
@@ -241,15 +247,12 @@ export default function HomePeparMiddleSection() {
       </SectionShell>
 
       <SectionShell className="pb-16 lg:pb-20">
-        <SectionPanel
-          tone="sky"
-          className="rounded-[1.9rem] p-6 md:p-8"
-        >
+        <SectionPanel tone="sky" className="rounded-[1.9rem] p-6 md:p-8">
           <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_280px] md:items-end">
             <div>
               <div className="flex items-center gap-3 text-ui-label text-foreground/55">
                 <Sparkles className="h-4 w-4" />
-                Final readiness check
+                Siap Mulai
               </div>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight md:text-3xl">
                 {homePrepareContent.closingTitle}
@@ -259,28 +262,12 @@ export default function HomePeparMiddleSection() {
               </p>
             </div>
             <div className="space-y-3">
-              {[
-                {
-                  label: "Theme alignment",
-                  value: "Rewrite shell dan block visual sudah makin dekat.",
-                },
-                {
-                  label: "Hybrid ready",
-                  value: "Top dan bottom blocks tetap bisa dieksperimenkan di Sanity.",
-                },
-                {
-                  label: "Next step",
-                  value: "Kunci hero dan proof terbaik, lalu uji sebelum promosi ke `/`.",
-                },
-              ].map((item) => (
+              {homePrepareContent.assurance.map((item) => (
                 <div
-                  className={cn(
-                    "rounded-[1.25rem] border border-border/70 bg-background/90 p-4",
-                  )}
+                  className={cn("rounded-[1.25rem] border border-border/70 bg-background/90 p-4")}
                   key={item.label}
                 >
                   <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-                    <ShieldCheck className="h-4 w-4" />
                     {item.label}
                   </div>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -291,11 +278,12 @@ export default function HomePeparMiddleSection() {
             </div>
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button asChild>
-              <Link href="/contact">Diskusikan kandidat homepage</Link>
-            </Button>
+            <GlobalWhatsAppButton
+              label="Konsultasi Sekarang"
+              className="rounded-full bg-green-500 text-white hover:bg-green-600"
+            />
             <Button asChild variant="outline">
-              <Link href="/">Bandingkan dengan homepage aktif</Link>
+              <Link href="/contact">Kirim Brief Kebutuhan</Link>
             </Button>
           </div>
         </SectionPanel>

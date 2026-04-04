@@ -347,6 +347,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] `page`-specific Studio actions are now re-enabled on top of the upgraded `5.19.0` runtime, restoring the hybrid preset and page-to-post conversion workflow in Studio.
 - [x] Historical migration planning docs and worker prompt files are now moved under `docs/archive/`, leaving `docs/` focused on current operational guidance and active workflows.
 - [x] Rewrite landing sections now have stronger service/pricing interaction polish, and pricing cards can route package-specific WhatsApp leads through the shared global WhatsApp settings path.
+- [x] `/home-pepar` has been rewritten away from prototype/internal explanatory language and now reads as a customer-facing homepage candidate that is materially closer to live use.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.
 - Blocker note (2026-04-02): Regenerated `v2` assets are ready, but final selection/approval and route-level wiring are still pending.

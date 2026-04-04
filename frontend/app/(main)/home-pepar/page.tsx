@@ -18,9 +18,9 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return generateBasicMetadata({
-    title: "Home Prepare | Hybrid Landing Page",
+    title: "Kotacom | Solusi IT, Website, Software, Support, dan Percetakan",
     description:
-      "Home Prepare memakai pola hybrid: block Sanity di atas dan bawah, dengan middle section code-owned yang tetap menjaga struktur halaman utama.",
+      "Kotacom membantu bisnis membangun website, software, IT support, dan kebutuhan percetakan dengan pendekatan yang lebih terarah dan siap dieksekusi.",
     slug: "home-pepar",
   });
 }
