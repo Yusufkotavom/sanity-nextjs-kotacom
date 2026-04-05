@@ -8,11 +8,10 @@
 - `frontend/sanity/queries/template-page.ts`
 - `frontend/sanity/lib/fetch.ts`
 - `studio/inputs/auto-route-input.tsx`
-- `studio/schemas/documents/service-type.ts` (new)
 - `frontend/scripts/seed-service-location-examples.mjs` (new)
 
 **Summary:**
-Implemented support for multi-level URL patterns with service + location tokens:
+Implemented support for multi-level URL patterns with service + location tokens using existing `service` document type:
 
 1. **Pattern Support:**
    - 2-level: `/{category}/{lokasi}` (existing)
@@ -37,16 +36,25 @@ Implemented support for multi-level URL patterns with service + location tokens:
    - Falls back to `slug` field if service not selected
    - Real-time preview shows computed route
 
-5. **Service Type Schema:**
-   - Created `serviceType` document for centralized service management
-   - Includes category, default template, and default content
-   - Can be referenced by serviceLocation for reusable service definitions
+5. **Using Existing Service Document:**
+   - Leverages existing `service` document type (no new schema needed)
+   - Service already has: title, slug, excerpt, pricing, duration, categories
+   - ServiceLocation references service for reusable service definitions
+   - Visible in Studio under "Services" menu
 
 6. **Seed Examples:**
    - Service docs: toko-online, company-profile, apotik, klinik
    - Location docs: Jakarta, Bandung (added to existing Surabaya)
    - ServiceLocation docs with 3-level patterns
    - Complete with SEO keywords, FAQs, highlights
+
+**How to Use in Studio:**
+1. Create/select Service document (e.g., "Software Apotik")
+2. Create ServiceLocation document
+3. Set `routePattern`: `/software/{service}/{lokasi}`
+4. Select Service reference (apotik)
+5. Select Location reference (bandung)
+6. Route auto-generates: `/software/apotik/bandung`
 
 **Impact on SEO/Integration:**
 - Enables scalable city + service combinations (e.g., 4 services × 34 cities = 136 pages)
@@ -59,7 +67,12 @@ Implemented support for multi-level URL patterns with service + location tokens:
 - ✅ Query supports optional service parameter
 - ✅ Fetch logic tries 3-level then 2-level patterns
 - ✅ Auto-route input handles multi-token replacement
-- ✅ Seed script ready: `node --env-file=../vercel-frontend.env scripts/seed-service-location-examples.mjs --write`
+- ✅ Service document already exists and visible in Studio
+- ✅ Seed script executed: 4 services + 2 locations + 3 serviceLocations created
+- ✅ Test URLs active:
+  - `/pembuatan-website/toko-online/surabaya`
+  - `/pembuatan-website/company-profile/jakarta`
+  - `/software/apotik/bandung`
 
 **Next Steps:**
 - Scale to more services and cities
