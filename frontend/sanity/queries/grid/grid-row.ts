@@ -11,7 +11,7 @@ export const gridRowQuery = groq`
     padding,
     colorVariant,
     gridColumns,
-    columns[]{
+    columns[0..11]{
       _key,
       ${gridCardQuery},
       ${pricingCardQuery},

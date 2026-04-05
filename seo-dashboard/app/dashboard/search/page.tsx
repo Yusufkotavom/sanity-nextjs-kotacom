@@ -5,6 +5,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { desc } from "drizzle-orm";
 
+export const dynamic = 'force-dynamic';
+
 function formatDate(value: Date | string | null) {
   if (!value) return "-";
   const date = typeof value === "string" ? new Date(value) : value;

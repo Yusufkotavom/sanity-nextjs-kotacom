@@ -11,7 +11,7 @@ export const carousel1Query = groq`
     size,
     orientation,
     indicators,
-    images[]{
+    images[0..9]{
       _key,
       ${imageQuery}
     },

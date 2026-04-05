@@ -20,12 +20,13 @@ export async function GET(request: NextRequest) {
   if (from) filters.push(gte(schema.seoAudits.checkedAt, new Date(from)));
   if (to) filters.push(lte(schema.seoAudits.checkedAt, new Date(to)));
 
-  let query = db().select().from(schema.seoAudits);
-  if (filters.length) {
-    query = query.where(and(...filters));
-  }
-
-  const audits = await query.orderBy(schema.seoAudits.checkedAt).limit(50);
+  const baseQuery = db().select().from(schema.seoAudits);
+  const audits = await (filters.length
+    ? baseQuery.where(and(...filters))
+    : baseQuery
+  )
+    .orderBy(schema.seoAudits.checkedAt)
+    .limit(50);
 
   return NextResponse.json({ ok: true, audits });
 }

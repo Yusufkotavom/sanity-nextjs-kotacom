@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
   const result = await generateAiText({
     prompt: input.prompt,
     system: input.system,
-    provider: input.provider,
+    provider: input.provider as "gateway" | "groq" | "gemini" | undefined,
     model: input.model,
     userId: "retry-parse",
     tags: ["retry"],

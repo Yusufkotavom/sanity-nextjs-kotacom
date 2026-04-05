@@ -8,10 +8,10 @@ export const faqsQuery = groq`
     _key,
     padding,
     colorVariant,
-    faqs[]->{
+    faqs[0..5]->{
       _id,
       title,
-      body[]{
+      body[0..9]{
         _key,
         ${bodyQuery}
       },

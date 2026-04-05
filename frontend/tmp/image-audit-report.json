@@ -1,0 +1,2046 @@
+{
+  "timestamp": "2026-04-05T23:23:57.168Z",
+  "summary": {
+    "sanityReferences": 0,
+    "localReferences": 23,
+    "externalReferences": 0,
+    "sanityAssets": 142,
+    "localFiles": 3
+  },
+  "images": {
+    "sanity": [],
+    "local": [
+      "/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
+      "/assets/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
+      "/images/kotacom-split-production-ready/hero/hero-cetak-buku-shark-v2.png",
+      "/images/branding/kotacom-logo.svg",
+      "/images/products/cetak_percetakan_thumb_1775318012761.png",
+      "/images/about-section.jpg",
+      "/assets/images/about-section.jpg",
+      "/images/a03xrv11/schemaui-marketing/240ffaed02641591c369afd4af0fa3e254200926-1200x630.webp?fm=webp&amp;fit=crop\\",
+      "/images/a03xrv11/schemaui-marketing/92d9a689fcbc5994ca68e8a36e215e467aed74f6-1200x686.webp?fm=webp&amp;fit=crop\\",
+      "/images/a03xrv11/schemaui-marketing/750e8cf48121604153cface019ecd3d0f5127964-800x800.svg\\",
+      "/images/a03xrv11/schemaui-marketing/dcac628dccdef51dee25020b54d1a5b46beb4d50-100x20.svg?fm=webp&amp;fit=crop\\",
+      "/images/a03xrv11/schemaui-marketing/776d4d657c8ccbaa2cdd0889bee304bf3874c993-92x28.svg?fm=webp&amp;fit=crop\\",
+      "/images/a03xrv11/schemaui-marketing/c205813c9771d60b70ab52cf69816689b450e53c-140x17.svg?fm=webp&amp;fit=crop\\",
+      "/images/a03xrv11/schemaui-marketing/fb498df7532c2a06acb171f3363f13c0ca2120cd-914x256.svg?fm=webp&amp;fit=crop\\",
+      "/images/a03xrv11/schemaui-marketing/fae50094a096ea09dc8ea7df559b29e80dd087cc-90x30.svg?fm=webp&amp;fit=crop\\",
+      "/images/a03xrv11/schemaui-marketing/f09eed1f2a8f4458ed6e37f863e23e252ba05b67-284x65.svg?fm=webp&amp;fit=crop\\",
+      "/images/a03xrv11/schemaui-marketing/d20faafbd8b43e41cb54dff6da576cc39a6bd19b-900x900.webp?fm=webp&amp;fit=crop\\",
+      "/images/a03xrv11/schemaui-marketing/59f70ae3968212410fa832885e164ab16e4d15b5-900x900.webp?fm=webp&amp;fit=crop\\",
+      "/images/a03xrv11/schemaui-marketing/40fb451fbc17b9891d1815a9eafcd3fddf8ef0b8-800x800.svg\\",
+      "/images/a03xrv11/schemaui-marketing/2cc789a02534557380d92124e2f8b9483d198fb3-24x24.svg\\",
+      "/images/a03xrv11/schemaui-marketing/7f7ffdeb2fb3e2a26a9c7a201cb90a973db80467-2500x2500.svg\\",
+      "/images/a03xrv11/schemaui-marketing/e4c3a21492906c586922bfe33f61f1592e0b6ca0-569x512.svg\\",
+      "/images/kotacom-split-production-ready"
+    ],
+    "external": []
+  },
+  "sanityAssets": [
+    {
+      "_id": "image-01f727304e923b7b5b8d1cfa1522f098a55fa06b-1024x1024-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAACwElEQVR4nI1UWU8TURRu7MzcO3c6252tK1Oxe51ON5xOp5RiKTQFLYI+iJFWXBI3QqIJPmgkwUQTw5sxyl/wwQd/g2j8VWYKVsGWkHwP93z3fPcsOed6CIr2HsdZGO8AnpHsGeE55e1xAb1jIsMBaC9gCMiQtI+kWQIyY8XEPwYFEUQMhViS4UmGo1iR4jCJOC9AxKhEPEOKhIwoKbFkumRVy3YtVyzHs4Y/rAs+XoA0C2hAQWJc2hRAihasN9tb26923u69eP1m4+HmTKNVSSQXk7H5ZCwdCWNRBBAdE5MAsbyIsSwq/mSpfvXOVu/Z7vrWznLviTPXvdJaetnr7z7Y6N+8btUsvx5hsOT2whWTELFiLJUzy044ZsjJSsTqRmurUbsbzDX8qYrZuLayvrl27+nyxl1ndWVyuo4zOYhVL6A95yga8cqkYedmlicKTeXirFrsSEZTSDisXuD0vGbO6c5KrLqUqbUzjU7UmceZEsAqAQ7TRhwfSmi5y6rZUsyWVuzglMPpeeHCFE7YUnpayTYmS61Wd+3+5nb/8XNrdoFX/H8bBsWAmKjIxpxizmvFjhCv+CI5nK4rRlOKW1JsaiLfuNF/9OXrt4Ofv96938sYplszAVwx4BT+fB4nqzhVk7MzXLTAhFJi3MIph9cNLpziw2lrpv3h4/73gx+fPu+XL9kkQEeRScRBHEDyBFJ0pEahGAScSkshJEegoAFOoXxYC+nNVvvW7d5CZzEY0Y9qHgARgHEBfTQrCFgVJEXAMi/KvCixPAaIBbSPE7AoySwvUDQzYqsIgBR/0DAL5SmrUCqbxVKhWE5nDSz7iaMhhcTh/I8Uy1ogZxYqdrViO5btVOyqYRYkNUBCRADX4bR9hogVREmSVVnRZNWFgGXIsAPlf4txYtz/MO56HiY59idxXcEx/Ynz8HbID83f/wd0KGKS20EAAAAASUVORK5CYII=",
+      "originalFilename": "percetakan_illust_2.png",
+      "size": 479062,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/01f727304e923b7b5b8d1cfa1522f098a55fa06b-1024x1024.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-0706c52522c89bed43f181560fcb248a5bc2d5ed-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAQFCP/EACMQAAICAgIABwEAAAAAAAAAAAECAAMEEQUxBhITISJBcYH/xAAYAQACAwAAAAAAAAAAAAAAAAAAAgEDBP/EABgRAQEBAQEAAAAAAAAAAAAAAAEAEQIh/9oADAMBAAIRAxEAPwDofM5U15L0JS7so3sSOvLzFR3sx7Su9++pFy2bj4nIWs7WLYwGtLsSnH8SceKVDOxbR83wPctzDws50qi1tN/rVq+iu/o9xIOPvN2MtnQYkj8iGTculoZNaONuqt+iRmqsdIo/kRAmSAADQGhERJkv/9k=",
+      "originalFilename": "project_clinic_1775323671374.png",
+      "size": 524975,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/0706c52522c89bed43f181560fcb248a5bc2d5ed-1024x1024.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-08bb2f0f167cc240e160e8bb4015641cf701f3ab-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAYDBAcF/8QAJRAAAQMDBAICAwAAAAAAAAAAAQIDBAAFBhESITETQQcVIlFh/8QAFgEBAQEAAAAAAAAAAAAAAAAABAMF/8QAHxEBAQADAAEFAQAAAAAAAAAAAQIAAxFRBBIUITFB/9oADAMBAAIRAxEAPwCky7L4EK4SbdMuElJbc1cCFkbT6rZu+YTrvjkN3GVMy4KNEvLcUQsqHoVx7OnzKza6+SO415FAALTqeu6r8MjfWYW+p5iSYzbuo2IO5RPfH6q13MyI/uQmNnLqDvP4vMyTvkS/x5CmlWk/j0Tu5FK8lu7XSWp1y3qK4wWUp8gGo09c0pHw5fvhkY9VftOqZaZiv6u1MTY6G1Sy4AXXEBSiDU1ZMru8+9NQpEkGO6dikpSBx/KUoGmJrUqecbsuiwHxnU4Fkt5jgmK2TrydO6UpWe7bHguNNcp1M//Z",
+      "originalFilename": "rakit_pc_1_1775319464533.png",
+      "size": 695524,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/08bb2f0f167cc240e160e8bb4015641cf701f3ab-1024x1024.jpg",
+      "usedIn": 12
+    },
+    {
+      "_id": "image-0eda92cc125ff0fdfd5d0a59879c6cab1c568dd9-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQEAAwAAAAAAAAAAAAAAAAUGAwcI/8QAJRAAAgIBAwMEAwAAAAAAAAAAAQIDBAAFESEGE2ESMTJBM0KR/8QAFgEBAQEAAAAAAAAAAAAAAAAAAwQF/8QAGREBAQEBAQEAAAAAAAAAAAAAAQACESES/9oADAMBAAIRAxEAPwD0dqd7sEJGA0h+smw65BM80bhkki+fG4/uQ+u2n0t1tV5e7I5/COXHkZiJerYGpvp8DSx25GCzO6EbA+5yLW9Z1J8dz27So6pXvQmWuSYwxXfb7GM4NIqQ19NrxVJUaEINmH7ecZoh57Qq1uzBFM3qljRmHAJHOZ3Vem9MsWksvXCyg7brxuPOMYYEyo1OvCkUKpGoCgcDGMY0F//Z",
+      "originalFilename": "quran_print_1775318348924.png",
+      "size": 759513,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/0eda92cc125ff0fdfd5d0a59879c6cab1c568dd9-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-0f821e07410be126a3b24d2ea637989ca1ac4e16-526x150-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 3.506666666666667,
+        "height": 150,
+        "width": 526
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzklEQVR4nH3RyUqDUQwF4F9ErUNxxOLQ1hHrXJzQjTvfQFz5/o9xPwkcpSsDISQ5Oecmt+tmDHOYr9j9Y621JexgMBMPMCySPlawio00N7GW3nrq/WAKuxzcCca4xT1GRXiNc5xhgic84C7AKR5x01q7DHariFprr3jDFz5xUYQvGboKeBrge2IJPJfITD5orR2G7APfIZwUYb2s1AqwGx+mfoR97OVGpzjOCbazcm1TIrXRuAjrHr34IhYSezl+5X+1eM3U2r+fUYIlPPoBPhlWEXGjqyYAAAAASUVORK5CYII=",
+      "originalFilename": "schema-ui-light.svg",
+      "size": 8123,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/0f821e07410be126a3b24d2ea637989ca1ac4e16-526x150.svg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-130bb13e3abc575ea09f38b3626d0a7206f893a5-100x20-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 5,
+        "height": 20,
+        "width": 100
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAAsTAAALEwEAmpwYAAABGElEQVR4nDVOQUoDQRDcu+BBREERT0Zy0IuIJ4lHJQQhggEVA9k4073rzvTsEjDZ6R6TXES9COJJwR+Iz/BXMoIFRUEV3VUJkvzkJLnWk3U0vIelvKALn+jCvbKhq4g72vAtEiukAEjTDpD0kfgNiN/R+evUjFeTf2ROvjPiCRAfopu2kGQOLnhwfAbWb0dqI+mfT9IflqGBdtYE4y/A+kHuZjtX1dNCUYRF58JSkjl+jQFa6QGFIVJ4Riu1sr6b53cNbUZbmuQSrYyjDqp6U5VhWdv66MZOTrCcb0AVVtDwvirq4wSJH9BxC4nbSPwIJF9I8gEknBV8Go9iUVynDKvMTg8GeViLD7Hidmp9M8Xxri78OTg/+gV3pYJALuBAOgAAAABJRU5ErkJggg==",
+      "originalFilename": "next-js.svg",
+      "size": 3907,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/130bb13e3abc575ea09f38b3626d0a7206f893a5-100x20.svg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-136eeb2e37bfcda33e67b853287984a1771042c1-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAQDAQf/xAAgEAACAgEFAAMAAAAAAAAAAAABAgADIQQREjFBE0Jx/8QAGAEAAgMAAAAAAAAAAAAAAAAAAwQCBQb/xAAZEQADAQEBAAAAAAAAAAAAAAAAAQISMVH/2gAMAwEAAhEDEQA/APDUDFGYDC9yrSaa7VXLVQnJyCwG/khqav4n5swb6gezbnWjKarXGMkdgzTbbTU9K/PpocEg9iJiGO2YjCsHkgrJxKrG62UD8iInIdnATtERDED/2Q==",
+      "originalFilename": "layanan_grok_1.png",
+      "size": 108841,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/136eeb2e37bfcda33e67b853287984a1771042c1-1024x1024.jpg",
+      "usedIn": 5
+    },
+    {
+      "_id": "image-1396ccac823445274c2f10e25a8eb52660bfece6-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAEFAgYH/8QAIxAAAgICAgEEAwAAAAAAAAAAAQIAAwQRBQYhEjFBUTJhkf/EABcBAAMBAAAAAAAAAAAAAAAAAAABAwT/xAAZEQEBAAMBAAAAAAAAAAAAAAAAAQIREjH/2gAMAwEAAhEDEQA/AO6di7Zj8JznGcbdQ9lmeSEZT4GvuXJyLSpYKAPcD5M0/uPBvyPaOGzURS+Hf6yzHWk15EvbLcxMo3WMrY34qla+f7L63GbPLm+Vd49jW1BmQoT8GIxz6qlb23ESkS9aONOoYfuBWgGgo19REQZjwNCIiAf/2Q==",
+      "originalFilename": "project_dashboard_1775323623303.png",
+      "size": 496070,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/1396ccac823445274c2f10e25a8eb52660bfece6-1024x1024.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-142bc03afd745818610f96804aa0c85897ea013e-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAMFBgj/xAAjEAABBAEEAQUAAAAAAAAAAAABAAIDBAUREiFBExQiMUJR/8QAFwEBAQEBAAAAAAAAAAAAAAAAAgMEBf/EACARAQACAQIHAAAAAAAAAAAAAAEAAhEDIRITFCIxUWH/2gAMAwEAAhEDEQA/APOGHxs+Qc+KrSlsyAanZ0FoWcK6vjRZloyNIdodTxoq4bIWsTJKKcxgdI3a4jsJeyMopub6mSVo+p+AlUrbdmzv0nCbHwnNSxkSH2FoPIBRaXidOBI4ckIp8wJTobW3JA2ZDZ5I46VLkm7aAxrQ487e0RKniDWVXPuasDQIWgfiIilgnbovCT//2Q==",
+      "originalFilename": "game_pc_grok_1.png",
+      "size": 222578,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/142bc03afd745818610f96804aa0c85897ea013e-1024x1024.jpg",
+      "usedIn": 26
+    },
+    {
+      "_id": "image-14f9783a41355cde7451c73bc7d2a01a8a7553ed-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAQGAwUI/8QAIxAAAQQBAwQDAAAAAAAAAAAAAQACAwQRBRIhBhMxUTJBYf/EABUBAQEAAAAAAAAAAAAAAAAAAAIB/8QAGBEBAQEBAQAAAAAAAAAAAAAAAQAhMUH/2gAMAwEAAhEDEQA/AOY6zXGaNpBLS4A49Kz9c0aenahBHRic1jomuIJ8kjytJp1jb3O2QTnAz6Vq6m1qKzo1GtNRET4WbRMfk79KaGNBdKnS1i0jhvIz5RRZrDt5xyPaIbLLJVjbvBU2eZ28ffGOclETeQ9oMmC48BERSV//2Q==",
+      "originalFilename": "cetak_buku_grok_4.png",
+      "size": 188377,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/14f9783a41355cde7451c73bc7d2a01a8a7553ed-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-15e7abd6912daa126019117a20996b2af1be905f-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAAMBAAAAAAAAAAAAAAAAAAQFBgP/xAAkEAACAgICAQMFAAAAAAAAAAABAgMEAAURIRITFHEGMUFRUv/EABYBAQEBAAAAAAAAAAAAAAAAAAMEBf/EACARAAIBAwQDAAAAAAAAAAAAAAECAAMREwQhIlESMXH/2gAMAwEAAhEDEQA/AI2l9kZY/e7BDJHKQYuwxyh3lI2tNepQWjKfWMoVuuB85SVPUtbSxZewkZmbyUN986bK09i0/k8bFE45A4TL0qKB4oOUR0qhzUc8OpjZ9TNG/Hgx6567xm1+nasja4F/7PBP5GMLIBsTHGmLC4EpYHaayqueQrBR8ZpL1OFaUgUEcr2QcYw6G9cXlbgYT9kPXRmOqqpLIB+vLGMZtY16kwY29z//2Q==",
+      "originalFilename": "rakit_pc_4_1775319528114.png",
+      "size": 766866,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/15e7abd6912daa126019117a20996b2af1be905f-1024x1024.jpg",
+      "usedIn": 5
+    },
+    {
+      "_id": "image-184ede6b121112f37e3a01eb3008762ef82413d5-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQEAAwAAAAAAAAAAAAAAAAUEAQYH/8QAJBAAAQQCAgEEAwAAAAAAAAAAAQACAwQFERIhMRMVMkFSYaH/xAAWAQEBAQAAAAAAAAAAAAAAAAACAwH/xAAfEQADAAEDBQAAAAAAAAAAAAAAAQIRITFBElFhcfD/2gAMAwEAAhEDEQA/APVMxms1FmrJqTw+315mxyEjtu/pdztiazS1DI+vIdak47/ijXsBCyrdtOcHQyvEskf5EftU5nGNtewyyG12a5hx6Ox1opPCrrXgnOsqGts+/uxzSq3YYAySy6RwPyc3RKLHgc1Jkq9iQ8C2Ow+JpHfQ0itU0nqSTXBVtwMkjLX7LCe276UrM4OjLgZKT43GtyD+HI+doiM8G0lubMLg6GIoitQh9OHkX63vs+URERH/2Q==",
+      "originalFilename": "business_card_print_1775318312900.png",
+      "size": 519085,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/184ede6b121112f37e3a01eb3008762ef82413d5-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-1c842026a6e28a2bddb25a18c6081154da676677-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQEAAwAAAAAAAAAAAAAAAAQDBQYI/8QAJBAAAgICAQMEAwAAAAAAAAAAAQIAAwQFEQYhIhMUMUEyUmH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgMA/8QAGREBAQADAQAAAAAAAAAAAAAAAAECETES/9oADAMBAAIRAxEAPwDzjqtLl7Ol3xaiwUE/HyR9TbD6bzrvUNuNcqr27L9y3pzqWzV656Vro4BPDEefJnM4XU2ysrZ7DiVVN5f0y2OPrhLdOgXVNTc9bfkpIMTfbZHutjkXePmxPaJOmTVuUsVhxyDz3Erzs+3KRVsWtQP0XiImnAqKIiAX/9k=",
+      "originalFilename": "blog_grok_3.png",
+      "size": 208709,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/1c842026a6e28a2bddb25a18c6081154da676677-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-1e03b1e1ef212be79c95197590ca9cb17d5a98d6-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAAMBAAAAAAAAAAAAAAAAAAIDBAf/xAAkEAACAgIBAgcBAAAAAAAAAAABAgADBBESITEFExQiQmFxcv/EABcBAQEBAQAAAAAAAAAAAAAAAAABAgP/xAAYEQEBAQEBAAAAAAAAAAAAAAAAARECIv/aAAwDAQACEQMRAD8A4DXQXTlyA+pKrEssbWtfs14bYiVbew8iOoI7RgZ/pM4PUlVtSkkC0d524y30xdYLqnqco40REv8AEsw5mZZd5aV8vinYRIrIOhBl2Q4cL7EX+RqIgUxEQP/Z",
+      "originalFilename": "rakit_pc_grok_4.png",
+      "size": 132089,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/1e03b1e1ef212be79c95197590ca9cb17d5a98d6-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-240ffaed02641591c369afd4af0fa3e254200926-1200x630-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.9047619047619047,
+        "height": 630,
+        "width": 1200
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQD/8QAHRAAAgICAwEAAAAAAAAAAAAAAAIBAwQREyIxUf/EABcBAAMBAAAAAAAAAAAAAAAAAAECBgf/xAAXEQADAQAAAAAAAAAAAAAAAAAAAREC/9oADAMBAAIRAxEAPwCPFrqseYut4117rZvdj4iJ0ypdvkKQglqbI8tu0AAA5//Z",
+      "originalFilename": "sanity-cms-og.webp",
+      "size": 7590,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/240ffaed02641591c369afd4af0fa3e254200926-1200x630.webp",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-244cc688856b5f974d670cbaf1e3fcf121aa1416-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAEEAwYI/8QAIRAAAgEDBAMBAAAAAAAAAAAAAQIAAwQRBRIhMRRBUXL/xAAVAQEBAAAAAAAAAAAAAAAAAAAABP/EABkRAAMBAQEAAAAAAAAAAAAAAAABAgMhMf/aAAwDAQACEQMRAD8A51srM3IY5KqPeJcqaMRhlchduSSI0O5p2wqO5AZeQG6MvHW/LoulQIlQ9fMSuJzc99Kss83KdM1tlwxB9RJqNudj9MSckYRijhhgkc8zNcXLVlAZKa/lcREArxEQD//Z",
+      "originalFilename": "game_pc_grok_2.png",
+      "size": 238840,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/244cc688856b5f974d670cbaf1e3fcf121aa1416-1024x1024.jpg",
+      "usedIn": 20
+    },
+    {
+      "_id": "image-24651165758b4de0505228f9522818f0c2befdf3-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAQGBQcI/8QAIxAAAgICAgIBBQAAAAAAAAAAAQIAAwQRBSESE0IUQVFxcv/EABcBAAMBAAAAAAAAAAAAAAAAAAIDBAX/xAAdEQACAQQDAAAAAAAAAAAAAAAAAQIDERIxEyEi/9oADAMBAAIRAxEAPwDm7ExLstymPWXYDyOvsJNv4TISs2U6vRKxZYU+H7k/gaqqb2a/2BShA8DruWHkLafpLFtOnfHCIMfoH+/zNNUXYjc+zXeok98Uhj1EHjYWSLPxtaFhsAzK8ilb1jVSLofEaiJpwXkklsrtyL7D1EREPYw//9k=",
+      "originalFilename": "layanan_grok_2.png",
+      "size": 134779,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/24651165758b4de0505228f9522818f0c2befdf3-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-261de7baacd29d6f940a09395c11651901e8a0e9-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAQBAgMI/8QAIhAAAQQBBAIDAAAAAAAAAAAAAgABAxESBBMhUQUiMWFy/8QAGAEBAAMBAAAAAAAAAAAAAAAAAAEDBAX/xAAaEQEBAAIDAAAAAAAAAAAAAAAAAQIDERIh/9oADAMBAAIRAxEAPwDz7BEUx4hV/aqHxsxQSy+tR8k180oxIgNnGTb7JVBrMAmHez3BrhvldTXjruN7X1nvKRFi2RUpbC+JM9M9drrqJnlFmcIx/I0iIJ0REH//2Q==",
+      "originalFilename": "rakit_pc_grok_2.png",
+      "size": 134919,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/261de7baacd29d6f940a09395c11651901e8a0e9-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-263cb980d781832730f62f643c36c4d1179bb0ff-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAQCBQYH/8QAHxAAAgIDAAIDAAAAAAAAAAAAAQIAAwQRIRJhMUGB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAwT/xAAaEQADAAMBAAAAAAAAAAAAAAAAAQIDBBES/9oADAMBAAIRAxEAPwDvGNcLbLVZeLrXuTcps8I/Zn8hmUEqxB9GJ4dljuwexyN/bGVzpLvrot2qlpl/RkeSb6ekdhFE4oA+IRHiRE4R/9k=",
+      "originalFilename": "pc-rakitan-core-i3-3240-ssd-120gb-4gb-500gb-design-office-admin.jpg",
+      "size": 75346,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/263cb980d781832730f62f643c36c4d1179bb0ff-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-271b20f564f05e5601f4ae98086cdea052d49e96-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADfUlEQVR4nF2S22ubdRzG3z/ACy8UQdjfIKgXeiHqTUEY4o2SgjJFGahbB8qmIB04JnPOHWyGZdOmrW3X1thD0vSUZm96SPZu+6XNcT0lb9I0SdO0OTR9kzf9Jb98H0m6IXjx4cMXnue5+koQMDQQHAZNF4a9A27Y07ghp3FD+inP7qZ13sxxfoxodJ/S2JHqNTBRA6tUBFMzGnOrWbaynWfh3QKLZg5ZsqCzXImzwwpnhzpnRf2IFXTOctoR286X2GamyBJ5nemVGqvX6kwSVVC1WqdiuUqBRIFGPHHqW1yjAWeIBpZUmgxlKbBTpnRRp3xJp6xWpqymUyJfIlc0Q6OhGMnhFO0UylTjdWoOlis12i3qFEhkqdcRoDO3LPTZlVE6d3eJLttU+se3T/5EnjbTOXqS3KfV1D554xmy+mPU/WiNRvxRCiTzlC9WSKpW69gtlOGN78O1kcKA3YMvfuzBqXYTrplmcM/ugxxKwruVwaPwNhyhCOzBTUyG1vG3ZxUTPhXyRhLuSBrB2D6kcqWKUCKLsWUV48thmGUPvrpkwicXbqPjjhljFgfkhwGshONgahzTgTWYH/sxuOzFoCeI+dUoPOoW5NUo5MAWpMxBCTNeFR1TDCbZh57pB/j4u068+tElfNBmxNeXe9HeOYEB+zIWQxHYvOvokr34Q15BnyuECc8GxhU/ep0eDLoCkNRMAV1zy/jmz2lcHHLi6rCMD8//jhMtF3DivR/wSutVvNPWjbPGWfw15cLwnAsdo/P4eciJWxYFd2ce4/rwHK4M2GCanYeUzB5iTFnFL6NLuDbuxsVeO1q+/BUvvnkaz732OV54qw2vn7qBb40W9FmmYbZZ0TViwc3+MVzvG8fte6Po7OtHv3kI8w8WIJX1GsUyB8QiKbofjNFvI25qOWOkl99to+ffOE0vvX2WTp4z0h3rIk0qKzS24KbBWZl6rLPUPW6joQkr2R028nkWaSe+2XgbEpwLUSxzkS6UxMP1lLhhdotPfzKLk+e7xfvf94h2k0NMeaPCHUkL51pCOIIxMeePivlgRHg2YiKynRTZbFZUyiUhiVpdaVDjdeWI15XDElfCyYJy35dUzK6IMrwQVhyBpPIkdaCoe5oS2dOajud0ZadQUfIaV/SKUDg/3pEEF63/gVZwNK1z0arpx+jP4Mfm/+s0e6Jh0fovsa9NeA1qkOAAAAAASUVORK5CYII=",
+      "originalFilename": "service-it-support-shark.png",
+      "size": 833390,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/271b20f564f05e5601f4ae98086cdea052d49e96-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-2b93a9cc8f550aec8fabb70e03d6850968dfc172-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAMEBQYH/8QAJBAAAQMEAQMFAAAAAAAAAAAAAQACAwQFERIhBjFxExQzUWH/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAgME/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAER/9oADAMBAAIRAxEAPwDjVBa5qpschaRA52uw5J8BW5rICdYXOa8ucAJRqcBRdPXKa2VXuW07KlsfGkh4Gfr9WX6tutNeHUwt1I+Cc/KS7u5dEkxlWr1VPJSzuinbrI3uEUchcXn1CS4cEk5RSoaSDjPGVPVEDTVob4REFdERB//Z",
+      "originalFilename": "it_support_grok_3.png",
+      "size": 166411,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/2b93a9cc8f550aec8fabb70e03d6850968dfc172-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-2ea010c1a76149f8c3344614b90d021f81604b19-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAMEBQIH/8QAIxAAAgEEAQQDAQAAAAAAAAAAAQIDAAQRIQUGEiIxExQjQf/EABgBAAMBAQAAAAAAAAAAAAAAAAIDBgEE/8QAIREAAgECBgMAAAAAAAAAAAAAAAECITEDERITJDJBgaH/2gAMAwEAAhEDEQA/APKbfpqP6aXkI+RgcNG66ru94R5YVUWsCK2PNF9VLY85dyyxC3gKQlT4Lv3/AGrE3JTW4EcLBmAOSToGqJuLsiajvqknUwLjgIYJDH3lyPZAxSr03UGH/ezV5CNt3YzStzwweUvH1Fbi76a0sHEJXS4BIyRmo2vJGtJCyxlg+Q2NilKCXVD5Ja/Zkcq5muu9tEqNLoUpSlO53Rsf/9k=",
+      "originalFilename": "post_tech_city_1775324344127.png",
+      "size": 829606,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/2ea010c1a76149f8c3344614b90d021f81604b19-1024x1024.jpg",
+      "usedIn": 5
+    },
+    {
+      "_id": "image-310e0bd66af03d650e6673dc6f428dc18d6048b7-1920x1037-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.8514946962391514,
+        "height": 1037,
+        "width": 1920
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAIDBAj/xAAfEAABBAEFAQAAAAAAAAAAAAABAAIDEQQSEyEiM0H/xAAVAQEBAAAAAAAAAAAAAAAAAAAAA//EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMzxuDsmxdJJ9vV1BBRi+rVLJG0uPCumqGviE8gAdQCEH//Z",
+      "originalFilename": "docs.webp",
+      "size": 50258,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/310e0bd66af03d650e6673dc6f428dc18d6048b7-1920x1037.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-314817e58a835299842554b779aab4d7a16e31f6-1920x2880-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 0.6666666666666666,
+        "height": 2880,
+        "width": 1920
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAeABQDASIAAhEBAxEB/8QAGgAAAwADAQAAAAAAAAAAAAAAAAYHAgMEBf/EACMQAAEDBAIDAAMAAAAAAAAAAAECAwQABRESIUEGFDETFyP/xAAYAQEAAwEAAAAAAAAAAAAAAAACAAEDBP/EABoRAQEBAAMBAAAAAAAAAAAAAAABERIhMVH/2gAMAwEAAhEDEQA/AG5HmFziSI7Knos1t1QTlY/GoE9U0NSPaGyxqsHBSOjSPc49sdctTgh5Ul0AaDBUc/abbbcIf9GUBQWlZHNcu/WkdxZB5xRW8lPSqKmEhd480hb2tDM1CS2UrUppvGqh0a9OP5VGbmSbkoe1H02ISMYPZqOTkR0kPJbPw8E1labq5HjTGEZ1cbxjPAoZyXOp4sH7gtYJBaeTjjAGaKhrjZ2+J+UUhtf/2Q==",
+      "originalFilename": "aleksandra-dementeva-qpi0r7gs3RM-unsplash.webp",
+      "size": 209358,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/314817e58a835299842554b779aab4d7a16e31f6-1920x2880.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-328b0a0916cad6d1554ea4cbc1b65706b0268757-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAEDBAUI/8QAHhAAAQQCAwEAAAAAAAAAAAAAAgABAxEEEiExQSL/xAAXAQEBAQEAAAAAAAAAAAAAAAADAAIE/8QAGBEBAQEBAQAAAAAAAAAAAAAAAAIBERL/2gAMAwEAAhEDEQA/AOehCSeTSIXIqumVeRiZEYuUkZMzepjTjFLufLVVM9Ooz8wJYtYxdn7ty6XTd70EzjXEfKKgy+nRH6JxebvajNqg1ER489RFUpYboiIm3//Z",
+      "originalFilename": "blog_grok_2.png",
+      "size": 121244,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/328b0a0916cad6d1554ea4cbc1b65706b0268757-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-35ab7e5686a60fb56eb36e8fb8d5399c61b99e6f-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAQGBwMF/8QAJRAAAgEEAQMEAwAAAAAAAAAAAQIDAAQREgUGEyEiMUJRJWGS/8QAFwEAAwEAAAAAAAAAAAAAAAAAAQMFBP/EAB8RAAIBAwUBAAAAAAAAAAAAAAECAAMRIQUSYXHhM//aAAwDAQACEQMRAD8A2+HnL6Tl9W7aWqSaOT7H6wanNyV1qVk0DvKVQJ59NUnjOn5unluLWW+N8JbhZyzHAUD4126j5E961eMC1CzAqwYknxRLKMKbxKhzlgRLtYvdxQlbieDbJxscHH7FKybmOCub2/knlkmmd8Ev3CM0qe2pU1O0q1xx7LCaO7qGFVbHnyezyi/lLobPgP7bVFaFWHqLHH2aUqXXxUbubKPzXqNMfJ/6pSlKjp//2Q==",
+      "originalFilename": "project_pos_1775323641893.png",
+      "size": 600882,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/35ab7e5686a60fb56eb36e8fb8d5399c61b99e6f-1024x1024.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-36d965dfb931ac4fc177e79a17e8f846fad3e189-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAAMBAAAAAAAAAAAAAAAAAAMFBgj/xAAhEAACAgICAgMBAAAAAAAAAAABAgADBCEFERIiMTJBUf/EABUBAQEAAAAAAAAAAAAAAAAAAAID/8QAGREBAAMBAQAAAAAAAAAAAAAAAAERIRIx/9oADAMBAAIRAxEAPwDn3isOg3KckMUGyq/JEs8niEZHuqqYUE+pG5EcC92W6lfqOh4nclTKyMeuukB2uL9MT/DK5ynNxqls44+XqOxE0lmAlLlXPkx2dxDRWm4ixgRLrJZXAc11hx+hdxEUeCz2XaxvbsxEQk//2Q==",
+      "originalFilename": "rakit_pc_grok_3.png",
+      "size": 327596,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/36d965dfb931ac4fc177e79a17e8f846fad3e189-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-38393d8fdac7f2a575f8545da69fc54a0e01d086-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAEEBQYI/8QAIBAAAgIDAAEFAAAAAAAAAAAAAQIAAwQFEVEGEzEycf/EABYBAQEBAAAAAAAAAAAAAAAAAAACAf/EABcRAQEBAQAAAAAAAAAAAAAAAAABMRH/2gAMAwEAAhEDEQA/APO2l1VmzuZUICoOsZs7H07jDHLYVre7X0OrTL0WccNb1TgssAAJM2qd4MXqW1h1ZCpPfMvW9kmOPI4SPESbCC7EfBPYhKF+w/ZbzwAE4ORECnERA//Z",
+      "originalFilename": "game_pc_grok_4.png",
+      "size": 179189,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/38393d8fdac7f2a575f8545da69fc54a0e01d086-1024x1024.jpg",
+      "usedIn": 27
+    },
+    {
+      "_id": "image-38cd661c681cd8eaa774eb34d964d4cae3848c57-1024x1024-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAACuUlEQVR4nK2U608TQRDA+U+83u3t3u2jV44WypXS0uvRQh8UsAUrUiilRYqUQ7BIU5AqEL+gmBDAoHxAMX7VxOg3/zRzffAIhBhjMtm9m8xvZnZnZttsgvjP0vafYHCbBfg7mAeW3B2KByJ/E+Z4wPFCfW1JQ9lgBNF2obcBjm8mZcE8gBJhDtWpOFTKFGp3EJkostxOiJ3Qrm7NF9A73ZpDdTldLlV1YIIFAK3InCAimcTi8WflVdM0s7lcPl9IDw7OerVSsC8T8Jv57Ova86WFQsk0d2vlF0vJkQG3jLGNr8OE0tnMg7OTg9OPJ0fvj7+cf64tFCu6bzsUWI2EDiqL346rezXz8Pjw9/ezH++Ki2k/Y5TjrbShJMuj0dBm+elGtfpmb+/r+aflx3PRDjVqZ3GPtj4/fbhRrBQm1pZKb2uV/ZWZzJBOMGmmLclkbCy1u71VNp+Y+czmSjEeCSMoCYIoYRrw+YpDkZdRwwx4J4xgIZVMGIYkY86CeUApMwtTP093jtanisO+0rgRCWgikqwLBxBBlOxQ9vWurR513KtlU6l4KISkJixSLJtJ/69a4sNi39qwtjM5mE30M8Ya9QAAGp3Kcqx7rt85HjHmc9lYJAIl3LptCBMesp50rIx1VtPhV49GkoYuy+RevbAAoqDeOz8dzaf9M+mh3ORDb0+PICIbgG02AHkAsYRUJmkuRyIUjAZ0VVGhhKGERYSRTDSPlhzW78c8o/FwNDzAmGI1Tx22Nk6AHC/yACHMoEwxU9yap9ff5+31u7We9g6nXWGUYsrshNoFUbJdhZs92BoGwhSP16cHjYBueLw+u0PlRcTxoiXXersBW7zlovErQAlhigmTiR1hCpDcNLhcW73dyKHlovndiGBV66bBtam6UF2B+bpcMte8N+e8kfadY9w81y2PwR+PGvpe1jeWIgAAAABJRU5ErkJggg==",
+      "originalFilename": "percetakan_illust_1.png",
+      "size": 495332,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/38cd661c681cd8eaa774eb34d964d4cae3848c57-1024x1024.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-38d4faff6991494fb35af7e7cc5353271f47814f-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGgABAAIDAQAAAAAAAAAAAAAAAAMEAQUGCP/EACEQAAICAgICAwEAAAAAAAAAAAECABEDBAUSITEjQWFy/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAMB/8QAGREBAQADAQAAAAAAAAAAAAAAABEBAiFh/9oADAMBAAIRAxEAPwDznp6WPNqd8gZW7Vf5MtxLHXbKhY9bsV6jQ5Q6+BcbjuAboibnBymu+sxxfCxQqw99rlMeo3aycckRR8xJdlQuZgvqIURoerqaBo/csbeY5D4RE/gVETBWiIgf/9k=",
+      "originalFilename": "instalasi_sw_grok_2.png",
+      "size": 185449,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/38d4faff6991494fb35af7e7cc5353271f47814f-1024x1024.jpg",
+      "usedIn": 11
+    },
+    {
+      "_id": "image-3cb33165f32b1e0190622c629b234063c23270e9-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAUDBgT/xAAmEAACAgEDAwMFAAAAAAAAAAABAgMEAAURIQYSEyIxURRBUmFx/8QAFwEBAQEBAAAAAAAAAAAAAAAAAQQCA//EACQRAAECBQIHAAAAAAAAAAAAAAEAAgMEESFRwdESExQxkaHw/9oADAMBAAIRAxEAPwDpOl6mhQac0t5BLIT6Vb4zydX2dFiSqKFeBC0oV/yYH4yNpYcok1tn3KeMheQo/mSNVnr6aslGGx9TJY2dJHXbsA9+TgyJwsoaghRulg+JWzga1+yq2oTxQWDGsEHao2BH3xkO3OUZAG8noG7dnvjHnxT2cPI2R0MAWLT73WkOo2DAE7gAx52Gc31FqliR2ryeNkiIZSV55/eMZqYAExbGq6Sd5Wpzotr+qW5plZ5OQgUbDbgYxjJAAblDhcr/2Q==",
+      "originalFilename": "post_business_digital_1775324360761.png",
+      "size": 911142,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/3cb33165f32b1e0190622c629b234063c23270e9-1024x1024.jpg",
+      "usedIn": 4
+    },
+    {
+      "_id": "image-455a3f84f92974ee35f34ceb4cd66a775dce20dc-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADIElEQVR4nF2TTW8bVRSG58ew4xegblkhWIEEO6TApl1ESAgUFpEaCZGKQNUClSIhkpSG0LRJ2jiO60nsJHVdi7FjO73+KLZjj208jj3+mI7H9oxn7pwX2UlRyuLRuXrPPVdXV/cRwDENYHpSL+DANL+o9ri+5tK+84y/MTc+R4ALNsZ1wRzuMttxmcVdptucNU2HdS3OhuPM4cy0HWZdwrY5c7k7mX+N4DouOY5L5ohTb2hTxzBJ0fqUVXsUVw0q6iZ1BhZ19AGpmkFq16BGt0dKW6d6u0d63yLHdok75wjcdmFaHB1jhHz9FQ5ZBQ/Cf+P3SBGPMipSTQNKp4eXtSZS1TPkFBXpqoroaQN/5esoNjQYQxuO7cJ1CIJtu9CHNqqdPsRECbNLAVy9tYPZ1QiWwzKicgf5ehuhUgkH5QLSdQWspCCUquDZyypS1QbqmgHDdODYBMEacZzpfWQaKrYiDNcW7mPq+gpu3fVh8yAJj1TCk5MK9nKneFopIK3UkM0VETtOQcoUEStWcVJRUG1rMMwRhL45QuZMhS+Tw23PET78+g7eu/o9Zm78hvnFDcwsivhxOwmRyYicVhBK5xGOJhGJSPBLDJtSGh4pilgmiXqrAUEbWAjLNdwUJXwyv4a3P57DWx98gytTC3j/i18wNbeEnzdD8McL8CVyWDt4ioeiB959P+54Q5jZlvDd4yfwBR8iV0hA0AcjSBUVN8U4Pvp2HVc+/wHvfLaAd79cwac3tjC/vIN73iPc35ewIj7Hr14PNnaX8Xj7HhbWd3BtI4qvtkLYCniQyycnb0g1bUCBbI1+2o3T9btBml0Sae6PZ3Tbc0yrgQQ9CB7TeiBGa8EorQbDtBn007a4S3/uHdHiYYqWIjl6ni1Qo9UiYfx3RjYnVTcpVe3SYUYhX6JM3mN5gi8ukz8h015Spv2TMu2/KFPghUxHrESRbIVipw3K1rrUfDWk8eXOTQEY52B9i7NWz2KKNmT/tAes3OqzUnPMgJXUAZPVcTbuDZmimUzVTab1LTYwnYllE1MmHl/wn8OX3Py/52+4f7l/sf4X3G958hAlZR4AAAAASUVORK5CYII=",
+      "originalFilename": "service-website-toko-online-shark.png",
+      "size": 895165,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/455a3f84f92974ee35f34ceb4cd66a775dce20dc-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-4a475e1f67139262d835708dd196586716e7f0eb-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAQGAQf/xAAlEAABAwMDAwUAAAAAAAAAAAABAgMFAAQSESExFEFRBhMjJEL/xAAVAQEBAAAAAAAAAAAAAAAAAAADAv/EABkRAAMBAQEAAAAAAAAAAAAAAAABAjERQf/aAAwDAQACEQMRAD8A7ZNXDbdxZsvXPTNOqIUsKx7UleLjYuO6iPlC877g+IvBWup32p6dj7S+Y+2wl3AEpy7GpeK9PxSL1WNk2P1yefPNNFNU08GmYqV3wu21ZISryNaKxoBLaQNgBtRVAPT/2Q==",
+      "originalFilename": "pc-karaoke-4tb-60000-lagu-film-audiobank-kjb-nakamichi-geisler.jpg",
+      "size": 83319,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/4a475e1f67139262d835708dd196586716e7f0eb-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-4c508d7c8eb20af0a834c156c983bf9157b32e3b-1447x1086-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.332412523020258,
+        "height": 1086,
+        "width": 1447
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAPCAIAAABr+ngCAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB2UlEQVR4nGNgQAWMjIxMYMCAhhgZ0VRiAWzs7AIC/Dz8/Mw8Agx8IgwCogyCogz8QgzsHPj1MzIzM8vJyzu7uus7BfDaRrN4pDMFZDIGJTPYujOISuCzn5GRkZ2d3dDINLGgxbFirUTNcZ7+q2yzLzD1rGMITmIQk8JnMyMjIysrm4KahX3CPJO6B0p9X8XnfuWeeoU5vY1B04iBnROvdxkZmZjZhWQctQO2GxV/1m78Ilt7hTeinVnFGKSTQIAxMjIxc4hIeRl7HrFO+6ybcV0qZA6XcRiToDQDMwsDA4HQZmRi4hAX9bayOWDrd13dbbGEV79AcA+7aQgjvzgDEzM+/YwMjMyMHJJ8HubqS430F6ia96vF7Fesui2UuYbVNIiRTxSffpBmBg4RdnMVgVQ5sRgNw16z6LsGVd8Ump/xZ61gMfFj4BVmYGTC7WwGVi5GST5mVR52JWmZSCPHrRYpb3Trfsh0PuXJXcJs6sXAK0hAPzMDOxMjOyeHrIxcvJ7TOr2ES4qll4Wq97JF1jIqaDOwsBJIaiBTGFk5OKRFJN0ltFKFzTJ5HNJYrIIZZVQZWNmISueMjMzMLNysHMIsXKLMPKKMvMIMHFygREokYGRkAiEceQsA+rxUWEBc8qEAAAAASUVORK5CYII=",
+      "originalFilename": "ChatGPT Image Apr 5, 2026, 01_16_08 AM.png",
+      "size": 274342,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/4c508d7c8eb20af0a834c156c983bf9157b32e3b-1447x1086.png",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-50d473b7509a19b84bbd12383892768fc134e94d-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAUDBAYH/8QAJRAAAQQBAwMFAQAAAAAAAAAAAQACAwQRBQYSBzFCFCEiUYFx/8QAFgEBAQEAAAAAAAAAAAAAAAAABAMF/8QAGxEAAgMBAQEAAAAAAAAAAAAAAAECA0ExERP/2gAMAwEAAhEDEQA/APABFKxgkdG8Rns4tOD+qlShnlOIYJXnGfi0n2Vaz1B9bsavtuxp8QZDjjOwAPOPsqtoPVOzo9mGWlpdQ8arKzg9uc8fL+rUjbLEClUtOXnMkMnCZj43jxcMFFsbw3Za3Nrb9Rs14YZHNDOEQwMBFZWvSXyWHEsOHBXqWJWjk1v4ERHq6Ku4Z5ImcuyIiR4FTP/Z",
+      "originalFilename": "portfolio_grok_1.png",
+      "size": 107187,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/50d473b7509a19b84bbd12383892768fc134e94d-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-50f0e57aedcc7f408c610f02eb16cd2a9250c442-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAAMBAAAAAAAAAAAAAAAAAAQFBgf/xAAlEAACAQQCAQMFAAAAAAAAAAABAgMABAURBhJBITFhBxMVInH/xAAZAQACAwEAAAAAAAAAAAAAAAACBQABAwT/xAAbEQABBAMAAAAAAAAAAAAAAAAAAQIDMRESIf/aAAwDAQACEQMRAD8A73zDkD4CJJSI1ttEMxb9u3gAVk+MfUb8tfCzkQCd3KqQdgfFTeeYxsnkBDfxG4xzAMo0R0bfvsVn8RZw46WWewxSW14paFNEsGA8n5pnFEzTti6R7t7OqpJ3UMPNKq8BLNJiLZ7rX3mXb6Xr6/ylc6twuDZF4WN2O8DqSR6e4qps7VYrjsHkbzpjsUpVtoi2TXYhtClKUYJ//9k=",
+      "originalFilename": "service_cloud_1775323550695.png",
+      "size": 695352,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/50f0e57aedcc7f408c610f02eb16cd2a9250c442-1024x1024.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-521eaed2b873428f85cb00b60aba45e7e655711f-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQADAAAAAAAAAAAAAAAAAAQFBgj/xAAjEAABBQABAwUBAAAAAAAAAAABAAIDBBEFBhMhEiMxQVFx/8QAGAEBAAMBAAAAAAAAAAAAAAAAAQACAwT/xAAYEQEBAAMAAAAAAAAAAAAAAAAAEQEhYf/aAAwDAQACEQMRAD8A5qgryTnIhpJzFVe4m1RrsmsMDWPODz5VfTsjK9lj5Gk48HFnes7UXJlnY9uNv04rpmJ1lutHRVOrAHPVv8RENU03ljwW/IOqrkLMk4Hczx+DERWCFERCP//Z",
+      "originalFilename": "website_company_grok_3.png",
+      "size": 124883,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/521eaed2b873428f85cb00b60aba45e7e655711f-1024x1024.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-55c330df0ec31ebcf5ac69a387b448c755563be5-2500x2500-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 2500,
+        "width": 2500
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEl0lEQVR4nJ1V/U9TVxi+P7hl2T+wzJ/2q24xlG66DxeMOjSZDsSPaak6nFNkQ5SJMmkV/EAGm59xjAUnzg9CjB8JHaAOBZVvaoG2CihtQau3tLb3nHNvP7i9fZbbBuZi9oN7kyf35Nznfd5z3uR9Dse9ELDZXpe8D6Z7vY/nO8b8RuswbbAPeEYet3dSvtnERrvujTy472lwjFGD18vmMcbeAjDtRY1/xNy9b4rjbRrf457tDwftl9s6XLbaq089F071SeajP8nDpXlyU/kfUnX1mKf2z6C1qUOqu26WsjttdKYTeOMlMeJp/djraDk8aGmx3rzRzmpre5UTlRbUHKnHwLFteFCaiervK5H17Rh0hRPKdycmyO4L4d6q66F9bcMRjdPpTIgCva95nliSXEPdh9tau0bOnu+WK46ZYTgwgF3GPlTuuYiBshzYizNRmXsSS3SjSNYr+DAvhtSSaCS/WrbVd0glPh+dEb/++Pj42w6XO/das6v/wNExWZ/HY+nXPixaL2Cx3of8Te1o/KEcNwv3omLLJXyuewbNKgWz9DFos2LINMrhc6ZQz7CTZqs95bwBNq+1m1zcf5LRpZvCmLNChjY9iuR0BclpMjK/GkXdnkswGU9jf04LFq9+Dk26Ak1GAguzFBiPRsitTqnumZfN4x65RMPZqyGrfseEMmelEicnpcXi0KTHoF/nwNXCM2goOo29uT1IXUPixSZ5HyxXsCZfVs5cCVmHnGIRZ7GzxoOVYc+iDVFol0WRrCKeEIN2lYIvs92oKr6GmrLbyN85hgWZIbyfoSB5mQJNWkI4NSuKfScj/D170MR19UuO7aURae6aBEElajOiSF6uYPZaBWkFFIbyIRwvt2BnwUN8pmMJsfQYNGmxePFPVivYuj8idVjEEa7dLNHNxog8e8VkxRi0K0PQrufx0bZBrCi7gz2/nkPFkV+Qa7yEuVvseG/tOGatlKBZFoU2Q4Gau7EoIt81S4RruxckmwwRea5OQeoGBUtyQlhYMIiUn2uQWluAVU3rkdOsx8b6rZh/vhTvVFZhetllvLvLgoW5fnyxRUZqlgJV465ZEjizTXSUVoWl/EMyjtREUF3vw6Ebf6Ggy4Addh2KhtbhkN2Ig301+KbzLBbcPYZPbx2HrsGECpMLp64E8eNvEzj8e1g028RH3KibNfTagnzPQBDDTgkuXsB9zwg6PXfQ6mlE1/htWD022PhRdD51oMHdjytPzGhxD2GQ98L1VMT9RxL6ByV+1M1MnE8QDH5BtAYIUwgTMQk/pfASIf799z6Dj1AEKJvaEyhTAoRa/VTczVFKUwKU1hEmkhcTXwmUEVXDT4MpnDouAqXZAcp6BMoi/0MwHCC057kgZPPq6KkD7fP5ZhLGSgQq2l5RNCwQagsQVjxlDmqo1hMQRU2AsRL1pOoV1L78l5D6T6CMEMa6CZOKRTGSNGVfk6GapHrS5wLNDhBaJ1DRKlCRJ0wUBcpkFYm1yAuEWhMcutlH6YyXDHbKaIFpah/8lKYIlBYJlJn8hI4QJgoq1HWAUpNAxd1+P03h+ZefgL8BndqPJ5tY4x8AAAAASUVORK5CYII=",
+      "originalFilename": "google-lighthouse.svg",
+      "size": 3011,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/55c330df0ec31ebcf5ac69a387b448c755563be5-2500x2500.svg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-589250297e05ab605d792cea96d229bbc5f04e85-1024x1024-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEA0lEQVR4nGP4sFjnZrv6uUpVODoPRmCGGhipnoMwqkAIzFa90ar+Zr4Ww71ejTXecpO1JSdpQdFkJMZkZK625CSYshVustea1RiuNatN15csZxcuYxMuZwORZWwilZzC1dzCFRwi5QhBBKOMTXiSpsTZMhWG681q0wygmsvYRCrYhRsFRCcrSczTlOyVFKvhEkHSI4KkWfJsmSpI83QDSbANInW8In2yEiusVY5EGV6I0NhjJTFHQbRFUKSSA0VnGZvwRJDNMM213CKd4uILDRX2hhpdLPW81+T/JMfkgb/0eWepDZbykxSk6nhFy5H0T9SQOFMKdvY8M6npqrJbPfXOZjncafB/2Bb0uNblUbbBo0jFx5Gqd1KMj/mpL9WR6BAVreJEdjZIs/oqO5kdLprXSzwfNAU+qXZ9VGR1L8vgTrLWjXDlezFar7KMX6Vq3YrV3uWpPUNNtpFftIJdeCJMs9p6R9lD7lp3853vFztdzHXYleO1O972coTanTiVR3kGr4oMPxQbvW9wf1LpfTrCdKWparek5HRdSGi3qK21l93npn+5IGBnfsikrNjGgux52aEX88xetJi9nuL8os/pZbvjs0a3p4UOj9OsL0VbbrPT3OAgd7lKleFGi/oyW7nVbpY7yjLac7JiwuPy01NmlMUebPK6M9Xn3qKYa3OCH0xyvddgfTtd/3680e0c1yu5PmdTLW83aYFsnm0h16OvNyPEtz4sMNHLqygyYFJOyKpy/4ONfkc6ww/1Bd+c7XF1ssueKvcjJb5XehMuzSg63Rh+u02f4XqL+nRDqUpBqQZltVZzw2ZXy/5w+5Vpzmuyfddl+W7Ndd9W7Xd8gv/uCcHtVUmTa9IOTc7Y2Za6Icf7cpMuOJ7BybOcS6xaTLZNR3Oep9HmGMvl0a6LI702xLkvTfNaXuixuCKoMju+KTV0aYr7VFfLmY5a56o0QM6GJk9W4TJ2kQo+iWYFxT4T7amu5itC7ddHOk8Jc54QaT85zqXB363B2qxFQ61aRGaithQ0tEGa2UCaK7nE68QU6yRV6mRVOvT1F3hZroyynxbh2Bds3+dp3aBvUCmmUM4lVsYmAkskUJtFSlmF6sQUp9i5z3QPmGrvMd3Nd25g0LKE8OWZ0QuTomYHBveZ2deJKpaziZRDNasiNJeBNCtNdfJaEBy9IDBqYUjMovCExVEJS2ISFkcnLAyJnWbn2SSlVs4uUs4Ky1X3ezVWe8lN1JScqCE5WU92tq32QjfjRe6mi9xNF3uaL/Y0X+hutsjdbKGryVxbnWkGCpNAKiWWu8hca1JneLdY53qL+ulS1TOlqqfLQOhMmQoIlYLQ2VKVM2WqEDYYqUK415rUXs/VAgDS6MXhwsVlQgAAAABJRU5ErkJggg==",
+      "originalFilename": "percetakan_grok_2.png",
+      "size": 973582,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/589250297e05ab605d792cea96d229bbc5f04e85-1024x1024.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-594f82c530bd71e3fa25e07b9d92c52c9495d480-800x800-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 800,
+        "width": 800
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAMEBgcI/8QAIBAAAQUAAgIDAAAAAAAAAAAAAQACAwQRBRIGExRRgf/EABUBAQEAAAAAAAAAAAAAAAAAAAAC/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAEh/9oADAMBAAIRAxEAPwDo69chowiSwSGk4MGqtFzNWWSNg9oMhxpdGQD+qLyWGxNRb8WD3yNdvTc1YhwFDygc3G7kYw2j37de2hn1iuSWIt1sZERSoREQEREH/9k=",
+      "originalFilename": "landscape-placeholder-svgrepo-com.svg",
+      "size": 949,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/594f82c530bd71e3fa25e07b9d92c52c9495d480-800x800.svg",
+      "usedIn": 6
+    },
+    {
+      "_id": "image-59f70ae3968212410fa832885e164ab16e4d15b5-900x900-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 900,
+        "width": 900
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAQFCP/EAB4QAAICAgIDAAAAAAAAAAAAAAABAgMEEQVRBhIx/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAID/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A5eGn0y/iuRWA5N41N6bT1Yt60WX+QzsrUIYmLWvZt6h9N0MQCT3JvsAAAAAAH//Z",
+      "originalFilename": "sanity-image.webp",
+      "size": 5478,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/59f70ae3968212410fa832885e164ab16e4d15b5-900x900.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-5f0629308e278c24f81573ee738287c40aa2f74b-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAQDBQYI/8QAIhAAAgICAQQDAQAAAAAAAAAAAQIAAwQREgUTIVEiMUFx/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAIDBP/EABoRAAMBAAMAAAAAAAAAAAAAAAABEQIDEiH/2gAMAwEAAhEDEQA/APMWJjNk2hFIX2zeAJZZ0sGtmxshLio2wH5M3S1q1dVcwQWLoNr6MtuPBe9Y9IZa+2qVjXIezN+eNSsV4d8Oa0YlJr2TElBujL8ZRzBI35luWFasfBV/g1ESyNZrSBuIiAH/2Q==",
+      "originalFilename": "layanan_grok_4.png",
+      "size": 186089,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/5f0629308e278c24f81573ee738287c40aa2f74b-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-624943447978d76d0f75e4938d6c5b54686eb580-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAUGB//EACMQAAIABgIBBQAAAAAAAAAAAAECAAMEBRESBjETFCFBUZH/xAAWAQEBAQAAAAAAAAAAAAAAAAACAwT/xAAfEQABAwMFAAAAAAAAAAAAAAACAAERAxIiIzFBYaH/2gAMAwEAAhEDEQA/ANe53eHtVsTwOUnTHUBvoZ94UVN8mU1RRzFqNpTMPIAc5il5FbqSvlL6yQk3UHXb4hNarHbQz4pE7B7Pf7Gu0cS5afVCqRsOnE9qvlsHRXHTDIggQBUUAYAGBBASbZf/2Q==",
+      "originalFilename": "pc-karaoke-4tb-slim-monitor-touchscreen-paket-bmb-speaker.jpg",
+      "size": 76676,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/624943447978d76d0f75e4938d6c5b54686eb580-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-637f7b70f0d027555e8fba49888084b42e99eaa0-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADTklEQVR4nFXSTU8bVxQGYP+K/oEuKnXTHxCxoMqmu0aqVGUXqWpWrdK0UiukJFVFWkVqldAmFDUpKY2SqAQccOIZcPgIxi7GYJfGxq4N2GDGjAdmGGMPnsPcmTlvZQP9WDzSuefe92zODcBF9ynXRTeR222R211vs45rco+1a73Non/6aGdxwkV3wPdYbhPCl23Hly3bk02LZK3eko2mLVvkyE3bkc0DSzbrddk8MGTd1OWaYXZ6NolO1juZE/A9kOv51HI80i2HiuoBzWcVep4s0YuMSitKg9a1Jm2oOlU1lbQ9hRRNoYKi0tqOQZpp0SEJOhI+ua5PAc/1mRyPDYs4V93nB9MZ/rR/gj+6E+Frw2n+JV7h+JrO+arBGzWd12u7/EpROVFWeXFD5b+2NTYOmnxoO3zkeBzwBMOyBRSzgWRpEzdHZ3D+6n188t0TDIxE8SxRxGJJR05toGJY2DItpGsG5stVxPKbSOZLWK2o2Nytw2wSAq7LMCxCZqeG6cIqbgVlvP9FPy71/oyhR88wFkngt2gBoZSCYlWHajZQ2KtjZWMLi6k/MbWQxngyi3C6iJyyh4AjPJT1BibzJTxYWMZnA8M4c6EX71y8jp4bP6L39q/4/PsR9I3+jrmVNcQy65h9VUYyu4FkcgVT0SjGpsIITk9gIV84HdhEJLeN/kgK564M4o1zPTj7wVVcu/EN7g304s5AH4ZGQxiJRPFT8AUGQy8hxVKILmcwl4gjPvMIS7NDyORTCLjCh2k5yFbrGJzO4OylAbz29mW8+d4VfNjTi4f3vsLE+F0En4/j4dMQ7g+P4nHwKcITYczG5hFbTGA5HkZxaRw7lTw6W3aEx3sNYjld5ovfBvmt81/z6+9+yWcuXOeem3c5ODXD43MJHo5E+cnEDI/KEQ5NTvLU3EteWEpyLpPiWqXAh406d/5h25HwaGffouk/ynRrZIEu3w7Tx30h+mEsQbPZbVpc0yheUGk+p1A0u0Xz2TItFbapWKmRru8TtVrkuR4FfM+XTnnCl6yWkCqaJaXXNCm2WpXSpV2ppFnSlmFLW/qxim5LVdOWdg8cqdnyJOH8OyMghOj6Lwh0CbutfT6ubVv8z/Gd6IKNzvtO5iT/NyW+YVZkqyAeAAAAAElFTkSuQmCC",
+      "originalFilename": "service-website-klinik-shark.png",
+      "size": 886317,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/637f7b70f0d027555e8fba49888084b42e99eaa0-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-66bfe785c60dd5db8ad312d31f47f536dd6b53fa-90x30-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 3,
+        "height": 30,
+        "width": 90
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsTAAALEwEAmpwYAAACBUlEQVR4nDWS32/SUBzFazTCkIkxmTE+qNEHF+M0S5wBpyZzbDYBjIVdxtre3v6A25+3FNpaishl07EFxEUf5s/Eh735T85U48P35eR7Tk7yOQzGNKN16GU1DOcppedYQlIboniBZUkKADBXLuMMQihtWTQLgJUtApBjgbIAkHVVNPwrGEc5hGg6+S8CnGPkVm+l6bx5jr3+Q9Wm1+qqe6+8gwsl3rwFeHupBPRHgkLuKlb0pCaaj1kO5QEiLAlHQm84AUG8v2qQaLnWMO9vVNAqU5fbutDseBD7SLWiZ1APWlXe8rkGLm2rHuQEw6vLji4b4WAL2oTdkoHmROL7yfHu9POPTn93wmlWbNZ402A5hWPqkHg1aI2B5PQ1u4fa4d6B4Q1mvNLxhWbQ3Zbd/rbsHElG+KsK7eFmVa2Z3tsKHX/qjj9+24z2DpcUIzLryH1dqTfzjKRHEsSBB5tB1wlGrYMPX/v70y8jzY6GEg5MSe/uNBTXh9ifJg1fvFSKshE/JeE7wenSRdSml7Abr2tmD/Cqf4MxyGA5EbAZr/m98crx95P85OhnAeFwHeKgoBrhHVHvPICtoAigXVh7Jd1GenQz8RESLyQQsUuvYydeJIReZP5TxtFhjlKamc1+zyFK0wlRYFlZQkgqOVUN5xMtofk3BNNMsgrm9PQMoPT8Pw84+wckN86F9wIiHQAAAABJRU5ErkJggg==",
+      "originalFilename": "sanity.svg",
+      "size": 2704,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/66bfe785c60dd5db8ad312d31f47f536dd6b53fa-90x30.svg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-67103cc58b3162aff5aa8e42ceb1b3039b841877-1920x1280-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 1280,
+        "width": 1920
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAANABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAEB//EACEQAAICAwEAAQUAAAAAAAAAAAECAwQABREGUQcTITGR/8QAFgEBAQEAAAAAAAAAAAAAAAAABAID/8QAGBEAAwEBAAAAAAAAAAAAAAAAAAECEVH/2gAMAwEAAhEDEQA/AM3jfT7ObapTs2X+0x4CT0HGvrrtzWwRPXnQO46CgH8zmv021CHcxSmaQlW7z5xh7jZR0NxVWKqpFaTvGckP35wa1rUIeS8YOl9Xt3kJe+6t+uZY4S9SYFpNPTZj+elcspRXTN1J/9k=",
+      "originalFilename": "clay-banks-bhoMFZB_6Bg-unsplash.webp",
+      "size": 173532,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/67103cc58b3162aff5aa8e42ceb1b3039b841877-1920x1280.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-6a4a5846f183bfae2ef156ea713007e10b90dfda-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAYBBAUI/8QAJRAAAQQCAAUFAQAAAAAAAAAAAQACAwQFEQYSITFRExQiMkFh/8QAFwEBAQEBAAAAAAAAAAAAAAAAAAMBAv/EABkRAQEBAAMAAAAAAAAAAAAAAAABERJBYf/aAAwDAQACEQMRAD8A83YavbkusirxOkkJ+oHUhW+cwdnLVH3KlOStWrsAl5z135U9w5ljjm+9jja62yQFpPhdXIcaZDKD05y1jCeoYNK2Tj6TN2oyxULJSOYFFm/Y3blP9/EUht4yQtlboAjfYrrZZ4EALI42Enu0Iip0RNy/J5JA2iIuGP/Z",
+      "originalFilename": "karaoke_grok_3.png",
+      "size": 278702,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/6a4a5846f183bfae2ef156ea713007e10b90dfda-1024x1024.jpg",
+      "usedIn": 9
+    },
+    {
+      "_id": "image-6d1fc527a49ff7aed028a3c05b39516deaa9c6c6-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAMEAgYI/8QAIRAAAgICAQQDAAAAAAAAAAAAAQIAAwQRBRIhMWEGE0H/xAAYAQADAQEAAAAAAAAAAAAAAAAAAQMEBf/EABwRAAIDAAMBAAAAAAAAAAAAAAABAgMREiExkf/aAAwDAQACEQMRAD8A5n4biruRyBXUhPbe5b5D47fitYSyhEG9sdb9D3MuB5J6B9QtNfV+iXHza8VbUyWa/Y2u/E6EKqpVrfpGKnz2XhqrqUYqfIiSX2iy1m6dbMTC0t6LEaMUYMp0RJ8nMvyEVbX6lHjtERJsCtEREB//2Q==",
+      "originalFilename": "home_grok_2.png",
+      "size": 194284,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/6d1fc527a49ff7aed028a3c05b39516deaa9c6c6-1024x1024.jpg",
+      "usedIn": 7
+    },
+    {
+      "_id": "image-6fcf0809e02f0cdb1f4d4c3d2556138e002ec596-800x800-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 800,
+        "width": 800
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAACDElEQVR4nJXUy4vOYRQH8E8xZWXL/AMWWMnCUmZhb2drRSgrlNuEyTS5ZyMbEXLLhoZISSSXWbiTa2MGQ2EmL29m5tWp89YzP/NOeerpV8/veb7nnO/3nC8T13TMwmJsQS/e4TfqeI/L2IYOtKNNizUDc7EKZ/EYn1HDWO5anj3BeazB/Hz7D9gC7MB9DCdAo8Uexwj60IWFJej0zGx7Rq5PAVTddTxL0HnN8oOzlbj3n2Al6AOsxmwpwGn8KC6FCEP4UgkS54MYwK/ifBjnsCQAN+NRhbOBDHICrzGa54Mp2Cl8KO6PJV2hvkupXFnGU6zDMhzPTBsJvhu78KLyZghXZZ/VKj8fJq+L8nszS3yFbuzE88qbGvoD8GdRUgm4HsuxAvvwMrPqzvaqAo4mVkvAmJTOBNuAM7iLnhYZjjYB+1uUHID7cQOHEjyUPIyDmXFjspKvJaFVwK0JFELcyTJ7cuR6Kyo3SlE6U/Lxisrx+Cg+4hsuYBOOZbm1Vm3TkVFHiguDmcWtbPh48DbLjTG7PVVjt6dr9BVTERPxFd/xpxixuLMXR/AmA9Wro9eWFtSVgz7VPEcV17EHF/Ep6ZlgDk37CguKHxEtHpaclrYVUxV8HsDJdKkJ9lWCRqZRfnAaJE9msMFvjOtaLMWcycCaK1IOTkOoUCzsPmw/aIgdfXYFG9OQZ2JaifAXCZQYyDTGS2gAAAAASUVORK5CYII=",
+      "originalFilename": "nextjs-icon-svgrepo-com.svg",
+      "size": 2923,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/6fcf0809e02f0cdb1f4d4c3d2556138e002ec596-800x800.svg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-70c682e59d1d3020e4ed54ca165d954972c1593c-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGgABAAIDAQAAAAAAAAAAAAAAAAQGAgMFCP/EACUQAAEEAgEEAQUAAAAAAAAAAAEAAgMEBREGEhMiYSEWMkJykf/EABgBAAMBAQAAAAAAAAAAAAAAAAEDBAAC/8QAHhEAAgEDBQAAAAAAAAAAAAAAAAIBAxETEiExMlL/2gAMAwEAAhEDEQA/APP3H+PXM2ZTUDeiIdTnE60F1n8OfIGR1JXSWHH8hpv9Vg49ifpvGusZS1HWnkG2wk+Th7Ch2MzAHSGOeIfIIAd8gelYtNV2cn1y3UiO41gqJ7GSybjab9/aHiPSKmXpzNblk6iepxOyiGSnHCmxv6M7d+zcsme3M+aUnZLzta7MvcA8GN/UaREiZuOiLEdERchP/9k=",
+      "originalFilename": "rakit_pc_grok_1.png",
+      "size": 326109,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/70c682e59d1d3020e4ed54ca165d954972c1593c-1024x1024.jpg",
+      "usedIn": 4
+    },
+    {
+      "_id": "image-70fc72a4925d808fab826229781acd814938e2bc-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADOUlEQVR4nI2Tz2sbVxDH/ZfYpx577bmXFkqhp15TEnpoQ6GUQh0CMVk1LSWNUwxpm5bE2E0IBiUhsl1LriTbsS0rsqPKkrzWj7V2s0+/pbWUrnbfrqR9732DrEJDTj18YRiYz8ww35lwHGcKHD7GOHH7HjMtR5g9in96NnqWDcumsCwbtm3Dpg5seyxK+3CcgRgOGeNM6NzjEhxMTsDBFADfcMhIt0dZo30qjNM2WkYTKinjQD7B00wJ8WIdhVoHxsuXoLYJalujRoI6Lht6TOecS8AZcDyhO/BIud1hqWNZZFJxxGMb+G1pBZd/fYJv5sP4fiWDR8kXyOkVGEYDna6BZtsQzdMu61hUN6krdR1ncmK0Mufw2QOPlBottrmzJSKP7sA//xO+uHIdn8z8jpnbj3Hnzzg2DhX8reiQtTK0ag1arSpKtTorNdq62jAktdYdATFFPe4zKCVKo86SqYRIhpcQuHcLFy9dw+czt7Dwx0NsrK1jayeBB1sZLDzN4SCvQCtlRKmUZUVd1Y8JkWRVnZzodp2phuX6iqcGOSQaK2gF8UJJYy24hnNfX8f7F77FV1d/wY25BVydXcSnPyxhej6C9VgC2b2QkBMRls4f6nvFjBSRk2MgMakvQeoknDliB8dHoqgcIRjdxLnpObz14SW8/bGE9z67iY8u3sCFyz/j5r0A/MEwAssBEYmGWGR/U1/d/0vy7/rHK3dcz5cut8nKfpqtxeIitreBUGgVV2bv4t3z3+Gd87P4YHoRX/74AIv+AKLbm1iNhPE4GBSR7SiLJdb13WfLUmQEHNnG4/AZJiVZrcr2MrKIP9/HTmwXT4JR3L6/jLn7Qdxd3kVo+xnSh8+Rk1PIZpPIZlOipMisVs7rDZKXaqo8vvLINp7HiO30Wb3dEScaQV7RkC+qyBVKyOVLKCgaTk5UFAtFKEUFmqqhXq0LyzTZsO/qnutKGNsGZ0DOQJjHWc+kolprQSd1ENJApdJEtdpErdo6izWtAlWrQNfraDU7ou8OGWf8v095Hcg9wfrOUNiWC6tHYZkUVs+BPZLlnmmU7/2bp7YrvMEbr/cmkA24YEOO/yNvwMWo5nXgKy3ebvvgSR4sAAAAAElFTkSuQmCC",
+      "originalFilename": "service-website-restoran-shark.png",
+      "size": 797722,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/70fc72a4925d808fab826229781acd814938e2bc-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-7200c78028afdf87af4c2ce5b30c1c6480fe2316-140x17-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 8.235294117647058,
+        "height": 17,
+        "width": 140
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAACCAYAAABYBvyLAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAoElEQVR4nBXMuw6CMBQA0BJHJyfDDzgbTVjRiETjc7AmJm5KSwvtrTDZcrmT8beN5wMOY4yxe9sO5YsS3fRKQXeuGprI2ieFC1kJuBUGD9riSgIthMFlYTBVjnJp32tlMNXgp0p9R4yx6P9FwvlYQc8lBFk5mj3sZ/y0OC9tt9eOLhr6mzR0FSZshKNc1bgrgY7S4Uk0gReOMiF8zDkf/ADlTzm0+Sl/IQAAAABJRU5ErkJggg==",
+      "originalFilename": "tailwind.svg",
+      "size": 4799,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/7200c78028afdf87af4c2ce5b30c1c6480fe2316-140x17.svg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-755e5791ee27df712b525242cb1862b182bd8db1-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAYHAwX/xAAiEAACAQQCAQUAAAAAAAAAAAABAgMABAURBhIhExQVMXH/xAAVAQEBAAAAAAAAAAAAAAAAAAAEA//EAB4RAAIBBAMBAAAAAAAAAAAAAAECAAMEEjERUWGB/9oADAMBAAIRAxEAPwBQ4Db2xktxesnoyP2YE62P2rByTEcaTBmXC+3F2CCSJN+KjfGkWWwjSRQy6Pg13poY0tUKLoj60TVbm5RWx68EalnUZFbnfp+RC5PEPmrlkZerHsNUVnmzrIyAUUymRiMdQVRSGOW5/9k=",
+      "originalFilename": "pc-karaoke-4tb-slim-60000-lagu-film-audiobank-kjb-nakamichi-geisler.jpg",
+      "size": 103457,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/755e5791ee27df712b525242cb1862b182bd8db1-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-77924ddd0a8edaf4fe76b9b796ab0092c442b12d-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAYHAwT/xAAoEAABBAAEBAcBAAAAAAAAAAABAAIDBAUGERIHEyExFBZBUVJhccH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgMA/8QAGREBAAMBAQAAAAAAAAAAAAAAAAIREiEi/9oADAMBAAIRAxEAPwDPM0cJ56eWPMFS9DJW5QlMZGjgFmPhpmmPeCBINzfsLU7/ABVu4tk8Zcr4ZGGckROlL+v6puPCrFp9Oa/PXhihDYw1rgTtH9VpZvicNV6Sxqadz1RVeNU8EZecGXXBug6N7BEKMho3lrgR6Fd7NuSVoBDW6fEaIiUXm3H3KIiDP//Z",
+      "originalFilename": "instalasi_sw_grok_3.png",
+      "size": 172807,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/77924ddd0a8edaf4fe76b9b796ab0092c442b12d-1024x1024.jpg",
+      "usedIn": 11
+    },
+    {
+      "_id": "image-7797e19a9791446ed03cdf529433f5e0f736e91e-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAUGA//EACEQAAICAgICAwEAAAAAAAAAAAECAwQABQYREmEhIjJB/8QAFQEBAQAAAAAAAAAAAAAAAAAABAD/xAAcEQACAgIDAAAAAAAAAAAAAAABAgADESEEEkH/2gAMAwEAAhEDEQA/AKfk/Ldzq+UT0a8SmsFBRinfeNdNuZmWO1MgWUt9+v6Mw5qfPf1w3z4fn13jTXVICvZjBx3IuFdYwuzGU0JY3ZideS0qOlmuksbAqwwxFQJRJFQkKHIAB9DDBBnIzJgoJAn/2Q==",
+      "originalFilename": "pc-karaoke-2tb-slim-30000-lagu-not-audiobank-kjb-nakamichi-geisler.jpg",
+      "size": 99374,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/7797e19a9791446ed03cdf529433f5e0f736e91e-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-7a41738e4b2c0afca98a7cafd175f289321e2611-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAUHAwb/xAAjEAABBAEFAAIDAAAAAAAAAAABAAIDBBEFBhIhQRQxFSJh/8QAGAEAAwEBAAAAAAAAAAAAAAAAAAMEAQL/xAAaEQADAQADAAAAAAAAAAAAAAAAAQIRAxMx/9oADAMBAAIRAxEAPwDu7XtP/IGOvesOrl7QO89Z7VvcFynpfxnyW5wHk/Q8wsn2s0PHYHPA4/05XtN8ixqctcRRtbDFBlzsnp3oVdKW8ZCnS8LlHWttvqxut6pZbOR+4z6ixPVWuZbIce8D6RMXDOB20azR0KhVAEMXHDgQcqxarslkAcXceOCB6iJbOkSJdpaRYeZJoC5595IiLdYYf//Z",
+      "originalFilename": "post_it_infrastructure_2_1775324488620.png",
+      "size": 769727,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/7a41738e4b2c0afca98a7cafd175f289321e2611-1024x1024.jpg",
+      "usedIn": 2
+    },
+    {
+      "_id": "image-7bf9271e3dbabcd9850e39959b3bb7f28169a830-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABwAEBv/EACYQAAEEAgEDAwUAAAAAAAAAAAECAwQFABEGBxIhEyIxQVFhgdH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABkRAAMBAQEAAAAAAAAAAAAAAAABAhEhIv/aAAwDAQACEQMRAD8A09KOQSrmybYsFNLR6G0J7QPIxWjvqLa09zTadEe0fH7w56R1kNni7Ng2wkTA2dO+d/zOfhW8+x5Y1GmSnXWC+UlsnSSPtoZbWVXCOfK6I3F7etr65caTJ7XEvOb0fzliLS0lYa5ncGOTr6oGWC6x4IpTWn//2Q==",
+      "originalFilename": "pc-rakitan-core-i3-ssd-120gb-4gb-500gb-design-office-admin.jpg",
+      "size": 109673,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/7bf9271e3dbabcd9850e39959b3bb7f28169a830-1472x832.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-7e5d621b797a81ba519ecdfdd8a836d8dee50e51-24x24-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 24,
+        "width": 24
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEiUlEQVR4nHWUf0wbZRjHj9ESEAMxU2AIkthhkDBo+74tjCDX971uzGRI+9Ya3f7YjMlmTGZitjATiU3snU4WXJxOY+IGIu1dTgYhgY2BE/9ZNhJMNPxjwDnnkN5dkf64SoEWaq7CBKzf5Ju8eS/v577P8z53FLVDKYrKukfTub/juidlZKybazIxEg0cf9DAEWgG6AEy1gXtptJ7dEUuRVFZO89vh9G0TqarSwLPmXEAg7Mygn0yhhMyY5lUGMtkeo1An/ZMg0u4plg7kxnmrs6ZYyzPSBi8LiM4qGA4K2MYkTFMKowlpVlba3sShrMSgt9ICLwy32R8ImMyxW6sDNhAu4zhHQVDVWYs6zIDExpAwTAgY8u8zMBQeo+BCQmDnxUM3plHpgqtTdt6prSAPelkGoyBcS2JhOGihOGUjKFPRrBLwqBTwvCrAIK3ZQymFQyuyAgcnLHuLdierpvKDZ0yoIUX9w0qLUCVMVyTMAhIGIoythwPIjOQadNeiYFPzzVDk4LML8kInNJ6uGgHhdvSaYpdp/YsdReeDr9bNrNw7Nl15XlTSMGgP4hha4Sx7BbdVPaWanbNWK0F2mUEDtTm/wemaeWGvmZ5JKcnLuaH1Y+Kk6E3DD8Gyb4TgQO1RZsHGrpSefZzS0/RXLQqk5vfi1RiTi12e1I51OoNXfPKmO7m6pg+sTyUG4v3FPRHuooaJraMA/LGDZhTT2NW/ex/fN7mDR+lO2MlVGI0+3BiXH8n8a0+tTquCybGsi8tj1JV1BbZ3v+rHnPqMGZjwYzmYr/YvNFPtLTbgCvjuuDymP5SdAcQeSONmI3dxJwa3zTi1BXMqWuYi6UwFwshVu2hObUmXfLymO67+HhOUh7Lj01dK7oqDhj2055/S27iFqoxq35gY9WhDY/YvNEfEKtGNoBBrfR0wsVRfV1wNI+/O1oYHRw2JNsHGn5qE1pO1vY6i6jUP5dCe+RHaU+0imbDMG1v+JDNG7uAWPWBBkSseh+zUc9B71I5NT36WPnEcGnH50PVd1/rt63bhNaQRXBeNQmk1TLg2E2J7odjQ3moXdaPrxU0cRJjY6M+xMX+RJyaxKw6xXjVo/azi4WUKJblnelvsDvElsEmwRGFPFkz8yQA/EQ08+S42ecGpt7WvYB3GIyCs87a/ba78cL1L23n7v+GuHASsWoIs2ov7QlDt5hKvzzLIrpLgM95EvjJbcCTOOBJEvBkEfBkCvidPrPg7AJ+ch7wzh7gO3LLerlDaro4tEp/OLNk4xZuIW/kVdoTffxhJfQErTP6SKWZd55JQwVXFPKudcC7EoAnEcCTABRc84AnIci7VqHvyHr9lfZY46f+yebO6XZtsGlPavtvrFp059T7SKVJSyq4BgBPZjdgSSi4UprTyQVXFAjkV+h/ecRy+a0391/0VaW/kEzSklZr5QsEAT9pB35Hn9lPJiDvmoSCaxLw5HszT3ggkA6T33nI+rWzDEyd0GeEbVFWRfexXJP/hVLtEsy9Tgx4VxvwEYdZdONav8sE+bZy8MXhRzbHaqv+BiwfgD++ICwnAAAAAElFTkSuQmCC",
+      "originalFilename": "Google__G__logo.svg",
+      "size": 772,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/7e5d621b797a81ba519ecdfdd8a836d8dee50e51-24x24.svg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-7f6c7966d6f8282b7f0260efc29c536c4d6cbb78-400x400-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 400,
+        "width": 400
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGgABAAIDAQAAAAAAAAAAAAAAAAEGAgQFCP/EACIQAAEEAgIBBQAAAAAAAAAAAAEAAgMEBREGITESE0Jhcf/EABYBAQEBAAAAAAAAAAAAAAAAAAADBP/EAB4RAAEDBAMAAAAAAAAAAAAAAAACEhMBAxEUMUFR/9oADAMBAAIRAxEAPwD1DfuwUKzp7Ugjib5JXEwHLKeXsugbuOXZ9Id8gt/kkMNjFyRWYPeif0WjyPtVXjOKpUb8UsFeZ8u+i89NCiuR9G8G2zqwqly/rwvyIisYiHNDhogFQI2A7DQD+IiAyREQH//Z",
+      "originalFilename": "canadian dream social logo.svg",
+      "size": 13019,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/7f6c7966d6f8282b7f0260efc29c536c4d6cbb78-400x400.svg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-84b93c2fd2e73852a64582c1efcc8f707f138646-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAUGBAf/xAAgEAACAgICAgMAAAAAAAAAAAABAgADBAURIRJBEzGB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAQT/xAAYEQEAAwEAAAAAAAAAAAAAAAAAARFBAv/aAAwDAQACEQMRAD8A65d4MOLMgUJ9lz6k5sdtr6WFdG0N+QWAFYA4P7GuxrS7HZLVDKfRk3ZrsStw6Y9asD0QJdFaj6vDn5Oe4TGGPA7hAv/Z",
+      "originalFilename": "1-set-pc-intel-core-i7-ram-16gb-hdd-1tb-ssd-monitor-led-19-inc-pc-only-hdd-500gb-only.jpg",
+      "size": 52835,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/84b93c2fd2e73852a64582c1efcc8f707f138646-1472x832.jpg",
+      "usedIn": 34
+    },
+    {
+      "_id": "image-85142b5925eb546ab9ea862802d0006b99494b9c-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAUGBwME/8QAJxAAAQQBAwIGAwAAAAAAAAAAAQACAwQFBhESEzEHFBUhMnFBUWH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABYRAQEBAAAAAAAAAAAAAAAAAAABIf/aAAwDAQACEQMRAD8AxalUsX7LK9SJ0srzxaGj8qSzOkc7iDEL2PljMvwA991atEa/oYCjUqDFwslMg8xaI3JZ+/tWTX/ihiLElKTDRNtuj3Dus0jiP4kuoxOzDLWmMU8bo5B3a4bFF79VZr13My3+gyDmAODOw2RURhOxSeUvABa0fQ2REHBERB//2Q==",
+      "originalFilename": "website_company_grok_2.png",
+      "size": 170026,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/85142b5925eb546ab9ea862802d0006b99494b9c-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-85d8914a1bfb61c0a32ce50cbb142aa98235097c-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAIEBgcI/8QAIxAAAQQBAwQDAAAAAAAAAAAAAQACAwQSBRExBiEiQTIzUf/EABYBAQEBAAAAAAAAAAAAAAAAAAADBP/EABgRAAMBAQAAAAAAAAAAAAAAAAABAgMh/9oADAMBAAIRAxEAPwDmqvXknPgO3sq9a0S1BWZPgXMdwdlLp+1FXskz4lvIDuCVmWrdWVZtNdC+rE4uZi05fWf0KV3SpJI1Y5Z1nVU+mt3AtJBGxCKUpykcR7KKxkIj5Kzcx2Zixre3pEQFZERAf//Z",
+      "originalFilename": "rakit_pc_grok_5.png",
+      "size": 155711,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/85d8914a1bfb61c0a32ce50cbb142aa98235097c-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-877771da927d4e04c08ea3ff29532c7ba80aeb9f-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAcEBQb/xAAfEAACAgMAAwEBAAAAAAAAAAABAgMEAAUREiFBBhP/xAAWAQEBAQAAAAAAAAAAAAAAAAAFAQT/xAAgEQAABQQDAQAAAAAAAAAAAAAAAQIEEQMFEyESMXGx/9oADAMBAAIRAxEAPwBc6PTiGtJPKnk6Dqp3nkcZP4PVbO9fFp4Vg1sSHvTwE5F12spzzo8tdWYD13uWkrtXqPFC7JGD6UMeYrcnppq4U6kPJsCHMctz78GnsbGtXk/mGVgPvcMS282NtNi6pO4A+YZqpspSRmYqmjKiePH1of/Z",
+      "originalFilename": "pc-karaoke-4tb-monitor-touchscreen-audiobank-kjb-nakamichi.jpg",
+      "size": 113579,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/877771da927d4e04c08ea3ff29532c7ba80aeb9f-1472x832.jpg",
+      "usedIn": 2
+    },
+    {
+      "_id": "image-8909a2aef7a3737dadb4a1c9e2393e22db0e4ab6-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAQFBgEH/8QAIxAAAgICAgIBBQAAAAAAAAAAAQIAEQMEBRIxQQYiMlFxcv/EABgBAAIDAAAAAAAAAAAAAAAAAAQFAAID/8QAGREAAwEBAQAAAAAAAAAAAAAAAAERAgMh/9oADAMBAAIRAxEAPwDwv4nxevyOyFzgOGsdboiaHc+PaWDTR8ONVbLYLO/2n1Uw2iE7WWyKw9q1VLjGgXECu470b6ubB/UjTtoPt5XpZrwy19JDD8j3Ela3KImFVNAiIK3sT66d64YTC3TKrAA0fB8SVs7JegMeNP4WoiHDxnFzPXmIiVhlEf/Z",
+      "originalFilename": "game_pc_grok_3.png",
+      "size": 215376,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/8909a2aef7a3737dadb4a1c9e2393e22db0e4ab6-1024x1024.jpg",
+      "usedIn": 23
+    },
+    {
+      "_id": "image-898510b10973f48816d98c32491d51f79b04ace6-1280x1248-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.0256410256410255,
+        "height": 1248,
+        "width": 1280
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAADUklEQVR4nKXVW08TQRgG4P4olXMpBwEJUBDEilHAAwVEDYoKtMUbQU7ilYIRMIhgwBsTsIgaQSrlQqFtInELCamtIFTKdmmpXXaW18yENqggiV58PWQyT2Zmv3lXQQjJl2X5ASHkPSHkwz+WSZIkauQrCCHPfT4f5/F4PIFAgCeE/Et5CCF2QsiQIhgM8l8cjs3pjx+xtLQEnufxxeGA3W6HneMwPz8Pl8uF5W/fsLCwAI7jYOfs7Lfb7UYwGIQsyyCESJIkrSsEQdiaMpsxODAA86QZoyMvcbetDQa9HnV6Pdpa7+Bpfz/6+/rQdLsRuppaGHR6tDQ1Y3hoCMvLywzcRqHw8jzevH6NjvZ2POrqRlXlFaSnpSFJlYDszCxcvngJdXoDzhYXI+1wChKU8Wys4LgGHe0dcDgcDAqhih+BANvaiNGI+/fu4XjeMUQdikBKUjLOFZ9B1ZWrOFVwEiqlEhEHDrKxIympMOh0eG8yQRCEMMZASZLg9Xox+2kW3Z1dyM/N2xfT19Ri4t0Em0d2rI6B9EMURSwuLrJzOltUvCdGt1xbXYN34+OgR/U7JodAWp7VVQwPDeOmoY6d404s8uAhhlXfuIHxsXHWCbth8k5Q8HphmphAY0MDTmpOQKWMZxituOgYaM+dh9FoxNra2p6Y/Cso4NXoKMq0pYiPjQtjtJQxsbhYfgFjb8ewvr6+JybvBFe/r7J+yzua+wtGKzoiEuqMTNyubwC9AH6/f39wZWUFj3t6kKPOZkhsVDQS4lWIiYwKo7QvaXPPTE9jY2Pj76Db7UZf7xPkZucwIDkxCQWaEwyheAjNyVKjuakJFotlV1QRfsoeD54NDrI+pJMTVQkoPHUa2pIStt3QSul3jlqN1uYWWK3WP9Aw6Pf5WUtUlJdDFadkE4+kpqHodCHOFBYhIz09vFI6Rm9U18NOfHW5dgfpjXE5nSwkdNU1KCvRorREi+tV19Dc2Ij6W7dwqaKC4bT5r1ZWoq+3l80JtREhZItePR+NHnZjgkH2cLjPHKwWKywzM7DZbCzK5ubm2H/z5CSmpqZgs9rgdDrDW96OL4EG7IvtcKQh+dcg3dzc5Gl+iqLIS5K0e8CKoqjZjm/Tf7wCJiVJ6gSg+QnS8u6EpJiuLQAAAABJRU5ErkJggg==",
+      "originalFilename": "59037.svg",
+      "size": 34670,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/898510b10973f48816d98c32491d51f79b04ace6-1280x1248.svg",
+      "usedIn": 2
+    },
+    {
+      "_id": "image-8ab99b635f1199e109edd21bc9e82c16bf810520-1024x1024-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC6ElEQVR4nGWRS0wTURSGZ93XzPSBGECYaad0gFI7LaU8rQJC73Runzht7fQBhdBiQSo1rdZHgiQaEzVxhyZu3AtudeHaLaxduXTjEtiYeZVSky83/733/8+5cwbRE0E9CUSIoJ4QhY5UhLjKQtFBFWWLKHctx4W1jY4TUlmRzhgJdITEgIhW1p1PALJuC6slDVYWo1iMAhjF4jbWaAM4xWK20EWPS2F1oyMBauMIH+8FyTEIJ2F8cXEZzkaCt3POmbyJjuhJtr0EouxJgFIQo2MWV9IbKvHVSqqRKTSK9Up5X1htbj4OCc0+Xxaj45gjaqC4VlgqY2VxOmbxZK5OrNBLlRmhFihW54o1Ll+PJne57JNJvkkEShaPYHKl8KG4wSp+RWvaLEbHzEzG4sv3Ta06g2VveMvD3ffAHV/8oT+xy3BbxGzR4s2Z3HfxoUQrzIpYWdQRNblSRrdA+HkuCtbT87kIV+Dz9zaqlZWVZAw6ZxMWT8bkSmN0TN/WWcwbKIgPJ/DRND0dfVrwfK9Q3zYDX/a2P72ov9/h90sBAEG3+w5KJ1A7lCeldpab28PYCD8yE32XZX6vUn+3Qz/f7r16ttesbb95LuRzXK87rLVCvVXyqwNT8igF0aHl4Un4OsX8Eux/8oEfu+UHm01hvVHbKWQF0M+EtCTX8rd+lRS2cagjRjLsGuf7yDs/L0+/TCUgyI9OpG/MgcDthZ5RTkeG1DBADCQwkKyClUUpzuJgaWbB75+bGF+67oN9I2Gjje12LPaMBI12cU4GFURHsJcJ4fbwgDftmMrZ/AI5niF9mV4Xj1OwzQNkgXQNLnXQ74L+hfxifHMhWp6PluYipbFb2WtOrmtw6cplJ1Lk3RJMkWfWJDbS3urqVKN081FZpF4KVFemNtJe+XatzYkcH5hPPpiPD2RMqjCfSOcKrRP1VgY5O9Kcf9Wc/cf5kSok2oXCkQY5PdScHimcSbQLWasGbcspcqj5B8EsSKpXl80VAAAAAElFTkSuQmCC",
+      "originalFilename": "percetakan_grok_3.png",
+      "size": 530178,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/8ab99b635f1199e109edd21bc9e82c16bf810520-1024x1024.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-8ce76795892141f64c46b4165cbacff15317d6e4-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAIDBAUH/8QAIRAAAgIDAAICAwAAAAAAAAAAAQIDBAAFERJBExUxgdH/xAAVAQEBAAAAAAAAAAAAAAAAAAACA//EABYRAQEBAAAAAAAAAAAAAAAAAAECAP/aAAwDAQACEQMRAD8A7rsj8+2q1DYkhUoznwbx7j7DWRV6U0ybC15opI7N7x9jrqluVJLEIeRRwN0ggfrKn0mvYENXBB/ILt/cc0AY3C0u09dKZ6FeRj0sgJPcMlrxJDCkcShUUcAHoYZF1zf/2Q==",
+      "originalFilename": "pc-karaoke-2tb-monitor-touchscreen-audiobank-kjb-nakamichi-geisler.jpg",
+      "size": 84737,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/8ce76795892141f64c46b4165cbacff15317d6e4-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-8e3622ff6350cb4d19ae695f7aeb1dc63590dc36-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAUGBAf/xAAlEAACAgIBAwMFAAAAAAAAAAABAgADBBEhBRMxEhUiMkFRYbH/xAAYAQADAQEAAAAAAAAAAAAAAAABAwQFBv/EAB0RAAICAgMBAAAAAAAAAAAAAAABAgMRExIyUSH/2gAMAwEAAhEDEQA/APJczqNdzpQvLMOAJO9txrq7Xsf5+ACfBkPGa85SXr69LxsShipk9Qy68epe07toFj5/epdZbtXKRJCrX8RItUJYyg7AOt/mJSu6TbXa6NyykgkREap+DdkfThxbnqtUoeN+PsZocO7usjdqtH39SAg/2Ihp7IFvVmmpx62rBK7JiInRKKwYjbyf/9k=",
+      "originalFilename": "it_support_grok_2.png",
+      "size": 228764,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/8e3622ff6350cb4d19ae695f7aeb1dc63590dc36-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-8fc8a906759a94ed6040b9f83cab9e8798b6e78e-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAIDBAUI/8QAIRAAAgICAQQDAAAAAAAAAAAAAQIAAwQRIQUSIlExQVL/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQME/8QAFREBAQAAAAAAAAAAAAAAAAAAACH/2gAMAwEAAhEDEQA/APN1Fa2E9zEa9Caq+nPdWXoIZQdeRAmSkhSdnWxOh07Mx8YuL8dMlNcKxI59zsrKOdYhrcq2tj1ElkWLbc7pWtak7CL8CIRBT2sCPo75l2RkNcAGWsa/K6iJRRERA//Z",
+      "originalFilename": "website_grok_2.png",
+      "size": 137480,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/8fc8a906759a94ed6040b9f83cab9e8798b6e78e-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-9127c93e1531e2b0040546fecb59fdddf84d13ea-1920x1073-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7893755824790307,
+        "height": 1073,
+        "width": 1920
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAUBBAYH/8QAIBAAAgICAgIDAAAAAAAAAAAAAQIAAwQREiEFBiIxMv/EABQBAQAAAAAAAAAAAAAAAAAAAAT/xAAaEQACAwEBAAAAAAAAAAAAAAABAgADBBET/9oADAMBAAIRAxEAPwDvnjfZz5q5qKK3xwOxZ9xjiLmPZyfLdVVu1IHyEV+pY9SVZfFANgb1NPjqBxAHWoTF6NSGsbpjdy1JcVrXgEsKQRsHYhIr/MIuCn//2Q==",
+      "originalFilename": "sanityblocks.webp",
+      "size": 76228,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/9127c93e1531e2b0040546fecb59fdddf84d13ea-1920x1073.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-91b412eafd112e192a1aa2ccdccea942ecb300ae-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADTElEQVR4nHXT329TdRgG8P41Xhz/Bm9MuNDEG0PilWBM8MYYJcQAISFAAiwyF5WELOQESQC3WREYbN1cgbFa25X+YG1P27Vd29P2nHZtv93OOT2n59f7fUw7jV7oxfO+V88n780bACCQR6LvE3McjyxzzC1zBGtkwLJGsEwTI9OEMbKgG2Mc6BaGugVtZMO0HO66Hk26E2NiBf4GHc9n2sgidb/H22obnW4bjXYLmWIVkZ0qYrsKdpUh+gcaDvVDMO0QA03jummS63rMdUm0bQiByXBdTxy7Husd6pQrl3lsO4LEH2EsLT/DxfmHOHt7FdceJ/FLooai3Ea/30Z3oEDuKVwZ9IjpBhtqlqjrthCYDNNyRX1ss9ZgSEkpy1+uBREO3sL12VmcOP8Dzn2/gNuPI1hP7qJQb0Dp1NFW91Bp7nFJlklqtFmh3hbLDVUIDAa6wAxD7Oo6k1SFkqUsfxNbQ+TJHVy59g0+/foGvrt1D6HlVURiSaRKVVSadbTUGsqtKk/XaxQvVVgsWxTT+bIQyDfyQmVfFmuDHkvKe5TYzfFKJYffX4Vx+vJNvHviEk6emcOlGyJm5hcx91MICxtRbEs5pCsZHi+naCubYVuZHTGezwuB1XRYSNTyYqXXYa9rNXr5JsMTuR38vPYcH52Zw1sfnMfbxy/jnZNX8P6pizj+5VWcnpnHveVnWI2s87XYBoWir9jz7agYT6eFQDi9JWRru2LnYMjKSoc2Xqd58MUWvr3/CB+fncWxU1dx7IubeO/zGXz42Tl88tUFXLg+hx8XFxBcecJXXmzQZjzKkpmUmC/nhYCqqgIbDkXbdphmWFRqKHwzncPyZhTBpyE8ePgUd38N4c7SI9y9/wCLS4v4bX0FiXgEqdQ2LxYlUpQ2Y30m6gNdCMCG4LmeSD4x3yUyTYcPNQOD4QEG/T6aDRmlUgkFqYCCJKEoSaiWy5BrdTQbTd7t7JOhjZhtuuLEOgI9moLkEvkucd/jII/DtT0wpqHZUiHLCuTmX1tW0Wx20Gp1udrp05DpzDRs0bbtI3DyKVPQA/kOcXI5JvEdwthyYRgWDN2EoU/2v2Py0cii8dhhru39c+H/gVN0GvrPeI7PfY/oqEtT8E/dDXMYm07+gQAAAABJRU5ErkJggg==",
+      "originalFilename": "service-website-hotel-shark.png",
+      "size": 799906,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/91b412eafd112e192a1aa2ccdccea942ecb300ae-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-9287641627c971311028194b84075f1464407be2-1920x1281-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.4988290398126465,
+        "height": 1281,
+        "width": 1920
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAANABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAMHBQb/xAAiEAABAwQCAgMAAAAAAAAAAAACAQMEAAURIQYSBxMUMUH/xAAVAQEBAAAAAAAAAAAAAAAAAAAEBf/EABkRAAIDAQAAAAAAAAAAAAAAAAECAAMREv/aAAwDAQACEQMRAD8AoFr57a3uJMzp5qUpAVXBAc7rirX5at7zzgTopCzvq4ib+9UjiANQuLNNAyBI4C91LeazoNnt8j2I5FbXPb8qJXxrAiVmVwq4Yi6+TZozT+K2wjK7DKbxRUzukAW7g+AGSCJqiJRTRWuQTXNs/9k=",
+      "originalFilename": "henrique-ferreira-wZIHFOzLuTQ-unsplash.webp",
+      "size": 372490,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/9287641627c971311028194b84075f1464407be2-1920x1281.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-92d9a689fcbc5994ca68e8a36e215e467aed74f6-1200x686-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.749271137026239,
+        "height": 686,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABZklEQVR4nK2SyYoCMRRF88GCHyL+gXvBnYqKIrpVEcQBlXJEdKFSVdI1OCXe5j4HRMpVd+CS5OXmvJdBAcDtdsN/NWWMAUXop7TWOBwOmE6nmEwmcF1XYlFe82C8gFEKggCtVgvJZBKJRAKNRgO+73/1G2PuQGaNWmRFpVIJ8XgcsVgMhUJBYlFe/WAofdX4JlbY7XaRSqVEHAd+8NWvrxrqcrngdDrB+/HgOA4c24Ft2yLXcbHZbNDv9zEYDGRMD6t8VxiEIIdS5/NZ7mW9XmM4HKLX60klnU5HQBRj7Bl/wp9ro9EIu90Ox+MRZAmQR9tut/KSNLXbbVQqFRSLRenr9TpqtRpyuRzy+Tyq1SqazaYkGI/HsjcMwzuQx+WEVfKL8Kjz+Vw2ZbNZAfBhyuUyMpkM0um0JOFX2u/3cgWe5wmDLMVSOXkXwavVCrPZTMQEi8UClmVJRcvlUjyf+ygVFfyLfgEhmTXQPXCVaQAAAABJRU5ErkJggg==",
+      "originalFilename": "next-js.webp",
+      "size": 89088,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/92d9a689fcbc5994ca68e8a36e215e467aed74f6-1200x686.webp",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-937187ae9f8c149e743ff9fddf411df995050dc3-569x512-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.111328125,
+        "height": 512,
+        "width": 569
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAYAAABb0P4QAAAACXBIWXMAAAsTAAALEwEAmpwYAAADOklEQVR4nIVU34vVVRC/9aI9Rm+GD7vhi4kb9gOFoKfWEoLuvTtzvpmgqIQJeyMf3FwCBd8y2ZZtFYNVScJcfJLsIVvumZlvS89K935nznfbjP6PjTnXrbur1oEDhzkzc8585vOZRmN9ra09U5QPtwXSI8h2PXC6g6QLyP1JkOpN38g66bZ8x3a9oPpwUfa3eWxj83rnR9sCMe1DttMQ7WggG5/o9gok/RzZ5pDrOT8DVaFNNu4+BdtpFNvrsY8lfP9e74V21BawdppLOgaLy8+FJXsJY3USWG8Dp9t+dtvh7upWFB0ruO4UUjc99rGE8LO+CFwdArJjbUkvB0rbMeoB5PQFspeeFpDtgtsCPdiefWTlGJJ96LEbkp1dW3u2FesdIdonge08UjqOZZpE1svIdgtE50HSPJZ2a2DTyQmqjgPbeeC604q/7fAcA+zMtrRER6FrE0jpEpDeCaJXkdN3QDofpP4Ixd7znc9sXyOr3111XyS9hNRvA1UjGUsoV19xgCHqdOD6y0DpJlL1DYrNgiTEbm8X/rLyOiyvvNHm+7u9KUg2i2JXkO17JLuIks6As0N0rAGcpiFWp7yrQep3szOna8h2EpfTHhBtYlnPofjvq1CU9Wv5ju2aP4qlHkDq7we2TyFWU41AabGIdfPgD/efh1//GAHScyj2bXYUHQtlmglsD4PUfwVJl0HqVwdJ9EYgPXdQdDTHijaB7GbDv91e6rXc2Lqno8h2djhhIXYxlOl3lPrPIGkepP/fCSFWU/5dpLT/EU2+yuV4WZT2fODNYJ1BSbMOfntzyfHfkl0UDf+FAwqs0+AAD4C+4lhCTAhsO73MnKjb25UbtakpwDod1puSJUfViL/uFHAqOCWcGk6RIDpEG/1/2gwT26XkZHXS5kHgJC7Xia1DxE5PJ/YG6XWrQ+Ef6T14JD27MJDdsPRSlh6IPVl6vlzgIWqrYO0UvLL7rW53a1YQ2YkgadG3n93mdxl71o5394nDwetHWd3rI8mV06beeJAEQeqpwM7FNBPIPnMbRHsbxI56V586vgYDtj8YsKQ3gO1uIF0Aqk9A7O3Lu2sfZxvb3exDeqT4aeOA/RvKN/LQRrVjLgAAAABJRU5ErkJggg==",
+      "originalFilename": "logo_dark.svg",
+      "size": 6733,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/937187ae9f8c149e743ff9fddf411df995050dc3-569x512.svg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-9441bf878ca9c8b2796d473ca76761b831fc1e56-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAYFBwj/xAApEAABAwQBAgQHAAAAAAAAAAABAgMEAAUREgYHURMUITEVFiJBUmGB/8QAFgEBAQEAAAAAAAAAAAAAAAAAAwIB/8QAHxEBAAIABwEBAAAAAAAAAAAAAQACAwQREiFhcrGB/9oADAMBAAIRAxEAPwDuvLeWuWtclmKhsuNJBy4sJ9T7Y71lfNrj0Nh6QtoO65UlB2Gag+r8dzkLTSrU3tIS5uTt7jtmo+xTbjw6xykzogW6+6gtJWc4Gfq/lbQWqjrzIxLVbAicfi9z0za3PMQWnXlaLWM6n7UrKsbnxC1RpJJR4iAde3pSm29wN/U5D03ji4RAiS44pOn5furyfYIEp1kvtlZbSAnODSlRl10v6t9lZkNcPxX5K6ChLcVtCAAkDAApSlIwif/Z",
+      "originalFilename": "service_dev_1775323567117.png",
+      "size": 665597,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/9441bf878ca9c8b2796d473ca76761b831fc1e56-1024x1024.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-94a02aed7b2cc3c6a74c7fd232c968ac8e75ec5e-1920x1145-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.6768558951965065,
+        "height": 1145,
+        "width": 1920
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAMABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAEEAwj/xAAeEAACAwEAAgMAAAAAAAAAAAABAgADEQQSEyEyQf/EABUBAQEAAAAAAAAAAAAAAAAAAAAD/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAEh/9oADAMBAAIRAxEAPwDnmteNuFQeY+0r9t/ZJwU1l3S1d+NEV3ZcaqlBChVwYMk7dFos8g53Ml4ndLpRVuYIMEJkzFjrHTCB/9k=",
+      "originalFilename": "starter.webp",
+      "size": 91894,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/94a02aed7b2cc3c6a74c7fd232c968ac8e75ec5e-1920x1145.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-97b8d834d616847dfaa5fcb8f2389885d8452a9c-526x150-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 3.506666666666667,
+        "height": 150,
+        "width": 526
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwUlEQVR4nH3RyUoEQAwE0Cfi7uCK4jbuuC+4oRdv/oF48v+/Q2qoAb3YENJJqquSNH/PBCbr/zszWMfmL7+DvRQHmMcClltcwWJrS80Pigl2rrgj7OMGdxiG8AqnOME5nvCA2wLv8YhrXBS7WqJXvOELnzgL4UsfXRace4Dv9RF4rsg4Tne7JfvAdwnT0KizqAWwUcsukj/ANra6o2McdgVrHTlCEclE4RntY7Y2jan6xFl+4t+5WN5k7PFnRDDCwx+ZWg1nxeQl7QAAAABJRU5ErkJggg==",
+      "originalFilename": "schema-ui-dark.svg",
+      "size": 8123,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/97b8d834d616847dfaa5fcb8f2389885d8452a9c-526x150.svg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-998e72c22b242fd3ba635a777167831475102c78-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAUCBAf/xAAfEAACAwABBQEAAAAAAAAAAAABAgADESIEEyEyQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAACBP/EABYRAQEBAAAAAAAAAAAAAAAAAAARA//aAAwDAQACEQMRAD8A2ihz36lOBGOEn5HVa1LWWrsDEfN2JawG8EaJf6StEPFQN/I9JAyNkbiISCesJOor/9k=",
+      "originalFilename": "pc-rakitan-core-i3-4160-gen-4-4gb-500gb-rakit-pc-surabaya.jpg",
+      "size": 60505,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/998e72c22b242fd3ba635a777167831475102c78-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-99a3a355e5548510638cc51ab4b79e18906330b2-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAUCAwYH/8QAIRAAAQQBBAMBAAAAAAAAAAAAAQACAwQRBhIhMQUTQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAAFBP/EABsRAAEFAQEAAAAAAAAAAAAAAAABAgMREiEx/9oADAMBAAIRAxEAPwDoGqr1qpYqtrSuY14OcKzxNu48tMkznZ/U8tVYJ/WZYmvIPBI6SnS4DzZ3DO2ZzRn4EnO7UdIngO6N27vhox0EKRHKEaVH/9k=",
+      "originalFilename": "pc-rakitan-gaming-core-i5-2400-ssd-120gb-8gb-500gb-nvidia-gt-1030-2gb.jpg",
+      "size": 75234,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/99a3a355e5548510638cc51ab4b79e18906330b2-1472x832.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-9b144730bd24c16a25fbcec03a41b43e43cc4237-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADWklEQVR4nG2TzW8bVRTF/VcgDxtWdMsK9ixg0Q2VCpuKBQhVkbJAGXVgE4qqFokqlCKVIOqKyihYruzIJMR2QpxYVuo48cQfsU0aOzP5mDqO4xnbGY89tufrvYOcCBFRFmfx7uKnd+49x6XrOmNZDkcIRGKDOBahjk1B/pFDQZ1L70uyTUIdixAQCI5DWV3X3S5F1xlNNzjdsERNHxJVG9DB0IJjk/+FnIMsAsMkGA5t2h9YpKMPBUXtsUdHstslSQojySonNXtiudYmxcMGfaloGAxtONarMMci6A9ttHsmJLlH+Uqd/JEWBF98l52O8BfAcq3NFWqamBIVktg9pnlJhtzpY2jYsP8DNE2CTt/EodxFKCXQW49XyMdTEeHmowTLeXm3S1EURqw3uYxQF9dKEtmoVGnuqIb9RgtKd4CB4cC5ZLU3sHDa6aFYreOn8Dq9PuklV7/8VZj4Oc56E0cXO6zJbW6/LIjbuSLJ7B7StFhFer+KnZqMhtaDYdrnwP7QQvVMw069Dv5QQCD5nI7df0o+mPhRmPguwAZHlrOSwuTFKlcqvRCzfJbE+BKd2ypjbjOHeI5H5aWIrq6f/67V1ZGXDpAo8UjvJLG8sUzH7k6Ttz6cFN658TX70fiU2+VZCjG+WIRbTq6KsWSSeKLr9PbCFu4uJOAL+5HPRqG0TtE3HBwrLaxlU4glglh7HsRMyE+vfX6fvP7+LeG19ybYN65ybtfD0DdMIPKQi68+EcPRALnnW6CfBHh8Gsrg+9ln2EzO4rRRhW7YkOoy4htJRFfmEViOYvJxgL479oC8ef2OcOXGt+zb49NulyfkYebiM9zqqk8Mh/3kSWie3lvcwlexXfwST2P7RR6qqsIcWe70kakcIpzKwr+Swg/PlugXD56Sm7cfCZ/d8bDjU16367e1LDOXLnCLfFFcTGVJJJWn85k9hAtVbO43cNLSYBgXRxlFRm53UawcYG1jE7HlCP1zwU8iv88I87MzbDDodbuWshKT3Gty6YO2uHWgkO2jJi2fqKg2dZz1TBjmv7EZyTJt9LQu5JNjSOUC3StskL9yKSGXWWd5PjHKoc60NYM761ui2jeJNrDoKHuWRc7rN2rGq/UbzS0YA532tA5RVVVoqSory7L7byQeXiJW55OKAAAAAElFTkSuQmCC",
+      "originalFilename": "service-website-ngo-shark.png",
+      "size": 755481,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/9b144730bd24c16a25fbcec03a41b43e43cc4237-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-9b5834be6b921e59fed987f88a0970d99599ec4e-512x512-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 512,
+        "width": 512
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAMEBgUH/8QAJhAAAQQCAQMDBQAAAAAAAAAAAQIDBAUAESEGExUSMkIiI1Jjkv/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD08zKqu8RDkx096b9Dek8bA3zla06koa2XOjyI/wByGWw5pH5nQzm9ZxJqU9N28KI5LRAc9TrTfuKSNbGZa2qra9F9bN1shhEt6OlllwaWQhXJIwN1fRIqpqVJYbAU2kjjGTXQKZDQPBDKQcYEVddyxBYA7fCB8cs+cl/r/nGMDOX1xKVO2e37B8cYxgf/2Q==",
+      "originalFilename": "schema-ui-icon.webp",
+      "size": 1724,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/9b5834be6b921e59fed987f88a0970d99599ec4e-512x512.webp",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-9bc95398f5ae685ff77ad5f6402dba0fc7558bdf-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAUGAwT/xAAjEAACAgICAQQDAAAAAAAAAAABAgMEAAUREhMGISIxM5Hh/8QAFwEAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACQRAAIBAgQHAQAAAAAAAAAAAAECAwAEBRMhYQYREiIxQVHB/9oADAMBAAIRAxEAPwDo2W3lWCz4BM1lEJ4RCeuL7W2rVdPDNSumxsGUB4pY+D2P9yn9ZyNVXy1mMUhI5ZPbnJvXxptJBNfRJpUB6sVAI/WFw+aKeA3Kp0jY6/lUr5nmuBE/IkePla1LLtXQ2+iz8fML9c4Yxq1oRF+Nfs4Y+3EcSErlnTetLBhzZS93qv/Z",
+      "originalFilename": "pc-karaoke-4tb-monitor-19inc-film-audiobank-kjb-nakamichi-geisler.jpg",
+      "size": 127063,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/9bc95398f5ae685ff77ad5f6402dba0fc7558bdf-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-9ef9d0fe241ba096fc4b34eb553dfe928c33e450-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAQGBwUI/8QAJxAAAQMDAwMEAwAAAAAAAAAAAQIDBAAFBhESIQcTQRRRU2FxkaH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgQA/8QAGhEAAwEBAQEAAAAAAAAAAAAAAAECEQMiMf/aAAwDAQACEQMRAD8AyixYtPuSUKTbpikK5DiUHaRUm5Yv6N/sFh9Uj4wef1W+9OOqOKwsStltkSVJlsshCx2/P5rhXfPbHbZs2W1FEiUXN7SigaEexPinT9YQ9+lRcqX9PPc6E/EkqaejusqHOxxOhApVpz7MUZRkK7kmGmPubSgoSdRqNef7SmKk9Ke2tSFhSSQakTZLjpG48fVKUDYiJSlKIT//2Q==",
+      "originalFilename": "website_grok_3.png",
+      "size": 166592,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/9ef9d0fe241ba096fc4b34eb553dfe928c33e450-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-a0722c11db1886f4ce12206818173fe6dd7bb224-90x30-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 3,
+        "height": 30,
+        "width": 90
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEElEQVR4nGNgGAWjgIFUAAACNwAB/EN1vQAAAABJRU5ErkJggg==",
+      "originalFilename": "tailwind.svg",
+      "size": 2464,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/a0722c11db1886f4ce12206818173fe6dd7bb224-90x30.svg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-a0aea503cc2095f73c6ebe74f233e29d72c029ef-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAUGBwP/xAAnEAABAwMCBgIDAAAAAAAAAAACAQMEAAURE0EGEhQhIjEyYTNRgf/EABkBAAEFAAAAAAAAAAAAAAAAAAUAAQIDBP/EABsRAAEFAQEAAAAAAAAAAAAAAAEAAgMRITES/9oADAMBAAIRAxEAPwDs17vAjEVw3vmirzAX4/uo9vvkmCwMWWrQofkCm5gnBXeoXGDCwSK0RXERVbHD5j7xtnasU/CCNCS5cROvvTlXTaAC7Bj1j6ohGwnvDxZHkUK6F2hu6A4PMMlQT9KlKzts665WuHKb0W0NpPFwe9KkGgYSqiTeBWYTbV+ekR7k024AouFRMEn9rzb4ctvSPi4zqplfmucYpSnlA90lET5tQSnyI66LDnI034iKbJSlKLtjZQxCnSOs6v/Z",
+      "originalFilename": "post_software_code_1775324376367.png",
+      "size": 894780,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/a0aea503cc2095f73c6ebe74f233e29d72c029ef-1024x1024.jpg",
+      "usedIn": 8
+    },
+    {
+      "_id": "image-a2d9fe6ac02ae3fb07df7bd4a51ebd513fa889c0-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAQFBgcD/8QAJhAAAgICAQMCBwAAAAAAAAAAAQIDBAARBQYhMUGREhMVIjJCcf/EABcBAAMBAAAAAAAAAAAAAAAAAAIEBQP/xAAfEQEAAgIABwAAAAAAAAAAAAABAAIDERITIjJRYZH/2gAMAwEAAhEDEQA/AOxQX6tuyIYg6tJ4OeyvXq8nBWszblmJCL8PYn+5UcbAlWNFv1TJKG0JEbRPtmW615vlk5CD6bCyJB+Da2xOOFG7qr9k7mAdROyJFTVAJEjDeuMxXTvIWL3D1p7DPJMy/eQP29RjB4PcMyeCQ02spZGZWHjR8ZB5CX5bNYKI8qjszjesYwpHxXsOhlOOTuHuth0B76Q6HtjGM30RRy333M//2Q==",
+      "originalFilename": "service_support_1775323600050.png",
+      "size": 610762,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/a2d9fe6ac02ae3fb07df7bd4a51ebd513fa889c0-1024x1024.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-a6f1dc7b2dd789527014ee3ebeb94c16f0b3ac84-914x256-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 3.5703125,
+        "height": 256,
+        "width": 914
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAAsTAAALEwEAmpwYAAABRElEQVR4nI1RXUtCQRC9FoQVEWapFSa91WNPQdGnJYQSJdwCUXywZnfux+7ea+LNves8hEG/utjMnh0YDnNmOMyccZy/aLf7qy9Bf9/zdCWKomVn/sg4zndmir85FeNhegQybYI0x4PB15rr0hJikuOcCr2INmA4XMckyfE+FXw/yduerRGTHABtdvwk3xPvxX8xrsYdJsevEJor3//MCzEpMqkvQZm65TAyF6B0DSU9YKBvMNQngTKnFkHqc4hNlQtqOCjTQ6boiQnjoTKAStfCcLKF+FHmIm0wYR65NHcWQY6fuUhbGIzqPDBnXNE1E+YWQl0DSU0Q1HLsdp4wVS7Tex6nDYjpoEuUBaAV36cdm94blTDWZa+vKyBoD9Ro217heVRC1GXGRruzvmN9sJ7YIetBt0vZ+f/xnXFdd5GIFmbUD0rEh/agI+GbAAAAAElFTkSuQmCC",
+      "originalFilename": "shadcn.svg",
+      "size": 8426,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/a6f1dc7b2dd789527014ee3ebeb94c16f0b3ac84-914x256.svg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-a720b4b7b15fedbd3f36b2fe0a54a8a9d969e04c-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAQFBv/EACQQAAEEAQQCAgMAAAAAAAAAAAECAwQFAAYREiExYRMiQXGh/8QAGAEAAgMAAAAAAAAAAAAAAAAAAgQAAQP/xAAdEQACAgEFAAAAAAAAAAAAAAAAAQISEQMhMUFR/9oADAMBAAIRAxEAPwDXudXarg6jsQlUpyKt8hpBRunj69Z3NTrRCRHasGSh9xIJPEjzk8yS9F1WxUhJdaQ2V/MT6yEa6TLpbCaqK2FVy+HFQH23O2+OOdo1SEY6e9pHX11q9MS+oNBAQ6psBXkgbd/3GRUDBvKiNYqmFkyE8+G/jGDdkqvCNdRGVdCxV8ipIBSCVdAfrJBputECdHDJDcpfJ3Y9k4xl95NI8YNamhtRK9thkENo6AJ/GMYwAkkf/9k=",
+      "originalFilename": "banner_print_1775318383690.png",
+      "size": 793836,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/a720b4b7b15fedbd3f36b2fe0a54a8a9d969e04c-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-a7c3068ad2d32866814ef1f7976aa4aa305782bc-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAQGBwX/xAAkEAABBAEEAAcAAAAAAAAAAAABAAIDBAUGERIhEzFBUWFxof/EABkBAAEFAAAAAAAAAAAAAAAAAAIBAwQFBv/EABoRAAMBAQEBAAAAAAAAAAAAAAABAgMRIjH/2gAMAwEAAhEDEQA/AOFafx89i02OGu2d7+g1w3WgzunLmPrF01OuN298R21S6RzDaGRjfGfo+y0ufy7TFYkfMJzMPIegV1MS56zPa77TqpXw5fJVkY8ghFZanHjHg7YImuInqqaIakjo52ub+q+7dmkgLTxA+AiJAqXpHlE7ntERCGf/2Q==",
+      "originalFilename": "service_security_1775323584591.png",
+      "size": 709486,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/a7c3068ad2d32866814ef1f7976aa4aa305782bc-1024x1024.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-a9c5755f6c05a761a8be6ce518babca3b78e4d43-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADVklEQVR4nG3TXVNaRxgH8POV+CD9Cr3IRTvjdDpe9MLWTBrNSxNbrcaXaafRdqxxq25IQAwoVkh8SRGPii+IoKIiggfhyLJwOHvO7r9Dkosm04vfPM/O7PO/+2u2bXtaALybtg2PyW3PhWl7DG6/2z9i2h7O3/97z/6IJh1JHEcS4YDUhSTMsojJSsSsFgnjJqlbFrGEILzpENNyyBUX5JIJUrUcIgRI6/6/NNeVTDiS1W2XVRpNVqgU2dVpjBlHS6x8vsmqhQzjZoGZtTrL3TTZboGzzTxjp+U6K9earNYQzBYua+W0aK4jZaPpyGvelJliUa6sR2XUOyT1wKA8jPvkgR6Wu9sxuXuSk/FsWYYPinI+WZBrR4bUsyV5eGnKCm9K23Gl60BqwnaVWbPUSamsFvV1NTz0gxru/EJNjXSrlwGqfveF1Ig3oqbeJFV471JFU0W1dHilQgdF5U/kVCR5ptLFkqrwhmplaY2mg+OrCl4lUngyPY3HXe0Y6/oSv/R8h66+IbT3z+DO6AL+COoIbp5iNWNgI19F9NyEfz+PwHYakYM0DgoGapaAZnILkeQJOifm8fXjXowPf4PI+G086+/E/e7vcaujD23dY3j4qxc/TS5hNLyD5VQeeq6E1aMCFneP4I8nEMsco1zj0Crcwtx2Bm2Dz9F+7y4WpjqwH/oRK6QPo30P8Hn7PXz2VQ9udQ7h25//RP9kEM/m3yIY28fy/imiu8cIrb7Fzt46zIoBjVsC+nEeA9MhPBoaQIA8xM5sL3b8w/A+7UXH3ftou/0IDwZGQGYI/npOMTjhxdPZCOb+SWBxPYHI6zDSW4uoGmfQHEeqq/KNWtM3lT/wUoV9Y2rd90TpvgE1P9mrxn/rUWOjg4rSCTUXmlVkdk6N0JAaCy6rwJqu3mxsqcR2XOWze6peLStNSnBhC35TKfPccYqn9Ndcj77gawtTfCk4w4NBP5/7e4kHVzb4q1iS+2Jp7o1leHAry9dSOZ46u+TG9TVv1Dl3hMM16Ura4gpJRaNBb0oGzZ6c0J39FI3vHdJ48ozGDwt086hEt7I3NHFepXsXVZopclqoWLTKBbWFS90POVqrw5/iNjwXJjxpw/ZkDXiyZutte4wPWp1u9fj/bv8FAvZaFDIKHMIAAAAASUVORK5CYII=",
+      "originalFilename": "service-website-sekolah-shark.png",
+      "size": 960349,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/a9c5755f6c05a761a8be6ce518babca3b78e4d43-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-ab8ce88d0766c452865ff975f499ded2d22fbae0-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADdklEQVR4nEWM3U9aBxjGz7+zP2H3S7rsapfbxS5ORrakS5Yt28XSpll6sazdpk3W2RpXhWEVRZACalFADkwFRV9BRDjy6UGwlG8BkcM577OwpdnFL0/yfAkARE3TxFZvKIYLVdG8ey5O+1PibOhcNIWyomk3K5rDBdF6UBBD51Wx2hmKnSHE6kAT6wNN7A3He4jjnzECdNBI06l+PaD9fI2cdEEOUiiYqVE436RtuUbO4zI5qESRXJ0q7Rtq3ozoqqtSqa1SrT+iwUgnXQeNvwRtpHO7d8tyucFSssT2wwI7jkvsy9Q5kGvylvyWHbFLth0p7Dur8HGpyZm3PU5Xe5yodLnQ6HPnRmVV1Xj8JQyGGorVNsLpS/iTJWwlFEjpCoK5Ovy5BoK5BqRsDT65is1kGdvnV4goLewpHewUWkhWWqh2uujfqhipOoTOjYqzUh1SsgR/qgzptIBYVkHisolYpYNYuY1wsQFfugJPvICQrCBSbGAt1YIpUsbijgxvLAu50kT3RoVQve4jmr/EZjwL11EOryIpbMcz2DuvQEqV4T9VEEhewEMZOCJJeE/yCMhvMRd+g3vWU9yd8uHbZ69hkRIo1TsQiq0W/HIW9v1TLO0kYd1NYTWcxnIwjt9tEh693MKSLwLv/jFe7RDmpSSMwRyMfhlTtjC+f7KKT+/P4tfFLRzlihAuWm14k2nMSwd44dmH2XcEy/Yh5l+H8NPsKr57asWUIwBP9ASbhwkYPQd48MKLB1MO/DHrwL2JBXx0dwKGh3OY29iD0LjuInp6AovbhenFJfxpWcaCbQXuDSdW3E7M2Fwwun3YiEQROIzC7d/C5IwJn//wGz75ZhJ3vpzAex//iDtfPMHkywCE28EtXxTzHAhs8vKymc2m5zxvfMr2xWlesxvZYf+LbSsmdros7Fq3sd1l5ZkFC3/98wx/YPiF3//sMX/41RQ/fL7Oe7ECCyNV436vz5flCh8lkrwZ3OWVdQ8v2BxsXlpms2WBLVYLO9ac7PZL7P47yhbfAU9YAnz/2To/MnrZ7o9zOl/lbu+WBX0E0kY6qapO7b5K5fo1yUqVKK3QTjxLIUrRXlwmkhVKKTXKXHXoTGnQoXxFx5k3lCs3qNkZkKpqpI90EjRNM4yBBoP2jiEMwyEMg3cM/tOxN/w3H/fHu//7Yx17/wBd2VdNrGqaMwAAAABJRU5ErkJggg==",
+      "originalFilename": "service-website-development-shark.png",
+      "size": 815971,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/ab8ce88d0766c452865ff975f499ded2d22fbae0-1200x800.png",
+      "usedIn": 2
+    },
+    {
+      "_id": "image-aca6e3028ff41eb866e4c07ada328bd5b86e2717-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAIDBgQH/8QAIBAAAgICAgIDAAAAAAAAAAAAAQIAAwQRBRITUSFhYv/EABYBAQEBAAAAAAAAAAAAAAAAAAAFAf/EABgRAQEBAQEAAAAAAAAAAAAAAAABMQIR/9oADAMBAAIRAxEAPwDyEKTrQk2otVO5RunvXxOni6/Ld0IBU/rU2N9OBhcHkKHra66vRUtsKfYlLb5E+9SawMQRqIanTa9Lh6zphLLsu64EWNsH6iIFERED/9k=",
+      "originalFilename": "it_support_grok_1.png",
+      "size": 132988,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/aca6e3028ff41eb866e4c07ada328bd5b86e2717-1024x1024.jpg",
+      "usedIn": 2
+    },
+    {
+      "_id": "image-acf6e648e66e7770160a21117bdf281225bf0107-1024x1024-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAACq0lEQVR4nHVUW2sTURDOf/Gl2T3n7J7LbnY3zWWzaS5rLU1bbRLSCyZtk1Z6AdtKU1sk0FipVm0VH3qjiIJWRLSgFIpSfBEFEXz0v8heErOmhYGdPWc+vjkz843Pz+N/Blp814gfEPcceK8A8dl35xjnOLxtAHfY0X7P4QVgHlJBJIKIEaIIMUGUoSBxgLbEWIn47E8rkvKIYSxHNZYM4bDCjKiRTnZrWgRA5tI2gj3MHKAAMUwUMxqfzJjFK8HuhJrP9Y8WCkZYRwhzXiaf83THBEAlJIfU6HRh5KA6f3euND5+bbw0MDGYyiXUWDCAsdT2ZhuPEFEE1hXQhwfyT1Zu/Tisfz2s7Tysrs0W10bNlXJfcSgXDRsAUqt4Nt5NmwOEiVingayZ2Vha+Lxd/bM383t/7v3uvZcb669u39ysLU1OzxixJIDUZW4FY0giUmA4m92qL549KH+v5T/VJ94dbh2/3jvdru4sXi8O9gSDnQDZZQNeMII4LMtjo9mtR8snj6dOl4deVCffPrtzdjT/7WnvQTkykZL1ABFQW585QCAiKpPymdTmauXjRuVkefhoqfxhvfhrN/xzG6yPBXujWifGIsBce6sApFSUYopa6jPvT+X2pwafz468Wb36ZRMd1y/dyDFNDoiQgEaBPWCLHFKGSExR+hOxYtqY6U4s5I3FEqkU+Mu6wEQMoGcQfa0T47fwGAuEEEmicpBKIVlSFCrKRBAJsITxH7hNDxwgPGJQlJEoO1Pth7SjKQngFOwCVVlto2oo0hWLm3o8HYrEMVU9MfwFzA6YSJpupFNmbzLdoxspwjQO2pJqpm0PWbuqbEkiJhAFM41QVcAK7w6GvQ+aafOWJM9bBrylfnuGcQfn7g0PrZ1gk7mxZZpOY9c4m6Tl1/U5QP4CBrQcA7aZGicAAAAASUVORK5CYII=",
+      "originalFilename": "percetakan_grok_5.png",
+      "size": 715226,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/acf6e648e66e7770160a21117bdf281225bf0107-1024x1024.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-ad7f3490fa9c3e48ceae473b1819bd1616f8e95c-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADJElEQVR4nIWT0U/bVhTG8/f4/9ietsc+7WHTpElM2jo0iZdpVTupaylt1dKpU1Y8hCo6WAoJpYySpAO12xKSAmMhgxhIaOLkQmLfJLYTx7F97jc5NFq1lz18OvceHf3Ole73hQBI5JHse8R7PZeMtiW0hoYmb8KyOrA6XZhWF8Ybtc3g3oPdc+E6vvA9EPnEA0bACg2Brudznbcpm82K+C9PsLuVBmM1sIYOprWgtQ20DAuGacIwg9oJFgm71yfP88+BTgB0IHkuyX2PeKXG6GksIn4K38BabBbLyReYTWwhkjrEbwpDkTXA6g3UzhqonjWgnjYE05pkdXvcc73zFzoOpK7ryZbj8mKlQonVmFiauYPw/bsYvfYAF+88xreRFCKbR8gUyvirqCJXqqBQrkApvxZKWaWa1uRG15GdAKibjsRtR661DL6eydK9B1Pi+sQERsa+wYXPr+HS7Rn8HEsgkdrFcqaAJ68UZJUCSmoepcqeKJwU6ITVeL3ZlnXHkUJMN6Uzw5ALrManFxfp4teXxeiVcXw0dh3vf3IZo5cmEQ4/xHfTC/hqag03o39gY3sT+0oau/spsbOXomMlw5mal5nOpJCu6xI3DLlYU/n80gLdmrwpHkbm8P3sPD4eG8c7H17BeyM3cOGL2/j06o+4O7eK+bU4HsXjCD9bF7GNOBVeRXk1tySz/KYUckxTcmxbbjY539lJ03p8QaTSz5F4kcTkDzI++HIC7352DyNXpzETiWIlGcfcylPcX1zGeDQpIr9ukLKT4NX82jkw+GXyPNnt93mLN6hcUkR+P4eX2QxWk0k8iq5g6nECy89fIre7icJeBrk/U8hupfH79rb4Wzkgjb3mhsZkU9eHQJIDc3quR3a3JzS9iaNiGfsHhzg4UKAUDlE8PsbJ8RFKh8qgVk5KqDMmOoZBrtM/t83Qh0Og7xH5Lgm746B+xqGqpyiXa1BVhmq1jkrlFKWSOlC5zKBpLdHvuf8m5b9A8kB+n4Tr+AigHdOGZXRhmTY6Vg8dy4YVRG/Q6wYzwuvT/wPJFSCXBvLfaHh+uzeYfTvLDqR/AOSBeFQ8FFSuAAAAAElFTkSuQmCC",
+      "originalFilename": "service-website-properti-shark.png",
+      "size": 802644,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/ad7f3490fa9c3e48ceae473b1819bd1616f8e95c-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-adbb1e64ffa7b2b719d8c705aff151901082526e-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQEAAwAAAAAAAAAAAAAAAAUEAwYH/8QAJRAAAQQBBAEEAwAAAAAAAAAAAQIDBAUABhESIUETIjFhMlFx/8QAGAEAAgMAAAAAAAAAAAAAAAAAAwUBAgT/xAAkEQACAgEDAgcAAAAAAAAAAAABAgADERIhMRPBUWFxgYLR8P/aAAwDAQACEQMRAD8At1tvH0hNW3ZS0GY8QFKH4n628DMmorNyfJmybiA3NrUN8mVteT4AOR9T6Xn2uoXpUWS3KbWOlpGxQn+ZzT6mVWUzEWneUro80r7CT5OZ0ShApVhk8+X1D2G61m1gjH73muslx58Fl4zJkX28Q1x5bAfeMk0Rfg1yGVraSrck+puT3jLObVYhDt6wPW07NXk/GSZF7YVmqnWoj5S0pexQextnbr59xLlfLQsoccBUoJ+CQP1jGSyKGqwOV7RjeSVYnx7z0fSldDlUUaQ/GaW86Oa1FI7OMYxJa7azvCIo0jaf/9k=",
+      "originalFilename": "rakit_pc_3_1775319499457.png",
+      "size": 1087092,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/adbb1e64ffa7b2b719d8c705aff151901082526e-1024x1024.jpg",
+      "usedIn": 13
+    },
+    {
+      "_id": "image-af724a01bfecd0c97373bf43f95ca8eb891bcdbb-92x28-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 3.2857142857142856,
+        "height": 28,
+        "width": 92
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAAsTAAALEwEAmpwYAAABdElEQVR4nG2Q30tVQRDHDxZKCVlKkg8S+WQUFYSQBl3MIIsL1qVTkUZdPe7OnLM/7wm8153deeulp/5jmUuPLQwfdmb3O/OdCnpeB5/ftbHoLnLAWMat51dnkVdjjDdUuNxof/E9pfgmMy9U/zl1XV+ra14UVuBmjyHSt9aVHn25gFA6HfIRBt5qTHoAjoYwoSE6foKTtCkDxMirXfd7TZoC8Pppm+4rw9tKXW5UytMIAjcihD5P5nR0gpO0hy4/R5fGEKhBQyPlyxdwPESb98Hnt8rlg3nYdKhd/ijvK2Xog3wQIXDUa5cNhPJd+byrDT0FR191KMfK0AgDA1g61YE+a88/laOTf27etDEdtp6fVcrMtnWgT+BzQF9m4AtqR+/FhrWzu02gR7IWEZfJzm0eSDOhNvklWH4xX4enh2K76qbTtSak1+jKGGNudUjH6PKOUhcrgwFft/bvkrV2qe//LCNO7/zwfFtqQmv5luTkLnXhFXKesdDoTWAHAAAAAElFTkSuQmCC",
+      "originalFilename": "react.svg",
+      "size": 8735,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/af724a01bfecd0c97373bf43f95ca8eb891bcdbb-92x28.svg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-b033b9748cd64029941dc65746f2402b10a03041-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAQFBwb/xAAkEAABAwQCAQUBAAAAAAAAAAABAgMEAAUREgYhMRMUIiVRYf/EABgBAAIDAAAAAAAAAAAAAAAAAAEEAAID/8QAHxEBAAIBAwUAAAAAAAAAAAAAAQARAgMhQRIicYHB/9oADAMBAAIRAxEAPwDvl2vDNucC5CVD4kjFeYe560lRcQ4CgjpOvdQ8vuf204XiMtqE0nRtY8rJ/Kw49st129Fq3e4117dGDr/KXMdcMsw2sr7czcsdTq3Shrzx6nX7RKVMtzMhYALgzSpeNtLjWaOwvZRbGuSME0plG4dN7S5VOtcKcnWZHQ8nOcLGami8etkRSlRoqWyfOvVKUBariXSabaEtoCUjoeKUpQkn/9k=",
+      "originalFilename": "tshirt_print_1775318428414.png",
+      "size": 562656,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/b033b9748cd64029941dc65746f2402b10a03041-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-b051d4ae284a0781e164896ba8aeec315ef5817c-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAMEBQYH/8QAJBAAAgICAQQBBQAAAAAAAAAAAQIAAwQRBQYUITESIjJBYYH/xAAXAQADAQAAAAAAAAAAAAAAAAABAwQC/8QAGxEAAgMBAQEAAAAAAAAAAAAAAAECAxEhIjH/2gAMAwEAAhEDEQA/APDeJ4mzkVY1kj4nz4mrT0qcgulFxaxBsgjWpX6a5CnGSyu9nQE7DJ7m43KYfbse5srsf8qoJH9llbqivUdJbI2zfl4cPk0nHvep/anUSTPtV8uwqWcb+4jW4iJKO8+D4t50iqco4KyzlZDWKPoRf2o1EQRbwLRV9+TERMhP/9k=",
+      "originalFilename": "instalasi_sw_grok_1.png",
+      "size": 188316,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/b051d4ae284a0781e164896ba8aeec315ef5817c-1024x1024.jpg",
+      "usedIn": 12
+    },
+    {
+      "_id": "image-b4f48f3ac7f4b9299165eb0d432a3f794ccee46a-1200x630-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.9047619047619047,
+        "height": 630,
+        "width": 1200
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMFCP/EAB4QAAICAgIDAAAAAAAAAAAAAAEDAAIEERMhBUFR/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AOYseuBwbyLuDflR1LoT42yRZjXch9ADUyogUcK1bcLO6g9ExJxA/9k=",
+      "originalFilename": "starter-img.webp",
+      "size": 10260,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/b4f48f3ac7f4b9299165eb0d432a3f794ccee46a-1200x630.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-b62b655c63426a087d4235b0976fa5ffdbd4dba6-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGgABAAMAAwAAAAAAAAAAAAAAAAMEBgUHCP/EACQQAAICAgEDBAMAAAAAAAAAAAECAAMEERIFIUEGExUiMVJh/8QAGAEAAwEBAAAAAAAAAAAAAAAAAQMFAAT/xAAbEQEAAgIDAAAAAAAAAAAAAAAAARETIQIDBP/aAAwDAQACEQMRAD8A83Y+LZe/FFJP8lu7o2TXXzatgNb/ABNl6cSrHodVSsX8TxsJ8zk8PIygj/Iew9YX6jY3uV8FaTp9E3p1U1ZB0R3iajqGFVbl2Oi8QTvW4gwcjI7oQra6MCp7jvJsjPvvADlQB+o1EToKpW5sfJiIgZ//2Q==",
+      "originalFilename": "home_grok_1.png",
+      "size": 213063,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/b62b655c63426a087d4235b0976fa5ffdbd4dba6-1024x1024.jpg",
+      "usedIn": 8
+    },
+    {
+      "_id": "image-b73adf8f0c1bd40a86e0bed7580e7ab90a9419ef-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAQBAgMH/8QAIBAAAgICAgIDAAAAAAAAAAAAAQIAAxESBCETMSIyQf/EABgBAAMBAQAAAAAAAAAAAAAAAAABBAID/8QAFhEBAQEAAAAAAAAAAAAAAAAAABEB/9oADAMBAAIRAxEAPwDzMFnfVVJnCwnRmAOF9zWvkBLvltjH5JreQRVarK2W9GU5In21jy7d9xJFc6jPRiYrood2Vsg4I9TlfyLLfu2YiLQnJiIgb//Z",
+      "originalFilename": "layanan_grok_3.png",
+      "size": 203912,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/b73adf8f0c1bd40a86e0bed7580e7ab90a9419ef-1024x1024.jpg",
+      "usedIn": 4
+    },
+    {
+      "_id": "image-b90e09d82483436b91b1dbe531cd0d4033d9624c-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAYHAwT/xAAjEAACAQQBAwUAAAAAAAAAAAABAgMABAURBhITQQcUIVFh/8QAFgEBAQEAAAAAAAAAAAAAAAAAAwQF/8QAGxEAAgIDAQAAAAAAAAAAAAAAAREAAgMEQRL/2gAMAwEAAhEDEQA/AHT1Iv7jG8Xnmsi3ueoBVA3seanvGOW8oyGfxePuGaOyaUB5DERofpq13lvDMid2NX0fNcrWduZAnaHSSPgbFMNk4/VSH0Sga1chqWuGMiwADQIYfY80VvEoWJFUaAGgKKzXHc//2Q==",
+      "originalFilename": "pc-rakitan-core-2-duo-500gb-rakit-pc-office-surabaya.jpg",
+      "size": 75099,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/b90e09d82483436b91b1dbe531cd0d4033d9624c-1472x832.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-ba6ae100b720123efd3442e7752d1330c021ebe9-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGgABAAIDAQAAAAAAAAAAAAAAAAQFAwYHCP/EACQQAAICAgIBAwUAAAAAAAAAAAECAwQAERIhBQYTFUFCUXGR/8QAFgEBAQEAAAAAAAAAAAAAAAAAAgQD/8QAGxEAAwEAAwEAAAAAAAAAAAAAAAECAxEiMVH/2gAMAwEAAhEDEQA/APPHCKB9IjbQ9gDvMU9zmwCxMCPzm32lSM0PbiTQfTuPu/eX1yn4vy/pq4teCP5KOZlDKADr6ZPGs0uWWbZVn1OUyTysxPEfzGTbVWanMYZlCuOyMZsmidp/SJWu2I+OpGIU7AJ2MuR5GwtRnjIjcnZKdbxjDSQ4p8elPdszWJzJM5Z9AbOMYxoL9P/Z",
+      "originalFilename": "cetak_buku_grok_2.png",
+      "size": 259291,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/ba6ae100b720123efd3442e7752d1330c021ebe9-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-bc5fd7b46952d58ddd06542497548bfed3dc6dca-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGgABAAIDAQAAAAAAAAAAAAAAAAMHBAUGCP/EACUQAAIBBAEDBAMAAAAAAAAAAAECAwAEBREGEiExBxNBcRRRwf/EABYBAQEBAAAAAAAAAAAAAAAAAAQBAv/EABwRAAICAwEBAAAAAAAAAAAAAAABAhEDEiExUf/aAAwDAQACEQMRAD8AvDlXqFjcDmEx9wXMzMq9hsDfzU1xye3kuHtIcjbrK67Rt/P6+6qP1ixtu/NJbu4mZZo0DrGvltVz9vcxTN+VNbCSZ5R7fS2m+9f2nLDFQ3APLJz1iz0fjpbl4WLzqxDaG1760KVFxz3mxMLSwKjEb8+ew70ofnKEqn2zJyfH8XkbkXF7aRzSga6mHfVQni+EJQnG25KDSnp8ClK0pOvSOK+G2jjWJAkYAUDQFKUqFP/Z",
+      "originalFilename": "cetak_percetakan_thumb_1775318012761.png",
+      "size": 609286,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/bc5fd7b46952d58ddd06542497548bfed3dc6dca-1024x1024.jpg",
+      "usedIn": 15
+    },
+    {
+      "_id": "image-bc99aa38948a79642b22d7003b09296eed3e2d09-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgADBf/EACIQAAICAgEDBQAAAAAAAAAAAAECAwQABRETISIGEkFRYf/EABYBAQEBAAAAAAAAAAAAAAAAAAUDBP/EAB0RAAICAgMBAAAAAAAAAAAAAAECAAMEBRESQSH/2gAMAwEAAhEDEQA/AE8s419aSxxy6jxB+84+q2l31A8yyoSAOPd8D8xKsEVhenOgdCe4ObaXX1aRmWrAkSlueFxHKy0xe1pTl/nBPkvjKttdagQhNVlikKFT2yxVbReu3iMsVq2pZAxWbzrB4Z//2Q==",
+      "originalFilename": "pc-karaoke-4tb-monitor-touchscreen-audiobank-kjb-nakamichi-geisler.jpg",
+      "size": 89363,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/bc99aa38948a79642b22d7003b09296eed3e2d09-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-bd6ec7989984c4e4faf8f5d340275b17146ffab8-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADPElEQVR4nIWT3WscZRTG918RBi+98NIL77wRQVBosXeCUkEFBQm1WqixtKh0LDFojCXQpIoN2ybFpG1ikg3Zj+xONrvJzm52ZrMfM5OdNzu7mf2a3ZmdnX3fRyahNTfixcPL4bz8zoHnPAEAHPUoPxqB9G2X1k9aTNFrUI/rMFptWH0Ldr8D22qh17Ng9W30+g4cx4U78NhoSCkoCKWU91kBx3G4bs/lidknMbFM55ZjbCK4hcmnaTxMKsgqVXRqB7CNNLqminbHhNlqot5swmx1WN8e0NGIEn8pOKdAcFWzx68kS2Rs8hG9cOUX9v6NOXw+vYqfnmUREQuoKwKalRCU8j6kSgX5igqxrEIsqUyrNagzcP8FttsOpzTa/FI0Sy6PT9O3P77Fvr59D7MPnmAjmoZUVmHUKjjS8kjmctjczSAqyojLKsLZIhNLCm11+8RxPN5nBQ4Ng9PMJi/kiuT6xH164ZOb7NadGTwJLmJrfRM7WRkx6QgxSUU8KyEqxCGIWaSUGrblMtvLH1ByrJPjhslrhsEFsprGyQ2Dj+QkMsbP0dfeu8be/fQHXPt+Bt/emcX1qUV8NRfG3bUMwmkRqWQcu/sZCIcatnMyS6bjVExHSSqxxodCj7mA1ja4nGHwwe0UuXR1ir705pfs5XfG8foHt/HW5e9w8TMeY5NB/LG2jVBCwPpWGA9XN/Hn31E8je0wISXQeGSFLM//zM9OXuECvtV6u8cvREVy6eqv9JWLN9irH07hjS/u4aNv7uLH6ftYXllBMhVDcjeC9dAqfn+0gJn5RSxthNieuEcz+wLZXF3gH8//xgV8ZxyH8sXqCXnwLE5vziyx8dkNTATD+GstjORODAf7Agq5HchiAtlUBMnEFoREFJlMimnKIW0YOjnWq7ymaWdA3/LhcETMlkVVvcGksg4xX4QkF1CUZRxKEgr5PAr5A5RkCUqpiJquo22azLYsOnRd4rne2dk8B1IK4g0p9QYj1uvaIKQOTSUvpCg6KpXq6asd1WCedDCwh6dJoecP+znQj4/f9AaUuY6Hfm+AnuWckw2reya/dmwX/vAX0fsv4MiljA4ZRkP6P2Lw/55ueA74D1iSaxUATTqoAAAAAElFTkSuQmCC",
+      "originalFilename": "service-website-personal-brand-shark.png",
+      "size": 778490,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/bd6ec7989984c4e4faf8f5d340275b17146ffab8-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-c06f28ce77e48c9e33ae54f637a63b703fd0095c-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAYFB//EACMQAAIBAwMEAwAAAAAAAAAAAAECAAMEBQYRMSEiUWESEzL/xAAXAQADAQAAAAAAAAAAAAAAAAACBAUB/8QAHREAAwEAAQUAAAAAAAAAAAAAAAECAzEEESEicf/aAAwDAQACEQMRAD8A4Hi8hcY+uKtqxDDxN+91HnMvZuhDvSQdx8CYWIpJVr99wlH20obkJZY+oKWRtnaoOoTfeZUYv2rn4Eq0XieCQYkkk8xDfo9d/cQgSi0XY0L7JItynyXfiX2ttOYy3xf2ULcI4HIiJO6iqW0pMcylPNvscgdQHYDgGIiURM//2Q==",
+      "originalFilename": "blog_grok_1.png",
+      "size": 123573,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/c06f28ce77e48c9e33ae54f637a63b703fd0095c-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-c12284006f1b418ae77c68904a7866949beed206-625x210-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 2.9761904761904763,
+        "height": 210,
+        "width": 625
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsTAAALEwEAmpwYAAABMUlEQVR4nI2RSXOCQBCF+f8/I8ktyVVziJYKqBENuIALO5iwg2LuL9VNESqHVOXwzUB3T0/Pe8Kt/kJ9vYH2/0C1ZVGhyMtfVOWFc0JbdL3UDCXoQPtPXKor037HUYIwOCPwQ3iuD98LEEcp5wQqij5juI4Hx3ZxPJxg6HuYJwumaeF0NBnLtGHbDsKQGgXYbnaYyjMMXodQFkuEwUfTkJbD/ghZmmI+e2PEiYTxaILBYIjRaAxJlCGJTUxT17AtB7PpHE+Pz7i/e+Cmvhd2E9Jk7yuVi3dbnVFVjW9ea2vousG7slBg6AY/UVM19Hsv6Pf6WC1X3YSkIWmWJCmTpTmLnGU50iRDnhUoixJ5liOJU46RhqQfyeCQDMG50/DHvfovpyne0hhIxtGlNEhL6/I3K//+3QcXX2YAAAAASUVORK5CYII=",
+      "originalFilename": "Schema UI Logo Bg.png",
+      "size": 6809,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/c12284006f1b418ae77c68904a7866949beed206-625x210.png",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-c18195c8a9b20ce65f1712d29822921a7bdf6858-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAcBBAUI/8QAJBAAAgEDAwMFAAAAAAAAAAAAAQIDAAQFERIhE1GBBhQWMXH/xAAWAQEBAQAAAAAAAAAAAAAAAAACAAH/xAAaEQACAwEBAAAAAAAAAAAAAAABAgADESJB/9oADAMBAAIRAxEAPwDoHMZEDMezM0igR7gicFj+1j5TL2NugWC5hhyG4BA0gZz317Ve9ZY20vFke4i3OF0DBipHkGlriMZZ/KIrXoL0CNSup58/dVe2KfIW5MdmMmV7GFjIrEryd2vNFRYWFra2qRW8CIg50FFYqhQBGTp2f//Z",
+      "originalFilename": "pc-karaoke-2tb-slim-monitor-touchscreen-paket-bmb-speaker.jpg",
+      "size": 129825,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/c18195c8a9b20ce65f1712d29822921a7bdf6858-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-c2bc89d00896c423fd096b4b4ab0265985164530-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAUBBAYH/8QAIxAAAQQBAwUBAQAAAAAAAAAAAQACAwQFBhESISIxQVET0f/EABcBAQEBAQAAAAAAAAAAAAAAAAIEAAP/xAAdEQEAAgMAAwEAAAAAAAAAAAABAAIDESESMUGh/9oADAMBAAIRAxEAPwD2XLa2FXUbsPBSklkA6Eff4s5DO5CvSFySs0RtO7xv14qLqp7YNSz87LiZoiwNjZ3M397qfPUgpVIDXyz5TFEXcH9wJH1St6ZLaHWv2MXHitwt333hO+w2TjymPjtxtcxr/Ad5RS9ISNlwUD2zfqXEkuA2G/wBFTY0pOVLFqliXLdaCcOEsTH8hsSR1U1uDxzYTEKrOBaW7H4URE52NXxa/Jt06kFKu2CtGI4m+Gj0iIswgBon/9k=",
+      "originalFilename": "sticker_print_1775318448869.png",
+      "size": 731189,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/c2bc89d00896c423fd096b4b4ab0265985164530-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-c3b15003f0810daed3c0992ace93f4c96628cd7d-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAQFBgEI/8QAIxAAAgIBBAICAwAAAAAAAAAAAQIAAwQFERMhEjEUgVJhcf/EABgBAQADAQAAAAAAAAAAAAAAAAIAAQME/8QAGREBAQEAAwAAAAAAAAAAAAAAAAERAhIh/9oADAMBAAIRAxEAPwD0NflLYVq5WqtbsBT2ZDGatL+WRlWqFPonoyHqz2WZWNXjg1sSV51G/j1KrWNKfUMXIpbKYl6uMEflv7nP2sjS8dvjY/NqYBgCwYbgg+4lRp1Yq0/Gq3JNdYQk/oRK1MaDhqdm8q0P1OjFoGxFKD6iIxqLYqo5CqAP5ERAcf/Z",
+      "originalFilename": "wedding_album_print_1775318366789.png",
+      "size": 694123,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/c3b15003f0810daed3c0992ace93f4c96628cd7d-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-c5881d7bc8dedd0c917702cb71fa3e8b50c8fc61-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAMEBQYI/8QAIRAAAgICAgEFAAAAAAAAAAAAAQIAAwQREiEFEzFCUWH/xAAYAQADAQEAAAAAAAAAAAAAAAABAwQAAv/EABkRAAIDAQAAAAAAAAAAAAAAAAABAgMRIf/aAAwDAQACEQMRAD8A5nwcNsjbd8R9S63iTZWWpViR17SbwWYi0GlgB+zKHPRF2Qo4jWx1HKKwgstmpM06xGrdkYEMDoiJLm2+vlWWa1yMRZYurpEjFGBU6Ms5mVZcFDBVAHxGtxEwGlpUiIgOj//Z",
+      "originalFilename": "it_support_grok_4.png",
+      "size": 158624,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/c5881d7bc8dedd0c917702cb71fa3e8b50c8fc61-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-c76c49dabfe41980db7eb82e55fb7a65e37758bd-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAQGAwUH/8QAKBAAAQMDAwMDBQAAAAAAAAAAAQIDBAAFEQYTIQcSYRQjMRUiQVHR/8QAFwEBAQEBAAAAAAAAAAAAAAAABAUCA//EACARAQACAQIHAAAAAAAAAAAAAAEAAhEDMRITISMkUWH/2gAMAwEAAhEDEQA/AKzFZ9Hd1uxLrHkupyVOpPwf7U1q9pklz6k9vBgZSSnJz+D5qNetMSoe+9Ahq2AQpLTY7iE/s1W7c4VOyAQUe3hSTxzmq2py75rRnOrerllzZ6uXiC0mPEa9pvgFR+aVnl9M3pmzIivR4qHGkqLa3OQcc0qR4rvGd31NPqzVt2auT9vjvhiKn7e1pOCR5NSLXiLYxcEoQuW4rtK3E92B4pSkUqGjXBviZ4l1XP2dA022mTaWnpA3HVZJUrk0pSlIHQh1Z//Z",
+      "originalFilename": "rakit_pc_2_1775319481183.png",
+      "size": 864401,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/c76c49dabfe41980db7eb82e55fb7a65e37758bd-1024x1024.jpg",
+      "usedIn": 9
+    },
+    {
+      "_id": "image-ca9ad54e03b2589846bcff826f5b830c3ca4b023-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAQCAwYH/8QAIBAAAgICAQUBAAAAAAAAAAAAAQIDBAAFEQYSIUFRof/EABYBAQEBAAAAAAAAAAAAAAAAAAQBAv/EABwRAAICAgMAAAAAAAAAAAAAAAABAgMhMREicf/aAAwDAQACEQMRAD8A7G8i7Hqe3VsWDEkEYMZVu3z7x2zOmnWGY3WsIW7WjZueB9yjq7W1J6xlkgUykgFgSD+YvqdTRQRla68j6Scl0umNsHVFxsal6aapYWzXSVAQreQDhk4o0RAFUAfMMytZGpPg/9k=",
+      "originalFilename": "pc-karaoke-2tb-30000-lagu-not-audiobank-kjb-nakamichi-geisler.jpg",
+      "size": 105652,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/ca9ad54e03b2589846bcff826f5b830c3ca4b023-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-cb0cb96790055cdca0da6b0564c94f94677b087b-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAQHAf/EACYQAAEEAgEDAwUAAAAAAAAAAAEAAgMEBRESBiExBxNRQWFxcsH/xAAXAQADAQAAAAAAAAAAAAAAAAAAAQME/8QAGBEAAwEBAAAAAAAAAAAAAAAAAAECESH/2gAMAwEAAhEDEQA/AMC9k23FsLeTtdgBsn7KW1h78MojmqyxyO8Ne3RP4Wo+l3UnTeLqRxZJsde4X7FlzA/R/i71nncdFlBeqZCrbsglzeQ5AfGvhZ1dTWJFnMta2Y7brTVZ3Q2I3RyN8tcNFFVnLrshk57Mri58h2Si0rc6RZIxx5D691TkHhwZxjjZ+o1tEQBAURExH//Z",
+      "originalFilename": "cetak_buku_grok_3.png",
+      "size": 227303,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/cb0cb96790055cdca0da6b0564c94f94677b087b-1024x1024.jpg",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-ced4680717d0c1b64552da3247befee3c3d433f8-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAMHAQUG/8QAIhAAAgEEAQQDAAAAAAAAAAAAAQIAAwQFEQYSITFxBzNR/8QAFgEBAQEAAAAAAAAAAAAAAAAABAAB/8QAGBEAAwEBAAAAAAAAAAAAAAAAAAECAxH/2gAMAwEAAhEDEQA/AKBxONuMpdpb2lNqlRjoKo2TNvmeJZDF0i1xRdCPIZdaknx/mlweaS6I2RsDvrW52fNuXJk7ImrULOV6fO9+43LOXHWgeutTfEypT2iZc9Tk/piFFhHKOGXyO4ktxd1bj7WB9DURIiCIiYR//9k=",
+      "originalFilename": "website_company_grok_1.png",
+      "size": 109805,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/ced4680717d0c1b64552da3247befee3c3d433f8-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-d20faafbd8b43e41cb54dff6da576cc39a6bd19b-900x900-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 900,
+        "width": 900
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAIFCP/EACMQAAIBAwQBBQAAAAAAAAAAAAECAAMFIQQREhNxFCIxUWH/xAAXAQEAAwAAAAAAAAAAAAAAAAAAAQID/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A5fCk/AJ8RwbPtOPybNkvi22mEfR0a4BYhmGQSNpWov8A3J1+lpLTKcCAMnO+/mbKMOJVQhnYqvFScD6iSJiIgIiIH//Z",
+      "originalFilename": "nextjs-image.webp",
+      "size": 5334,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/d20faafbd8b43e41cb54dff6da576cc39a6bd19b-900x900.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-d4cf9cf93f44d1b65bfa451e084c3c7f99fd5b0e-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGwABAAICAwAAAAAAAAAAAAAAAAMEAgUGBwj/xAAjEAABBAIBAwUAAAAAAAAAAAABAAIDBAURIQYSQQcUIlFy/8QAGQEAAgMBAAAAAAAAAAAAAAAAAAMBAgQF/8QAGBEBAQEBAQAAAAAAAAAAAAAAAQARAhL/2gAMAwEAAhEDEQA/APP3TeDu5y62pjYDNORvQ44V+/0xkqlmatYqvjmiG3Nd4C3fp5aixPuJpZ2RSO0Ad86XKcnnat2u+aSxDLY7ddzjzpZuu0bpB5My6akj08ghFLbcX2pXNbsFx0UTSUnNjHM8OHPlT27DntHxa38hERV1qncftERTG3//2Q==",
+      "originalFilename": "cetak_buku_grok_1.png",
+      "size": 191477,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/d4cf9cf93f44d1b65bfa451e084c3c7f99fd5b0e-1024x1024.jpg",
+      "usedIn": 2
+    },
+    {
+      "_id": "image-d955867c8d41813d31a62b5b433c9724ba833ccb-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAYHA//EACMQAAICAgEEAgMAAAAAAAAAAAECAwQAEQUGEhMxFnEhUWH/xAAWAQEBAQAAAAAAAAAAAAAAAAADAQT/xAAaEQEAAwADAAAAAAAAAAAAAAABAAIRAxJR/9oADAMBAAIRAxEAPwCNXenJ6t40uQrxxSA6RvQf6zb4/UqxjzFfL3BgNb9Yxcjyty3wlN7M3lkj7gjMikgfesQuobMyToqyMAw2359nGMJha8lr4OEeWsdBusZ5Li7DXAoEhqN2xk/wfvDJhPYlZ9lzvWGTSP0fZ//Z",
+      "originalFilename": "pc-rakitan-core-i3-4gb-500g-lengkap-siap-pakai-untuk-office-admin.jpg",
+      "size": 128397,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/d955867c8d41813d31a62b5b433c9724ba833ccb-1472x832.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-d99d3b372917088a7c1dc41fd4c8af2faa1453bf-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAUEBwb/xAAjEAACAQMEAgMBAAAAAAAAAAACAwEABBEFBhMxEiEVQlFS/8QAFwEBAQEBAAAAAAAAAAAAAAAAAQMABP/EACIRAAEEAQIHAAAAAAAAAAAAAAEAAhEhAxITMTJRYYGRwf/aAAwDAQACEQMRAD8A7/ufcSdBWsmgTJOceI1H0vf1pfMISUaBH7H1Uffirm/1YY090MnPjxl0M15v4PVF8oXxLAfHERGO64cjs2kuxBpA736VNtnO55B6RR8x9XbkMFyQYEwQlGYmKVK2ku4ToNqq6xyAOPU59UqyDRpbm6daubymkOT+ojE1mdoli645WKmS/M+qUpFcERKoJUCFitQwIR1FKUoWX//Z",
+      "originalFilename": "book_printing_1775318240720.png",
+      "size": 680300,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/d99d3b372917088a7c1dc41fd4c8af2faa1453bf-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-db39b3ed7f53e32dd5cc67ae85bfad8258b46fa5-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADkUlEQVR4nI3M3U9bdRzH8fMfGC+MMd7sH9A7ExOSJexGSdwVRmOyC5Y5zTYCaoSzIASHYd4wyCa4sRGwPDMYDyrQCbQdYAXajvb0nNJCT58fz2lpS0tb2vP7fswweu3F++7zeXEaEU8a8RWN+EJF49VChT9MF3mXWuDjhTJfOMnyxbCbV8Nu3qcmeUGN8ltxNy+oYT5ZKPDFinb+PXeIeE5jkEpVJmVLVSmaOZVc4WPJ7EtLu+GMJKezUvY4LuV9ghSSHZJLiUgHmYRkibolq1eQZL9XUo7T0mmlKr1yGIPEnVU0SuXLZPUqNGkQqWduj+4uStS/GaU/3AkKxSOkRn3k9Mn0MpYgXzpFFuceTU8M0uhgLxnWVygSj1PprEpalRF3Wq7Cp+QwuuZAQ/cs6jtm8GW/CZ0Lh3hqi8MdUeFPKDDLMVhCCoJJBTbzOh503MSt+lp0t30Fi82KXKGMyhkDlymewZVMYcK4h2tdI/j8jg79Y8+xsL6PbVcUzmAKgj+OHU8Iu54QDgMhyI4t6B99hztX6/BD29cwW6xIZgvIFyvgErlT2GIxTG7t4GrnIK60DuDB4znMzOkxt2bBssWLvaMQHN4A/hSOIHi8SAUF+LenMT/cC93cEnY8QfjVLJRcHpxfyWJZOELPghF1zT/hnU+6cblpAA3tQ7jWNY7uKRMMB0ew+2SY7SLcXg9SahDe4CH0+26MWiKYdarYDSQRSifAuSNpPFrbR/MTPS41DuDtDztw4XIX3r3Sh5rGETT9rMf8X3Zs77+EbdcIv8cGbyKOzfAJxp0Z3DXGcHvpEAMbIrbdHnCxdB7ze1606gy4+EUf3qhpxGvv38JbH3Si5uYwvn/yO57p17Gy+it2VsdgN69iQwpgeD8NfukI9b0m1LYvoqFvFRNGO7hSqUpyIktjGw76+NtBulDbRK+/d53evNhMdTfu0f3hSZp6OkW/6IZocmyIppbX6OELmdpX/PTZgJku3Z6lj9qmqWPERJuOIHFaFax8pjF/7JhN663sm55Z9mnrEKtvGWIt/QtMt/KCzTw3svGlVab7zcCGTQfssTnG7huC7MdFgd17ZmUzJhdzyEmWzZcZxxhEMIjVqiYqxwXRKSfEbUdAXLcFRPNBTHSGU6IrrIrOQEIUAopoj5yIQqwoitGCeBDJiHIiJ6q5kliuaucOp2lo+a+K1qJpWguA/9WrbaXyT/8afwPfHUYxD8Hu+wAAAABJRU5ErkJggg==",
+      "originalFilename": "service-software-custom-shark.png",
+      "size": 852398,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/db39b3ed7f53e32dd5cc67ae85bfad8258b46fa5-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-dd47b213d06f7ec9a1cda8799e0053917c77aac6-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAMEBQYH/8QAIhAAAgICAgICAwAAAAAAAAAAAQIAAwQRBRIhQQYTMVFS/8QAFwEAAwEAAAAAAAAAAAAAAAAAAQIDBP/EABoRAQADAAMAAAAAAAAAAAAAAAABESESIuH/2gAMAwEAAhEDEQA/AONcVwNeZSfuyq6LGG07b0Zao+JFLmXNzcavS7A7eWlTCyHGLXWR3qX82fzMlyebZmKr120239BoqNHQ9S+YyTy3t41zPwGxslqletwPanxEcg635BdiqMQNgRFWuVRbHA6hj135HoyW6wqVasCs/tfERAaoQlix2x2TERAL/9k=",
+      "originalFilename": "home_grok_3.png",
+      "size": 217197,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/dd47b213d06f7ec9a1cda8799e0053917c77aac6-1024x1024.jpg",
+      "usedIn": 5
+    },
+    {
+      "_id": "image-de6cb1ad1912f98d389a10dcded975a442616bda-1024x1024-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAADU0lEQVR4nF3La2/bVBjA8fMN1o2mSew4vju+3y+xHTuOkzZNmjZptqhVaFm6S6BFm9at2sZGRRASE1UREhLai0loQozLBEggkBCv4Jsh220Jk346es55/gd4lpbSPTt1dj179O1zTnJ61nmQxqBqqAlTy7imFnl2O641gqpr6VVDyzhZZmjzPbA05YKpyo6hDnutx4d77+6NGkHVt7XQNZYjv9Oq172qrWvzPTAU2VBkW9ea9bC7shzV/EE3nj2ePjm80W/Xu7G1vRkfP9w7+eT9na0NxzB0WdaVhKHIQJUkVZJ8x5lOJqefPnt0/3C40RmtNcedVtd3B53o+NH+r69Pv385u7F7zTHNrM8AWRBkQbR0fWdr+8VXz3/89tWDu3d6UdCv+cOV1r2D93745uufXj1/enR7rbPq2K4iyZIgZIDA8SLHCxxvmebOeOf4w9mtW/ub7d7+eOfk4w/++PnlP3/+djJ7uNWrh76nG44kiELaCxwP2Aor8rypqaahqbpjuCu62/Fq629vT7/84vTvv17//st3R3cPus3AMk1BkDmWYyssW0lOQNMVWZJ6nebVQVs3HYxzCCli9WXN76+Pbt4/evLR7NnN6YPm6ki1Yk7QGIZl6EoGUBTDcUKzEfTXms2ourEejMet3kZLqbZove1Gg63t69d3J8PhKIrbmmYxNEuRDEkyFMkAgqAJkmYYVhHFwar+2dPGi89Xjg5i24swsSFb8bDXuDepH07Cd67WQldl6ApO0MkvnAYoRqIYWS4TBE6Grnh7t3ZnGvV7AavUykJESaHrepur9rWu1Y1NUxNIksq+oBgJkDKeKZdxgmJZyWZVnxJ9jA9RsVHm65gQUHJAiT5esVCSL6PExRcAlVD4HIRQRVQqYFoB0yDKRCouTDsQZSYIo4DKEMLAJQyCz3pQKCL/gdAiTEAIXcJYBBcQQizhfAllIIQswkQBxgsQOt+DpTycKJQuoBglK6bt+KbtGWZVVg2cYPLJCk5kfQosLkHzcktQGaN0wwnCuB41g7BhOx5Jc7k8vJgrJk12pgO4sliY99ZiIZeHYQRHcRonKhhBIyiZLyJvZBmwcGVpTj6VzpdT/9u+IQ8uLeQuXU4tnMuu2cv8ML9Kr/8ClLPvo+f7eV8AAAAASUVORK5CYII=",
+      "originalFilename": "percetakan_grok_1.png",
+      "size": 633674,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/de6cb1ad1912f98d389a10dcded975a442616bda-1024x1024.png",
+      "usedIn": 3
+    },
+    {
+      "_id": "image-dfc6f0cccb9d44068ecc431cb57ba8be5ebb5fad-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGgABAAIDAQAAAAAAAAAAAAAAAAIFAwQGCP/EACMQAAEEAgEDBQAAAAAAAAAAAAEAAgMEBRESBiExExRBUWH/xAAYAQACAwAAAAAAAAAAAAAAAAADBAABAv/EAB4RAAEDBQEBAAAAAAAAAAAAAAEAAhEDEhMhMWFB/9oADAMBAAIRAxEAPwD0Le6ir1b74JmSF0Y7lo7KprdeUbdaeeKva9OJ3HfHyfxRz+Oe7KGavXe8zni48uxGtFc9j8H7etPVbTmbG14JDSfI+dpamXWPyGXTqOAerNebm4NCNz9Pi7zE3WZSiy2yOSNr96a8aKLTwEskOMijkYQW7A39IliWz1OAOIVxO4tcAFGY6Y4hEUeeq2jixgAAAAIiIYRF/9k=",
+      "originalFilename": "brochure_print_1775318277612.png",
+      "size": 592252,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/dfc6f0cccb9d44068ecc431cb57ba8be5ebb5fad-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-dfd137f5f9e0a4360cb224b9a4f4ca9f5d722c86-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGgABAQACAwAAAAAAAAAAAAAAAAQCBQYHCP/EACIQAAICAwACAgMBAAAAAAAAAAECAwQABRESQTFhBgchMv/EABcBAQEBAQAAAAAAAAAAAAAAAAMEAAL/xAAhEQABAwQCAwEAAAAAAAAAAAABAAISAxEhMUFRBBMUI//aAAwDAQACEQMRAD8A9G7nfQayzFA6lpJFLDh9DOD7z85eVLMtGYwiFeEEd63c1X7RkdrVqRFJYhYYz5c8WOY0NXQWvRpbYBPOHjlD/o/eC/8AKNWUm3yANa2paj/ra7xqQi8c3Od9Ls7TWGt6qpYcgtJGrE/fMZFqRFFRjiqys8CDxQn0B6xhewHIVwplgi7YUW70dC/aLWofM+Qb595PY0dGxMkssRLoOKe/AxjDJNiOCtSaGvk0WPavqxLVhEUPVQf3mMYzgYCVxJNyv//Z",
+      "originalFilename": "packaging_print_1775318295503.png",
+      "size": 533292,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/dfd137f5f9e0a4360cb224b9a4f4ca9f5d722c86-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-e0381565e80766d80078af72551c2d55f7b23f62-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAcBBQYI/8QAJBAAAgICAQMEAwAAAAAAAAAAAQIAAwURBAYSUQcTIXEVIkL/xAAWAQEBAQAAAAAAAAAAAAAAAAAEAwX/xAAdEQACAgEFAAAAAAAAAAAAAAAAAQIRAwQTFCEx/9oADAMBAAIRAxEAPwCYYni2Zh2SiyqoD+rW0PqZyfRWSVGtrt49yDZHY+y2vAm09GWwX5m6vqdlXiFO5SxPy3iV/Ncjonj4hxhKfc5YRhUyk6Qn7i6bdJGaoxxK7R5cal1YhlII+CDEoT9OtY7Oy7LHZiI2JEOfjOaxCjvU6lHwxFiLtFGvA1ESuD0Jr30zolqTtH6iIiPMGz//2Q==",
+      "originalFilename": "website_grok_1.png",
+      "size": 147343,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/e0381565e80766d80078af72551c2d55f7b23f62-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-e161ab318d8221755733c3b4d7b13b7390c846a3-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADUUlEQVR4nHXTS28bZRgFYMs/gz/AjjXMihUSGxYVEkIqEgsqFghEAlSiLZ0iBA1NSFKgTuxiN7XrS0ycxJE7NjgXO9fGCfHdip04IY4v9WUcjz3j+WbG/g4KtGoLYnHe5SO90jk6APpuV2UUtc/JSp+IskbbXQ1P05E1SEQDUXpQ1T762rP0tD7t9yD3e/BRSl89t3Tnp1jlmWK9zZV5kdSELhUkAklWIckKRJlAlESIYhtSR4AsCiCyBFXRoP0faPHtMZbfE9xU6JDMRys0enKGakvEWaeDZquBdrMAkT+CUM2CL8bAV/PodNogikZ7vf6LIMtCf2kkwHz4U5D7yLxJrnuz1L1bRqJQQ/K0hEgui/RBEoVCBpWTPTzOBVA/XoJQS0LqVKmiKnLv3+CgMczcsAS5cccysQdjdDV9inShgo2DPGYjcXi3d7GaSiKT20M59Stq0VHUoiNo5jkqi3W51+s/D7L6y3fmmPF789yMy0uW/Es0Es8gfVzAdvYIgWgGvt04VpIZpHIpHO+6kPR8jJDpHew8HKblYlZuSbJPUtV/QB3L6l+7yDIXPhnhvvj2Lrn5s4OaZxaxEt3H6v4hVjL7CKf2Eclkkf8zh2I8gDXrNRhuXILNZqBbqaScLlV9pw3hCahj9S+9Mci88u517q3BYfLelTH6+agN7rUdeDMJeFIxrCbjiCd2kDvMIJ3YxOLsBB6YWHgWHtDFWEzePDjxxU8fP3lZp9O/fHGIeX1wgvtgyEgGvhuhg0MTuDPLYXJpEYbgMvyhICLrHH5b38Lk/BKmXEYsz12Ff+EWXVgP/Q3mGo1n4Puskfn0Byt3y2QhE8YxOvrjGEYnjBj9xQzDfSscThusDjuuTnpw4SsLBm5+D6f1S0xZv6E2f0CO5Iu+hiQ97SGrdzqtzJz7PvdwxkICMybqnb6LabsZdvsUXNNOWKfd+NrgwNvXzHjzs9sYGB6H2WWCm5ul4WhKLtZbPlV9rtiRjTCzvRnmHm2tkfWtTRp+tIPQdhShnQRCf6QR2E7DFtzDbc8aTN5l+Dc2EN1P4ahUpE1BlBWl9+JSeJ5n6o0zrsa3SIUXaLkhotyQUOa7qJyn2UWJl1BqtFE9EyCIHciEQFW1/0zvLyBpNpJX10rcAAAAAElFTkSuQmCC",
+      "originalFilename": "service-website-konstruksi-shark.png",
+      "size": 858124,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/e161ab318d8221755733c3b4d7b13b7390c846a3-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-e57753070d413d5ecda8e0ff356fca7d22691534-1200x800-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 800,
+        "width": 1200
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAADd0lEQVR4nFXSyW8bdRQH8Pl/uCFuHMsBVCSQEByQQBUSpTIjoCKikZqSktCgRGQhzU5bZ3U2K3YTx4mzk80l8TaTpbGxHSdp7CZxvIw9Hvs3v3lf5JAeOHwu732/7/QEAKYrHCZ+TeMwqQymDINJ0fgVVftvXsbKuesO8H+CYZDEdEPSmCGpjEv5oi4pRSapTJcUTZfOsqp0llElRWMS44ZU5Fwq6FxSyxiXNJ1Lum5IOjek8i1BZwYpBUaJjEbhRJp84Ti5gwnyH2fIf5wmlxQjhy9K+6+SpGgaqcUipfIqHSczFHmdong6Rxm1RKqmk844CaWSgYusBncwga5JD+4/XUBlvxt1MzF0rp2iYVpCzcQLOP1hxNNZpHJ5xM4usewL4vm6BG/oBPF0Hlm1hFKJQygUOU5SCuzufdypH8cnlWb80DaDBvsO+jZf4claCK0uHxZ3IkikM7jM5fHyOIGxRQ+67X9hes2HbfklguFDJJNpCOXLoeQlXIFd/NQyjFv3u9FmnsTs/CZWA2FM+Y8w8iICbzSB6OsL7BwlsB08huvvPdhWtmFzzqGzow0tzc2YcjghXCgFbMVOMe724bv6Prx/ux53f32Grl47nowvos6ygdoxH2ybIQwt+9FgXUOvy40Vr4TAwQG2NxbQ+agCpi8/w4OfqyHEU3nYPSHUjizj03s9eOvjarz9eT1uft+JD8U/cON2Ez66Z8bdxxOo6LDix7YhNJn7YXXYse734GBnA6ujTWisqcBv7Z0QkoqGWX8EtYOLuFM3hJviY7zzVTve/fYpbnzdgPduVeGDb37BF5WNqG7twZ993bD0NaO3vwsD0w6s+tbh9izCMu9Cz8oWBK3I6TBxSa4NP1mez1J77yhVtQzSg1YL1TR10MNHdVRV85B+b6yj0YFWmrW2kWO4hQbNLdQ7NkBT2+s0uR8kSyBMtt0TuvrDYoHR2dk5hYJ75NtapfUVJ60t2GnJOUwzE2ZyWJ+R095Pc84RmpudoCmnjcYmrGSbn6elgxAtRRO0GT2nyHmOBINDNnRDZkUm55WsnDxPyPGTqHz0z64c3PXJAb9X9gYCskfelbf2DmTPfkT2BmOyZ/9Q3ovF5aO0Ip9mC3JS0eRikcsC5xDfYIyLnEFkGhc1jYk5lYmZHBNT1zJqecZFtbwv58rKvTddDvFfkPpRxwrJ/IkAAAAASUVORK5CYII=",
+      "originalFilename": "service-wordpress-migration-shark.png",
+      "size": 857352,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/e57753070d413d5ecda8e0ff356fca7d22691534-1200x800.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-e7fdc300309cd01c7ad73ec08cc262d4648f443c-1024x1024-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAADKUlEQVR4nFVU+U8TQRTm72jLsUfLzmxh20JpoVAotamAEQ+gSAQhqEiExANEjPygRiCoAQ9uCAhYCGcp940CIhUoRw0kFDkSjRij/4KZ7bZdkpfNmzfv2++b996Mj5AEIhKICCAk0Nfj8w3FOQeiBBKymdCHW7AY1qAXRkKXiUguKGJ9HhhFuW2RNw8i86S6d4VsppsG+PC0sRkEZLWxYO9ZUNAVcctGOT5ImFcqFOJAgFFCAvpJpDhkYIhKpdWFRERhgOFoeeZldgkjaZlMpdEajPEXk1IyMvMKC59WlOfdLwiNjBWRtPvA3EFcYETuK6YZVcTVrMzSiucNTTUtrQ19A+3TSyPza4tt/f3pOfmUXO0Wz+IJjhkKcIBDWWpGeu9A587u+ubaon1+8Gjbuv9jznZkn1y3l1U3Rp1N9JVIeQVHrUKeAKcIWnY999byyuzJyZ7D9nF/uvvvRqfz2DJ/+Hl8e7uuq//clWsYlPG7xYGFBPCTSM8nJVtHeo6OtzaXZw6mev6tmZ2HPQtHc1M7Wx1DY6bsHEKq8Hbbw+zCq7S6t7VVu3urDvvC7lzfH0f3z1/9337P2g7WzcNDqdk3T4HdQ4LWAhxQTOjdooJV+6d95/rXxSGHrdPp7NlwDo8ujb2obczIuqFUqv3FvFa55wGZf2DQ5bS0scmB7wdb4xPjjY1N79vq27pa3zW3vayqf1V0706CVhtMY2KvbG6G0V9IoNEbGpprHI5Vq3WmsspcXfOhw9w7YLFa+ro7y4vrTFEPomGsjMYlbtncAIqhgKBohephSfGXlXnbyvLo6IRl0GLuaq+ufV38uCjDdClHpyjTg0cx0CBH/CyYVzMMBF9IMb2prmxuqXlW+iQ3/3ZiSrJGp6cVYRhgaABNSlCiA5lqCCnUKt5FI9Gc0QqVzhivj0tQRkYDeRgOZX4SqZAAAvaSUoFQzwAdA8QST6s84lk8xShVWr0m1hgeY1BHn5Gro3DAeAj8SRgghr6uavORCEzSgUxoeIwhxpigNcRpYo1ytRbjgdnSnhoS10XlniE/MR1ABWOAwQGDUcH+kiDP68FLhv8BZKdMzjQUpmgAAAAASUVORK5CYII=",
+      "originalFilename": "percetakan_grok_4.png",
+      "size": 625939,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/e7fdc300309cd01c7ad73ec08cc262d4648f443c-1024x1024.png",
+      "usedIn": 2
+    },
+    {
+      "_id": "image-e83fee6a672a9df53548878eccddc0f962d1cac8-1920x931-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 2.0622986036519872,
+        "height": 931,
+        "width": 1920
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMCBAj/xAAcEAACAgMBAQAAAAAAAAAAAAABAgADBBEhEjP/xAAXAQADAQAAAAAAAAAAAAAAAAAAAQID/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhEDEQA/AM35gpSsFL2a0gEje4nFf3coLkjXfUQsZi/WbWIi/wAXiuNQkqgCg2BCBv/Z",
+      "originalFilename": "Presentation-screenshot.webp",
+      "size": 73126,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/e83fee6a672a9df53548878eccddc0f962d1cac8-1920x931.webp",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-eb137cd25bca4f86d8947dcc0f0639fff790fdb8-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEB//EAB4QAAIDAQEAAwEAAAAAAAAAAAECAAMRBBIhMoGR/8QAFAEBAAAAAAAAAAAAAAAAAAAAAv/EABoRAAICAwAAAAAAAAAAAAAAAAABEjECAxH/2gAMAwEAAhEDEQA/AN0Db0CtsClSdjjzVV872I+Pm563ZN0VJZntd/Yzn5afH0H9Meadpj1xdj66y1akj5IhKVACgCEPWKCP/9k=",
+      "originalFilename": "pc-rakitan-core-i3-3210-gen-3-4gb-500gb-rakit-pc-surabaya.jpg",
+      "size": 86287,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/eb137cd25bca4f86d8947dcc0f0639fff790fdb8-1472x832.jpg",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-ed73fa001ce0aeaa0ea1f3bd044e113eb49ea2f0-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGgABAQACAwAAAAAAAAAAAAAAAAUBAgMECP/EACQQAAICAgEDBAMAAAAAAAAAAAECAAMEEQUSEyEGMUFhFHGB/8QAGAEAAgMAAAAAAAAAAAAAAAAAAQMAAgT/xAAhEQABAwMEAwAAAAAAAAAAAAABAAIDERJREyFSkQQiMf/aAAwDAQACEQMRAD8A9GZXIWnNspr6VWvWyfnc6tuPnWEvVlJ/R4k4clTQ912W5qDuNbG96nJZ6jwb7kGJnoq+xXtk7mioIo07ZSKH64brPH5Vr0H8gg2KxUkfOokQ5OZTfeq45Ze4Srb9xEjPJjtFzgCg6B4PqCQq2Tx2O5JcMT9mT7OPx6ztE0fqIgjjZhWe92VqE6fAZtfuIiO0Y+I6StaTke1//9k=",
+      "originalFilename": "project_ecommerce_1775323655506.png",
+      "size": 538486,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/ed73fa001ce0aeaa0ea1f3bd044e113eb49ea2f0-1024x1024.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-ee07c319f8b6cde719e9db4b3480a83821a227de-284x65-svg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 4.369230769230769,
+        "height": 65,
+        "width": 284
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAAAsTAAALEwEAmpwYAAABUUlEQVR4nCWQTSvFURCHb9bkvbihJAsvIXZ2UoSkUBZXyX05/zNz/M+Zc3O7l3vOzKUoyYLkg1gpS0sbe5/At9BhMU0zv6dnagoi0lU9a09qF7ey/GJW1WWoimEus2Fa5e2pWt5erVhZKJtGseJlwJjW4Gl+MWyMFBFlJPGKLkczez2tTdwslBt3PRld7QHJC3jBJDIky+BkHxwfaWIDLtY18Ulmw3aqdBwo7iiSDaC4i9QpZZYr2kkooJMl7eXJ1Dvf6OQ1wdrKPFg+BcdN8NwECo+a+EG7SGCjTpmy4TgjLgHJOXi+0Y7vwMtzAT3X0PM7+s4PknwlScWFGbBx5U/u4iaQKLCCkMddlcc1ZeO6tvEAKRwicQkd17STcuKS8B48v4HnTyD+0BQesrOwiIjdzkkftFr9UG+PKysTxtwOKtXsTb9M8/9OiilPvZrL2C+kjqRblxOuzQAAAABJRU5ErkJggg==",
+      "originalFilename": "vercel.svg",
+      "size": 1081,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/ee07c319f8b6cde719e9db4b3480a83821a227de-284x65.svg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-f034832b67b81edebd311bc7ed22662f8769a3fd-600x400-png",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 400,
+        "width": 600
+      },
+      "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAIAAAAmMtkJAAAACXBIWXMAAknwAAJJ8AGtv6cTAAABQklEQVR4nJWSXUvCUBjH99Uqir5A0ZWEGZi9QK/X1QfQkHXZutXAsBu7So0OloIaGxuMwWBzV1MYc2du55x1DIVohlP73T0XP/7P/+FhhpNQSr9CUEqH0TDhwff9Xq/X0Tu6NkLXNMuyCCHzZUqpZVm1Wo2749hs9iaTuec4QRA8z4vKZ8Jyv98vv5Qvzs63Nja3Y7FbllUUhRCykIwQatQbp8cn66trRweHr9Wq4zgzajNhGSNUf//Y30utLC3v7iSeikXTNIMgWEgmGH+229eXV4l4PJVMZtJpnud935+/dhAEEEJFUZ5LpYd8Pp/LPRYKrVar2+0ihGbJdFzYMIxmswkAAG8jqpUKAEAURdu2p4Yzv4UxNk1TlmVJksQxPM8LgqCqKoRwgYNh7LouHOP8MBgMom428WE0gqnmX/m/fAMfgtK+eO0T7gAAAABJRU5ErkJggg==",
+      "originalFilename": "payload-projects.jpg",
+      "size": 13115,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/f034832b67b81edebd311bc7ed22662f8769a3fd-600x400.png",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-f0e052acdb1a1f25628e3fed188ace7c9ae23294-1920x1280-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.5,
+        "height": 1280,
+        "width": 1920
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAANABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAgCBAf/xAAiEAABBAICAQUAAAAAAAAAAAABAAIDBAYRBSESFEFxcoH/xAAWAQEBAQAAAAAAAAAAAAAAAAADAgT/xAAdEQACAQQDAAAAAAAAAAAAAAAAARIDERMhMVFh/9oADAMBAAIRAxEAPwDQMWzPHpMfqm5yEb5S3vQUrGZ4mHEeq2fhJhV5K1W8BFK4NHttXGc1bksNDn9bWN0tbbFmr8DcjNcT13ZcD9UJRJOQsOeSZH/hQjwesua6P//Z",
+      "originalFilename": "luke-peterson-eYBNVOJWnBc-unsplash.webp",
+      "size": 243784,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/f0e052acdb1a1f25628e3fed188ace7c9ae23294-1920x1280.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-f1b6c9cdb4de401b0111a4adbc792c550baa7b8a-625x210-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 2.9761904761904763,
+        "height": 210,
+        "width": 625
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAHABQDASIAAhEBAxEB/8QAFwABAAMAAAAAAAAAAAAAAAAAAAMECP/EAB8QAAEDBQADAAAAAAAAAAAAAAIAAQMEBRETISIxQf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A0PUhcnMtEkIjnxy3xRSx3PUTbInLHMc6iKixbAqgpBGsNjmz129IiIP/2Q==",
+      "originalFilename": "Schema UI Logo Bg.webp",
+      "size": 4068,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/f1b6c9cdb4de401b0111a4adbc792c550baa7b8a-625x210.webp",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-f3a23c5524597c1add42a4ce2c4415882d72c873-2048x1152-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7777777777777777,
+        "height": 1152,
+        "width": 2048
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQI/8QAGxAAAgMBAQEAAAAAAAAAAAAAAAECAxEEQRP/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDMVFX1nmpL1tlXTxVwhtNym/U8RCDdAAAP/9k=",
+      "originalFilename": "headless-cms.webp",
+      "size": 17682,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/f3a23c5524597c1add42a4ce2c4415882d72c873-2048x1152.webp",
+      "usedIn": 0
+    },
+    {
+      "_id": "image-f515be607a49d8d25b983967486b2b49e9354d7d-1920x2880-webp",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 0.6666666666666666,
+        "height": 2880,
+        "width": 1920
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAeABQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAYHCAMF/8QAJhAAAQMFAAECBwAAAAAAAAAAAQIDBAAFBhESITFxBxUyYYGRwf/EABcBAAMBAAAAAAAAAAAAAAAAAAMEBQL/xAAcEQACAwEBAQEAAAAAAAAAAAABAgADERIhEyL/2gAMAwEAAhEDEQA/ALtnjbb2F3YaG1NGsY3KAG7slGvVz+1rPO8hjQsTnB51kqcSUpAWNn2qB3HDbhIi/O3HWmWE6d5WfJTQbW/WQqVMy9T02Rb4zLbT7zaHAkbBNFTTLZyn726pjS0BKQCPI9KK2tYIibWkEiMXcm+41HbS4ncdIUSpWz4+1dURsjvTKbfHlSH2NBCwEcoA96eYOJW7HbaxMHb6yeeT4H6piYuSFRdsshpOvpSNUvXX2d3yULb/AJrznsnlu+G78OKGl3NKVb3zx1r80U2SZyi6fWimw+eSaUBOkT//2Q==",
+      "originalFilename": "robert-visual-diary-berlin-lstt3exjBr8-unsplash.webp",
+      "size": 601696,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/f515be607a49d8d25b983967486b2b49e9354d7d-1920x2880.webp",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-fb65acab5133b09f47f8dbff24098f5435f1edf7-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAYBBAf/xAAjEAACAQQBAwUAAAAAAAAAAAABAgMABAUGESFBYSIjNoGR/8QAFQEBAQAAAAAAAAAAAAAAAAAABAX/xAAYEQEAAwEAAAAAAAAAAAAAAAABAAIRA//aAAwDAQACEQMRAD8Addbywk1+wVmA9kAn6qxPcLKkqq4clD0A8UjaG7XKQQzMWiCdF54rQZ0XH2cjWaiJj3A5P6apFVINck6jf5VcHCLfEzypyfUp470U8aN8eh8sTRQLc6ikSOmz/9k=",
+      "originalFilename": "pc-rakitan-core-i3-4gb-500gb-siap-pakai-untuk-office-admin.jpg",
+      "size": 55741,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/fb65acab5133b09f47f8dbff24098f5435f1edf7-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-fb7ee59c811ea9adc087ca996506c2cf12151b47-1472x832-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1.7692307692307692,
+        "height": 832,
+        "width": 1472
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAEBf/EACQQAAICAQIFBQAAAAAAAAAAAAECAwQABREHEyFBURIiMmGx/8QAFgEBAQEAAAAAAAAAAAAAAAAAAwEE/8QAGhEAAgMBAQAAAAAAAAAAAAAAAQIAESETMf/aAAwDAQACEQMRAD8ABm+JbLxCRWaHpy0H4M5+r3tR9J3oqgc7Rs596/eLuNdOvpHFGu2mQrWMnV+X03OZ7UMc1qFJVDK0bOd+585trMhIpb2CItPkmjDvWhZz8mKbknzucsXU1WasjygMx7nLD5KdqUkqauf/2Q==",
+      "originalFilename": "pc-karaoke-2tb-monitor-16inc-not-audiobank-kjb-nakamichi-geisler.jpg",
+      "size": 144109,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/fb7ee59c811ea9adc087ca996506c2cf12151b47-1472x832.jpg",
+      "usedIn": 1
+    },
+    {
+      "_id": "image-fc08872d3b41196aa5910dbc0cc7993092b90881-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAYEBQcI/8QAJxAAAQQBBAECBwAAAAAAAAAAAQACAwQRBQYSIXETUQcWIzFBYZH/xAAYAQADAQEAAAAAAAAAAAAAAAABAwQFBv/EAB4RAAICAgIDAAAAAAAAAAAAAAABAgMREwRREiEz/9oADAMBAAIRAxEAPwDl17UpNTpTyVw1zYgOQ5AHv2H5Uzc27rLIzasabZhr57lfGQ0Z/aytmWKVHVKVm/FK/wBKyx7wBlpYPuMe665vr4mu3JoFzRKNLjTndhruOCGg9K2yc73lgnNv2zz+9pY8tOCQcdIt/wDLFw9iN2PCJWizoVvh2Um3qsLi0ujafKuNPqwEtHosHgIi3aIrxQOd8yhZUg4D6bf4iIrkkcq28n//2Q==",
+      "originalFilename": "software_grok_5.png",
+      "size": 135309,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/fc08872d3b41196aa5910dbc0cc7993092b90881-1024x1024.jpg",
+      "usedIn": 25
+    },
+    {
+      "_id": "image-fd983bdbeeb1cf94fd3758e18be26da76c4f87a1-1024x1024-jpg",
+      "dimensions": {
+        "_type": "sanity.imageDimensions",
+        "aspectRatio": 1,
+        "height": 1024,
+        "width": 1024
+      },
+      "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAIFBwEG/8QAJRAAAQQBAgYDAQAAAAAAAAAAAQACAwQFESEGBxITFEEiMVFS/8QAFQEBAQAAAAAAAAAAAAAAAAAAAwL/xAAfEQEAAgEDBQAAAAAAAAAAAAABADEDAlFxEhMUIUH/2gAMAwEAAhEDEQA/AMmgmaNK9YGNjj8pD+rsUlivbMIcZ2nYE7HRW/BfD5s18nZy9nsVKcXWH/070FX8P5puPznkNpQ24z8SyT2Ejr9ofJJopaZDSFxJDi3fcH9RaPS5f4/PwDJY2+yvBOeowyHeN3tqI+/jLYvjZWiR4ipw1OWNBsLdPKm6pSftxCz/AMaGtS78Ube6NdCURXhp5ZOezgnnxl8hG5witzRtJ16WO0CIiTpNoZqd5//Z",
+      "originalFilename": "rakit_pc_5_1775319544370.png",
+      "size": 865100,
+      "url": "https://cdn.sanity.io/images/b017f7tl/production/fd983bdbeeb1cf94fd3758e18be26da76c4f87a1-1024x1024.jpg",
+      "usedIn": 12
+    }
+  ],
+  "localFiles": [
+    {
+      "path": "/images/kotacom-split-production-ready/README.md",
+      "size": 98,
+      "file": "/home/ubuntu/next-js-sanity-starter/frontend/public/images/kotacom-split-production-ready/README.md"
+    },
+    {
+      "path": "/images/kotacom-split-production-ready/manifest.json",
+      "size": 2562,
+      "file": "/home/ubuntu/next-js-sanity-starter/frontend/public/images/kotacom-split-production-ready/manifest.json"
+    },
+    {
+      "path": "/images/page-thumbnails/.upload-cache.json",
+      "size": 4128,
+      "file": "/home/ubuntu/next-js-sanity-starter/frontend/public/images/page-thumbnails/.upload-cache.json"
+    }
+  ]
+}

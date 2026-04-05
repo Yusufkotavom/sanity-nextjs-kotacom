@@ -21,7 +21,8 @@
     "page:to-post": "node scripts/convert-page-to-post.mjs",
     "nav:icons:migrate": "node scripts/migrate-navigation-ui-icons.mjs",
     "typegen": "npx sanity schema extract && npx sanity typegen generate",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "psi:batch": "node scripts/pagespeed-insights-batch.mjs"
   },
   "dependencies": {
     "@ai-sdk/gateway": "^3.0.85",

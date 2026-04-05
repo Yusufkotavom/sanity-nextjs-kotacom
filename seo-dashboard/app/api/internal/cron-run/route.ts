@@ -240,20 +240,20 @@ export async function POST(request: NextRequest) {
           await db()
             .insert(schema.analyticsDaily)
             .values({
-              contentItemId,
               date: endDate,
+              contentItemId,
               clicks: row.clicks ?? 0,
               impressions: row.impressions ?? 0,
-              ctr: row.ctr ?? null,
-              position: row.position ?? null,
+              ctr: row.ctr != null ? String(row.ctr) : null,
+              position: row.position != null ? String(row.position) : null,
             })
             .onConflictDoUpdate({
               target: [schema.analyticsDaily.contentItemId, schema.analyticsDaily.date],
               set: {
                 clicks: row.clicks ?? 0,
                 impressions: row.impressions ?? 0,
-                ctr: row.ctr ?? null,
-                position: row.position ?? null,
+                ctr: row.ctr != null ? String(row.ctr) : null,
+                position: row.position != null ? String(row.position) : null,
               },
             });
         }

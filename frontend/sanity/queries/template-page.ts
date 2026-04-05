@@ -10,22 +10,22 @@ const templateRewriteQuery = `
     secondaryKeywords,
     description,
     intro,
-    highlights,
-    eeatPoints[]{ title, description },
-    process,
-    faqs[]{ question, answer },
+    highlights[0..4],
+    eeatPoints[0..3]{ title, description },
+    process[0..3],
+    faqs[0..3]{ question, answer },
     ctaLabel,
     ctaLink{
       ${linkQuery}
     },
-    ctaLinks[]{
+    ctaLinks[0..2]{
       _key,
       label,
       link{
         ${linkQuery}
       }
     },
-    serviceTypes[]{
+    serviceTypes[0..5]{
       title,
       description,
       image{
@@ -35,19 +35,19 @@ const templateRewriteQuery = `
         ${linkQuery}
       }
     },
-    pricingPlans[]{
+    pricingPlans[0..2]{
       name,
       price,
       description,
-      items,
+      items[0..9],
       recommended
     },
-    features[]{
+    features[0..5]{
       title,
       description,
       icon
     },
-    proofItems[]{
+    proofItems[0..5]{
       title,
       description,
       image{
@@ -57,12 +57,12 @@ const templateRewriteQuery = `
         ${linkQuery}
       }
     },
-    testimonials[]{
+    testimonials[0..2]{
       name,
       role,
       quote
     },
-    longGuide[]{
+    longGuide[0..4]{
       title,
       description
     },
