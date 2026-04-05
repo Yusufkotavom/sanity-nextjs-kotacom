@@ -1,19 +1,21 @@
+import dynamic from "next/dynamic";
 import { PAGE_QUERY_RESULT } from "@/sanity.types";
-import Hero1 from "@/components/blocks/hero/hero-1";
-import Hero2 from "@/components/blocks/hero/hero-2";
-import SectionHeader from "@/components/blocks/section-header";
-import SplitRow from "@/components/blocks/split/split-row";
-import GridRow from "@/components/blocks/grid/grid-row";
-import Carousel1 from "@/components/blocks/carousel/carousel-1";
-import Carousel2 from "@/components/blocks/carousel/carousel-2";
-import TimelineRow from "@/components/blocks/timeline/timeline-row";
-import Cta1 from "@/components/blocks/cta/cta-1";
-import WhatsAppCta from "@/components/blocks/cta/whatsapp-cta";
-import LogoCloud1 from "@/components/blocks/logo-cloud/logo-cloud-1";
-import FAQs from "@/components/blocks/faqs";
-import FormNewsletter from "@/components/blocks/forms/newsletter";
-import AllPosts from "@/components/blocks/all-posts";
-import RichContent from "@/components/blocks/rich-content";
+
+const Hero1 = dynamic(() => import("@/components/blocks/hero/hero-1"));
+const Hero2 = dynamic(() => import("@/components/blocks/hero/hero-2"));
+const SectionHeader = dynamic(() => import("@/components/blocks/section-header"));
+const SplitRow = dynamic(() => import("@/components/blocks/split/split-row"));
+const GridRow = dynamic(() => import("@/components/blocks/grid/grid-row"));
+const Carousel1 = dynamic(() => import("@/components/blocks/carousel/carousel-1"));
+const Carousel2 = dynamic(() => import("@/components/blocks/carousel/carousel-2"));
+const TimelineRow = dynamic(() => import("@/components/blocks/timeline/timeline-row"));
+const Cta1 = dynamic(() => import("@/components/blocks/cta/cta-1"));
+const WhatsAppCta = dynamic(() => import("@/components/blocks/cta/whatsapp-cta"));
+const LogoCloud1 = dynamic(() => import("@/components/blocks/logo-cloud/logo-cloud-1"));
+const FAQs = dynamic(() => import("@/components/blocks/faqs"));
+const FormNewsletter = dynamic(() => import("@/components/blocks/forms/newsletter"));
+const AllPosts = dynamic(() => import("@/components/blocks/all-posts"));
+const RichContent = dynamic(() => import("@/components/blocks/rich-content"));
 
 type Block = NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 

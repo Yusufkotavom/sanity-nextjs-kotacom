@@ -8,6 +8,8 @@ import { SanityLive } from "@/sanity/lib/live";
 import ReusableSlotSections from "@/components/reusable-slot-sections";
 import { fetchSanityReusableSections } from "@/sanity/lib/fetch";
 
+export const revalidate = 600;
+
 export default async function MainLayout({
   children,
 }: {

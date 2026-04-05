@@ -1,16 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Blocks,
-  LaptopMinimal,
-  Network,
-  Printer,
-  Sparkles,
-  Workflow,
-  CheckCircle2,
-  Trophy,
-  MapPin,
-} from "lucide-react";
+import Blocks from "lucide-react/dist/esm/icons/blocks";
+import LaptopMinimal from "lucide-react/dist/esm/icons/laptop-minimal";
+import Network from "lucide-react/dist/esm/icons/network";
+import Printer from "lucide-react/dist/esm/icons/printer";
+import Sparkles from "lucide-react/dist/esm/icons/sparkles";
+import Workflow from "lucide-react/dist/esm/icons/workflow";
+import CheckCircle2 from "lucide-react/dist/esm/icons/check-circle-2";
+import Trophy from "lucide-react/dist/esm/icons/trophy";
+import MapPin from "lucide-react/dist/esm/icons/map-pin";
 
 import { Button } from "@/components/ui/button";
 import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
@@ -21,11 +19,12 @@ import {
 } from "@/components/ui/section-shell";
 import { homePrepareContent } from "@/lib/local-content/home-prepare";
 import { cn } from "@/lib/utils";
-import { sanityFetch } from "@/sanity/lib/live";
-import { PROJECTS_QUERY } from "@/sanity/queries/project";
-import { PRODUCTS_QUERY } from "@/sanity/queries/product";
-import { POSTS_QUERY } from "@/sanity/queries/post";
-import { SERVICES_QUERY } from "@/sanity/queries/service";
+import {
+  fetchSanityHomePosts,
+  fetchSanityHomeProducts,
+  fetchSanityHomeProjects,
+  fetchSanityHomeServices,
+} from "@/sanity/lib/fetch";
 import ProjectCard from "@/components/ui/project-card";
 import ProductCard from "@/components/ui/product-card";
 import PostCard from "@/components/ui/post-card";
@@ -60,23 +59,17 @@ const testimonials = [
 ];
 
 export default async function HomePeparMiddleSection() {
-  // Parallel fetch untuk performa lebih baik
   const [
-    { data: projectsData },
-    { data: productsData },
-    { data: servicesData },
-    { data: postsData }
+    recentProjects,
+    recentProducts,
+    recentServices,
+    recentPosts,
   ] = await Promise.all([
-    sanityFetch({ query: PROJECTS_QUERY }),
-    sanityFetch({ query: PRODUCTS_QUERY }),
-    sanityFetch({ query: SERVICES_QUERY }),
-    sanityFetch({ query: POSTS_QUERY })
+    fetchSanityHomeProjects(),
+    fetchSanityHomeProducts(),
+    fetchSanityHomeServices(),
+    fetchSanityHomePosts(),
   ]);
-
-  const recentProjects = (projectsData || []).slice(0, 3);
-  const recentProducts = (productsData || []).slice(0, 3);
-  const recentServices = (servicesData || []).slice(0, 3);
-  const recentPosts = (postsData || []).slice(0, 3);
 
   return (
     <>

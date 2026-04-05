@@ -5181,3 +5181,110 @@ Direct UI/UX and Core Web Vitals (SEO) enhancement on Mobile devices. Significan
 
 **Verification Status:**
 Lighthouse PSI analysis simulation passed logic, components compiled locally.
+
+## 2026-04-05 - Global PageSpeed Optimization Pass
+
+**Changed files:**
+- `frontend/sanity/lib/env.ts`
+- `frontend/app/(main)/layout.tsx`
+- `frontend/next.config.mjs`
+- `frontend/sanity/queries/post.ts`
+- `frontend/sanity/queries/product.ts`
+- `frontend/sanity/queries/service.ts`
+- `frontend/sanity/queries/project.ts`
+- `frontend/sanity/lib/fetch.ts`
+- `frontend/components/hybrid/generated/home-pepar-middle-section.tsx`
+- `frontend/components/portable-text-renderer.tsx`
+- `docs/astro-migration-megaplan.md`
+
+**Summary:**
+Enabled Sanity CDN by default in production, set main layout route revalidation to 10 minutes, added AVIF/WebP image outputs, capped homepage list queries to top 3 with cached fetch helpers, tree-shook Lucide icon imports, and reduced PortableText image quality to shrink payloads.
+
+**Impact:**
+Positive Core Web Vitals impact (lower TTFB and LCP across pages, reduced JS/image payloads). No functional SEO regressions expected.
+
+**Verification Status:**
+Not run (manual or automated).
+
+## 2026-04-05 - LCP Hero Optimization for Detail Pages
+
+**Changed files:**
+- `frontend/app/(main)/products/[slug]/page.tsx`
+- `frontend/app/(main)/services/[slug]/page.tsx`
+- `frontend/app/(main)/projects/[slug]/page.tsx`
+- `frontend/components/ui/rewrite/hero.tsx`
+- `frontend/components/blocks/post-hero.tsx`
+
+**Summary:**
+Reduced detail-page hero image quality to 85, forced 1200px CDN sizing, added `priority` + `sizes` to project hero, and tree-shook Lucide icons in rewrite hero and post hero to reduce JS payload.
+
+**Impact:**
+Positive Core Web Vitals impact (lower LCP and JS execution time) across product/service/project detail pages and rewrite templates. No SEO metadata changes.
+
+**Verification Status:**
+Not run (manual or automated).
+
+## 2026-04-05 - Dynamic Block Splitting + Cached Detail Fetch
+
+**Changed files:**
+- `frontend/components/blocks/index.tsx`
+- `frontend/sanity/lib/fetch.ts`
+- `docs/astro-migration-megaplan.md`
+
+**Summary:**
+Code-split all Sanity block renderers with `next/dynamic` and cache page/post/product/service/project fetches with a 10-minute revalidate window and per-slug tags.
+
+**Impact:**
+Positive Core Web Vitals impact by reducing initial JS and lowering TTFB for content-heavy pages. No change to SEO metadata contracts.
+
+**Verification Status:**
+Not run (manual or automated).
+
+## 2026-04-05 - Mass Delete Obsolete Sanity Documents by Slug
+- Changed files:
+  - `frontend/scripts/delete-slugs.mjs` (New)
+  - `frontend/scripts/delete-referenced-documents.mjs` (New)
+- Summary:
+  - Created automated deletion script to remove 159 obsolete documents from Sanity CMS based on their slug values.
+  - Successfully deleted 92 documents including pages, posts, services, and categories that were no longer needed.
+  - Identified 7 documents that couldn't be deleted due to references from other documents (navigation, home page, product references).
+  - Documents deleted included various gaming content, printing services, location-based pages, and outdated blog posts that were cluttering the CMS.
+- SEO impact:
+  - High. Removes low-quality and duplicate content from the CMS that could dilute site authority and create crawl budget waste. Cleaning obsolete pages improves overall content quality signals and reduces potential duplicate content issues.
+- Verification:
+  - Script execution logs show 92 successful deletions, 63 slugs not found (already deleted), and 7 documents with references that require manual cleanup.
+  - Remaining referenced documents need manual review in Sanity Studio to remove dependencies before deletion.
+
+## 2026-04-05 - Grouped TOC Sources by Legacy + Sanity Types
+
+**Changed files:**
+- `frontend/app/(main)/toc/page.tsx`
+- `frontend/sanity/queries/page.ts`
+- `frontend/sanity/lib/fetch.ts`
+
+**Summary:**
+Reworked `/toc` to split links by legacy sections (including pembuatan-website and percetakan), added Sanity content groupings (pages, posts, services, products, projects, categories), and surfaced generated Jasa Cetak Buku Kota routes alongside local Astro/doc indices.
+
+**Impact:**
+No direct SEO impact.
+
+**Verification Status:**
+Not run (manual or automated).
+## 2026-04-05 - Create Comprehensive Website Services Landing Page
+- Changed files:
+  - `frontend/scripts/create-website-surabaya-page.mjs` (New)
+  - `frontend/scripts/update-website-surabaya-page.mjs` (New)
+  - `frontend/scripts/add-remaining-sections.mjs` (New)
+  - `frontend/scripts/create-website-faqs.mjs` (New)
+- Summary:
+  - Created comprehensive Sanity page with slug `jasa-pembuatan-website-surabaya` based on existing website content.
+  - Built complete landing page with 35 blocks including hero, stats, service types, benefits, packages, pricing, portfolio, testimonials, FAQs, and templates.
+  - Added 8 different website types (sekolah, company profile, dokter/klinik, toko online, expedisi, konstruksi, komunitas/NGO, custom).
+  - Included detailed pricing for 3 tiers: Starter (Rp 500K), Professional (Rp 990K), Enterprise (Rp 1.999M).
+  - Created 10 comprehensive FAQ documents covering timeline, technology, mobile-friendly, SEO, maintenance, revisions, security, hosting, payment, and support.
+  - Added portfolio showcase, client testimonials, and 100+ premium templates section.
+- SEO impact:
+  - High. Creates comprehensive local landing page targeting "jasa pembuatan website Surabaya" with rich content covering all service aspects. Detailed pricing, FAQs, and testimonials improve conversion signals and reduce bounce rate. Multiple internal links to service pages boost crawl depth.
+- Verification:
+  - Page successfully created with 35 blocks total: 1 hero, 13 grid rows, 11 section headers, 7 CTAs, 1 FAQ block, 2 other blocks.
+  - All FAQ documents created and properly referenced in the page structure.

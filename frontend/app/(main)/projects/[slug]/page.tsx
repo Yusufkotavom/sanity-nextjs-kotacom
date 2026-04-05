@@ -82,11 +82,13 @@ export default async function ProjectPage(props: {
           {project.image?.asset?._id && (
             <div className="mb-6 overflow-hidden rounded-2xl">
               <Image
-                src={urlFor(project.image).url()}
+                src={urlFor(project.image).width(1200).url()}
                 alt={project.image.alt || ""}
                 width={project.image.asset?.metadata?.dimensions?.width || 1200}
                 height={project.image.asset?.metadata?.dimensions?.height || 720}
-                quality={100}
+                quality={85}
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 800px"
               />
             </div>
           )}

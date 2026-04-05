@@ -73,6 +73,24 @@ export const PRODUCTS_QUERY = groq`*[_type == "product" && defined(slug)] | orde
   }
 }`;
 
+export const PRODUCTS_HOME_QUERY = groq`*[_type == "product" && defined(slug)] | order(featured desc, _createdAt desc) [0...3]{
+  title,
+  slug,
+  excerpt,
+  image{
+    ${imageQuery}
+  },
+  price,
+  currency,
+  availability,
+  featured,
+  categories[]->{
+    _id,
+    title,
+    slug
+  }
+}`;
+
 export const PRODUCTS_BY_CATEGORY_QUERY = groq`*[_type == "product" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(featured desc, _createdAt desc){
   title,
   slug,

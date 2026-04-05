@@ -53,4 +53,23 @@ export const PROJECTS_QUERY = groq`*[_type == "project" && defined(slug)] | orde
   }
 }`;
 
+export const PROJECTS_HOME_QUERY = groq`*[_type == "project" && defined(slug)] | order(featured desc, _createdAt desc) [0...3]{
+  title,
+  slug,
+  excerpt,
+  image{
+    ${imageQuery}
+  },
+  clientName,
+  industry,
+  completionYear,
+  projectUrl,
+  featured,
+  categories[]->{
+    _id,
+    title,
+    slug
+  }
+}`;
+
 export const PROJECTS_SLUGS_QUERY = groq`*[_type == "project" && defined(slug)]{slug}`;

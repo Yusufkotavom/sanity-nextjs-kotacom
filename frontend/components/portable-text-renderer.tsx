@@ -26,8 +26,8 @@ const createPortableTextComponents = (
             marginLeft: "auto",
             marginRight: "auto",
           }}
-          quality={100}
-          sizes="(max-width: 768px) 100vw, 800px"
+          quality={85}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 720px, 800px"
         />
       );
     },

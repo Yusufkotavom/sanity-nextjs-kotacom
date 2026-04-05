@@ -192,6 +192,9 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Universal trust badge cards have been compacted further so icon + title sit on one line and the supporting copy stays ultra-short, improving density without falling back to image-based labels
 - [x] `project` documents now include `categories` again in the Studio schema and frontend query contract, resolving Sanity `Unknown field found` warnings on legacy project docs that still store category references
 - [x] Printing products catalog is now populated in Sanity CMS using 10 custom generated high-quality visuals, ensuring proper product coverage and visual continuity on `/products` routes
+- [x] Global PageSpeed pass applied: Sanity CDN defaulted for production, homepage data queries capped and cached, main layout revalidation set to 10 minutes, icon imports tree-shaken, and portable-text images compressed for faster LCP.
+- [x] Block rendering now code-split via dynamic imports and detail-page Sanity fetches cache with 10-minute revalidation for faster TTFB/LCP on all content templates.
+- [x] Detail-page hero LCP tuned: product/service/project hero images now use CDN width hints, quality 85, and priority + sizes; rewrite/post icons are tree-shaken.
 ## Workstream A - Platform & Data Foundation
 
 ### A1. CMS Contract Freeze
@@ -280,6 +283,9 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Resolve non-200 target pages prioritized by traffic.
 - [x] Remove orphan/no-value thin pages from index strategy.
 - [ ] Rebuild sitemap coverage by canonical route set.
+- [x] Core Web Vitals pass: enable Sanity CDN in production, cache homepage query slices, add AVIF/WebP output, and set 10-minute route revalidation for main pages.
+- [x] Template performance pass: dynamic-import block renderers plus cached detail fetches (page/post/product/service/project) to reduce JS and TTFB.
+- [x] Detail-page hero images optimized (quality 85, width hints, priority on project hero) and hero icon imports tree-shaken to reduce LCP/JS cost.
 
 ## Workstream D - UI Redesign + Refactor
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import PostDate from "@/components/post-date";
-import { Mail } from "lucide-react";
+import Mail from "lucide-react/dist/esm/icons/mail";
 import { urlFor } from "@/sanity/lib/image";
 import { POST_QUERY_RESULT } from "@/sanity.types";
 
@@ -89,7 +89,7 @@ export default function PostHero({
               aria-label="Share via email"
               title="Share via email"
             >
-              <Mail size={24} />
+              <Mail className="h-6 w-6" />
             </a>
           </div>
         </div>

@@ -86,6 +86,20 @@ export const POSTS_QUERY = groq`*[_type == "post" && defined(slug)] | order(_cre
     },
 }`;
 
+export const POSTS_HOME_QUERY = groq`*[_type == "post" && defined(slug)] | order(_createdAt desc) [0...3]{
+    title,
+    slug,
+    excerpt,
+    image{
+      ${imageQuery}
+    },
+    categories[]->{
+      _id,
+      title,
+      slug
+    },
+}`;
+
 export const POSTS_BY_CATEGORY_QUERY = groq`*[_type == "post" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(_createdAt desc){
     title,
     slug,

@@ -15,4 +15,9 @@ export const PAGE_QUERY = groq`
   }
 `;
 
+export const PAGES_QUERY = groq`*[_type == "page" && defined(slug)] | order(title asc){
+  title,
+  slug,
+}`;
+
 export const PAGES_SLUGS_QUERY = groq`*[_type == "page" && defined(slug)]{slug}`;

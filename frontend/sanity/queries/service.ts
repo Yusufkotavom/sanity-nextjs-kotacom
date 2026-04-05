@@ -71,6 +71,24 @@ export const SERVICES_QUERY = groq`*[_type == "service" && defined(slug)] | orde
   }
 }`;
 
+export const SERVICES_HOME_QUERY = groq`*[_type == "service" && defined(slug)] | order(featured desc, _createdAt desc) [0...3]{
+  title,
+  slug,
+  excerpt,
+  image{
+    ${imageQuery}
+  },
+  duration,
+  startingPrice,
+  currency,
+  featured,
+  categories[]->{
+    _id,
+    title,
+    slug
+  }
+}`;
+
 export const SERVICES_BY_CATEGORY_QUERY = groq`*[_type == "service" && defined(slug) && references(*[_type=="category" && slug.current==$slug][0]._id)] | order(featured desc, _createdAt desc){
   title,
   slug,
