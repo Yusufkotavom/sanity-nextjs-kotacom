@@ -5049,3 +5049,25 @@ This file is the canonical changelog for all repository updates, with explicit S
   - No direct SEO impact. Bug fix only.
 - Verification:
   - `pnpm --filter frontend run typecheck` → exit code 0, 0 errors.
+
+## 2026-04-05 - SEO Pre-Launch Fixes (Audit Results)
+- Changed files:
+  - `frontend/app/layout.tsx`
+  - `frontend/scripts/fix-duplicate-slugs.mjs` (new)
+  - `frontend/scripts/fix-duplicate-slugs.mjs` (executed: 13 Sanity docs deleted)
+- Summary:
+  - **Removed AggregateRating** (`ratingValue: 4.8, reviewCount: 125`) from LocalBusiness JSON-LD in layout.tsx — data was placeholder/unverifiable which risks Google structured data penalty.
+  - **Deleted 13 duplicate Sanity documents** with `-1` / `-2` suffix slugs via new `fix-duplicate-slugs.mjs` script:
+    - 3 posts (post-astro-* duplicates)
+    - 3 products (kalender-dinding-2, pc-rakitan gaming duplicates)
+    - 7 legacy pages (legacy-page-* with -1/-2 slugs)
+  - **404 /services/ecommerce-development**: Not in codebase — link originates from CMS rich text content. Needs manual cleanup in Sanity Studio.
+  - Note: Breadcrumbs, Article schema, Product schema, Service schema, BreadcrumbList — already implemented in previous sessions (blog/[slug], products/[slug], services/[slug]).
+  - Note: llms.txt URL `https://www.kotacom.id` is intentional — production domain is www.kotacom.id.
+- SEO impact:
+  - Removing fake AggregateRating prevents structured data quality issues.
+  - Deleting 13 duplicate slug documents reduces duplicate content risk and cleans sitemap (954 → ~941 URLs).
+  - TypeScript: exit code 0, 0 errors.
+- Verification:
+  - `pnpm --filter frontend run typecheck` — exit code 0.
+  - Duplicate detection script: 0 duplicates remain after delete run.

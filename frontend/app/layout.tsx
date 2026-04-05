@@ -228,11 +228,6 @@ export default async function RootLayout({
                 "https://www.instagram.com/kotacom.id",
                 "https://www.facebook.com/kotacom"
               ],
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.8",
-                "reviewCount": "125"
-              },
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": "Layanan Utama Kotacom",
