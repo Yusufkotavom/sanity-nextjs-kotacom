@@ -342,7 +342,7 @@ export default async function HomePeparMiddleSection() {
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {recentPosts.map((post: any) => (
-              <PostCard key={post._id || (post.slug && post.slug.current)} post={post} />
+              <PostCard key={post._id || (post.slug && post.slug.current)} {...post} />
             ))}
           </div>
           <div className="mt-8 flex justify-center sm:hidden">

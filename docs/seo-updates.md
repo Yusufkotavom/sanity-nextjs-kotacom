@@ -5037,3 +5037,15 @@ This file is the canonical changelog for all repository updates, with explicit S
   - No direct SEO impact. Brand name is already in alt/title of logo image. This is a UI enhancement only.
 - Verification:
   - TypeScript check run — no new errors from these changes (pre-existing unrelated errors with deleted home-pepar route).
+
+## 2026-04-05 - Fix TypeScript Errors (PostCard prop + stale .next cache)
+- Changed files:
+  - `frontend/components/hybrid/generated/home-pepar-middle-section.tsx`
+- Summary:
+  - Fixed `PostCard` usage on line 345: replaced invalid `post={post}` prop with correct spread `{...post}` matching `PostCardProps` interface.
+  - Cleared stale `.next` build cache that still referenced deleted `home-pepar/page.tsx` route.
+  - TypeScript now passes clean with 0 errors.
+- SEO impact:
+  - No direct SEO impact. Bug fix only.
+- Verification:
+  - `pnpm --filter frontend run typecheck` → exit code 0, 0 errors.
