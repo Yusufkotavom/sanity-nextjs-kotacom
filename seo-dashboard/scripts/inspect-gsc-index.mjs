@@ -74,7 +74,7 @@ function parseArgs(argv) {
 }
 
 function printHelp() {
-  console.log(`Inspect indexing status per URL using Google Search Console URL Inspection API\n\nUsage:\n  pnpm --filter frontend exec node scripts/inspect-gsc-index.mjs -- \\
+  console.log(`Inspect indexing status per URL using Google Search Console URL Inspection API\n\nUsage:\n  pnpm --filter seo-dashboard exec node scripts/inspect-gsc-index.mjs -- \\
     --site-url https://www.kotacom.id/ \\
     --input-csv ./tmp/gsc-kotacom-full/gsc-pages.csv \\
     --input-column page \\

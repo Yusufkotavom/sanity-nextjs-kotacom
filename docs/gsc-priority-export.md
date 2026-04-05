@@ -7,7 +7,7 @@ Script ini membantu kurasi URL migrasi berbasis data Google Search Console, term
 
 ## Lokasi Script
 
-- `frontend/scripts/export-gsc-priority.mjs`
+- `seo-dashboard/scripts/export-gsc-priority.mjs`
 
 ## Kebutuhan
 
@@ -20,7 +20,7 @@ Script ini membantu kurasi URL migrasi berbasis data Google Search Console, term
 
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS=/abs/path/service-account.json
-pnpm --filter frontend gsc:export -- \
+pnpm --filter seo-dashboard gsc:export -- \
   --site-url https://www.kotacom.id/ \
   --start-date 2025-01-01 \
   --end-date 2026-04-01 \

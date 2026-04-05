@@ -10,7 +10,6 @@
     "lint": "next lint",
     "email": "email dev",
     "docs:scrape": "node scripts/scrape-schemaui-docs.mjs",
-    "gsc:export": "node scripts/export-gsc-priority.mjs",
     "legacy:manifest": "node scripts/generate-astro-local-pages-manifest.mjs",
     "astro-local:import": "node scripts/import-astro-local-pages.mjs",
     "astro-repo:import": "node scripts/import-astro-repo-content.mjs",

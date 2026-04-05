@@ -17,7 +17,7 @@ Dokumen ini mendefinisikan standar operasional (SOP) untuk mengelola redireksi (
 
 ## Alur Update & Sinkronisasi
 Setiap kali ada perubahan struktur konten atau audit GSC:
-1. **Audit GSC:** Gunakan script `frontend/scripts/export-gsc-priority.mjs` untuk melihat URL yang menghasilkan 404 atau butuh migrasi.
+1. **Audit GSC:** Gunakan script `seo-dashboard/scripts/export-gsc-priority.mjs` untuk melihat URL yang menghasilkan 404 atau butuh migrasi.
 2. **Kurasi Manual:** Update file CSV di `docs/curation/` untuk memetakan URL lama ke intent yang benar.
 3. **Validasi & Import:** Jalankan `frontend/scripts/import-approved-redirects.mjs`. Script ini secara otomatis akan:
    - Mengecek apakah `finalDecision` sudah `approved_redirect`.

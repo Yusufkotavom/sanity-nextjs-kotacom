@@ -81,6 +81,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] AI writer production hardening completed for operations: dashboard UI, gateway model validation, prompt guardrails, and go-live checklist docs
 - [x] AI rewrite apply flow completed: Studio `AI Rewrite` document action now triggers server rewrite and patches draft content automatically
 - [x] AI writer documentation consolidated into production-focused runbook; irrelevant/duplicated setup notes removed
+- [x] SEO Ops dashboard stack split into a standalone Next.js app (`seo-dashboard`) with dedicated scripts, Sanity fetch layer, and auth middleware
 - [x] Critical import behavior confirmed: dotted document IDs (example `post.import.*`, `page.legacy.*`) are visible in authenticated reads but can be missing in public published reads used by frontend build/runtime
 - [x] Shared `legacy-rich-content` block contract added for Markdown/HTML raw rendering and wired to both `page.blocks` and `post.body` (`block-content`)
 - [x] Sanity import smoke test completed with safe ID strategy (no dots): 2 pages + 2 posts published and visible in both public and authenticated published reads
@@ -219,6 +220,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Navigation link contract synced: `link`/`navigation-link-child` destination validation + `category` reference support aligned with frontend query mapping.
 - [x] `project` document contract shipped across Studio schema, frontend GROQ/fetch layer, and route rendering.
 - [x] Env/deploy contract synced for AI Writer + SEO Ops required keys across `frontend/.env.example`, `studio/.env.example`, and deploy env templates.
+- [x] SEO Ops dashboard moved to standalone app package to decouple operations tooling from the main frontend runtime.
 - Blocker note (2026-04-02): Full A1 closure still pending audit for remaining document contracts (`project`, `redirect`) outside Worker 2 navigation scope.
 
 ### A2. Route Contract Freeze

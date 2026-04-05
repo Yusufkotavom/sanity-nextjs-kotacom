@@ -2,6 +2,46 @@
 
 ## 2026-04-05
 
+### SEO Ops Dashboard Standalone App Split
+
+**Changed files:**
+- `seo-dashboard/app/layout.tsx` (new)
+- `seo-dashboard/app/page.tsx` (new)
+- `seo-dashboard/app/dashboard/seo/*` (moved)
+- `seo-dashboard/app/api/seo/*` (moved)
+- `seo-dashboard/app/api/ai/*` (moved)
+- `seo-dashboard/lib/seo-ops/*` (moved)
+- `seo-dashboard/lib/ai-writer/*` (moved)
+- `seo-dashboard/sanity/lib/fetch.ts` (new)
+- `seo-dashboard/sanity/queries/seo-ops-settings.ts` (new copy)
+- `seo-dashboard/sanity/queries/ai-writer-settings.ts` (new copy)
+- `seo-dashboard/components/ui/button.tsx` (new copy)
+- `seo-dashboard/components/ui/input.tsx` (new copy)
+- `seo-dashboard/package.json` (new)
+- `seo-dashboard/next.config.mjs` (new)
+- `seo-dashboard/middleware.ts` (new)
+- `seo-dashboard/.env.example` (new)
+- `seo-dashboard/scripts/*` (moved)
+- `frontend/app/api/revalidate/route.ts`
+- `frontend/package.json`
+- `frontend/.env.example`
+- `pnpm-workspace.yaml`
+- `package.json`
+- `docs/astro-migration-megaplan.md`
+- `docs/sanity-redirect-management.md`
+- `docs/gsc-priority-export.md`
+
+**Summary:**
+Moved the SEO Ops dashboard UI + API into a new standalone Next.js app (`seo-dashboard`) with its own scripts, Sanity fetch layer, and middleware auth gate. Removed the dashboard routes and SEO ops API endpoints from `frontend` and updated workspace wiring/scripts accordingly.
+
+**Impact on SEO/Integration:**
+- Frontend revalidate webhook no longer triggers SEO indexing submissions; that automation now lives only in the standalone dashboard app. If needed, revalidate should call the dashboard service explicitly.
+
+**Verification:**
+- Not run (manual start/build not executed).
+
+---
+
 ### Multi-Level Service Location Pattern Support
 
 **Changed files:**

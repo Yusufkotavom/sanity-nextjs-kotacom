@@ -1,0 +1,46 @@
+{
+  "name": "seo-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.19.0",
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "gsc:export": "node scripts/export-gsc-priority.mjs",
+    "gsc:inspect": "node scripts/inspect-gsc-index.mjs",
+    "gsc:merge": "node scripts/merge-gsc-migration-health.mjs",
+    "seo:audit": "node scripts/audit-seo-metadata.mjs",
+    "seo:test:indexing": "node scripts/test-indexing.mjs",
+    "seo:test:audit": "node scripts/test-seo-audit.mjs",
+    "seo:test:revalidate": "node scripts/test-revalidate.mjs"
+  },
+  "dependencies": {
+    "@ai-sdk/gateway": "^3.0.85",
+    "@radix-ui/react-slot": "^1.2.4",
+    "ai": "^6.0.143",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "geist": "^1.7.0",
+    "googleapis": "^171.4.0",
+    "next": "16.1.7",
+    "next-sanity": "^12.1.5",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^10.1.0",
+    "eslint-config-next": "16.1.7",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.9.3"
+  }
+}

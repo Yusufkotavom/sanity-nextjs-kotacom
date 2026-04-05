@@ -53,7 +53,7 @@ function parseArgs(argv) {
 }
 
 function printHelp() {
-  console.log(`Merge migration curation + index inspection + metadata audit\n\nUsage:\n  pnpm --filter frontend exec node scripts/merge-gsc-migration-health.mjs -- \\
+  console.log(`Merge migration curation + index inspection + metadata audit\n\nUsage:\n  pnpm --filter seo-dashboard exec node scripts/merge-gsc-migration-health.mjs -- \\
     --migration-csv ./tmp/gsc-kotacom-full/gsc-migration-curation.csv \\
     --inspection-csv ./tmp/gsc-kotacom-full/gsc-url-inspection.csv \\
     --metadata-csv ./tmp/gsc-kotacom-full/seo-metadata-audit.csv \\

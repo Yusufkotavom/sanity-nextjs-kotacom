@@ -61,7 +61,7 @@ function parseArgs(argv) {
 }
 
 function printHelp() {
-  console.log(`Audit SEO metadata for each URL from CSV\n\nUsage:\n  pnpm --filter frontend exec node scripts/audit-seo-metadata.mjs -- \\
+  console.log(`Audit SEO metadata for each URL from CSV\n\nUsage:\n  pnpm --filter seo-dashboard exec node scripts/audit-seo-metadata.mjs -- \\
     --input-csv ./tmp/gsc-kotacom-full/gsc-pages.csv \\
     --input-column page \\
     --out-dir ./tmp/gsc-kotacom-full \\
