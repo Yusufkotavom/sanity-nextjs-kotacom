@@ -35,6 +35,31 @@ export default defineType({
           description:
             "The height of the logo. Default is dimensions of the image.",
         }),
+        defineField({
+          name: "showBrandName",
+          title: "Show Brand Name Next to Logo",
+          type: "boolean",
+          description:
+            "If enabled, displays the brand name text beside the logo in the header.",
+          initialValue: false,
+        }),
+        defineField({
+          name: "brandNameSize",
+          title: "Brand Name Text Size",
+          type: "string",
+          description: "Font size of the brand name shown next to the logo.",
+          options: {
+            list: [
+              { title: "Small (sm)", value: "sm" },
+              { title: "Medium (md)", value: "md" },
+              { title: "Large (lg)", value: "lg" },
+              { title: "Extra Large (xl)", value: "xl" },
+            ],
+            layout: "radio",
+          },
+          initialValue: "md",
+          hidden: ({ parent }) => !parent?.showBrandName,
+        }),
       ],
     }),
     defineField({

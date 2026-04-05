@@ -37,6 +37,8 @@ export const SETTINGS_QUERY = groq`*[_type == "settings"][0]{
     },
     width,
     height,
+    showBrandName,
+    brandNameSize,
   },
   copyright,
   socialLinks[]{

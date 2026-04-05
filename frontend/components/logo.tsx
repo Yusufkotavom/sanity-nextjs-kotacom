@@ -11,6 +11,13 @@ const KOTACOM_DEFAULT_LOGO = "/images/branding/kotacom-logo.svg";
 const KOTACOM_DEFAULT_LOGO_WIDTH = 1280;
 const KOTACOM_DEFAULT_LOGO_HEIGHT = 1248;
 
+const BRAND_NAME_SIZE_MAP: Record<string, string> = {
+  sm: "text-sm",
+  md: "text-base",
+  lg: "text-lg",
+  xl: "text-xl",
+};
+
 export default function Logo({
   settings,
   className,
@@ -42,9 +49,14 @@ export default function Logo({
     settings?.logo?.[themeToUse === "dark" ? "light" : "dark"];
   const logoToUse = selectedLogo || fallbackLogo;
 
+  const showBrandName = (settings?.logo as { showBrandName?: boolean } | null)?.showBrandName;
+  const brandNameSize = (settings?.logo as { brandNameSize?: string } | null)?.brandNameSize || "md";
+  const brandNameClass = BRAND_NAME_SIZE_MAP[brandNameSize] || "text-base";
+  const brandName = settings?.siteName || settings?.brandName || "Kotacom";
+
   if (logoToUse) {
     return (
-      <span className={cn("inline-flex items-center", className)}>
+      <span className={cn("inline-flex items-center gap-2.5", className)}>
         <Image
           src={urlFor(logoToUse).url()}
           alt={settings.siteName || "kotacom.id"}
@@ -70,12 +82,22 @@ export default function Logo({
           quality={100}
           priority={priority}
         />
+        {showBrandName && (
+          <span
+            className={cn(
+              "font-semibold tracking-tight text-foreground transition-colors",
+              brandNameClass
+            )}
+          >
+            {brandName}
+          </span>
+        )}
       </span>
     );
   }
 
   return (
-    <span className={cn("inline-flex items-center", className)}>
+    <span className={cn("inline-flex items-center gap-2.5", className)}>
       <Image
         src={KOTACOM_DEFAULT_LOGO}
         alt={settings?.siteName || "kotacom.id"}
@@ -85,6 +107,16 @@ export default function Logo({
         className={cn("h-10 w-auto dark:invert", imageClassName)}
         priority={priority}
       />
+      {showBrandName && (
+        <span
+          className={cn(
+            "font-semibold tracking-tight text-foreground transition-colors",
+            brandNameClass
+          )}
+        >
+          {brandName}
+        </span>
+      )}
     </span>
   );
 }

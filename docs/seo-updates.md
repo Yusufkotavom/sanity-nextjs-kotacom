@@ -5021,3 +5021,19 @@ This file is the canonical changelog for all repository updates, with explicit S
   - No direct SEO impact. UI-only layout change for improved visual symmetry on desktop.
 - Verification:
   - Manual code review completed.
+
+## 2026-04-05 - Logo Brand Name Text Beside Logo (Optional, CMS-controlled)
+- Changed files:
+  - `studio/schemas/documents/settings.ts`
+  - `frontend/sanity/queries/settings.ts`
+  - `frontend/components/logo.tsx`
+- Summary:
+  - Added two new optional fields inside the `logo` object in Sanity settings schema:
+    - `showBrandName` (boolean) — toggle to show/hide brand name text beside the logo
+    - `brandNameSize` (radio: sm/md/lg/xl) — controls font size of the brand name text, hidden when `showBrandName` is false
+  - Updated SETTINGS_QUERY GROQ to fetch `showBrandName` and `brandNameSize` from the logo object.
+  - Updated `logo.tsx` to conditionally render brand name text next to the logo using `text-foreground` so it follows dark/light mode automatically. Size map: sm=text-sm, md=text-base, lg=text-lg, xl=text-xl.
+- SEO impact:
+  - No direct SEO impact. Brand name is already in alt/title of logo image. This is a UI enhancement only.
+- Verification:
+  - TypeScript check run — no new errors from these changes (pre-existing unrelated errors with deleted home-pepar route).
