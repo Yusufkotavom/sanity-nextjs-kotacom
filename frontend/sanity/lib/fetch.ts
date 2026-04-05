@@ -176,24 +176,55 @@ export const fetchTemplatePageByRoute = async ({
 
   if (data) return data;
 
+  // Try pattern matching with multiple token support
   const segments = route.split("/").filter(Boolean);
   if (segments.length < 2) return null;
-  const city = segments.at(-1) || "";
-  const pattern = `/${segments.slice(0, -1).join("/")}/{lokasi}`;
 
-  const fallback = isDev
-    ? await fetchPublished<TemplatePageDoc | null>({
-        query: TEMPLATE_PAGE_BY_PATTERN_QUERY,
-        params: { pattern, city },
-      })
-    : await fetchPublishedCached<TemplatePageDoc | null>({
-        query: TEMPLATE_PAGE_BY_PATTERN_QUERY,
-        params: { pattern, city },
-        tags: ["template-pages", `template-page:${pattern}:${city}`],
-        revalidate: 600,
-      });
+  // Try different pattern combinations
+  const patterns = [
+    // 3-level: /{category}/{service}/{lokasi}
+    segments.length >= 3
+      ? {
+          pattern: `/${segments[0]}/{service}/{lokasi}`,
+          service: segments[1],
+          city: segments[2],
+        }
+      : null,
+    // 2-level: /{category}/{lokasi}
+    {
+      pattern: `/${segments.slice(0, -1).join("/")}/{lokasi}`,
+      service: undefined,
+      city: segments.at(-1) || "",
+    },
+  ].filter(Boolean) as Array<{
+    pattern: string;
+    service?: string;
+    city: string;
+  }>;
 
-  return fallback || null;
+  for (const { pattern, service, city } of patterns) {
+    const params: Record<string, string | undefined> = { pattern, city };
+    if (service) params.service = service;
+
+    const fallback = isDev
+      ? await fetchPublished<TemplatePageDoc | null>({
+          query: TEMPLATE_PAGE_BY_PATTERN_QUERY,
+          params,
+        })
+      : await fetchPublishedCached<TemplatePageDoc | null>({
+          query: TEMPLATE_PAGE_BY_PATTERN_QUERY,
+          params,
+          tags: [
+            "template-pages",
+            `template-page:${pattern}:${service || ""}:${city}`,
+          ],
+          revalidate: 600,
+        });
+
+    if (fallback) return fallback;
+  }
+
+  return null;
 };
 
 export const fetchTemplatePageRoutes = async (): Promise<
