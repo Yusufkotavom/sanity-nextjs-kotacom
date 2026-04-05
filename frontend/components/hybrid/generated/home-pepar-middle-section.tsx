@@ -60,16 +60,22 @@ const testimonials = [
 ];
 
 export default async function HomePeparMiddleSection() {
-  const { data: projectsData } = await sanityFetch({ query: PROJECTS_QUERY });
+  // Parallel fetch untuk performa lebih baik
+  const [
+    { data: projectsData },
+    { data: productsData },
+    { data: servicesData },
+    { data: postsData }
+  ] = await Promise.all([
+    sanityFetch({ query: PROJECTS_QUERY }),
+    sanityFetch({ query: PRODUCTS_QUERY }),
+    sanityFetch({ query: SERVICES_QUERY }),
+    sanityFetch({ query: POSTS_QUERY })
+  ]);
+
   const recentProjects = (projectsData || []).slice(0, 3);
-
-  const { data: productsData } = await sanityFetch({ query: PRODUCTS_QUERY });
   const recentProducts = (productsData || []).slice(0, 3);
-
-  const { data: servicesData } = await sanityFetch({ query: SERVICES_QUERY });
   const recentServices = (servicesData || []).slice(0, 3);
-
-  const { data: postsData } = await sanityFetch({ query: POSTS_QUERY });
   const recentPosts = (postsData || []).slice(0, 3);
 
   return (
@@ -112,6 +118,9 @@ export default async function HomePeparMiddleSection() {
                 fill
                 className="object-contain p-4"
                 priority
+                quality={85}
+                loading="eager"
+                fetchPriority="high"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
               />
             </div>

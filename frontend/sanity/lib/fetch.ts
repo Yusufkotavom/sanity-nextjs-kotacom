@@ -78,7 +78,28 @@ const fetchPublished = async <T>({
   query: string;
   params?: Record<string, unknown>;
 }): Promise<T> => {
-  return client.fetch(query, params || {}, { perspective: "published", stega: false });
+  return client.fetch(query, params || {}, {
+    perspective: "published",
+    stega: false,
+  });
+};
+
+// Cached fetch for rarely-changing global data (settings, navigation, theme)
+// Revalidates every 3600s (1 hour) and uses tags for on-demand revalidation
+const fetchPublishedCached = async <T>({
+  query,
+  params,
+  tags,
+}: {
+  query: string;
+  params?: Record<string, unknown>;
+  tags?: string[];
+}): Promise<T> => {
+  return client.fetch(query, params || {}, {
+    perspective: "published",
+    stega: false,
+    next: { revalidate: 3600, tags },
+  });
 };
 
 export const fetchSanityPageBySlug = async ({
@@ -148,24 +169,27 @@ export const fetchSanityPostsStaticParams =
 
 export const fetchSanityNavigation =
   async (): Promise<NAVIGATION_QUERY_RESULT> => {
-    const data = await fetchPublished<NAVIGATION_QUERY_RESULT>({
+    const data = await fetchPublishedCached<NAVIGATION_QUERY_RESULT>({
       query: NAVIGATION_QUERY,
+      tags: ["navigation"],
     });
 
     return data;
   };
 
 export const fetchSanitySettings = async (): Promise<SETTINGS_QUERY_RESULT> => {
-  const data = await fetchPublished<SETTINGS_QUERY_RESULT>({
+  const data = await fetchPublishedCached<SETTINGS_QUERY_RESULT>({
     query: SETTINGS_QUERY,
+    tags: ["settings"],
   });
 
   return data;
 };
 
 export const fetchSanitySeoSettings = async (): Promise<any | null> => {
-  const data = await fetchPublished<any | null>({
+  const data = await fetchPublishedCached<any | null>({
     query: SEO_SETTINGS_QUERY,
+    tags: ["seo-settings"],
   });
 
   return data;
@@ -184,7 +208,7 @@ export const fetchSanityThemeSettings = async (): Promise<{
     darkRing?: string;
   } | null;
 } | null> => {
-  const data = await fetchPublished<{
+  const data = await fetchPublishedCached<{
     themeColors?: {
       themePreset?: string;
       lightPrimary?: string;
@@ -198,6 +222,7 @@ export const fetchSanityThemeSettings = async (): Promise<{
     } | null;
   } | null>({
     query: THEME_SETTINGS_QUERY,
+    tags: ["theme-settings"],
   });
 
   return data;
@@ -362,8 +387,9 @@ export const fetchSanityAiWriterSettingsPrivate = async (): Promise<{
 };
 
 export const fetchSanityReusableSections = async (): Promise<ReusableSectionItem[]> => {
-  const data = await fetchPublished<ReusableSectionItem[]>({
+  const data = await fetchPublishedCached<ReusableSectionItem[]>({
     query: REUSABLE_SECTIONS_QUERY,
+    tags: ["reusable-sections"],
   });
 
   return data || [];

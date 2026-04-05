@@ -53,6 +53,7 @@ export function ArchiveCardMedia({
   heightVariant = "regular",
   className,
   quality,
+  priority,
 }: {
   image?: any;
   altFallback?: string;
@@ -60,6 +61,7 @@ export function ArchiveCardMedia({
   heightVariant?: HeightVariant;
   className?: string;
   quality?: number;
+  priority?: boolean;
 }) {
   if (!image?.asset?._id) {
     return null;
@@ -86,6 +88,7 @@ export function ArchiveCardMedia({
         blurDataURL={image?.asset?.metadata?.lqip || ""}
         sizes={sizes}
         quality={quality}
+        priority={priority}
       />
     </div>
   );

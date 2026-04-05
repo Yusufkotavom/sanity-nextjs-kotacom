@@ -37,6 +37,8 @@ const LEGACY_SANITIZE_SCHEMA = {
       "title",
       "width",
       "height",
+      "loading",
+      "decoding",
     ],
     td: ["colspan", "rowspan"],
     th: ["colspan", "rowspan"],
@@ -76,12 +78,28 @@ function rehypeExternalLinks() {
   };
 }
 
+function rehypeLazyImages() {
+  return (tree: any) => {
+    visit(tree, "element", (node: any) => {
+      if (node.tagName !== "img") return;
+      node.properties = node.properties || {};
+      if (!node.properties.loading) {
+        node.properties.loading = "lazy";
+      }
+      if (!node.properties.decoding) {
+        node.properties.decoding = "async";
+      }
+    });
+  };
+}
+
 function renderHtmlInput(input: string): string {
   return String(
     unified()
       .use(rehypeParse, { fragment: true })
       .use(rehypeSanitize, LEGACY_SANITIZE_SCHEMA as any)
       .use(rehypeExternalLinks)
+      .use(rehypeLazyImages)
       .use(rehypeStringify)
       .processSync(input),
   );
@@ -94,6 +112,7 @@ function renderMarkdownInput(input: string): string {
       .use(remarkRehype)
       .use(rehypeSanitize, LEGACY_SANITIZE_SCHEMA as any)
       .use(rehypeExternalLinks)
+      .use(rehypeLazyImages)
       .use(rehypeStringify)
       .processSync(input),
   );

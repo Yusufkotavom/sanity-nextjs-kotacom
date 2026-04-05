@@ -184,6 +184,8 @@ export default async function ServiceSlugPage(props: {
                 width={service.image.asset?.metadata?.dimensions?.width || 1200}
                 height={service.image.asset?.metadata?.dimensions?.height || 720}
                 quality={100}
+                priority={true}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 800px"
               />
             </div>
           )}

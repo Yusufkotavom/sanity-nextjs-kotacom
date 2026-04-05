@@ -17,6 +17,7 @@ export default function ProductCard({
   currency,
   availability,
   categories,
+  priority,
 }: {
   title?: string;
   slug?: { current?: string };
@@ -26,11 +27,12 @@ export default function ProductCard({
   currency?: string;
   availability?: string;
   categories?: Array<{ _id?: string; title?: string }>;
+  priority?: boolean;
 }) {
   return (
     <ArchiveCardShell href={`/products/${slug?.current || ""}`} density="compact">
       <div>
-        <ArchiveCardMedia image={image} heightVariant="compact" className="mb-3 lg:mb-3.5" />
+        <ArchiveCardMedia image={image} heightVariant="compact" className="mb-3 lg:mb-3.5" priority={priority} />
         <ArchiveCardTitle density="compact">{title}</ArchiveCardTitle>
         <ArchiveCardMeta
           density="compact"

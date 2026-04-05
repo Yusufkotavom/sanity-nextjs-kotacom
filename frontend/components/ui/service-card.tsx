@@ -17,6 +17,7 @@ export default function ServiceCard({
   startingPrice,
   currency,
   categories,
+  priority,
 }: {
   title?: string;
   slug?: { current?: string };
@@ -26,11 +27,12 @@ export default function ServiceCard({
   startingPrice?: number;
   currency?: string;
   categories?: Array<{ _id?: string; title?: string }>;
+  priority?: boolean;
 }) {
   return (
     <ArchiveCardShell href={`/services/${slug?.current || ""}`} density="compact">
       <div>
-        <ArchiveCardMedia image={image} heightVariant="compact" className="mb-3 lg:mb-3.5" />
+        <ArchiveCardMedia image={image} heightVariant="compact" className="mb-3 lg:mb-3.5" priority={priority} />
         <ArchiveCardTitle density="compact">{title}</ArchiveCardTitle>
         <ArchiveCardMeta
           density="compact"

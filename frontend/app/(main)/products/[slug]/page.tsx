@@ -213,6 +213,8 @@ export default async function ProductSlugPage(props: {
                 width={product.image.asset?.metadata?.dimensions?.width || 1200}
                 height={product.image.asset?.metadata?.dimensions?.height || 720}
                 quality={100}
+                priority={true}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 800px"
               />
             </div>
           )}

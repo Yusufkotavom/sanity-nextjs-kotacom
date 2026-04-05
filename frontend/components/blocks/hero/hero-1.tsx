@@ -73,13 +73,15 @@ export default function Hero1({
             <div className="overflow-hidden rounded-[1.5rem] border border-white/45 bg-white/70 shadow-[0_18px_48px_rgba(15,23,42,0.1)] dark:border-white/12 dark:bg-white/5">
               <Image
                 className="h-full w-full object-cover"
-                src={urlFor(image).url()}
+                src={urlFor(image).width(900).url()}
                 alt={image.alt || ""}
                 width={image.asset?.metadata?.dimensions?.width || 800}
                 height={image.asset?.metadata?.dimensions?.height || 800}
                 placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
                 blurDataURL={image?.asset?.metadata?.lqip || ""}
-                quality={100}
+                quality={85}
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           )}

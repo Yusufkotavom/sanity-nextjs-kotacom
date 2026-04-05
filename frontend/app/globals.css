@@ -616,3 +616,10 @@
   background: transparent;
   padding: 0;
 }
+.legacy-prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
