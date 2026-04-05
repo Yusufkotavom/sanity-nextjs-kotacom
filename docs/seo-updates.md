@@ -5238,6 +5238,45 @@ Reverted Lucide imports to package entry points to avoid webpack resolving broke
 Build reliability fix. No direct SEO impact.
 
 **Verification Status:**
+`pnpm --filter frontend run typecheck`
+
+## 2026-04-05 - Restore /services/[slug] for JSON Usaha
+
+**Changed files:**
+- `frontend/app/(main)/services/[slug]/page.tsx`
+- `frontend/components/ui/json-usaha-page.tsx`
+- `frontend/app/sitemap.ts`
+
+**Summary:**
+Added JSON-usaha fallback rendering for `/services/[slug]`, updated JSON-LD paths to `/services/{slug}`, and reintroduced JSON-usaha slugs in the sitemap under `/services`.
+
+**Impact:**
+Restores access for legacy JSON-usaha slugs without `/layanan` while preserving consolidated `/services` as the canonical section.
+
+**Verification Status:**
+`pnpm --filter frontend run typecheck`
+
+## 2026-04-05 - Consolidate /layanan Into /services
+
+**Changed files:**
+- `frontend/app/(main)/services/page.tsx`
+- `frontend/components/ui/rewrite/page-shell.tsx`
+- `frontend/app/(main)/layanan/page.tsx`
+- `frontend/app/(main)/layanan/[slug]/page.tsx`
+- `frontend/app/sitemap.ts`
+- `frontend/app/(main)/toc/page.tsx`
+- `frontend/lib/local-content/home-prepare.ts`
+- `frontend/components/hybrid/generated/home-pepar-middle-section.tsx`
+- `frontend/lib/legacy-pages/internal-links.ts`
+- `frontend/components/ui/json-usaha-page.tsx`
+
+**Summary:**
+Merged the legacy `/layanan` rewrite content and JSON-usaha summaries into `/services`, enriched the services catalog with those sections, and removed the `/layanan` routes. Updated sitemap, TOC, and internal links to reference `/services`.
+
+**Impact:**
+SEO route consolidation. `/layanan` URLs are removed; if redirects are required, they must be added in the Sanity `redirect` document per repo rules. `/services` now has richer content and retains legacy messaging.
+
+**Verification Status:**
 Pending (typecheck/build).
 
 ## 2026-04-05 - Dynamic Block Splitting + Cached Detail Fetch
@@ -5304,3 +5343,17 @@ Not run (manual or automated).
 - Verification:
   - Page successfully created with 35 blocks total: 1 hero, 13 grid rows, 11 section headers, 7 CTAs, 1 FAQ block, 2 other blocks.
   - All FAQ documents created and properly referenced in the page structure.
+## 2026-04-05 - Redesign Website Page with Visual Components
+- Changed files:
+  - `frontend/scripts/create-visual-website-page.mjs` (New)
+- Summary:
+  - Completely redesigned the website services page using more visual and engaging components instead of rigid grid layouts.
+  - Replaced static grids with dynamic split-row layouts, carousels, timelines, and WhatsApp CTAs for better user engagement.
+  - Used hero-2 for more visual impact, logo-cloud for trust signals, timeline-row for process visualization, and multiple split-row layouts for content variety.
+  - Added WhatsApp CTAs strategically placed for conversion optimization with urgency messaging.
+  - Integrated carousel for portfolio showcase and maintained FAQ section for comprehensive information.
+  - Total 13 blocks with better visual hierarchy and less rigid structure.
+- SEO impact:
+  - High. More engaging visual layout improves user experience metrics (dwell time, bounce rate) which are important ranking factors. WhatsApp CTAs and timeline visualization enhance conversion potential. Split layouts with varied content types create better content flow and readability.
+- Verification:
+  - Page successfully recreated with 13 visual blocks: 1 hero-2, 1 logo-cloud, 4 split-rows, 2 WhatsApp CTAs, 1 timeline, 2 section headers, 1 carousel, 1 FAQ block.

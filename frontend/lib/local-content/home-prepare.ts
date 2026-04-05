@@ -39,7 +39,7 @@ export const homePrepareContent = {
     "Kotacom membantu bisnis membangun fondasi digital yang rapi, menjalankan operasional yang lebih stabil, dan menyiapkan materi promosi yang siap dipakai untuk tumbuh.",
   primaryCta: {
     label: "Jelajahi Layanan",
-    href: "/layanan",
+    href: "/services",
   },
   secondaryCta: {
     label: "Konsultasi via WhatsApp",

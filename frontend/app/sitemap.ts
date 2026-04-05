@@ -78,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [
     { data: contentData }, 
     { data: categoryData },
-    jsonUsahaParams
+    jsonUsahaParams,
   ] = await Promise.all([
     sanityFetch({ query: CONTENT_SITEMAP_QUERY }),
     sanityFetch({ query: CATEGORY_SITEMAP_QUERY }),
@@ -146,7 +146,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/about",
     "/contact",
     "/privacy",
-    "/layanan",
     "/pembuatan-website",
     "/percetakan",
     "/software",
@@ -166,10 +165,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Add JSON Usaha routes
+  // JSON Usaha routes now live under /services
   for (const usaha of jsonUsahaParams) {
     addEntry({
-      url: makeAbsoluteUrl(baseUrl, `/layanan/${usaha.slug}`),
+      url: makeAbsoluteUrl(baseUrl, `/services/${usaha.slug}`),
       lastModified: new Date().toISOString(),
       changeFrequency: "monthly",
       priority: 0.6,

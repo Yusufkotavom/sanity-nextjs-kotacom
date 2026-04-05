@@ -97,7 +97,7 @@ export default async function HomePeparMiddleSection() {
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="default">
-                <Link href="/layanan">Jelajahi Solusi</Link>
+                <Link href="/services">Jelajahi Solusi</Link>
               </Button>
               <GlobalWhatsAppButton
                 label="Konsultasi Gratis"
@@ -223,7 +223,7 @@ export default async function HomePeparMiddleSection() {
                 size="sm"
               />
               <Button asChild variant="ghost" size="sm">
-                <Link href="/layanan">Lihat semua layanan</Link>
+                <Link href="/services">Lihat semua layanan</Link>
               </Button>
             </div>
           </div>

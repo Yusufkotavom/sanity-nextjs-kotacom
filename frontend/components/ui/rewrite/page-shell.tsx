@@ -24,21 +24,30 @@ type RewritePageShellProps = {
   page: LegacyAstroPage;
   siblings?: LegacyAstroPage[];
   children?: React.ReactNode;
+  routeOverride?: string;
+  sectionHrefOverride?: string;
+  sectionLabelOverride?: string;
 };
 
 export default function RewritePageShell({
   page,
   siblings = [],
   children,
+  routeOverride,
+  sectionHrefOverride,
+  sectionLabelOverride,
 }: RewritePageShellProps) {
+  const resolvedRoute = routeOverride ?? page.route;
+  const resolvedSectionHref =
+    sectionHrefOverride ?? (page.section ? `/${page.section}` : resolvedRoute);
+  const resolvedSectionLabel =
+    sectionLabelOverride ?? page.section.replace(/-/g, " ");
   const copy = buildLegacyRewriteCopy(page);
-  const sectionHref = page.section ? `/${page.section}` : page.route;
-  const sectionLabel = page.section.replace(/-/g, " ");
   const related = siblings
     .filter((item) => item.route !== page.route)
     .slice(0, 12);
   const strategicLinks = getStrategicLinks(page);
-  const breadcrumbParts = page.route.split("/").filter(Boolean);
+  const breadcrumbParts = resolvedRoute.split("/").filter(Boolean);
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
     ...breadcrumbParts.map((segment, index) => ({
@@ -61,7 +70,7 @@ export default function RewritePageShell({
     ? buildServiceJsonLd({
         title: copy.primaryKeyword,
         description: copy.description,
-        path: page.route,
+        path: resolvedRoute,
       })
     : null;
   const faqJsonLd = copy.faqs.length > 0 ? buildFaqJsonLd(copy.faqs) : null;
@@ -191,8 +200,8 @@ export default function RewritePageShell({
       <RewriteHero
         page={page}
         copy={copy}
-        sectionLabel={sectionLabel}
-        sectionHref={sectionHref}
+        sectionLabel={resolvedSectionLabel}
+        sectionHref={resolvedSectionHref}
         heroImage={heroImageBySection}
       />
       {children}

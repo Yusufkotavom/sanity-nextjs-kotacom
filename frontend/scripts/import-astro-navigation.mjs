@@ -32,7 +32,7 @@ const TITLE_ROUTE_OVERRIDES = new Map([
   ["Software Development", "/software"],
   ["Mobile App Development", "/software"],
   ["E-commerce Solutions", "/pembuatan-website"],
-  ["IT Support", "/layanan"],
+  ["IT Support", "/services"],
   ["Network Setup", "/services"],
   ["System Administration", "/services"],
   ["Digital Consultation", "/contact"],
@@ -73,7 +73,7 @@ const TOP_LEVEL_NAV_ITEMS = [
   },
   {
     title: "IT Service",
-    href: "/layanan",
+    href: "/services",
     icon: "support",
     source: "Services",
     includeGroups: ["IT Support & Services"],
@@ -485,7 +485,7 @@ async function buildNavigationPayload(snapshot, client) {
     itServiceLink.children = dedupeChildren([
       buildNavLink({
         title: "Layanan",
-        href: "/layanan",
+        href: "/services",
         group: "Core",
         icon: "support",
       }),

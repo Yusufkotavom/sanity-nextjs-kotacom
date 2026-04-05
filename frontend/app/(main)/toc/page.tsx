@@ -168,7 +168,6 @@ export default async function TocPage() {
     "percetakan",
     "software",
     "sistem-pos",
-    "layanan",
     "about",
     "contact",
     "privacy",
@@ -176,7 +175,7 @@ export default async function TocPage() {
   const orderedLegacySections = [
     ...preferredLegacyOrder.filter((section) => legacySections.includes(section)),
     ...legacySections.filter((section) => !preferredLegacyOrder.includes(section)),
-  ];
+  ].filter((section) => section !== "layanan");
 
   const legacySectionGroups: TocSection[] = orderedLegacySections.map((section) => {
     const index = getLegacySectionIndex(section);

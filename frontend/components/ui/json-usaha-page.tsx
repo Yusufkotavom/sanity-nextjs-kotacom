@@ -8,6 +8,8 @@ import { buildBreadcrumbJsonLd, buildFaqJsonLd, buildServiceJsonLd } from "@/lib
 
 type JsonUsahaPageProps = {
   page: JsonUsahaPage;
+  basePath?: string;
+  breadcrumbLabel?: string;
 };
 
 function SectionHeading({
@@ -34,18 +36,23 @@ function SectionHeading({
   );
 }
 
-export default async function JsonUsahaPageView({ page }: JsonUsahaPageProps) {
+export default async function JsonUsahaPageView({
+  page,
+  basePath = "/services",
+  breadcrumbLabel = "Layanan",
+}: JsonUsahaPageProps) {
+  const resolvedPath = `${basePath}/${page.slug}`;
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
-    { name: "Layanan", path: "/layanan" },
-    { name: page.title, path: `/layanan/${page.slug}` },
+    { name: breadcrumbLabel, path: basePath },
+    { name: page.title, path: resolvedPath },
   ]);
   const faqJsonLd =
     page.faqs.length > 0 ? buildFaqJsonLd(page.faqs) : null;
   const serviceJsonLd = buildServiceJsonLd({
     title: page.title,
     description: page.description,
-    path: `/layanan/${page.slug}`,
+    path: resolvedPath,
   });
   const heroPrimaryCta = page.heroCta?.href || "/contact";
   const heroPrimaryLabel = page.heroCta?.label || "Konsultasi Kebutuhan";

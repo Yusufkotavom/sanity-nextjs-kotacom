@@ -196,6 +196,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Block rendering now code-split via dynamic imports and detail-page Sanity fetches cache with 10-minute revalidation for faster TTFB/LCP on all content templates.
 - [x] Detail-page hero LCP tuned: product/service/project hero images now use CDN width hints, quality 85, and priority + sizes; rewrite/post icons are tree-shaken.
 - [x] Build fix: Lucide icon imports reverted to package entry points to avoid ESM subpath resolution failures on Vercel.
+- [x] Consolidated `/layanan` into `/services` with richer service catalog content and removed the `/layanan` routes (sitemap/TOC/internal links updated).
 ## Workstream A - Platform & Data Foundation
 
 ### A1. CMS Contract Freeze

@@ -215,7 +215,7 @@ function buildHomepagePreset() {
           "CTA bawah cocok untuk eksperimen message dan follow-up offer, sedangkan shell inti homepage tetap menjaga positioning Kotacom di level produk dan layanan.",
         primaryHref: DEFAULT_WHATSAPP_URL,
         primaryTitle: "Hubungi tim",
-        secondaryHref: "/layanan",
+        secondaryHref: "/services",
         secondaryTitle: "Jelajahi layanan",
       }),
     ],
