@@ -1,9 +1,0 @@
-{
-  "totalUrls": 120,
-  "okFetch": 0,
-  "fetchErrors": 120,
-  "withIssues": 120,
-  "issueBreakdown": {
-    "fetch_error": 120
-  }
-}
