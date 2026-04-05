@@ -216,6 +216,9 @@ const upsertDoc = async (client, doc) => {
   try {
     await client.createOrReplace(doc);
     console.log(`✅ Upserted ${doc._type} (${doc._id})`);
+    // Random delay between 1-3 seconds to avoid rate limiting
+    const delay = 1000 + Math.random() * 2000;
+    await new Promise(resolve => setTimeout(resolve, delay));
   } catch (err) {
     console.error(`❌ Failed to upsert ${doc._id}:`, err.message);
   }
