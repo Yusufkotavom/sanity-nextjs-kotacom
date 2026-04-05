@@ -82,6 +82,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] AI rewrite apply flow completed: Studio `AI Rewrite` document action now triggers server rewrite and patches draft content automatically
 - [x] AI writer documentation consolidated into production-focused runbook; irrelevant/duplicated setup notes removed
 - [x] SEO Ops dashboard stack split into a standalone Next.js app (`seo-dashboard`) with dedicated scripts, Sanity fetch layer, and auth middleware
+- [x] Frontend revalidate webhook now supports optional indexing submission via the dashboard webhook when configured
 - [x] Critical import behavior confirmed: dotted document IDs (example `post.import.*`, `page.legacy.*`) are visible in authenticated reads but can be missing in public published reads used by frontend build/runtime
 - [x] Shared `legacy-rich-content` block contract added for Markdown/HTML raw rendering and wired to both `page.blocks` and `post.body` (`block-content`)
 - [x] Sanity import smoke test completed with safe ID strategy (no dots): 2 pages + 2 posts published and visible in both public and authenticated published reads

@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { SEO_SESSION_COOKIE, verifySessionToken } from "@/lib/seo-ops/session";
-
 const LOGIN_PATH = "/dashboard/seo/login";
+const SEO_SESSION_COOKIE = "seo_dash_session";
 
 function isPublicSeoApi(pathname: string) {
-  return pathname === "/api/seo/auth/login" || pathname === "/api/seo/auth/logout";
+  return (
+    pathname === "/api/seo/auth/login" ||
+    pathname === "/api/seo/auth/logout" ||
+    pathname === "/api/seo/indexing/webhook"
+  );
 }
 
 export function middleware(request: NextRequest) {
@@ -22,7 +25,7 @@ export function middleware(request: NextRequest) {
   }
 
   const token = request.cookies.get(SEO_SESSION_COOKIE)?.value;
-  const valid = verifySessionToken(token);
+  const valid = Boolean(token);
 
   if (valid) {
     if (pathname === LOGIN_PATH) {

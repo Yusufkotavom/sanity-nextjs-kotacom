@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import SeoLoginForm from "@/components/seo-login-form";
 
-export default function HomePage() {
-  redirect("/dashboard/seo");
+export default function LoginPage() {
+  return <SeoLoginForm />;
 }

@@ -1,3 +1,20 @@
+/**
+ * @deprecated This file contains local static data that has been migrated to Sanity CMS.
+ * 
+ * Migration Status: ✅ COMPLETE (2026-04-05)
+ * - All 104 URLs now exist in Sanity
+ * - This file kept as fallback during transition
+ * - Route handlers still use this as primary source
+ * 
+ * Source of Truth: Sanity CMS
+ * - Use Sanity queries for new features
+ * - This data serves as backup/reference only
+ * 
+ * Future: Will be archived after route handlers updated to use Sanity first
+ * 
+ * See: docs/MIGRATION-STATUS.md for details
+ */
+
 import manifest from "./astro-static-manifest.json";
 
 export type LegacyAstroPage = {
