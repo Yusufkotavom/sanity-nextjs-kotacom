@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { LayoutTemplate } from "lucide-react";
 import { SectionIntro, SectionPanel, SectionShell } from "@/components/ui/section-shell";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 import { KOTACOM_SPLIT_DEFAULT_ILLUSTRATION } from "@/lib/illustrations/kotacom-split";
 

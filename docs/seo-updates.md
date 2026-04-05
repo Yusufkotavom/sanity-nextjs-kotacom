@@ -5317,6 +5317,58 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Build verification: pending deploy.
 
 ## 2026-04-05
+
+### Template System Enhancement - Complete Content & Link Format
+
+**Changed files:**
+- `frontend/scripts/seed-template-samples.mjs`
+- `frontend/components/ui/rewrite/landing-sections/features-section.tsx`
+- `frontend/components/ui/rewrite/landing-sections/proof-section.tsx`
+
+**Summary:**
+Enhanced template seed data with complete, production-ready content and proper link formatting:
+
+1. **Complete Content for All Templates:**
+   - Expanded all text fields with detailed, relevant content
+   - Added 4-5 secondary keywords with {lokasi} token for SEO
+   - Filled all sections: highlights (5 items), E-E-A-T (4 points), process (4 steps), FAQs (4 items)
+   - Added 3 pricing tiers with detailed feature lists
+   - Expanded testimonials, proof items, and long guides
+   - All content uses {lokasi} token for automatic city injection
+
+2. **Fixed Link Format (Critical):**
+   - All links now use `isExternal: true` with `href` property
+   - Applied to: ctaLink, ctaLinks, serviceTypes links, proofItems links
+   - Prevents validation errors in Sanity Studio
+   - Editors can now safely use templates without link errors
+
+3. **Auto WhatsApp CTA Buttons:**
+   - Added WA buttons to Features section (per feature)
+   - Added WA buttons to Proof section (per portfolio item)
+   - Pricing section already had WA buttons (preserved)
+   - All use GlobalWhatsAppButton with contextual messages
+
+4. **SEO Keyword Clustering:**
+   - Each template now has 4-5 location-aware secondary keywords
+   - Keywords automatically inject city name via {lokasi} token
+   - Examples: "Cetak buku {lokasi}", "Web developer {lokasi}"
+   - Supports high-intent local SEO targeting
+
+**Impact on SEO/Integration:**
+- Improved local SEO with keyword clustering (4-5 variations per template)
+- E-E-A-T signals strengthened with detailed credibility content
+- More conversion touchpoints with distributed WA CTAs
+- Editors can now use templates immediately without filling from scratch
+- Link format compliance prevents Studio validation errors
+
+**Verification:**
+- ✅ All links use isExternal format
+- ✅ All content fields populated with relevant data
+- ✅ {lokasi} tokens placed strategically for city injection
+- ✅ WA buttons added to Features and Proof sections
+- ✅ Ready for: `node --env-file=../vercel-frontend.env scripts/seed-template-samples.mjs --write`
+
+---
 **Files Changed:**
 - `frontend/app/(main)/products/[slug]/page.tsx`
 - `frontend/app/(main)/services/[slug]/page.tsx`

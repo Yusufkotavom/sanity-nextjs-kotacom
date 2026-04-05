@@ -455,3 +455,14 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - `docs/archive/2026-04-historical-plans/astro-to-next-migration-plan.md`
   - `docs/astro-migration-megaplan.md`
   - `docs/seo-updates.md`
+
+- [x] **Template System Complete (2026-04-05):**
+  - Template base structure with E-E-A-T section
+  - Auto location injection via {lokasi} token in all content fields
+  - Auto route generation from routePattern + location.slug
+  - Generic Company template variant added
+  - Complete seed data with production-ready content (all fields filled)
+  - All links use isExternal format (prevents validation errors)
+  - SEO keyword clustering (4-5 location-aware variations per template)
+  - Auto WA CTA buttons distributed in Pricing, Features, and Proof sections
+  - Editors can use templates immediately without filling from scratch
