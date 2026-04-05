@@ -2,7 +2,7 @@ import {
   pgTable,
   uuid,
   text,
-  timestamptz,
+  timestamp,
   boolean,
   integer,
   jsonb,
@@ -21,10 +21,10 @@ export const contentItems = pgTable(
     slug: text("slug").notNull(),
     url: text("url").notNull(),
     title: text("title"),
-    publishedAt: timestamptz("published_at"),
-    updatedAt: timestamptz("updated_at"),
-    lastSeenInSitemapAt: timestamptz("last_seen_in_sitemap_at"),
-    createdAt: timestamptz("created_at").defaultNow().notNull(),
+    publishedAt: timestamp("published_at", { withTimezone: true }),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
+    lastSeenInSitemapAt: timestamp("last_seen_in_sitemap_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => ({
     sanityIdUnique: uniqueIndex("content_items_sanity_id_unique").on(table.sanityId),
@@ -40,9 +40,9 @@ export const scheduledTasks = pgTable("scheduled_tasks", {
   timezone: text("timezone").default("Asia/Jakarta"),
   enabled: boolean("enabled").default(true).notNull(),
   payload: jsonb("payload").notNull(),
-  lastRunAt: timestamptz("last_run_at"),
-  nextRunAt: timestamptz("next_run_at"),
-  createdAt: timestamptz("created_at").defaultNow().notNull(),
+  lastRunAt: timestamp("last_run_at", { withTimezone: true }),
+  nextRunAt: timestamp("next_run_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
 export const jobRuns = pgTable(
@@ -56,9 +56,9 @@ export const jobRuns = pgTable(
     payload: jsonb("payload"),
     result: jsonb("result"),
     errorMessage: text("error_message"),
-    startedAt: timestamptz("started_at"),
-    finishedAt: timestamptz("finished_at"),
-    createdAt: timestamptz("created_at").defaultNow().notNull(),
+    startedAt: timestamp("started_at", { withTimezone: true }),
+    finishedAt: timestamp("finished_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => ({
     statusIndex: index("job_runs_status_idx").on(table.status),
@@ -83,7 +83,7 @@ export const aiGenerations = pgTable(
     validationErrors: jsonb("validation_errors"),
     sanityWriteStatus: text("sanity_write_status").notNull(),
     sanityDocumentId: text("sanity_document_id"),
-    createdAt: timestamptz("created_at").defaultNow().notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => ({
     validationIndex: index("ai_generations_validation_idx").on(table.validationStatus),
@@ -97,8 +97,8 @@ export const seoAudits = pgTable("seo_audits", {
   score: integer("score").notNull(),
   status: text("status").notNull(),
   issues: jsonb("issues").notNull(),
-  checkedAt: timestamptz("checked_at").notNull(),
-  createdAt: timestamptz("created_at").defaultNow().notNull(),
+  checkedAt: timestamp("checked_at", { withTimezone: true }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
 export const searchSubmissions = pgTable(
@@ -112,7 +112,7 @@ export const searchSubmissions = pgTable(
     responsePayload: jsonb("response_payload"),
     httpStatus: integer("http_status"),
     status: text("status").notNull(),
-    submittedAt: timestamptz("submitted_at").notNull(),
+    submittedAt: timestamp("submitted_at", { withTimezone: true }).notNull(),
   },
   (table) => ({
     providerIndex: index("search_submissions_provider_idx").on(table.provider),
@@ -132,11 +132,11 @@ export const indexStatusChecks = pgTable(
     indexingState: text("indexing_state"),
     pageFetchState: text("page_fetch_state"),
     robotsState: text("robots_state"),
-    lastCrawlTime: timestamptz("last_crawl_time"),
+    lastCrawlTime: timestamp("last_crawl_time", { withTimezone: true }),
     googleCanonical: text("google_canonical"),
     userCanonical: text("user_canonical"),
     rawResponse: jsonb("raw_response"),
-    checkedAt: timestamptz("checked_at").notNull(),
+    checkedAt: timestamp("checked_at", { withTimezone: true }).notNull(),
   },
   (table) => ({
     contentIndex: index("index_status_checks_content_idx").on(table.contentItemId),
@@ -157,7 +157,7 @@ export const analyticsDaily = pgTable(
     topQueries: jsonb("top_queries"),
     topCountries: jsonb("top_countries"),
     topDevices: jsonb("top_devices"),
-    createdAt: timestamptz("created_at").defaultNow().notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => ({
     uniqueDaily: uniqueIndex("analytics_daily_unique").on(table.contentItemId, table.date),
