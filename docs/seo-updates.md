@@ -522,3 +522,32 @@ Successfully migrated all 101 remaining URLs from local manifest to Sanity CMS:
 - Serves as backup/reference during Phase 3-4
 
 ---
+
+---
+
+### Sanity Agent Toolkit Installation
+
+**Changed files:**
+- `.agents/skills/sanity-best-practices/` (40 files added)
+- `.agents/skills/content-modeling-best-practices/` (5 files added)
+- `.agents/skills/seo-aeo-best-practices/` (5 files added)
+- `.agents/skills/content-experimentation-best-practices/` (5 files added)
+- `skills-lock.json` (new)
+
+**Summary:**
+Installed Sanity Agent Toolkit skills from https://github.com/sanity-io/agent-toolkit using `npx skills add sanity-io/agent-toolkit`. This provides AI agents with comprehensive best practices for:
+- Sanity development (GROQ, schema design, TypeGen, Visual Editing, framework integrations)
+- Content modeling (structured content principles, references vs embedding)
+- SEO/AEO (EEAT principles, structured data, technical SEO)
+- Content experimentation (A/B testing methodology, statistical foundations)
+
+**Impact on SEO/Integration:**
+- Provides AI agents with official Sanity best practices for schema design, GROQ queries, and SEO implementation
+- Includes SEO/AEO guidance with EEAT principles and structured data patterns
+- Helps maintain consistency with Sanity's recommended patterns for Next.js integration
+- No runtime impact - skills are documentation for AI agents only
+
+**Verification:**
+- Skills installed successfully in `.agents/skills/` directory
+- 40 reference files covering all major Sanity topics
+- Compatible with Kiro, Cursor, Claude Code, and other Agent Skills-compatible tools
