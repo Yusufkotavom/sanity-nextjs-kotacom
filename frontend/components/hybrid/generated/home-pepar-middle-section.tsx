@@ -1,14 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
-import Blocks from "lucide-react/dist/esm/icons/blocks";
-import LaptopMinimal from "lucide-react/dist/esm/icons/laptop-minimal";
-import Network from "lucide-react/dist/esm/icons/network";
-import Printer from "lucide-react/dist/esm/icons/printer";
-import Sparkles from "lucide-react/dist/esm/icons/sparkles";
-import Workflow from "lucide-react/dist/esm/icons/workflow";
-import CheckCircle2 from "lucide-react/dist/esm/icons/check-circle-2";
-import Trophy from "lucide-react/dist/esm/icons/trophy";
-import MapPin from "lucide-react/dist/esm/icons/map-pin";
+import {
+  Blocks,
+  LaptopMinimal,
+  Network,
+  Printer,
+  Sparkles,
+  Workflow,
+  CheckCircle2,
+  Trophy,
+  MapPin,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import GlobalWhatsAppButton from "@/components/global-whatsapp-button";

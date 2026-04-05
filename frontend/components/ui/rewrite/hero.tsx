@@ -1,7 +1,5 @@
 import Link from "next/link";
-import ArrowRight from "lucide-react/dist/esm/icons/arrow-right";
-import CheckCircle2 from "lucide-react/dist/esm/icons/check-circle-2";
-import Sparkles from "lucide-react/dist/esm/icons/sparkles";
+import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import Image from "next/image";
 import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";

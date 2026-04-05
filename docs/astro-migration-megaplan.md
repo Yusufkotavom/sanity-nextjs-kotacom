@@ -195,6 +195,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Global PageSpeed pass applied: Sanity CDN defaulted for production, homepage data queries capped and cached, main layout revalidation set to 10 minutes, icon imports tree-shaken, and portable-text images compressed for faster LCP.
 - [x] Block rendering now code-split via dynamic imports and detail-page Sanity fetches cache with 10-minute revalidation for faster TTFB/LCP on all content templates.
 - [x] Detail-page hero LCP tuned: product/service/project hero images now use CDN width hints, quality 85, and priority + sizes; rewrite/post icons are tree-shaken.
+- [x] Build fix: Lucide icon imports reverted to package entry points to avoid ESM subpath resolution failures on Vercel.
 ## Workstream A - Platform & Data Foundation
 
 ### A1. CMS Contract Freeze

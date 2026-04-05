@@ -5224,6 +5224,22 @@ Positive Core Web Vitals impact (lower LCP and JS execution time) across product
 **Verification Status:**
 Not run (manual or automated).
 
+## 2026-04-05 - Lucide Import Build Fix
+
+**Changed files:**
+- `frontend/components/hybrid/generated/home-pepar-middle-section.tsx`
+- `frontend/components/ui/rewrite/hero.tsx`
+- `frontend/components/blocks/post-hero.tsx`
+
+**Summary:**
+Reverted Lucide imports to package entry points to avoid webpack resolving broken ESM icon subpaths during Vercel builds.
+
+**Impact:**
+Build reliability fix. No direct SEO impact.
+
+**Verification Status:**
+Pending (typecheck/build).
+
 ## 2026-04-05 - Dynamic Block Splitting + Cached Detail Fetch
 
 **Changed files:**
