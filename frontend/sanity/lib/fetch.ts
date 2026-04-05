@@ -203,8 +203,11 @@ export const fetchTemplatePageByRoute = async ({
   }>;
 
   for (const { pattern, service, city } of patterns) {
-    const params: Record<string, string | undefined> = { pattern, city };
-    if (service) params.service = service;
+    const params: Record<string, string | null> = {
+      pattern,
+      city,
+      service: service || null,
+    };
 
     const fallback = isDev
       ? await fetchPublished<TemplatePageDoc | null>({

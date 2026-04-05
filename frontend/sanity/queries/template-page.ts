@@ -142,12 +142,13 @@ export const TEMPLATE_PAGE_BY_PATTERN_QUERY = groq`
     _type in ["pageLocation", "serviceLocation"]
     && routePattern == $pattern
     && (
-      (defined($service) && (service->slug.current == $service || serviceType->slug.current == $service)) ||
-      !defined($service)
+      $service == null ||
+      service->slug.current == $service ||
+      serviceType->slug.current == $service
     )
     && (
-      (defined($city) && location->slug.current == $city) ||
-      !defined($city)
+      $city == null ||
+      location->slug.current == $city
     )
   ][0]{
     _id,
