@@ -11,6 +11,9 @@ export default function AutoRouteInput(props: StringInputProps) {
   const serviceSlug = useFormValue(["service", "slug", "current"]) as
     | string
     | undefined;
+  const serviceTypeSlug = useFormValue(["serviceType", "slug", "current"]) as
+    | string
+    | undefined;
   const locationSlug = useFormValue(["location", "slug", "current"]) as
     | string
     | undefined;
@@ -19,7 +22,7 @@ export default function AutoRouteInput(props: StringInputProps) {
 
   // Replace {service} token
   if (computed && SERVICE_TOKEN_REGEX.test(computed)) {
-    const serviceValue = serviceSlug || slug || "";
+    const serviceValue = serviceTypeSlug || serviceSlug || slug || "";
     if (serviceValue) {
       computed = computed.replace(SERVICE_TOKEN_REGEX, serviceValue);
     } else {

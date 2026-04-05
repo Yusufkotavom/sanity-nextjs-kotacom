@@ -54,6 +54,13 @@ export const structure = (S: any, context: any) =>
         context,
       }),
       orderableDocumentListDeskItem({
+        type: "serviceType",
+        title: "Service Types",
+        icon: BriefcaseBusiness,
+        S,
+        context,
+      }),
+      orderableDocumentListDeskItem({
         type: "project",
         title: "Projects",
         icon: FolderKanban,

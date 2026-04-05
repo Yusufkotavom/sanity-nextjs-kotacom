@@ -44,14 +44,17 @@ const extractServices = () => {
       const slug = item.slug;
       const title = item.title;
       services.set(`website-${slug}`, {
-        _id: `service-${slug}`,
-        _type: "service",
+        _id: `service-type-${slug}`,
+        _type: "serviceType",
         title,
         slug: { _type: "slug", current: slug.replace("jasa-pembuatan-website-", "") },
-        excerpt: `Layanan ${title.toLowerCase()} profesional untuk bisnis Anda.`,
-        startingPrice: 8000000,
-        currency: "IDR",
-        duration: "2-4 minggu",
+        category: "pembuatan-website",
+        description: `Layanan ${title.toLowerCase()} profesional untuk bisnis Anda.`,
+        pricing: {
+          startingPrice: 8000000,
+          currency: "IDR",
+          duration: "2-4 minggu",
+        },
       });
     }
   });
@@ -62,14 +65,17 @@ const extractServices = () => {
       const slug = item.slug;
       const title = item.title;
       services.set(`percetakan-${slug}`, {
-        _id: `service-${slug}`,
-        _type: "service",
+        _id: `service-type-${slug}`,
+        _type: "serviceType",
         title,
         slug: { _type: "slug", current: slug.replace("cetak-", "") },
-        excerpt: `Layanan ${title.toLowerCase()} dengan kualitas terbaik.`,
-        startingPrice: 500000,
-        currency: "IDR",
-        duration: "3-7 hari",
+        category: "percetakan",
+        description: `Layanan ${title.toLowerCase()} dengan kualitas terbaik.`,
+        pricing: {
+          startingPrice: 500000,
+          currency: "IDR",
+          duration: "3-7 hari",
+        },
       });
     }
   });
@@ -80,14 +86,17 @@ const extractServices = () => {
       const slug = item.slug;
       const title = item.title;
       services.set(`software-${slug}`, {
-        _id: `service-${slug}`,
-        _type: "service",
+        _id: `service-type-${slug}`,
+        _type: "serviceType",
         title,
         slug: { _type: "slug", current: slug },
-        excerpt: `Solusi ${title.toLowerCase()} untuk efisiensi bisnis Anda.`,
-        startingPrice: 15000000,
-        currency: "IDR",
-        duration: "4-8 minggu",
+        category: "software",
+        description: `Solusi ${title.toLowerCase()} untuk efisiensi bisnis Anda.`,
+        pricing: {
+          startingPrice: 15000000,
+          currency: "IDR",
+          duration: "4-8 minggu",
+        },
       });
     }
   });
@@ -184,7 +193,7 @@ const createServiceLocationDocs = () => {
         _type: "serviceLocation",
         title: item.title,
         routePattern: `/${category}/{service}/{lokasi}`,
-        service: { _type: "reference", _ref: `service-${service}` },
+        serviceType: { _type: "reference", _ref: `service-type-${service}` },
         location: { _type: "reference", _ref: `location-${city}` },
         template: { _type: "reference", _ref: `page-template-${category}` },
         contentStatus: "draft",
@@ -249,7 +258,7 @@ async function main() {
   }
 
   // Upsert services
-  console.log("\n🛠️  Creating services...");
+  console.log("\n🛠️  Creating service types...");
   for (const doc of services) {
     await upsertDoc(client, doc);
   }

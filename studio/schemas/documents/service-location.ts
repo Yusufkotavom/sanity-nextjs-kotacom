@@ -60,6 +60,17 @@ export default defineType({
       type: "reference",
       to: [{ type: "service" }],
       group: "settings",
+      description: "Reference to full Service document (for detail pages)",
+      hidden: ({ document }) => !!document?.serviceType,
+    }),
+    defineField({
+      name: "serviceType",
+      title: "Service Type",
+      type: "reference",
+      to: [{ type: "serviceType" }],
+      group: "settings",
+      description: "Reference to Service Type (for location-based pages, recommended)",
+      hidden: ({ document }) => !!document?.service,
     }),
     defineField({
       name: "location",

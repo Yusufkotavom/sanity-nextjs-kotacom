@@ -122,6 +122,12 @@ export const TEMPLATE_PAGE_BY_ROUTE_QUERY = groq`
       title,
       slug
     },
+    serviceType->{
+      title,
+      slug,
+      category,
+      description
+    },
     location->{
       title,
       slug,
@@ -136,7 +142,7 @@ export const TEMPLATE_PAGE_BY_PATTERN_QUERY = groq`
     _type in ["pageLocation", "serviceLocation"]
     && routePattern == $pattern
     && (
-      (defined($service) && service->slug.current == $service) ||
+      (defined($service) && (service->slug.current == $service || serviceType->slug.current == $service)) ||
       !defined($service)
     )
     && (
@@ -178,6 +184,12 @@ export const TEMPLATE_PAGE_BY_PATTERN_QUERY = groq`
     service->{
       title,
       slug
+    },
+    serviceType->{
+      title,
+      slug,
+      category,
+      description
     },
     location->{
       title,
