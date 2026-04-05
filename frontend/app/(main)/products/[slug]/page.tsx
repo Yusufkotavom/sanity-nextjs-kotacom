@@ -23,7 +23,8 @@ import {
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
 import JsonLd from "@/components/seo/json-ld";
-import { buildBreadcrumbJsonLd, buildProductJsonLd } from "@/lib/seo-jsonld";
+import { buildBreadcrumbJsonLd, buildProductJsonLd, resolveAggregateRating } from "@/lib/seo-jsonld";
+import ReviewsSection from "@/components/ui/reviews-section";
 
 type BreadcrumbLink = {
   label: string;
@@ -169,6 +170,12 @@ export default async function ProductSlugPage(props: {
     { label: product.title as string, href: "#" },
   ];
   const productPath = `/products/${params.slug}`;
+  const seo = await fetchSanitySeoSettings();
+  const resolvedRating = resolveAggregateRating(
+    product.aggregateRating,
+    product.reviews,
+    (seo as any)?.defaultAggregateRating,
+  );
   const productJsonLd = buildProductJsonLd({
     title: product.title || "",
     description: product.meta?.description || product.excerpt,
@@ -177,6 +184,8 @@ export default async function ProductSlugPage(props: {
     price: product.price,
     currency: product.currency,
     availability: product.availability,
+    aggregateRating: resolvedRating,
+    reviews: product.reviews,
   });
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
@@ -248,6 +257,14 @@ export default async function ProductSlugPage(props: {
             <ProductGrid products={relatedProducts} initialCount={4} step={4} />
           </div>
         )}
+
+        {/* Reviews Section */}
+        <div className="mx-auto max-w-4xl">
+          <ReviewsSection
+            reviews={product.reviews || []}
+            aggregateRating={resolvedRating}
+          />
+        </div>
       </div>
     </section>
   );

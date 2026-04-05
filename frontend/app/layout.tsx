@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { generateRootMetadata } from "@/sanity/lib/metadata";
-import { fetchSanityThemeSettings } from "@/sanity/lib/fetch";
+import { fetchSanityThemeSettings, fetchSanitySeoSettings } from "@/sanity/lib/fetch";
 
 const THEME_PRESETS: Record<
   string,
@@ -100,7 +100,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const themeSettings = await fetchSanityThemeSettings();
+  const [themeSettings, seoSettings] = await Promise.all([
+    fetchSanityThemeSettings(),
+    fetchSanitySeoSettings(),
+  ]);
   const colors = themeSettings?.themeColors;
   const themeVars: Record<string, string> = {};
   const preset = THEME_PRESETS[colors?.themePreset || "neutral"];
@@ -228,6 +231,14 @@ export default async function RootLayout({
                 "https://www.instagram.com/kotacom.id",
                 "https://www.facebook.com/kotacom"
               ],
+              ...((seoSettings as any)?.defaultAggregateRating?.ratingValue ? {
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": String((seoSettings as any).defaultAggregateRating.ratingValue),
+                  "reviewCount": String((seoSettings as any).defaultAggregateRating.reviewCount || 1),
+                  "bestRating": String((seoSettings as any).defaultAggregateRating.bestRating || 5)
+                }
+              } : {}),
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": "Layanan Utama Kotacom",

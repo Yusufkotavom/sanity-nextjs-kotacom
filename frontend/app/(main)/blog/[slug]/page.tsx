@@ -12,7 +12,14 @@ import {
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
 import JsonLd from "@/components/seo/json-ld";
-import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "@/lib/seo-jsonld";
+import {
+  buildArticleJsonLd,
+  buildBreadcrumbJsonLd,
+  buildItemListJsonLd,
+  buildAffiliateItemJsonLd,
+} from "@/lib/seo-jsonld";
+import AffiliateProductCard from "@/components/ui/affiliate-product-card";
+import StarRating from "@/components/ui/star-rating";
 
 type BreadcrumbLink = {
   label: string;
@@ -92,10 +99,20 @@ export default async function PostPage(props: {
     { name: post.title || "Post", path: postPath },
   ]);
 
+  // Auto-detect affiliate items
+  const affiliateItems = (post as any)?.affiliateItems || [];
+
   return (
     <section>
       <JsonLd data={articleJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
+      {/* Auto-detected affiliate/review JSON-LD */}
+      {affiliateItems.length > 1 && (
+        <JsonLd data={buildItemListJsonLd(affiliateItems, post.title || undefined)} />
+      )}
+      {affiliateItems.length === 1 && (
+        <JsonLd data={buildAffiliateItemJsonLd(affiliateItems[0])} />
+      )}
       <div className="container py-16 xl:py-20">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
           <article className="max-w-3xl">
@@ -110,6 +127,35 @@ export default async function PostPage(props: {
             {post.body && (
               <PortableTextRenderer value={post.body} headingIdMap={headingIdMap} />
             )}
+
+            {/* Affiliate Items Section (auto-detected) */}
+            {affiliateItems.length > 0 && (
+              <div className="mt-10 border-t border-border/40 pt-8">
+                <h2 className="mb-6 text-2xl font-bold">
+                  {affiliateItems.length === 1
+                    ? `Review: ${affiliateItems[0].name}`
+                    : `${affiliateItems.length} Item yang Direkomendasikan`}
+                </h2>
+                {(post as any).overallRating && (
+                  <div className="mb-4 flex items-center gap-2">
+                    <span className="text-sm font-medium text-foreground/70">Rating Keseluruhan:</span>
+                    <StarRating rating={(post as any).overallRating} size="md" />
+                  </div>
+                )}
+                <div className={affiliateItems.length > 1 ? "grid gap-6 sm:grid-cols-2" : ""}>
+                  {affiliateItems.map((item: any, idx: number) => (
+                    <AffiliateProductCard key={item._key || idx} item={item} />
+                  ))}
+                </div>
+                {(post as any).verdict && (
+                  <div className="mt-6 rounded-xl bg-muted/50 p-5">
+                    <h3 className="mb-2 font-semibold">Kesimpulan</h3>
+                    <p className="text-foreground/80">{(post as any).verdict}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
             <GlobalWhatsAppPanel
               title="Butuh bantuan menerapkan insight ini?"
               description="Bahas kebutuhan bisnis Anda via WhatsApp. Tim kami bisa bantu menjembatani insight dari artikel ini menjadi langkah implementasi yang lebih konkret."

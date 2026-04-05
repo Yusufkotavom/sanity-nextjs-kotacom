@@ -162,6 +162,13 @@ export default defineType({
       initialValue: 3,
       validation: (Rule) => Rule.integer().min(0),
     }),
+    defineField({
+      name: "aggregateRating",
+      title: "Aggregate Rating",
+      type: "aggregateRating",
+      group: "seo",
+      description: "Page-level rating override. Falls back to SEO Settings default if empty.",
+    }),
     meta,
     orderRankField({ type: "page" }),
   ],

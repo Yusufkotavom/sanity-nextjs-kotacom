@@ -96,6 +96,13 @@ export default defineType({
         }),
       ],
     }),
+    defineField({
+      name: "defaultAggregateRating",
+      title: "Default Aggregate Rating (Global Fallback)",
+      type: "aggregateRating",
+      description:
+        "Global default rating applied to all pages/products/services that don't have their own rating. Set this to your Google Maps or platform-verified rating.",
+    }),
   ],
   preview: {
     select: {

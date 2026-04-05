@@ -21,7 +21,8 @@ import {
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
 import JsonLd from "@/components/seo/json-ld";
-import { buildBreadcrumbJsonLd, buildServiceJsonLd } from "@/lib/seo-jsonld";
+import { buildBreadcrumbJsonLd, buildServiceJsonLd, resolveAggregateRating } from "@/lib/seo-jsonld";
+import ReviewsSection from "@/components/ui/reviews-section";
 
 type BreadcrumbLink = {
   label: string;
@@ -141,6 +142,12 @@ export default async function ServiceSlugPage(props: {
     { label: service.title as string, href: "#" },
   ];
   const servicePath = `/services/${params.slug}`;
+  const seo = await fetchSanitySeoSettings();
+  const resolvedRating = resolveAggregateRating(
+    service.aggregateRating,
+    service.reviews,
+    (seo as any)?.defaultAggregateRating,
+  );
   const serviceJsonLd = buildServiceJsonLd({
     title: service.title || "",
     description: service.meta?.description || service.excerpt,
@@ -148,6 +155,8 @@ export default async function ServiceSlugPage(props: {
     image: service.meta?.image || service.image,
     startingPrice: service.startingPrice,
     currency: service.currency,
+    aggregateRating: resolvedRating,
+    reviews: service.reviews,
   });
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
@@ -218,6 +227,14 @@ export default async function ServiceSlugPage(props: {
             </div>
           ) : null}
         </article>
+
+        {/* Reviews Section */}
+        <div className="mx-auto max-w-4xl">
+          <ReviewsSection
+            reviews={service.reviews || []}
+            aggregateRating={resolvedRating}
+          />
+        </div>
       </div>
     </section>
   );

@@ -13,5 +13,12 @@ export const SEO_SETTINGS_QUERY = groq`*[_type == "seoSettings"][0]{
   twitterHandle,
   defaultImage{
     ${imageQuery}
-  }
+  },
+  defaultAggregateRating{
+    ratingValue,
+    reviewCount,
+    bestRating,
+    ratingSource,
+    sourceUrl,
+  },
 }`;

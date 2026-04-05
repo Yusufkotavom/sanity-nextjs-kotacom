@@ -29,6 +29,25 @@ export const PRODUCT_QUERY = groq`*[_type == "product" && slug.current == $slug]
   cta{
     ${linkQuery}
   },
+  reviews[]{
+    _key,
+    reviewerName,
+    reviewerRole,
+    reviewerImage{ ${imageQuery} },
+    rating,
+    reviewBody,
+    datePublished,
+    source,
+    sourceUrl,
+    verified,
+  },
+  aggregateRating{
+    ratingValue,
+    reviewCount,
+    bestRating,
+    ratingSource,
+    sourceUrl,
+  },
   _createdAt,
   _updatedAt,
   ${metaQuery},

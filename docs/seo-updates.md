@@ -5071,3 +5071,43 @@ This file is the canonical changelog for all repository updates, with explicit S
 - Verification:
   - `pnpm --filter frontend run typecheck` — exit code 0.
   - Duplicate detection script: 0 duplicates remain after delete run.
+
+## 2026-04-05 - Rich Reviews & Structured Data System
+
+- New files:
+  - `studio/schemas/blocks/shared/review-item.ts` — reviewItem reusable object schema
+  - `studio/schemas/blocks/shared/aggregate-rating.ts` — aggregateRating reusable object schema
+  - `studio/schemas/blocks/shared/affiliate-item.ts` — affiliateItem schema (supports Product, Software, Service, WebApp, MobileApp)
+  - `frontend/components/ui/star-rating.tsx` — reusable star rating display component
+  - `frontend/components/ui/review-card.tsx` — review card with reviewer info, source badge, verified status
+  - `frontend/components/ui/affiliate-product-card.tsx` — affiliate/review item card with pros/cons, rating, CTA
+  - `frontend/components/ui/reviews-section.tsx` — reviews section wrapper with aggregate summary
+- Modified files:
+  - `studio/schema-types.ts` — registered 3 new object types
+  - `studio/schemas/documents/product.ts` — added reviews[], aggregateRating fields
+  - `studio/schemas/documents/service.ts` — added reviews[], aggregateRating fields
+  - `studio/schemas/documents/post.ts` — added affiliateItems[], overallRating, verdict, aggregateRating
+  - `studio/schemas/documents/page.ts` — added aggregateRating field
+  - `studio/schemas/documents/seo-settings.ts` — added defaultAggregateRating (global fallback)
+  - `frontend/sanity/queries/product.ts` — added reviews + aggregateRating projections
+  - `frontend/sanity/queries/service.ts` — added reviews + aggregateRating projections
+  - `frontend/sanity/queries/post.ts` — added affiliateItems + overallRating + verdict + aggregateRating
+  - `frontend/sanity/queries/seo-settings.ts` — added defaultAggregateRating projection
+  - `frontend/lib/seo-jsonld.ts` — complete rewrite: added resolveAggregateRating fallback chain, buildItemListJsonLd, buildAffiliateItemJsonLd
+  - `frontend/app/layout.tsx` — CMS-driven AggregateRating in LocalBusiness JSON-LD
+  - `frontend/app/(main)/products/[slug]/page.tsx` — integrated reviews + rating JSON-LD + UI
+  - `frontend/app/(main)/services/[slug]/page.tsx` — integrated reviews + rating JSON-LD + UI
+  - `frontend/app/(main)/blog/[slug]/page.tsx` — auto-detect affiliate items, render cards + ItemList/Review JSON-LD
+  - `frontend/components/blocks/carousel/carousel-2.tsx` — fixed StarRating import
+- Summary:
+  - Full review, rating, and affiliate product system integrated across CMS and frontend.
+  - AggregateRating fallback chain: Document override → Auto-calculated from reviews → SEO Settings default.
+  - Affiliate items in blog auto-detected: 1 item → Review schema, >1 items → ItemList schema.
+  - All affiliate links auto-apply rel="sponsored nofollow noopener".
+  - Supports 5 item types: Product, Software, Service, WebApp, MobileApp.
+- SEO impact:
+  - Enables Product Rating Stars, Service Rating, ItemList/Carousel, Review Snippets in Google rich results.
+  - CMS-managed AggregateRating for LocalBusiness replaces former hardcoded placeholder.
+  - Zero-effort for existing content (all new fields optional, UI hidden when empty).
+- Verification:
+  - `pnpm --filter frontend run typecheck` — exit code 0, 0 errors.
