@@ -112,7 +112,7 @@ The implementation follows an incremental approach: critical visual fixes first,
   - Test visual hierarchy and readability across all sections
   - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
 
-- [~] 11. Audit and enhance footer for local SEO
+- [ ] 11. Audit and enhance footer for local SEO
   - Update `frontend/components/footer.tsx` component
   - Add complete Surabaya business address with proper formatting
   - Add operating hours or business availability information
@@ -121,7 +121,7 @@ The implementation follows an incremental approach: critical visual fixes first,
   - Maintain consistent styling with overall design system
   - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5_
 
-- [~] 12. Validate content preservation across all changes
+- [ ] 12. Validate content preservation across all changes
   - Verify all headline copy is preserved, including "Bangun fondasi digital bisnis yang rapi, stabil, dan siap untuk tumbuh"
   - Verify benefit-oriented, non-technical tone is maintained in all service descriptions
   - Verify 3-step workflow explanation (Understand → Arrange → Execute) is intact
@@ -129,7 +129,7 @@ The implementation follows an incremental approach: critical visual fixes first,
   - Verify visual changes enhance rather than replace content foundation
   - _Requirements: 12.1, 12.2, 12.3, 12.4, 12.5_
 
-- [~] 13. Final checkpoint and cross-browser testing
+- [ ] 13. Final checkpoint and cross-browser testing
   - Test all changes on Chrome, Firefox, Safari, and Edge
   - Test responsive behavior on mobile (375px), tablet (768px), and desktop (1440px)
   - Verify accessibility: keyboard navigation, focus states, screen reader compatibility

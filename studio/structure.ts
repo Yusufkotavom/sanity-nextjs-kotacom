@@ -16,6 +16,8 @@ import {
   Blocks,
   Bot,
   Sparkles,
+  MapPin,
+  LayoutTemplate,
 } from "lucide-react";
 
 export const structure = (S: any, context: any) =>
@@ -93,6 +95,40 @@ export const structure = (S: any, context: any) =>
         S,
         context,
       }),
+      orderableDocumentListDeskItem({
+        type: "pageTemplate",
+        title: "Page Templates",
+        icon: LayoutTemplate,
+        S,
+        context,
+      }),
+      S.listItem()
+        .title("Page Locations")
+        .icon(MapPin)
+        .schemaType("pageLocation")
+        .child(
+          S.documentTypeList("pageLocation")
+            .title("Page Locations")
+            .defaultOrdering([{ field: "_updatedAt", direction: "desc" }])
+        ),
+      S.listItem()
+        .title("Service Locations")
+        .icon(MapPin)
+        .schemaType("serviceLocation")
+        .child(
+          S.documentTypeList("serviceLocation")
+            .title("Service Locations")
+            .defaultOrdering([{ field: "_updatedAt", direction: "desc" }])
+        ),
+      S.listItem()
+        .title("Locations")
+        .icon(MapPin)
+        .schemaType("location")
+        .child(
+          S.documentTypeList("location")
+            .title("Locations")
+            .defaultOrdering([{ field: "title", direction: "asc" }])
+        ),
       S.listItem()
         .title("Redirects")
         .icon(Link2)

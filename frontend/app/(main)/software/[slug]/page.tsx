@@ -4,11 +4,28 @@ import {
   getLegacySectionSlug,
 } from "@/lib/legacy-pages/astro-static";
 import { generateLegacyPageMetadata } from "@/lib/legacy-pages/metadata";
+import {
+  fetchTemplatePageByRoute,
+  fetchTemplatePageRoutes,
+} from "@/sanity/lib/fetch";
+import { generatePageMetadata } from "@/sanity/lib/metadata";
+import { resolveTemplateMeta } from "@/lib/templates/resolve-template";
 import { notFound } from "next/navigation";
+import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 
-export function generateStaticParams() {
-  return getLegacySectionChildren("software").map((item) => ({
-    slug: item.slug,
+export async function generateStaticParams() {
+  const directSlugs = getLegacySectionChildren("software").map(
+    (item) => item.slug,
+  );
+  const templateRoutes = await fetchTemplatePageRoutes();
+  const templateSlugs = templateRoutes
+    .map((item) => item.route || "")
+    .filter((route) => route.startsWith("/software/"))
+    .map((route) => route.replace(/^\/software\//, ""))
+    .filter((slug) => slug && !slug.includes("/"));
+
+  return Array.from(new Set([...directSlugs, ...templateSlugs])).map((slug) => ({
+    slug,
   }));
 }
 
@@ -16,6 +33,22 @@ export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
+  const route = `/software/${params.slug}`;
+  const templatePage = await fetchTemplatePageByRoute({ route });
+  if (templatePage) {
+    const meta = resolveTemplateMeta({
+      page: templatePage.meta || null,
+      template: templatePage.template?.metaDefaults || null,
+    });
+    return await generatePageMetadata({
+      page: {
+        title: templatePage.title || params.slug,
+        excerpt: templatePage.structured?.description,
+        meta: meta || undefined,
+      },
+      slug: route.replace(/^\/+/, ""),
+    });
+  }
   return generateLegacyPageMetadata(getLegacySectionSlug("software", params.slug));
 }
 
@@ -23,6 +56,24 @@ export default async function SoftwareDetailPage(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
+  const route = `/software/${params.slug}`;
+  const templatePage = await fetchTemplatePageByRoute({ route });
+  if (templatePage) {
+    const virtualPage: LegacyAstroPage = {
+      route,
+      section: "software",
+      slug: params.slug,
+      sourceFile: "sanity-template",
+      title: templatePage.title || params.slug,
+      migrationStatus: "draft",
+    };
+    return (
+      <RewritePageShell
+        page={virtualPage}
+        siblings={getLegacySectionChildren("software")}
+      />
+    );
+  }
   const page = getLegacySectionSlug("software", params.slug);
   if (!page) notFound();
 

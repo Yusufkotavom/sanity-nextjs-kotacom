@@ -4,6 +4,7 @@ export type LegacyRewriteCopy = {
   description: string;
   intro: string;
   highlights: string[];
+  eeatPoints?: Array<{ title: string; description: string }>;
   process: string[];
   faqs: Array<{ question: string; answer: string }>;
   ctaLabel: string;

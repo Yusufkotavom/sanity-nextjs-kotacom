@@ -5,6 +5,12 @@ import { SETTINGS_QUERY } from "@/sanity/queries/settings";
 import { SEO_SETTINGS_QUERY } from "@/sanity/queries/seo-settings";
 import { THEME_SETTINGS_QUERY } from "@/sanity/queries/theme-settings";
 import { REUSABLE_SECTIONS_QUERY } from "@/sanity/queries/reusable-section";
+import { LEGACY_PAGE_OVERRIDE_QUERY } from "@/sanity/queries/legacy-page";
+import {
+  TEMPLATE_PAGE_BY_ROUTE_QUERY,
+  TEMPLATE_PAGE_BY_PATTERN_QUERY,
+  TEMPLATE_PAGE_ROUTES_QUERY,
+} from "@/sanity/queries/template-page";
 import {
   SEO_OPS_SETTINGS_PRIVATE_QUERY,
   SEO_OPS_SETTINGS_PUBLIC_QUERY,
@@ -60,8 +66,9 @@ import {
   NAVIGATION_QUERY_RESULT,
   SETTINGS_QUERY_RESULT,
 } from "@/sanity.types";
+import type { TemplatePageDoc } from "@/types/template";
 
-type PageBlock = NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
+export type PageBlock = NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 export type ReusablePlacementSlot =
   | "beforeHeader"
   | "afterHeader"
@@ -121,6 +128,82 @@ export const fetchSanityPageBySlug = async ({
   });
 
   return data;
+};
+
+export const fetchSanityPageBySlugBuildOnly = async ({
+  slug,
+}: {
+  slug: string;
+}): Promise<PAGE_QUERY_RESULT> => {
+  const data = await fetchPublished<PAGE_QUERY_RESULT>({
+    query: PAGE_QUERY,
+    params: { slug },
+  });
+
+  return data;
+};
+
+export const fetchLegacyPageOverrideByRoute = async ({
+  route,
+}: {
+  route: string;
+}): Promise<any | null> => {
+  const data = await fetchPublished<any | null>({
+    query: LEGACY_PAGE_OVERRIDE_QUERY,
+    params: { route },
+  });
+
+  return data || null;
+};
+
+export const fetchTemplatePageByRoute = async ({
+  route,
+}: {
+  route: string;
+}): Promise<TemplatePageDoc | null> => {
+  const isDev = process.env.NODE_ENV === "development";
+  const data = isDev
+    ? await fetchPublished<TemplatePageDoc | null>({
+        query: TEMPLATE_PAGE_BY_ROUTE_QUERY,
+        params: { route },
+      })
+    : await fetchPublishedCached<TemplatePageDoc | null>({
+        query: TEMPLATE_PAGE_BY_ROUTE_QUERY,
+        params: { route },
+        tags: ["template-pages", `template-page:${route}`],
+        revalidate: 600,
+      });
+
+  if (data) return data;
+
+  const segments = route.split("/").filter(Boolean);
+  if (segments.length < 2) return null;
+  const city = segments.at(-1) || "";
+  const pattern = `/${segments.slice(0, -1).join("/")}/{lokasi}`;
+
+  const fallback = isDev
+    ? await fetchPublished<TemplatePageDoc | null>({
+        query: TEMPLATE_PAGE_BY_PATTERN_QUERY,
+        params: { pattern, city },
+      })
+    : await fetchPublishedCached<TemplatePageDoc | null>({
+        query: TEMPLATE_PAGE_BY_PATTERN_QUERY,
+        params: { pattern, city },
+        tags: ["template-pages", `template-page:${pattern}:${city}`],
+        revalidate: 600,
+      });
+
+  return fallback || null;
+};
+
+export const fetchTemplatePageRoutes = async (): Promise<
+  Array<{ route?: string | null }>
+> => {
+  const data = await fetchPublished<Array<{ route?: string | null }>>({
+    query: TEMPLATE_PAGE_ROUTES_QUERY,
+  });
+
+  return data || [];
 };
 
 export const fetchSanityPagesStaticParams =

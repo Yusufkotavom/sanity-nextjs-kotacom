@@ -13,6 +13,7 @@ type RewriteHeroProps = {
   copy: LegacyRewriteCopy;
   sectionLabel: string;
   sectionHref: string;
+  eyebrow?: string;
   heroImage?: {
     src: string;
     alt: string;
@@ -37,6 +38,7 @@ export default async function RewriteHero({
   copy,
   sectionLabel,
   sectionHref,
+  eyebrow,
   heroImage,
 }: RewriteHeroProps) {
   const settings = (await fetchSanitySettings()) as
@@ -52,6 +54,7 @@ export default async function RewriteHero({
     | null;
   const whatsApp = settings?.whatsApp;
   const headline = splitHeadline(copy.primaryKeyword);
+  const eyebrowText = eyebrow || `Layanan ${sectionLabel} Profesional`;
   const spotlightKeywords = copy.secondaryKeywords.slice(0, 3);
 
   return (
@@ -61,7 +64,7 @@ export default async function RewriteHero({
         <div className="mx-auto max-w-5xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-4 py-1.5 text-ui-label text-foreground/80 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
             <Sparkles className="size-3.5 text-amber-500" />
-            Layanan {sectionLabel} Profesional
+            {eyebrowText}
           </p>
           <h1 className="mt-5 text-balance text-display-lg md:text-6xl">
             <span>{headline.lead}</span>{" "}

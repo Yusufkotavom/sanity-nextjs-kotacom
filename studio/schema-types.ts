@@ -12,10 +12,15 @@ import navigation from "./schemas/documents/navigation";
 import settings from "./schemas/documents/settings";
 import themeSettings from "./schemas/documents/theme-settings";
 import seoSettings from "./schemas/documents/seo-settings";
+import pageTemplate from "./schemas/documents/page-template";
+import pageLocation from "./schemas/documents/page-location";
+import serviceLocation from "./schemas/documents/service-location";
+import location from "./schemas/documents/location";
 import redirect from "./schemas/documents/redirect";
 import reusableSection from "./schemas/documents/reusable-section";
 import seoOpsSettings from "./schemas/documents/seo-ops-settings";
 import aiWriterSettings from "./schemas/documents/ai-writer-settings";
+import legacyPage from "./schemas/documents/legacy-page";
 
 // Schema UI shared objects
 import blockContent from "./schemas/blocks/shared/block-content";
@@ -29,6 +34,16 @@ import sectionPadding from "./schemas/blocks/shared/section-padding";
 import reviewItem from "./schemas/blocks/shared/review-item";
 import aggregateRatingObj from "./schemas/blocks/shared/aggregate-rating";
 import affiliateItem from "./schemas/blocks/shared/affiliate-item";
+import templateCtaLink from "./schemas/objects/template-cta-link";
+import templateFaq from "./schemas/objects/template-faq";
+import templateServiceType from "./schemas/objects/template-service-type";
+import templatePricingPlan from "./schemas/objects/template-pricing-plan";
+import templateFeature from "./schemas/objects/template-feature";
+import templateEeatPoint from "./schemas/objects/template-eeat-point";
+import templateProofItem from "./schemas/objects/template-proof-item";
+import templateTestimonial from "./schemas/objects/template-testimonial";
+import templateLongGuide from "./schemas/objects/template-long-guide";
+import templateRewriteCopy from "./schemas/objects/template-rewrite-copy";
 // Schema UI objects
 import hero1 from "./schemas/blocks/hero/hero-1";
 import hero2 from "./schemas/blocks/hero/hero-2";
@@ -71,10 +86,15 @@ export const schemaTypes = [
   settings,
   themeSettings,
   seoSettings,
+  pageTemplate,
+  pageLocation,
+  serviceLocation,
+  location,
   seoOpsSettings,
   aiWriterSettings,
   redirect,
   reusableSection,
+  legacyPage,
   // shared objects
   blockContent,
   link,
@@ -87,6 +107,16 @@ export const schemaTypes = [
   reviewItem,
   aggregateRatingObj,
   affiliateItem,
+  templateCtaLink,
+  templateFaq,
+  templateServiceType,
+  templatePricingPlan,
+  templateFeature,
+  templateEeatPoint,
+  templateProofItem,
+  templateTestimonial,
+  templateLongGuide,
+  templateRewriteCopy,
   // blocks
   hero1,
   hero2,

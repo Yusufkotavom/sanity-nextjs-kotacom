@@ -55,6 +55,19 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Worker 3 content rewrite pass v2 expanded to slug-specific copy variants (website services, printing details, software details, `about/ai-statement`)
 - [x] Worker 3 content rewrite pass v3 closed remaining generic-route backlog in Wave 1 clusters (`TOTAL_GENERIC 0`)
 - [x] Legacy landing v4 sections added for rewrite routes (TOC, pricing, feature icons, portfolio visuals, testimonials, final CTA, FAQ schema)
+- [x] Sanity legacy template overrides added for rewrite routes (hero/highlights/FAQ/section order/custom blocks) with build-only fetch and metadata sync.
+- [x] Sanity template documents (`pageTemplate`, `pageLocation`, `serviceLocation`) and structured rewrite copy wired into rewrite shell + metadata with hybrid block support.
+- [x] Sample seed script added for template documents and location-based pages to bootstrap CMS editing.
+- [x] Studio desk structure now exposes template/location document types for editing.
+- [x] Page template ordering enabled via orderable rank field.
+- [x] Location overview field added + nested template routing enabled for `/software/{city}` and `/pembuatan-website/{city}`.
+- [x] Dev-mode template fetch now bypasses cache to prevent stale 404s during editing.
+- [x] Location overview/highlights now render on template-backed pages when location is linked.
+- [x] Location token replacement added to template copy for auto city injection.
+- [x] Catch-all template routing added for arbitrary nested paths via `pageLocation/serviceLocation`.
+- [x] Route pattern matching (`/parent/{lokasi}`) added with fallback lookup.
+- [x] Studio auto-route input added (routePattern + slug -> route) and slug clarified as non-routing.
+- [x] E-E-A-T points rendered in rewrite template + Generic Company template variant added.
 - [x] `/toc` content index locked to repository-local sources only (no external copy/fetch, no Sanity dependency in TOC runtime)
 - [x] Studio shared `link` schema now hides navigation-only fields outside `navigation` documents to avoid editor noise in post/product/service content
 - [x] Metadata resolver now falls back to content thumbnail image when SEO `meta.image` is empty (`meta.image` -> `page.image` -> global default image)
@@ -261,6 +274,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - [x] meta description target 120-155 chars
 - [ ] Ensure canonical consistency for paginated and variant pages.
 - [x] Legacy rewrite copy hardening completed for service/trust clusters to reduce boilerplate and improve intent-specific keyword coverage.
+- [x] Legacy rewrite templates now accept Sanity override documents to control hero/highlights/FAQ/section order/custom blocks with build-only fetch.
 - [x] Centralized SEO enrichment pass added to rewrite content pipeline (keyword dedupe/expansion, FAQ intent coverage, and long-guide fallback generation for main clusters).
 - [x] Slug-intent SEO pass added (pricing/migration/cetak-buku/ecommerce/implementasi intent signals) with reusable enrichment rules in rewrite content engine.
 - [x] Manual money-page rewrite v2 shipped for 16 high-intent slugs (`pembuatan-website`, `harga`, `jasa-migrasi-wordpress`, `jasa-pembuatan-website-*` selected pages, `template`, `percetakan` selected pages, `software`, `pembuatan-software`, `implementasi-software`, `instalasi-software`, `sistem-pos`) with conversion-focused headline/intro/CTA/FAQ tuning.
@@ -416,6 +430,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 
 ### Sprint 2 (Template + Metadata)
 - [ ] Complete core template parity
+- [x] Add Sanity template documents + template resolver for rewrite shells (hybrid-ready)
 - [ ] Rewrite high-impression metadata batch
 - [x] Deploy redirect wave 1
 

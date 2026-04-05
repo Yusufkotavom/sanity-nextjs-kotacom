@@ -11,6 +11,11 @@ type SitemapItem = {
   _updatedAt?: string;
 };
 
+type TemplateSitemapItem = {
+  route?: string | null;
+  _updatedAt?: string;
+};
+
 type CategorySitemapItem = {
   slug?: { current?: string | null } | null;
   _updatedAt?: string;
@@ -42,6 +47,17 @@ const CATEGORY_SITEMAP_QUERY = groq`
     "postCount": count(*[_type == "post" && references(^._id)]),
     "productCount": count(*[_type == "product" && references(^._id)]),
     "serviceCount": count(*[_type == "service" && references(^._id)])
+  }
+`;
+
+const TEMPLATE_SITEMAP_QUERY = groq`
+  *[
+    _type in ["pageLocation", "serviceLocation"]
+    && meta.noindex != true
+    && defined(route)
+  ]{
+    route,
+    _updatedAt
   }
 `;
 
@@ -78,10 +94,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [
     { data: contentData }, 
     { data: categoryData },
+    { data: templateData },
     jsonUsahaParams,
   ] = await Promise.all([
     sanityFetch({ query: CONTENT_SITEMAP_QUERY }),
     sanityFetch({ query: CATEGORY_SITEMAP_QUERY }),
+    sanityFetch({ query: TEMPLATE_SITEMAP_QUERY }),
     getJsonUsahaStaticParams(),
   ]);
 
@@ -89,6 +107,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const contentItems = (contentData || []) as SitemapItem[];
   const categoryItems = (categoryData || []) as CategorySitemapItem[];
+  const templateItems = (templateData || []) as TemplateSitemapItem[];
 
   const entries: MetadataRoute.Sitemap = [];
   const addedUrls = new Set<string>();
@@ -139,6 +158,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.6,
       });
     }
+  }
+
+  for (const template of templateItems) {
+    if (!template.route) continue;
+    addEntry({
+      url: makeAbsoluteUrl(baseUrl, template.route),
+      lastModified: template._updatedAt || undefined,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    });
   }
 
   // Include static core routes that might not exist in Sanity

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import { SectionPanel, SectionShell } from "@/components/ui/section-shell";
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 import type { TocItem } from "./types";
@@ -7,9 +8,13 @@ import type { TocItem } from "./types";
 export function UtilityStrip({
   tocItems,
   ctaLinks,
+  ctaLabel,
+  ctaHref,
 }: {
   tocItems: TocItem[];
   ctaLinks?: LegacyRewriteCopy["ctaLinks"];
+  ctaLabel?: string;
+  ctaHref?: string;
 }) {
   return (
     <SectionShell id="toc" className="py-8 md:py-10">
@@ -31,11 +36,16 @@ export function UtilityStrip({
             ))}
           </div>
         </div>
-        {ctaLinks?.length ? (
+        {ctaLinks?.length || ctaLabel ? (
           <div className="border-t border-black/8 pt-1 md:border-l md:border-t-0 md:pl-6 dark:border-white/10">
             <p className="text-ui-label text-primary/80">Aksi Cepat</p>
             <div className="mt-3 flex flex-wrap gap-3">
-              {ctaLinks.slice(0, 4).map((item, index) => (
+              <GlobalWhatsAppButton
+                fallbackHref={ctaHref}
+                fallbackLabel={ctaLabel || "Konsultasi via WhatsApp"}
+                size="sm"
+              />
+              {ctaLinks?.slice(0, 4).map((item, index) => (
                 <Button
                   key={item.label}
                   asChild

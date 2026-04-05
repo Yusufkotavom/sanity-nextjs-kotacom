@@ -1,0 +1,135 @@
+import { defineField, defineType } from "sanity";
+import { FileText } from "lucide-react";
+import pageBlocks from "../blocks/shared/page-blocks";
+import meta from "../blocks/shared/meta";
+import AutoRouteInput from "../../inputs/auto-route-input";
+
+export default defineType({
+  name: "pageLocation",
+  title: "Page Location",
+  type: "document",
+  icon: FileText,
+  groups: [
+    { name: "content", title: "Content" },
+    { name: "hero", title: "Hero" },
+    { name: "settings", title: "Settings" },
+    { name: "seo", title: "SEO" },
+  ],
+  fields: [
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+      group: "content",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "route",
+      title: "Route",
+      type: "string",
+      group: "settings",
+      description: "Path URL lengkap, contoh: /pembuatan-website/ambon",
+      components: {
+        input: AutoRouteInput,
+      },
+    }),
+    defineField({
+      name: "routePattern",
+      title: "Route Pattern",
+      type: "string",
+      group: "settings",
+      description:
+        "Opsional pola URL, contoh: /software/{lokasi}. Akan diubah otomatis ke Route memakai slug.",
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      group: "settings",
+      options: {
+        source: "title",
+        maxLength: 96,
+        isUnique: () => true,
+      },
+      description:
+        "Tidak dipakai untuk routing. Aman jika sama di banyak dokumen (dipakai untuk auto route).",
+    }),
+    defineField({
+      name: "location",
+      title: "Location",
+      type: "reference",
+      to: [{ type: "location" }],
+      group: "settings",
+      description: "Opsional untuk halaman non-lokal.",
+    }),
+    defineField({
+      name: "template",
+      title: "Page Template",
+      type: "reference",
+      to: [{ type: "pageTemplate" }],
+      group: "settings",
+    }),
+    defineField({
+      name: "heroEyebrow",
+      title: "Hero Eyebrow",
+      type: "string",
+      group: "hero",
+    }),
+    defineField({
+      name: "heroImage",
+      title: "Hero Image",
+      type: "image",
+      group: "hero",
+      options: { hotspot: true },
+      fields: [
+        {
+          name: "alt",
+          title: "Alt Text",
+          type: "string",
+        },
+      ],
+    }),
+    defineField({
+      name: "structured",
+      title: "Structured Copy Override",
+      type: "templateRewriteCopy",
+      group: "content",
+    }),
+    pageBlocks,
+    defineField({
+      name: "topBlockCount",
+      title: "Top Block Count",
+      type: "number",
+      group: "settings",
+      description: "Override jumlah block di atas shell.",
+      validation: (Rule) => Rule.integer().min(0),
+    }),
+    defineField({
+      name: "contentStatus",
+      title: "Content Status",
+      type: "string",
+      group: "settings",
+      options: {
+        list: [
+          { title: "Draft", value: "draft" },
+          { title: "Reviewed", value: "reviewed" },
+          { title: "Index", value: "index" },
+        ],
+      },
+      initialValue: "draft",
+    }),
+    meta,
+  ],
+  preview: {
+    select: {
+      title: "title",
+      route: "route",
+    },
+    prepare({ title, route }) {
+      return {
+        title: title || "Page Location",
+        subtitle: route || "",
+      };
+    },
+  },
+});

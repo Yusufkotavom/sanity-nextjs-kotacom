@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import Blocks from "@/components/blocks";
-import { fetchSanityPageBySlug } from "@/sanity/lib/fetch";
+import { fetchSanityPageBySlugBuildOnly } from "@/sanity/lib/fetch";
 
 type PageHybridShellProps = {
   slug: string;
@@ -12,7 +12,7 @@ export default async function PageHybridShell({
   slug,
   children,
 }: PageHybridShellProps) {
-  const cmsPage = await fetchSanityPageBySlug({ slug });
+  const cmsPage = await fetchSanityPageBySlugBuildOnly({ slug });
   const cmsPageWithSplit = cmsPage as (typeof cmsPage & {
     topBlockCount?: number;
   }) | null;

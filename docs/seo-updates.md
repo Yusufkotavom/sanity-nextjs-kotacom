@@ -16,6 +16,160 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-05 - Sanity Template Documents for Rewrite Shells
+- Changed files:
+  - `studio/schemas/documents/page-template.ts`
+  - `studio/schemas/documents/page-location.ts`
+  - `studio/schemas/documents/service-location.ts`
+  - `studio/schemas/documents/location.ts`
+  - `studio/schemas/objects/template-cta-link.ts`
+  - `studio/schemas/objects/template-faq.ts`
+  - `studio/schemas/objects/template-service-type.ts`
+  - `studio/schemas/objects/template-pricing-plan.ts`
+  - `studio/schemas/objects/template-feature.ts`
+  - `studio/schemas/objects/template-proof-item.ts`
+  - `studio/schemas/objects/template-testimonial.ts`
+  - `studio/schemas/objects/template-long-guide.ts`
+  - `studio/schemas/objects/template-rewrite-copy.ts`
+  - `studio/schema-types.ts`
+  - `frontend/sanity/queries/template-page.ts`
+  - `frontend/sanity/lib/fetch.ts`
+  - `frontend/types/template.ts`
+  - `frontend/lib/templates/resolve-template.ts`
+  - `frontend/components/ui/rewrite/page-shell.tsx`
+  - `frontend/lib/legacy-pages/metadata.ts`
+  - `frontend/app/(main)/[slug]/page.tsx`
+  - `frontend/app/sitemap.ts`
+- Summary:
+  - Added CMS-editable template, page-location, service-location, and location schemas plus structured copy objects for rewrite shells.
+  - Wired template fetch + merge into rewrite rendering, metadata generation, and sitemap inclusion with hybrid block support and fallback to legacy copy.
+- SEO impact:
+  - Moderate. Enables richer, CMS-managed differentiation for rewrite pages while preserving SEO fallbacks and noindex controls during rollout.
+- Verification:
+  - Not run (not requested).
+
+## 2026-04-05 - Seed Script for Template Samples
+- Changed files:
+  - `frontend/scripts/seed-template-samples.mjs`
+- Summary:
+  - Added a safe seed script to create sample `pageTemplate`, `pageLocation`, `serviceLocation`, and `location` documents with structured rewrite copy.
+- SEO impact:
+  - Low. Adds draft/noindex sample content only; no runtime effect until published.
+- Verification:
+  - Not run (not requested).
+
+## 2026-04-05 - Studio Structure Exposes Template Docs
+- Changed files:
+  - `studio/structure.ts`
+- Summary:
+  - Added desk structure entries for Page Templates, Page Locations, Service Locations, and Locations so seeded docs appear in Studio.
+- SEO impact:
+  - No direct SEO impact (Studio UI only).
+- Verification:
+  - Not run (not requested).
+
+## 2026-04-05 - Page Template Order Rank Field
+- Changed files:
+  - `studio/schemas/documents/page-template.ts`
+- Summary:
+  - Added `orderRank` field to `pageTemplate` so templates can be ordered in Studio lists.
+- SEO impact:
+  - No direct SEO impact.
+- Verification:
+  - Not run (not requested).
+
+## 2026-04-05 - Location Overview + Template Routes for Nested Pages
+- Changed files:
+  - `studio/schemas/documents/location.ts`
+  - `frontend/sanity/queries/template-page.ts`
+  - `frontend/scripts/seed-template-samples.mjs`
+  - `frontend/app/(main)/software/[slug]/page.tsx`
+  - `frontend/app/(main)/pembuatan-website/[slug]/page.tsx`
+  - `frontend/sanity/lib/fetch.ts`
+  - `frontend/components/ui/rewrite/page-shell.tsx`
+  - `frontend/types/template.ts`
+- Summary:
+  - Added `overview` field for location uniqueness and included it in template queries + sample seed.
+  - Enabled template lookup for nested routes like `/software/{city}` and `/pembuatan-website/{city}` with template route static params and metadata handling.
+  - Switched template route fetch to no-cache in development to avoid stale 404s after updates.
+  - Rendered location overview + highlights block when template page has a linked location.
+  - Added automatic `{lokasi}` token replacement to inject city names into template copy without manual edits.
+- SEO impact:
+  - Moderate. Supports scalable city pages with unique location context while keeping noindex controls in place.
+- Verification:
+  - Not run (not requested).
+
+## 2026-04-05 - Catch-All Template Route Support
+- Changed files:
+  - `frontend/app/(main)/[...segments]/page.tsx`
+- Summary:
+  - Added a catch-all route to render template-backed nested paths (e.g., `/kaljdkllad/malang`) using `pageLocation/serviceLocation` by exact `route`.
+- SEO impact:
+  - Moderate. Enables scalable nested local URLs while keeping template-controlled metadata and noindex handling.
+- Verification:
+  - Not run (not requested).
+
+## 2026-04-05 - Route Pattern Support for /parent/{lokasi}
+- Changed files:
+  - `studio/schemas/documents/page-location.ts`
+  - `studio/schemas/documents/service-location.ts`
+  - `studio/inputs/auto-route-input.tsx`
+  - `frontend/sanity/queries/template-page.ts`
+  - `frontend/sanity/lib/fetch.ts`
+  - `frontend/types/template.ts`
+- Summary:
+  - Added optional `routePattern` with `{lokasi}` token and relaxed slug uniqueness to avoid duplicate city slugs.
+  - Added route-pattern fallback lookup so `/parent/{city}` resolves without manual route edits.
+  - Auto-fills Route from routePattern + slug in Studio and clarifies slug usage.
+- SEO impact:
+  - Moderate. Supports scalable location URL patterns while preserving exact-route sitemap behavior.
+- Verification:
+  - Not run (not requested).
+
+## 2026-04-05 - E-E-A-T Points + WhatsApp CTA Spread + Generic Company Template
+- Changed files:
+  - `studio/schemas/objects/template-eeat-point.ts`
+  - `studio/schemas/objects/template-rewrite-copy.ts`
+  - `studio/schemas/documents/page-template.ts`
+  - `studio/schema-types.ts`
+  - `frontend/types/template.ts`
+  - `frontend/sanity/queries/template-page.ts`
+  - `frontend/lib/legacy-pages/content/types.ts`
+  - `frontend/lib/templates/resolve-template.ts`
+  - `frontend/components/ui/rewrite/eeat-section.tsx`
+  - `frontend/components/ui/rewrite/page-shell.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/utility-strip.tsx`
+  - `frontend/components/ui/rewrite/landing-sections/index.tsx`
+  - `frontend/scripts/seed-template-samples.mjs`
+- Summary:
+  - Added E-E-A-T point fields to templates and rendered a credibility section when present.
+  - Spread WhatsApp CTA into the quick-action strip to increase aligned contact points.
+  - Added a Generic Company template variant and seeded a sample template.
+- SEO impact:
+  - Moderate. Improves E-E-A-T clarity, increases contact intent signals, and expands template coverage.
+- Verification:
+  - Not run (not requested).
+
+## 2026-04-05 - Sanity Legacy Template Overrides (Build-Time Only)
+- Changed files:
+  - `studio/schemas/documents/legacy-page.ts`
+  - `studio/schema-types.ts`
+  - `frontend/sanity/queries/legacy-page.ts`
+  - `frontend/sanity/lib/fetch.ts`
+  - `frontend/lib/legacy-pages/legacy-overrides.ts`
+  - `frontend/components/ui/rewrite/page-shell.tsx`
+  - `frontend/components/ui/rewrite/hero.tsx`
+  - `frontend/lib/legacy-pages/metadata.ts`
+  - `frontend/components/hybrid/page-hybrid-shell.tsx`
+- Summary:
+  - Added a dedicated `legacyPage` Sanity document for template overrides (hero, highlights, FAQ, section order, custom blocks, meta).
+  - Wired override fetch into legacy rewrite rendering and metadata, with build-only fetch (no revalidate) for override content.
+  - Enabled custom block insertion and per-variant section ordering to reduce template sameness across legacy routes.
+- SEO impact:
+  - Moderate. Allows per-page differentiation and targeted metadata overrides while preserving global SEO fallbacks. Changes only apply on rebuild as requested.
+- Verification:
+  - Not run (not requested).
+
 ## 2026-04-04 - Set New Home Pepar Layout as Root Homepage
 - Changed files:
   - `frontend/app/(main)/page.tsx`

@@ -1,5 +1,12 @@
+import { Fragment } from "react";
 import type { LegacyAstroPage } from "@/lib/legacy-pages/astro-static";
 import { buildLegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
+import {
+  applyLegacyCopyOverrides,
+  DEFAULT_SECTION_ORDER,
+  resolveSectionOrder,
+  type LegacyPageOverride,
+} from "@/lib/legacy-pages/legacy-overrides";
 import JsonLd from "@/components/seo/json-ld";
 import {
   buildBreadcrumbJsonLd,
@@ -15,10 +22,21 @@ import QuoteSpotlight from "@/components/ui/rewrite/quote-spotlight";
 import RewriteLandingSections from "@/components/ui/rewrite/landing-sections";
 import LogoWall from "@/components/ui/rewrite/logo-wall";
 import RewriteHighlights from "@/components/ui/rewrite/highlights";
+import RewriteEeatSection from "@/components/ui/rewrite/eeat-section";
 import RewriteProcessFaq from "@/components/ui/rewrite/process-faq";
 import RewriteRelatedLinks from "@/components/ui/rewrite/related-links";
 import MicroBadges from "@/components/micro-badges";
 import { kotacomSplitIllustrations } from "@/lib/illustrations/kotacom-split";
+import Blocks from "@/components/blocks";
+import { urlFor } from "@/sanity/lib/image";
+import { fetchLegacyPageOverrideByRoute, fetchTemplatePageByRoute } from "@/sanity/lib/fetch";
+import {
+  resolveTemplateBlocks,
+  resolveTemplateCopy,
+  resolveTemplateHero,
+  resolveTopBlockCount,
+} from "@/lib/templates/resolve-template";
+import { SectionPanel, SectionShell } from "@/components/ui/section-shell";
 
 type RewritePageShellProps = {
   page: LegacyAstroPage;
@@ -29,7 +47,7 @@ type RewritePageShellProps = {
   sectionLabelOverride?: string;
 };
 
-export default function RewritePageShell({
+export default async function RewritePageShell({
   page,
   siblings = [],
   children,
@@ -42,7 +60,18 @@ export default function RewritePageShell({
     sectionHrefOverride ?? (page.section ? `/${page.section}` : resolvedRoute);
   const resolvedSectionLabel =
     sectionLabelOverride ?? page.section.replace(/-/g, " ");
-  const copy = buildLegacyRewriteCopy(page);
+  const templatePage = await fetchTemplatePageByRoute({ route: resolvedRoute });
+  const override = (await fetchLegacyPageOverrideByRoute({
+    route: resolvedRoute,
+  })) as LegacyPageOverride;
+  const baseCopy = buildLegacyRewriteCopy(page);
+  const templateCopy = resolveTemplateCopy({
+    base: baseCopy,
+    template: templatePage?.template?.structured || null,
+    override: templatePage?.structured || null,
+    locationName: templatePage?.location?.title || null,
+  });
+  const copy = applyLegacyCopyOverrides(templateCopy, override);
   const related = siblings
     .filter((item) => item.route !== page.route)
     .slice(0, 12);
@@ -119,6 +148,29 @@ export default function RewritePageShell({
     }
     return undefined;
   })();
+  const heroImageOverride = override?.heroOverride?.image
+    ? {
+        src: urlFor(override.heroOverride.image).width(1600).url(),
+        alt:
+          override.heroOverride.image?.alt ||
+          `${copy.primaryKeyword} - KOTACOM`,
+      }
+    : null;
+  const templateHero = resolveTemplateHero({
+    page: templatePage,
+    template: templatePage?.template || null,
+  });
+  const templateHeroImage = templateHero.image
+    ? {
+        src: urlFor(templateHero.image).width(1600).url(),
+        alt:
+          templateHero.image?.alt ||
+          `${copy.primaryKeyword} - KOTACOM`,
+      }
+    : null;
+  const heroImage = templateHeroImage || heroImageOverride || heroImageBySection;
+  const locationOverview = templatePage?.location?.overview;
+  const locationHighlights = templatePage?.location?.highlights || [];
 
   const percetakanMetrics = [
     {
@@ -190,9 +242,128 @@ export default function RewritePageShell({
   ];
 
   const shouldRenderPercetakanModules = page.section === "percetakan";
+  const customBlocks = override?.customBlocks || [];
+  const customBlocksNode =
+    customBlocks.length > 0 ? (
+      <Blocks blocks={customBlocks} pageTitle={page.title} />
+    ) : null;
+  const templateBlocks = resolveTemplateBlocks({
+    page: templatePage,
+    template: templatePage?.template || null,
+  });
+  const topBlockCount = resolveTopBlockCount({
+    page: templatePage,
+    template: templatePage?.template || null,
+  });
+  const isHybridTemplate = Boolean(templatePage?.template?.isHybrid);
+  const renderBlocks = templateBlocks.length > 0;
+  const splitCount = Math.max(
+    0,
+    Math.min(topBlockCount, templateBlocks.length),
+  );
+  const topBlocks = renderBlocks && isHybridTemplate ? templateBlocks.slice(0, splitCount) : [];
+  const bottomBlocks = renderBlocks
+    ? isHybridTemplate
+      ? templateBlocks.slice(splitCount)
+      : templateBlocks
+    : [];
+  const topBlocksNode =
+    topBlocks.length > 0 ? (
+      <Blocks blocks={topBlocks} pageTitle={templatePage?.title || page.title} />
+    ) : null;
+  const bottomBlocksNode =
+    bottomBlocks.length > 0 ? (
+      <Blocks blocks={bottomBlocks} pageTitle={templatePage?.title || page.title} />
+    ) : null;
+  const sectionMap = new Map<string, React.ReactNode>();
+  if (shouldRenderPercetakanModules) {
+    sectionMap.set("percetakan-metrics", (
+      <>
+        <MetricsRail items={percetakanMetrics} />
+        <InlinePhraseStrip phrases={percetakanPhraseStrip} />
+      </>
+    ));
+    sectionMap.set("percetakan-stage", (
+      <ProductStage
+        title="Alur percetakan dibangun supaya kebutuhan bisnis lebih cepat masuk ke spesifikasi yang bisa diproduksi."
+        description="Bukan sekadar menerima file lalu cetak, tetapi memastikan material, finishing, dan timeline cocok dengan tujuan promosi atau operasional Anda."
+        items={percetakanStageItems}
+      />
+    ));
+  }
+  sectionMap.set("landing", (
+    <RewriteLandingSections page={page} copy={copy} />
+  ));
+  if (shouldRenderPercetakanModules) {
+    sectionMap.set("percetakan-quote", (
+      <QuoteSpotlight
+        eyebrow="Cerita klien"
+        quote="Yang kami butuhkan bukan cuma cetak cepat, tapi hasil yang rapi dan enak dibagikan ke calon klien. Tim Kotacom bantu cek file, rapikan spesifikasi, lalu kirim hasil yang siap dipakai."
+        author="Tim Marketing"
+        role="B2B & Promotion Materials"
+        highlights={["Spesifikasi rapi", "QC produksi", "Pengiriman aman"]}
+      />
+    ));
+    sectionMap.set("percetakan-logo-wall", (
+      <LogoWall
+        title="Kebutuhan cetak yang biasa ditangani tidak berhenti di satu jenis materi."
+        description="Kami hadir sebagai partner strategis untuk mendampingi lini bisnis Anda menangani pelbagai variasi produksi, mulai dari pamflet promosi kilat hingga buku profil representatif perusahaan."
+        items={percetakanTrustItems}
+      />
+    ));
+  }
+  sectionMap.set("micro-badges", <MicroBadges />);
+  sectionMap.set("highlights", <RewriteHighlights copy={copy} />);
+  if (copy.eeatPoints && copy.eeatPoints.length > 0) {
+    sectionMap.set("eeat", <RewriteEeatSection copy={copy} />);
+  }
+  if (customBlocksNode) {
+    sectionMap.set("custom-blocks", customBlocksNode);
+  }
+  sectionMap.set("process-faq", <RewriteProcessFaq copy={copy} />);
+  if (related.length > 0 || strategicLinks.length > 0) {
+    sectionMap.set(
+      "related-links",
+      <RewriteRelatedLinks
+        page={page}
+        related={related}
+        strategicLinks={strategicLinks}
+      />,
+    );
+  }
+  const baseOrder = shouldRenderPercetakanModules
+    ? [
+        "percetakan-metrics",
+        "percetakan-stage",
+        "landing",
+        "percetakan-quote",
+        "percetakan-logo-wall",
+        "micro-badges",
+        "highlights",
+        "custom-blocks",
+        "process-faq",
+        "related-links",
+      ]
+    : DEFAULT_SECTION_ORDER;
+  const requestedOrder = resolveSectionOrder(override, baseOrder);
+  const orderedIds: string[] = [];
+  const seen = new Set<string>();
+  requestedOrder.forEach((id) => {
+    if (sectionMap.has(id) && !seen.has(id)) {
+      orderedIds.push(id);
+      seen.add(id);
+    }
+  });
+  baseOrder.forEach((id) => {
+    if (sectionMap.has(id) && !seen.has(id)) {
+      orderedIds.push(id);
+      seen.add(id);
+    }
+  });
 
   return (
     <>
+      {topBlocksNode}
       <JsonLd data={breadcrumbJsonLd} />
       {serviceJsonLd ? <JsonLd data={serviceJsonLd} /> : null}
       {faqJsonLd ? <JsonLd data={faqJsonLd} /> : null}
@@ -202,45 +373,42 @@ export default function RewritePageShell({
         copy={copy}
         sectionLabel={resolvedSectionLabel}
         sectionHref={resolvedSectionHref}
-        heroImage={heroImageBySection}
+        eyebrow={templateHero.eyebrow || override?.heroOverride?.eyebrow || undefined}
+        heroImage={heroImage}
       />
+      {locationOverview ? (
+        <SectionShell id="lokasi" className="py-10 md:py-12">
+          <SectionPanel
+            tone="sky"
+            className="rounded-[1.75rem] p-6 md:p-8"
+          >
+            <p className="text-ui-label text-foreground/55">Lokasi</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+              {templatePage?.location?.title || "Konteks Lokal"}
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-muted-foreground md:text-base">
+              {locationOverview}
+            </p>
+            {locationHighlights.length > 0 ? (
+              <ul className="mt-4 flex flex-wrap gap-2 text-sm text-foreground/75">
+                {locationHighlights.map((item) => (
+                  <li
+                    key={item}
+                    className="rounded-full border border-border/60 px-3 py-1"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </SectionPanel>
+        </SectionShell>
+      ) : null}
       {children}
-      {shouldRenderPercetakanModules ? (
-        <>
-          <MetricsRail items={percetakanMetrics} />
-          <InlinePhraseStrip phrases={percetakanPhraseStrip} />
-          <ProductStage
-            title="Alur percetakan dibangun supaya kebutuhan bisnis lebih cepat masuk ke spesifikasi yang bisa diproduksi."
-            description="Bukan sekadar menerima file lalu cetak, tetapi memastikan material, finishing, dan timeline cocok dengan tujuan promosi atau operasional Anda."
-            items={percetakanStageItems}
-          />
-        </>
-      ) : null}
-      <RewriteLandingSections page={page} copy={copy} />
-      {shouldRenderPercetakanModules ? (
-        <>
-          <QuoteSpotlight
-            eyebrow="Cerita klien"
-            quote="Yang kami butuhkan bukan cuma cetak cepat, tapi hasil yang rapi dan enak dibagikan ke calon klien. Tim Kotacom bantu cek file, rapikan spesifikasi, lalu kirim hasil yang siap dipakai."
-            author="Tim Marketing"
-            role="B2B & Promotion Materials"
-            highlights={["Spesifikasi rapi", "QC produksi", "Pengiriman aman"]}
-          />
-          <LogoWall
-            title="Kebutuhan cetak yang biasa ditangani tidak berhenti di satu jenis materi."
-            description="Kami hadir sebagai partner strategis untuk mendampingi lini bisnis Anda menangani pelbagai variasi produksi, mulai dari pamflet promosi kilat hingga buku profil representatif perusahaan."
-            items={percetakanTrustItems}
-          />
-        </>
-      ) : null}
-      <MicroBadges />
-      <RewriteHighlights copy={copy} />
-      <RewriteProcessFaq copy={copy} />
-      <RewriteRelatedLinks
-        page={page}
-        related={related}
-        strategicLinks={strategicLinks}
-      />
+      {orderedIds.map((id) => (
+        <Fragment key={id}>{sectionMap.get(id)}</Fragment>
+      ))}
+      {bottomBlocksNode}
     </>
   );
 }
