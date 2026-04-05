@@ -242,9 +242,12 @@ export const fetchTemplatePageRoutes = async (): Promise<
 
 export const fetchSanityPagesStaticParams =
   async (): Promise<PAGES_SLUGS_QUERY_RESULT> => {
-    const data = await fetchPublished<PAGES_SLUGS_QUERY_RESULT>({
-      query: PAGES_SLUGS_QUERY,
-    });
+    const data = await client
+      .withConfig({ useCdn: false })
+      .fetch(PAGES_SLUGS_QUERY, {}, {
+        perspective: "published",
+        stega: false,
+      });
 
     return data;
   };
@@ -304,9 +307,12 @@ export const fetchSanityPostsByCategorySlug = async ({
 
 export const fetchSanityPostsStaticParams =
   async (): Promise<POSTS_SLUGS_QUERY_RESULT> => {
-    const data = await fetchPublished<POSTS_SLUGS_QUERY_RESULT>({
-      query: POSTS_SLUGS_QUERY,
-    });
+    const data = await client
+      .withConfig({ useCdn: false })
+      .fetch(POSTS_SLUGS_QUERY, {}, {
+        perspective: "published",
+        stega: false,
+      });
 
     return data;
   };
@@ -585,9 +591,12 @@ export const fetchSanityCategoryBySlug = async ({
 };
 
 export const fetchSanityCategoriesStaticParams = async (): Promise<any[]> => {
-  const data = await fetchPublished<any[]>({
-    query: CATEGORIES_SLUGS_QUERY,
-  });
+  const data = await client
+    .withConfig({ useCdn: false })
+    .fetch(CATEGORIES_SLUGS_QUERY, {}, {
+      perspective: "published",
+      stega: false,
+    });
 
   return data || [];
 };
@@ -638,9 +647,12 @@ export const fetchSanityProductBySlug = async ({
 };
 
 export const fetchSanityProductsStaticParams = async (): Promise<any[]> => {
-  const data = await fetchPublished<any[]>({
-    query: PRODUCTS_SLUGS_QUERY,
-  });
+  const data = await client
+    .withConfig({ useCdn: false })
+    .fetch(PRODUCTS_SLUGS_QUERY, {}, {
+      perspective: "published",
+      stega: false,
+    });
 
   return data || [];
 };
@@ -706,9 +718,12 @@ export const fetchSanityServiceBySlug = async ({
 };
 
 export const fetchSanityServicesStaticParams = async (): Promise<any[]> => {
-  const data = await fetchPublished<any[]>({
-    query: SERVICES_SLUGS_QUERY,
-  });
+  const data = await client
+    .withConfig({ useCdn: false })
+    .fetch(SERVICES_SLUGS_QUERY, {}, {
+      perspective: "published",
+      stega: false,
+    });
 
   return data || [];
 };
@@ -746,9 +761,12 @@ export const fetchSanityProjectBySlug = async ({
 };
 
 export const fetchSanityProjectsStaticParams = async (): Promise<any[]> => {
-  const data = await fetchPublished<any[]>({
-    query: PROJECTS_SLUGS_QUERY,
-  });
+  const data = await client
+    .withConfig({ useCdn: false })
+    .fetch(PROJECTS_SLUGS_QUERY, {}, {
+      perspective: "published",
+      stega: false,
+    });
 
   return data || [];
 };

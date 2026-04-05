@@ -47,7 +47,7 @@ export default function PostHero({
                     author.image.asset?.metadata?.lqip ? "blur" : undefined
                   }
                   blurDataURL={author.image.asset?.metadata?.lqip || undefined}
-                  sizes="40px"
+                  sizes="(max-width: 768px) 24px, 40px"
                   className="w-10 h-10 rounded-full mr-2"
                 />
               </div>

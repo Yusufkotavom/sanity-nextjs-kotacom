@@ -7,6 +7,7 @@ export const splitCardsListQuery = groq`
     _type,
     _key,
     list[]{
+      _key,
       tagLine,
       uiIcon{
         provider,
@@ -15,6 +16,7 @@ export const splitCardsListQuery = groq`
       },
       title,
       body[]{
+        _key,
         ${bodyQuery}
       },
     },

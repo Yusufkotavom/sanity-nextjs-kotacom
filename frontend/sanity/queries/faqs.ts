@@ -12,6 +12,7 @@ export const faqsQuery = groq`
       _id,
       title,
       body[]{
+        _key,
         ${bodyQuery}
       },
     },

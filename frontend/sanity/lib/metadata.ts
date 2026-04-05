@@ -65,7 +65,7 @@ const resolveImage = (
 ) => {
   if (page?.meta?.image) {
     return {
-      url: urlFor(page.meta.image).quality(100).url(),
+      url: urlFor(page.meta.image).quality(85).url(),
       width: page.meta.image.asset?.metadata?.dimensions?.width || 1200,
       height: page.meta.image.asset?.metadata?.dimensions?.height || 630,
     };
@@ -73,7 +73,7 @@ const resolveImage = (
 
   if (page?.image) {
     return {
-      url: urlFor(page.image).quality(100).url(),
+      url: urlFor(page.image).quality(85).url(),
       width: page.image.asset?.metadata?.dimensions?.width || 1200,
       height: page.image.asset?.metadata?.dimensions?.height || 630,
     };
@@ -81,7 +81,7 @@ const resolveImage = (
 
   if (seo?.defaultImage) {
     return {
-      url: urlFor(seo.defaultImage).quality(100).url(),
+      url: urlFor(seo.defaultImage).quality(85).url(),
       width: seo.defaultImage.asset?.metadata?.dimensions?.width || 1200,
       height: seo.defaultImage.asset?.metadata?.dimensions?.height || 630,
     };

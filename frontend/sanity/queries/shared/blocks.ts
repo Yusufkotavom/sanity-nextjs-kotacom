@@ -20,6 +20,7 @@ import { legacyRichContentQuery } from "../legacy/legacy-rich-content";
  */
 export const blocksQuery = `
   blocks[]{
+    _key,
     ${hero1Query},
     ${hero2Query},
     ${sectionHeaderQuery},

@@ -13,6 +13,7 @@ export const splitContentQuery = groq`
     tagLine,
     title,
     body[]{
+      _key,
       ${bodyQuery}
     },
     link{

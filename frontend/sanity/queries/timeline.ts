@@ -9,9 +9,11 @@ export const timelineQuery = groq`
     padding,
     colorVariant,
     timelines[]{
+      _key,
       title,
       tagLine,
       body[]{
+        _key,
         ${bodyQuery}
       },
     },

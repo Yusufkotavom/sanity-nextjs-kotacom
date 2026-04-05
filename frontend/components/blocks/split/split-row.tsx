@@ -39,10 +39,14 @@ export default function SplitRow({
           {splitColumns?.map((column) => {
             const Component = componentMap[column._type];
             if (!Component) {
-              // Fallback for development/debugging of new component types
-              console.warn(
-                `No component implemented for split column type: ${column._type}`,
-              );
+              // Enhanced fallback for development/debugging
+              if (process.env.NODE_ENV === 'development') {
+                console.warn(
+                  `[SplitRow] No component implemented for type: ${column._type}`,
+                  '\nAvailable types:', Object.keys(componentMap),
+                  '\nBlock data:', column
+                );
+              }
               return <div data-type={column._type} key={column._key} />;
             }
             return (

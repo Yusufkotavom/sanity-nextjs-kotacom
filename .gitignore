@@ -16,6 +16,9 @@
 # production
 /build
 
+# Sanity Studio build artifacts
+studio/dist/
+
 # misc
 .DS_Store
 *.pem
@@ -47,3 +50,25 @@ deploy/*.json
 *.tsbuildinfo
 next-env.d.ts
 frontend/vercel-frontend.env
+
+# cloudflare worker
+worker/.dev.vars
+worker/.wrangler/
+worker/wrangler.toml.backup
+
+# ops dashboard local env
+seo-dashboard/.env.local
+seo-dashboard/.env.server
+
+# database
+packages/db/drizzle/
+packages/db/.drizzle/
+*.db
+*.sqlite
+*.sqlite3
+
+# Documentation with credentials (DO NOT COMMIT)
+OPS-CREDENTIALS-CONFIGURED.md
+OPS-DASHBOARD-READY.md
+docs/ops-dashboard-setup.md
+docs/ops-dashboard-files-summary.md

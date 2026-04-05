@@ -358,9 +358,3 @@ ini boleh Auto WA button juga di Pricing / Features / Proof
 ini juga Auto SEO keyword cluster (4–5 variasi keyword kota otomatis)
 
 
-kemudian untuk template semua konten isi dengan data relevan agar tim editor tinggal edit edit tipis
-
-termasuk link link patikan link link di template mengunakan format is external, agar tidak gagal/error karena kalau tidak centang akan menjadi tidak valid, kecuali embed/pilih link dari dokumen
-
-
-

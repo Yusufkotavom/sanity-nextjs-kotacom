@@ -13,6 +13,7 @@ export const splitRowQuery = groq`
     colorVariant,
     noGap,
     splitColumns[]{
+      _key,
       ${splitContentQuery},
       ${splitCardsListQuery},
       ${splitImageQuery},

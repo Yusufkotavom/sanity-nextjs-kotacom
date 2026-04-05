@@ -17,6 +17,7 @@ export const carousel2Query = groq`
         ${imageQuery}
       },
       body[]{
+        _key,
         ${bodyQuery}
       },
       rating,

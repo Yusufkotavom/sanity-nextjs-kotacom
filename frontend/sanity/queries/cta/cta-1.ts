@@ -19,9 +19,11 @@ export const cta1Query = groq`
     },
     title,
     body[]{
+      _key,
       ${bodyQuery}
     },
     links[]{
+      _key,
       ${linkQuery}
     },
   }

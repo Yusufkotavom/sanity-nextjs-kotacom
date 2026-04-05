@@ -19,6 +19,7 @@ export const whatsappCtaQuery = groq`
     },
     title,
     body[]{
+      _key,
       ${bodyQuery}
     },
     secondaryLink{

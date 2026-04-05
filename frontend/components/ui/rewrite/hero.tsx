@@ -126,6 +126,9 @@ export default async function RewriteHero({
                 className="object-cover"
                 sizes="(min-width: 1024px) 56rem, 100vw"
                 priority
+                quality={85}
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
           ) : null}

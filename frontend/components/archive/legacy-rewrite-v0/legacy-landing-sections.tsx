@@ -427,6 +427,7 @@ export default async function LegacyLandingSections({
                   alt={item.title}
                   fill
                   className="object-cover"
+                  sizes="(min-width: 768px) 33vw, 100vw"
                 />
               </div>
               <div className="p-4">

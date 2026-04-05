@@ -16,12 +16,14 @@ export const hero1Query = groq`
     },
     title,
     body[]{
+      _key,
       ${bodyQuery}
     },
     image{
       ${imageQuery}
     },
     links[]{
+      _key,
       ${linkQuery}
     },
   }

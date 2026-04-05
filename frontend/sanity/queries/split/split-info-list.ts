@@ -8,6 +8,7 @@ export const splitInfoListQuery = groq`
     _type,
     _key,
     list[]{
+      _key,
       image{
         ${imageQuery}
       },
@@ -18,6 +19,7 @@ export const splitInfoListQuery = groq`
       },
       title,
       body[]{
+        _key,
         ${bodyQuery}
       },
       tags[],
