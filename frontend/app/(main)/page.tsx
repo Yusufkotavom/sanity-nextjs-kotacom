@@ -3,7 +3,7 @@ import { fetchSanityPageBySlug } from "@/sanity/lib/fetch";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
 import PageHybridShell from "@/components/hybrid/page-hybrid-shell";
-import HomeMiddleSection from "@/components/hybrid/home-middle-section";
+import HomePeparMiddleSection from "@/components/hybrid/generated/home-pepar-middle-section";
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await fetchSanityPageBySlug({ slug: "index" });
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function IndexPage() {
   return (
     <PageHybridShell slug="index">
-      <HomeMiddleSection />
+      <HomePeparMiddleSection />
     </PageHybridShell>
   );
 }

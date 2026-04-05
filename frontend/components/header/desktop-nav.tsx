@@ -65,7 +65,7 @@ export default function DesktopNav({
           const groupedChildren = groupChildren(children);
 
           return (
-            <li key={item._key} className="group/nav relative">
+            <li key={item._key} className="group/nav">
               <Link
                 href={item.href || "#"}
                 target={item.target ? "_blank" : undefined}
@@ -81,7 +81,7 @@ export default function DesktopNav({
               </Link>
 
               {hasChildren && (
-                <div className="invisible absolute left-1/2 top-full z-50 w-[min(920px,calc(100vw-7rem))] -translate-x-1/2 translate-y-2 rounded-2xl border border-border/70 bg-background/95 p-6 opacity-0 shadow-[0_24px_70px_-28px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-all duration-150 group-hover/nav:visible group-hover/nav:translate-y-0 group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:translate-y-0 group-focus-within/nav:opacity-100 dark:border-white/12 dark:bg-black/96 dark:shadow-[0_28px_90px_-30px_rgba(0,0,0,0.85)]">
+                <div className="invisible absolute left-1/2 top-full z-50 w-[min(920px,calc(100vw-7rem))] -translate-x-1/2 translate-y-2 rounded-2xl border border-border/70 bg-background/95 p-6 opacity-0 shadow-[0_24px_70px_-28px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-all duration-150 before:absolute before:-top-6 before:left-0 before:h-6 before:w-full before:content-[''] group-hover/nav:visible group-hover/nav:translate-y-0 group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:translate-y-0 group-focus-within/nav:opacity-100 dark:border-white/12 dark:bg-black/96 dark:shadow-[0_28px_90px_-30px_rgba(0,0,0,0.85)]">
                   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {groupedChildren.map(([groupName, links]) => (
                       <div key={groupName || "default"} className="space-y-2">

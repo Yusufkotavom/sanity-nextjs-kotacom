@@ -59,8 +59,8 @@ export default async function Footer() {
   return (
     <footer className="section-divider mt-10">
       <div className="container py-12 xl:py-14">
-        <div className="grid gap-10 xl:grid-cols-[1.2fr_1fr] xl:gap-14">
-          <div>
+        <div className="flex flex-col gap-10 xl:gap-14">
+          <div className="flex flex-col items-start lg:items-center lg:text-center">
             <Link href="/" className="inline-block" aria-label="Home page">
               <Logo settings={settings} />
             </Link>
@@ -68,7 +68,7 @@ export default async function Footer() {
               Solusi website, software, dan layanan IT dengan implementasi yang
               rapi, cepat, serta mudah di-scale untuk kebutuhan bisnis Anda.
             </p>
-            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2.5">
+            <div className="mt-6 flex flex-wrap items-center justify-start gap-x-4 gap-y-2.5 lg:justify-center">
               {footerPrimaryLinks.map((navItem: SanityLink) => (
                 <Link
                   key={navItem._key}
@@ -82,7 +82,7 @@ export default async function Footer() {
               ))}
             </div>
             {!!footerUtilityLinks.length && (
-              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2.5">
+              <div className="mt-3 flex flex-wrap items-center justify-start gap-x-4 gap-y-2.5 lg:justify-center">
                 {footerUtilityLinks.map((navItem: SanityLink) => (
                   <Link
                     key={navItem._key}
@@ -99,14 +99,15 @@ export default async function Footer() {
           </div>
 
           {!!footerColumns.length && (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+            <div className="border-t border-border/60 pt-10">
+            <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:flex lg:flex-wrap lg:justify-center lg:gap-x-10 lg:gap-y-8">
               {footerColumns.map((item) => {
                 const children =
                   item.children?.filter((child) => child?.title && child?.href) || [];
                 const groupedChildren = groupChildren(children);
 
                 return (
-                  <div key={item._key}>
+                  <div key={item._key} className="lg:min-w-[120px]">
                     <Link
                       href={item.href || "#"}
                       target={item.target ? "_blank" : undefined}
@@ -144,6 +145,7 @@ export default async function Footer() {
                   </div>
                 );
               })}
+            </div>
             </div>
           )}
         </div>

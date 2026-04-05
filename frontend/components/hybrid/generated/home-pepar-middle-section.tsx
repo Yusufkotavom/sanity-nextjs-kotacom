@@ -23,7 +23,13 @@ import { homePrepareContent } from "@/lib/local-content/home-prepare";
 import { cn } from "@/lib/utils";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECTS_QUERY } from "@/sanity/queries/project";
+import { PRODUCTS_QUERY } from "@/sanity/queries/product";
+import { POSTS_QUERY } from "@/sanity/queries/post";
+import { SERVICES_QUERY } from "@/sanity/queries/service";
 import ProjectCard from "@/components/ui/project-card";
+import ProductCard from "@/components/ui/product-card";
+import PostCard from "@/components/ui/post-card";
+import ServiceCard from "@/components/ui/service-card";
 
 const laneIconMap = {
   website: LaptopMinimal,
@@ -56,6 +62,15 @@ const testimonials = [
 export default async function HomePeparMiddleSection() {
   const { data: projectsData } = await sanityFetch({ query: PROJECTS_QUERY });
   const recentProjects = (projectsData || []).slice(0, 3);
+
+  const { data: productsData } = await sanityFetch({ query: PRODUCTS_QUERY });
+  const recentProducts = (productsData || []).slice(0, 3);
+
+  const { data: servicesData } = await sanityFetch({ query: SERVICES_QUERY });
+  const recentServices = (servicesData || []).slice(0, 3);
+
+  const { data: postsData } = await sanityFetch({ query: POSTS_QUERY });
+  const recentPosts = (postsData || []).slice(0, 3);
 
   return (
     <>
@@ -252,6 +267,87 @@ export default async function HomePeparMiddleSection() {
           <div className="mt-8 flex justify-center sm:hidden">
             <Button asChild variant="outline" className="w-full">
               <Link href="/projects">Semua Portfolio</Link>
+            </Button>
+          </div>
+        </SectionShell>
+      )}
+
+      {/* PRODUCTS PREVIEW */}
+      {recentProducts.length > 0 && (
+        <SectionShell>
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <SectionIntro
+              eyebrow="Katalog Produk"
+              title="Perangkat Kasir & IT"
+              description="Pilihan produk dengan kualitas terbaik untuk mendukung kegiatan bisnis Anda."
+              className="mb-0"
+            />
+            <Button asChild variant="outline" className="hidden sm:flex">
+              <Link href="/products">Semua Produk</Link>
+            </Button>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {recentProducts.map((product: any) => (
+              <ProductCard key={product._id || (product.slug && product.slug.current)} {...product} />
+            ))}
+          </div>
+          <div className="mt-8 flex justify-center sm:hidden">
+            <Button asChild variant="outline" className="w-full">
+              <Link href="/products">Semua Produk</Link>
+            </Button>
+          </div>
+        </SectionShell>
+      )}
+
+      {/* SERVICES PREVIEW */}
+      {recentServices.length > 0 && (
+        <SectionShell>
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <SectionIntro
+              eyebrow="Layanan Tersedia"
+              title="Solusi Teknis Khusus"
+              description="Dari instalasi jaringan hingga percetakan dalam skala besar."
+              className="mb-0"
+            />
+            <Button asChild variant="outline" className="hidden sm:flex">
+              <Link href="/services">Semua Layanan</Link>
+            </Button>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {recentServices.map((service: any) => (
+              <ServiceCard key={service._id || (service.slug && service.slug.current)} {...service} />
+            ))}
+          </div>
+          <div className="mt-8 flex justify-center sm:hidden">
+            <Button asChild variant="outline" className="w-full">
+              <Link href="/services">Semua Layanan</Link>
+            </Button>
+          </div>
+        </SectionShell>
+      )}
+
+      {/* BLOG/POSTS PREVIEW */}
+      {recentPosts.length > 0 && (
+        <SectionShell>
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <SectionIntro
+              eyebrow="Artikel & Insights"
+              title="Informasi Terbaru & Tips IT"
+              description="Baca artikel seputar solusi teknologi dan tren industri dari tim ahli kami."
+              className="mb-0"
+            />
+            <Button asChild variant="outline" className="hidden sm:flex">
+              <Link href="/posts">Semua Artikel</Link>
+            </Button>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {recentPosts.map((post: any) => (
+              <PostCard key={post._id || (post.slug && post.slug.current)} post={post} />
+            ))}
+          </div>
+          <div className="mt-8 flex justify-center sm:hidden">
+            <Button asChild variant="outline" className="w-full">
+              <Link href="/posts">Semua Artikel</Link>
             </Button>
           </div>
         </SectionShell>

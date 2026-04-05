@@ -69,3 +69,26 @@ export const SERVICES_BY_CATEGORY_QUERY = groq`*[_type == "service" && defined(s
 }`;
 
 export const SERVICES_SLUGS_QUERY = groq`*[_type == "service" && defined(slug)]{slug}`;
+
+export const RELATED_SERVICES_QUERY = groq`*[
+  _type == "service" 
+  && defined(slug) 
+  && slug.current != $slug
+  && count((categories[]->_id)[@ in $categoryIds]) > 0
+] | order(featured desc, _createdAt desc) [0...4]{
+  title,
+  slug,
+  excerpt,
+  image{
+    ${imageQuery}
+  },
+  duration,
+  startingPrice,
+  currency,
+  featured,
+  categories[]->{
+    _id,
+    title,
+    slug
+  }
+}`;

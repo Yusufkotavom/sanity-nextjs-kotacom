@@ -19,6 +19,7 @@ import {
   fetchSanityProductsStaticParams,
   fetchSanityRelatedProducts,
   fetchSanitySeoSettings,
+  fetchSanityProducts,
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
 import JsonLd from "@/components/seo/json-ld";
@@ -140,12 +141,27 @@ export default async function ProductSlugPage(props: {
     .map((cat: any) => cat?._id)
     .filter(Boolean);
 
-  const relatedProducts = categoryIds.length > 0
+  let relatedProducts = categoryIds.length > 0
     ? await fetchSanityRelatedProducts({
         slug: params.slug,
         categoryIds,
       })
     : [];
+
+  if (relatedProducts.length < 4) {
+    const allProducts = await fetchSanityProducts();
+    const existingIds = new Set([product._id, ...relatedProducts.map((p: any) => p._id)]);
+    const fallbackPool = allProducts.filter((p: any) => p._id !== product._id && !existingIds.has(p._id));
+    
+    // Shuffle the fallback pool
+    for (let i = fallbackPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [fallbackPool[i], fallbackPool[j]] = [fallbackPool[j], fallbackPool[i]];
+    }
+
+    const needed = 4 - relatedProducts.length;
+    relatedProducts = [...relatedProducts, ...fallbackPool.slice(0, needed)];
+  }
 
   const links: BreadcrumbLink[] = [
     { label: "Home", href: "/" },

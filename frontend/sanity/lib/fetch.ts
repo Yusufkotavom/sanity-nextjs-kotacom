@@ -33,6 +33,7 @@ import {
   SERVICES_BY_CATEGORY_QUERY,
   SERVICES_QUERY,
   SERVICES_SLUGS_QUERY,
+  RELATED_SERVICES_QUERY,
 } from "@/sanity/queries/service";
 import {
   PROJECT_QUERY,
@@ -44,6 +45,7 @@ import {
   POSTS_BY_CATEGORY_QUERY,
   POSTS_QUERY,
   POSTS_SLUGS_QUERY,
+  RELATED_POSTS_QUERY,
 } from "@/sanity/queries/post";
 import {
   PAGE_QUERY_RESULT,

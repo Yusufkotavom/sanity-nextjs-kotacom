@@ -82,7 +82,7 @@ export default function Logo({
         title={settings?.siteName || "kotacom.id"}
         width={KOTACOM_DEFAULT_LOGO_WIDTH}
         height={KOTACOM_DEFAULT_LOGO_HEIGHT}
-        className={cn("h-10 w-auto", imageClassName)}
+        className={cn("h-10 w-auto dark:invert", imageClassName)}
         priority={priority}
       />
     </span>

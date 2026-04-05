@@ -71,3 +71,23 @@ export const POSTS_BY_CATEGORY_QUERY = groq`*[_type == "post" && defined(slug) &
 }`;
 
 export const POSTS_SLUGS_QUERY = groq`*[_type == "post" && defined(slug)]{slug}`;
+
+export const RELATED_POSTS_QUERY = groq`*[
+  _type == "post" 
+  && defined(slug) 
+  && slug.current != $slug
+  && count((categories[]->_id)[@ in $categoryIds]) > 0
+] | order(_createdAt desc) [0...4]{
+  title,
+  slug,
+  excerpt,
+  image{
+    ${imageQuery}
+  },
+  categories[]->{
+    _id,
+    title,
+    slug
+  },
+  _createdAt,
+}`;

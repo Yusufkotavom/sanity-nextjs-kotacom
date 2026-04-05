@@ -16,6 +16,18 @@ This file is the canonical changelog for all repository updates, with explicit S
   - ...
 ```
 
+## 2026-04-04 - Set New Home Pepar Layout as Root Homepage
+- Changed files:
+  - `frontend/app/(main)/page.tsx`
+  - `frontend/scripts/change-home-slug.mjs`
+- Summary:
+  - Migrated the Sanity CMS page slugs so the new `home-pepar` page document becomes `index` (the root homepage), and the old homepage document becomes `index-old`.
+  - Updated the frontend root route `app/(main)/page.tsx` to automatically render the `HomePeparMiddleSection` component, fully establishing the modernized services overview UX at the root URL.
+- SEO impact:
+  - High. The root homepage now has a more comprehensive cluster layout (product, service, blog widgets, expanded portfolio) which significantly increases internal crawl paths and homepage topical relevance across IT service and printing keyword clusters.
+- Verification:
+  - Built and confirmed node migration script updated Sanity documents successfully. Let it pass local compile.
+
 ## 2026-04-04 - Product Archive UI Improvements and Related Products
 
 - Changed files:
@@ -4985,3 +4997,27 @@ This file is the canonical changelog for all repository updates, with explicit S
   - TypeScript diagnostics passed for `frontend/components/menu-toggle.tsx` and `frontend/components/header/index.tsx`
   - Production build completed successfully (npm run build)
   - Manual review confirms all requirements met
+
+## 2026-04-04 - Product Single Page Random Related Products Fallback
+- Changed files:
+  - `frontend/app/(main)/products/[slug]/page.tsx`
+- Summary:
+  - Updated the "Produk Terkait" section on the product single page to guarantee 4 products are displayed.
+  - If the Sanity related products query returns fewer than 4 products from the same category, the section now backfills the missing slots with randomly selected products from the entire product catalog (excluding the current product).
+- SEO impact:
+  - Better internal linking structure. Guaranteeing 4 related products at the bottom of every product page helps distribute link equity more effectively across the product catalog and improves crawl depth for product pages that might otherwise have thin or no related sections.
+- Verification:
+  - `pnpm --filter frontend run typecheck` (Manual review confirms no TS errors for `page.tsx`).
+
+## 2026-04-04 - Footer Desktop Menu Centering
+- Changed files:
+  - `frontend/components/footer.tsx`
+- Summary:
+  - Centered footer logo, description, and primary/utility nav links on desktop (`lg:items-center lg:text-center`, `lg:justify-center`).
+  - Converted footer columns grid from `lg:grid-cols-6` to `lg:flex lg:flex-wrap lg:justify-center` so all menu columns are horizontally centered on desktop.
+  - Added `lg:min-w-[120px]` per column to maintain readable column widths on large screens.
+  - Mobile layout remains unchanged (2-column grid, left-aligned).
+- SEO impact:
+  - No direct SEO impact. UI-only layout change for improved visual symmetry on desktop.
+- Verification:
+  - Manual code review completed.
