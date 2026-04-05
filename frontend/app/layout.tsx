@@ -167,6 +167,54 @@ export default async function RootLayout({
           {children}
         </ThemeProvider>
         <Toaster position="top-center" richColors />
+        {/* Organization Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Kotacom",
+              "url": "https://www.kotacom.id",
+              "logo": "https://www.kotacom.id/assets/images/kotacom-logo-Cxnk7d9Z_1nOG2e.svg",
+              "description": "Solusi IT & Digital Terpadu untuk Bisnis Anda",
+              "foundingDate": "2008",
+              "sameAs": [
+                "https://www.instagram.com/kotacom.id",
+                "https://www.facebook.com/kotacom"
+              ],
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+6285799520350",
+                "contactType": "customer service",
+                "areaServed": "ID",
+                "availableLanguage": ["Indonesian", "English"]
+              }
+            }),
+          }}
+        />
+        {/* WebSite Schema with SearchAction */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Kotacom",
+              "url": "https://www.kotacom.id",
+              "description": "Solusi IT, Website, Software & Percetakan Profesional Surabaya",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.kotacom.id/search?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            }),
+          }}
+        />
+        {/* LocalBusiness Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

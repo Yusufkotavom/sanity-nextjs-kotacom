@@ -1,4 +1,4 @@
-const SITE_URL = 'https://sanity-nextjs-kotacom-frontend.vercel.app';
+const SITE_URL = 'https://www.kotacom.id';
 const LIMIT = 5; // Batasi test cuma 5 URL agar cepat
 
 async function testSeoAudit() {

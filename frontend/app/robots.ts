@@ -28,6 +28,28 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     });
   }
 
+  // AI Crawler Management - Allow all AI crawlers for better discoverability
+  const aiCrawlers = [
+    "GPTBot",
+    "ChatGPT-User",
+    "ClaudeBot",
+    "PerplexityBot",
+    "Google-Extended",
+    "Applebot-Extended",
+    "Bytespider",
+    "CCBot",
+    "anthropic-ai",
+    "FacebookBot",
+    "Amazonbot",
+  ];
+
+  aiCrawlers.forEach((crawler) => {
+    rules.push({
+      userAgent: crawler,
+      allow: "/",
+    });
+  });
+
   return {
     rules,
     sitemap: siteUrl ? [`${siteUrl}/sitemap.xml`] : [],

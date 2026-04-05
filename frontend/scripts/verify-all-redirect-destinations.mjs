@@ -27,7 +27,7 @@ async function main() {
   for (let i = 0; i < destArray.length; i += batchSize) {
     const batch = destArray.slice(i, i + batchSize);
     await Promise.all(batch.map(async (dest) => {
-      const url = `https://sanity.kotacom.id${dest}`;
+      const url = `https://www.kotacom.id${dest}`;
       try {
         const response = await fetch(url, { method: 'HEAD', redirect: 'follow' });
         if (response.status >= 400) {

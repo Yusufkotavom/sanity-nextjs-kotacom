@@ -31,6 +31,8 @@ import ProjectCard from "@/components/ui/project-card";
 import ProductCard from "@/components/ui/product-card";
 import PostCard from "@/components/ui/post-card";
 import ServiceCard from "@/components/ui/service-card";
+import HomeWhyChoose from "@/components/home-why-choose";
+import HomeFAQ from "@/components/home-faq";
 
 const laneIconMap = {
   website: LaptopMinimal,
@@ -558,6 +560,12 @@ export default async function HomePeparMiddleSection() {
           </div>
         </SectionPanel>
       </SectionShell>
+
+      {/* Why Choose Kotacom Section */}
+      <HomeWhyChoose />
+
+      {/* FAQ Section */}
+      <HomeFAQ />
     </>
   );
 }

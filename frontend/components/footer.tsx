@@ -164,6 +164,32 @@ export default async function Footer() {
           </div>
         )}
 
+        {/* Structured Address */}
+        <div className="section-divider mt-10 pt-7">
+          <div className="grid gap-6 md:grid-cols-2">
+            <address className="not-italic">
+              <p className="mb-2 text-sm font-semibold text-foreground">Kantor Sidoarjo</p>
+              <p className="text-sm text-foreground/70">
+                Kotacom IT Service & Percetakan<br />
+                Graha Indraprasta G7/15<br />
+                Tulangan, Sidoarjo 61273<br />
+                Jawa Timur, Indonesia
+              </p>
+            </address>
+            <address className="not-italic">
+              <p className="mb-2 text-sm font-semibold text-foreground">Kantor Surabaya</p>
+              <p className="text-sm text-foreground/70">
+                Jl. Tenggilis Mulya 76<br />
+                Surabaya, Jawa Timur 60292<br />
+                Indonesia<br />
+                <a href="tel:+6285799520350" className="hover:text-primary transition-colors">
+                  +62 857-9952-0350
+                </a>
+              </p>
+            </address>
+          </div>
+        </div>
+
         <div className="section-divider mt-7 flex flex-row gap-6 pt-6 text-xs lg:mt-8">
           <div className="flex items-center gap-2 text-foreground/60">
             <span>&copy; {new Date().getFullYear()}</span>

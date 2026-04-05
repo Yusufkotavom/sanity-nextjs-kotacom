@@ -72,10 +72,10 @@ async function main() {
     }
   }
 
-  console.log(`Verifying ${wlRemainingUrls.length} URLs on https://sanity.kotacom.id...\n`);
+  console.log(`Verifying ${wlRemainingUrls.length} URLs on https://www.kotacom.id...\n`);
 
   for (const urlPath of wlRemainingUrls) {
-    const fullUrl = `https://sanity.kotacom.id${urlPath}`;
+    const fullUrl = `https://www.kotacom.id${urlPath}`;
     try {
       const response = await fetch(fullUrl, { method: 'HEAD', redirect: 'manual' });
       console.log(`[${response.status} ${response.statusText}] ${urlPath}`);

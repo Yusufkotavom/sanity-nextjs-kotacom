@@ -38,7 +38,7 @@ async function main() {
     await Promise.all(batch.map(async (doc) => {
       if (!doc.source) return;
       
-      const url = `https://sanity.kotacom.id${doc.source}`;
+      const url = `https://www.kotacom.id${doc.source}`;
       try {
         // Send a request. If Vercel hasn't deployed the redirects, 
         // a 200 means the page actually exists and shouldn't be redirected.
