@@ -28,14 +28,14 @@ export default function SeoLoginForm() {
       return;
     }
 
-    window.location.href = "/dashboard/seo";
+    window.location.href = "/dashboard";
   }
 
   return (
     <div className="max-w-md mx-auto py-8">
       <h1 className="text-2xl font-semibold mb-2">SEO Ops Dashboard</h1>
       <p className="text-sm text-muted-foreground mb-6">
-        Masuk untuk mengakses indexing, audit, dan AI ops.
+        Masuk untuk mengakses jobs, SEO, search, analytics, dan AI ops.
       </p>
 
       <form onSubmit={onSubmit} className="flex flex-col gap-4">

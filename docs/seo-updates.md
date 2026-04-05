@@ -2,6 +2,71 @@
 
 ## 2026-04-05
 
+### Ops Dashboard MVP + Worker Scheduler
+
+**Changed files:**
+- `.github/workflows/ci.yml`
+- `pnpm-workspace.yaml`
+- `pnpm-lock.yaml`
+- `packages/db/src/schema.ts`
+- `packages/db/src/index.ts`
+- `packages/ai/src/index.ts`
+- `packages/search/src/index.ts`
+- `packages/seo/src/index.ts`
+- `packages/content/src/index.ts`
+- `packages/sanity/src/index.ts`
+- `worker/src/index.ts`
+- `worker/wrangler.toml`
+- `seo-dashboard/app/api/internal/cron-run/route.ts`
+- `seo-dashboard/app/api/internal/content-published-webhook/route.ts`
+- `seo-dashboard/app/api/internal/revalidate/route.ts`
+- `seo-dashboard/app/api/templates/preview/route.ts`
+- `seo-dashboard/app/api/templates/bulk-generate/route.ts`
+- `seo-dashboard/app/api/ai/generate/route.ts`
+- `seo-dashboard/app/api/ai/retry-parse/route.ts`
+- `seo-dashboard/app/api/ai/push-to-sanity/route.ts`
+- `seo-dashboard/app/api/seo/audit/route.ts`
+- `seo-dashboard/app/api/seo/report/route.ts`
+- `seo-dashboard/app/api/search/indexnow-submit/route.ts`
+- `seo-dashboard/app/api/search/sitemap-submit/route.ts`
+- `seo-dashboard/app/api/search/inspect/route.ts`
+- `seo-dashboard/app/api/search/status/route.ts`
+- `seo-dashboard/app/api/jobs/run-now/route.ts`
+- `seo-dashboard/app/api/jobs/retry/route.ts`
+- `seo-dashboard/middleware.ts`
+- `seo-dashboard/components/app-sidebar.tsx`
+- `seo-dashboard/components/seo-login-form.tsx`
+- `seo-dashboard/components/templates-panel.tsx`
+- `seo-dashboard/components/job-retry-button.tsx`
+- `seo-dashboard/components/ai-actions.tsx`
+- `seo-dashboard/app/dashboard/layout.tsx`
+- `seo-dashboard/app/dashboard/page.tsx`
+- `seo-dashboard/app/dashboard/jobs/page.tsx`
+- `seo-dashboard/app/dashboard/templates/page.tsx`
+- `seo-dashboard/app/dashboard/ai/page.tsx`
+- `seo-dashboard/app/dashboard/seo/page.tsx`
+- `seo-dashboard/app/dashboard/search/page.tsx`
+- `seo-dashboard/app/dashboard/analytics/page.tsx`
+- `seo-dashboard/components/ui/card.tsx`
+- `seo-dashboard/components/ui/badge.tsx`
+- `seo-dashboard/components/ui/table.tsx`
+- `seo-dashboard/components/ui/textarea.tsx`
+- `seo-dashboard/components/ui/select.tsx`
+- `seo-dashboard/components/ui/label.tsx`
+
+**Summary:**
+Implemented the ops dashboard MVP architecture (shared packages, cron-driven worker, new API endpoints, and shadcn/Geist UI). Added scheduler hooks for sitemap submit, analytics pulls, and index inspection. Rebuilt the dashboard navigation/layout with new Jobs/Templates/AI/SEO/Search/Analytics screens and action buttons, plus auth middleware coverage for the new routes.
+
+**Impact on SEO/Integration:**
+- Adds Sanity webhook intake to mirror content into ops DB and enqueue SEO/search jobs.
+- Adds scheduler + queue consumers for sitemap submission, analytics snapshots, and URL inspection.
+- No direct SEO impact on the public frontend; ops-only.
+
+**Verification:**
+- Not run (build/test/manual check pending).
+
+---
+
 ### SEO Dashboard Middleware Edge Fix
 
 **Changed files:**

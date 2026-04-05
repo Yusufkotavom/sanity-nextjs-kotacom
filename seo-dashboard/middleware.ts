@@ -12,11 +12,19 @@ function isPublicSeoApi(pathname: string) {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const isDashboard = pathname.startsWith("/dashboard/seo");
+  const isDashboard = pathname.startsWith("/dashboard");
   const isSeoApi = pathname.startsWith("/api/seo");
   const isAiApi = pathname.startsWith("/api/ai");
+  const isJobsApi = pathname.startsWith("/api/jobs");
+  const isTemplatesApi = pathname.startsWith("/api/templates");
+  const isSearchApi = pathname.startsWith("/api/search");
+  const isInternalApi = pathname.startsWith("/api/internal");
 
-  if (!isDashboard && !isSeoApi && !isAiApi) {
+  if (!isDashboard && !isSeoApi && !isAiApi && !isJobsApi && !isTemplatesApi && !isSearchApi) {
+    return NextResponse.next();
+  }
+
+  if (isInternalApi) {
     return NextResponse.next();
   }
 
@@ -29,12 +37,12 @@ export function middleware(request: NextRequest) {
 
   if (valid) {
     if (pathname === LOGIN_PATH) {
-      return NextResponse.redirect(new URL("/dashboard/seo", request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
     return NextResponse.next();
   }
 
-  if (isSeoApi || isAiApi) {
+  if (isSeoApi || isAiApi || isJobsApi || isTemplatesApi || isSearchApi) {
     return NextResponse.json({ ok: false, message: "Unauthorized" }, { status: 401 });
   }
 

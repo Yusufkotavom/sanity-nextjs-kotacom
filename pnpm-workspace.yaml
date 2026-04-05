@@ -2,3 +2,5 @@ packages:
   - "studio"
   - "frontend"
   - "seo-dashboard"
+  - "worker"
+  - "packages/*"

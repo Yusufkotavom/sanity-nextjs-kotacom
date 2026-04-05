@@ -1,0 +1,14 @@
+{
+  "totalUrls": 1504,
+  "ok": 1504,
+  "errors": 0,
+  "verdicts": {
+    "NEUTRAL": 1496,
+    "PASS": 8
+  },
+  "indexingStates": {
+    "INDEXING_STATE_UNSPECIFIED": 1461,
+    "INDEXING_ALLOWED": 40,
+    "BLOCKED_BY_META_TAG": 3
+  }
+}

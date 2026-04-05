@@ -19,23 +19,23 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 
-export const seoNavGroups = [
+export const dashboardNavGroups = [
   {
-    title: "Operations",
+    title: "Ops",
     items: [
-      { title: "Overview", url: "/dashboard/seo" },
-      { title: "Indexing", url: "/dashboard/seo/indexing" },
-      { title: "Migration Priority", url: "/dashboard/seo/migration-priority" },
-      { title: "SEO Audit", url: "/dashboard/seo/audit" },
+      { title: "Overview", url: "/dashboard" },
+      { title: "Jobs", url: "/dashboard/jobs" },
+      { title: "Templates", url: "/dashboard/templates" },
+      { title: "AI", url: "/dashboard/ai" },
     ],
   },
   {
-    title: "AI Ops",
-    items: [{ title: "AI Writer", url: "/dashboard/seo/ai-writer" }],
-  },
-  {
-    title: "Admin",
-    items: [{ title: "Settings", url: "/dashboard/seo/settings" }],
+    title: "Search",
+    items: [
+      { title: "SEO", url: "/dashboard/seo" },
+      { title: "Search", url: "/dashboard/search" },
+      { title: "Analytics", url: "/dashboard/analytics" },
+    ],
   },
 ];
 
@@ -48,7 +48,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/dashboard/seo">
+              <Link href="/dashboard">
                 <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-medium">SEO Ops Dashboard</span>
                   <span className="text-xs text-muted-foreground">Operations Console</span>
@@ -59,7 +59,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {seoNavGroups.map((group) => (
+        {dashboardNavGroups.map((group) => (
           <SidebarGroup key={group.title}>
             <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
             <SidebarMenu>

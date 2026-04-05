@@ -23,6 +23,8 @@ jobs:
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
       studio: ${{ steps.filter.outputs.studio }}
+      seo_dashboard: ${{ steps.filter.outputs.seo_dashboard }}
+      worker: ${{ steps.filter.outputs.worker }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -34,11 +36,25 @@ jobs:
           filters: |
             frontend:
               - 'frontend/**'
+              - 'packages/**'
               - 'package.json'
               - 'pnpm-lock.yaml'
               - 'pnpm-workspace.yaml'
             studio:
               - 'studio/**'
+              - 'packages/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+            seo_dashboard:
+              - 'seo-dashboard/**'
+              - 'packages/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+            worker:
+              - 'worker/**'
+              - 'packages/**'
               - 'package.json'
               - 'pnpm-lock.yaml'
               - 'pnpm-workspace.yaml'
@@ -135,3 +151,69 @@ jobs:
 
       - name: Build studio
         run: pnpm --filter studio run build
+
+  seo_dashboard:
+    name: SEO Dashboard Quality + Build
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.seo_dashboard == 'true'
+    env:
+      NEXT_PUBLIC_APP_URL: ${{ vars.NEXT_PUBLIC_OPS_URL || 'https://ops.example.com' }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+      UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+      SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+      SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET || 'production' }}
+      SANITY_API_VERSION: ${{ vars.NEXT_PUBLIC_SANITY_API_VERSION || '2026-03-23' }}
+      SANITY_API_WRITE_TOKEN: ${{ secrets.SANITY_API_WRITE_TOKEN || secrets.SANITY_AUTH_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck dashboard
+        run: pnpm --filter seo-dashboard run typecheck
+
+      - name: Build dashboard
+        run: pnpm --filter seo-dashboard run build
+
+  worker:
+    name: Worker Typecheck
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.worker == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck worker
+        run: pnpm --filter worker run typecheck

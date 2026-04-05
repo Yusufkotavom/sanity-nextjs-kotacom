@@ -1,0 +1,15 @@
+{
+  "total": 1504,
+  "byReadiness": {
+    "ready_to_redirect": 1,
+    "keep_verify": 102,
+    "needs_metadata_fix": 90,
+    "needs_index_fix": 708,
+    "manual_mapping_required": 603
+  },
+  "byMigrationAction": {
+    "redirect_auto": 799,
+    "keep_path": 102,
+    "review_manual": 603
+  }
+}

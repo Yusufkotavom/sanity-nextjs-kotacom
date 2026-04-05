@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 import { generateAiText } from "@/lib/ai-writer/generate";
 import { getAiWriterResolvedSettings } from "@/lib/ai-writer/settings-source";
+import { db } from "@/lib/db";
+import { createJobRun, updateJobRun } from "@/lib/jobs";
+import { schema } from "@repo/db";
 
 type Body = {
   prompt?: string;
   system?: string;
   model?: string;
+  provider?: "gateway" | "groq" | "gemini";
   docType?: "post" | "service" | "project";
 };
 
@@ -39,13 +43,40 @@ export async function POST(request: NextRequest) {
     .filter(Boolean)
     .join("\n\n");
 
+  const job = await createJobRun({
+    jobType: "ai_generate",
+    payload: { docType: body.docType || "generic" },
+  });
+
+  await updateJobRun(job.id, { status: "processing", startedAt: new Date() });
+
   try {
     const result = await generateAiText({
       prompt,
       system,
       model: body.model,
+      provider: body.provider,
       userId: "studio-dashboard",
       tags: ["route:api-ai-generate", `docType:${body.docType || "generic"}`],
+    });
+
+    await db()
+      .insert(schema.aiGenerations)
+      .values({
+        sourceType: "manual",
+        inputJson: { prompt, system, docType: body.docType || "generic" },
+        provider: result.providerMode === "gateway" ? "gateway" : result.providerMode === "direct-groq" ? "groq" : "gemini",
+        model: result.model,
+        rawOutput: result.text,
+        validationStatus: "valid",
+        sanityWriteStatus: "pending",
+      })
+      .returning();
+
+    await updateJobRun(job.id, {
+      status: "success",
+      result: { provider: result.providerMode, model: result.model },
+      finishedAt: new Date(),
     });
 
     return NextResponse.json({
@@ -55,6 +86,11 @@ export async function POST(request: NextRequest) {
       text: result.text,
     });
   } catch (error) {
+    await updateJobRun(job.id, {
+      status: "failed",
+      errorMessage: error instanceof Error ? error.message : "AI generation failed",
+      finishedAt: new Date(),
+    });
     return NextResponse.json(
       {
         ok: false,
