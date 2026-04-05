@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { FileText } from "lucide-react";
 import meta from "../blocks/shared/meta";
+import pageBlocks from "../blocks/shared/page-blocks";
 
 export default defineType({
   name: "post",
@@ -82,6 +83,7 @@ export default defineType({
       type: "block-content",
       group: "content",
     }),
+    pageBlocks,
     defineField({
       name: "affiliateItems",
       title: "Affiliate / Review Items",

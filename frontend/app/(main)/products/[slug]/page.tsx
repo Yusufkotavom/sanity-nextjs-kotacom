@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Blocks from "@/components/blocks";
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
@@ -231,6 +232,13 @@ export default async function ProductSlugPage(props: {
           />
 
           {product.body && <PortableTextRenderer value={product.body} />}
+
+          {/* Sanity Page Blocks */}
+          {(product as any)?.blocks?.length > 0 && (
+            <div className="mt-10">
+              <Blocks blocks={(product as any).blocks} pageTitle={product.title} />
+            </div>
+          )}
           <GlobalWhatsAppPanel
             title={`Tanya detail ${product.title} via WhatsApp`}
             description="Cocok untuk cek ketersediaan, harga terbaru, kebutuhan custom, atau rekomendasi produk sebelum Anda ambil keputusan."

@@ -3,6 +3,7 @@ import { imageQuery } from "./shared/image";
 import { bodyQuery } from "./shared/body";
 import { metaQuery } from "./shared/meta";
 import { linkQuery } from "./shared/link";
+import { blocksQuery } from "./shared/blocks";
 
 export const SERVICE_QUERY = groq`*[_type == "service" && slug.current == $slug][0]{
   title,
@@ -46,6 +47,7 @@ export const SERVICE_QUERY = groq`*[_type == "service" && slug.current == $slug]
     ratingSource,
     sourceUrl,
   },
+  ${blocksQuery},
   _createdAt,
   _updatedAt,
   ${metaQuery},

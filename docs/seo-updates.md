@@ -5111,3 +5111,31 @@ This file is the canonical changelog for all repository updates, with explicit S
   - Zero-effort for existing content (all new fields optional, UI hidden when empty).
 - Verification:
   - `pnpm --filter frontend run typecheck` — exit code 0, 0 errors.
+
+## 2026-04-05 - Page Blocks Support for Post, Service, Product, Project
+
+- New files:
+  - `studio/schemas/blocks/shared/page-blocks.ts` — shared blocks field definition (DRY)
+  - `frontend/sanity/queries/shared/blocks.ts` — shared GROQ blocks[] projection (DRY)
+- Modified files:
+  - `studio/schemas/documents/page.ts` — refactored to use shared pageBlocks
+  - `studio/schemas/documents/post.ts` — added pageBlocks field
+  - `studio/schemas/documents/service.ts` — added pageBlocks field
+  - `studio/schemas/documents/product.ts` — added pageBlocks field
+  - `studio/schemas/documents/project.ts` — added pageBlocks field
+  - `frontend/sanity/queries/page.ts` — refactored to use shared blocksQuery
+  - `frontend/sanity/queries/post.ts` — added blocksQuery
+  - `frontend/sanity/queries/service.ts` — added blocksQuery
+  - `frontend/sanity/queries/product.ts` — added blocksQuery
+  - `frontend/sanity/queries/project.ts` — added blocksQuery
+  - `frontend/app/(main)/blog/[slug]/page.tsx` — renders blocks after body
+  - `frontend/app/(main)/services/[slug]/page.tsx` — renders blocks after body
+  - `frontend/app/(main)/products/[slug]/page.tsx` — renders blocks after body
+  - `frontend/app/(main)/projects/[slug]/page.tsx` — renders blocks after body
+- Summary:
+  - All document types (post, service, product, project) now support Sanity page blocks
+  - Same block types as page: hero, grid, split, carousel, CTA, FAQ, etc.
+  - Blocks render after body content — optional, zero impact when empty
+  - Extracted shared definitions to avoid code duplication
+- SEO impact: Enables richer content pages with structured sections, improving dwell time and engagement signals.
+- Verification: `pnpm --filter frontend run typecheck` — exit code 0.

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Blocks from "@/components/blocks";
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
@@ -98,6 +99,14 @@ export default async function ProjectPage(props: {
             ]}
           />
           {project.body && <PortableTextRenderer value={project.body} />}
+
+          {/* Sanity Page Blocks */}
+          {(project as any)?.blocks?.length > 0 && (
+            <div className="mt-10">
+              <Blocks blocks={(project as any).blocks} pageTitle={project.title} />
+            </div>
+          )}
+
           {project.projectUrl && (
             <div className="mt-8">
               <Button asChild variant="outline">

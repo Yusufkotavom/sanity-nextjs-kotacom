@@ -3,6 +3,7 @@ import { imageQuery } from "./shared/image";
 import { bodyQuery } from "./shared/body";
 import { metaQuery } from "./shared/meta";
 import { linkQuery } from "./shared/link";
+import { blocksQuery } from "./shared/blocks";
 
 export const PRODUCT_QUERY = groq`*[_type == "product" && slug.current == $slug][0]{
   title,
@@ -48,6 +49,7 @@ export const PRODUCT_QUERY = groq`*[_type == "product" && slug.current == $slug]
     ratingSource,
     sourceUrl,
   },
+  ${blocksQuery},
   _createdAt,
   _updatedAt,
   ${metaQuery},

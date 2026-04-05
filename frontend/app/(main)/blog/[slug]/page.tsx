@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Blocks from "@/components/blocks";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 import PostHero from "@/components/blocks/post-hero";
 import PortableTextRenderer from "@/components/portable-text-renderer";
@@ -126,6 +127,13 @@ export default async function PostPage(props: {
             <BlogTableOfContents items={tocItems} variant="mobile" />
             {post.body && (
               <PortableTextRenderer value={post.body} headingIdMap={headingIdMap} />
+            )}
+
+            {/* Sanity Page Blocks */}
+            {(post as any)?.blocks?.length > 0 && (
+              <div className="mt-10">
+                <Blocks blocks={(post as any).blocks} pageTitle={post.title} />
+              </div>
             )}
 
             {/* Affiliate Items Section (auto-detected) */}

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Blocks from "@/components/blocks";
 import Image from "next/image";
 import Link from "next/link";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
@@ -212,6 +213,13 @@ export default async function ServiceSlugPage(props: {
             </div>
           )}
           {service.body && <PortableTextRenderer value={service.body} />}
+
+          {/* Sanity Page Blocks */}
+          {(service as any)?.blocks?.length > 0 && (
+            <div className="mt-10">
+              <Blocks blocks={(service as any).blocks} pageTitle={service.title} />
+            </div>
+          )}
           <GlobalWhatsAppPanel
             title={`Diskusikan ${service.title} via WhatsApp`}
             description="Jelaskan kebutuhan, target, dan kendala utama Anda. Tim kami akan bantu mengarahkan scope, estimasi, dan langkah implementasi yang paling masuk akal."

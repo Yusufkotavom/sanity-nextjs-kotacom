@@ -2,6 +2,7 @@ import { defineField, defineType } from "sanity";
 import { orderRankField } from "@sanity/orderable-document-list";
 import { FolderKanban } from "lucide-react";
 import meta from "../blocks/shared/meta";
+import pageBlocks from "../blocks/shared/page-blocks";
 
 export default defineType({
   name: "project",
@@ -42,6 +43,7 @@ export default defineType({
       type: "block-content",
       group: "content",
     }),
+    pageBlocks,
     defineField({
       name: "image",
       title: "Main Image",

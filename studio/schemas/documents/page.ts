@@ -2,6 +2,7 @@ import { defineField, defineType } from "sanity";
 import { Files } from "lucide-react";
 import { orderRankField } from "@sanity/orderable-document-list";
 import meta from "../blocks/shared/meta";
+import pageBlocks from "../blocks/shared/page-blocks";
 
 const HYBRID_PAGE_SLUGS = new Set([
   "home-pepar",
@@ -57,101 +58,7 @@ export default defineType({
         },
       ],
     }),
-    defineField({
-      name: "blocks",
-      type: "array",
-      group: "content",
-      of: [
-        { type: "hero-1" },
-        { type: "hero-2" },
-        { type: "section-header" },
-        { type: "split-row" },
-        { type: "grid-row" },
-        { type: "carousel-1" },
-        { type: "carousel-2" },
-        { type: "timeline-row" },
-        { type: "cta-1" },
-        { type: "whatsapp-cta" },
-        { type: "logo-cloud-1" },
-        { type: "faqs" },
-        { type: "form-newsletter" },
-        { type: "all-posts" },
-        { type: "legacy-rich-content" },
-      ],
-      options: {
-        insertMenu: {
-          groups: [
-            {
-              name: "hero",
-              title: "Hero",
-              of: ["hero-1", "hero-2"],
-            },
-            {
-              name: "logo-cloud",
-              title: "Logo Cloud",
-              of: ["logo-cloud-1"],
-            },
-            {
-              name: "section-header",
-              title: "Section Header",
-              of: ["section-header"],
-            },
-            {
-              name: "grid",
-              title: "Grid",
-              of: ["grid-row"],
-            },
-            {
-              name: "split",
-              title: "Split",
-              of: ["split-row"],
-            },
-            {
-              name: "carousel",
-              title: "Carousel",
-              of: ["carousel-1", "carousel-2"],
-            },
-            {
-              name: "timeline",
-              title: "Timeline",
-              of: ["timeline-row"],
-            },
-            {
-              name: "cta",
-              title: "CTA",
-              of: ["cta-1", "whatsapp-cta"],
-            },
-            {
-              name: "faqs",
-              title: "FAQs",
-              of: ["faqs"],
-            },
-            {
-              name: "forms",
-              title: "Forms",
-              of: ["form-newsletter"],
-            },
-            {
-              name: "all-posts",
-              title: "All Posts",
-              of: ["all-posts"],
-            },
-            {
-              name: "legacy",
-              title: "Legacy",
-              of: ["legacy-rich-content"],
-            },
-          ],
-          views: [
-            {
-              name: "grid",
-              previewImageUrl: (block) => `/static/images/preview/${block}.jpg`,
-            },
-            { name: "list" },
-          ],
-        },
-      },
-    }),
+    pageBlocks,
     defineField({
       name: "topBlockCount",
       title: "Top Block Count",

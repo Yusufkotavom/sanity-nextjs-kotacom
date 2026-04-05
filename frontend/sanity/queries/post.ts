@@ -2,6 +2,7 @@ import { groq } from "next-sanity";
 import { imageQuery } from "./shared/image";
 import { bodyQuery } from "./shared/body";
 import { metaQuery } from "./shared/meta";
+import { blocksQuery } from "./shared/blocks";
 
 export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
     title,
@@ -65,6 +66,7 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
       ratingSource,
       sourceUrl,
     },
+    ${blocksQuery},
     _createdAt,
     _updatedAt,
     ${metaQuery},
