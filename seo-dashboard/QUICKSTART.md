@@ -1,198 +1,247 @@
-# SEO Dashboard Quick Start
+# SEO Dashboard - Quick Start Guide
 
-Get the ops dashboard running locally in 5 minutes.
+Get the SEO Dashboard running locally in 5 minutes.
 
 ## Prerequisites
 
 - Node.js 22+
-- pnpm 10.19.0+
-- Neon PostgreSQL database (free tier: https://neon.tech)
-- Upstash Redis (free tier: https://upstash.com)
+- pnpm 10+
+- PostgreSQL database (Neon recommended for free tier)
 
-## Step 1: Install Dependencies
+## Step 1: Database Setup
 
-From repo root:
+### Option A: Use Neon (Recommended - Free Tier)
+
+1. Sign up at https://neon.tech
+2. Create a new project
+3. Copy the connection string
+
+### Option B: Local PostgreSQL
 
 ```bash
+# Install PostgreSQL
+brew install postgresql  # macOS
+sudo apt install postgresql  # Ubuntu
+
+# Start server
+brew services start postgresql  # macOS
+sudo systemctl start postgresql  # Ubuntu
+
+# Create database
+createdb seo_dashboard
+```
+
+## Step 2: Environment Configuration
+
+```bash
+# Copy environment template
+cd seo-dashboard
+cp .env.local .env
+
+# Edit .env and set your DATABASE_URL
+# For Neon:
+DATABASE_URL='postgresql://user:pass@ep-xxx.region.aws.neon.tech/db?sslmode=require&channel_binding=require'
+
+# For local:
+DATABASE_URL='postgresql://localhost:5432/seo_dashboard'
+```
+
+## Step 3: Install Dependencies
+
+```bash
+# From project root
 pnpm install
 ```
 
-## Step 2: Setup Database
-
-### Create Neon Database
-
-1. Go to https://neon.tech and create account
-2. Create new project
-3. Copy connection string (looks like: `postgresql://user:pass@host/db?sslmode=require`)
-
-### Run Migrations
+## Step 4: Setup Database
 
 ```bash
+# Run complete database setup
 cd packages/db
+export DATABASE_URL="your-connection-string"
+pnpm db:setup
 
-# Add your DATABASE_URL temporarily
-export DATABASE_URL="postgresql://..."
-
-# Generate and run migrations
-pnpm drizzle:generate
-pnpm drizzle:migrate
+# (Optional) Seed with test data
+pnpm db:seed
 ```
-
-## Step 3: Setup Redis
-
-1. Go to https://upstash.com and create account
-2. Create new Redis database
-3. Copy REST URL and Token from dashboard
-
-## Step 4: Configure Environment
-
-```bash
-cd seo-dashboard
-cp .env.local .env
-```
-
-Edit `.env` and update these required variables:
-
-```bash
-# Database (from Step 2)
-DATABASE_URL=postgresql://user:pass@host/db?sslmode=require
-
-# Redis (from Step 3)
-UPSTASH_REDIS_REST_URL=https://your-redis.upstash.io
-UPSTASH_REDIS_REST_TOKEN=AXn1...your-token
-```
-
-All other variables are pre-configured with real Sanity credentials.
 
 ## Step 5: Start Dashboard
 
 ```bash
+cd seo-dashboard
 pnpm dev
 ```
 
-Dashboard will be available at: http://localhost:3001
+Open http://localhost:3001
 
-## Step 6: Login
+**Default Login:**
+- Password: `kotacom`
 
-1. Open http://localhost:3001
-2. Enter password: `kotacom`
-3. You should see the dashboard home
+## Verify Setup
 
-## What's Working Now
+1. Login at http://localhost:3001
+2. Check Dashboard page shows stats (0 rows if not seeded)
+3. Check Jobs, AI, SEO, Search, Analytics pages load without errors
 
-✅ Dashboard UI with navigation
-✅ Jobs monitoring (empty until you create jobs)
-✅ Templates management
-✅ AI generation (using Vercel AI Gateway)
-✅ SEO audit tools
-✅ Search submission tools
-✅ Analytics views
+## Troubleshooting
 
-## What Needs Additional Setup
+### Database Connection Error
 
-### Optional: Google Search Console (for sitemap/analytics/inspection)
-
-1. Create service account: https://console.cloud.google.com
-2. Enable "Google Search Console API"
-3. Download JSON key
-4. Add to `.env`:
 ```bash
-GSC_CLIENT_EMAIL=your-account@project.iam.gserviceaccount.com
+# Test connection
+psql $DATABASE_URL -c "SELECT version();"
+
+# Check tables exist
+psql $DATABASE_URL -c "\dt"
+```
+
+### Missing Tables
+
+```bash
+cd packages/db
+export DATABASE_URL="your-connection-string"
+pnpm db:reset  # Drops all tables and re-migrates
+pnpm db:seed   # Add test data
+```
+
+### Port Already in Use
+
+```bash
+# Change port in seo-dashboard/.env
+NEXT_PUBLIC_APP_URL=http://localhost:3002
+
+# Start with custom port
+pnpm dev -- -p 3002
+```
+
+## Next Steps
+
+### Configure AI Providers
+
+Add to `seo-dashboard/.env`:
+
+```bash
+# AI Gateway (Vercel AI SDK)
+AI_GATEWAY_API_KEY=your-key
+
+# Groq (optional fallback)
+AI_WRITER_GROQ_KEYS=key1,key2,key3
+
+# Gemini (optional fallback)
+AI_WRITER_GEMINI_KEYS=key1,key2,key3
+```
+
+### Configure Google Search Console
+
+1. Create service account at https://console.cloud.google.com
+2. Download JSON key
+3. Add to `.env`:
+
+```bash
+GSC_CLIENT_EMAIL=your-service-account@project.iam.gserviceaccount.com
 GSC_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
 GSC_SITE_URL=https://your-site.com
 ```
 
-### Optional: IndexNow (for fast indexing)
-
-1. Generate key: `openssl rand -hex 32`
-2. Create `frontend/public/indexnow-key.txt` with the key
-3. Add to `.env`:
-```bash
-INDEXNOW_KEY=your-generated-key
-INDEXNOW_KEY_LOCATION=https://your-site.com/indexnow-key.txt
-```
-
-### Optional: AI Fallback Providers
-
-Add Groq and/or Gemini keys for fallback when Gateway fails:
+### Configure IndexNow
 
 ```bash
-# Groq (https://console.groq.com)
-AI_WRITER_GROQ_KEYS=key1,key2,key3
-
-# Gemini (https://aistudio.google.com/apikey)
-AI_WRITER_GEMINI_KEYS=key1,key2,key3
+# Generate key at https://www.bing.com/indexnow
+INDEXNOW_KEY=your-key
+INDEXNOW_KEY_LOCATION=https://your-site.com/your-key.txt
 ```
 
-## Testing
+### Configure Redis Queue
 
-### Test AI Generation
-
-1. Go to http://localhost:3001/dashboard/ai
-2. Click "Generate Content"
-3. Enter a prompt
-4. Should see result using Gateway provider
-
-### Test Job Creation
-
-1. Go to http://localhost:3001/dashboard/jobs
-2. Click "Run Now"
-3. Select job type
-4. Should see job in list
-
-### Test API Endpoints
+Sign up at https://upstash.com (free tier):
 
 ```bash
-# Test internal webhook (simulates Sanity publish)
-curl -X POST http://localhost:3001/api/internal/content-published-webhook \
-  -H "Content-Type: application/json" \
-  -H "x-internal-secret: dbf637ca11029cbb31110fda38e2154c12bb144a-internal" \
-  -d '{
-    "_id": "test-123",
-    "_type": "page",
-    "slug": {"current": "test"},
-    "title": "Test Page"
-  }'
-
-# Check database
-psql $DATABASE_URL -c "SELECT * FROM content_items WHERE sanity_id = 'test-123'"
+UPSTASH_REDIS_REST_URL=https://your-redis.upstash.io
+UPSTASH_REDIS_REST_TOKEN=your-token
 ```
 
-## Troubleshooting
+## Production Deployment
 
-### "DATABASE_URL is not configured"
+### Deploy to Vercel
 
-Make sure you added `DATABASE_URL` to `.env` file.
-
-### "Cannot connect to database"
-
-1. Check connection string format
-2. Verify database is running in Neon dashboard
-3. Test connection: `psql $DATABASE_URL -c "SELECT 1"`
-
-### "Redis connection failed"
-
-1. Verify `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`
-2. Test connection:
 ```bash
-curl -H "Authorization: Bearer $UPSTASH_REDIS_REST_TOKEN" \
-  "$UPSTASH_REDIS_REST_URL/ping"
+cd seo-dashboard
+vercel
+
+# Add environment variables in Vercel dashboard:
+# - DATABASE_URL
+# - UPSTASH_REDIS_REST_URL
+# - UPSTASH_REDIS_REST_TOKEN
+# - All AI provider keys
+# - GSC credentials
+# - IndexNow key
 ```
 
-### "AI generation failed"
+### Deploy Worker to Cloudflare
 
-1. Check `AI_GATEWAY_API_KEY` is set
-2. Verify key is valid in Vercel dashboard
-3. Check logs in terminal for error details
+```bash
+cd worker
+pnpm deploy
 
-## Next Steps
+# Set secrets
+wrangler secret put CRON_SECRET
+wrangler secret put OPS_API_URL
+```
 
-1. ✅ Dashboard running locally
-2. ⏳ Deploy to Vercel (see `docs/ops-dashboard-setup.md`)
-3. ⏳ Deploy worker to Cloudflare
-4. ⏳ Configure Sanity webhook
-5. ⏳ Test end-to-end flow
+## Available Scripts
 
-## Need Help?
+```bash
+# Development
+pnpm dev              # Start dev server (port 3001)
+pnpm build            # Build for production
+pnpm start            # Start production server
 
-See full documentation: `docs/ops-dashboard-setup.md`
+# Database
+pnpm --filter @repo/db db:setup    # Complete DB setup
+pnpm --filter @repo/db db:seed     # Seed test data
+pnpm --filter @repo/db db:reset    # Reset database
+pnpm --filter @repo/db drizzle:studio  # Open DB GUI
+
+# Type checking
+pnpm typecheck        # Check TypeScript types
+```
+
+## Dashboard Features
+
+### Jobs Page
+- View all queued and completed jobs
+- Retry failed jobs
+- Monitor job execution status
+
+### AI Page
+- View AI generation history
+- Retry failed generations
+- Push generated content to Sanity
+
+### SEO Page
+- View SEO audit results
+- Check audit scores and issues
+- Monitor content quality
+
+### Search Page
+- Submit URLs to IndexNow
+- Submit sitemaps to Google
+- Check URL inspection status
+
+### Analytics Page
+- View daily analytics snapshots
+- Track impressions, clicks, CTR
+- Monitor search performance
+
+## Support
+
+For detailed documentation, see:
+- Database: `packages/db/README.md`
+- Worker: `worker/README.md`
+- Setup Guide: `docs/ops-dashboard-setup.md`
+
+For issues:
+1. Check logs in terminal
+2. Verify DATABASE_URL is set
+3. Run `pnpm db:setup` to verify tables
+4. Check Vercel logs for production issues
