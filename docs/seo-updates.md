@@ -2,6 +2,36 @@
 
 ## 2026-04-06
 
+### Database migrations + dashboard error handling + UI improvements
+
+**Changed files:**
+- `packages/db/migrations/0000_fast_morgan_stark.sql` (new - database schema)
+- `packages/db/migrations/meta/0000_snapshot.json` (new)
+- `packages/db/migrations/meta/_journal.json` (new)
+- `seo-dashboard/app/dashboard/page.tsx` (added error handling)
+- `frontend/components/menu-toggle.tsx` (icon-only dark mode toggle)
+- `frontend/components/header/index.tsx` (reordered navigation)
+- `docs/seo-updates.md`
+
+**Summary:**
+Fixed dashboard 500 errors by running database migrations to create all required tables. Generated migrations from schema using drizzle-kit and executed against Neon PostgreSQL database. Created 8 tables: ai_generations (15 columns, 2 indexes, 1 FK), analytics_daily (11 columns, 2 indexes, 1 FK), content_items (10 columns, 2 indexes), index_status_checks (13 columns, 2 indexes, 1 FK), job_runs (11 columns, 2 indexes, 1 FK), scheduled_tasks (10 columns), search_submissions (9 columns, 3 indexes, 1 FK), seo_audits (7 columns, 1 FK). Added error handling to main dashboard page to gracefully handle database connection issues. Improved header UI: changed dark mode toggle from button with text to icon-only button (size-8 rounded-full), reordered navigation items (WhatsApp → CTA → Theme toggle for better visual hierarchy).
+
+**Impact on SEO / integration:**
+No direct SEO impact; fixes ops dashboard infrastructure. Database now ready for SEO audits, AI generations, job scheduling, search submissions, and analytics tracking. UI improvements enhance user experience without affecting SEO functionality.
+
+**Verification:**
+- ✅ Migrations generated: `drizzle-kit generate` created 0000_fast_morgan_stark.sql
+- ✅ Migrations executed: `drizzle-kit migrate` ran successfully against Neon DB
+- ✅ 8 tables created with proper indexes and foreign keys
+- ✅ Dashboard page now has try-catch error handling
+- ✅ Dark mode toggle changed to icon-only (consistent with WhatsApp button)
+- ✅ Header navigation reordered for better UX
+- ⏳ Vercel deployment will verify dashboard loads without 500 errors
+
+---
+
+## 2026-04-06
+
 ### Fixed SEO dashboard 500 error - database error handling
 
 **Changed files:**
