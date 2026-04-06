@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 const LOGIN_PATH = "/dashboard/seo/login";
 const SEO_SESSION_COOKIE = "seo_dash_session";
 
@@ -10,7 +11,7 @@ function isPublicSeoApi(pathname: string) {
   );
 }
 
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isDashboard = pathname.startsWith("/dashboard");
   const isSeoApi = pathname.startsWith("/api/seo");
