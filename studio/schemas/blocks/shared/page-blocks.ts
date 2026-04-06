@@ -13,6 +13,7 @@ const pageBlocks = defineField({
   of: [
     { type: "hero-1" },
     { type: "hero-2" },
+    { type: "stats-hero-block" },
     { type: "section-header" },
     { type: "split-row" },
     { type: "grid-row" },
@@ -30,6 +31,11 @@ const pageBlocks = defineField({
     { type: "testimonials-block" },
     { type: "pricing-block" },
     { type: "faq-block" },
+    { type: "benefits-block" },
+    { type: "features-package-block" },
+    { type: "service-types-block" },
+    { type: "problem-solution-block" },
+    { type: "value-props-block" },
   ],
   options: {
     insertMenu: {
@@ -37,7 +43,7 @@ const pageBlocks = defineField({
         {
           name: "hero",
           title: "Hero",
-          of: ["hero-1", "hero-2"],
+          of: ["hero-1", "hero-2", "stats-hero-block"],
         },
         {
           name: "logo-cloud",
@@ -97,7 +103,17 @@ const pageBlocks = defineField({
         {
           name: "seo",
           title: "SEO",
-          of: ["company-info", "testimonials-block", "pricing-block", "faq-block"],
+          of: [
+            "company-info",
+            "testimonials-block",
+            "pricing-block",
+            "faq-block",
+            "benefits-block",
+            "features-package-block",
+            "service-types-block",
+            "problem-solution-block",
+            "value-props-block",
+          ],
         },
       ],
       views: [

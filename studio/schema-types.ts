@@ -77,6 +77,12 @@ import companyInfo from "./schemas/blocks/seo/company-info";
 import faqBlock from "./schemas/blocks/seo/faq-block";
 import testimonialsBlock from "./schemas/blocks/seo/testimonials-block";
 import pricingBlock from "./schemas/blocks/seo/pricing-block";
+import benefitsBlock from "./schemas/blocks/seo/benefits-block";
+import featuresPackageBlock from "./schemas/blocks/seo/features-package-block";
+import serviceTypesBlock from "./schemas/blocks/seo/service-types-block";
+import problemSolutionBlock from "./schemas/blocks/seo/problem-solution-block";
+import valuePropsBlock from "./schemas/blocks/seo/value-props-block";
+import statsHeroBlock from "./schemas/blocks/seo/stats-hero-block";
 
 export const schemaTypes = [
   // documents
@@ -157,4 +163,10 @@ export const schemaTypes = [
   faqBlock,
   testimonialsBlock,
   pricingBlock,
+  benefitsBlock,
+  featuresPackageBlock,
+  serviceTypesBlock,
+  problemSolutionBlock,
+  valuePropsBlock,
+  statsHeroBlock,
 ];

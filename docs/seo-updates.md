@@ -4,6 +4,141 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-06: Pembuatan Website Page Expansion with New SEO Blocks
+
+### Changed Files
+- `studio/schemas/blocks/seo/benefits-block.ts` (NEW)
+- `studio/schemas/blocks/seo/features-package-block.ts` (NEW)
+- `studio/schemas/blocks/seo/service-types-block.ts` (NEW)
+- `studio/schemas/blocks/seo/problem-solution-block.ts` (NEW)
+- `studio/schemas/blocks/seo/value-props-block.ts` (NEW)
+- `studio/schemas/blocks/seo/stats-hero-block.ts` (NEW)
+- `studio/schemas/blocks/shared/page-blocks.ts` (UPDATED)
+- `studio/schema-types.ts` (UPDATED)
+- `frontend/components/blocks/seo/benefits-block.tsx` (NEW)
+- `frontend/components/blocks/seo/features-package-block.tsx` (NEW)
+- `frontend/components/blocks/seo/service-types-block.tsx` (NEW)
+- `frontend/components/blocks/seo/problem-solution-block.tsx` (NEW)
+- `frontend/components/blocks/seo/value-props-block.tsx` (NEW)
+- `frontend/components/blocks/seo/stats-hero-block.tsx` (NEW)
+- `frontend/components/blocks/index.tsx` (UPDATED)
+- `docs/pembuatan-website-expansion-guide.md` (NEW)
+- `pembuatan-website-sample-blocks.ndjson` (NEW)
+- `content-comparison-kotacom-vs-sanity.md` (NEW)
+- `frontend/sanity.types.ts` (REGENERATED)
+
+### Summary of Changes
+
+**1. Content Analysis & Strategy**
+- Analyzed content differences between Kotacom Original (www.kotacom.id) and Sanity version
+- Created comprehensive comparison document identifying missing content blocks
+- Kotacom Original: Sales-driven, aggressive CTAs, concrete statistics (200% omset, 85% trust)
+- Sanity Version: Professional, consultative, process-focused
+
+**2. New SEO-Optimized Block Types Created**
+
+**Stats Hero Block:**
+- Hero section with eyebrow statistics (e.g., "200+ Website Sukses Dibuat")
+- Supports image, title, description, and 2 CTA buttons
+- Designed for social proof and urgency
+
+**Benefits Block:**
+- 6 benefit cards with emoji icons, badges, and statistics
+- Each benefit includes: icon, title, description, badge text, badge icon
+- Example: "📈 200% Peningkatan rata-rata omset klien kami"
+
+**Features Package Block:**
+- Showcase what's included in packages
+- 6 feature items with icons and badges
+- Example: "Website Responsive Premium", "SEO Optimization Lengkap"
+
+**Service Types Block:**
+- 3 service offerings with pricing and features
+- Includes: title, description, feature list, price, timeline, badge (POPULER)
+- CTA links for each service
+- Example: "Website Company Profile - Mulai Rp 500.000 - Timeline: 1-2 minggu"
+
+**Problem Solution Block:**
+- Highlights pain points (4 problems)
+- Presents solution with statistics
+- Visual distinction between problems (red) and solution (green)
+
+**Value Props Block:**
+- 4 value propositions in grid layout
+- Icons, titles, descriptions
+- Example: "Harga Terjangkau", "Garansi Kepuasan 100%"
+
+**3. Schema & Component Integration**
+- Registered 6 new block types in Sanity schema
+- Created corresponding React components with TypeScript types
+- Updated page-blocks.ts to include new blocks in SEO group
+- Dynamic imports for performance optimization
+
+**4. Sample Content Import**
+- Created NDJSON file with complete page structure
+- Imported to Sanity production dataset
+- Page ID: `pembuatan-website-page`
+- Includes 13 blocks: hero, benefits, features, services, testimonials, FAQ, CTA
+
+**5. Documentation**
+- Comprehensive expansion guide with implementation steps
+- Sample content for each block type
+- Recommended page structure (top blocks + bottom blocks)
+- Content guidelines matching Kotacom Original tone
+- Troubleshooting section
+
+### Impact on SEO/Integration
+
+**Positive SEO Impact:**
+- ✅ Rich content blocks improve on-page SEO
+- ✅ Structured data ready (testimonials, pricing, FAQ blocks already have schema)
+- ✅ Benefits block highlights USPs with concrete statistics (E-E-A-T signals)
+- ✅ Service types block provides clear pricing transparency
+- ✅ Problem-solution block addresses user intent and pain points
+- ✅ Value props block reinforces trust signals
+
+**Content Strategy:**
+- Hybrid page approach: CMS blocks + code-owned shell
+- `topBlockCount: 3` splits blocks into top (hero, header, benefits) and bottom sections
+- Allows flexibility to A/B test different content arrangements
+
+**Conversion Optimization:**
+- Multiple CTA placements throughout page
+- Social proof via statistics (200%, 85%, 70%)
+- Urgency signals (POPULER badge, limited offers)
+- Risk reversal (Garansi Kepuasan 100%)
+
+**Technical SEO:**
+- All blocks support `colorVariant` and `padding` for visual hierarchy
+- Semantic HTML structure in components
+- Image optimization with Next.js Image component
+- Dynamic imports for code splitting
+
+### Verification Status
+
+- ✅ Schema types generated successfully
+- ✅ Sample data imported to Sanity production
+- ✅ TypeScript types regenerated (frontend/sanity.types.ts)
+- ✅ All 6 new block components created
+- ✅ Block registration in schema-types.ts complete
+- ✅ Component mapping in blocks/index.tsx complete
+- ✅ Page data verified in Sanity (10 blocks, topBlockCount: 3)
+- ⚠️ **DEPLOYMENT REQUIRED**: Frontend needs to be deployed to production
+- ⚠️ TODO: Test page rendering after deployment
+- ⚠️ TODO: Verify responsive design on mobile
+- ⚠️ TODO: Populate real content (testimonials, images, pricing)
+
+### Next Steps
+
+1. Test `/pembuatan-website` page in local development
+2. Populate remaining content (testimonials, FAQs) in Sanity Studio
+3. Add images to blocks via Sanity Studio
+4. Configure pricing block with actual pricing data
+5. A/B test different block arrangements
+6. Monitor conversion rates and adjust content
+
+---
+
 ## 2026-04-06: Money Pages SEO Audit & Improvements
 
 ### Changed Files

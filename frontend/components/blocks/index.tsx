@@ -20,6 +20,12 @@ const CompanyInfo = dynamic(() => import("@/components/blocks/seo/company-info")
 const TestimonialsBlock = dynamic(() => import("@/components/blocks/seo/testimonials-block"));
 const PricingBlock = dynamic(() => import("@/components/blocks/seo/pricing-block"));
 const FaqBlock = dynamic(() => import("@/components/blocks/seo/faq-block"));
+const BenefitsBlock = dynamic(() => import("@/components/blocks/seo/benefits-block"));
+const FeaturesPackageBlock = dynamic(() => import("@/components/blocks/seo/features-package-block"));
+const ServiceTypesBlock = dynamic(() => import("@/components/blocks/seo/service-types-block"));
+const ProblemSolutionBlock = dynamic(() => import("@/components/blocks/seo/problem-solution-block"));
+const ValuePropsBlock = dynamic(() => import("@/components/blocks/seo/value-props-block"));
+const StatsHeroBlock = dynamic(() => import("@/components/blocks/seo/stats-hero-block"));
 
 type Block = NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
@@ -44,6 +50,12 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   "testimonials-block": TestimonialsBlock,
   "pricing-block": PricingBlock,
   "faq-block": FaqBlock,
+  "benefits-block": BenefitsBlock,
+  "features-package-block": FeaturesPackageBlock,
+  "service-types-block": ServiceTypesBlock,
+  "problem-solution-block": ProblemSolutionBlock,
+  "value-props-block": ValuePropsBlock,
+  "stats-hero-block": StatsHeroBlock,
 };
 
 export default function Blocks({
