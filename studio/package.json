@@ -9,7 +9,9 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "typegen": "rm -rf schema.json && sanity schema extract && sanity typegen generate",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "skill:ops:contract": "node ../frontend/scripts/ops-check-block-contract.mjs --json",
+    "skill:content:validate": "node ../frontend/scripts/ops-validate-sanity-payload.mjs"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.3",

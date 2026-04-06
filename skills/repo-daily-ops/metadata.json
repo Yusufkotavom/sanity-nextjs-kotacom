@@ -1,0 +1,22 @@
+{
+  "name": "repo-daily-ops",
+  "version": "1.0.0",
+  "owner": "repo-local",
+  "entry": "SKILL.md",
+  "agents": [
+    "agents/repo-daily-ops-agent.md"
+  ],
+  "references": [
+    "references/use-case-matrix.md",
+    "references/scripts.md",
+    "references/daily-checklist.md"
+  ],
+  "scripts": [
+    "../../frontend/scripts/ops-check-block-contract.mjs",
+    "../../frontend/scripts/ops-validate-sanity-payload.mjs",
+    "../../scripts/build-repo-daily-ops-skill-zip.mjs",
+    "scripts/run-contract-audit.sh",
+    "scripts/run-payload-validate.sh",
+    "scripts/build-skill-zip.sh"
+  ]
+}

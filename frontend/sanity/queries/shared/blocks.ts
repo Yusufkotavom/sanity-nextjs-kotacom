@@ -17,12 +17,6 @@ import { companyInfoQuery } from "../seo/company-info";
 import { testimonialsBlockQuery } from "../seo/testimonials-block";
 import { pricingBlockQuery } from "../seo/pricing-block";
 import { faqBlockQuery } from "../seo/faq-block";
-import { benefitsBlockQuery } from "../seo/benefits-block";
-import { featuresPackageBlockQuery } from "../seo/features-package-block";
-import { serviceTypesBlockQuery } from "../seo/service-types-block";
-import { problemSolutionBlockQuery } from "../seo/problem-solution-block";
-import { valuePropsBlockQuery } from "../seo/value-props-block";
-import { statsHeroBlockQuery } from "../seo/stats-hero-block";
 
 /**
  * Shared GROQ projection for blocks[].
@@ -51,11 +45,5 @@ export const blocksQuery = `
     ${testimonialsBlockQuery},
     ${pricingBlockQuery},
     ${faqBlockQuery},
-    ${benefitsBlockQuery},
-    ${featuresPackageBlockQuery},
-    ${serviceTypesBlockQuery},
-    ${problemSolutionBlockQuery},
-    ${valuePropsBlockQuery},
-    ${statsHeroBlockQuery},
   }
 `;

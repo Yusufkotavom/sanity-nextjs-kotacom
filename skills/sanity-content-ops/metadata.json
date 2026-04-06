@@ -1,0 +1,22 @@
+{
+  "name": "sanity-content-ops",
+  "version": "1.0.0",
+  "entry": "SKILL.md",
+  "agents": [
+    "agents/sanity-content-ops-agent.md"
+  ],
+  "references": [
+    "references/content-types.md",
+    "references/workflow.md",
+    "references/commands.md"
+  ],
+  "scripts": [
+    "../../frontend/scripts/ops-generate-content-payload.mjs",
+    "../../frontend/scripts/ops-validate-sanity-payload.mjs",
+    "../../frontend/scripts/ops-upsert-sanity-content.mjs",
+    "scripts/generate.sh",
+    "scripts/validate.sh",
+    "scripts/upsert.sh",
+    "scripts/build-skill-zip.sh"
+  ]
+}

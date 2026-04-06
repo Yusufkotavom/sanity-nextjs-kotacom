@@ -1,0 +1,12 @@
+{
+  "_id": "serviceLocation-software-surabaya",
+  "_type": "serviceLocation",
+  "title": "Software Surabaya",
+  "slug": {
+    "_type": "slug",
+    "current": "software-surabaya"
+  },
+  "route": "/software/surabaya",
+  "contentStatus": "draft",
+  "blocks": []
+}
