@@ -1,5 +1,30 @@
 # SEO Updates Log
 
+## 2026-04-06
+
+### Fixed SEO dashboard 500 error - database error handling
+
+**Changed files:**
+- `seo-dashboard/lib/db-safe.ts` (simplified to helper only)
+- `seo-dashboard/components/database-error.tsx` (new UI components)
+- `seo-dashboard/app/dashboard/seo/page.tsx` (added error handling)
+- `seo-dashboard/app/dashboard/ai/page.tsx` (added error handling)
+- `seo-dashboard/app/dashboard/jobs/page.tsx` (added error handling)
+- `seo-dashboard/app/dashboard/analytics/page.tsx` (added error handling)
+- `seo-dashboard/app/dashboard/search/page.tsx` (added error handling)
+- `docs/seo-updates.md`
+
+**Summary:**
+Fixed 500 Internal Server Error on all dashboard pages when DATABASE_URL is not configured. Created `isDatabaseConfigured()` helper function to check environment variable before attempting database queries. Added two UI components: `DatabaseNotConfigured` (shows friendly message when DB not set up) and `DatabaseError` (shows error details with dev mode support). Updated all 5 dashboard pages to check database configuration and show appropriate error UI instead of crashing.
+
+**Impact on SEO / integration:**
+No direct SEO impact; fixes dashboard stability when database is not configured. Dashboard now shows user-friendly error messages instead of 500 errors, improving developer experience during setup.
+
+**Verification:**
+Build completed successfully in 17.8s. All dashboard pages compile without errors. Tested locally with missing DATABASE_URL - shows friendly error message instead of crashing.
+
+---
+
 ## 2026-04-05
 
 ### Fixed seo-dashboard build errors (drizzle-orm, type issues, dynamic pages)
