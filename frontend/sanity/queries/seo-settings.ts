@@ -1,24 +1,112 @@
 import { groq } from "next-sanity";
-import { imageQuery } from "./shared/image";
 
 export const SEO_SETTINGS_QUERY = groq`*[_type == "seoSettings"][0]{
+  _id,
+  _type,
   titleSuffix,
   defaultTitle,
   defaultDescription,
   defaultNoIndex,
-  noIndexBlogCategories,
-  noIndexProductCategories,
-  noIndexServiceCategories,
-  robotsDisallowPaths,
   twitterHandle,
   defaultImage{
-    ${imageQuery}
+    ...,
+    asset->{
+      _id,
+      url,
+      metadata {
+        lqip,
+        dimensions {
+          width,
+          height
+        }
+      }
+    },
+    alt
   },
-  defaultAggregateRating{
-    ratingValue,
-    reviewCount,
-    bestRating,
-    ratingSource,
-    sourceUrl,
+  defaultAggregateRating,
+  companyInfo{
+    name,
+    foundedYear,
+    address,
+    phone,
+    whatsapp,
+    email,
+    operatingHours,
+    totalClients,
+    totalProjects,
+    serviceAreas,
+    certifications,
+    awards
   },
+  testimonials[]{
+    _key,
+    name,
+    position,
+    company,
+    industry,
+    rating,
+    quote,
+    results{
+      metric,
+      value,
+      timeframe
+    },
+    date,
+    verified
+  },
+  pricingPackages{
+    website[]{
+      _key,
+      name,
+      price,
+      currency,
+      priceUnit,
+      duration,
+      features,
+      excluded,
+      paymentTerms,
+      bestFor
+    },
+    software[]{
+      _key,
+      name,
+      price,
+      currency,
+      priceUnit,
+      duration,
+      features,
+      excluded,
+      paymentTerms,
+      bestFor
+    },
+    printing[]{
+      _key,
+      name,
+      price,
+      currency,
+      priceUnit,
+      duration,
+      features,
+      excluded,
+      paymentTerms,
+      bestFor
+    }
+  },
+  faq{
+    website[]{
+      _key,
+      question,
+      answer
+    },
+    software[]{
+      _key,
+      question,
+      answer
+    },
+    printing[]{
+      _key,
+      question,
+      answer
+    }
+  }
 }`;

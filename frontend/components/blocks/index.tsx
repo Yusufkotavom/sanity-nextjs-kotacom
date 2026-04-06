@@ -16,6 +16,10 @@ const FAQs = dynamic(() => import("@/components/blocks/faqs"));
 const FormNewsletter = dynamic(() => import("@/components/blocks/forms/newsletter"));
 const AllPosts = dynamic(() => import("@/components/blocks/all-posts"));
 const RichContent = dynamic(() => import("@/components/blocks/rich-content"));
+const CompanyInfo = dynamic(() => import("@/components/blocks/seo/company-info"));
+const TestimonialsBlock = dynamic(() => import("@/components/blocks/seo/testimonials-block"));
+const PricingBlock = dynamic(() => import("@/components/blocks/seo/pricing-block"));
+const FaqBlock = dynamic(() => import("@/components/blocks/seo/faq-block"));
 
 type Block = NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
 
@@ -36,6 +40,10 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   "all-posts": AllPosts,
   "legacy-rich-content": RichContent,
   "rich-content": RichContent,
+  "company-info": CompanyInfo,
+  "testimonials-block": TestimonialsBlock,
+  "pricing-block": PricingBlock,
+  "faq-block": FaqBlock,
 };
 
 export default function Blocks({

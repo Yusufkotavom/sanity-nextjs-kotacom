@@ -345,6 +345,9 @@ export const fetchSanitySeoSettings = async (): Promise<any | null> => {
   return data;
 };
 
+// Alias for consistency
+export const fetchSeoSettings = fetchSanitySeoSettings;
+
 export const fetchSanityThemeSettings = async (): Promise<{
   themeColors?: {
     themePreset?: string;

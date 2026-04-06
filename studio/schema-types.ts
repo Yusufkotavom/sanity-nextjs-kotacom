@@ -45,6 +45,8 @@ import templateProofItem from "./schemas/objects/template-proof-item";
 import templateTestimonial from "./schemas/objects/template-testimonial";
 import templateLongGuide from "./schemas/objects/template-long-guide";
 import templateRewriteCopy from "./schemas/objects/template-rewrite-copy";
+import pricingPackage from "./schemas/objects/pricingPackage";
+import faqItem from "./schemas/objects/faqItem";
 // Schema UI objects
 import hero1 from "./schemas/blocks/hero/hero-1";
 import hero2 from "./schemas/blocks/hero/hero-2";
@@ -71,6 +73,10 @@ import faqs from "./schemas/blocks/faqs";
 import newsletter from "./schemas/blocks/forms/newsletter";
 import allPosts from "./schemas/blocks/all-posts";
 import legacyRichContent from "./schemas/blocks/legacy/legacy-rich-content";
+import companyInfo from "./schemas/blocks/seo/company-info";
+import faqBlock from "./schemas/blocks/seo/faq-block";
+import testimonialsBlock from "./schemas/blocks/seo/testimonials-block";
+import pricingBlock from "./schemas/blocks/seo/pricing-block";
 
 export const schemaTypes = [
   // documents
@@ -119,6 +125,8 @@ export const schemaTypes = [
   templateTestimonial,
   templateLongGuide,
   templateRewriteCopy,
+  pricingPackage,
+  faqItem,
   // blocks
   hero1,
   hero2,
@@ -145,4 +153,8 @@ export const schemaTypes = [
   newsletter,
   allPosts,
   legacyRichContent,
+  companyInfo,
+  faqBlock,
+  testimonialsBlock,
+  pricingBlock,
 ];

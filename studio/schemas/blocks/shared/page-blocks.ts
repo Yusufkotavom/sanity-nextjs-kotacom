@@ -26,6 +26,10 @@ const pageBlocks = defineField({
     { type: "form-newsletter" },
     { type: "all-posts" },
     { type: "legacy-rich-content" },
+    { type: "company-info" },
+    { type: "testimonials-block" },
+    { type: "pricing-block" },
+    { type: "faq-block" },
   ],
   options: {
     insertMenu: {
@@ -89,6 +93,11 @@ const pageBlocks = defineField({
           name: "legacy",
           title: "Legacy",
           of: ["legacy-rich-content"],
+        },
+        {
+          name: "seo",
+          title: "SEO",
+          of: ["company-info", "testimonials-block", "pricing-block", "faq-block"],
         },
       ],
       views: [
