@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 export function TemplatesPanel() {
   const [templateId, setTemplateId] = useState("");
@@ -25,14 +26,16 @@ export function TemplatesPanel() {
       });
       const data = await response.json();
       setResult(JSON.stringify(data, null, 2));
+      
+      if (response.ok) {
+        toast.success("Template preview generated");
+      } else {
+        toast.error(data?.message || "Preview failed");
+      }
     } catch (error) {
-      setResult(
-        JSON.stringify(
-          { ok: false, message: error instanceof Error ? error.message : "Preview failed" },
-          null,
-          2,
-        ),
-      );
+      const errorMsg = error instanceof Error ? error.message : "Preview failed";
+      setResult(JSON.stringify({ ok: false, message: errorMsg }, null, 2));
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -49,14 +52,16 @@ export function TemplatesPanel() {
       });
       const data = await response.json();
       setResult(JSON.stringify(data, null, 2));
+      
+      if (response.ok) {
+        toast.success(`${rows.length} jobs queued successfully`);
+      } else {
+        toast.error(data?.message || "Bulk generation failed");
+      }
     } catch (error) {
-      setResult(
-        JSON.stringify(
-          { ok: false, message: error instanceof Error ? error.message : "Bulk failed" },
-          null,
-          2,
-        ),
-      );
+      const errorMsg = error instanceof Error ? error.message : "Bulk failed";
+      setResult(JSON.stringify({ ok: false, message: errorMsg }, null, 2));
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }

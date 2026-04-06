@@ -52,7 +52,7 @@ export function ArchiveCardMedia({
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
   heightVariant = "regular",
   className,
-  quality,
+  quality = 75,
   priority,
 }: {
   image?: any;
@@ -68,6 +68,7 @@ export function ArchiveCardMedia({
   }
 
   const isCompact = heightVariant === "compact";
+  const targetWidth = isCompact ? 480 : heightVariant === "tall" ? 960 : 800;
 
   return (
     <div
@@ -78,7 +79,7 @@ export function ArchiveCardMedia({
       )}
     >
       <Image
-        src={urlFor(image).url()}
+        src={urlFor(image).width(targetWidth).quality(quality).url()}
         alt={image?.alt || altFallback}
         fill={!isCompact}
         width={isCompact ? 400 : undefined}

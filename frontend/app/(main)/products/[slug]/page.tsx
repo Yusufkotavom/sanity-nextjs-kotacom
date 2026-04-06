@@ -208,11 +208,13 @@ export default async function ProductSlugPage(props: {
           {product.image?.asset?._id && (
             <div className="mb-6 overflow-hidden rounded-2xl">
               <Image
-                src={urlFor(product.image).width(1200).url()}
+                src={urlFor(product.image).width(960).quality(75).url()}
                 alt={product.image.alt || ""}
                 width={product.image.asset?.metadata?.dimensions?.width || 1200}
                 height={product.image.asset?.metadata?.dimensions?.height || 720}
-                quality={85}
+                placeholder={product.image?.asset?.metadata?.lqip ? "blur" : undefined}
+                blurDataURL={product.image?.asset?.metadata?.lqip || ""}
+                quality={75}
                 priority={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 800px"
               />

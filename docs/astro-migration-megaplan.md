@@ -211,6 +211,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Global PageSpeed pass applied: Sanity CDN defaulted for production, homepage data queries capped and cached, main layout revalidation set to 10 minutes, icon imports tree-shaken, and portable-text images compressed for faster LCP.
 - [x] Block rendering now code-split via dynamic imports and detail-page Sanity fetches cache with 10-minute revalidation for faster TTFB/LCP on all content templates.
 - [x] Detail-page hero LCP tuned: product/service/project hero images now use CDN width hints, quality 85, and priority + sizes; rewrite/post icons are tree-shaken.
+- [x] CWV batch tuning pass: Sanity image default quality set to 75, grid/card imagery constrained to width hints, detail hero images now include LQIP blur, and grid image preloads reduced to the first item to limit LCP contention.
 - [x] Build fix: Lucide icon imports reverted to package entry points to avoid ESM subpath resolution failures on Vercel.
 - [x] Consolidated `/layanan` into `/services` with richer service catalog content and removed the `/layanan` routes (sitemap/TOC/internal links updated).
 ## Workstream A - Platform & Data Foundation
@@ -307,6 +308,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Core Web Vitals pass: enable Sanity CDN in production, cache homepage query slices, add AVIF/WebP output, and set 10-minute route revalidation for main pages.
 - [x] Template performance pass: dynamic-import block renderers plus cached detail fetches (page/post/product/service/project) to reduce JS and TTFB.
 - [x] Detail-page hero images optimized (quality 85, width hints, priority on project hero) and hero icon imports tree-shaken to reduce LCP/JS cost.
+- [x] Batch CWV tuning (2026-04-06): reduced Sanity image default quality, capped grid/card image widths, added LQIP blur to detail hero images, and limited preload priority in archive grids.
 
 ## Workstream D - UI Redesign + Refactor
 

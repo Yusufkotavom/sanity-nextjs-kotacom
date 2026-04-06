@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "SEO Ops Dashboard",
@@ -23,6 +24,7 @@ export default function RootLayout({
     >
       <body className={cn("min-h-screen bg-background font-sans antialiased")}>
         <TooltipProvider>{children}</TooltipProvider>
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );

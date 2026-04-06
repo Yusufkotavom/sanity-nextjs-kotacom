@@ -214,11 +214,13 @@ export default async function ServiceSlugPage(props: {
           {service.image?.asset?._id && (
             <div className="mb-6 overflow-hidden rounded-2xl">
               <Image
-                src={urlFor(service.image).width(1200).url()}
+                src={urlFor(service.image).width(960).quality(75).url()}
                 alt={service.image.alt || ""}
                 width={service.image.asset?.metadata?.dimensions?.width || 1200}
                 height={service.image.asset?.metadata?.dimensions?.height || 720}
-                quality={85}
+                placeholder={service.image?.asset?.metadata?.lqip ? "blur" : undefined}
+                blurDataURL={service.image?.asset?.metadata?.lqip || ""}
+                quality={75}
                 priority={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 800px"
               />

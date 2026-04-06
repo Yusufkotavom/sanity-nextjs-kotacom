@@ -44,14 +44,14 @@ export default function GridCard({
           {image && image.asset?._id && (
             <div className="relative mb-4 h-[15rem] overflow-hidden rounded-[1.15rem] border border-white/40 bg-white/60 sm:h-[20rem] md:h-[25rem] lg:h-[9.5rem] xl:h-[12rem] dark:border-white/10 dark:bg-white/5">
               <Image
-                src={urlFor(image).url()}
+                src={urlFor(image).width(900).quality(75).url()}
                 alt={image.alt || ""}
                 placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
                 blurDataURL={image?.asset?.metadata?.lqip || ""}
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover"
-                quality={100}
+                quality={75}
               />
             </div>
           )}

@@ -24,7 +24,7 @@ export default function ServiceGrid({
       gridClassName={gridClassName}
       buttonLabel="Show more services"
       getKey={(service: any) => service.slug?.current || service.title}
-      renderItem={(service: any, index: number) => <ServiceCard {...service} priority={index < 4} />}
+      renderItem={(service: any, index: number) => <ServiceCard {...service} priority={index === 0} />}
     />
   );
 }

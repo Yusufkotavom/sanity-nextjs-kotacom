@@ -82,11 +82,13 @@ export default async function ProjectPage(props: {
           {project.image?.asset?._id && (
             <div className="mb-6 overflow-hidden rounded-2xl">
               <Image
-                src={urlFor(project.image).width(1200).url()}
+                src={urlFor(project.image).width(960).quality(75).url()}
                 alt={project.image.alt || ""}
                 width={project.image.asset?.metadata?.dimensions?.width || 1200}
                 height={project.image.asset?.metadata?.dimensions?.height || 720}
-                quality={85}
+                placeholder={project.image?.asset?.metadata?.lqip ? "blur" : undefined}
+                blurDataURL={project.image?.asset?.metadata?.lqip || ""}
+                quality={75}
                 priority
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 800px"
               />

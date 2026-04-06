@@ -2,6 +2,182 @@
 
 ## 2026-04-06
 
+### SEO Dashboard Phase 2 - Advanced Features
+
+**Changed files:**
+- `seo-dashboard/components/job-details-row.tsx` (new - expandable job details)
+- `seo-dashboard/components/bulk-retry-button.tsx` (new - bulk retry with confirmation)
+- `seo-dashboard/components/export-csv-button.tsx` (new - CSV export functionality)
+- `seo-dashboard/components/ui/alert-dialog.tsx` (new - shadcn alert dialog)
+- `seo-dashboard/app/api/jobs/bulk-retry/route.ts` (new - bulk retry API)
+- `seo-dashboard/app/dashboard/jobs/page.tsx` (added expandable rows + bulk retry)
+- `seo-dashboard/app/dashboard/analytics/page.tsx` (added CSV export)
+- `docs/seo-updates.md`
+
+**Summary:**
+Implemented Phase 2 advanced features for SEO dashboard. Added expandable rows to Jobs page showing full job details: timeline (created/started/completed), duration, error messages, and full payload. Implemented bulk retry functionality with confirmation dialog - users can retry all failed jobs at once (up to 100 jobs). Added CSV export to Analytics page allowing users to download performance data with proper formatting (dates, percentages, handling commas/quotes). All features include proper error handling, toast notifications, and user confirmations for destructive actions.
+
+**Impact on SEO / integration:**
+No direct SEO impact; significantly improves ops dashboard productivity. Expandable rows eliminate need for separate detail pages. Bulk retry saves time when multiple jobs fail. CSV export enables external analysis and reporting. Users can now debug failed jobs faster, recover from bulk failures efficiently, and share analytics data with stakeholders.
+
+**Verification:**
+- ✅ Build successful in 13.7s
+- ✅ Expandable rows show job timeline, errors, and payload
+- ✅ Bulk retry button appears when failed jobs exist
+- ✅ Confirmation dialog prevents accidental bulk retries
+- ✅ CSV export handles special characters (commas, quotes, newlines)
+- ✅ Toast notifications for all actions
+- ✅ Alert dialog component added from shadcn
+- ✅ New API endpoint: /api/jobs/bulk-retry
+
+**New Features:**
+1. **Expandable Job Rows** - Click any job to see full details inline
+2. **Bulk Retry** - Retry all failed jobs with one click (with confirmation)
+3. **CSV Export** - Download analytics data for external analysis
+4. **Confirmation Dialogs** - Prevent accidental destructive actions
+
+**User Experience Improvements:**
+- Jobs page: Click row to expand and see timeline, errors, payload
+- Jobs page: "Retry All Failed (N)" button when failures exist
+- Analytics page: "Export CSV" button downloads formatted data
+- All bulk actions require confirmation before executing
+- Success/error toasts for all operations
+
+---
+
+## 2026-04-06
+
+### SEO Dashboard Major UI/UX Improvements
+
+**Changed files:**
+- `seo-dashboard/app/layout.tsx` (added Toaster for notifications)
+- `seo-dashboard/components/job-retry-button.tsx` (added toast notifications)
+- `seo-dashboard/components/ai-actions.tsx` (added toast notifications)
+- `seo-dashboard/components/templates-panel.tsx` (added toast notifications)
+- `seo-dashboard/components/app-sidebar.tsx` (restructured navigation with icons)
+- `seo-dashboard/components/jobs-filters.tsx` (new - filter component)
+- `seo-dashboard/components/ai-filters.tsx` (new - filter component)
+- `seo-dashboard/components/search-filters.tsx` (new - filter component)
+- `seo-dashboard/components/seo-filters.tsx` (new - filter component)
+- `seo-dashboard/components/analytics-chart.tsx` (new - recharts visualization)
+- `seo-dashboard/app/dashboard/page.tsx` (enhanced with metrics, trends, quick actions)
+- `seo-dashboard/app/dashboard/jobs/page.tsx` (added filters, search, empty states)
+- `seo-dashboard/app/dashboard/ai/page.tsx` (added filters, improved layout)
+- `seo-dashboard/app/dashboard/search/page.tsx` (added filters, actions, URL count)
+- `seo-dashboard/app/dashboard/analytics/page.tsx` (added charts, summary metrics)
+- `seo-dashboard/app/dashboard/seo/page.tsx` (added filters, score badges)
+- `seo-dashboard/package.json` (added sonner, recharts, date-fns)
+- `docs/seo-dashboard-ux-review.md` (new - comprehensive UX analysis)
+- `docs/seo-dashboard-improvement-plan.md` (new - implementation roadmap)
+- `docs/seo-updates.md`
+
+**Summary:**
+Implemented comprehensive UI/UX improvements to SEO dashboard based on detailed user experience review. Added toast notification system using Sonner for all user actions (retry, push, generate). Restructured navigation from confusing "Ops/Search" to clear "Overview → Content Operations → SEO & Search" with lucide-react icons. Enhanced dashboard overview with today's metrics, success rates, trend indicators (↑↓), and quick action buttons. Added comprehensive filters to all pages: Jobs (status, type, search), AI (provider, validation, sanity), Search (provider, type, status), SEO (status, score range). Implemented empty states with helpful messages when no data found. Added data visualization to Analytics page with recharts line chart showing 14-day trends, plus summary metric cards (total clicks, impressions, avg CTR, avg position). Improved all tables with hover effects, better typography, and refresh buttons. All actions now show success/error toast notifications and auto-refresh after 1 second.
+
+**Impact on SEO / integration:**
+No direct SEO impact; dramatically improves ops dashboard usability and user experience. Users can now filter and search across all data, see visual trends, get immediate feedback on actions, and navigate intuitively. Dashboard transforms from read-only view to fully interactive operations console. Filters enable quick problem identification (failed jobs, invalid AI, low-scoring audits). Charts provide at-a-glance performance insights. Toast notifications prevent confusion about action results.
+
+**Verification:**
+- ✅ Toast notifications installed (sonner) and configured in root layout
+- ✅ Navigation restructured with 3 clear groups and icons
+- ✅ Dashboard overview shows today's metrics + success rates
+- ✅ Jobs page has 3 filters (status, type, search) + empty states
+- ✅ AI page has 3 filters (provider, validation, sanity)
+- ✅ Search page has 3 filters + "Submit URLs" action button
+- ✅ Analytics page has 4 metric cards + trend chart (recharts)
+- ✅ SEO page has 2 filters + score-based badge colors
+- ✅ All action buttons show toast on success/error
+- ✅ All tables have hover effects and improved spacing
+- ✅ Empty states implemented across all pages
+- ⏳ Build test pending: `cd seo-dashboard && pnpm build`
+
+**Key Improvements:**
+1. **Toast Notifications** - All actions now provide immediate feedback
+2. **Better Navigation** - Clear hierarchy: Dashboard → Content Ops → SEO & Search
+3. **Comprehensive Filters** - Every list page has relevant filters
+4. **Data Visualization** - Analytics chart shows 14-day performance trends
+5. **Enhanced Metrics** - Dashboard shows today's activity + success rates
+6. **Empty States** - Helpful messages when no data available
+7. **Quick Actions** - "Generate Content", "Submit URLs", "Run Audit" buttons
+8. **Better UX** - Hover effects, icons, improved typography, refresh buttons
+
+**Before vs After:**
+- Navigation: Confusing "Ops/Search" → Clear "Content Operations/SEO & Search"
+- Feedback: Silent actions → Toast notifications on every action
+- Filtering: None → Comprehensive filters on all pages
+- Metrics: Static totals → Today's activity + trends + success rates
+- Analytics: Plain table → Charts + summary cards + detailed table
+- Empty states: None → Helpful messages with guidance
+- Actions: Hidden → Prominent action buttons with icons
+
+---
+
+## 2026-04-06
+
+### Core Web Vitals Batch Analysis + Image Delivery Tuning
+
+**Changed files:**
+- `frontend/tmp/pagespeed-batch-latest.json` (updated - PSI batch results for 30 URLs)
+- `frontend/sanity/lib/image.ts` (default Sanity image quality set to 75 for raster assets)
+- `frontend/components/ui/archive-card.tsx` (card image width hints + lower default quality)
+- `frontend/components/blocks/grid/grid-card.tsx` (grid image width hints + reduced quality)
+- `frontend/components/blocks/grid/grid-post.tsx` (grid image width hints + reduced quality)
+- `frontend/app/(main)/services/[slug]/page.tsx` (detail hero image width/quality + LQIP blur)
+- `frontend/app/(main)/products/[slug]/page.tsx` (detail hero image width/quality + LQIP blur)
+- `frontend/app/(main)/projects/[slug]/page.tsx` (detail hero image width/quality + LQIP blur)
+- `frontend/components/services/service-grid.tsx` (limit priority preloads to first card)
+- `frontend/components/products/product-grid.tsx` (limit priority preloads to first card)
+- `docs/seo-updates.md`
+- `docs/astro-migration-megaplan.md`
+
+**Summary:**
+Ran a 30-URL PSI batch from `https://sanity.kotacom.id/sitemap.xml` with 2s delay. Results showed low mobile performance (avg 68.6; min 45; max 85) and extremely high LCP in lab data (avg ~7.4s, p95 ~18.1s). Implemented image delivery optimizations to reduce LCP pressure: set Sanity image default quality to 75, added width hints for grid/card images, reduced grid preload priority to the first card only, and tightened detail-page hero images with smaller width + LQIP blur. These changes target the worst LCP pages (service/product detail pages) identified in the batch.
+
+**Impact on SEO / integration:**
+Expected positive impact on Core Web Vitals (LCP/TBT) by reducing image payload sizes and network contention from preloaded grid images. No metadata/schema changes; frontend only.
+
+**Verification:**
+- ✅ PSI batch completed (30/30) with API key; output saved to `frontend/tmp/pagespeed-batch-latest.json`
+- ✅ Metrics summarized (avg score 68.6; LCP avg ~7.4s; worst LCP pages identified)
+- ⚠️ No rebuild or Lighthouse rerun after code changes (follow-up recommended)
+
+---
+
+## 2026-04-06
+
+### SEO Dashboard UI/UX Review
+
+**Changed files:**
+- `docs/seo-dashboard-ux-review.md` (new - comprehensive UI/UX analysis)
+- `docs/seo-updates.md`
+
+**Summary:**
+Conducted comprehensive UI/UX review of SEO dashboard from end-user perspective. Analyzed 14 areas: authentication, navigation, dashboard overview, jobs, AI generations, templates, search submissions, analytics, SEO audits, visual design, user feedback, accessibility, performance, and missing features. Created detailed 300+ line review document with ratings, issues, and prioritized recommendations. Key findings: navigation structure is confusing (4/10), lacks user feedback mechanisms (3/10), missing filters/search across all pages, no data visualizations, poor empty/loading states. Provided actionable recommendations in three priority tiers: High (navigation restructure, toast notifications, filters), Medium (data viz, bulk actions, mobile responsive), Low (user preferences, activity log, webhooks).
+
+**Impact on SEO / integration:**
+No direct SEO impact; improves ops dashboard usability and user experience. Review identifies critical UX issues that affect team productivity when managing SEO operations. Recommendations will guide future dashboard improvements to make SEO workflows more efficient.
+
+**Verification:**
+- ✅ Reviewed all dashboard pages: Overview, Jobs, AI, Templates, SEO, Search, Analytics
+- ✅ Analyzed navigation structure and information architecture
+- ✅ Evaluated interactive components and user feedback mechanisms
+- ✅ Assessed accessibility and performance considerations
+- ✅ Documented 14 detailed sections with ratings and recommendations
+- ✅ Created prioritized action plan (High/Medium/Low priority)
+
+**Key Recommendations:**
+1. Restructure navigation: "Dashboard" → "Content Operations" → "SEO & Search"
+2. Add toast notifications for all user actions
+3. Implement filters and search on all list pages
+4. Add data visualizations (charts, trends, sparklines)
+5. Create proper empty states with helpful guidance
+6. Add expandable rows for detailed information
+7. Implement date range selectors for analytics
+
+---
+
+## 2026-04-06
+
 ### Complete database management system + GitHub Actions path filtering
 
 **Changed files:**
@@ -2780,3 +2956,169 @@ After deployment, re-test 15 pages to confirm:
 **Ready for Production:** ✅ YES
 
 All query optimizations are live and ready to deploy. Expected PageSpeed improvement: 71 → 80-85 average (+9-14 points).
+
+
+---
+
+## 2026-04-06
+
+### SEO Dashboard Phase 3 - Manual Operations & Custom Features
+
+**Changed files:**
+- `seo-dashboard/components/manual-index-form.tsx` (new - manual URL submission)
+- `seo-dashboard/components/delete-job-button.tsx` (new - delete with confirmation)
+- `seo-dashboard/components/ai-preview-dialog.tsx` (new - content preview)
+- `seo-dashboard/components/custom-prompt-editor.tsx` (new - prompt customization)
+- `seo-dashboard/components/ui/dialog.tsx` (new - shadcn)
+- `seo-dashboard/components/ui/tabs.tsx` (new - shadcn)
+- `seo-dashboard/components/job-details-row.tsx` (updated - added delete button, fixed "use client")
+- `seo-dashboard/components/ai-actions.tsx` (updated - added preview dialog)
+- `seo-dashboard/components/app-sidebar.tsx` (updated - added AI Settings)
+- `seo-dashboard/app/dashboard/search/page.tsx` (updated - added manual form)
+- `seo-dashboard/app/dashboard/ai/page.tsx` (updated - added preview to actions)
+- `seo-dashboard/app/dashboard/jobs/page.tsx` (updated - added Actions column)
+- `seo-dashboard/app/dashboard/ai-settings/page.tsx` (new page)
+- `seo-dashboard/app/api/search/manual-submit/route.ts` (new - manual submission API)
+- `seo-dashboard/app/api/jobs/[id]/route.ts` (new - delete job API)
+- `seo-dashboard/app/api/ai/save-prompt/route.ts` (new - save custom prompts)
+- `seo-dashboard/app/api/ai/test-prompt/route.ts` (new - test prompt generation)
+- `docs/seo-dashboard-phase3-summary.md` (new)
+- `docs/seo-dashboard-improvement-plan.md` (updated - marked Phase 3 complete)
+- `docs/seo-updates.md`
+
+**Summary:**
+Implemented Phase 3 manual operations and custom features for SEO dashboard. Added manual index submission form allowing users to submit URLs directly to IndexNow, Google Search Console, or Bing with bulk paste support. Implemented delete job functionality with confirmation dialog to remove failed or stuck jobs. Created AI content preview dialog with formatted/raw JSON tabs, copy functionality, word count, and metadata display. Built custom prompt editor with variable insertion ({{title}}, {{description}}, etc.), temperature/token controls, and test functionality. Added new AI Settings page to navigation. All features include proper error handling, toast notifications, and user confirmations for destructive actions.
+
+**Impact on SEO / integration:**
+No direct SEO impact; significantly improves ops dashboard flexibility and user control. Users can now manually submit URLs for indexing without waiting for automated jobs, delete problematic jobs, preview AI-generated content before publishing, and create custom prompt templates for different content types. Manual operations provide immediate control when automation fails or when testing new workflows.
+
+**Verification:**
+- ✅ Build successful in 13.2s
+- ✅ Manual index form integrated into Search page
+- ✅ Delete button added to job details row with confirmation
+- ✅ AI preview dialog shows formatted and raw JSON views
+- ✅ Custom prompt editor with variable insertion and controls
+- ✅ AI Settings page added to navigation
+- ✅ All API endpoints created and functional
+- ✅ Toast notifications for all actions
+- ✅ Dialog and Tabs components added from shadcn
+- ✅ Fixed missing eq import in manual-submit API
+- ✅ Fixed schema mismatch (urlCount → requestPayload)
+- ✅ Fixed AiPreviewDialog props (added validationStatus)
+
+**New Features:**
+1. **Manual Index Submission** - Submit URLs directly to search engines
+2. **Delete Job** - Remove failed or stuck jobs with confirmation
+3. **AI Content Preview** - Review generated content before publishing
+4. **Custom Prompt Editor** - Create and test custom AI prompts
+5. **AI Settings Page** - Centralized AI configuration
+
+**User Experience Improvements:**
+- Search page: Manual submission form with bulk paste
+- Jobs page: Delete button in Actions column
+- AI page: Preview button shows formatted content
+- AI Settings: Custom prompt editor with variable insertion
+- All forms: Toast notifications for success/error
+- All destructive actions: Confirmation dialogs
+
+**API Endpoints:**
+- `POST /api/search/manual-submit` - Submit URLs to search engines
+- `DELETE /api/jobs/[id]` - Delete job by ID
+- `POST /api/ai/save-prompt` - Save custom prompt template
+- `POST /api/ai/test-prompt` - Test prompt with variable substitution
+
+**Technical Details:**
+- Manual submit stores URLs in requestPayload (matches schema)
+- Delete job validates existence before deletion
+- AI preview parses JSON content and extracts common fields
+- Custom prompt editor supports variable substitution
+- All components follow shadcn/ui conventions
+- All async operations handle errors gracefully
+
+**Phase 3 Complete:**
+All planned manual operations and custom features implemented. Dashboard now provides full control over automated processes with manual overrides, content preview, and custom prompt management.
+
+
+---
+
+## 2026-04-06
+
+### SEO Dashboard Phase 4 - Advanced Features (Date Range, Sorting, Export)
+
+**Changed files:**
+- `seo-dashboard/components/date-range-picker.tsx` (new - calendar date picker)
+- `seo-dashboard/components/date-range-presets.tsx` (new - quick date presets)
+- `seo-dashboard/components/analytics-date-filter.tsx` (new - date filter wrapper)
+- `seo-dashboard/components/sortable-header.tsx` (new - sortable table headers)
+- `seo-dashboard/components/export-jobs-button.tsx` (new - jobs CSV export)
+- `seo-dashboard/components/ui/calendar.tsx` (new - shadcn)
+- `seo-dashboard/components/ui/popover.tsx` (new - shadcn)
+- `seo-dashboard/app/dashboard/analytics/page.tsx` (updated - date range + sorting)
+- `seo-dashboard/app/dashboard/jobs/page.tsx` (updated - sorting + export)
+- `seo-dashboard/app/dashboard/seo/page.tsx` (updated - export)
+- `docs/seo-dashboard-phase4-summary.md` (new)
+- `docs/seo-dashboard-improvement-plan.md` (updated - marked Phase 4 complete)
+- `docs/seo-updates.md`
+
+**Summary:**
+Implemented Phase 4 advanced features for SEO dashboard. Added date range picker with calendar UI and quick preset buttons (Today, Last 7/14/30/90 days) to Analytics page, allowing users to filter data by custom date ranges with URL parameter persistence. Implemented sortable table columns with visual indicators (↑↓⇅) for Analytics (date, clicks, impressions, CTR, position) and Jobs (type, status, attempt, created) pages - clicking column headers toggles sort order with URL params. Enhanced export functionality: added CSV export for Jobs (with duration calculation and error messages) and SEO Audits (with issues JSON), complementing existing Analytics export from Phase 2. All exports use proper CSV escaping for special characters and date-stamped filenames.
+
+**Impact on SEO / integration:**
+No direct SEO impact; significantly improves ops dashboard data analysis capabilities. Users can now analyze performance over custom date ranges, sort data by any metric to identify trends, and export filtered/sorted results for external analysis. Date range filtering enables period comparisons, sortable columns speed up data exploration, and enhanced exports support reporting workflows.
+
+**Verification:**
+- ✅ Build successful in 45s
+- ✅ Date range picker with 2-month calendar view
+- ✅ Quick preset buttons (5 options)
+- ✅ URL params persist: ?from=YYYY-MM-DD&to=YYYY-MM-DD
+- ✅ Sortable columns with visual indicators
+- ✅ URL params persist: ?sort=column&order=asc/desc
+- ✅ Jobs export includes duration and errors
+- ✅ SEO audits export includes issues JSON
+- ✅ CSV special characters properly escaped
+- ✅ Toast notifications for all exports
+- ✅ Calendar and Popover components added from shadcn
+
+**New Features:**
+1. **Date Range Picker** - Custom date selection with calendar
+2. **Date Presets** - Quick buttons for common ranges
+3. **Sortable Columns** - Click headers to sort data
+4. **Jobs Export** - CSV with full job details
+5. **SEO Audits Export** - CSV with issues
+
+**User Experience Improvements:**
+- Analytics page: Date range filter card at top
+- Analytics page: Sortable columns for all metrics
+- Jobs page: Sortable columns for type, status, attempt, created
+- Jobs page: Export CSV button with full details
+- SEO page: Export CSV button with issues
+- All filters: URL parameter persistence
+- All exports: Date-stamped filenames
+
+**Technical Details:**
+- Date range uses shadcn calendar + popover
+- Sorting uses URL params + database ORDER BY
+- Export happens client-side (no server load)
+- CSV escaping handles commas, quotes, newlines
+- Query optimization with indexed columns
+- Limit results to 100 rows for performance
+
+**Database Query Enhancements:**
+```typescript
+// Date range filtering
+const conditions = [];
+if (params.from) conditions.push(gte(schema.analyticsDaily.date, params.from));
+if (params.to) conditions.push(lte(schema.analyticsDaily.date, params.to));
+
+// Dynamic sorting
+let orderByClause;
+switch (params.sort) {
+  case "clicks": orderByClause = params.order === "asc" 
+    ? schema.analyticsDaily.clicks 
+    : desc(schema.analyticsDaily.clicks);
+  // ... other columns
+}
+```
+
+**Phase 4 Complete:**
+All planned advanced features implemented. Dashboard now provides powerful data analysis tools with custom date ranges, sortable columns, and comprehensive export capabilities.
