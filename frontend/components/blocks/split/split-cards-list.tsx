@@ -17,14 +17,11 @@ export default function SplitCardsList({ color, list }: SplitCardsListProps) {
     <div className="flex flex-col justify-center gap-12">
       {list &&
         list.length > 0 &&
-        list.map((item, index) => (
+        list.map((item) => (
           <SplitCardsItem
-            key={index}
+            key={item._key}
             color={color}
-            tagLine={item.tagLine}
-            uiIcon={item.uiIcon}
-            title={item.title}
-            body={item.body}
+            {...item}
           />
         ))}
     </div>

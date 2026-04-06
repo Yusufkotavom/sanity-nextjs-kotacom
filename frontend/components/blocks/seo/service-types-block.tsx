@@ -1,0 +1,105 @@
+import { stegaClean } from "next-sanity";
+import type { PAGE_QUERY_RESULT } from "@/sanity.types";
+import SectionContainer from "@/components/ui/section-container";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
+type Block = NonNullable<NonNullable<PAGE_QUERY_RESULT>["blocks"]>[number];
+type ServiceTypesBlock = Extract<Block, { _type: "service-types-block" }>;
+
+export default function ServiceTypesBlock({
+  padding,
+  colorVariant,
+  title,
+  description,
+  services,
+}: ServiceTypesBlock) {
+  const color = stegaClean(colorVariant);
+
+  return (
+    <SectionContainer color={color} padding={padding}>
+      <div className="mx-auto max-w-7xl">
+        {title && (
+          <div className="mb-3 text-center text-3xl font-bold md:text-4xl">
+            {title}
+          </div>
+        )}
+        {description && (
+          <p className="mx-auto mb-12 max-w-3xl text-center text-muted-foreground">
+            {description}
+          </p>
+        )}
+
+        {services && services.length > 0 && (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {services.map((service) => (
+              <div
+                key={service._key}
+                className="relative rounded-lg border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+              >
+                {service.badge && (
+                  <div className="absolute right-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">
+                    {service.badge}
+                  </div>
+                )}
+                <h3 className="mb-2 text-xl font-bold">{service.title}</h3>
+                <p className="mb-4 text-sm text-muted-foreground">
+                  {service.description}
+                </p>
+
+                {service.features && service.features.length > 0 && (
+                  <ul className="mb-4 space-y-2">
+                    {service.features.map((feature, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-2 text-sm"
+                      >
+                        <span className="mt-0.5 text-primary">✓</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <div className="mt-4 space-y-2 border-t pt-4">
+                  {service.price && (
+                    <div className="text-lg font-bold text-primary">
+                      {service.price}
+                    </div>
+                  )}
+                  {service.timeline && (
+                    <div className="text-sm text-muted-foreground">
+                      {service.timeline}
+                    </div>
+                  )}
+                </div>
+
+                {service.link && (
+                  <div className="mt-4">
+                    <Button
+                      asChild
+                      variant={stegaClean(service.link.buttonVariant) as any}
+                      className="w-full"
+                    >
+                      <Link
+                        href={service.link.href || "#"}
+                        target={service.link.target ? "_blank" : undefined}
+                        rel={
+                          service.link.target
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                      >
+                        {service.link.title || "Learn More"}
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </SectionContainer>
+  );
+}

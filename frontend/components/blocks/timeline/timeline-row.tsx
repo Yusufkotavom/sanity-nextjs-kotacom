@@ -16,13 +16,11 @@ export default function TimelineRow({
     <SectionContainer color={colorVariant} padding={padding}>
       {timelines && timelines?.length > 0 && (
         <div className="max-w-[48rem] mx-auto">
-          {timelines?.map((timeline, index) => (
+          {timelines?.map((timeline) => (
             <Timeline1
-              key={index}
+              key={timeline._key}
               color={colorVariant as ColorVariant}
-              tagLine={timeline.tagLine}
-              title={timeline.title}
-              body={timeline.body}
+              {...timeline}
             />
           ))}
         </div>

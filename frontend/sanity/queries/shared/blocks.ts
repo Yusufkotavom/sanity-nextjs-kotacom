@@ -24,6 +24,7 @@ import { faqBlockQuery } from "../seo/faq-block";
  */
 export const blocksQuery = `
   blocks[]{
+    _type,
     _key,
     ${hero1Query},
     ${hero2Query},
