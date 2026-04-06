@@ -26,6 +26,7 @@
     "@repo/sanity": "workspace:*",
     "@repo/search": "workspace:*",
     "@repo/seo": "workspace:*",
+    "@supabase/supabase-js": "^2.101.1",
     "@upstash/redis": "^1.35.3",
     "ai": "^6.0.143",
     "class-variance-authority": "^0.7.1",

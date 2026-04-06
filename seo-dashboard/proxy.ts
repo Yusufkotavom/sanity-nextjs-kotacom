@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const LOGIN_PATH = "/dashboard/seo/login";
+const LOGIN_PATH = "/login";
+const OLD_LOGIN_PATH = "/dashboard/seo/login";
 const SEO_SESSION_COOKIE = "seo_dash_session";
+const NEW_AUTH_COOKIE = "seo-dashboard-auth";
 
 function isPublicSeoApi(pathname: string) {
   return (
@@ -33,10 +35,17 @@ export default function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const token = request.cookies.get(SEO_SESSION_COOKIE)?.value;
-  const valid = Boolean(token);
+  // Check both old and new auth cookies
+  const oldToken = request.cookies.get(SEO_SESSION_COOKIE)?.value;
+  const newToken = request.cookies.get(NEW_AUTH_COOKIE)?.value;
+  const valid = Boolean(oldToken || newToken);
 
   if (valid) {
+    // Redirect old login to new login
+    if (pathname === OLD_LOGIN_PATH) {
+      return NextResponse.redirect(new URL(LOGIN_PATH, request.url));
+    }
+    // Redirect to dashboard if already logged in
     if (pathname === LOGIN_PATH) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
@@ -47,7 +56,8 @@ export default function proxy(request: NextRequest) {
     return NextResponse.json({ ok: false, message: "Unauthorized" }, { status: 401 });
   }
 
-  if (pathname === LOGIN_PATH) {
+  // Allow access to both login pages
+  if (pathname === LOGIN_PATH || pathname === OLD_LOGIN_PATH) {
     return NextResponse.next();
   }
 
