@@ -1,4 +1,5 @@
-import { isDatabaseConfigured, DatabaseNotConfigured, DatabaseError, db } from "@/lib/db-safe";
+import { isDatabaseConfigured, db } from "@/lib/db-safe";
+import { DatabaseNotConfigured, DatabaseError } from "@/components/database-error";
 import { schema } from "@repo/db";
 import { desc } from "drizzle-orm";
 import { Badge } from "@/components/ui/badge";
