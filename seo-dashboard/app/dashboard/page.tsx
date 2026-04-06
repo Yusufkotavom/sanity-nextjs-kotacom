@@ -1,4 +1,5 @@
-import { db } from "@/lib/db";
+import { isDatabaseConfigured, db } from "@/lib/db-safe";
+import { DatabaseNotConfigured, DatabaseError } from "@/components/database-error";
 import { schema } from "@repo/db";
 import { desc, sql } from "drizzle-orm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,22 +18,40 @@ function formatDate(value: Date | string | null) {
 }
 
 export default async function Page() {
-  const database = db();
-  const [{ value: jobsTotal }] = await database
-    .select({ value: sql<number>`count(*)` })
-    .from(schema.jobRuns);
-  const [{ value: aiTotal }] = await database
-    .select({ value: sql<number>`count(*)` })
-    .from(schema.aiGenerations);
-  const [{ value: submissionsTotal }] = await database
-    .select({ value: sql<number>`count(*)` })
-    .from(schema.searchSubmissions);
+  if (!isDatabaseConfigured()) {
+    return <DatabaseNotConfigured title="Dashboard" />;
+  }
 
-  const recentJobs = await database
-    .select()
-    .from(schema.jobRuns)
-    .orderBy(desc(schema.jobRuns.createdAt))
-    .limit(6);
+  let jobsTotal = 0;
+  let aiTotal = 0;
+  let submissionsTotal = 0;
+  let recentJobs: any[] = [];
+
+  try {
+    const database = db();
+    const [{ value: jobs }] = await database
+      .select({ value: sql<number>`count(*)` })
+      .from(schema.jobRuns);
+    jobsTotal = jobs;
+    
+    const [{ value: ai }] = await database
+      .select({ value: sql<number>`count(*)` })
+      .from(schema.aiGenerations);
+    aiTotal = ai;
+    
+    const [{ value: submissions }] = await database
+      .select({ value: sql<number>`count(*)` })
+      .from(schema.searchSubmissions);
+    submissionsTotal = submissions;
+
+    recentJobs = await database
+      .select()
+      .from(schema.jobRuns)
+      .orderBy(desc(schema.jobRuns.createdAt))
+      .limit(6);
+  } catch (error) {
+    return <DatabaseError title="Dashboard" error={error} />;
+  }
 
   return (
     <div className="flex flex-1 flex-col gap-6">

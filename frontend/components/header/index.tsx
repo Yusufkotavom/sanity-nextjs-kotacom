@@ -83,7 +83,6 @@ export default async function Header() {
           </Link>
           <DesktopNav navigation={navigation} />
           <div className="ml-auto flex items-center gap-1.5">
-            <ModeToggle />
             {showWhatsAppCta ? (
               <WhatsAppLink
                 phoneNumber={whatsApp.phoneNumber}
@@ -118,6 +117,7 @@ export default async function Header() {
                 {headerCta.title}
               </Link>
             )}
+            <ModeToggle />
           </div>
         </div>
       </div>
