@@ -25,6 +25,7 @@ jobs:
       studio: ${{ steps.filter.outputs.studio }}
       seo_dashboard: ${{ steps.filter.outputs.seo_dashboard }}
       worker: ${{ steps.filter.outputs.worker }}
+      db: ${{ steps.filter.outputs.db }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -34,27 +35,39 @@ jobs:
         uses: dorny/paths-filter@v4
         with:
           filters: |
+            db:
+              - 'packages/db/**'
             frontend:
               - 'frontend/**'
-              - 'packages/**'
+              - 'packages/!(db)/**'
               - 'package.json'
               - 'pnpm-lock.yaml'
               - 'pnpm-workspace.yaml'
             studio:
               - 'studio/**'
-              - 'packages/**'
+              - 'packages/sanity/**'
               - 'package.json'
               - 'pnpm-lock.yaml'
               - 'pnpm-workspace.yaml'
             seo_dashboard:
               - 'seo-dashboard/**'
-              - 'packages/**'
+              - 'packages/db/**'
+              - 'packages/ai/**'
+              - 'packages/seo/**'
+              - 'packages/search/**'
+              - 'packages/content/**'
+              - 'packages/sanity/**'
               - 'package.json'
               - 'pnpm-lock.yaml'
               - 'pnpm-workspace.yaml'
             worker:
               - 'worker/**'
-              - 'packages/**'
+              - 'packages/db/**'
+              - 'packages/ai/**'
+              - 'packages/seo/**'
+              - 'packages/search/**'
+              - 'packages/content/**'
+              - 'packages/sanity/**'
               - 'package.json'
               - 'pnpm-lock.yaml'
               - 'pnpm-workspace.yaml'
