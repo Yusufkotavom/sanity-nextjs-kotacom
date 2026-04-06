@@ -263,3 +263,156 @@ Automatically added SEO blocks to all money pages:
 4. Check all blocks render correctly
 5. Monitor Google Search Console
 6. Track conversion rate improvements
+
+## 2026-04-06 - Repository Frontend+Sanity Architecture Analysis & Agent Guide
+
+### Changed Files
+- `docs/repo-frontend-sanity-architecture-agent-guide.md` (NEW)
+- `docs/astro-migration-megaplan.md` (UPDATED)
+- `docs/seo-updates.md` (UPDATED)
+
+### Summary of Changes
+- Menambahkan dokumen operasional menyeluruh untuk agent yang memetakan arsitektur frontend, integrasi Sanity, flow query->transform->render, inventory page types, reusable blocks/components, guardrails implementasi, rancangan skill agent, dan rancangan reusable scripts.
+- Mendokumentasikan temuan mismatch contract blok SEO (schema+renderer sudah support, shared GROQ blocks belum memproyeksikan blok SEO) sebagai risiko regression prioritas.
+- Menambahkan update snapshot pada mega plan migrasi agar jejak analisis ini tercatat pada workstream migration/SEO/redesign.
+
+### Impact on SEO/Integration
+- **No direct SEO impact** (dokumen & governance only).
+- Dampak integrasi tidak langsung: memperkecil risiko perubahan yang tidak sinkron antara schema, query, dan renderer pada task SEO/content berikutnya.
+
+### Verification Status
+- ✅ Manual repository analysis completed (frontend + studio + query/fetch + docs/skills terkait).
+- ✅ Dokumen source-of-truth operasional agent ditambahkan.
+- ✅ Update log SEO diperbarui.
+- ✅ Mega plan snapshot migration diperbarui.
+- ⚠️ Belum ada perubahan runtime code, jadi tidak ada build/test runtime yang wajib untuk task ini.
+
+## 2026-04-06 - SEO Block Query Contract Sync (Schema ↔ GROQ ↔ Renderer)
+
+### Changed Files
+- `frontend/sanity/queries/shared/blocks.ts` (UPDATED)
+- `docs/seo-updates.md` (UPDATED)
+- `docs/astro-migration-megaplan.md` (UPDATED)
+
+### Summary of Changes
+- Menutup gap contract blok SEO yang sebelumnya terdeteksi pada analisis arsitektur: shared GROQ `blocksQuery` kini memproyeksikan blok `company-info`, `testimonials-block`, `pricing-block`, dan `faq-block`.
+- Menjaga sinkronisasi tiga layer: Studio schema (`page-blocks`), frontend query fragment (`shared/blocks.ts`), dan frontend block renderer (`components/blocks/index.tsx`).
+
+### Impact on SEO/Integration
+- **Direct integration impact:** blok SEO yang sudah diisi di Sanity kini bisa ikut terbaca di query shared `blocks[]` untuk page/post/service/product/project/template flows yang memakai fragment ini.
+- **SEO impact:** meningkatkan kepastian bahwa trust/content blocks (company info, testimonials, pricing, FAQ) benar-benar sampai ke layer render saat dipakai editor.
+
+### Verification Status
+- ✅ TypeScript typecheck frontend lulus.
+- ✅ Verifikasi manual diff memastikan empat query fragment SEO sudah dimasukkan ke `blocksQuery`.
+- ⚠️ Uji visual runtime belum dijalankan pada task ini (fokus pada sinkronisasi contract query).
+
+## 2026-04-06 - Migration Archive + Daily Ops Skill Package
+
+### Changed Files
+- `docs/archive/2026-04-historical-plans/astro-migration-megaplan-final.md` (MOVED)
+- `docs/astro-migration-megaplan.md` (REPLACED with archive pointer)
+- `docs/repo-frontend-sanity-operations-manual.md` (NEW)
+- `skills/repo-daily-ops/**` (NEW skill package)
+- `frontend/scripts/ops-check-block-contract.mjs` (NEW)
+- `frontend/scripts/ops-validate-sanity-payload.mjs` (NEW)
+- `scripts/build-repo-daily-ops-skill-zip.mjs` (NEW)
+- `docs/seo-updates.md` (UPDATED)
+
+### Summary of Changes
+- Mengarsipkan dokumen mega plan migrasi karena migrasi dinyatakan selesai.
+- Menambahkan dokumen operasional aktif untuk workflow harian.
+- Menambahkan paket skill siap pakai (`skills/repo-daily-ops`) lengkap dengan `SKILL.md`, metadata agent, references, scripts wrapper, fixtures, serta artefak final `skill.zip`.
+- Menambahkan script reusable operasional:
+  1. audit contract block schema↔query↔renderer,
+  2. validasi payload Sanity (dengan mode dry-run default, autofix opsional via `--write`),
+  3. build+validasi paket `skill.zip`.
+
+### Impact on SEO/Integration
+- **Indirect positive impact:** workflow operasional lebih aman untuk perubahan SEO/content karena ada contract audit + payload validation sebelum write.
+- **No direct runtime SEO rendering change** pada halaman publik dalam task ini.
+
+### Verification Status
+- ✅ `node frontend/scripts/ops-check-block-contract.mjs --json` pass (contract sync).
+- ✅ `node frontend/scripts/ops-validate-sanity-payload.mjs --input skills/repo-daily-ops/fixtures/sample-payload.json` memunculkan temuan validasi (expected fail untuk sample invalid).
+- ✅ `node frontend/scripts/ops-validate-sanity-payload.mjs --input /tmp/sample-fixed.json` pass setelah perbaikan sample.
+- ✅ `node scripts/build-repo-daily-ops-skill-zip.mjs` berhasil menghasilkan `skills/repo-daily-ops/skill.zip`.
+- ✅ `unzip -l skills/repo-daily-ops/skill.zip` memverifikasi isi paket.
+
+## 2026-04-06 - Sanity Content Ops Skill (Post/Product/Service/Project + Localisation)
+
+### Changed Files
+- `frontend/scripts/ops-generate-content-payload.mjs` (NEW)
+- `frontend/scripts/ops-upsert-sanity-content.mjs` (NEW)
+- `scripts/build-sanity-content-ops-skill-zip.mjs` (NEW)
+- `skills/sanity-content-ops/**` (NEW skill package + `skill.zip`)
+- `docs/sanity-content-ops-manual.md` (NEW)
+- `docs/seo-updates.md` (UPDATED)
+
+### Summary of Changes
+- Menambahkan skill operasional baru untuk pembuatan semua jenis konten utama (`post`, `product`, `service`, `project`) dan localisation docs (`pageLocation`, `serviceLocation`).
+- Menambahkan script generator payload reusable dengan validasi input per tipe dan output JSON idempotent.
+- Menambahkan script upsert Sanity dengan mode dry-run default dan write mode (`--write`) menggunakan urutan kredensial dev-first (`SANITY_DEV` -> `SANITY_AUTH_TOKEN`).
+- Menambahkan builder untuk validasi struktur skill + packaging artefak `skills/sanity-content-ops/skill.zip`.
+
+### Impact on SEO/Integration
+- **Indirect positive impact:** mempercepat content ops sekaligus mengurangi kesalahan payload yang bisa merusak render, metadata, atau integrasi halaman lokal.
+- **No direct runtime SEO change** pada template halaman publik dalam task ini.
+
+### Verification Status
+- ✅ Generator diuji untuk 6 tipe konten (`post/product/service/project/pageLocation/serviceLocation`).
+- ✅ Validator payload lulus untuk payload hasil generate.
+- ✅ Upsert script dry-run berhasil untuk payload localisation.
+- ✅ Skill package berhasil dibuild dan diverifikasi isi zip.
+
+## 2026-04-06 - Monorepo Skill Integration (Root + Frontend + Studio + Dashboard)
+
+### Changed Files
+- `package.json` (UPDATED)
+- `frontend/package.json` (UPDATED)
+- `studio/package.json` (UPDATED)
+- `seo-dashboard/package.json` (UPDATED)
+- `scripts/verify-skill-integration.mjs` (NEW)
+- `docs/repo-frontend-sanity-operations-manual.md` (UPDATED)
+- `docs/sanity-content-ops-manual.md` (UPDATED)
+- `docs/seo-updates.md` (UPDATED)
+
+### Summary of Changes
+- Mengintegrasikan command skill ke seluruh boundary monorepo (root, frontend, studio, dashboard).
+- Menambahkan command root untuk build semua skill zip dan verifikasi integrasi command lintas app.
+- Menambahkan script `verify-skill-integration` untuk mengecek keberadaan script command skill pada seluruh package target.
+- Menambahkan dokumentasi integrasi monorepo pada manual operasional.
+
+### Impact on SEO/Integration
+- **Operational integration impact:** workflow skill kini konsisten dipanggil dari seluruh app boundary monorepo tanpa manual wiring per app.
+- **No direct runtime SEO rendering change** pada halaman publik.
+
+### Verification Status
+- ✅ `pnpm run skill:verify:integration` pass.
+- ✅ `pnpm --filter studio run skill:ops:contract` pass.
+- ✅ `pnpm --filter seo-dashboard run skill:ops:contract` pass.
+- ✅ `pnpm run skill:zip:all` pass (kedua skill.zip terbangun ulang).
+
+## 2026-04-06 - Remove Generated skill.zip Binary Artifacts
+
+### Changed Files
+- `.gitignore` (UPDATED)
+- `skills/repo-daily-ops/skill.zip` (DELETED generated artifact)
+- `skills/sanity-content-ops/skill.zip` (DELETED generated artifact)
+- `docs/astro-migration-megaplan.md` (UPDATED checklist snapshot)
+- `docs/seo-updates.md` (UPDATED)
+
+### Summary of Changes
+- Menghapus dua file binary `skill.zip` dari repository karena isinya hanya bundle hasil generate dari file skill yang sudah ada.
+- Menambahkan ignore rule `skills/**/skill.zip` agar artefak zip tidak ter-commit lagi.
+- Menjaga distribusi skill tetap lewat source files (`SKILL.md`, metadata, references, scripts), bukan menyimpan binary di git.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**
+- **Operational hygiene impact:** repository lebih bersih, review diff lebih aman, dan artefak build diproduksi on-demand.
+
+### Verification Status
+- ✅ `unzip -l skills/repo-daily-ops/skill.zip` (sebelum delete) menunjukkan isi hanya file skill bundle.
+- ✅ `unzip -l skills/sanity-content-ops/skill.zip` (sebelum delete) menunjukkan isi hanya file skill bundle.
+- ✅ `git show --numstat --format='' f52bd3c | awk '$1=="-" && $2=="-" {print $3}'` mengonfirmasi keduanya binary di commit sebelumnya.
+- ✅ Verifikasi file setelah cleanup: `test ! -f skills/repo-daily-ops/skill.zip && test ! -f skills/sanity-content-ops/skill.zip`.

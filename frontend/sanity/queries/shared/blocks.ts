@@ -13,6 +13,10 @@ import { faqsQuery } from "../faqs";
 import { formNewsletterQuery } from "../forms/newsletter";
 import { allPostsQuery } from "../all-posts";
 import { legacyRichContentQuery } from "../legacy/legacy-rich-content";
+import { companyInfoQuery } from "../seo/company-info";
+import { testimonialsBlockQuery } from "../seo/testimonials-block";
+import { pricingBlockQuery } from "../seo/pricing-block";
+import { faqBlockQuery } from "../seo/faq-block";
 
 /**
  * Shared GROQ projection for blocks[].
@@ -36,5 +40,9 @@ export const blocksQuery = `
     ${formNewsletterQuery},
     ${allPostsQuery},
     ${legacyRichContentQuery},
+    ${companyInfoQuery},
+    ${testimonialsBlockQuery},
+    ${pricingBlockQuery},
+    ${faqBlockQuery},
   }
 `;

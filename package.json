@@ -11,7 +11,15 @@
     "dev:dashboard": "pnpm run dev --workspace=seo-dashboard",
     "typegen": "cd studio && pnpm typegen",
     "typecheck": "cd frontend && pnpm typecheck",
-    "export": "cd studio && sanity dataset export production sample-data.tar.gz"
+    "export": "cd studio && sanity dataset export production sample-data.tar.gz",
+    "skill:ops:contract": "node frontend/scripts/ops-check-block-contract.mjs --json",
+    "skill:content:generate": "node frontend/scripts/ops-generate-content-payload.mjs",
+    "skill:content:validate": "node frontend/scripts/ops-validate-sanity-payload.mjs",
+    "skill:content:upsert": "node frontend/scripts/ops-upsert-sanity-content.mjs",
+    "skill:zip:daily-ops": "node scripts/build-repo-daily-ops-skill-zip.mjs",
+    "skill:zip:content-ops": "node scripts/build-sanity-content-ops-skill-zip.mjs",
+    "skill:zip:all": "pnpm run skill:zip:daily-ops && pnpm run skill:zip:content-ops",
+    "skill:verify:integration": "node scripts/verify-skill-integration.mjs"
   },
   "homepage": "https://www.schemaui.com/"
 }

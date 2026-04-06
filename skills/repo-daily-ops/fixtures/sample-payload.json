@@ -1,0 +1,15 @@
+{
+  "_id": "page.sample-dot-id",
+  "_type": "page",
+  "title": "Sample",
+  "blocks": [
+    {
+      "_type": "cta-1",
+      "title": "CTA Sample",
+      "link": {
+        "_type": "link",
+        "href": "https://example.com"
+      }
+    }
+  ]
+}

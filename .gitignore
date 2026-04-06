@@ -72,3 +72,6 @@ OPS-CREDENTIALS-CONFIGURED.md
 OPS-DASHBOARD-READY.md
 docs/ops-dashboard-setup.md
 docs/ops-dashboard-files-summary.md
+
+# skill build artifacts (generated bundles)
+skills/**/skill.zip
