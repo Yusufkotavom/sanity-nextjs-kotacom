@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { isDatabaseConfigured, DatabaseNotConfigured, DatabaseError, db } from "@/lib/db-safe";
 import { schema } from "@repo/db";
 import { desc, inArray } from "drizzle-orm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,24 +7,35 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 export const dynamic = 'force-dynamic';
 
 export default async function AnalyticsPage() {
-  const rows = await db()
-    .select()
-    .from(schema.analyticsDaily)
-    .orderBy(desc(schema.analyticsDaily.date))
-    .limit(25);
+  if (!isDatabaseConfigured()) {
+    return <DatabaseNotConfigured title="Search Analytics" />;
+  }
 
-  const contentIds = rows
-    .map((row) => row.contentItemId)
-    .filter((id): id is string => Boolean(id));
+  let rows: any[] = [];
+  let urlById = new Map<string, string>();
+  
+  try {
+    rows = await db()
+      .select()
+      .from(schema.analyticsDaily)
+      .orderBy(desc(schema.analyticsDaily.date))
+      .limit(25);
 
-  const contentItems = contentIds.length
-    ? await db()
-        .select({ id: schema.contentItems.id, url: schema.contentItems.url })
-        .from(schema.contentItems)
-        .where(inArray(schema.contentItems.id, contentIds))
-    : [];
+    const contentIds = rows
+      .map((row) => row.contentItemId)
+      .filter((id): id is string => Boolean(id));
 
-  const urlById = new Map(contentItems.map((item) => [item.id, item.url]));
+    const contentItems = contentIds.length
+      ? await db()
+          .select({ id: schema.contentItems.id, url: schema.contentItems.url })
+          .from(schema.contentItems)
+          .where(inArray(schema.contentItems.id, contentIds))
+      : [];
+
+    urlById = new Map(contentItems.map((item) => [item.id, item.url]));
+  } catch (error) {
+    return <DatabaseError title="Search Analytics" error={error} />;
+  }
 
   return (
     <Card>

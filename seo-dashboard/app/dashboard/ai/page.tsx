@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { isDatabaseConfigured, DatabaseNotConfigured, DatabaseError, db } from "@/lib/db-safe";
 import { schema } from "@repo/db";
 import { desc } from "drizzle-orm";
 import { Badge } from "@/components/ui/badge";
@@ -18,11 +18,21 @@ function formatDate(value: Date | string | null) {
 }
 
 export default async function AiPage() {
-  const generations = await db()
-    .select()
-    .from(schema.aiGenerations)
-    .orderBy(desc(schema.aiGenerations.createdAt))
-    .limit(25);
+  if (!isDatabaseConfigured()) {
+    return <DatabaseNotConfigured title="AI Generations" />;
+  }
+
+  let generations: any[] = [];
+  
+  try {
+    generations = await db()
+      .select()
+      .from(schema.aiGenerations)
+      .orderBy(desc(schema.aiGenerations.createdAt))
+      .limit(25);
+  } catch (error) {
+    return <DatabaseError title="AI Generations" error={error} />;
+  }
 
   return (
     <Card>

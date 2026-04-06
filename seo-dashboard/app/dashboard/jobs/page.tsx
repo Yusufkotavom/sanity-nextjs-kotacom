@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { isDatabaseConfigured, DatabaseNotConfigured, DatabaseError, db } from "@/lib/db-safe";
 import { schema } from "@repo/db";
 import { desc } from "drizzle-orm";
 import { Badge } from "@/components/ui/badge";
@@ -18,11 +18,21 @@ function formatDate(value: Date | string | null) {
 }
 
 export default async function JobsPage() {
-  const jobs = await db()
-    .select()
-    .from(schema.jobRuns)
-    .orderBy(desc(schema.jobRuns.createdAt))
-    .limit(30);
+  if (!isDatabaseConfigured()) {
+    return <DatabaseNotConfigured title="Job Runs" />;
+  }
+
+  let jobs: any[] = [];
+  
+  try {
+    jobs = await db()
+      .select()
+      .from(schema.jobRuns)
+      .orderBy(desc(schema.jobRuns.createdAt))
+      .limit(30);
+  } catch (error) {
+    return <DatabaseError title="Job Runs" error={error} />;
+  }
 
   return (
     <Card>

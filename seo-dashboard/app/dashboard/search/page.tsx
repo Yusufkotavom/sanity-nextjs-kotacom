@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { isDatabaseConfigured, DatabaseNotConfigured, DatabaseError, db } from "@/lib/db-safe";
 import { schema } from "@repo/db";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -17,17 +17,28 @@ function formatDate(value: Date | string | null) {
 }
 
 export default async function SearchPage() {
-  const submissions = await db()
-    .select()
-    .from(schema.searchSubmissions)
-    .orderBy(desc(schema.searchSubmissions.submittedAt))
-    .limit(20);
+  if (!isDatabaseConfigured()) {
+    return <DatabaseNotConfigured title="Search Submissions" />;
+  }
 
-  const inspections = await db()
-    .select()
-    .from(schema.indexStatusChecks)
-    .orderBy(desc(schema.indexStatusChecks.checkedAt))
-    .limit(10);
+  let submissions: any[] = [];
+  let inspections: any[] = [];
+  
+  try {
+    submissions = await db()
+      .select()
+      .from(schema.searchSubmissions)
+      .orderBy(desc(schema.searchSubmissions.submittedAt))
+      .limit(20);
+
+    inspections = await db()
+      .select()
+      .from(schema.indexStatusChecks)
+      .orderBy(desc(schema.indexStatusChecks.checkedAt))
+      .limit(10);
+  } catch (error) {
+    return <DatabaseError title="Search Submissions" error={error} />;
+  }
 
   return (
     <div className="flex flex-col gap-6">

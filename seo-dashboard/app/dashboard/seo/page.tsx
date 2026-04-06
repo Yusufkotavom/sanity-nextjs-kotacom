@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { isDatabaseConfigured, DatabaseNotConfigured, DatabaseError, db } from "@/lib/db-safe";
 import { schema } from "@repo/db";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,24 +17,35 @@ function formatDate(value: Date | string | null) {
 }
 
 export default async function SeoPage() {
-  const audits = await db()
-    .select()
-    .from(schema.seoAudits)
-    .orderBy(desc(schema.seoAudits.checkedAt))
-    .limit(25);
+  if (!isDatabaseConfigured()) {
+    return <DatabaseNotConfigured title="SEO Audits" />;
+  }
 
-  const contentIds = audits
-    .map((audit) => audit.contentItemId)
-    .filter((id): id is string => Boolean(id));
+  let audits: any[] = [];
+  let urlById = new Map<string, string>();
 
-  const contentItems = contentIds.length
-    ? await db()
-        .select({ id: schema.contentItems.id, url: schema.contentItems.url })
-        .from(schema.contentItems)
-        .where(inArray(schema.contentItems.id, contentIds))
-    : [];
+  try {
+    audits = await db()
+      .select()
+      .from(schema.seoAudits)
+      .orderBy(desc(schema.seoAudits.checkedAt))
+      .limit(25);
 
-  const urlById = new Map(contentItems.map((item) => [item.id, item.url]));
+    const contentIds = audits
+      .map((audit) => audit.contentItemId)
+      .filter((id): id is string => Boolean(id));
+
+    const contentItems = contentIds.length
+      ? await db()
+          .select({ id: schema.contentItems.id, url: schema.contentItems.url })
+          .from(schema.contentItems)
+          .where(inArray(schema.contentItems.id, contentIds))
+      : [];
+
+    urlById = new Map(contentItems.map((item) => [item.id, item.url]));
+  } catch (error) {
+    return <DatabaseError title="SEO Audits" error={error} />;
+  }
 
   return (
     <Card>
