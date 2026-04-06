@@ -1,247 +1,266 @@
 # SEO Dashboard - Quick Start Guide
 
-Get the SEO Dashboard running locally in 5 minutes.
-
-## Prerequisites
-
-- Node.js 22+
-- pnpm 10+
-- PostgreSQL database (Neon recommended for free tier)
-
-## Step 1: Database Setup
-
-### Option A: Use Neon (Recommended - Free Tier)
-
-1. Sign up at https://neon.tech
-2. Create a new project
-3. Copy the connection string
-
-### Option B: Local PostgreSQL
-
-```bash
-# Install PostgreSQL
-brew install postgresql  # macOS
-sudo apt install postgresql  # Ubuntu
-
-# Start server
-brew services start postgresql  # macOS
-sudo systemctl start postgresql  # Ubuntu
-
-# Create database
-createdb seo_dashboard
-```
-
-## Step 2: Environment Configuration
-
-```bash
-# Copy environment template
-cd seo-dashboard
-cp .env.local .env
-
-# Edit .env and set your DATABASE_URL
-# For Neon:
-DATABASE_URL='postgresql://user:pass@ep-xxx.region.aws.neon.tech/db?sslmode=require&channel_binding=require'
-
-# For local:
-DATABASE_URL='postgresql://localhost:5432/seo_dashboard'
-```
-
-## Step 3: Install Dependencies
-
-```bash
-# From project root
-pnpm install
-```
-
-## Step 4: Setup Database
-
-```bash
-# Run complete database setup
-cd packages/db
-export DATABASE_URL="your-connection-string"
-pnpm db:setup
-
-# (Optional) Seed with test data
-pnpm db:seed
-```
-
-## Step 5: Start Dashboard
+## 🚀 Start Development Server
 
 ```bash
 cd seo-dashboard
 pnpm dev
 ```
 
-Open http://localhost:3001
+**Dashboard will be available at:**
+- Local: http://localhost:3000
+- Network: http://10.0.0.88:3000
 
-**Default Login:**
-- Password: `kotacom`
+## 🔐 Login
 
-## Verify Setup
-
-1. Login at http://localhost:3001
-2. Check Dashboard page shows stats (0 rows if not seeded)
-3. Check Jobs, AI, SEO, Search, Analytics pages load without errors
-
-## Troubleshooting
-
-### Database Connection Error
-
-```bash
-# Test connection
-psql $DATABASE_URL -c "SELECT version();"
-
-# Check tables exist
-psql $DATABASE_URL -c "\dt"
+### Option 1: Fallback Credentials (Instant)
+```
+URL: http://localhost:3000/login
+Email: admin@kotacom.id
+Password: admin123
 ```
 
-### Missing Tables
+### Option 2: Supabase User
+1. Create user in Supabase dashboard
+2. Login with your Supabase credentials
 
-```bash
-cd packages/db
-export DATABASE_URL="your-connection-string"
-pnpm db:reset  # Drops all tables and re-migrates
-pnpm db:seed   # Add test data
-```
+## 📋 Available Pages
+
+After login, you can access:
+
+### Overview
+- **Dashboard**: http://localhost:3000/dashboard
+  - Today's metrics
+  - Success rates
+  - Quick actions
+
+### Content Operations
+- **Jobs**: http://localhost:3000/dashboard/jobs
+  - Job queue monitoring
+  - Bulk retry failed jobs
+  - Export to CSV
+  - Sortable columns
+  
+- **AI Generations**: http://localhost:3000/dashboard/ai
+  - AI content preview
+  - Retry/Push actions
+  - Filters by provider/status
+  
+- **Templates**: http://localhost:3000/dashboard/templates
+  - Template management
+  - Bulk generation
+  
+- **AI Settings**: http://localhost:3000/dashboard/ai-settings
+  - Custom prompt editor
+  - Variable insertion
+  - Temperature/token controls
+
+### SEO & Search
+- **SEO Audits**: http://localhost:3000/dashboard/seo
+  - SEO health monitoring
+  - Export to CSV
+  - Score-based filtering
+  
+- **Search Console**: http://localhost:3000/dashboard/search
+  - Manual URL submission
+  - IndexNow integration
+  - Submission history
+  
+- **Analytics**: http://localhost:3000/dashboard/analytics
+  - Date range picker
+  - Performance trends
+  - Sortable metrics
+  - CSV export
+
+## 🛠️ Common Tasks
+
+### Manual URL Submission
+1. Go to Search Console page
+2. Paste URLs (one per line)
+3. Select provider (IndexNow/Google/Bing)
+4. Click "Submit URLs"
+
+### Retry Failed Jobs
+1. Go to Jobs page
+2. Click "Retry All Failed (N)" button
+3. Confirm in dialog
+4. Jobs will be retried
+
+### Export Data
+1. Go to any page (Jobs/Analytics/SEO)
+2. Click "Export CSV" button
+3. File downloads automatically
+
+### Preview AI Content
+1. Go to AI Generations page
+2. Click "Preview" on any generation
+3. View formatted or raw JSON
+4. Copy content if needed
+
+### Create Custom Prompt
+1. Go to AI Settings page
+2. Enter prompt name
+3. Write template with variables
+4. Click variable buttons to insert
+5. Adjust temperature/tokens
+6. Click "Test Prompt" to preview
+7. Click "Save Prompt" to store
+
+### Filter by Date Range
+1. Go to Analytics page
+2. Click preset button (Today, 7d, 14d, etc.)
+3. Or open calendar picker
+4. Select custom date range
+5. Data updates automatically
+
+### Sort Table Columns
+1. Go to any page with tables
+2. Click column header to sort
+3. Click again to reverse order
+4. Visual indicators show sort state
+
+## 🔧 Troubleshooting
 
 ### Port Already in Use
-
 ```bash
-# Change port in seo-dashboard/.env
-NEXT_PUBLIC_APP_URL=http://localhost:3002
+# Kill process on port 3000
+lsof -ti:3000 | xargs kill -9
 
-# Start with custom port
-pnpm dev -- -p 3002
+# Or use different port
+PORT=3001 pnpm dev
 ```
 
-## Next Steps
-
-### Configure AI Providers
-
-Add to `seo-dashboard/.env`:
-
+### Lock File Error
 ```bash
-# AI Gateway (Vercel AI SDK)
-AI_GATEWAY_API_KEY=your-key
+# Remove lock file
+rm -rf .next/dev/lock
 
-# Groq (optional fallback)
-AI_WRITER_GROQ_KEYS=key1,key2,key3
-
-# Gemini (optional fallback)
-AI_WRITER_GEMINI_KEYS=key1,key2,key3
+# Restart dev server
+pnpm dev
 ```
 
-### Configure Google Search Console
-
-1. Create service account at https://console.cloud.google.com
-2. Download JSON key
-3. Add to `.env`:
-
+### Can't Login
 ```bash
-GSC_CLIENT_EMAIL=your-service-account@project.iam.gserviceaccount.com
-GSC_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-GSC_SITE_URL=https://your-site.com
+# Check credentials
+Email: admin@kotacom.id (exact)
+Password: admin123 (exact)
+
+# Clear browser cookies
+# Try incognito window
 ```
 
-### Configure IndexNow
-
+### Database Not Configured
 ```bash
-# Generate key at https://www.bing.com/indexnow
-INDEXNOW_KEY=your-key
-INDEXNOW_KEY_LOCATION=https://your-site.com/your-key.txt
+# Check .env file has DATABASE_URL
+# Verify Neon PostgreSQL is running
+# Run migrations if needed
+cd ../packages/db
+pnpm drizzle:migrate
 ```
 
-### Configure Redis Queue
-
-Sign up at https://upstash.com (free tier):
-
+### Supabase Not Working
 ```bash
-UPSTASH_REDIS_REST_URL=https://your-redis.upstash.io
-UPSTASH_REDIS_REST_TOKEN=your-token
+# Check .env has Supabase credentials
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+
+# Use fallback credentials instead
+Email: admin@kotacom.id
+Password: admin123
 ```
 
-## Production Deployment
+## 📚 Documentation
 
-### Deploy to Vercel
+- **Auth Setup**: `SUPABASE-SETUP.md`
+- **Login Guide**: `LOGIN-CREDENTIALS.md`
+- **Full Docs**: `docs/seo-dashboard-auth-setup.md`
+- **Improvement Plan**: `docs/seo-dashboard-improvement-plan.md`
+
+## 🎯 Quick Commands
 
 ```bash
+# Start dev server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Run linter
+pnpm lint
+
+# Type check
+pnpm type-check
+
+# Clean build
+rm -rf .next && pnpm build
+```
+
+## 🌐 Network Access
+
+If you need to access from other devices:
+
+```bash
+# Dashboard is available on network
+http://10.0.0.88:3000
+
+# Make sure firewall allows port 3000
+sudo ufw allow 3000
+```
+
+## 🔄 Restart Services
+
+```bash
+# Stop all dev servers
+pkill -f "next dev"
+
+# Start fresh
 cd seo-dashboard
-vercel
-
-# Add environment variables in Vercel dashboard:
-# - DATABASE_URL
-# - UPSTASH_REDIS_REST_URL
-# - UPSTASH_REDIS_REST_TOKEN
-# - All AI provider keys
-# - GSC credentials
-# - IndexNow key
+pnpm dev
 ```
 
-### Deploy Worker to Cloudflare
+## ✅ Health Check
+
+Dashboard is working if you see:
+- ✅ Login page loads
+- ✅ Can login with credentials
+- ✅ Dashboard shows metrics
+- ✅ All pages accessible
+- ✅ No console errors
+
+## 🚨 Emergency Reset
+
+If everything breaks:
 
 ```bash
-cd worker
-pnpm deploy
+# 1. Stop all processes
+pkill -f "next dev"
 
-# Set secrets
-wrangler secret put CRON_SECRET
-wrangler secret put OPS_API_URL
+# 2. Clean everything
+cd seo-dashboard
+rm -rf .next node_modules
+
+# 3. Reinstall
+pnpm install
+
+# 4. Rebuild
+pnpm build
+
+# 5. Start fresh
+pnpm dev
 ```
 
-## Available Scripts
+## 📞 Support
 
-```bash
-# Development
-pnpm dev              # Start dev server (port 3001)
-pnpm build            # Build for production
-pnpm start            # Start production server
+- Check browser console for errors
+- Check terminal for server errors
+- Review documentation files
+- Verify environment variables
 
-# Database
-pnpm --filter @repo/db db:setup    # Complete DB setup
-pnpm --filter @repo/db db:seed     # Seed test data
-pnpm --filter @repo/db db:reset    # Reset database
-pnpm --filter @repo/db drizzle:studio  # Open DB GUI
+## 🎉 You're Ready!
 
-# Type checking
-pnpm typecheck        # Check TypeScript types
-```
+1. ✅ Dev server running
+2. ✅ Login page accessible
+3. ✅ Credentials working
+4. ✅ Dashboard functional
 
-## Dashboard Features
-
-### Jobs Page
-- View all queued and completed jobs
-- Retry failed jobs
-- Monitor job execution status
-
-### AI Page
-- View AI generation history
-- Retry failed generations
-- Push generated content to Sanity
-
-### SEO Page
-- View SEO audit results
-- Check audit scores and issues
-- Monitor content quality
-
-### Search Page
-- Submit URLs to IndexNow
-- Submit sitemaps to Google
-- Check URL inspection status
-
-### Analytics Page
-- View daily analytics snapshots
-- Track impressions, clicks, CTR
-- Monitor search performance
-
-## Support
-
-For detailed documentation, see:
-- Database: `packages/db/README.md`
-- Worker: `worker/README.md`
-- Setup Guide: `docs/ops-dashboard-setup.md`
-
-For issues:
-1. Check logs in terminal
-2. Verify DATABASE_URL is set
-3. Run `pnpm db:setup` to verify tables
-4. Check Vercel logs for production issues
+**Start building! 🚀**
