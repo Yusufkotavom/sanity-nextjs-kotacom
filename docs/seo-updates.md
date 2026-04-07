@@ -4,6 +4,22 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-07: Update Favicon to Next.js RootLayout
+
+### Changed Files
+- `frontend/app/layout.tsx` (MODIFIED)
+
+### Summary
+- Updated the hardcoded `<link rel="icon" ... />` in the frontend RootLayout to point to `/fav.png` instead of the default `/favicon.ico`.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**. Ensures brand visibility via the browser tab icon.
+
+### Verification Status
+- Verified that `layout.tsx` output includes the updated reference.
+
+---
+
 ## 2026-04-06: Kadence Starter Templates Scrape & Sanity Import (91 Templates)
 
 ### Changed Files

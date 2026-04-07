@@ -154,7 +154,7 @@ export default async function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       style={themeVars}
     >
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/fav.png" />
       <body
         className={cn("min-h-screen bg-background font-sans antialiased overscroll-none")}
       >
