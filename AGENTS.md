@@ -93,3 +93,10 @@
 - Before adding a new hybrid main page, review:
   - `skills/hybrid-content-page-workflow/SKILL.md`
   - `docs/sanity-seed-guardrails.md`
+
+## UI Component Architecture Rule
+
+- **Strict Component Reusability**: When building or modifying React UI for the frontend, **agents must prioritize existing Shadcn UI components** or other predefined styles in `frontend/components/ui/` (e.g., `Button`, `Select`, `Tabs`, `Card`, etc.).
+- **Do not use raw HTML elements** like `<select>`, standard `<button>`, or unstyled `<input>` when an equivalent scalable React UI component is available.
+- **Missing Components**: If a standard UI component is missing, the agent MUST use the Shadcn CLI to install it (e.g., `cd frontend && npx shadcn@latest add [component]`) rather than building an isolated, ad-hoc version using generic HTML.
+- Ensure any UI component built strictly matches the Vercel architecture and design systems currently enforced in the repository to ensure scalability.

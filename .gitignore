@@ -72,3 +72,7 @@ OPS-CREDENTIALS-CONFIGURED.md
 OPS-DASHBOARD-READY.md
 docs/ops-dashboard-setup.md
 docs/ops-dashboard-files-summary.md
+
+# Ignoring temporary dirs and agents cache
+/tmp/
+/.agents/

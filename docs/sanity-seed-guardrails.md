@@ -13,6 +13,8 @@ Gunakan aturan ini setiap kali melakukan seed, import, insert, atau patch docume
   - `faqs[]`
   - item `Portable Text` seperti `body[]`, `markDefs[]`, dan `children[]`
 
+> **Developer info**: This usually happens when items are created using an API client, and the `_key` property has not been included. The value of the `_key` property must be a unique string. Saat melakukan script data import, pastikan untuk men-generate `crypto.randomUUID()` untuk setiap item dalam iterasi array.
+
 Contoh:
 
 ```ts

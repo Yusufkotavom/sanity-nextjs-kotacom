@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
 
 type Density = "compact" | "regular";
-type HeightVariant = "compact" | "regular" | "tall";
+type HeightVariant = "compact" | "regular" | "tall" | "auto";
 
 const densityStyles: Record<Density, string> = {
   compact:
@@ -19,6 +19,7 @@ const mediaHeightStyles: Record<HeightVariant, string> = {
   compact: "aspect-square lg:h-48",
   regular: "h-44 sm:h-48 lg:h-56",
   tall: "h-[15rem] sm:h-[20rem] md:h-[25rem] lg:h-[9.5rem] xl:h-[12rem]",
+  auto: "h-auto w-full",
 };
 
 export function ArchiveCardShell({
@@ -68,6 +69,7 @@ export function ArchiveCardMedia({
   }
 
   const isCompact = heightVariant === "compact";
+  const isAuto = heightVariant === "auto";
   const targetWidth = isCompact ? 480 : heightVariant === "tall" ? 960 : 800;
 
   return (
@@ -81,10 +83,10 @@ export function ArchiveCardMedia({
       <Image
         src={urlFor(image).width(targetWidth).quality(quality).url()}
         alt={image?.alt || altFallback}
-        fill={!isCompact}
-        width={isCompact ? 400 : undefined}
-        height={isCompact ? 400 : undefined}
-        style={{ objectFit: "cover" }}
+        fill={!isCompact && !isAuto}
+        width={isCompact || isAuto ? targetWidth : undefined}
+        height={isCompact || isAuto ? targetWidth * 1.5 : undefined} // approximate or let h-auto scale it
+        style={{ objectFit: isAuto ? "contain" : "cover", height: isAuto ? "auto" : "100%", width: "100%" }}
         placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
         blurDataURL={image?.asset?.metadata?.lqip || ""}
         sizes={sizes}

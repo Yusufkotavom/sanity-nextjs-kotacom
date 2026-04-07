@@ -19,7 +19,7 @@ export default async function ProjectsPage() {
         <div className="mb-10">
           <h1 className="text-4xl font-bold md:text-5xl">Projects</h1>
           <p className="mt-3 max-w-2xl text-foreground/70">
-            Case-driven portfolio of product, service, and software delivery work.
+            Explore our case-driven portfolio, web templates, and open-source software delivery.
           </p>
         </div>
         <ProjectGrid projects={projects as any[]} />

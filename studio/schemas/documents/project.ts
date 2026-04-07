@@ -78,6 +78,46 @@ export default defineType({
       validation: (Rule) => Rule.integer().min(1990).max(2100),
     }),
     defineField({
+      name: "projectType",
+      title: "Project Type",
+      type: "string",
+      group: "settings",
+      options: {
+        list: [
+          { title: "Portfolio", value: "portfolio" },
+          { title: "Website", value: "website" },
+          { title: "Software", value: "software" },
+          { title: "Repository", value: "repository" },
+        ],
+        layout: "dropdown",
+      },
+      initialValue: "portfolio",
+    }),
+    defineField({
+      name: "repositoryUrl",
+      title: "Repository URL",
+      description: "Link to the source code (e.g., GitHub).",
+      type: "url",
+      group: "settings",
+      validation: (Rule) =>
+        Rule.uri({
+          allowRelative: false,
+          scheme: ["http", "https"],
+        }),
+    }),
+    defineField({
+      name: "previewUrl",
+      title: "Live Preview URL",
+      description: "Link to a live demo or preview environment if different from Project URL.",
+      type: "url",
+      group: "settings",
+      validation: (Rule) =>
+        Rule.uri({
+          allowRelative: false,
+          scheme: ["http", "https"],
+        }),
+    }),
+    defineField({
       name: "projectUrl",
       title: "Project URL",
       type: "url",

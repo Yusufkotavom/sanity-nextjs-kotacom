@@ -4,6 +4,47 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-06: Kadence Starter Templates Scrape & Sanity Import (91 Templates)
+
+### Changed Files
+- `.agents/skills/sanity-mass-scraper-importer/scripts/scrape_kadence.py` (NEW)
+- `studio/scripts/import-blocksy.mjs` (MODIFIED — added dynamic CLI arg for input file)
+- `/tmp/kadence_data.json` (generated, not committed)
+
+### Summary
+- Built `scrape_kadence.py` using Playwright to scrape all 91 starter templates from `kadencewp.com/kadence-theme/starter-templates/`. Extracts: title, live preview URL, categories, and excerpt.
+- Implemented **category mapping** to normalize 47 raw Kadence categories into 7 clean buckets: `Business`, `Blog`, `Creative`, `Education`, `E-Commerce`, `Events`, `Non-Profit`.
+- Modified `import-blocksy.mjs` to accept a dynamic CLI argument for input file path, making the importer reusable across Blocksy and Kadence datasets.
+- Successfully imported all 91 Kadence templates into Sanity CMS with recursive `_key` injection and automatic category document creation.
+
+### Impact on SEO/Integration
+- Significantly expands the project archive with 91 additional templates, increasing content volume for indexing.
+- All documents follow Sanity public content guardrails (no dots in `_id`, `_key` on all array items).
+
+### Verification Status
+- Import script exited with code 0. All 91 templates confirmed via Sanity Studio. Categories (7 total) auto-created and linked.
+
+---
+
+## 2026-04-06: Fix API Missing Key Guardrails & Mass Import 45+ Templates
+
+### Changed Files
+- `docs/sanity-seed-guardrails.md`
+- `studio/scripts/import-blocksy.mjs`
+
+### Summary
+- Updated `sanity-seed-guardrails.md` to explicitly map the Sanity missing `_key` error log to API-created structures, adding guidance on generating UUIDs.
+- Updated `import-blocksy.mjs` to traverse arrays explicitly and automatically inject `crypto.randomUUID()` to all nested elements seamlessly.
+- Deployed a completely automated mass scraper that gathered 45+ starter templates and successfully pushed them to Sanity CMS with rich texts and images.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**. Ensures total frontend rendering stability by preventing runtime crashes caused by lists missing the `_key` index in Next.js array mapping logic. 
+
+### Verification Status
+- Verified script execution without any `_key` exceptions and data successfully indexed on the local app.
+
+---
+
 ## 2026-04-06: Pembuatan Website Page Expansion with New SEO Blocks
 
 ### Changed Files
@@ -398,3 +439,31 @@ Automatically added SEO blocks to all money pages:
 4. Check all blocks render correctly
 5. Monitor Google Search Console
 6. Track conversion rate improvements
+
+## 2026-04-06 - Projects Page Dual-Purpose Expansion
+
+### Changed Files
+- `studio/schemas/documents/project.ts` (UPDATED)
+- `frontend/sanity/queries/project.ts` (UPDATED)
+- `frontend/app/(main)/projects/page.tsx` (UPDATED)
+- `frontend/components/projects/project-grid.tsx` (UPDATED)
+- `frontend/components/ui/project-card.tsx` (UPDATED)
+- `frontend/app/(main)/projects/[slug]/page.tsx` (UPDATED)
+
+### Summary of Changes
+1. Expanded the `project` schema to include `projectType` (Portfolio, Website, Software, Repository), `repositoryUrl`, and `previewUrl` to support templates and open-source repos.
+2. Updated GROQ queries to fetch the new fields.
+3. Added a client-side `ProjectFilter` directly within `project-grid.tsx` to allow users to filter projects by `projectType` and `categories` (taxonomies).
+4. Updated `project-card.tsx` to render `projectType` and category badges.
+5. Updated `[slug]/page.tsx` to render the new metadata fields and display prominent buttons for "Live Preview" and "Source Repository".
+
+### Impact on SEO/Integration
+- **Rich Snippets & UX:** Users can now easily filter templates and portfolios, improving time-on-site and navigational flow.
+- **Content Expansion:** Broadens the use-case of Kotacom to be a resource hub (open-source repos, templates) rather than purely a client portfolio, capturing template-related search intent.
+- **Integration:** Maintained sync between Sanity schema and Next.js frontend queries.
+
+### Verification Status
+- ✅ Schema updated successfully
+- ✅ Frontend queries and filtering logic added
+- ⚠️ Pending: Real data input via Sanity Studio
+- ⚠️ Pending: Build and deploy verify

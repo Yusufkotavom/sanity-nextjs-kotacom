@@ -18,6 +18,9 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
   clientName,
   industry,
   completionYear,
+  projectType,
+  repositoryUrl,
+  previewUrl,
   projectUrl,
   featured,
   categories[]->{
@@ -44,6 +47,9 @@ export const PROJECTS_QUERY = groq`*[_type == "project" && defined(slug)] | orde
   clientName,
   industry,
   completionYear,
+  projectType,
+  repositoryUrl,
+  previewUrl,
   projectUrl,
   featured,
   categories[]->{
@@ -63,6 +69,9 @@ export const PROJECTS_HOME_QUERY = groq`*[_type == "project" && defined(slug)] |
   clientName,
   industry,
   completionYear,
+  projectType,
+  repositoryUrl,
+  previewUrl,
   projectUrl,
   featured,
   categories[]->{
