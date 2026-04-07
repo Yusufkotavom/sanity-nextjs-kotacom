@@ -1,6 +1,7 @@
 import ProjectGrid from "@/components/projects/project-grid";
 import { fetchSanityProjects } from "@/sanity/lib/fetch";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
+import { Suspense } from "react";
 
 export async function generateMetadata() {
   return await generateBasicMetadata({
@@ -22,7 +23,9 @@ export default async function ProjectsPage() {
             Explore our case-driven portfolio, web templates, and open-source software delivery.
           </p>
         </div>
-        <ProjectGrid projects={projects as any[]} />
+        <Suspense fallback={<div className="h-40 flex items-center justify-center">Loading...</div>}>
+          <ProjectGrid projects={projects as any[]} />
+        </Suspense>
       </div>
     </section>
   );

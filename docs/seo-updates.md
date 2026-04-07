@@ -483,3 +483,37 @@ Automatically added SEO blocks to all money pages:
 - ✅ Frontend queries and filtering logic added
 - ⚠️ Pending: Real data input via Sanity Studio
 - ⚠️ Pending: Build and deploy verify
+
+## 2026-04-07: Open Source Software & Framework Templates Mass Import
+
+### Changed Files
+- `docs/seo-updates.md` (UPDATED)
+
+### Summary of Changes
+1. Imported 17 high-quality templates and Open Source Software (OSS) entries (Next.js Commerce, Moodle, Odoo, WordPress, Strapi, etc.) to Sanity CMS.
+2. Verified project Types (`Website` and `Software`) and set up proper categories (`E-Commerce`, `Business`, `Education`, etc.).
+3. Programmatically set `meta.noindex = true` for all 17 imported entries so that they won't pollute the sitemap with duplicate or external content.
+
+### Impact on SEO/Integration
+- **Index Management / Sitemap:** Correctly flagged external software and templates as `noindex`, preventing thin content or external links from being crawled improperly.
+- **Content Expansion:** Enhances Kotacom's portfolio directory to become a true template and open-source directory hub for users, directly addressing the "free templates" and "open source" intents.
+
+### Verification Status
+- ✅ 17/17 imports successful
+- ✅ `noindex` applied securely on Sanity for all new templates
+
+## 2026-04-07 — Domain Migration: Replace Hardcoded Vercel & sanity.kotacom.id Domains
+
+**Changed files:**
+- `frontend/studio.env` — SANITY_STUDIO_PREVIEW_URL → https://www.kotacom.id
+- `frontend/scripts/pagespeed-insights-batch.mjs` — DEFAULT_SITEMAP → https://www.kotacom.id/sitemap.xml
+- `seo-dashboard/.env.server` — GSC_SITE_URL, INDEXNOW_KEY_LOCATION, FRONTEND_REVALIDATE_URL → https://www.kotacom.id
+- `seo-dashboard/.env.local` — GSC_SITE_URL, INDEXNOW_KEY_LOCATION → https://www.kotacom.id
+- `studio/.env`, `studio/.env.example`, `studio/studio.env`, `studio/vercel-frontend.env`, `studio/github-actions-vars.env` — SANITY_STUDIO_PREVIEW_URL → https://www.kotacom.id
+- `github-actions-vars.env`, `vercel-frontend.env`, `studio.env` (root) — all domain refs → https://www.kotacom.id
+
+**Summary:** Replaced all hardcoded `sanity-nextjs-kotacom-frontend.vercel.app` and `sanity.kotacom.id` references with the production domain `https://www.kotacom.id`. Studio domain remains `studio.kotacom.id` (correct, separate subdomain).
+
+**Impact:** Ensures sitemap, GSC tracking, IndexNow, revalidation webhooks, and Sanity Studio preview all point to the correct live domain.
+
+**Verification:** Manual grep audit — no remaining vercel.app or sanity.kotacom.id in active code files.

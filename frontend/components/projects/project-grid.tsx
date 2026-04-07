@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import ProjectCard from "@/components/ui/project-card";
 import LoadMoreGrid from "@/components/ui/load-more-grid";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -19,25 +20,57 @@ export default function ProjectGrid({
   step = 16,
   gridClassName = "grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3",
 }: ProjectGridProps) {
-  const [selectedType, setSelectedType] = useState<string>("All");
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Read initial values from URL, fallback to "All"
+  const urlType = searchParams.get("type");
+  const urlCategory = searchParams.get("category");
+
+  const [selectedType, setSelectedType] = useState<string>(
+    urlType ? urlType.toLowerCase() : "All"
+  );
+  
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    urlCategory ? urlCategory.toLowerCase() : "All"
+  );
 
   const types = useMemo(() => {
-    const t = new Set(projects.map((p) => p.projectType || "portfolio"));
+    const t = new Set(projects.map((p) => p.projectType?.toLowerCase() || "portfolio"));
     return ["All", ...Array.from(t)];
   }, [projects]);
 
   const categories = useMemo(() => {
     const validProjects = selectedType === "All"
       ? projects
-      : projects.filter(p => (p.projectType || "portfolio") === selectedType);
+      : projects.filter(p => (p.projectType?.toLowerCase() || "portfolio") === selectedType);
 
     const c = new Set(
-      validProjects.flatMap((p) => p.categories?.map((cat: any) => cat.title) || [])
+      validProjects.flatMap((p) => p.categories?.map((cat: any) => cat.title?.toLowerCase()) || [])
     );
     // Sort categories alphabetically but keep "All" first
     return ["All", ...Array.from(c).sort()];
   }, [projects, selectedType]);
+
+  // Sync state to URL without scrolling
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    
+    if (selectedType && selectedType !== "All") {
+      params.set("type", selectedType);
+    } else {
+      params.delete("type");
+    }
+
+    if (selectedCategory && selectedCategory !== "All") {
+      params.set("category", selectedCategory);
+    } else {
+      params.delete("category");
+    }
+
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [selectedType, selectedCategory, pathname, router, searchParams]);
 
   // Reset category if it's no longer valid for the selected type
   useEffect(() => {
@@ -48,11 +81,13 @@ export default function ProjectGrid({
 
   const filteredProjects = useMemo(() => {
     return projects.filter((p) => {
-      const matchType =
-        selectedType === "All" || (p.projectType || "portfolio") === selectedType;
+      const pType = p.projectType?.toLowerCase() || "portfolio";
+      const matchType = selectedType === "All" || pType === selectedType;
+      
       const matchCategory =
         selectedCategory === "All" ||
-        (p.categories && p.categories.some((c: any) => c.title === selectedCategory));
+        (p.categories && p.categories.some((c: any) => c.title?.toLowerCase() === selectedCategory));
+        
       return matchType && matchCategory;
     });
   }, [projects, selectedType, selectedCategory]);

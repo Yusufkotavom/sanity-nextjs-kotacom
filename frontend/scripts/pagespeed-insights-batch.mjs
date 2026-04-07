@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const FRONTEND_ROOT = path.resolve(__dirname, "..");
-const DEFAULT_SITEMAP = "https://sanity.kotacom.id/sitemap.xml";
+const DEFAULT_SITEMAP = "https://www.kotacom.id/sitemap.xml";
 
 function loadEnvFile(filePath) {
   const env = {};
