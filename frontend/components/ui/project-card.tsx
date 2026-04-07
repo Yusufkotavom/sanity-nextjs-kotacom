@@ -43,11 +43,11 @@ export default function ProjectCard({
       <div className="flex h-full flex-col">
         <div className="relative flex-grow">
           <ArchiveCardMedia image={image} heightVariant="auto" className="mb-0 rounded-none w-full border-b border-border/50" />
-          <div className="absolute right-3 top-3 flex gap-1.5 opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="absolute right-3 top-3 flex gap-1.5 opacity-100 md:opacity-0 transition-opacity md:group-hover:opacity-100 z-10">
             {repositoryUrl && (
               <button
                 type="button"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-background/90 text-foreground shadow-sm hover:bg-primary hover:text-primary-foreground"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-background/90 text-foreground shadow-sm hover:bg-primary hover:text-primary-foreground pointer-events-auto"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -60,7 +60,7 @@ export default function ProjectCard({
             {projectUrl && !previewUrl && (
               <button
                 type="button"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-background/90 text-foreground shadow-sm hover:bg-primary hover:text-primary-foreground"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-background/90 text-foreground shadow-sm hover:bg-primary hover:text-primary-foreground pointer-events-auto"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -73,7 +73,7 @@ export default function ProjectCard({
              {previewUrl && (
               <button
                 type="button"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm hover:bg-primary/90"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 pointer-events-auto"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
