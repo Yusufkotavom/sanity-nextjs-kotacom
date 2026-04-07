@@ -96,12 +96,12 @@ const fetchPublished = async <T>({
 };
 
 // Cached fetch for rarely-changing global data (settings, navigation, theme)
-// Revalidates every 3600s (1 hour) and uses tags for on-demand revalidation
+// Revalidates every 86400s (24 hours) and uses tags for on-demand revalidation
 const fetchPublishedCached = async <T>({
   query,
   params,
   tags,
-  revalidate = 3600,
+  revalidate = 86400,
 }: {
   query: string;
   params?: Record<string, unknown>;
@@ -124,7 +124,7 @@ export const fetchSanityPageBySlug = async ({
     query: PAGE_QUERY,
     params: { slug },
     tags: ["pages", `page:${slug}`],
-    revalidate: 600,
+    revalidate: 86400,
   });
 
   return data;
@@ -171,7 +171,7 @@ export const fetchTemplatePageByRoute = async ({
         query: TEMPLATE_PAGE_BY_ROUTE_QUERY,
         params: { route },
         tags: ["template-pages", `template-page:${route}`],
-        revalidate: 600,
+        revalidate: 86400,
       });
 
   if (data) return data;
@@ -221,7 +221,7 @@ export const fetchTemplatePageByRoute = async ({
             "template-pages",
             `template-page:${pattern}:${service || ""}:${city}`,
           ],
-          revalidate: 600,
+          revalidate: 86400,
         });
 
     if (fallback) return fallback;
@@ -286,7 +286,7 @@ export const fetchSanityPostBySlug = async ({
     query: POST_QUERY,
     params: { slug },
     tags: ["posts", `post:${slug}`],
-    revalidate: 600,
+    revalidate: 86400,
   });
 
   return data;
@@ -643,7 +643,7 @@ export const fetchSanityProductBySlug = async ({
     query: PRODUCT_QUERY,
     params: { slug },
     tags: ["products", `product:${slug}`],
-    revalidate: 600,
+    revalidate: 86400,
   });
 
   return data;
@@ -714,7 +714,7 @@ export const fetchSanityServiceBySlug = async ({
     query: SERVICE_QUERY,
     params: { slug },
     tags: ["services", `service:${slug}`],
-    revalidate: 600,
+    revalidate: 86400,
   });
 
   return data;
@@ -757,7 +757,7 @@ export const fetchSanityProjectBySlug = async ({
     query: PROJECT_QUERY,
     params: { slug },
     tags: ["projects", `project:${slug}`],
-    revalidate: 600,
+    revalidate: 86400,
   });
 
   return data;

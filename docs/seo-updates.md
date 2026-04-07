@@ -517,3 +517,18 @@ Automatically added SEO blocks to all money pages:
 **Impact:** Ensures sitemap, GSC tracking, IndexNow, revalidation webhooks, and Sanity Studio preview all point to the correct live domain.
 
 **Verification:** Manual grep audit — no remaining vercel.app or sanity.kotacom.id in active code files.
+
+## 2026-04-07: Optimasi Caching Vercel untuk menghemat limit ISR Writes
+### Changed Files
+- `frontend/app/(main)/layout.tsx` (MODIFIED)
+- `frontend/sanity/lib/fetch.ts` (MODIFIED)
+
+### Summary
+- Diubah rentang `revalidate` default dari 600 detik (10 menit) menjadi 86400 detik (24 jam) di `layout.tsx` dan semua pemanggilan API lokal `fetchPublishedCached` di dalam `fetch.ts`.
+- Hal ini dilakukan agar Vercel cache tidak melakukan re-write/pengisian memori ulang secara mandiri setiap 10 menit.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**. Hal ini sangat krusial agar website tidak mencapai batasan "Limit Exceeded" untuk *Hobby/Free Tier* (Vercel Data Cache dan Fast Data Transfer). Update halaman tidak akan tertinggal sama sekali (Realtime), karena masih terselamatkan dan ditrigger oleh `revalidate/route.ts` via webhook dari Sanity saat konten di-publish.
+
+### Verification Status
+- Memastikan semua baris koding yang memuat `revalidate: 600` tidak ada lagi di dalam folder frontend.
