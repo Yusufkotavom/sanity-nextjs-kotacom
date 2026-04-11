@@ -2,12 +2,14 @@
 
 declare global {
   interface Window {
-    dataLayer: unknown[];
     gtag?: (...args: unknown[]) => void;
   }
 }
 
-export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
+export const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ||
+  process.env.NEXT_PUBLIC_GA_ID ||
+  "G-P0DQM5CH0D";
 
 export function isGaEnabled() {
   return Boolean(GA_MEASUREMENT_ID);
@@ -58,4 +60,3 @@ export function trackWhatsAppClick({
     page_path: pagePath || "",
   });
 }
-

@@ -781,3 +781,20 @@ Automatically added SEO blocks to all money pages:
 - ✅ Code-level verification completed for GA4 + WA instrumentation wiring.
 - ⚠️ `pnpm --filter frontend run typecheck` failed due pre-existing stale `.next/types` include references, unrelated to this change.
 - ⚠️ `pnpm --filter frontend run build` failed on pre-existing `proxy.ts` runtime config (`Route segment config is not allowed in Proxy file`), unrelated to this change.
+
+## 2026-04-11 — GA4 Measurement ID Default Set
+
+### Changed Files
+- `frontend/lib/analytics.ts`
+- `frontend/.env.example`
+
+### Summary of Changes
+1. Set GA4 default fallback measurement ID to `G-P0DQM5CH0D` in frontend analytics loader.
+2. Updated frontend env example to use the same measurement ID as default reference.
+
+### Impact on SEO/Integration
+- GA4 page view and WhatsApp click events can run immediately with the provided ID, while still allowing environment override.
+
+### Verification Status
+- ✅ Code-level config wired.
+- ⚠️ Frontend build in local shell still requires Sanity public env variables (`NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`) to complete static config collection.
