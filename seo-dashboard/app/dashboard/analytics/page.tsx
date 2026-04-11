@@ -1,7 +1,7 @@
 import { isDatabaseConfigured, db } from "@/lib/db-safe";
 import { DatabaseNotConfigured, DatabaseError } from "@/components/database-error";
 import { schema } from "@repo/db";
-import { desc, inArray, sql, and, gte, lte } from "drizzle-orm";
+import { desc, inArray, and, gte, lte } from "drizzle-orm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AnalyticsChart } from "@/components/analytics-chart";
@@ -28,6 +28,8 @@ export default async function AnalyticsPage({
   let totalImpressions = 0;
   let avgCtr = 0;
   let avgPosition = 0;
+  let totalSessions = 0;
+  let totalConversions = 0;
   let chartData: Array<{ date: string; clicks: number; impressions: number }> = [];
   
   try {
@@ -95,6 +97,20 @@ export default async function AnalyticsPage({
 
     urlById = new Map(contentItems.map((item) => [item.id, item.url]));
 
+    const ga4Rows = contentIds.length
+      ? await db()
+          .select()
+          .from(schema.analyticsGa4Daily)
+          .where(inArray(schema.analyticsGa4Daily.contentItemId, contentIds))
+      : [];
+    const ga4ByContentDate = new Map(
+      ga4Rows.map((item) => [`${item.contentItemId || ""}:${item.date}`, item]),
+    );
+    rows = rows.map((row) => ({
+      ...row,
+      ga4: ga4ByContentDate.get(`${row.contentItemId || ""}:${row.date}`) || null,
+    }));
+
     // Calculate summary metrics
     totalClicks = rows.reduce((sum, row) => sum + (row.clicks || 0), 0);
     totalImpressions = rows.reduce((sum, row) => sum + (row.impressions || 0), 0);
@@ -104,6 +120,11 @@ export default async function AnalyticsPage({
     avgPosition = positionRows.length > 0
       ? positionRows.reduce((sum, row) => sum + (row.position || 0), 0) / positionRows.length
       : 0;
+    totalSessions = rows.reduce((sum, row) => sum + Number(row.ga4?.sessions || 0), 0);
+    totalConversions = rows.reduce(
+      (sum, row) => sum + Number(row.ga4?.conversions || 0),
+      0,
+    );
 
     // Prepare chart data (aggregate by date)
     const dateMap = new Map<string, { clicks: number; impressions: number }>();
@@ -131,6 +152,10 @@ export default async function AnalyticsPage({
     impressions: row.impressions,
     ctr: row.ctr ? (row.ctr * 100).toFixed(2) : "-",
     position: row.position ? row.position.toFixed(1) : "-",
+    sessions: row.ga4?.sessions ?? 0,
+    conversions: row.ga4?.conversions ?? 0,
+    engagedSessions: row.ga4?.engagedSessions ?? 0,
+    revenue: row.ga4?.revenue ?? 0,
   }));
 
   const exportColumns = [
@@ -140,6 +165,10 @@ export default async function AnalyticsPage({
     { key: "impressions", label: "Impressions" },
     { key: "ctr", label: "CTR (%)" },
     { key: "position", label: "Position" },
+    { key: "sessions", label: "GA4 Sessions" },
+    { key: "engagedSessions", label: "Engaged Sessions" },
+    { key: "conversions", label: "Conversions" },
+    { key: "revenue", label: "Revenue" },
   ];
 
   const dateRangeText = params.from && params.to
@@ -160,7 +189,7 @@ export default async function AnalyticsPage({
       </Card>
 
       {/* Summary Metrics */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Clicks</CardTitle>
@@ -202,6 +231,28 @@ export default async function AnalyticsPage({
           <CardContent>
             <div className="text-2xl font-bold">{avgPosition.toFixed(1)}</div>
             <p className="text-xs text-muted-foreground mt-1">Search ranking</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">GA4 Sessions</CardTitle>
+            <TrendingUp className="size-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalSessions.toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground mt-1">{dateRangeText}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Conversions</CardTitle>
+            <TrendingUp className="size-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalConversions.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground mt-1">GA4 conversion count</p>
           </CardContent>
         </Card>
       </div>
@@ -264,6 +315,8 @@ export default async function AnalyticsPage({
                   <TableHead className="text-right">
                     <SortableHeader column="position" label="Position" align="right" />
                   </TableHead>
+                  <TableHead className="text-right">Sessions</TableHead>
+                  <TableHead className="text-right">Conversions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -280,6 +333,10 @@ export default async function AnalyticsPage({
                     </TableCell>
                     <TableCell className="text-right">
                       {row.position ? row.position.toFixed(1) : "-"}
+                    </TableCell>
+                    <TableCell className="text-right">{row.ga4?.sessions ?? 0}</TableCell>
+                    <TableCell className="text-right">
+                      {row.ga4?.conversions != null ? Number(row.ga4.conversions).toFixed(2) : "-"}
                     </TableCell>
                   </TableRow>
                 ))}

@@ -3,6 +3,9 @@ import { google } from "googleapis";
 import { getEnabledEngines, getSeoOpsRuntimeConfig } from "@/lib/seo-ops/config";
 import { getSeoOpsResolvedSettings } from "@/lib/seo-ops/settings-source";
 import { IndexEngine, SeoIndexingJob, SeoJobTask } from "@/lib/seo-ops/types";
+import { db, isDatabaseConfigured } from "@/lib/db-safe";
+import { schema } from "@repo/db";
+import { eq } from "drizzle-orm";
 
 const jobs = new Map<string, SeoIndexingJob>();
 
@@ -26,6 +29,10 @@ function normalizeUrl(url: string) {
 
 function uniqueUrls(urls: string[]) {
   return Array.from(new Set(urls.map(normalizeUrl).filter(Boolean)));
+}
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function submitGoogle(url: string) {
@@ -134,6 +141,8 @@ async function processJob(jobId: string) {
   job.updatedAt = nowIso();
 
   const retryAttempts = (await getSeoOpsRuntimeConfig()).defaults.retryAttempts;
+  const taskDelayMs = Math.max(0, Number(process.env.SEO_INDEXING_TASK_DELAY_MS || 200));
+  const contentIdByUrl = new Map<string, string | null>();
 
   for (const task of job.tasks) {
     if (task.status !== "queued") continue;
@@ -152,14 +161,64 @@ async function processJob(jobId: string) {
         success = true;
         break;
       }
+      if (attempt <= retryAttempts) {
+        await sleep(250 * attempt);
+      }
     }
 
     task.status = success ? "success" : "failed";
     task.message = lastMessage;
     task.updatedAt = nowIso();
+
+    if (isDatabaseConfigured()) {
+      try {
+        const contentItemId = await resolveContentItemId(task.url, contentIdByUrl);
+        await db().insert(schema.searchSubmissions).values({
+          contentItemId,
+          provider: task.engine,
+          submissionType: `indexing_${job.source}`,
+          requestPayload: {
+            urls: [task.url],
+            jobId: job.id,
+            taskId: task.id,
+            source: job.source,
+            reason: job.reason,
+          },
+          responsePayload: {
+            message: lastMessage,
+            attempts: task.attempts,
+            status: task.status,
+          },
+          status: task.status === "success" ? "success" : "failed",
+          submittedAt: new Date(),
+        });
+      } catch {
+        // Keep indexing flow running even when DB logging is temporarily unavailable.
+      }
+    }
+
+    if (taskDelayMs > 0) {
+      await sleep(taskDelayMs);
+    }
   }
 
   recomputeJobStatus(job);
+}
+
+async function resolveContentItemId(url: string, cache: Map<string, string | null>) {
+  if (cache.has(url)) {
+    return cache.get(url) || null;
+  }
+
+  const row = await db()
+    .select({ id: schema.contentItems.id })
+    .from(schema.contentItems)
+    .where(eq(schema.contentItems.url, url))
+    .limit(1);
+
+  const id = row[0]?.id || null;
+  cache.set(url, id);
+  return id;
 }
 
 export async function enqueueIndexingJob({

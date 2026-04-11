@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 import { canEncryptSeoSettings, encryptSeoSecret } from "@/lib/seo-ops/crypto";
 import { canWriteSeoOpsSettings, upsertSeoOpsSettings } from "@/lib/seo-ops/sanity-write";
-import { fetchSanitySeoOpsSettingsPrivate } from "@/sanity/lib/fetch";
+import { getSeoOpsResolvedSettings } from "@/lib/seo-ops/settings-source";
 
 type SaveBody = {
   googleEnabled?: boolean;
@@ -62,7 +62,8 @@ export async function POST(request: NextRequest) {
   }
 
   const body = (await request.json().catch(() => ({}))) as SaveBody;
-  const existing = await fetchSanitySeoOpsSettingsPrivate();
+  const resolved = await getSeoOpsResolvedSettings();
+  const existing = resolved.studio;
 
   const googleServiceAccountJson = normalizeString(body.googleServiceAccountJson);
   const indexNowKey = normalizeString(body.indexNowKey);

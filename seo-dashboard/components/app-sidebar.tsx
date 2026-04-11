@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   Globe,
   LogOut,
+  TrendingUp,
 } from "lucide-react";
 
 import {
@@ -86,6 +87,11 @@ export const dashboardNavGroups = [
         title: "Analytics", 
         url: "/dashboard/analytics",
         icon: BarChart3,
+      },
+      {
+        title: "Opportunities",
+        url: "/dashboard/opportunities",
+        icon: TrendingUp,
       },
     ],
   },

@@ -1,10 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
-import { generateAiText } from "@/lib/ai-writer/generate";
-import { getAiWriterResolvedSettings } from "@/lib/ai-writer/settings-source";
-import { db } from "@/lib/db";
-import { createJobRun, updateJobRun } from "@/lib/jobs";
-import { schema } from "@repo/db";
 
 type Body = {
   prompt?: string;
@@ -15,6 +9,22 @@ type Body = {
 };
 
 export async function POST(request: NextRequest) {
+  const [
+    { ensureSeoApiAccess },
+    { generateAiText },
+    { getAiWriterResolvedSettings },
+    { db },
+    { createJobRun, updateJobRun },
+    { schema },
+  ] = await Promise.all([
+    import("@/lib/seo-ops/api-auth"),
+    import("@/lib/ai-writer/generate"),
+    import("@/lib/ai-writer/settings-source"),
+    import("@/lib/db"),
+    import("@/lib/jobs"),
+    import("@repo/db"),
+  ]);
+
   const auth = await ensureSeoApiAccess(request);
   if (!auth.ok) return auth.response;
 

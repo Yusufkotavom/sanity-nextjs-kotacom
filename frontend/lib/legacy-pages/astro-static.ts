@@ -12,7 +12,7 @@
  * 
  * Future: Will be archived after route handlers updated to use Sanity first
  * 
- * See: docs/MIGRATION-STATUS.md for details
+ * See: docs/astro-migration-megaplan.md for details
  */
 
 import manifest from "./astro-static-manifest.json";

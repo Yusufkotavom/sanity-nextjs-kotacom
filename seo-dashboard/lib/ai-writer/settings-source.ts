@@ -1,9 +1,19 @@
-import { fetchSanityAiWriterSettingsPrivate } from "@/sanity/lib/fetch";
-
 export type AiWriterMode = "gateway" | "direct-gemini" | "direct-groq";
 
 export async function getAiWriterResolvedSettings() {
-  const studio = await fetchSanityAiWriterSettingsPrivate();
+  let studio: Awaited<
+    ReturnType<
+      (typeof import("@/sanity/lib/fetch"))["fetchSanityAiWriterSettingsPrivate"]
+    >
+  > = null;
+  try {
+    const { fetchSanityAiWriterSettingsPrivate } = await import("@/sanity/lib/fetch");
+    studio = await fetchSanityAiWriterSettingsPrivate();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    const isMissingPublicSanityEnv = message.includes("Missing environment variable: NEXT_PUBLIC_SANITY_");
+    if (!isMissingPublicSanityEnv) throw error;
+  }
 
   const mode = (studio?.mode || "gateway") as AiWriterMode;
   const enabled = Boolean(studio?.enabled);

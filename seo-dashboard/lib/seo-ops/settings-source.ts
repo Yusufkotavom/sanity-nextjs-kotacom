@@ -1,5 +1,4 @@
 import { decryptSeoSecret } from "@/lib/seo-ops/crypto";
-import { fetchSanitySeoOpsSettingsPrivate } from "@/sanity/lib/fetch";
 
 function envTrue(value?: string) {
   return ["1", "true", "yes", "on"].includes((value || "").toLowerCase());
@@ -28,7 +27,19 @@ function pickString(studioValue: StringLike, envValue: string) {
 }
 
 export async function getSeoOpsResolvedSettings() {
-  const studio = await fetchSanitySeoOpsSettingsPrivate();
+  let studio: Awaited<
+    ReturnType<
+      (typeof import("@/sanity/lib/fetch"))["fetchSanitySeoOpsSettingsPrivate"]
+    >
+  > = null;
+  try {
+    const { fetchSanitySeoOpsSettingsPrivate } = await import("@/sanity/lib/fetch");
+    studio = await fetchSanitySeoOpsSettingsPrivate();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    const isMissingPublicSanityEnv = message.includes("Missing environment variable: NEXT_PUBLIC_SANITY_");
+    if (!isMissingPublicSanityEnv) throw error;
+  }
 
   const studioGoogleJson = decryptSeoSecret(studio?.googleServiceAccountEncrypted);
   const studioIndexNowKey = decryptSeoSecret(studio?.indexNowKeyEncrypted);

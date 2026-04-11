@@ -4,7 +4,6 @@ import { schema } from "@repo/db";
 import { and, lte, eq, gte } from "drizzle-orm";
 import { drain, QUEUES } from "@/lib/queue";
 import { updateJobRun, createJobRun } from "@/lib/jobs";
-import { generateAiText } from "@/lib/ai-writer/generate";
 import { auditHtml } from "@repo/seo";
 import { submitIndexNow, submitSitemap, fetchSearchAnalytics, inspectUrl } from "@repo/search";
 import { desc, inArray } from "drizzle-orm";
@@ -16,6 +15,7 @@ function requireCronSecret(request: NextRequest) {
 }
 
 async function processAiJob(jobId: string, payload: any) {
+  const { generateAiText } = await import("@/lib/ai-writer/generate");
   await updateJobRun(jobId, { status: "processing", startedAt: new Date() });
   const result = await generateAiText({
     prompt: payload.prompt,
@@ -215,16 +215,30 @@ export async function POST(request: NextRequest) {
       const startDate = start.toISOString().slice(0, 10);
       const endDate = end.toISOString().slice(0, 10);
 
-      const analytics = await fetchSearchAnalytics({
-        clientEmail,
-        privateKey,
-        siteUrl,
-        startDate,
-        endDate,
-      });
+      const dimensions = ["page", "query", "country", "device"];
+      const rowLimit = 25000;
+      let startRow = 0;
+      const allRows: NonNullable<Awaited<ReturnType<typeof fetchSearchAnalytics>>["rows"]> = [];
 
-      const rows = analytics.rows || [];
-      const urls = rows.map((row) => row.keys?.[0]).filter((url): url is string => Boolean(url));
+      while (true) {
+        const analytics = await fetchSearchAnalytics({
+          clientEmail,
+          privateKey,
+          siteUrl,
+          startDate,
+          endDate,
+          dimensions,
+          rowLimit,
+          startRow,
+        });
+        const rows = analytics.rows || [];
+        allRows.push(...rows);
+
+        if (rows.length < rowLimit) break;
+        startRow += rowLimit;
+      }
+
+      const urls = allRows.map((row) => row.keys?.[0]).filter((url): url is string => Boolean(url));
       if (urls.length) {
         const contentItems = await db()
           .select({ id: schema.contentItems.id, url: schema.contentItems.url })
@@ -232,28 +246,94 @@ export async function POST(request: NextRequest) {
           .where(inArray(schema.contentItems.url, urls));
 
         const idByUrl = new Map(contentItems.map((item) => [item.url, item.id]));
-        for (const row of rows) {
+        const aggregateByUrl = new Map<
+          string,
+          {
+            clicks: number;
+            impressions: number;
+            weightedPosition: number;
+            query: Map<string, number>;
+            country: Map<string, number>;
+            device: Map<string, number>;
+          }
+        >();
+
+        for (const row of allRows) {
           const url = row.keys?.[0];
-          const contentItemId = url ? idByUrl.get(url) : undefined;
+          if (!url) continue;
+          const query = row.keys?.[1] || "unknown";
+          const country = row.keys?.[2] || "unknown";
+          const device = row.keys?.[3] || "unknown";
+          const clicks = row.clicks ?? 0;
+          const impressions = row.impressions ?? 0;
+          const position = row.position ?? 0;
+
+          const current =
+            aggregateByUrl.get(url) ||
+            {
+              clicks: 0,
+              impressions: 0,
+              weightedPosition: 0,
+              query: new Map<string, number>(),
+              country: new Map<string, number>(),
+              device: new Map<string, number>(),
+            };
+
+          current.clicks += clicks;
+          current.impressions += impressions;
+          current.weightedPosition += position * impressions;
+          current.query.set(query, (current.query.get(query) || 0) + clicks);
+          current.country.set(country, (current.country.get(country) || 0) + impressions);
+          current.device.set(device, (current.device.get(device) || 0) + impressions);
+          aggregateByUrl.set(url, current);
+        }
+
+        for (const [url, aggregate] of aggregateByUrl.entries()) {
+          const contentItemId = idByUrl.get(url);
           if (!contentItemId) continue;
+
+          const ctr = aggregate.impressions > 0 ? aggregate.clicks / aggregate.impressions : null;
+          const position =
+            aggregate.impressions > 0
+              ? aggregate.weightedPosition / aggregate.impressions
+              : null;
+
+          const topQueries = Array.from(aggregate.query.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10)
+            .map(([query, clicks]) => ({ query, clicks }));
+          const topCountries = Array.from(aggregate.country.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10)
+            .map(([country, impressions]) => ({ country, impressions }));
+          const topDevices = Array.from(aggregate.device.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([device, impressions]) => ({ device, impressions }));
 
           await db()
             .insert(schema.analyticsDaily)
             .values({
               date: endDate,
               contentItemId,
-              clicks: row.clicks ?? 0,
-              impressions: row.impressions ?? 0,
-              ctr: row.ctr != null ? String(row.ctr) : null,
-              position: row.position != null ? String(row.position) : null,
+              clicks: aggregate.clicks,
+              impressions: aggregate.impressions,
+              ctr: ctr != null ? String(ctr) : null,
+              position: position != null ? String(position) : null,
+              topQueries,
+              topCountries,
+              topDevices,
             })
             .onConflictDoUpdate({
               target: [schema.analyticsDaily.contentItemId, schema.analyticsDaily.date],
               set: {
-                clicks: row.clicks ?? 0,
-                impressions: row.impressions ?? 0,
-                ctr: row.ctr != null ? String(row.ctr) : null,
-                position: row.position != null ? String(row.position) : null,
+                clicks: aggregate.clicks,
+                impressions: aggregate.impressions,
+                ctr: ctr != null ? String(ctr) : null,
+                position: position != null ? String(position) : null,
+                topQueries,
+                topCountries,
+                topDevices,
               },
             });
         }

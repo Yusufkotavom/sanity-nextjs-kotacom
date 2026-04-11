@@ -103,7 +103,7 @@ export function ManualIndexForm() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="google">Google (IndexNow)</SelectItem>
+                <SelectItem value="google">Google (Indexing API)</SelectItem>
                 <SelectItem value="bing">Bing (IndexNow)</SelectItem>
                 <SelectItem value="yandex">Yandex (IndexNow)</SelectItem>
               </SelectContent>

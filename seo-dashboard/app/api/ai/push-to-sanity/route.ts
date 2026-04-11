@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
-import { db } from "@/lib/db";
-import { schema } from "@repo/db";
 import { eq } from "drizzle-orm";
-import { getSanityClient } from "@repo/sanity";
 import { randomUUID } from "crypto";
 
 export async function POST(request: NextRequest) {
+  const [{ ensureSeoApiAccess }, { db }, { schema }, { getSanityClient }] =
+    await Promise.all([
+      import("@/lib/seo-ops/api-auth"),
+      import("@/lib/db"),
+      import("@repo/db"),
+      import("@repo/sanity"),
+    ]);
+
   const auth = await ensureSeoApiAccess(request);
   if (!auth.ok) return auth.response;
 

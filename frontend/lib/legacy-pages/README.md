@@ -73,10 +73,9 @@ After all routes updated:
 ## Documentation
 
 See detailed migration docs:
-- `docs/MIGRATION-STATUS.md` - Current status
-- `docs/url-comparison-local-vs-sanity.md` - URL comparison
-- `docs/local-cleanup-plan.md` - Cleanup strategy
-- `docs/LOCAL-DATA-ARCHIVE-PLAN.md` - Archive plan
+- `docs/astro-migration-megaplan.md` - Current migration/source-of-truth status
+- `docs/seo-updates.md` - Change log and verification trail
+- `docs/archive/README.md` - Historical plans and archived context
 
 ## Questions?
 

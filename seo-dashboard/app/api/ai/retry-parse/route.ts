@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
-import { db } from "@/lib/db";
-import { schema } from "@repo/db";
 import { eq } from "drizzle-orm";
-import { generateAiText } from "@/lib/ai-writer/generate";
 
 export async function POST(request: NextRequest) {
+  const [{ ensureSeoApiAccess }, { db }, { schema }, { generateAiText }] = await Promise.all([
+    import("@/lib/seo-ops/api-auth"),
+    import("@/lib/db"),
+    import("@repo/db"),
+    import("@/lib/ai-writer/generate"),
+  ]);
+
   const auth = await ensureSeoApiAccess(request);
   if (!auth.ok) return auth.response;
 

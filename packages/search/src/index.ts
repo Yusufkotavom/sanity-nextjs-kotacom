@@ -58,12 +58,18 @@ export async function fetchSearchAnalytics({
   siteUrl,
   startDate,
   endDate,
+  dimensions = ["page"],
+  rowLimit = 25000,
+  startRow = 0,
 }: {
   clientEmail: string;
   privateKey: string;
   siteUrl: string;
   startDate: string;
   endDate: string;
+  dimensions?: string[];
+  rowLimit?: number;
+  startRow?: number;
 }) {
   const auth = createGscAuth(clientEmail, privateKey);
   const webmasters = google.webmasters({ version: "v3", auth });
@@ -72,7 +78,9 @@ export async function fetchSearchAnalytics({
     requestBody: {
       startDate,
       endDate,
-      dimensions: ["page"],
+      dimensions,
+      rowLimit,
+      startRow,
     },
   });
 

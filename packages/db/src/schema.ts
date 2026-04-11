@@ -164,3 +164,23 @@ export const analyticsDaily = pgTable(
     dateIndex: index("analytics_daily_date_idx").on(table.date),
   }),
 );
+
+export const analyticsGa4Daily = pgTable(
+  "analytics_ga4_daily",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    contentItemId: uuid("content_item_id").references(() => contentItems.id),
+    pageUrl: text("page_url").notNull(),
+    date: date("date").notNull(),
+    sessions: integer("sessions").default(0).notNull(),
+    engagedSessions: integer("engaged_sessions").default(0).notNull(),
+    conversions: numeric("conversions", { precision: 12, scale: 2 }),
+    revenue: numeric("revenue", { precision: 14, scale: 2 }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    uniqueDaily: uniqueIndex("analytics_ga4_daily_unique").on(table.pageUrl, table.date),
+    dateIndex: index("analytics_ga4_daily_date_idx").on(table.date),
+    contentDateIndex: index("analytics_ga4_daily_content_date_idx").on(table.contentItemId, table.date),
+  }),
+);

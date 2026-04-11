@@ -4,6 +4,111 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-11: SEO Ops Automation Hardening + Opportunity Board
+
+### Changed Files
+- `packages/db/src/schema.ts` (MODIFIED)
+- `packages/db/migrations/0001_mushy_fat_cobra.sql` (NEW)
+- `packages/db/migrations/meta/_journal.json` (MODIFIED)
+- `packages/search/src/index.ts` (MODIFIED)
+- `seo-dashboard/app/api/search/manual-submit/route.ts` (MODIFIED)
+- `seo-dashboard/lib/seo-ops/jobs.ts` (MODIFIED)
+- `seo-dashboard/app/api/internal/cron-run/route.ts` (MODIFIED)
+- `seo-dashboard/app/api/seo/data/import/ga4/route.ts` (MODIFIED)
+- `seo-dashboard/app/dashboard/analytics/page.tsx` (MODIFIED)
+- `seo-dashboard/app/dashboard/search/page.tsx` (MODIFIED)
+- `seo-dashboard/app/dashboard/opportunities/page.tsx` (NEW)
+- `seo-dashboard/components/app-sidebar.tsx` (MODIFIED)
+- `seo-dashboard/components/manual-index-form.tsx` (MODIFIED)
+- `seo-dashboard/.env.example` (MODIFIED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+- Replaced manual indexing stub flow with real queue-driven submit (`enqueueIndexingJob`) for provider-specific engines.
+- Added task-level DB logging for indexing job outcomes and introduced configurable pacing delay (`SEO_INDEXING_TASK_DELAY_MS`) plus retry backoff.
+- Added persistent GA4 daily table (`analytics_ga4_daily`) and upgraded GA4 import API to write upserted records into DB.
+- Upgraded GSC pull pipeline to multi-dimension aggregation (`page/query/country/device`) and now stores top queries/countries/devices in `analytics_daily`.
+- Extended analytics dashboard with GA4 sessions/conversions visibility.
+- Added new SEO Opportunity Board with:
+  - Quick Wins (high impressions, low CTR, rank 4-20)
+  - Decay Pages (7-day click drop detection)
+  - Indexing Blockers (latest non-pass inspection results)
+- Fixed search history UI URL-count mismatch by deriving count from request payload.
+
+### Impact on SEO/Integration
+- Direct SEO impact:
+  - Better actionability from enriched GSC dimensions and opportunity scoring.
+  - Better indexing automation reliability from queue-based manual submits.
+- Integration impact:
+  - DB schema expanded with GA4 persistence table.
+  - Dashboard now joins GSC + GA4 signals for deeper diagnostics.
+
+### Verification Status
+- Code-level verification complete via static inspection and type-safe route/schema wiring.
+- Runtime verification pending in target environment:
+  - Run DB migration `0001_mushy_fat_cobra`
+  - Trigger cron type `pull-analytics`
+  - Import GA4 sample rows
+  - Validate `/dashboard/opportunities` population
+
+---
+
+## 2026-04-11: Migration Documentation Cleanup (Obsolete Docs Removed)
+
+### Changed Files
+- `docs/MIGRATION-STATUS.md` (DELETED)
+- `docs/local-cleanup-plan.md` (DELETED)
+- `docs/url-comparison-local-vs-sanity.md` (DELETED)
+- `docs/LOCAL-DATA-ARCHIVE-PLAN.md` (DELETED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+- Removed migration-only documents that are no longer relevant after migration completion.
+- Updated migration megaplan status to mark core template parity as completed.
+- Added migration closeout note in megaplan snapshot to reflect documentation cleanup.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**.
+- Documentation/integration impact: reduces stale migration guidance and keeps active operational docs focused and current.
+
+### Verification Status
+- Verified removed files no longer exist in `docs/`.
+- Verified surviving migration source-of-truth document remains updated: `docs/astro-migration-megaplan.md`.
+
+---
+
+## 2026-04-11: Migration Documentation Cleanup (Wave 2 - SEO Dashboard Summaries)
+
+### Changed Files
+- `docs/seo-dashboard-improvements-summary.md` (DELETED)
+- `docs/seo-dashboard-phase2-summary.md` (DELETED)
+- `docs/seo-dashboard-phase3-summary.md` (DELETED)
+- `docs/seo-dashboard-phase3-visual-guide.md` (DELETED)
+- `docs/seo-dashboard-phase4-summary.md` (DELETED)
+- `docs/seo-dashboard-ux-review.md` (DELETED)
+- `docs/seo-dashboard-visual-guide.md` (DELETED)
+- `docs/seo-phase2-completion.md` (DELETED)
+- `docs/seo-implementation-summary.md` (DELETED)
+- `frontend/lib/legacy-pages/README.md` (MODIFIED)
+- `frontend/lib/legacy-pages/archive/README.md` (MODIFIED)
+- `frontend/lib/legacy-pages/astro-static.ts` (MODIFIED)
+- `frontend/scripts/compare-local-vs-sanity-urls.mjs` (MODIFIED)
+
+### Summary
+- Removed outdated phase-by-phase summary/visual review docs that were superseded by current operational documentation.
+- Repointed legacy-page documentation references to active docs (`astro-migration-megaplan.md`, `seo-updates.md`, `docs/archive/README.md`).
+- Updated URL comparison script output target from removed active-doc path to archived report path: `docs/archive/url-comparison-local-vs-sanity.md`.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**.
+- Documentation integration impact: removes stale references and prevents dead links to deleted migration docs.
+
+### Verification Status
+- Verified no remaining references to deleted docs in `docs/`, `frontend/`, `studio/`, and `.github/`.
+- Verified script now points to existing archive path for generated comparison report.
+
+---
+
 ## 2026-04-11: Force Edge Runtime for Netlify Proxy Bundling Compatibility
 
 ### Changed Files
@@ -597,3 +702,49 @@ Automatically added SEO blocks to all money pages:
 
 ### Verification Status
 - Memastikan semua baris koding yang memuat `revalidate: 600` tidak ada lagi di dalam folder frontend.
+
+## 2026-04-11 — SEO Ops Automation + Netlify Build Hardening (seo-dashboard)
+
+### Changed Files
+- `seo-dashboard/app/api/search/manual-submit/route.ts`
+- `seo-dashboard/lib/seo-ops/jobs.ts`
+- `packages/db/src/schema.ts`
+- `packages/db/migrations/0001_mushy_fat_cobra.sql`
+- `packages/db/migrations/meta/_journal.json`
+- `seo-dashboard/app/api/seo/data/import/ga4/route.ts`
+- `packages/search/src/index.ts`
+- `seo-dashboard/app/api/internal/cron-run/route.ts`
+- `seo-dashboard/app/dashboard/analytics/page.tsx`
+- `seo-dashboard/app/dashboard/opportunities/page.tsx`
+- `seo-dashboard/components/app-sidebar.tsx`
+- `seo-dashboard/app/dashboard/search/page.tsx`
+- `seo-dashboard/components/manual-index-form.tsx`
+- `seo-dashboard/lib/queue.ts`
+- `seo-dashboard/lib/seo-ops/settings-source.ts`
+- `seo-dashboard/lib/ai-writer/settings-source.ts`
+- `seo-dashboard/app/api/seo/config/save/route.ts`
+- `seo-dashboard/app/api/seo/config/status/route.ts`
+- `seo-dashboard/.env.example`
+
+### Summary of Changes
+1. Manual indexing submit now enqueues real jobs (`enqueueIndexingJob`) instead of returning mock-success.
+2. Indexing worker now writes per-task submission logs to DB with pacing (`SEO_INDEXING_TASK_DELAY_MS`) and retry backoff.
+3. Added persistent GA4 table (`analytics_ga4_daily`) + import upsert flow.
+4. Upgraded GSC pull to multi-dimension (`page/query/country/device`) with aggregated top queries/countries/devices in `analytics_daily`.
+5. Added `SEO Opportunity Board` page with:
+   - Quick Wins (high impressions, low CTR)
+   - Decay pages
+   - Indexing blockers
+6. Analytics dashboard now joins and exposes GA4 sessions/conversions.
+7. Netlify/Next build hardening: converted Sanity-dependent imports to lazy runtime imports in seo-dashboard API paths so `Collecting page data` no longer fails when public Sanity envs are absent during build.
+
+### Impact on SEO/Integration
+- Stronger indexing operations reliability: manual + queued + logged submissions are unified and auditable.
+- Richer SEO analytics stack: GSC dimensions and GA4 persistence enable actionable opportunity scoring.
+- Operational stability: seo-dashboard build/deploy no longer breaks on env-sensitive import-time errors.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run build` passed
+- ✅ `pnpm --filter seo-dashboard typecheck` previously passed in this cycle
+- ✅ Route generation includes `api/internal/cron-run`, `api/jobs/retry`, and `api/seo/config/*` without collect-page-data failures
+- ⚠️ DB migration execution in remote env remains required (`analytics_ga4_daily`)

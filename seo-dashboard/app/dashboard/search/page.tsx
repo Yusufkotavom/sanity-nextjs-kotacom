@@ -119,7 +119,11 @@ export default async function SearchPage({
                         {item.status}
                       </Badge>
                     </TableCell>
-                    <TableCell>{item.urlCount || "-"}</TableCell>
+                    <TableCell>
+                      {Array.isArray((item.requestPayload as { urls?: string[] } | null)?.urls)
+                        ? (item.requestPayload as { urls?: string[] }).urls?.length
+                        : "-"}
+                    </TableCell>
                     <TableCell className="text-sm">{formatDate(item.submittedAt)}</TableCell>
                   </TableRow>
                 ))}

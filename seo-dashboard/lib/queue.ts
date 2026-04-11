@@ -1,6 +1,15 @@
 import { Redis } from "@upstash/redis";
 
-const redis = Redis.fromEnv();
+let redisClient: Redis | null = null;
+
+function getRedisClient() {
+  if (redisClient) return redisClient;
+  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+    throw new Error("Missing Upstash Redis environment variables");
+  }
+  redisClient = Redis.fromEnv();
+  return redisClient;
+}
 
 export const QUEUES = {
   publish: "q:publish",
@@ -10,13 +19,13 @@ export const QUEUES = {
 } as const;
 
 export async function enqueue(queue: string, payload: unknown) {
-  await redis.lpush(queue, JSON.stringify(payload));
+  await getRedisClient().lpush(queue, JSON.stringify(payload));
 }
 
 export async function drain(queue: string, limit = 10) {
   const items: string[] = [];
   for (let i = 0; i < limit; i += 1) {
-    const value = await redis.rpop<string>(queue);
+    const value = await getRedisClient().rpop<string>(queue);
     if (!value) break;
     items.push(value);
   }
@@ -30,10 +39,10 @@ export async function drain(queue: string, limit = 10) {
 }
 
 export async function acquireLock(key: string, ttlSeconds = 900) {
-  const result = await redis.set(key, "1", { nx: true, ex: ttlSeconds });
+  const result = await getRedisClient().set(key, "1", { nx: true, ex: ttlSeconds });
   return result === "OK";
 }
 
 export async function releaseLock(key: string) {
-  await redis.del(key);
+  await getRedisClient().del(key);
 }

@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
-import { canEncryptSeoSettings } from "@/lib/seo-ops/crypto";
-import { canWriteAiWriterSettings } from "@/lib/ai-writer/sanity-write";
-import { fetchSanityAiWriterSettings } from "@/sanity/lib/fetch";
-import { getAiWriterResolvedSettings } from "@/lib/ai-writer/settings-source";
 
 export async function GET(request: NextRequest) {
+  const [
+    { ensureSeoApiAccess },
+    { canEncryptSeoSettings },
+    { canWriteAiWriterSettings },
+    { fetchSanityAiWriterSettings },
+    { getAiWriterResolvedSettings },
+  ] = await Promise.all([
+    import("@/lib/seo-ops/api-auth"),
+    import("@/lib/seo-ops/crypto"),
+    import("@/lib/ai-writer/sanity-write"),
+    import("@/sanity/lib/fetch"),
+    import("@/lib/ai-writer/settings-source"),
+  ]);
+
   const auth = await ensureSeoApiAccess(request);
   if (!auth.ok) return auth.response;
 

@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db, isDatabaseConfigured } from "@/lib/db-safe";
-import { schema } from "@repo/db";
-import { eq } from "drizzle-orm";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
+import { enqueueIndexingJob } from "@/lib/seo-ops/jobs";
+import type { IndexEngine } from "@/lib/seo-ops/types";
+
+const PROVIDER_TO_ENGINES: Record<string, IndexEngine[]> = {
+  google: ["google"],
+  bing: ["bing"],
+  yandex: ["indexnow"],
+};
 
 export async function POST(request: NextRequest) {
-  if (!isDatabaseConfigured()) {
-    return NextResponse.json(
-      { ok: false, message: "Database not configured" },
-      { status: 500 }
-    );
-  }
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
 
   try {
     const body = await request.json();
@@ -29,39 +31,35 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const database = db();
+    const engines = PROVIDER_TO_ENGINES[String(provider)] || [];
+    if (engines.length === 0) {
+      return NextResponse.json(
+        { ok: false, message: "Unsupported provider" },
+        { status: 400 },
+      );
+    }
 
-    // Create submission record
-    const [submission] = await database
-      .insert(schema.searchSubmissions)
-      .values({
-        provider,
-        submissionType: "manual",
-        status: "pending",
-        requestPayload: { urls },
-        submittedAt: new Date(),
-      })
-      .returning();
+    const result = await enqueueIndexingJob({
+      urls,
+      reason: `manual submit via ${provider}`,
+      source: "manual",
+      engines,
+    });
 
-    // In a real implementation, you would:
-    // 1. Queue a job to submit these URLs
-    // 2. Call IndexNow API or Google Search Console API
-    // 3. Update submission status based on result
-
-    // For now, just mark as success
-    await database
-      .update(schema.searchSubmissions)
-      .set({ 
-        status: "success",
-        responsePayload: { submitted: urls.length }
-      })
-      .where(eq(schema.searchSubmissions.id, submission.id));
+    if (!result.ok) {
+      return NextResponse.json(
+        { ok: false, message: result.message },
+        { status: 400 },
+      );
+    }
 
     return NextResponse.json(
       {
         ok: true,
-        submission_id: submission.id,
-        message: `${urls.length} URLs submitted to ${provider}`,
+        job_id: result.job.id,
+        queued_urls: result.job.urls.length,
+        engines: result.job.engines,
+        message: `${result.job.urls.length} URL(s) queued for ${provider}`,
       },
       { status: 200 }
     );

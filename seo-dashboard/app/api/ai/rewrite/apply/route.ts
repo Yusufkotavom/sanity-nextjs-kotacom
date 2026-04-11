@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateAiText } from "@/lib/ai-writer/generate";
 
 type DocType = "post" | "service" | "project";
 
@@ -390,6 +389,7 @@ export async function OPTIONS(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const { generateAiText } = await import("@/lib/ai-writer/generate");
   const corsHeaders = withCorsHeaders(request.headers.get("origin"));
 
   if (!hasActionSecretAccess(request)) {

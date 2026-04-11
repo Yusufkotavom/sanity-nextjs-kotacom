@@ -23,7 +23,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - Migration coverage:
   - [x] top 1000 auto-redirect mapped and deployed in staged wave
   - [x] top 300 manual legacy URLs curated one-by-one
-  - [ ] content parity for core templates (blog/service/product/project)
+  - [x] content parity for core templates (blog/service/product/project)
 - UX redesign:
   - [ ] new design system applied to key templates
   - [ ] mobile + desktop verified for header/nav/CTA/content pages
@@ -31,6 +31,11 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ## Current Status Snapshot (Already Done)
 
 - [x] **GSC MIGRATION 100% DONE:** All Top 300 manual curations + Top 1000 auto-redirects fully synced, seeded, and mapped via Sanity and Next.js wildcards.
+- [x] SEO Ops automation hardening completed: manual indexing now uses real queue jobs, GSC daily pull now aggregates page/query/country/device, and GA4 imports are persisted in DB for dashboard joins.
+- [x] SEO Opportunity Board added in operations dashboard with quick wins (high impressions + low CTR), decay detection, and indexing blocker monitoring.
+- [x] Seo-dashboard Netlify build hardening completed: Sanity/env-sensitive API imports are now lazy-loaded to prevent `Failed to collect page data` crashes during production build.
+- [x] Migration closeout doc cleanup completed: obsolete migration-only docs removed from `docs/` to keep active documentation focused on operational workflows.
+- [x] Post-migration documentation prune wave 2 completed: stale SEO dashboard phase summaries removed and dead doc references in legacy README/script paths replaced with active/archive links.
 - [x] Removed the 8-item validation cap from navigation submenus in the Sanity schema (`link.ts`), permitting expanded menu structures.
 - [x] Standardized `surface-panel` global CSS utility to enforce a unified transparent glassmorphism background across all components (Hero, CTA, Grid Cards, Split Panels).
 - [x] Fixed `cta-1` block layout: buttons are now fully encapsulated by the section panel background and are properly centered alongside the text content.
@@ -310,6 +315,9 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Template performance pass: dynamic-import block renderers plus cached detail fetches (page/post/product/service/project) to reduce JS and TTFB.
 - [x] Detail-page hero images optimized (quality 85, width hints, priority on project hero) and hero icon imports tree-shaken to reduce LCP/JS cost.
 - [x] Batch CWV tuning (2026-04-06): reduced Sanity image default quality, capped grid/card image widths, added LQIP blur to detail hero images, and limited preload priority in archive grids.
+- [x] SEO Ops analytics enrichment shipped (2026-04-11): GSC pull upgraded to multi-dimension aggregation (`page/query/country/device`) and stored `topQueries/topCountries/topDevices` in `analytics_daily`.
+- [x] SEO Ops conversion analytics persistence shipped (2026-04-11): GA4 imports now persist to `analytics_ga4_daily` and are surfaced in dashboard analytics joins.
+- [x] SEO Ops opportunity workflow shipped (2026-04-11): dedicated board for quick wins, decay pages, and indexing blockers.
 
 ## Workstream D - UI Redesign + Refactor
 

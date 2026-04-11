@@ -208,10 +208,10 @@ async function main() {
   }
 
   // Write report
-  const reportPath = join(__dirname, "../../docs/url-comparison-local-vs-sanity.md");
+  const reportPath = join(__dirname, "../../docs/archive/url-comparison-local-vs-sanity.md");
   writeFileSync(reportPath, report.join("\n"), "utf-8");
 
-  console.log(`✅ Report generated: docs/url-comparison-local-vs-sanity.md`);
+  console.log(`✅ Report generated: docs/archive/url-comparison-local-vs-sanity.md`);
   console.log("");
   console.log("Summary:");
   console.log(`  - URLs in both: ${results.inBoth.length}`);

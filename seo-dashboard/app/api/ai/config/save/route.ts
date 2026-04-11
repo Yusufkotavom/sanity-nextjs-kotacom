@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
-import { canWriteAiWriterSettings, upsertAiWriterSettings } from "@/lib/ai-writer/sanity-write";
 
 type SaveBody = {
   enabled?: boolean;
@@ -47,6 +45,12 @@ function normalizeNumber(value: unknown, fallback: number, min: number, max: num
 }
 
 export async function POST(request: NextRequest) {
+  const [{ ensureSeoApiAccess }, { canWriteAiWriterSettings, upsertAiWriterSettings }] =
+    await Promise.all([
+      import("@/lib/seo-ops/api-auth"),
+      import("@/lib/ai-writer/sanity-write"),
+    ]);
+
   const auth = await ensureSeoApiAccess(request);
   if (!auth.ok) return auth.response;
 

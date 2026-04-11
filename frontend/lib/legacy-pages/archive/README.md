@@ -51,6 +51,6 @@ These files are kept as reference for:
 
 ## Related Documentation
 
-- `docs/MIGRATION-STATUS.md` - Migration status
-- `docs/url-comparison-local-vs-sanity.md` - URL comparison
+- `docs/astro-migration-megaplan.md` - Migration status (active source)
+- `docs/seo-updates.md` - Migration/update log
 - `../README.md` - Legacy pages overview
