@@ -18,6 +18,7 @@
     "sanity:pages:normalize": "node scripts/normalize-sanity-page-arrays.mjs --write",
     "hybrid:create": "node scripts/create-hybrid-page.mjs",
     "hybrid:route:create": "node scripts/create-hybrid-route.mjs",
+    "sanity:bulk:delete": "node scripts/bulk-delete-by-query.mjs",
     "page:to-post": "node scripts/convert-page-to-post.mjs",
     "nav:icons:migrate": "node scripts/migrate-navigation-ui-icons.mjs",
     "typegen": "npx sanity schema extract && npx sanity typegen generate",

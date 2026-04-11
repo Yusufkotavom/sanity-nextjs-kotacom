@@ -4,6 +4,32 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-11: Frontend-Side Sanity Bulk Operations Alternative Setup
+
+### Changed Files
+- `frontend/package.json` (MODIFIED)
+- `frontend/scripts/bulk-delete-by-query.mjs` (NEW)
+
+### Summary
+- Evaluated requested plugins and skipped direct installation of:
+  - `sanity-plugin-bulk-delete` (`sanity` peer range up to `^4`)
+  - `sanity-plugin-bulk-actions-table` (`sanity` peer range `^3`)
+- Added frontend-only bulk-delete flow per request via `sanity:bulk:delete` and created `frontend/scripts/bulk-delete-by-query.mjs`:
+  - GROQ-driven ID selection
+  - dry-run by default
+  - explicit write gate (`--write --confirm DELETE`)
+  - dev-first token priority (`SANITY_DEV` -> `SANITY_AUTH_TOKEN`) per repo guardrails.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**.
+- Improves CMS operations safety for bulk content maintenance while keeping execution in the frontend workspace scripts.
+
+### Verification Status
+- Verified script wiring/help output: `pnpm --filter frontend sanity:bulk:delete -- --help`.
+- No destructive delete operation executed in this task.
+
+---
+
 ## 2026-04-11: Fix Netlify Edge Bundling Failure for Next Proxy
 
 ### Changed Files
