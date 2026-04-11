@@ -949,3 +949,20 @@ Automatically added SEO blocks to all money pages:
 
 ### Verification Status
 - ✅ Manual key audit completed (template includes core GA4/GSC/Sitemap/Sanity/queue/database/auth keys used by current codepaths).
+
+## 2026-04-11 — Netlify Deploy Fix: Lambda Env 4KB Limit
+
+### Changed Files
+- `netlify.toml`
+
+### Summary of Changes
+1. Added explicit `build.environment` overrides in `netlify.toml` to clear non-frontend secrets (`""`) during frontend deploy.
+2. Trimmed ops-only variables from frontend runtime context (DB/Redis/GSC/internal cron/indexing/ops auth), which were inflating Netlify server function env size.
+
+### Impact on SEO/Integration
+- Restores deployability for frontend on Netlify by reducing function environment payload below AWS Lambda 4KB env limit.
+- No direct SEO logic change; this is deployment/runtime configuration hardening.
+
+### Verification Status
+- ✅ Static config review complete (vars causing bloat are now overridden in Netlify config).
+- ⚠️ Final verification requires re-run deploy on Netlify after this commit.

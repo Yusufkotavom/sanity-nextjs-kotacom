@@ -8,6 +8,24 @@
   NPM_FLAGS = "--version"
   PNPM_VERSION = "10.19.0"
   NEXT_DISABLE_NETLIFY_EDGE = "true"
+  # Keep frontend function env under AWS Lambda 4KB limit by clearing
+  # non-frontend secrets that are only needed by seo-dashboard/ops services.
+  AI_GATEWAY_API_KEY = ""
+  CRON_SECRET = ""
+  DATABASE_URL = ""
+  GSC_CLIENT_EMAIL = ""
+  GSC_PRIVATE_KEY = ""
+  GSC_SITE_URL = ""
+  GSC_SITEMAP_URL = ""
+  INDEXNOW_ENDPOINT = ""
+  INDEXNOW_KEY = ""
+  INDEXNOW_KEY_LOCATION = ""
+  INTERNAL_API_SECRET = ""
+  SEO_DASHBOARD_PASSWORD = ""
+  SEO_SESSION_SECRET = ""
+  SEO_SETTINGS_ENCRYPTION_KEY = ""
+  UPSTASH_REDIS_REST_TOKEN = ""
+  UPSTASH_REDIS_REST_URL = ""
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
