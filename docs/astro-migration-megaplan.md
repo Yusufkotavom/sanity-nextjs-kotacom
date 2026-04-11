@@ -92,6 +92,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] `/home-pepar` now carries a fuller homepage-candidate middle section aligned to the live `kotacom.id` information architecture, giving the migration a realistic rehearsal surface instead of a scaffold placeholder
 - [x] `/home-pepar` has now been polished into a more realistic live-candidate flow: one CMS hero above the shell, a less repetitive code-owned middle section, and CMS proof/CTA blocks below with preview-safe metadata
 - [x] Next.js dev tooling warnings reduced by setting explicit Turbopack root and migrating `middleware.ts` to `proxy.ts`
+- [x] Netlify proxy runtime compatibility fix applied: `frontend/proxy.ts` now pins runtime to `edge` to avoid node-middleware edge bundling crash on Next.js 16 builds.
 - [x] Environment contract sync completed for frontend/studio examples + deploy env templates (missing keys added, AI Writer action secret parity documented)
 - [x] Footer navigation visual cleanup shipped by removing card container style for a cleaner flat footer link section
 - [x] Turbopack monorepo root issue fixed by setting `turbopack.root` to workspace root (prevent `frontend/app` Next package resolution failure)
@@ -392,6 +393,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Rewrite landing sections now have stronger service/pricing interaction polish, and pricing cards can route package-specific WhatsApp leads through the shared global WhatsApp settings path.
 - [x] `/home-pepar` has been rewritten away from prototype/internal explanatory language and now reads as a customer-facing homepage candidate that is materially closer to live use.
 - [x] Printing rewrite modules are back to a deployable state after restoring the missing `buildGenericCopy` import for the company profile page module.
+- [x] Netlify edge bundling compatibility hardening applied for Next proxy by explicitly setting proxy runtime to `edge`, avoiding `___netlify-edge-handler-node-middleware` CJS/ESM crash during build.
 - [ ] Ensure internal linking slots are CMS-configurable.
 - Blocker note (2026-04-02): Priority-1 illustration assets are generated but integration into live page sections/routes is still pending.
 - Blocker note (2026-04-02): Regenerated `v2` assets are ready, but final selection/approval and route-level wiring are still pending.

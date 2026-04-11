@@ -4,6 +4,25 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-11: Force Edge Runtime for Netlify Proxy Bundling Compatibility
+
+### Changed Files
+- `frontend/proxy.ts` (MODIFIED)
+
+### Summary
+- Set `export const config.runtime = "edge"` in `frontend/proxy.ts`.
+- This forces Next proxy/middleware compilation to the edge runtime path and avoids Netlify `node-middleware` bundling that was failing with `ReferenceError: exports is not defined`.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**.
+- Deployment integration impact: unblocks Netlify build stage `Edge Functions bundling` for proxy middleware.
+
+### Verification Status
+- Verified code change in proxy config.
+- Local Netlify bundling parity cannot be fully reproduced in this workspace; Netlify redeploy is required to confirm edge bundling stage passes.
+
+---
+
 ## 2026-04-11: Frontend-Side Sanity Bulk Operations Alternative Setup
 
 ### Changed Files
