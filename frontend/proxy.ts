@@ -53,5 +53,6 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
+  runtime: 'nodejs',
   matcher: ["/((?!_next|.*\\..*).*)"],
 };
