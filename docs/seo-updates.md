@@ -815,3 +815,19 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ Static code fix applied for the exact Netlify error path.
 - ⚠️ Full local `frontend build` still depends on local Sanity env completeness; Netlify has those envs configured.
+
+## 2026-04-11 — Netlify Edge Bundling Fix: Remove Frontend Proxy Middleware
+
+### Changed Files
+- `frontend/proxy.ts` (deleted)
+
+### Summary of Changes
+1. Removed `frontend/proxy.ts` to stop Next.js from generating middleware/proxy runtime artifacts that Netlify plugin attempted to bundle as edge function (`___netlify-edge-handler-node-middleware`).
+
+### Impact on SEO/Integration
+- Eliminates Netlify edge bundling crash (`exports is not defined`) that happened after successful Next.js build phase.
+- No impact on active frontend routing behavior for current deployed routes (`/dashboard/seo` and `/api/seo` are not part of frontend app route map).
+
+### Verification Status
+- ✅ Root-cause aligned with Netlify failure stage (Edge Functions bundling only).
+- ⚠️ Final confirmation requires new Netlify deploy run after this commit.
