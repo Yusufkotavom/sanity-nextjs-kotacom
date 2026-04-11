@@ -1,0 +1,30 @@
+# Global Netlify Configuration for Monorepo
+[build]
+  command = "pnpm --filter frontend build"
+  publish = "frontend/.next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--version"
+  PNPM_VERSION = "10.19.0"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Configuration for Sanity Studio (if deployed as a separate site)
+# Set Base Directory to "studio" in Netlify UI
+# Build command: "pnpm build"
+# Publish directory: "studio/dist"
+
+# Configuration for SEO Dashboard (if deployed as a separate site)
+# Set Base Directory to "seo-dashboard" in Netlify UI
+# Build command: "pnpm build"
+# Publish directory: "seo-dashboard/.next"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
