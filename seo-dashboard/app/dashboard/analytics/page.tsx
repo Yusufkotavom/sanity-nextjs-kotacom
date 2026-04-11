@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { AnalyticsChart } from "@/components/analytics-chart";
 import { ExportCsvButton } from "@/components/export-csv-button";
 import { AnalyticsDateFilter } from "@/components/analytics-date-filter";
+import ManualOpsTrigger from "@/components/manual-ops-trigger";
 import { SortableHeader } from "@/components/sortable-header";
 import { TrendingUp, MousePointer, Eye, Percent } from "lucide-react";
 
@@ -187,6 +188,8 @@ export default async function AnalyticsPage({
           <AnalyticsDateFilter />
         </CardContent>
       </Card>
+
+      <ManualOpsTrigger />
 
       {/* Summary Metrics */}
       <div className="grid gap-4 md:grid-cols-6">

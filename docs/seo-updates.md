@@ -858,3 +858,24 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ Feature wiring completed (UI -> API enqueue, cron GA4 -> DB upsert).
 - ⚠️ `seo-dashboard` local typecheck/build currently noisy due workspace `.next/types` state in this shell session; requires clean Next types regeneration in CI/runtime env for strict verification output.
+
+## 2026-04-11 — Manual Front Trigger for Cron Tasks
+
+### Changed Files
+- `seo-dashboard/app/api/seo/ops/trigger/route.ts`
+- `seo-dashboard/components/manual-ops-trigger.tsx`
+- `seo-dashboard/app/dashboard/analytics/page.tsx`
+
+### Summary of Changes
+1. Added authenticated API bridge `POST /api/seo/ops/trigger` for manual execution of selected internal worker tasks from frontend.
+2. API bridge validates allowed task types and forwards to `/api/internal/cron-run` using server-side `CRON_SECRET` (secret not exposed to browser).
+3. Added dashboard UI panel (`Manual Worker Trigger`) in Analytics page to run:
+   - `pull-ga4`, `pull-analytics`, `run-seo-audits`, `submit-sitemap`, `inspect-index`, `drain-queues`, `run-scheduled`.
+
+### Impact on SEO/Integration
+- Operators can execute GA4/GSC sync and audit batches instantly from UI without waiting for external cron schedule.
+- Cron scheduler remains recommended for full automation, while manual trigger serves operational recovery and ad-hoc sync use cases.
+
+### Verification Status
+- ✅ API + frontend trigger wiring completed.
+- ⚠️ Full runtime verification depends on deployed env values (`CRON_SECRET`, GA4/GSC credentials) and live dashboard auth session.
