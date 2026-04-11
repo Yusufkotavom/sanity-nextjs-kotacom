@@ -879,3 +879,73 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ API + frontend trigger wiring completed.
 - ⚠️ Full runtime verification depends on deployed env values (`CRON_SECRET`, GA4/GSC credentials) and live dashboard auth session.
+
+## 2026-04-11 — Env Contract Update for GA4/GSC Automation
+
+### Changed Files
+- `seo-dashboard/.env.example`
+
+### Summary of Changes
+1. Added missing `GSC_SITEMAP_URL` to match `submit-sitemap` task requirements.
+2. Added GA4 env block for `pull-ga4` task:
+   - `GA4_PROPERTY_ID`
+   - `GA4_CLIENT_EMAIL`
+   - `GA4_PRIVATE_KEY`
+3. Clarified fallback behavior (`GA4_CLIENT_EMAIL` -> `GSC_CLIENT_EMAIL`, `GA4_PRIVATE_KEY` -> `GSC_PRIVATE_KEY`).
+
+### Impact on SEO/Integration
+- Prevents deployment misconfiguration for automated GA4 and sitemap sync jobs.
+- Makes manual trigger + cron execution predictable across environments.
+
+### Verification Status
+- ✅ Env template now covers required vars used by internal task handlers.
+
+## 2026-04-11 — Real GA4/GSC/Sitemap Env Synchronization
+
+### Changed Files
+- `.env`
+- `frontend/.env.example`
+- `seo-dashboard/.env.local`
+- `seo-dashboard/.env.server`
+- `seo-dashboard/.env.example`
+- `studio/.env.example`
+- `packages/sanity/.env.example`
+
+### Summary of Changes
+1. Synced real site and analytics identifiers across root/frontend/seo-dashboard env files.
+2. Added/updated GA4 and sitemap-related keys:
+   - `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-P0DQM5CH0D`
+   - `NEXT_PUBLIC_GA_ID=G-P0DQM5CH0D` (compat alias)
+   - `GSC_SITEMAP_URL=https://www.kotacom.id/sitemap.xml`
+   - `GA4_DATA_STREAM_ID=2168616948`
+   - `GA4_PROPERTY_ID=2168616948`
+3. Aligned example env defaults with active production domain/project context (`kotacom.id`, `b017f7tl`) to reduce setup drift.
+
+### Impact on SEO/Integration
+- Ensures SEO dashboard import/cron features use consistent real URL + measurement configuration.
+- Reduces env mismatch risk between frontend tracking, GSC sitemap submit flow, and GA4 ingestion pipeline.
+
+### Verification Status
+- ✅ Env key presence verified via repository grep across all updated `.env` and `.env.example` files.
+- ⚠️ GA4 Data API correctness still depends on whether provided `2168616948` is the GA4 Property ID (Data API requirement) or only Data Stream ID.
+
+## 2026-04-11 — Unified All-in-One Env Template
+
+### Changed Files
+- `.env.all-in-one.example`
+
+### Summary of Changes
+1. Added a single consolidated env template at repo root to cover frontend, studio, and seo-dashboard configuration in one place.
+2. Included real non-secret defaults for current domain and analytics identifiers:
+   - `NEXT_PUBLIC_SITE_URL=https://www.kotacom.id`
+   - `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-P0DQM5CH0D`
+   - `GA4_DATA_STREAM_ID=2168616948`
+   - `GSC_SITEMAP_URL=https://www.kotacom.id/sitemap.xml`
+3. Kept secret values as explicit placeholders (`replace-with-...`) for safe reuse.
+
+### Impact on SEO/Integration
+- Reduces env drift across frontend tracking, studio integration, and SEO dashboard ingestion/import workflows.
+- Speeds up new environment provisioning with one canonical template.
+
+### Verification Status
+- ✅ Manual key audit completed (template includes core GA4/GSC/Sitemap/Sanity/queue/database/auth keys used by current codepaths).
