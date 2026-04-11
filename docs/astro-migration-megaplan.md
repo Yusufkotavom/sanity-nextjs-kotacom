@@ -45,6 +45,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Added root-level unified env template (`.env.all-in-one.example`) as a single source of config truth for frontend, studio, and seo-dashboard setup.
 - [x] Netlify frontend deploy env has been trimmed via `netlify.toml` overrides to prevent AWS Lambda 4KB environment overflow during function upload.
 - [x] SEO dashboard Vercel build typing break fixed for GA4 cron import path (`googleapis` runReport request contract updated), and local `seo-dashboard` build is green again.
+- [x] Netlify runtime module-resolution hardening applied at root workspace (`next/react/react-dom` root dependencies) to address `Cannot find module 'next/dist/server/lib/start-server.js'` crash after deploy.
 - [x] Migration closeout doc cleanup completed: obsolete migration-only docs removed from `docs/` to keep active documentation focused on operational workflows.
 - [x] Post-migration documentation prune wave 2 completed: stale SEO dashboard phase summaries removed and dead doc references in legacy README/script paths replaced with active/archive links.
 - [x] Removed the 8-item validation cap from navigation submenus in the Sanity schema (`link.ts`), permitting expanded menu structures.

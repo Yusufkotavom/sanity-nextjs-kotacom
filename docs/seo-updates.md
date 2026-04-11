@@ -985,3 +985,24 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ `pnpm --filter seo-dashboard run typecheck` passed.
 - ✅ `pnpm --filter seo-dashboard run build` passed.
+
+## 2026-04-11 — Netlify Runtime Crash Fix (`start-server.js` not found)
+
+### Changed Files
+- `package.json`
+- `pnpm-lock.yaml`
+
+### Summary of Changes
+1. Added root workspace runtime dependencies:
+   - `next@16.1.7`
+   - `react@19.2.4`
+   - `react-dom@19.2.4`
+2. Regenerated lockfile to include root importer dependency mapping.
+
+### Impact on SEO/Integration
+- Fixes frontend runtime stability on Netlify after successful build/deploy by ensuring Next runtime modules are resolvable from function execution context.
+- No direct SEO behavior change.
+
+### Verification Status
+- ✅ `pnpm install --lockfile-only` completed successfully with updated dependency graph.
+- ⚠️ Final confirmation requires fresh Netlify deploy + runtime smoke check (homepage/API response).
