@@ -4,6 +4,26 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-11: Fix Netlify Edge Bundling Failure for Next Proxy
+
+### Changed Files
+- `frontend/proxy.ts` (MODIFIED)
+
+### Summary
+- Removed `runtime: 'nodejs'` from `proxy` config so Next.js proxy/middleware uses default runtime behavior on Netlify.
+- This avoids Netlify creating the Node middleware edge handler path that was failing during edge bundling with `ReferenceError: exports is not defined`.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**.
+- Deployment integration impact: prevents Netlify edge-function bundling failure path for proxy/middleware.
+
+### Verification Status
+- `pnpm install` completed successfully.
+- `pnpm --filter frontend build` now passes compile and TypeScript stages, then fails later at page-data collection in local env (`/_not-found`) due missing runtime environment context locally.
+- Netlify-side verification pending redeploy on updated commit.
+
+---
+
 ## 2026-04-07: Update Favicon to Next.js RootLayout
 
 ### Changed Files
