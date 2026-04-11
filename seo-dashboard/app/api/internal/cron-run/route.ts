@@ -222,8 +222,8 @@ async function pullGa4Daily() {
 
   while (true) {
     const response = await analyticsData.properties.runReport({
-      property: `properties/${propertyId}`,
       requestBody: {
+        property: `properties/${propertyId}`,
         dateRanges: [{ startDate, endDate }],
         dimensions: [{ name: "date" }, { name: "pagePath" }],
         metrics: [
@@ -232,8 +232,8 @@ async function pullGa4Daily() {
           { name: "conversions" },
           { name: "totalRevenue" },
         ],
-        limit,
-        offset,
+        limit: String(limit),
+        offset: String(offset),
       },
     });
 

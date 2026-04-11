@@ -966,3 +966,22 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ Static config review complete (vars causing bloat are now overridden in Netlify config).
 - ⚠️ Final verification requires re-run deploy on Netlify after this commit.
+
+## 2026-04-11 — Vercel Studio Build Fix (GA4 runReport Typing)
+
+### Changed Files
+- `seo-dashboard/app/api/internal/cron-run/route.ts`
+
+### Summary of Changes
+1. Updated GA4 Data API `runReport` call shape for current `googleapis` typings:
+   - moved `property` into `requestBody.property`
+   - cast `limit` and `offset` to strings (`int64`-compatible request format)
+2. This resolves TypeScript overload mismatch seen during Vercel build on commit `3745f1f`.
+
+### Impact on SEO/Integration
+- Restores deploy/build stability for SEO dashboard (studio deployment target) while keeping GA4 pull job behavior intact.
+- No direct SEO output logic change; this is API typing/request contract compatibility.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed.
+- ✅ `pnpm --filter seo-dashboard run build` passed.
