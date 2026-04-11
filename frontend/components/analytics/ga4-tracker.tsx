@@ -2,19 +2,18 @@
 
 import Script from "next/script";
 import { useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { GA_MEASUREMENT_ID, isGaEnabled } from "@/lib/analytics";
 
 export default function Ga4Tracker() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (!isGaEnabled()) return;
     if (typeof window === "undefined") return;
     if (typeof window.gtag !== "function") return;
 
-    const query = searchParams?.toString();
+    const query = window.location.search.replace(/^\?/, "");
     const pagePath = query ? `${pathname}?${query}` : pathname;
 
     window.gtag("event", "page_view", {
@@ -22,7 +21,7 @@ export default function Ga4Tracker() {
       page_location: window.location.href,
       page_title: document.title,
     });
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   if (!isGaEnabled()) return null;
 
@@ -44,4 +43,3 @@ export default function Ga4Tracker() {
     </>
   );
 }
-

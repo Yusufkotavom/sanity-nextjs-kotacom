@@ -798,3 +798,20 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ Code-level config wired.
 - ⚠️ Frontend build in local shell still requires Sanity public env variables (`NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`) to complete static config collection.
+
+## 2026-04-11 — Netlify Build Fix: Remove `useSearchParams` from GA4 Tracker
+
+### Changed Files
+- `frontend/components/analytics/ga4-tracker.tsx`
+
+### Summary of Changes
+1. Reworked GA4 tracker to stop using `useSearchParams()` in client component.
+2. Query string now read from `window.location.search` inside effect, keyed by `pathname`.
+
+### Impact on SEO/Integration
+- Fixes Next.js prerender failure on Netlify (`useSearchParams() should be wrapped in a suspense boundary`) for `/_not-found` and slug pages.
+- Keeps GA4 `page_view` tracking behavior without requiring Suspense boundary in root layout.
+
+### Verification Status
+- ✅ Static code fix applied for the exact Netlify error path.
+- ⚠️ Full local `frontend build` still depends on local Sanity env completeness; Netlify has those envs configured.
