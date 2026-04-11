@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { desc, inArray, and, eq, gte, lte, between } from "drizzle-orm";
 import { SeoFilters } from "@/components/seo-filters";
 import { ExportCsvButton } from "@/components/export-csv-button";
-import { RefreshCw, Play } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import Link from "next/link";
+import SeoAuditRunForm from "@/components/seo-audit-run-form";
 
 export const dynamic = 'force-dynamic';
 
@@ -119,14 +120,11 @@ export default async function SeoPage({
                   Refresh
                 </Link>
               </Button>
-              <Button size="sm">
-                <Play className="size-4 mr-2" />
-                Run Audit
-              </Button>
             </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
+          <SeoAuditRunForm />
           <SeoFilters />
           
           {audits.length === 0 ? (

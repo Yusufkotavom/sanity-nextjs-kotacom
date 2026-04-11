@@ -138,6 +138,176 @@ async function enqueueJob(queue: string, jobRunId: string, jobType: string, payl
   await enqueue(queue, { jobRunId, jobType, payload });
 }
 
+function formatGa4Date(dateValue: string) {
+  if (!/^\d{8}$/.test(dateValue)) return null;
+  return `${dateValue.slice(0, 4)}-${dateValue.slice(4, 6)}-${dateValue.slice(6, 8)}`;
+}
+
+function toAbsoluteUrl(pathOrUrl: string, siteUrl: string) {
+  const value = (pathOrUrl || "").trim();
+  if (!value) return null;
+  if (value.startsWith("http://") || value.startsWith("https://")) return value;
+  if (!siteUrl) return null;
+  const origin = siteUrl.replace(/\/+$/, "");
+  const pathname = value.startsWith("/") ? value : `/${value}`;
+  return `${origin}${pathname}`;
+}
+
+async function resolveContentIdsByUrl(urls: string[]) {
+  if (!urls.length) return new Map<string, string>();
+
+  const idByUrl = new Map<string, string>();
+  const chunkSize = 500;
+
+  for (let index = 0; index < urls.length; index += chunkSize) {
+    const chunk = urls.slice(index, index + chunkSize);
+    const rows = await db()
+      .select({ id: schema.contentItems.id, url: schema.contentItems.url })
+      .from(schema.contentItems)
+      .where(inArray(schema.contentItems.url, chunk));
+
+    for (const row of rows) {
+      idByUrl.set(row.url, row.id);
+    }
+  }
+
+  return idByUrl;
+}
+
+async function pullGa4Daily() {
+  const propertyIdRaw = process.env.GA4_PROPERTY_ID || "";
+  const propertyId = propertyIdRaw.replace(/^properties\//, "");
+  const clientEmail = process.env.GA4_CLIENT_EMAIL || process.env.GSC_CLIENT_EMAIL || "";
+  const privateKey = (
+    process.env.GA4_PRIVATE_KEY ||
+    process.env.GSC_PRIVATE_KEY ||
+    ""
+  ).replace(/\\n/g, "\n");
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.GSC_SITE_URL || "";
+
+  if (!propertyId || !clientEmail || !privateKey || !siteUrl) {
+    return {
+      ok: false as const,
+      message:
+        "Missing GA4 env. Required: GA4_PROPERTY_ID, GA4_CLIENT_EMAIL, GA4_PRIVATE_KEY, NEXT_PUBLIC_SITE_URL.",
+    };
+  }
+
+  const { google } = await import("googleapis");
+  const auth = new google.auth.JWT({
+    email: clientEmail,
+    key: privateKey,
+    scopes: ["https://www.googleapis.com/auth/analytics.readonly"],
+  });
+  const analyticsData = google.analyticsdata({ version: "v1beta", auth });
+
+  const end = new Date();
+  end.setUTCDate(end.getUTCDate() - 1);
+  const endDate = end.toISOString().slice(0, 10);
+  const startDate = endDate;
+
+  const limit = 25000;
+  let offset = 0;
+  const aggregated = new Map<
+    string,
+    {
+      pageUrl: string;
+      date: string;
+      sessions: number;
+      engagedSessions: number;
+      conversions: number;
+      revenue: number;
+    }
+  >();
+
+  while (true) {
+    const response = await analyticsData.properties.runReport({
+      property: `properties/${propertyId}`,
+      requestBody: {
+        dateRanges: [{ startDate, endDate }],
+        dimensions: [{ name: "date" }, { name: "pagePath" }],
+        metrics: [
+          { name: "sessions" },
+          { name: "engagedSessions" },
+          { name: "conversions" },
+          { name: "totalRevenue" },
+        ],
+        limit,
+        offset,
+      },
+    });
+
+    const rows = response.data.rows || [];
+    for (const row of rows) {
+      const gaDate = row.dimensionValues?.[0]?.value || "";
+      const pagePath = row.dimensionValues?.[1]?.value || "";
+      const date = formatGa4Date(gaDate);
+      const pageUrl = toAbsoluteUrl(pagePath, siteUrl);
+      if (!date || !pageUrl) continue;
+
+      const sessions = Number(row.metricValues?.[0]?.value || 0);
+      const engagedSessions = Number(row.metricValues?.[1]?.value || 0);
+      const conversions = Number(row.metricValues?.[2]?.value || 0);
+      const revenue = Number(row.metricValues?.[3]?.value || 0);
+      const key = `${date}:${pageUrl}`;
+      const current =
+        aggregated.get(key) || {
+          pageUrl,
+          date,
+          sessions: 0,
+          engagedSessions: 0,
+          conversions: 0,
+          revenue: 0,
+        };
+
+      current.sessions += Number.isFinite(sessions) ? sessions : 0;
+      current.engagedSessions += Number.isFinite(engagedSessions) ? engagedSessions : 0;
+      current.conversions += Number.isFinite(conversions) ? conversions : 0;
+      current.revenue += Number.isFinite(revenue) ? revenue : 0;
+      aggregated.set(key, current);
+    }
+
+    if (rows.length < limit) break;
+    offset += limit;
+  }
+
+  const records = Array.from(aggregated.values());
+  const uniqueUrls = Array.from(new Set(records.map((item) => item.pageUrl)));
+  const idByUrl = await resolveContentIdsByUrl(uniqueUrls);
+
+  for (const record of records) {
+    const contentItemId = idByUrl.get(record.pageUrl) || null;
+
+    await db()
+      .insert(schema.analyticsGa4Daily)
+      .values({
+        contentItemId,
+        pageUrl: record.pageUrl,
+        date: record.date,
+        sessions: Math.round(record.sessions),
+        engagedSessions: Math.round(record.engagedSessions),
+        conversions: String(record.conversions),
+        revenue: String(record.revenue),
+      })
+      .onConflictDoUpdate({
+        target: [schema.analyticsGa4Daily.pageUrl, schema.analyticsGa4Daily.date],
+        set: {
+          contentItemId,
+          sessions: Math.round(record.sessions),
+          engagedSessions: Math.round(record.engagedSessions),
+          conversions: String(record.conversions),
+          revenue: String(record.revenue),
+        },
+      });
+  }
+
+  return {
+    ok: true as const,
+    rows: records.length,
+    date: endDate,
+  };
+}
+
 export async function POST(request: NextRequest) {
   if (!requireCronSecret(request)) {
     return NextResponse.json({ ok: false, message: "Unauthorized" }, { status: 401 });
@@ -339,6 +509,17 @@ export async function POST(request: NextRequest) {
         }
       }
     }
+  }
+
+  if (type === "pull-ga4") {
+    const result = await pullGa4Daily();
+    return NextResponse.json(
+      {
+        type,
+        ...result,
+      },
+      { status: result.ok ? 200 : 400 },
+    );
   }
 
   if (type === "inspect-index") {

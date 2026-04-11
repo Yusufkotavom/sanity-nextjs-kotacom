@@ -831,3 +831,30 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ Root-cause aligned with Netlify failure stage (Edge Functions bundling only).
 - ⚠️ Final confirmation requires new Netlify deploy run after this commit.
+
+## 2026-04-11 — SEO Audit UI Trigger + GA4 Cron Pull Automation
+
+### Changed Files
+- `seo-dashboard/components/seo-audit-run-form.tsx`
+- `seo-dashboard/app/dashboard/seo/page.tsx`
+- `seo-dashboard/app/api/internal/cron-run/route.ts`
+
+### Summary of Changes
+1. Added interactive `Run Audit` form in SEO dashboard page:
+   - accepts one-or-many URLs (newline/comma separated),
+   - validates URL format client-side,
+   - submits to `POST /api/seo/audit`,
+   - refreshes table after enqueue.
+2. Replaced static/non-functional `Run Audit` button with working manual trigger form.
+3. Added internal cron type `pull-ga4` in `/api/internal/cron-run`:
+   - pulls GA4 Data API (`date`, `pagePath`, `sessions`, `engagedSessions`, `conversions`, `totalRevenue`),
+   - maps path to absolute URL using `NEXT_PUBLIC_SITE_URL`,
+   - resolves `content_item_id` and upserts to `analytics_ga4_daily`.
+
+### Impact on SEO/Integration
+- SEO audit can now be triggered manually from dashboard without shell/API call.
+- GA4 ingestion is now automatable through existing internal cron endpoint (`type: pull-ga4`), removing dependence on manual import POST flow.
+
+### Verification Status
+- ✅ Feature wiring completed (UI -> API enqueue, cron GA4 -> DB upsert).
+- ⚠️ `seo-dashboard` local typecheck/build currently noisy due workspace `.next/types` state in this shell session; requires clean Next types regeneration in CI/runtime env for strict verification output.

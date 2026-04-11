@@ -38,6 +38,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Default GA4 measurement ID now set to `G-P0DQM5CH0D` with env override support (`NEXT_PUBLIC_GA_MEASUREMENT_ID` / `NEXT_PUBLIC_GA_ID`) to simplify deployment activation.
 - [x] Netlify prerender blocker resolved for GA4 instrumentation: root tracker no longer uses `useSearchParams`, preventing suspense-boundary errors on `/_not-found` and dynamic slug pages.
 - [x] Netlify edge bundling blocker mitigated by removing unused frontend `proxy.ts`, preventing generation of `___netlify-edge-handler-node-middleware` artifact that crashed plugin bundling on Next.js 16.1.7.
+- [x] SEO dashboard operations UX now includes functional manual `Run Audit` input form (URL batch enqueue), and internal worker cron now supports `pull-ga4` for GA4-to-DB daily sync automation.
 - [x] Migration closeout doc cleanup completed: obsolete migration-only docs removed from `docs/` to keep active documentation focused on operational workflows.
 - [x] Post-migration documentation prune wave 2 completed: stale SEO dashboard phase summaries removed and dead doc references in legacy README/script paths replaced with active/archive links.
 - [x] Removed the 8-item validation cap from navigation submenus in the Sanity schema (`link.ts`), permitting expanded menu structures.
