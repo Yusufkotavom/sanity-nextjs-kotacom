@@ -34,6 +34,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] SEO Ops automation hardening completed: manual indexing now uses real queue jobs, GSC daily pull now aggregates page/query/country/device, and GA4 imports are persisted in DB for dashboard joins.
 - [x] SEO Opportunity Board added in operations dashboard with quick wins (high impressions + low CTR), decay detection, and indexing blocker monitoring.
 - [x] Seo-dashboard Netlify build hardening completed: Sanity/env-sensitive API imports are now lazy-loaded to prevent `Failed to collect page data` crashes during production build.
+- [x] Frontend instrumentation pass completed for GA4 + WhatsApp conversion tracking: root GA loader, route page_view dispatch, and shared WA click events now wired across floating/header/rewrite/SEO block CTA surfaces.
 - [x] Migration closeout doc cleanup completed: obsolete migration-only docs removed from `docs/` to keep active documentation focused on operational workflows.
 - [x] Post-migration documentation prune wave 2 completed: stale SEO dashboard phase summaries removed and dead doc references in legacy README/script paths replaced with active/archive links.
 - [x] Removed the 8-item validation cap from navigation submenus in the Sanity schema (`link.ts`), permitting expanded menu structures.

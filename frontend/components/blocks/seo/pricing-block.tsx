@@ -2,6 +2,7 @@ import { stegaClean } from "next-sanity";
 import SectionContainer from "@/components/ui/section-container";
 import { fetchSeoSettings } from "@/sanity/lib/fetch";
 import { Check, X, Clock, CreditCard } from "lucide-react";
+import WhatsAppLink from "@/components/whatsapp-link";
 import { ColorVariant, SectionPadding } from "@/sanity.types";
 
 type PricingBlock = {
@@ -116,14 +117,15 @@ export default async function PricingBlock({
 
               {/* CTA */}
               <div className="mt-auto">
-                <a
-                  href={`https://wa.me/6285799520350?text=Halo, saya tertarik dengan paket ${pkg.name}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <WhatsAppLink
+                  phoneNumber="6285799520350"
+                  predefinedText={`Halo, saya tertarik dengan paket ${pkg.name}`}
+                  trackingContext="seo_pricing_block"
+                  ariaLabel={`Konsultasi Gratis paket ${pkg.name}`}
                   className="block w-full rounded-md bg-primary px-4 py-2 text-center text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
                 >
                   Konsultasi Gratis
-                </a>
+                </WhatsAppLink>
               </div>
             </div>
           ))}

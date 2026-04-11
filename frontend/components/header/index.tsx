@@ -43,6 +43,7 @@ export default async function Header() {
                 phoneNumber={whatsApp.phoneNumber}
                 predefinedText={whatsApp.predefinedText}
                 sourceUrl={whatsApp.sourceUrl}
+                trackingContext="header_mobile_whatsapp"
                 ariaLabel={whatsAppLabel}
                 className={cn(
                   buttonVariants({
@@ -88,6 +89,7 @@ export default async function Header() {
                 phoneNumber={whatsApp.phoneNumber}
                 predefinedText={whatsApp.predefinedText}
                 sourceUrl={whatsApp.sourceUrl}
+                trackingContext="header_desktop_whatsapp"
                 ariaLabel={whatsAppLabel}
                 className={cn(
                   buttonVariants({

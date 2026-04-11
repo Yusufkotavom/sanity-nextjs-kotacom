@@ -5,6 +5,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import Ga4Tracker from "@/components/analytics/ga4-tracker";
 import { generateRootMetadata } from "@/sanity/lib/metadata";
 import { fetchSanityThemeSettings, fetchSanitySeoSettings } from "@/sanity/lib/fetch";
 
@@ -167,6 +168,7 @@ export default async function RootLayout({
           {children}
         </ThemeProvider>
         <Toaster position="top-center" richColors />
+        <Ga4Tracker />
         {/* Organization Schema */}
         <script
           type="application/ld+json"

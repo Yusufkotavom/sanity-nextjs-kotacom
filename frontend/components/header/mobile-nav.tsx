@@ -324,6 +324,7 @@ export default function MobileNav({
                 phoneNumber={whatsAppPhoneNumber}
                 predefinedText={whatsApp?.predefinedText}
                 sourceUrl={whatsApp?.sourceUrl}
+                trackingContext="mobile_nav_whatsapp"
                 ariaLabel={whatsAppLabel}
                 onClick={() => setOpen(false)}
                 className={cn(

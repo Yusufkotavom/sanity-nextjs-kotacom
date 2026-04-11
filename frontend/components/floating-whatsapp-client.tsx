@@ -22,6 +22,7 @@ export default function FloatingWhatsAppClient({
       phoneNumber={phoneNumber}
       predefinedText={predefinedText}
       sourceUrl={sourceUrl}
+      trackingContext="floating_whatsapp"
       aria-label="Chat on WhatsApp"
       className={cn(
         "fixed right-4 bottom-6 z-50 inline-flex h-12 items-center gap-2 rounded-full bg-green-500 px-4 text-sm font-medium text-white shadow-lg transition hover:bg-green-600 focus-visible:ring-2 focus-visible:ring-green-300 focus-visible:outline-none",

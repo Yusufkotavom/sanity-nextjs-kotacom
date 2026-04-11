@@ -748,3 +748,36 @@ Automatically added SEO blocks to all money pages:
 - ✅ `pnpm --filter seo-dashboard typecheck` previously passed in this cycle
 - ✅ Route generation includes `api/internal/cron-run`, `api/jobs/retry`, and `api/seo/config/*` without collect-page-data failures
 - ⚠️ DB migration execution in remote env remains required (`analytics_ga4_daily`)
+
+## 2026-04-11 — Frontend GA4 + WhatsApp Click Tracking
+
+### Changed Files
+- `frontend/app/layout.tsx`
+- `frontend/components/analytics/ga4-tracker.tsx`
+- `frontend/lib/analytics.ts`
+- `frontend/components/whatsapp-link.tsx`
+- `frontend/components/floating-whatsapp-client.tsx`
+- `frontend/components/global-whatsapp-button.tsx`
+- `frontend/components/header/index.tsx`
+- `frontend/components/header/mobile-nav.tsx`
+- `frontend/components/ui/rewrite/hero-primary-cta.tsx`
+- `frontend/components/blocks/seo/faq-block.tsx`
+- `frontend/components/blocks/seo/pricing-block.tsx`
+- `frontend/.env.example`
+
+### Summary of Changes
+1. Added GA4 bootstrap tracker in frontend root layout using `NEXT_PUBLIC_GA_MEASUREMENT_ID`.
+2. Added centralized client analytics helper (`trackEvent`, `trackWhatsAppClick`) and route-level `page_view` dispatch.
+3. Added WhatsApp click tracking in shared `WhatsAppLink` component so most WA CTA surfaces are automatically tracked.
+4. Added explicit WA tracking contexts for floating button, header desktop/mobile, mobile nav, global WA buttons, and rewrite hero primary CTA.
+5. Replaced hardcoded `wa.me` anchors in SEO FAQ/Pricing blocks with shared tracked `WhatsAppLink`.
+
+### Impact on SEO/Integration
+- SEO analytics becomes richer with measurable WA conversion actions from organic landing pages.
+- Frontend WA CTA behavior is now standardized and observable in GA4 event stream (`whatsapp_click`).
+- No schema/query contract change; integration scope is frontend instrumentation only.
+
+### Verification Status
+- ✅ Code-level verification completed for GA4 + WA instrumentation wiring.
+- ⚠️ `pnpm --filter frontend run typecheck` failed due pre-existing stale `.next/types` include references, unrelated to this change.
+- ⚠️ `pnpm --filter frontend run build` failed on pre-existing `proxy.ts` runtime config (`Route segment config is not allowed in Proxy file`), unrelated to this change.

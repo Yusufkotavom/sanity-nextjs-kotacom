@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import WhatsAppLink from "@/components/whatsapp-link";
 import { ColorVariant, SectionPadding } from "@/sanity.types";
 
 type FaqBlock = {
@@ -65,14 +66,15 @@ export default async function FaqBlock({
           <p className="text-sm text-muted-foreground mb-4">
             Masih ada pertanyaan? Hubungi kami untuk konsultasi gratis
           </p>
-          <a
-            href="https://wa.me/6285799520350?text=Halo, saya ingin konsultasi"
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            phoneNumber="6285799520350"
+            predefinedText="Halo, saya ingin konsultasi"
+            trackingContext="seo_faq_block"
+            ariaLabel="Hubungi via WhatsApp"
             className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
           >
             Hubungi via WhatsApp
-          </a>
+          </WhatsAppLink>
         </div>
       </div>
     </SectionContainer>

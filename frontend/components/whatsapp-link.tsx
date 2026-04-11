@@ -4,7 +4,8 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { buildWhatsAppHref } from "@/lib/whatsapp";
+import { buildWhatsAppHref, normalizeWhatsAppPhone } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 type WhatsAppLinkProps = {
   phoneNumber: string;
@@ -16,6 +17,7 @@ type WhatsAppLinkProps = {
   rel?: string;
   target?: string;
   onClick?: () => void;
+  trackingContext?: string;
 };
 
 export default function WhatsAppLink({
@@ -28,6 +30,7 @@ export default function WhatsAppLink({
   rel = "noopener noreferrer",
   target = "_blank",
   onClick,
+  trackingContext = "whatsapp_link",
 }: WhatsAppLinkProps) {
   const pathname = usePathname();
   const previousUrlRef = useRef<string>("");
@@ -59,7 +62,16 @@ export default function WhatsAppLink({
       rel={target === "_blank" ? rel : undefined}
       aria-label={ariaLabel}
       className={className}
-      onClick={onClick}
+      onClick={() => {
+        const normalizedPhone = normalizeWhatsAppPhone(phoneNumber);
+        trackWhatsAppClick({
+          location: trackingContext,
+          label: ariaLabel,
+          phoneLast4: normalizedPhone.slice(-4),
+          pagePath: typeof window !== "undefined" ? window.location.pathname : "",
+        });
+        onClick?.();
+      }}
     >
       {children}
     </Link>

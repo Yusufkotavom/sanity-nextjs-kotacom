@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { buildWhatsAppHref } from "@/lib/whatsapp";
+import { buildWhatsAppHref, normalizeWhatsAppPhone } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 type RewriteHeroPrimaryCtaProps = {
@@ -77,6 +78,16 @@ export default function RewriteHeroPrimaryCta({
       href={href || fallbackHref}
       target={isWhatsApp ? "_blank" : undefined}
       rel={isWhatsApp ? "noopener noreferrer" : undefined}
+      onClick={() => {
+        if (!isWhatsApp || !phoneNumber) return;
+        const normalizedPhone = normalizeWhatsAppPhone(phoneNumber);
+        trackWhatsAppClick({
+          location: "rewrite_hero_primary_cta",
+          label: ctaText?.trim() || "Chat via WhatsApp",
+          phoneLast4: normalizedPhone.slice(-4),
+          pagePath: typeof window !== "undefined" ? window.location.pathname : "",
+        });
+      }}
       className={cn(
         buttonVariants({ size: "lg" }),
         "min-w-[13rem] rounded-full px-6 shadow-[0_16px_40px_rgba(17,24,39,0.16)]",

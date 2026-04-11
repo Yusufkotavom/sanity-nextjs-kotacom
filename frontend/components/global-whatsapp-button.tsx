@@ -20,6 +20,7 @@ type GlobalWhatsAppButtonProps = {
   className?: string;
   showIcon?: boolean;
   ariaLabel?: string;
+  trackingContext?: string;
 };
 
 export default async function GlobalWhatsAppButton({
@@ -34,6 +35,7 @@ export default async function GlobalWhatsAppButton({
   className,
   showIcon = true,
   ariaLabel,
+  trackingContext = "global_whatsapp_button",
 }: GlobalWhatsAppButtonProps) {
   const whatsApp = await getGlobalWhatsAppSettings();
   const baseClassName = cn(buttonVariants({ variant, size }), className);
@@ -47,6 +49,7 @@ export default async function GlobalWhatsAppButton({
         predefinedText={predefinedText ?? whatsApp.predefinedText}
         sourceUrl={sourceUrl ?? whatsApp.sourceUrl}
         ariaLabel={ariaLabel || resolvedLabel}
+        trackingContext={trackingContext}
         className={baseClassName}
       >
         {showIcon ? <WhatsAppIcon className="size-4" /> : null}
