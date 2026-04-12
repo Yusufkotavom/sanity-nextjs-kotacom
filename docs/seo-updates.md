@@ -4,6 +4,53 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12 — Service-Aware Conversion Copy for Template Spinner
+
+### Changed Files
+- `studio/schemas/objects/template-content-variant.ts` (MODIFIED)
+- `frontend/types/template.ts` (MODIFIED)
+- `frontend/sanity/queries/template-page.ts` (MODIFIED)
+- `frontend/lib/templates/resolve-template.ts` (MODIFIED)
+- `frontend/scripts/upgrade-template-conversion-content.mjs` (MODIFIED)
+- `frontend/package.json` (MODIFIED)
+- `frontend/tests/template-resolver.contract.test.ts` (MODIFIED)
+- `docs/seo-updates.md` (MODIFIED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+1. Extended the template spinner/content-variant contract so reusable copy can now be service-aware, not only city-aware.
+2. Added support for:
+   - service token replacement: `{layanan}` / `{service}`
+   - `requiresService` guardrails in Studio and frontend resolver
+   - `ctaLabel` as a spinner-controlled slot for route-specific CTA phrasing
+3. Updated template resolver context building so service slug/title/category now contribute context tags and route-level copy can adapt more precisely on `service` and `service-city` pages.
+4. Reworked the template content upgrade script so website, printing, and software templates now include stronger decision-stage copy variants for:
+   - service-only routes
+   - service + city routes
+   - route-specific primary CTA labels
+5. Applied the updated template content script to the 4 active `pageTemplate` documents in Sanity, so the new service-aware spinner copy is now present in the live template dataset.
+6. Tightened reusable FAQ/copy direction for lane-level objections:
+   - website: timeline, redesign, ownership/domain-hosting concerns
+   - printing: lead time / production readiness concerns
+   - software: integration and implementation concerns
+7. Replaced generic fallback phrasing that sounded too internal with safer public-facing fallback content.
+
+### Impact on SEO/Integration
+- Positive SEO and conversion impact:
+  - service-intent pages can now render more specific above-the-fold and closeout copy instead of inheriting city/base phrasing that feels generic
+  - reduces semantic drift between `base`, `city`, `service`, and `service-city` template routes
+  - improves CTA relevance and objection handling for repeated commercial template pages
+- Integration impact:
+  - Studio schema, frontend types, GROQ query contract, resolver logic, and template upgrade script are now aligned for service-aware spinner behavior
+
+### Verification Status
+- ✅ `pnpm --filter frontend test:templates`
+- ✅ `pnpm --filter frontend typecheck`
+- ✅ `pnpm --filter studio typecheck`
+- ✅ `pnpm --filter frontend build`
+- ✅ `node frontend/scripts/upgrade-template-conversion-content.mjs --write`
+- ✅ Read-back verification confirms active templates now store `requiresService` variants and updated service-aware CTA/headline/final-CTA copy
+
 ## 2026-04-12 — Structured Data (JSON-LD) for Listing Pages + Localization
 
 ### Changed Files

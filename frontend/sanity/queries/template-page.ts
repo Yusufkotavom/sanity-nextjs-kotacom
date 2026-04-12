@@ -76,6 +76,7 @@ const templateRewriteQuery = `
       intent,
       strength,
       requiresLocation,
+      requiresService,
       routeKinds,
       disallowedContexts
     }

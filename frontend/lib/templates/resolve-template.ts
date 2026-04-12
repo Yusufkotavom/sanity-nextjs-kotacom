@@ -14,7 +14,8 @@ import type {
   TemplateTrustMode,
 } from "@/types/template";
 
-const TOKEN_REGEX = /\{(lokasi|location|city)\}/gi;
+const LOCATION_TOKEN_REGEX = /\{(lokasi|location|city)\}/gi;
+const SERVICE_TOKEN_REGEX = /\{(layanan|service|serviceName)\}/gi;
 const SPACE_BEFORE_PUNCTUATION_REGEX = /\s+([,.;:!?])/g;
 const MULTI_SPACE_REGEX = /\s{2,}/g;
 
@@ -88,6 +89,13 @@ const defaultSourcePolicy: Required<TemplateSourcePolicy> = {
   maxQuickLinks: 2,
 };
 
+const slugifyTag = (value: string) =>
+  value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 const pickString = (value: string | null | undefined, fallback = "") => {
   if (typeof value !== "string") return fallback;
   const trimmed = value.trim();
@@ -96,25 +104,41 @@ const pickString = (value: string | null | undefined, fallback = "") => {
 
 const normalizeText = (value: string) =>
   value
-    .replace(TOKEN_REGEX, " ")
+    .replace(LOCATION_TOKEN_REGEX, " ")
+    .replace(SERVICE_TOKEN_REGEX, " ")
     .replace(SPACE_BEFORE_PUNCTUATION_REGEX, "$1")
     .replace(MULTI_SPACE_REGEX, " ")
     .replace(/\(\s*\)/g, "")
     .trim();
 
-const applyLocationTokens = (value: string, locationName?: string | null) => {
-  const replaced = locationName
-    ? value.replace(TOKEN_REGEX, locationName)
-    : value.replace(TOKEN_REGEX, " ");
+const applyContextTokens = (
+  value: string,
+  {
+    locationName,
+    serviceName,
+  }: {
+    locationName?: string | null;
+    serviceName?: string | null;
+  } = {},
+) => {
+  const withLocation = locationName
+    ? value.replace(LOCATION_TOKEN_REGEX, locationName)
+    : value.replace(LOCATION_TOKEN_REGEX, " ");
+  const replaced = serviceName
+    ? withLocation.replace(SERVICE_TOKEN_REGEX, serviceName)
+    : withLocation.replace(SERVICE_TOKEN_REGEX, " ");
   return normalizeText(replaced);
 };
 
-const applyLocationTokensArray = (
+const applyContextTokensArray = (
   items: string[],
-  locationName?: string | null,
+  context?: {
+    locationName?: string | null;
+    serviceName?: string | null;
+  },
 ) =>
   items
-    .map((item) => applyLocationTokens(item, locationName))
+    .map((item) => applyContextTokens(item, context))
     .filter(Boolean);
 
 const pickArray = <T>(value: T[] | null | undefined, fallback: T[]): T[] => {
@@ -174,13 +198,17 @@ const resolveCtaLinks = (
   items: TemplateCtaLink[] | null | undefined,
   fallback: LegacyRewriteCopy["ctaLinks"],
   locationName?: string | null,
+  serviceName?: string | null,
   maxQuickLinks = 2,
 ) => {
   const source = items && items.length > 0 ? items : [];
   const resolved = source
     .map((item) => {
       const href = resolveLinkHref(item.link || undefined);
-      const label = applyLocationTokens(pickString(item.label), locationName);
+      const label = applyContextTokens(pickString(item.label), {
+        locationName,
+        serviceName,
+      });
       if (!label || !href) return null;
       return { label, href };
     })
@@ -240,6 +268,11 @@ export const resolveTemplateExperience = ({
     page?.location ? "location" : "no-location",
     page?.service || page?.serviceType ? "service" : "no-service",
     variant,
+    ...(page?.service?.slug?.current ? [page.service.slug.current] : []),
+    ...(page?.serviceType?.slug?.current ? [page.serviceType.slug.current] : []),
+    ...(page?.serviceType?.category ? [slugifyTag(page.serviceType.category)] : []),
+    ...(page?.service?.title ? [slugifyTag(page.service.title)] : []),
+    ...(page?.serviceType?.title ? [slugifyTag(page.serviceType.title)] : []),
   ];
 
   return { lane, routeKind, variant, trustMode, sourcePolicy, contextTags };
@@ -251,6 +284,7 @@ const matchesVariantContext = ({
   routeKind,
   trustMode,
   hasLocation,
+  hasService,
   contextTags,
 }: {
   item: TemplateContentVariant;
@@ -258,11 +292,13 @@ const matchesVariantContext = ({
   routeKind: TemplateRouteKind;
   trustMode: TemplateTrustMode;
   hasLocation: boolean;
+  hasService: boolean;
   contextTags: string[];
 }) => {
   if (!item.text || !item.slot) return false;
   if (item.lane && item.lane !== lane) return false;
   if (item.requiresLocation && !hasLocation) return false;
+  if (item.requiresService && !hasService) return false;
   if (item.routeKinds?.length && !item.routeKinds.includes(routeKind)) return false;
   if (trustMode === "safe" && item.strength === "aggressive") return false;
   if (
@@ -282,6 +318,7 @@ const resolveVariantText = ({
   routeKind,
   trustMode,
   locationName,
+  serviceName,
   contextTags,
 }: {
   slot: NonNullable<TemplateContentVariant["slot"]>;
@@ -292,6 +329,7 @@ const resolveVariantText = ({
   routeKind: TemplateRouteKind;
   trustMode: TemplateTrustMode;
   locationName?: string | null;
+  serviceName?: string | null;
   contextTags: string[];
 }) => {
   const candidates = [...(pageVariants || []), ...(templateVariants || [])];
@@ -303,11 +341,15 @@ const resolveVariantText = ({
       routeKind,
       trustMode,
       hasLocation: Boolean(locationName),
+      hasService: Boolean(serviceName),
       contextTags,
     }),
   );
 
-  return applyLocationTokens(match?.text || fallback, locationName);
+  return applyContextTokens(match?.text || fallback, {
+    locationName,
+    serviceName,
+  });
 };
 
 const containsKeywords = (value: string, keywords: string[]) => {
@@ -332,12 +374,15 @@ const isRelevantToLane = (value: string, lane: TemplateLane) => {
 
 const applyLocationEeatPoints = (
   items: Array<{ title?: string | null; description?: string | null }>,
-  locationName?: string | null,
+  context?: {
+    locationName?: string | null;
+    serviceName?: string | null;
+  },
 ) =>
   items
     .map((item) => ({
-      title: applyLocationTokens(item.title || "", locationName),
-      description: applyLocationTokens(item.description || "", locationName),
+      title: applyContextTokens(item.title || "", context),
+      description: applyContextTokens(item.description || "", context),
     }))
     .filter((item) => item.title && item.description);
 
@@ -351,6 +396,7 @@ export const resolveTemplateCopy = ({
   template?: TemplatePageDoc["template"] | null;
 }): LegacyRewriteCopy => {
   const locationName = page?.location?.title || null;
+  const serviceName = page?.serviceType?.title || page?.service?.title || null;
   const experience = resolveTemplateExperience({ page, template });
   const pageStructured = page?.structured || null;
   const templateStructured = template?.structured || null;
@@ -367,6 +413,7 @@ export const resolveTemplateCopy = ({
     routeKind: experience.routeKind,
     trustMode: experience.trustMode,
     locationName,
+    serviceName,
     contextTags: experience.contextTags,
   });
 
@@ -378,12 +425,12 @@ export const resolveTemplateCopy = ({
     primaryKeyword = normalizeText(`${primaryKeyword} ${locationName}`);
   }
 
-  const secondaryKeywords = applyLocationTokensArray(
+  const secondaryKeywords = applyContextTokensArray(
     pickArray(
       pageStructured?.secondaryKeywords ?? templateStructured?.secondaryKeywords,
       base.secondaryKeywords,
     ),
-    locationName,
+    { locationName, serviceName },
   );
 
   const locationAwareKeywords =
@@ -406,6 +453,7 @@ export const resolveTemplateCopy = ({
     routeKind: experience.routeKind,
     trustMode: experience.trustMode,
     locationName,
+    serviceName,
     contextTags: experience.contextTags,
   });
 
@@ -421,28 +469,29 @@ export const resolveTemplateCopy = ({
     routeKind: experience.routeKind,
     trustMode: experience.trustMode,
     locationName,
+    serviceName,
     contextTags: experience.contextTags,
   });
 
   const highlights = dedupeByText(
-    applyLocationTokensArray(
+    applyContextTokensArray(
       pickArray(pageStructured?.highlights ?? templateStructured?.highlights, base.highlights),
-      locationName,
+      { locationName, serviceName },
     ),
     (item) => item,
   ).slice(0, 4);
 
   const eeatPoints = applyLocationEeatPoints(
     pickArray(pageStructured?.eeatPoints ?? templateStructured?.eeatPoints, []),
-    locationName,
+    { locationName, serviceName },
   ).filter((item) =>
     isRelevantToLane(`${item.title} ${item.description}`, experience.lane),
   );
 
   const process = dedupeByText(
-    applyLocationTokensArray(
+    applyContextTokensArray(
       pickArray(pageStructured?.process ?? templateStructured?.process, base.process),
-      locationName,
+      { locationName, serviceName },
     ),
     (item) => item,
   ).slice(0, 4);
@@ -450,8 +499,14 @@ export const resolveTemplateCopy = ({
   const faqs = dedupeByText(
     pickArray(pageStructured?.faqs ?? templateStructured?.faqs, base.faqs)
       .map((item) => ({
-        question: applyLocationTokens(pickString(item.question), locationName),
-        answer: applyLocationTokens(pickString(item.answer), locationName),
+        question: applyContextTokens(pickString(item.question), {
+          locationName,
+          serviceName,
+        }),
+        answer: applyContextTokens(pickString(item.answer), {
+          locationName,
+          serviceName,
+        }),
       }))
       .filter(
         (item) =>
@@ -463,10 +518,21 @@ export const resolveTemplateCopy = ({
     (item) => `${item.question} ${item.answer}`,
   ).slice(0, 4);
 
-  const ctaLabel = applyLocationTokens(
-    pickString(pageStructured?.ctaLabel ?? templateStructured?.ctaLabel, base.ctaLabel),
+  const ctaLabel = resolveVariantText({
+    slot: "ctaLabel",
+    pageVariants: pageStructured?.contentVariants,
+    templateVariants: templateStructured?.contentVariants,
+    fallback: pickString(
+      pageStructured?.ctaLabel ?? templateStructured?.ctaLabel,
+      base.ctaLabel,
+    ),
+    lane: experience.lane,
+    routeKind: experience.routeKind,
+    trustMode: experience.trustMode,
     locationName,
-  );
+    serviceName,
+    contextTags: experience.contextTags,
+  });
   const ctaHref =
     resolveLinkHref(pageStructured?.ctaLink) ||
     resolveLinkHref(templateStructured?.ctaLink) ||
@@ -476,6 +542,7 @@ export const resolveTemplateCopy = ({
     pageStructured?.ctaLinks ?? templateStructured?.ctaLinks,
     base.ctaLinks,
     locationName,
+    serviceName,
     experience.sourcePolicy.maxQuickLinks ?? undefined,
   );
 
@@ -485,8 +552,14 @@ export const resolveTemplateCopy = ({
       base.serviceTypes || [],
     )
       .map((item) => ({
-        title: applyLocationTokens(pickString(item.title), locationName),
-        description: applyLocationTokens(pickString(item.description), locationName),
+        title: applyContextTokens(pickString(item.title), {
+          locationName,
+          serviceName,
+        }),
+        description: applyContextTokens(pickString(item.description), {
+          locationName,
+          serviceName,
+        }),
         image: resolveImageUrl(item.image),
         href: resolveLinkHref(item.link),
       }))
@@ -507,14 +580,20 @@ export const resolveTemplateCopy = ({
       base.pricingPlans || [],
     )
       .map((item) => ({
-        name: applyLocationTokens(pickString(item.name ?? "", ""), locationName),
-        price: pickString(item.price ?? "", ""),
-        description: applyLocationTokens(
-          pickString(item.description ?? "", ""),
+        name: applyContextTokens(pickString(item.name ?? "", ""), {
           locationName,
+          serviceName,
+        }),
+        price: pickString(item.price ?? "", ""),
+        description: applyContextTokens(
+          pickString(item.description ?? "", ""),
+          { locationName, serviceName },
         ),
         items: dedupeByText(
-          applyLocationTokensArray(pickArray(item.items || [], []), locationName),
+          applyContextTokensArray(pickArray(item.items || [], []), {
+            locationName,
+            serviceName,
+          }),
           (entry) => entry,
         ),
         recommended: Boolean(item.recommended),
@@ -532,10 +611,13 @@ export const resolveTemplateCopy = ({
   const features = dedupeByText(
     pickArray(pageStructured?.features ?? templateStructured?.features, base.features || [])
       .map((item) => ({
-        title: applyLocationTokens(pickString(item.title ?? "", ""), locationName),
-        description: applyLocationTokens(
-          pickString(item.description ?? "", ""),
+        title: applyContextTokens(pickString(item.title ?? "", ""), {
           locationName,
+          serviceName,
+        }),
+        description: applyContextTokens(
+          pickString(item.description ?? "", ""),
+          { locationName, serviceName },
         ),
         icon: item.icon || undefined,
       }))
@@ -556,10 +638,13 @@ export const resolveTemplateCopy = ({
       base.proofItems || [],
     )
       .map((item) => ({
-        title: applyLocationTokens(pickString(item.title ?? "", ""), locationName),
-        description: applyLocationTokens(
-          pickString(item.description ?? "", ""),
+        title: applyContextTokens(pickString(item.title ?? "", ""), {
           locationName,
+          serviceName,
+        }),
+        description: applyContextTokens(
+          pickString(item.description ?? "", ""),
+          { locationName, serviceName },
         ),
         image: resolveImageUrl(item.image),
         href: resolveLinkHref(item.link),
@@ -581,9 +666,18 @@ export const resolveTemplateCopy = ({
       base.testimonials || [],
     )
       .map((item) => ({
-        name: applyLocationTokens(pickString(item.name ?? "", ""), locationName),
-        role: applyLocationTokens(pickString(item.role ?? "", ""), locationName),
-        quote: applyLocationTokens(pickString(item.quote ?? "", ""), locationName),
+        name: applyContextTokens(pickString(item.name ?? "", ""), {
+          locationName,
+          serviceName,
+        }),
+        role: applyContextTokens(pickString(item.role ?? "", ""), {
+          locationName,
+          serviceName,
+        }),
+        quote: applyContextTokens(pickString(item.quote ?? "", ""), {
+          locationName,
+          serviceName,
+        }),
       }))
       .filter(
         (item) =>
@@ -597,10 +691,13 @@ export const resolveTemplateCopy = ({
   const longGuide = dedupeByText(
     pickArray(pageStructured?.longGuide ?? templateStructured?.longGuide, base.longGuide || [])
       .map((item) => ({
-        title: applyLocationTokens(pickString(item.title ?? "", ""), locationName),
-        description: applyLocationTokens(
-          pickString(item.description ?? "", ""),
+        title: applyContextTokens(pickString(item.title ?? "", ""), {
           locationName,
+          serviceName,
+        }),
+        description: applyContextTokens(
+          pickString(item.description ?? "", ""),
+          { locationName, serviceName },
         ),
       }))
       .filter(
@@ -624,6 +721,7 @@ export const resolveTemplateCopy = ({
     routeKind: experience.routeKind,
     trustMode: experience.trustMode,
     locationName,
+    serviceName,
     contextTags: experience.contextTags,
   });
 
@@ -639,6 +737,7 @@ export const resolveTemplateCopy = ({
     routeKind: experience.routeKind,
     trustMode: experience.trustMode,
     locationName,
+    serviceName,
     contextTags: experience.contextTags,
   });
 
@@ -739,6 +838,7 @@ export const resolvePrimaryHeroEyebrow = ({
 }) => {
   const experience = resolveTemplateExperience({ page, template });
   const locationName = page?.location?.title || null;
+  const serviceName = page?.serviceType?.title || page?.service?.title || null;
 
   return resolveVariantText({
     slot: "heroEyebrow",
@@ -749,6 +849,7 @@ export const resolvePrimaryHeroEyebrow = ({
     routeKind: experience.routeKind,
     trustMode: experience.trustMode,
     locationName,
+    serviceName,
     contextTags: experience.contextTags,
   });
 };

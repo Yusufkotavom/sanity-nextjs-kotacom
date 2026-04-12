@@ -69,6 +69,7 @@ export type TemplateContentVariant = {
     | "primaryKeyword"
     | "intro"
     | "description"
+    | "ctaLabel"
     | "finalCtaTitle"
     | "finalCtaDescription"
     | null;
@@ -77,6 +78,7 @@ export type TemplateContentVariant = {
   intent?: "awareness" | "commercial" | "decision" | null;
   strength?: TemplateTrustMode | null;
   requiresLocation?: boolean | null;
+  requiresService?: boolean | null;
   routeKinds?: TemplateRouteKind[] | null;
   disallowedContexts?: string[] | null;
 };

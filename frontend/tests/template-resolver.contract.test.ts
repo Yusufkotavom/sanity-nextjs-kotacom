@@ -256,10 +256,18 @@ async function main() {
         contentVariants: [
           {
             slot: "heroEyebrow",
-            text: "Website company profile untuk {lokasi}",
+            text: "{layanan} untuk {lokasi}",
             lane: "website",
             routeKinds: ["service-city"],
             requiresLocation: true,
+            requiresService: true,
+          },
+          {
+            slot: "ctaLabel",
+            text: "Diskusikan {layanan}",
+            lane: "website",
+            routeKinds: ["service-city"],
+            requiresService: true,
           },
         ],
       },
@@ -273,10 +281,12 @@ async function main() {
 
     const experience = resolveTemplateExperience({ page, template });
     const eyebrow = resolvePrimaryHeroEyebrow({ page, template });
+    const copy = resolveTemplateCopy({ base: baseCopy, page, template });
 
     assert.equal(experience.routeKind, "service-city");
     assert.equal(experience.lane, "website");
-    assert.equal(eyebrow, "Website company profile untuk Jakarta");
+    assert.equal(eyebrow, "Company Profile untuk Jakarta");
+    assert.equal(copy.ctaLabel, "Diskusikan Company Profile");
   }
 
   console.log("template resolver contract tests passed");

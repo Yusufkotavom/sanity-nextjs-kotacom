@@ -27,6 +27,7 @@ function contentVariant({
   lane,
   routeKinds,
   requiresLocation = false,
+  requiresService = false,
   strength = "safe",
 }) {
   return {
@@ -40,8 +41,12 @@ function contentVariant({
       : "commercial",
     strength,
     requiresLocation,
+    requiresService,
     routeKinds,
-    disallowedContexts: requiresLocation ? ["no-location"] : [],
+    disallowedContexts: [
+      ...(requiresLocation ? ["no-location"] : []),
+      ...(requiresService ? ["no-service"] : []),
+    ],
   };
 }
 
@@ -184,16 +189,16 @@ const templatePatches = {
           "Tergantung tujuan utamanya. Jika fokus Anda kredibilitas, company profile biasanya cukup. Jika fokusnya akuisisi lead, struktur halaman dan CTA perlu dibuat lebih tajam. Jika fokusnya transaksi, alurnya harus mendukung katalog, checkout, dan follow-up."
         ),
         faq(
-          "Apakah saya harus menyiapkan semua konten sebelum proyek dimulai?",
-          "Tidak harus lengkap di awal, tetapi kami butuh bahan dasar seperti profil bisnis, layanan utama, contoh referensi, dan arah tone komunikasi agar struktur website tidak dibangun dari asumsi."
+          "Berapa lama proyek website biasanya berjalan?",
+          "Timeline bergantung pada jumlah halaman, kesiapan konten, dan tingkat revisi. Yang paling memengaruhi lama proyek biasanya bukan coding, tetapi keputusan scope dan kelengkapan materi di awal."
         ),
         faq(
-          "Apakah website nanti bisa saya update sendiri?",
-          "Ya. Struktur proyek disiapkan agar perubahan konten rutin seperti teks, portfolio, dan informasi layanan tidak selalu bergantung ke tim developer."
+          "Apakah website lama bisa diredesign tanpa mulai dari nol?",
+          "Bisa. Kami biasanya audit dulu struktur konten, halaman yang masih layak dipakai, serta bagian yang justru perlu disederhanakan agar redesign tidak hanya mengganti tampilan."
         ),
         faq(
-          "Apa yang paling sering membuat proyek website molor?",
-          "Biasanya karena scope berubah di tengah jalan atau keputusan konten tertunda. Karena itu kami menekankan penentuan prioritas sejak awal dan pemecahan pekerjaan ke milestone yang jelas."
+          "Apakah domain, hosting, dan pengelolaan konten nanti tetap bisa dipegang tim saya?",
+          "Bisa. Kami mengutamakan struktur yang tetap mudah dikelola setelah launch agar update rutin seperti teks, portfolio, dan informasi layanan tidak selalu bergantung pada developer."
         ),
       ],
       ctaLabel: "Diskusikan Website Anda",
@@ -306,6 +311,59 @@ const templatePatches = {
           requiresLocation: true,
         }),
         contentVariant({
+          slot: "heroEyebrow",
+          text: "{layanan} untuk bisnis yang butuh kredibilitas dan CTA yang jelas",
+          lane: "website",
+          routeKinds: ["service", "service-city"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "primaryKeyword",
+          text: "Jasa Pembuatan {layanan} yang Lebih Siap Dipakai untuk Penjualan",
+          lane: "website",
+          routeKinds: ["service"],
+          requiresService: true,
+          strength: "aggressive",
+        }),
+        contentVariant({
+          slot: "primaryKeyword",
+          text: "Jasa Pembuatan {layanan} di {lokasi}",
+          lane: "website",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
+          strength: "aggressive",
+        }),
+        contentVariant({
+          slot: "description",
+          text: "Kami membantu merancang {layanan} yang lebih mudah dipahami calon pelanggan, lebih rapi saat dipresentasikan, dan lebih siap mengarahkan inquiry.",
+          lane: "website",
+          routeKinds: ["service", "service-city"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "intro",
+          text: "{layanan} yang efektif harus menjawab tiga hal lebih cepat: bisnis Anda menawarkan apa, siapa targetnya, dan tindakan apa yang ingin Anda dorong setelah pengunjung masuk.",
+          lane: "website",
+          routeKinds: ["service"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "intro",
+          text: "Untuk bisnis di {lokasi}, {layanan} yang efektif harus langsung menjelaskan nilai layanan, menunjukkan bukti yang relevan, dan memudahkan calon klien masuk ke tahap diskusi.",
+          lane: "website",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "ctaLabel",
+          text: "Diskusikan {layanan}",
+          lane: "website",
+          routeKinds: ["service", "service-city"],
+          requiresService: true,
+        }),
+        contentVariant({
           slot: "finalCtaTitle",
           text: "Butuh website yang lebih siap dipakai untuk bisnis di {lokasi}?",
           lane: "website",
@@ -313,11 +371,41 @@ const templatePatches = {
           requiresLocation: true,
         }),
         contentVariant({
+          slot: "finalCtaTitle",
+          text: "Siapkan {layanan} yang lebih mudah dipercaya sejak kunjungan pertama",
+          lane: "website",
+          routeKinds: ["service"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "finalCtaTitle",
+          text: "Butuh {layanan} yang lebih siap dipakai di {lokasi}?",
+          lane: "website",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
+        }),
+        contentVariant({
           slot: "finalCtaDescription",
           text: "Diskusikan kebutuhan website Anda di {lokasi}. Kami bantu petakan scope awal, prioritas halaman, dan langkah implementasi yang paling realistis.",
           lane: "website",
           routeKinds: ["city", "service-city"],
           requiresLocation: true,
+        }),
+        contentVariant({
+          slot: "finalCtaDescription",
+          text: "Kami bantu memetakan scope {layanan}, prioritas halaman, dan kebutuhan konten supaya proyek tidak berhenti di desain yang rapi tetapi lemah saat dipakai jualan.",
+          lane: "website",
+          routeKinds: ["service"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "finalCtaDescription",
+          text: "Diskusikan kebutuhan {layanan} di {lokasi}. Kami bantu tentukan scope awal, CTA utama, dan struktur halaman yang paling realistis untuk target bisnis Anda.",
+          lane: "website",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
         }),
       ],
     },
@@ -360,8 +448,8 @@ const templatePatches = {
       faqs: [
         faq("Bagaimana menentukan jenis material yang tepat?", "Material terbaik selalu bergantung pada fungsi akhirnya. Brosur promosi, company profile, buku, dan banner membutuhkan pertimbangan yang berbeda pada ketebalan, finishing, dan daya tahannya."),
         faq("Apakah bisa bantu cek file sebelum cetak?", "Ya. Pemeriksaan file adalah bagian penting dari proses agar hasil cetak tidak gagal karena hal yang sebenarnya bisa dicegah lebih awal."),
+        faq("Apa yang paling memengaruhi lead time produksi?", "Biasanya kombinasi jumlah, antrean produksi, finishing, dan apakah file final sudah aman diproses. Semakin jelas spesifikasinya di awal, semakin mudah timeline diprediksi."),
         faq("Apa yang paling memengaruhi harga cetak?", "Biasanya jumlah, ukuran, material, finishing, dan tingkat urgensi deadline. Karena itu kami lebih suka membahas basis spesifikasi dulu sebelum memberi estimasi."),
-        faq("Kapan sebaiknya pilih POD dan kapan pilih cetak massal?", "POD cocok untuk proof, kebutuhan satuan, atau volume kecil. Cetak massal lebih efisien jika materialnya akan dipakai berulang atau didistribusikan dalam jumlah besar."),
       ],
       ctaLabel: "Konsultasikan Kebutuhan Cetak",
       ctaLink: externalLink(
@@ -429,11 +517,94 @@ const templatePatches = {
           requiresLocation: true,
         }),
         contentVariant({
+          slot: "heroEyebrow",
+          text: "{layanan} dengan spesifikasi, QC, dan timeline yang lebih jelas",
+          lane: "printing",
+          routeKinds: ["service", "service-city"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "primaryKeyword",
+          text: "Jasa {layanan} dengan Hasil yang Lebih Siap Dipakai",
+          lane: "printing",
+          routeKinds: ["service"],
+          requiresService: true,
+          strength: "aggressive",
+        }),
+        contentVariant({
+          slot: "primaryKeyword",
+          text: "Jasa {layanan} di {lokasi}",
+          lane: "printing",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
+          strength: "aggressive",
+        }),
+        contentVariant({
+          slot: "description",
+          text: "Kami membantu menyiapkan {layanan} dengan spesifikasi yang lebih aman diproduksi, hasil yang lebih rapi, dan keputusan material yang tidak terasa menebak.",
+          lane: "printing",
+          routeKinds: ["service", "service-city"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "intro",
+          text: "Pada {layanan}, risiko terbesarnya biasanya datang dari file yang kurang siap, spesifikasi yang kabur, atau deadline yang diputuskan tanpa basis produksi yang jelas.",
+          lane: "printing",
+          routeKinds: ["service"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "intro",
+          text: "Untuk kebutuhan {layanan} di {lokasi}, kami membantu memecah spesifikasi, pilihan material, dan timeline agar output akhirnya lebih aman dipakai untuk promosi maupun distribusi.",
+          lane: "printing",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "ctaLabel",
+          text: "Konsultasikan {layanan}",
+          lane: "printing",
+          routeKinds: ["service", "service-city"],
+          requiresService: true,
+        }),
+        contentVariant({
           slot: "finalCtaTitle",
           text: "Butuh hasil cetak yang lebih siap dipakai di {lokasi}?",
           lane: "printing",
           routeKinds: ["city", "service-city"],
           requiresLocation: true,
+        }),
+        contentVariant({
+          slot: "finalCtaTitle",
+          text: "Pastikan {layanan} Anda diputuskan dari spesifikasi yang benar",
+          lane: "printing",
+          routeKinds: ["service"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "finalCtaTitle",
+          text: "Butuh {layanan} yang lebih siap diproduksi di {lokasi}?",
+          lane: "printing",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "finalCtaDescription",
+          text: "Diskusikan kebutuhan {layanan} Anda bersama kami. Kami bantu pecah ke jumlah, material, finishing, dan timeline yang lebih realistis untuk produksi.",
+          lane: "printing",
+          routeKinds: ["service"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "finalCtaDescription",
+          text: "Jika Anda butuh {layanan} di {lokasi}, kami bantu pastikan spesifikasi, proofing, dan timeline produksi sudah masuk akal sebelum cetak berjalan.",
+          lane: "printing",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
         }),
       ],
     },
@@ -476,7 +647,7 @@ const templatePatches = {
       faqs: [
         faq("Kapan bisnis sebaiknya memilih software custom?", "Saat workflow Anda sudah cukup spesifik sehingga software jadi terasa memaksa tim berputar mengikuti tool, bukan sebaliknya."),
         faq("Apakah semua fitur harus dibangun sekaligus?", "Tidak. Banyak proyek lebih sehat dimulai dari MVP atau modul inti agar keputusan berikutnya didasarkan pada pemakaian nyata, bukan asumsi."),
-        faq("Apa yang paling sering membuat proyek software gagal?", "Biasanya scope yang terlalu luas sejak awal, proses bisnis yang belum dipetakan, atau user role yang tidak jelas."),
+        faq("Apakah software baru bisa diintegrasikan dengan proses atau tools yang sudah ada?", "Bisa, tetapi kebutuhan integrasi perlu dipetakan sejak awal karena dampaknya langsung ke struktur data, hak akses, dan prioritas pengerjaan."),
         faq("Bagaimana memastikan software nanti benar-benar dipakai tim?", "Selain build, fase implementasi perlu mempertimbangkan training, dokumentasi, dan penyesuaian kecil setelah tim mulai menggunakan sistem secara nyata."),
       ],
       ctaLabel: "Diskusikan Scope Software",
@@ -545,11 +716,94 @@ const templatePatches = {
           requiresLocation: true,
         }),
         contentVariant({
+          slot: "heroEyebrow",
+          text: "{layanan} untuk proses yang ingin dirapikan lebih dulu",
+          lane: "software",
+          routeKinds: ["service", "service-city"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "primaryKeyword",
+          text: "Pembuatan {layanan} yang Mengikuti Workflow Bisnis",
+          lane: "software",
+          routeKinds: ["service"],
+          requiresService: true,
+          strength: "aggressive",
+        }),
+        contentVariant({
+          slot: "primaryKeyword",
+          text: "Pembuatan {layanan} di {lokasi}",
+          lane: "software",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
+          strength: "aggressive",
+        }),
+        contentVariant({
+          slot: "description",
+          text: "Kami membantu membangun {layanan} yang lebih relevan untuk alur kerja harian, lebih mudah dipahami user, dan lebih realistis saat diimplementasikan bertahap.",
+          lane: "software",
+          routeKinds: ["service", "service-city"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "intro",
+          text: "{layanan} yang sehat dimulai dari bottleneck yang jelas, role user yang rapi, dan keputusan scope yang tidak dipaksakan terlalu luas sejak awal.",
+          lane: "software",
+          routeKinds: ["service"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "intro",
+          text: "Jika Anda butuh {layanan} di {lokasi}, kami membantu memetakan alur kerja, prioritas modul, dan tahap implementasi agar tim lebih siap mengadopsinya.",
+          lane: "software",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "ctaLabel",
+          text: "Diskusikan {layanan}",
+          lane: "software",
+          routeKinds: ["service", "service-city"],
+          requiresService: true,
+        }),
+        contentVariant({
           slot: "finalCtaTitle",
           text: "Butuh software yang lebih nyambung dengan proses bisnis di {lokasi}?",
           lane: "software",
           routeKinds: ["city", "service-city"],
           requiresLocation: true,
+        }),
+        contentVariant({
+          slot: "finalCtaTitle",
+          text: "Mulai {layanan} dari bottleneck yang paling mahal lebih dulu",
+          lane: "software",
+          routeKinds: ["service"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "finalCtaTitle",
+          text: "Butuh {layanan} yang lebih nyambung dengan proses bisnis di {lokasi}?",
+          lane: "software",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "finalCtaDescription",
+          text: "Kami bantu pecah kebutuhan {layanan} menjadi scope yang lebih jelas, fase implementasi yang lebih realistis, dan alur adopsi yang lebih masuk akal untuk tim Anda.",
+          lane: "software",
+          routeKinds: ["service"],
+          requiresService: true,
+        }),
+        contentVariant({
+          slot: "finalCtaDescription",
+          text: "Diskusikan kebutuhan {layanan} di {lokasi}. Kami bantu tentukan modul inti, integrasi penting, dan langkah implementasi yang paling realistis untuk operasional Anda.",
+          lane: "software",
+          routeKinds: ["service-city"],
+          requiresLocation: true,
+          requiresService: true,
         }),
       ],
     },
@@ -614,13 +868,13 @@ const templatePatches = {
         feature("Bisa diperkaya bertahap", "Proof, FAQ, dan paket dapat diperbarui tanpa membongkar seluruh struktur halaman.", "support"),
       ],
       proofItems: [
-        proof("Bukti kerja yang relevan", "Tambahkan hanya contoh yang benar-benar dekat dengan layanan yang sedang dijual."),
+        proof("Bukti kerja yang relevan", "Gunakan contoh proyek yang paling dekat dengan masalah, buyer intent, dan hasil yang dicari calon klien di halaman ini."),
       ],
       testimonials: [
-        testimonial("Template fallback", "Internal use", "Halaman generic sebaiknya dipakai sebagai jembatan, bukan sebagai pengganti permanen untuk money page yang sudah jelas lane-nya."),
+        testimonial("Hendra", "Manager operasional", "Yang kami butuhkan bukan halaman yang ramai, tetapi halaman yang cepat menjelaskan scope, bukti kerja, dan langkah kontak berikutnya."),
       ],
-      finalCtaTitle: "Gunakan template ini hanya sebagai fallback yang tetap rapi",
-      finalCtaDescription: "Saat layanan sudah punya positioning, proof, dan buyer intent yang jelas, lebih baik pindah ke shell khusus agar halaman bisa bekerja lebih tajam.",
+      finalCtaTitle: "Gunakan template generic hanya sampai lane khusus siap",
+      finalCtaDescription: "Template ini aman dipakai untuk menjaga struktur tetap rapi. Tetapi saat buyer intent, proof, dan positioning sudah jelas, pindah ke shell khusus akan memberi hasil konversi yang lebih kuat.",
     },
   },
 };
@@ -664,7 +918,7 @@ async function main() {
   }
 
   const updated = await readClient.fetch(
-    `*[_type == "pageTemplate"]{_id,title,variant,lane,trustMode,sourcePolicy,structured{primaryKeyword,ctaLabel,ctaLinks[]{label},pricingPlans[]{name,price},proofItems[]{title},testimonials[]{name},contentVariants[]{slot,routeKinds,requiresLocation}}}`
+    `*[_type == "pageTemplate"]{_id,title,variant,lane,trustMode,sourcePolicy,structured{primaryKeyword,ctaLabel,ctaLinks[]{label},pricingPlans[]{name,price},proofItems[]{title},testimonials[]{name},contentVariants[]{slot,routeKinds,requiresLocation,requiresService}}}`
   );
 
   console.log(JSON.stringify(updated, null, 2));

@@ -5,6 +5,7 @@ const SLOT_OPTIONS = [
   { title: "Hero Headline", value: "primaryKeyword" },
   { title: "Hero Subheadline", value: "intro" },
   { title: "Description", value: "description" },
+  { title: "Primary CTA Label", value: "ctaLabel" },
   { title: "Final CTA Title", value: "finalCtaTitle" },
   { title: "Final CTA Description", value: "finalCtaDescription" },
 ];
@@ -38,22 +39,30 @@ export default defineType({
     defineField({
       name: "text",
       title: "Text",
-      type: "text",
-      rows: 4,
-      validation: (Rule) =>
-        Rule.required().custom((value, context) => {
-          const parent = context.parent as {
-            requiresLocation?: boolean;
-          } | null;
-          if (
-            typeof value === "string" &&
-            /\{(lokasi|location|city)\}/i.test(value) &&
-            !parent?.requiresLocation
-          ) {
-            return "Aktifkan 'Requires Location Context' jika teks memakai token lokasi.";
-          }
-          return true;
-        }),
+        type: "text",
+        rows: 4,
+        validation: (Rule) =>
+          Rule.required().custom((value, context) => {
+            const parent = context.parent as {
+              requiresLocation?: boolean;
+              requiresService?: boolean;
+            } | null;
+            if (
+              typeof value === "string" &&
+              /\{(lokasi|location|city)\}/i.test(value) &&
+              !parent?.requiresLocation
+            ) {
+              return "Aktifkan 'Requires Location Context' jika teks memakai token lokasi.";
+            }
+            if (
+              typeof value === "string" &&
+              /\{(layanan|service|serviceName)\}/i.test(value) &&
+              !parent?.requiresService
+            ) {
+              return "Aktifkan 'Requires Service Context' jika teks memakai token layanan.";
+            }
+            return true;
+          }),
     }),
     defineField({
       name: "lane",
@@ -91,6 +100,12 @@ export default defineType({
     defineField({
       name: "requiresLocation",
       title: "Requires Location Context",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
+      name: "requiresService",
+      title: "Requires Service Context",
       type: "boolean",
       initialValue: false,
     }),
