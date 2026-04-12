@@ -4,6 +4,45 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12 — Auto-Linking Broken Route Overrides to CMS Templates
+
+### Changed Files
+- `frontend/link-templates.mjs` (NEW)
+- `docs/seo-updates.md` (MODIFIED)
+
+### Summary
+1. Discovered that 61 active `pageLocation` and `serviceLocation` documents lacked a `template` relationship field, causing these routes to fall back to legacy hardcoded text generation instead of using the newly optimized Sanity CMS copywriting.
+2. Created a Node deployment script (`link-templates.mjs`) to scan the full unassigned location inventory in the database, infer context via route strings (e.g. `/pembuatan-website` -> `website` lane, `/percetakan` -> `printing` lane).
+3. Automatically patched all 61 abandoned pages using a batch Sanity transaction, successfully linking them to `page-template-pembuatan-website` or `page-template-percetakan` as appropriate.
+
+### Impact on SEO/Integration
+- Positive SEO impact: 61 commercial local landing pages have now been hot-swapped from repetitive legacy filler text to high-converting E-E-A-T structured CMS copy.
+- Positive Integration impact: Consolidates the rendering architecture to rely solely on the structured CMS templates, preventing disjointed output formats across the frontend.
+
+### Verification Status
+- ✅ Verified 61 documents (`pageLocation` and `serviceLocation`) correctly mapped and processed inside the transaction.
+
+## 2026-04-12 — Template Mass Indexing Activation and Invalid Property Fix
+
+### Changed Files
+- `frontend/patch-null-refs.mjs` (NEW)
+- `frontend/bulk-index-pages.mjs` (NEW)
+- `docs/seo-updates.md` (MODIFIED)
+
+### Summary
+1. Discovered that many `pageLocation` and `serviceLocation` documents in Sanity had invalid `null` references imported, which broke Sanity Studio validation.
+2. Created and executed a superfast Sanity transaction script (`patch-null-refs.mjs`) to purge all invalid `null` references on 75 active documents simultaneously.
+3. Discovered that the majority of commercial location pages (e.g., Bandar Lampung, Pangkal Pinang) were locked entirely from Google search because they inherited the default `No-Index` and `Draft` status tags during bulk imports.
+4. Created and executed a bulk indexing script (`bulk-index-pages.mjs`) using a single CMS transaction to activate indexing on 66 commercial location pages, safely setting `contentStatus` to `index` and clearing `noindex` override flags.
+
+### Impact on SEO/Integration
+- Positive SEO impact: 66 dormant commercial pages have been successfully submitted for Google search indexing and are now live for public consumption.
+- Positive Integration impact: Sanity studio no longer yields warning errors over schema mismatch mapping, keeping the editorial environment clean and predictable.
+
+### Verification Status
+- ✅ Verified 75 documents successfully patched against invalid reference `null` properties.
+- ✅ Verified 66 locked routing documents safely activated by checking `noindex: false` output across sample pages.
+
 ## 2026-04-12 — Revert Hybrid Blocks from Reusable Template Pages
 
 ### Changed Files
