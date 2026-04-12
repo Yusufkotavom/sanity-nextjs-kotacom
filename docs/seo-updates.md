@@ -77,6 +77,34 @@ This document tracks all SEO-related changes made to the repository.
 ### Verification Status
 - ✅ Repo reference scan confirms no remaining live references to the deleted script names outside this changelog entry.
 
+## 2026-04-12 — Template Override Normalization for Page/Service Location Docs
+
+### Changed Files
+- `frontend/scripts/normalize-template-page-overrides.mjs` (NEW)
+- `frontend/package.json` (MODIFIED)
+- `docs/seo-updates.md` (MODIFIED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+1. Added a dedicated normalization script for `pageLocation` / `serviceLocation` documents that use `pageTemplate` references.
+2. The script currently fixes legacy override data issues by:
+   - converting outdated testimonial shape `client` -> `name` + `role`
+   - capping `ctaLinks` to the active max
+   - removing empty/null structured fields from the stored override payload
+3. Ran the script in write mode and patched the affected document:
+   - `service-location-jasa-cetak-buku-surabaya`
+
+### Impact on SEO/Integration
+- Positive integration impact:
+  - prevents template-backed pages from silently losing testimonial data due to old field shape mismatch
+  - keeps override documents aligned with the active frontend template contract
+- No direct SEO logic change beyond improving consistency of rendered trust content.
+
+### Verification Status
+- ✅ Dry run completed: `node frontend/scripts/normalize-template-page-overrides.mjs`
+- ✅ Write run completed: `node frontend/scripts/normalize-template-page-overrides.mjs --write`
+- ✅ Read-back verification confirmed `service-location-jasa-cetak-buku-surabaya` testimonials now use `name` / `role` / `quote`
+
 ## 2026-04-12 — Template Rewrite Architecture Refactor for Lane-Based Conversion
 
 ### Changed Files
