@@ -440,7 +440,22 @@ function normalizeJsonUsaha(data: Record<string, unknown>, sourceFile: string): 
 }
 
 async function readAllJsonUsahaFiles() {
-  const entries = await fs.readdir(ROOT, { withFileTypes: true });
+  let entries;
+  try {
+    entries = await fs.readdir(ROOT, { withFileTypes: true });
+  } catch (error) {
+    if (
+      error &&
+      typeof error === "object" &&
+      "code" in error &&
+      error.code === "ENOENT"
+    ) {
+      return [];
+    }
+
+    throw error;
+  }
+
   const files = entries
     .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
     .map((entry) => entry.name)

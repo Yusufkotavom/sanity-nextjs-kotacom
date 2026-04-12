@@ -31,6 +31,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ## Current Status Snapshot (Already Done)
 
 - [x] **GSC MIGRATION 100% DONE:** All Top 300 manual curations + Top 1000 auto-redirects fully synced, seeded, and mapped via Sanity and Next.js wildcards.
+- [x] Repo-local `json_usaha` source pack has been restored from the Astro source tree into `frontend/content/astro-local/json-usaha`, and `/services/[slug]` static generation is green again for `agency-landing`, `biro-jasa-perizinan`, and `jasa-pengukuhan-pkp`.
+- [x] `/services` now follows the repo hybrid-page pattern: the route remains code-owned for the service catalog shell, while Sanity `page` blocks and metadata for slug `services` are rendered again through `PageHybridShell`.
 - [x] Template rewrite architecture upgraded to lane-aware conversion shells: `pageTemplate` now carries explicit `lane`, `trustMode`, and source-of-truth policy; structured copy supports rule-based content variants; and rewrite pages render one clear variant-driven narrative instead of stacking duplicate hero/pricing/proof layers.
 - [x] All 4 live `pageTemplate` documents have now been patched to the new conversion model in Sanity, including lane-specific pricing/proof/testimonial content, capped quick CTAs, and city-aware support-copy variants for location routes.
 - [x] Obsolete one-off template patch scripts have been removed from `frontend/scripts`, leaving a single maintained upgrade path for live template conversion content and reducing accidental rollback risk.

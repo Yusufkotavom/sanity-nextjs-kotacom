@@ -1607,3 +1607,44 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ Config patch applied.
 - ⚠️ Requires fresh redeploy and runtime smoke check.
+
+## 2026-04-12 — Restore Local JSON Usaha Source Pack
+
+### Changed Files
+- `frontend/content/astro-local/json-usaha/agency_landing.json`
+- `frontend/content/astro-local/json-usaha/Biro_jasa_perizinan.json`
+- `frontend/content/astro-local/json-usaha/Jasa_pengukuhan_PKP.json`
+- `frontend/lib/local-content/json-usaha.ts`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Restored the missing Astro JSON source files for the legacy `layanan/[slug]` dataset into `frontend/content/astro-local/json-usaha`.
+2. Kept the local-content loader defensive so CI/build does not crash with `ENOENT` when that folder is missing from a checkout.
+3. Revalidated `/services/[slug]` static generation so the three JSON-backed service pages are included in the build again.
+
+### Impact on SEO/Integration
+- Restores static route generation for `/services/agency-landing`, `/services/biro-jasa-perizinan`, and `/services/jasa-pengukuhan-pkp`.
+- Preserves the existing frontend integration contract for local Astro-derived service content.
+
+### Verification Status
+- ✅ `pnpm --filter frontend run build`
+
+## 2026-04-12 — Hybrid Sanity Rendering For Services Index
+
+### Changed Files
+- `frontend/app/(main)/services/page.tsx`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Updated `/services` metadata resolution to prefer the Sanity `page` document for slug `services` when it exists.
+2. Wrapped the `/services` route in the shared hybrid shell so Sanity `blocks` render above and below the existing code-owned service catalog content.
+3. Preserved the existing code-owned catalog and JSON-usaha summary sections in the middle of the page.
+
+### Impact on SEO/Integration
+- Restores cross-layer sync between Sanity `page` content and frontend rendering for `/services`.
+- Sanity-managed metadata and block content for slug `services` can now appear on the public route without replacing the current code-owned catalog shell.
+
+### Verification Status
+- ✅ `pnpm --filter frontend run build`

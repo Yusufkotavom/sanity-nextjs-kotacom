@@ -1,10 +1,14 @@
 import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
 import ServiceGrid from "@/components/services/service-grid";
 import {
+  fetchSanityPageBySlug,
   fetchSanityServiceCategories,
   fetchSanityServices,
 } from "@/sanity/lib/fetch";
-import { generateBasicMetadata } from "@/sanity/lib/metadata";
+import {
+  generateBasicMetadata,
+  generatePageMetadata,
+} from "@/sanity/lib/metadata";
 import { getLegacySinglePage } from "@/lib/legacy-pages/astro-static";
 import { buildLegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 import { normalizeSeoDescription, normalizeSeoTitle } from "@/lib/seo-normalize";
@@ -16,14 +20,25 @@ import { Button } from "@/components/ui/button";
 import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import JsonLd from "@/components/seo/json-ld";
 import { buildBreadcrumbJsonLd, buildCollectionPageJsonLd } from "@/lib/seo-jsonld";
+import PageHybridShell from "@/components/hybrid/page-hybrid-shell";
+
+const SLUG = "services";
 
 export async function generateMetadata() {
+  const page = await fetchSanityPageBySlug({ slug: SLUG });
+  if (page) {
+    return generatePageMetadata({
+      page,
+      slug: SLUG,
+    });
+  }
+
   const legacyPage = getLegacySinglePage("layanan");
   if (!legacyPage) {
     return await generateBasicMetadata({
       title: "Layanan IT & Percetakan Kotacom",
       description: "Jelajahi layanan IT, website, software, dan percetakan profesional dari Kotacom Surabaya.",
-      slug: "services",
+      slug: SLUG,
     });
   }
 
@@ -31,7 +46,7 @@ export async function generateMetadata() {
   return await generateBasicMetadata({
     title: normalizeSeoTitle(copy.primaryKeyword),
     description: normalizeSeoDescription(copy.description),
-    slug: "services",
+    slug: SLUG,
   });
 }
 
@@ -149,34 +164,36 @@ export default async function ServicesPage() {
 
   if (!legacyPage) {
     return (
-      <section>
-        <JsonLd data={breadcrumbJsonLd} />
-        <JsonLd data={collectionJsonLd} />
-        <div className="container py-16 xl:py-20">
-          <div className="mb-10">
-            <h1 className="text-4xl font-bold md:text-5xl">Layanan</h1>
-            <p className="mt-3 max-w-2xl text-foreground/70">
-              Jelajahi layanan IT, website, software, dan percetakan kami serta pilih yang paling sesuai untuk bisnis Anda.
-            </p>
-            <div className="mt-4">
-              <ArchiveCategoryFilter
-                currentValue="/services"
-                allValue="/services"
-                options={categories.map((category: any) => ({
-                  label: category.title,
-                  value: `/services/${category.slug?.current}`,
-                }))}
-              />
+      <PageHybridShell slug={SLUG}>
+        <section>
+          <JsonLd data={breadcrumbJsonLd} />
+          <JsonLd data={collectionJsonLd} />
+          <div className="container py-16 xl:py-20">
+            <div className="mb-10">
+              <h1 className="text-4xl font-bold md:text-5xl">Layanan</h1>
+              <p className="mt-3 max-w-2xl text-foreground/70">
+                Jelajahi layanan IT, website, software, dan percetakan kami serta pilih yang paling sesuai untuk bisnis Anda.
+              </p>
+              <div className="mt-4">
+                <ArchiveCategoryFilter
+                  currentValue="/services"
+                  allValue="/services"
+                  options={categories.map((category: any) => ({
+                    label: category.title,
+                    value: `/services/${category.slug?.current}`,
+                  }))}
+                />
+              </div>
             </div>
+            <ServiceGrid services={services as any[]} />
           </div>
-          <ServiceGrid services={services as any[]} />
-        </div>
-      </section>
+        </section>
+      </PageHybridShell>
     );
   }
 
   return (
-    <>
+    <PageHybridShell slug={SLUG}>
       <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={collectionJsonLd} />
       <RewritePageShell
@@ -188,6 +205,6 @@ export default async function ServicesPage() {
         {serviceCatalogSection}
         {usahaSection}
       </RewritePageShell>
-    </>
+    </PageHybridShell>
   );
 }
