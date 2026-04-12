@@ -17,6 +17,10 @@ importers:
       react-dom:
         specifier: 19.2.4
         version: 19.2.4(react@19.2.4)
+    devDependencies:
+      '@netlify/plugin-nextjs':
+        specifier: 5.13.3
+        version: 5.13.3
 
   frontend:
     dependencies:
@@ -2659,6 +2663,10 @@ packages:
 
   '@napi-rs/wasm-runtime@0.2.12':
     resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
+
+  '@netlify/plugin-nextjs@5.13.3':
+    resolution: {integrity: sha512-QIEsiTLEySyXroAOhstY01xROokOFojTkhzqhewQAMddbqDrVaCUI6w649R/1MJ0XcD6cB3se/dn8KJXh40HLw==}
+    engines: {node: '>=18.0.0'}
 
   '@next/env@16.1.7':
     resolution: {integrity: sha512-rJJbIdJB/RQr2F1nylZr/PJzamvNNhfr3brdKP6s/GW850jbtR70QlSfFselvIBbcPUOlQwBakexjFzqLzF6pg==}
@@ -11637,6 +11645,8 @@ snapshots:
       '@emnapi/runtime': 1.9.1
       '@tybys/wasm-util': 0.10.1
     optional: true
+
+  '@netlify/plugin-nextjs@5.13.3': {}
 
   '@next/env@16.1.7': {}
 

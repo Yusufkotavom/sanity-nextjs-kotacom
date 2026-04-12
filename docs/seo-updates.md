@@ -1025,3 +1025,22 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ Configuration patch applied.
 - ⚠️ Requires redeploy + runtime smoke validation on `https://kotacomweb.netlify.app/`.
+
+## 2026-04-12 — Pin Netlify Next.js Plugin Version
+
+### Changed Files
+- `package.json`
+- `pnpm-lock.yaml`
+
+### Summary of Changes
+1. Added root dev dependency pin:
+   - `@netlify/plugin-nextjs@5.13.3`
+2. Updated lockfile so Netlify build resolves the pinned plugin version from repo dependencies.
+
+### Impact on SEO/Integration
+- Improves runtime compatibility between Netlify Next.js adapter and current Next.js app output in monorepo deployment.
+- No direct SEO logic change.
+
+### Verification Status
+- ✅ Lockfile regeneration completed (`pnpm install --lockfile-only`).
+- ⚠️ Final confirmation requires fresh Netlify deploy and runtime check on production URL.
