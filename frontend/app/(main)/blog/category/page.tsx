@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { fetchSanityCategories, fetchSanitySeoSettings } from "@/sanity/lib/fetch";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
+import JsonLd from "@/components/seo/json-ld";
+import { buildBreadcrumbJsonLd, buildCollectionPageJsonLd } from "@/lib/seo-jsonld";
 
 export async function generateMetadata() {
   const seo = (await fetchSanitySeoSettings()) as
@@ -8,8 +10,8 @@ export async function generateMetadata() {
     | null;
 
   return await generateBasicMetadata({
-    title: "Blog Categories",
-    description: "Browse blog posts by category.",
+    title: "Kategori Blog – Kotacom",
+    description: "Jelajahi artikel blog Kotacom berdasarkan kategori: website, software, percetakan, teknologi, dan panduan bisnis IT.",
     slug: "blog/category",
     noindex: Boolean(seo?.noIndexBlogCategories),
   });
@@ -18,17 +20,37 @@ export async function generateMetadata() {
 export default async function BlogCategoriesPage() {
   const categories = await fetchSanityCategories();
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog" },
+    { name: "Kategori", path: "/blog/category" },
+  ]);
+
+  const collectionJsonLd = buildCollectionPageJsonLd({
+    name: "Kategori Blog – Kotacom",
+    description: "Daftar kategori artikel blog seputar IT, website, software, dan percetakan dari Kotacom.",
+    url: "/blog/category",
+    items: (categories as any[])
+      .filter((c: any) => c.title && c.slug?.current)
+      .map((c: any) => ({
+        name: c.title,
+        url: `/blog/category/${c.slug.current}`,
+      })),
+  });
+
   return (
     <section>
+      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={collectionJsonLd} />
       <div className="container py-16 xl:py-20">
         <div className="mb-10">
-          <h1 className="text-4xl font-bold md:text-5xl">Categories</h1>
+          <h1 className="text-4xl font-bold md:text-5xl">Kategori</h1>
           <p className="mt-3 max-w-2xl text-foreground/70">
-            Pick a category to see related posts.
+            Pilih kategori untuk melihat artikel seputar IT, website, software, dan percetakan dari Kotacom.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {categories.map((category: any) => (
+          {(categories as any[]).map((category: any) => (
             <Link
               key={category._id}
               href={`/blog/category/${category.slug?.current}`}
@@ -39,7 +61,7 @@ export default async function BlogCategoriesPage() {
                 <p className="mt-2 text-sm text-foreground/70">{category.description}</p>
               )}
               <p className="mt-3 text-sm text-foreground/60">
-                {category.postCount || 0} post{category.postCount === 1 ? "" : "s"}
+                {category.postCount || 0} artikel
               </p>
             </Link>
           ))}
