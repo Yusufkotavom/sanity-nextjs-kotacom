@@ -4,7 +4,29 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
-## 2026-04-12 — Auto-Linking Broken Route Overrides to CMS Templates
+## 2026-04-12 — Fix Redirect /jasa-cetak-buku-:city dan Cleanup Copy Placeholder
+
+### Changed Files
+- `frontend/next.config.mjs` (MODIFIED)
+- `frontend/components/ui/rewrite/page-shell.tsx` (MODIFIED)
+- `docs/seo-updates.md` (MODIFIED)
+
+### Summary
+1. **Hapus redirect wildcard yang salah:** Rule `/jasa-cetak-buku-:city → /percetakan/cetak-buku` dihapus dari `STATIC_REDIRECTS` di `next.config.mjs`. Rule ini menyebabkan 399 halaman kota programatik diredirect ke single page generik, menghilangkan nilai SEO halaman-halaman tersebut.
+2. **Verifikasi infrastruktur halaman:** Konfirmasi bahwa 399 halaman `/jasa-cetak-buku-{kota}` sudah di-render via `JasaCetakBukuCityShell` dengan data dari `cities.json` dan fallback dinamis.
+3. **Cleanup teks placeholder gibberish:** Seluruh `laneSectionCopy` di `page-shell.tsx` diganti dengan copy profesional dan natural untuk lane `printing`, `software`, dan `generic`, serta `routeAwareAddon` untuk semua `routeKind`.
+
+### Impact on SEO/Integration
+- **Positif:** 399 halaman `/jasa-cetak-buku-{kota}` kini tidak lagi diredirect dan akan tampil dengan konten yang sesuai
+- **Positif:** Teks placeholder machine-generated yang aneh (seperti "Penataan kategori penyelesaian perakitan...") dihapus dari semua halaman percetakan, software, dan generic
+- **Tidak ada breaking change** pada struktur URL atau schema Sanity
+
+### Verification Status
+- ✅ `next.config.mjs` verified — tidak ada rule `jasa-cetak-buku` tersisa
+- ✅ Tidak ada redirect document Sanity untuk pola `/jasa-cetak-buku*`
+- ⏳ Deployment Vercel — menunggu build selesai untuk verifikasi live
+
+
 
 ### Changed Files
 - `frontend/link-templates.mjs` (NEW)
