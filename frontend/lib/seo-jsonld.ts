@@ -351,3 +351,44 @@ export const buildItemListJsonLd = (
     item: buildAffiliateItemJsonLd(item),
   })),
 });
+
+// ---------- Collection/Listing Page Builders ----------
+
+export type CollectionItemData = {
+  name: string;
+  url: string;
+  description?: string;
+  image?: any;
+};
+
+/**
+ * Build ItemList JSON-LD for listing/archive pages (blog, products, services, projects).
+ * Uses simple ListItem → Thing (or subtypes) pattern without affiliate-specific fields.
+ */
+export const buildCollectionPageJsonLd = ({
+  name,
+  description,
+  url,
+  items,
+}: {
+  name: string;
+  description?: string;
+  url: string;
+  items: CollectionItemData[];
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name,
+  description: description || undefined,
+  url: toAbsoluteUrl(url),
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: items.length,
+    itemListElement: items.slice(0, 20).map((item, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      name: item.name,
+      url: item.url.startsWith("http") ? item.url : toAbsoluteUrl(item.url),
+    })),
+  },
+});

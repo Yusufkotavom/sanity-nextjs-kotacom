@@ -14,13 +14,15 @@ import { getJsonUsahaPages } from "@/lib/local-content/json-usaha";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
+import JsonLd from "@/components/seo/json-ld";
+import { buildBreadcrumbJsonLd, buildCollectionPageJsonLd } from "@/lib/seo-jsonld";
 
 export async function generateMetadata() {
   const legacyPage = getLegacySinglePage("layanan");
   if (!legacyPage) {
     return await generateBasicMetadata({
-      title: "Services",
-      description: "Browse our services.",
+      title: "Layanan IT & Percetakan Kotacom",
+      description: "Jelajahi layanan IT, website, software, dan percetakan profesional dari Kotacom Surabaya.",
       slug: "services",
     });
   }
@@ -122,14 +124,39 @@ export default async function ServicesPage() {
       </SectionShell>
     ) : null;
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Layanan", path: "/services" },
+  ]);
+
+  const allServiceItems = [
+    ...(services as any[]).filter((s: any) => s.title && s.slug?.current).map((s: any) => ({
+      name: s.title,
+      url: `/services/${s.slug.current}`,
+    })),
+    ...usahaPages.filter((p) => p.slug && p.title).map((p) => ({
+      name: p.title,
+      url: `/services/${p.slug}`,
+    })),
+  ];
+
+  const collectionJsonLd = buildCollectionPageJsonLd({
+    name: "Layanan IT & Percetakan – Kotacom",
+    description: "Katalog lengkap layanan website, software, IT service, dan percetakan dari Kotacom Surabaya.",
+    url: "/services",
+    items: allServiceItems,
+  });
+
   if (!legacyPage) {
     return (
       <section>
+        <JsonLd data={breadcrumbJsonLd} />
+        <JsonLd data={collectionJsonLd} />
         <div className="container py-16 xl:py-20">
           <div className="mb-10">
-            <h1 className="text-4xl font-bold md:text-5xl">Services</h1>
+            <h1 className="text-4xl font-bold md:text-5xl">Layanan</h1>
             <p className="mt-3 max-w-2xl text-foreground/70">
-              Explore our service offerings and choose what fits your needs.
+              Jelajahi layanan IT, website, software, dan percetakan kami serta pilih yang paling sesuai untuk bisnis Anda.
             </p>
             <div className="mt-4">
               <ArchiveCategoryFilter
@@ -149,14 +176,18 @@ export default async function ServicesPage() {
   }
 
   return (
-    <RewritePageShell
-      page={legacyPage}
-      routeOverride="/services"
-      sectionHrefOverride="/services"
-      sectionLabelOverride="Layanan"
-    >
-      {serviceCatalogSection}
-      {usahaSection}
-    </RewritePageShell>
+    <>
+      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={collectionJsonLd} />
+      <RewritePageShell
+        page={legacyPage}
+        routeOverride="/services"
+        sectionHrefOverride="/services"
+        sectionLabelOverride="Layanan"
+      >
+        {serviceCatalogSection}
+        {usahaSection}
+      </RewritePageShell>
+    </>
   );
 }

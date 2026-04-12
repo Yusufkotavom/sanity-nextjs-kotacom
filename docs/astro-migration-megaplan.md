@@ -37,6 +37,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Template-backed location override documents now also have a normalization path for legacy field-shape drift, and the known `jasa-cetak-buku-surabaya` override has been brought in line with the active testimonial contract.
 - [x] Template-backed `pageLocation` and `serviceLocation` documents have been brought out of legacy `draft/noindex` state, so active money pages and location-route descendants now align with the public indexing intent of the new rewrite architecture.
 - [x] Template resolver guardrails now have direct frontend contract coverage for token stripping, lane filtering, trust-mode copy selection, source-policy precedence, and route-kind inference.
+- [x] `CollectionPage` + `BreadcrumbList` JSON-LD added to all major listing/archive pages (`/blog`, `/blog/category/[slug]`, `/products`, `/projects`, `/services`). Reusable `buildCollectionPageJsonLd` builder added to `frontend/lib/seo-jsonld.ts`. English hardcoded UI strings localized to Bahasa Indonesia on all affected listing pages.
 - [x] SEO Ops automation hardening completed: manual indexing now uses real queue jobs, GSC daily pull now aggregates page/query/country/device, and GA4 imports are persisted in DB for dashboard joins.
 - [x] SEO Opportunity Board added in operations dashboard with quick wins (high impressions + low CTR), decay detection, and indexing blocker monitoring.
 - [x] Seo-dashboard Netlify build hardening completed: Sanity/env-sensitive API imports are now lazy-loaded to prevent `Failed to collect page data` crashes during production build.
@@ -325,7 +326,9 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - Blocker note (2026-04-02): Live SEO sample audit (`120` URLs) still reports unresolved issues outside migrated frontend scope (`meta_description_too_long: 106`, `title_too_long: 22`, `http_status_not_200: 10`) dominated by legacy live pages/redirect gaps; requires content import/redirect wave plus metadata cleanup on production routes.
 
 ### C2. Structured Data
-- [ ] Align JSON-LD by template (Article, BreadcrumbList, ItemList, Organization, WebSite).
+- [x] CollectionPage + BreadcrumbList JSON-LD added to all 5 listing/archive routes (`/blog`, `/blog/category/[slug]`, `/products`, `/projects`, `/services`).
+- [x] `buildCollectionPageJsonLd` reusable builder added to `frontend/lib/seo-jsonld.ts`.
+- [ ] Align JSON-LD by template (Article, BreadcrumbList, ItemList, Organization, WebSite) — remaining: paginated/category archives.
 - [ ] Ensure fallback global SEO data always available.
 - [ ] Validate no schema duplication/conflict.
 

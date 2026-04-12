@@ -5,11 +5,14 @@ import ArchiveCategoryFilter from "@/components/ui/archive-category-filter";
 import PostGrid from "@/components/posts/post-grid";
 import { fetchSanityBlogCategories, fetchSanityPosts } from "@/sanity/lib/fetch";
 import { generateBasicMetadata } from "@/sanity/lib/metadata";
+import JsonLd from "@/components/seo/json-ld";
+import { buildBreadcrumbJsonLd, buildCollectionPageJsonLd } from "@/lib/seo-jsonld";
 
 export async function generateMetadata() {
   return await generateBasicMetadata({
-    title: "Blog",
-    description: "Read the latest articles.",
+    title: "Blog & Artikel IT",
+    description:
+      "Baca artikel, tips, dan panduan terbaru seputar teknologi, pengembangan website, software, dan percetakan dari tim Kotacom.",
     slug: "blog",
   });
 }
@@ -18,19 +21,39 @@ export default async function BlogPage() {
   const posts = (await fetchSanityPosts()) as any[];
   const categories = await fetchSanityBlogCategories();
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog" },
+  ]);
+
+  const collectionJsonLd = buildCollectionPageJsonLd({
+    name: "Blog & Artikel IT – Kotacom",
+    description:
+      "Kumpulan artikel teknologi, tips IT, panduan website, software, dan percetakan dari tim Kotacom.",
+    url: "/blog",
+    items: posts
+      .filter((p: any) => p.title && p.slug?.current)
+      .map((p: any) => ({
+        name: p.title,
+        url: `/blog/${p.slug.current}`,
+      })),
+  });
+
   return (
     <section>
+      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={collectionJsonLd} />
       <div className="container py-16 xl:py-20">
         <div className="mb-10">
           <h1 className="text-4xl font-bold md:text-5xl">Blog</h1>
           <p className="mt-3 max-w-2xl text-foreground/70">
-            Articles and updates from our team.
+            Artikel, tips, dan panduan seputar web, software, dan percetakan dari tim Kotacom.
           </p>
           <Link
             href="/blog/category"
             className={cn(buttonVariants({ variant: "outline" }), "mt-4")}
           >
-            Browse by category
+            Lihat berdasarkan kategori
           </Link>
           <div className="mt-4">
             <ArchiveCategoryFilter

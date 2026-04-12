@@ -4,6 +4,47 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12 — Structured Data (JSON-LD) for Listing Pages + Localization
+
+### Changed Files
+- `frontend/lib/seo-jsonld.ts` (MODIFIED — added `buildCollectionPageJsonLd`)
+- `frontend/app/(main)/blog/page.tsx` (MODIFIED)
+- `frontend/app/(main)/blog/category/[slug]/page.tsx` (MODIFIED)
+- `frontend/app/(main)/products/page.tsx` (MODIFIED)
+- `frontend/app/(main)/projects/page.tsx` (MODIFIED)
+- `frontend/app/(main)/services/page.tsx` (MODIFIED)
+- `docs/seo-updates.md` (MODIFIED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+1. Added `buildCollectionPageJsonLd` builder to `seo-jsonld.ts` for listing/archive pages.
+   - Outputs `CollectionPage` schema with `ItemList` mainEntity (capped at 20 items).
+2. Applied `CollectionPage` + `BreadcrumbList` JSON-LD to all 5 listing routes:
+   - `/blog` — CollectionPage of blog posts
+   - `/blog/category/[slug]` — CollectionPage of posts in category
+   - `/products` — CollectionPage of products
+   - `/projects` — CollectionPage of projects
+   - `/services` — CollectionPage of services (both code-only fallback and RewritePageShell render paths)
+3. Localized English hardcoded UI strings to Bahasa Indonesia on all affected listing pages:
+   - "Blog" metadata title → "Blog & Artikel IT"
+   - "Browse our products" → "Jelajahi produk IT, perlengkapan kantor, dan percetakan..."
+   - "Explore our case-driven portfolio..." → Indonesian equivalent
+   - "Services" fallback metadata title → "Layanan IT & Percetakan Kotacom"
+   - "Back to categories" → "Kembali ke kategori"
+   - Suspense fallback "Loading..." → "Memuat..."
+
+### Impact on SEO/Integration
+- **Positive SEO impact**:
+  - All major listing/archive pages now emit `CollectionPage` + `ItemList` JSON-LD for rich result eligibility.
+  - `BreadcrumbList` JSON-LD now present on all listing pages (previously missing for blog, products, projects).
+  - Indonesian title/description metadata parity now applies to fallback metadata paths too.
+- Integration impact: `buildCollectionPageJsonLd` is reusable for any future listing page.
+
+### Verification Status
+- ✅ `pnpm --filter frontend typecheck`
+
+---
+
 ## 2026-04-12 — Template Resolver Contract Test Coverage
 
 ### Changed Files

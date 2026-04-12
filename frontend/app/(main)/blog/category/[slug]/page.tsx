@@ -13,7 +13,7 @@ import {
 } from "@/sanity/lib/fetch";
 import { generatePageMetadata } from "@/sanity/lib/metadata";
 import JsonLd from "@/components/seo/json-ld";
-import { buildBreadcrumbJsonLd } from "@/lib/seo-jsonld";
+import { buildBreadcrumbJsonLd, buildCollectionPageJsonLd } from "@/lib/seo-jsonld";
 
 export async function generateStaticParams() {
   const categories = await fetchSanityCategoriesStaticParams();
@@ -60,19 +60,32 @@ export default async function BlogCategoryDetailPage(props: {
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "Blog", path: "/blog" },
-    { name: category.title || "Category", path: categoryPath },
+    { name: category.title || "Kategori", path: categoryPath },
   ]);
+
+  const collectionJsonLd = buildCollectionPageJsonLd({
+    name: `${category.title || "Kategori Blog"} – Kotacom`,
+    description: category.description || `Artikel kategori ${category.title || ""} dari tim Kotacom.`,
+    url: categoryPath,
+    items: (posts as any[])
+      .filter((p: any) => p.title && p.slug?.current)
+      .map((p: any) => ({
+        name: p.title,
+        url: `/blog/${p.slug.current}`,
+      })),
+  });
 
   return (
     <section>
       <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={collectionJsonLd} />
       <div className="container py-16 xl:py-20">
         <div className="mb-10">
           <Link
             href="/blog/category"
             className={cn(buttonVariants({ variant: "outline" }))}
           >
-            Back to categories
+            Kembali ke kategori
           </Link>
           <div className="mt-4">
             <ArchiveCategoryFilter
