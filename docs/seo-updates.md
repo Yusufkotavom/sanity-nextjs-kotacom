@@ -4,6 +4,23 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12: Allow Sanity Studio Preview in Frame (CSP Update)
+
+### Changed Files
+- `frontend/next.config.mjs` (MODIFIED)
+
+### Summary
+- Removed `X-Frame-Options` and updated `Content-Security-Policy` with `frame-ancestors 'self' http://localhost:* https://*.sanity.studio https://*.vercel.app https://sanity.kotacom.id; upgrade-insecure-requests;` to allow embedding the frontend within Sanity Studio for preview capability.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**.
+- Integration impact: fixes Sanity Studio preview blocking caused by strict framing restrictions.
+
+### Verification Status
+- Need to restart the Next.js server locally and verify preview within Sanity Studio.
+
+---
+
 ## 2026-04-11: SEO Ops Automation Hardening + Opportunity Board
 
 ### Changed Files

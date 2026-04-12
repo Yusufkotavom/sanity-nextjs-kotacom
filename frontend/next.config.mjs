@@ -180,10 +180,6 @@ const nextConfig = {
             value: "nosniff",
           },
           {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
           },
@@ -197,7 +193,7 @@ const nextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: "frame-ancestors 'self'; upgrade-insecure-requests;",
+            value: "frame-ancestors 'self' http://localhost:* https://*.sanity.studio https://*.vercel.app https://sanity.kotacom.id; upgrade-insecure-requests;",
           },
         ],
       },
