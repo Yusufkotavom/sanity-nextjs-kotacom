@@ -4,6 +4,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { fetchSanitySeoSettings } from "@/sanity/lib/fetch";
 import { getJasaCetakBukuCityStaticParams } from "@/lib/local-content/jasa-cetak-buku-kota";
 import { getJsonUsahaStaticParams } from "@/lib/local-content/json-usaha";
+import { isAllowedTemplateRoute } from "@/lib/templates/route-policy";
 
 type SitemapItem = {
   _type: "page" | "post" | "product" | "service" | "project";
@@ -161,9 +162,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   for (const template of templateItems) {
-    if (!template.route) continue;
+    if (!isAllowedTemplateRoute(template.route)) continue;
     addEntry({
-      url: makeAbsoluteUrl(baseUrl, template.route),
+      url: makeAbsoluteUrl(baseUrl, template.route!),
       lastModified: template._updatedAt || undefined,
       changeFrequency: "weekly",
       priority: 0.7,

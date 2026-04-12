@@ -68,6 +68,8 @@ export default defineType({
       title: "Quick CTA Links",
       type: "array",
       of: [{ type: "templateCtaLink" }],
+      validation: (Rule) =>
+        Rule.max(2).warning("Gunakan maksimal 2 quick CTA agar hierarchy tetap fokus."),
     }),
     defineField({
       name: "serviceTypes",
@@ -115,6 +117,14 @@ export default defineType({
       title: "Final CTA Description",
       type: "text",
       rows: 3,
+    }),
+    defineField({
+      name: "contentVariants",
+      title: "Rule-based Content Variants",
+      type: "array",
+      description:
+        "Reusable spinner copy untuk slot penting. Gunakan hanya untuk support copy, bukan bukti inti atau pricing.",
+      of: [{ type: "templateContentVariant" }],
     }),
   ],
 });

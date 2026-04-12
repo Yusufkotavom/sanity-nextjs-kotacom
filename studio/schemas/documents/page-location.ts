@@ -32,6 +32,13 @@ export default defineType({
       components: {
         input: AutoRouteInput,
       },
+      validation: (Rule) =>
+        Rule.custom((value) => {
+          if (!value) return true;
+          return /^\/[a-z0-9\-\/]*$/.test(value)
+            ? true
+            : "Route harus dimulai dengan / dan hanya memakai huruf kecil, angka, dash, serta slash.";
+        }),
     }),
     defineField({
       name: "routePattern",
@@ -40,6 +47,13 @@ export default defineType({
       group: "settings",
       description:
         "Opsional pola URL, contoh: /software/{lokasi}. Akan diubah otomatis ke Route memakai slug.",
+      validation: (Rule) =>
+        Rule.custom((value) => {
+          if (!value) return true;
+          return /^\/[a-z0-9\-\/{}]*$/.test(value)
+            ? true
+            : "Route pattern hanya boleh memakai huruf kecil, angka, dash, slash, dan token kurung kurawal.";
+        }),
     }),
     defineField({
       name: "slug",

@@ -3,12 +3,38 @@ import { Button } from "@/components/ui/button";
 import GlobalWhatsAppButton from "@/components/global-whatsapp-button";
 import { SectionShell, SplitVisualPanel } from "@/components/ui/section-shell";
 import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
+import type { TemplateLane } from "@/types/template";
+
+const laneSecondaryLinks: Record<
+  TemplateLane,
+  Array<{ href: string; label: string; variant: "outline" | "secondary" }>
+> = {
+  website: [
+    { href: "#paket", label: "Lihat Paket", variant: "outline" },
+    { href: "#faq", label: "Lihat FAQ", variant: "secondary" },
+  ],
+  software: [
+    { href: "#portfolio", label: "Lihat Use Case", variant: "outline" },
+    { href: "#faq", label: "Lihat FAQ", variant: "secondary" },
+  ],
+  printing: [
+    { href: "#paket", label: "Lihat Spesifikasi", variant: "outline" },
+    { href: "#faq", label: "Lihat FAQ", variant: "secondary" },
+  ],
+  generic: [
+    { href: "#faq", label: "Lihat FAQ", variant: "outline" },
+  ],
+};
 
 export async function FinalCtaSection({
   copy,
+  lane = "generic",
 }: {
   copy: LegacyRewriteCopy;
+  lane?: TemplateLane;
 }) {
+  const secondaryLinks = laneSecondaryLinks[lane] || laneSecondaryLinks.generic;
+
   return (
     <SectionShell id="cta-final" className="py-10 md:py-12">
       <SplitVisualPanel
@@ -31,15 +57,11 @@ export async function FinalCtaSection({
                 fallbackLabel={copy.ctaLabel || "Konsultasi Gratis Sekarang"}
                 size="lg"
               />
-              <Button asChild size="lg" variant="outline">
-                <Link href="#paket">Lihat Paket</Link>
-              </Button>
-              <Button asChild size="lg" variant="secondary">
-                <Link href="/percetakan">Lihat Layanan Percetakan</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="#faq">Lihat FAQ</Link>
-              </Button>
+              {secondaryLinks.map((item) => (
+                <Button key={item.href} asChild size="lg" variant={item.variant}>
+                  <Link href={item.href}>{item.label}</Link>
+                </Button>
+              ))}
             </div>
           </>
         }

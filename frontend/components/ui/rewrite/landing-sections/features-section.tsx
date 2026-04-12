@@ -25,15 +25,19 @@ const ICON_MAP = {
 
 export function FeaturesSection({
   features,
+  title = "Fitur Unggulan",
+  description = "Detail spesifikasi dan nilai tambah utama yang disusun khusus untuk memperlancar fungsi produksi operasional harian Anda.",
 }: {
   features: NonNullable<LegacyRewriteCopy["features"]>;
+  title?: string;
+  description?: string;
 }) {
   return (
     <SectionShell id="fitur" className="py-10 md:py-12">
       <SectionIntro
         eyebrow="Core Features"
-        title="Fitur Unggulan"
-        description="Detail spesifikasi dan nilai tambah utama yang disusun khusus untuk memperlancar fungsi produksi operasional harian Anda."
+        title={title}
+        description={description}
       />
       <div className="grid gap-4 md:grid-cols-2">
         {features.map((feature, index) => {

@@ -1,3 +1,20 @@
+export type TemplateLane =
+  | "website"
+  | "software"
+  | "printing"
+  | "generic";
+
+export type TemplateTrustMode = "safe" | "aggressive";
+
+export type TemplateRouteKind = "base" | "city" | "service" | "service-city";
+
+export type TemplateSourceMode =
+  | "page-first"
+  | "template-first"
+  | "template-only"
+  | "page-only"
+  | "base-only";
+
 export type TemplateLink = {
   href?: string | null;
 };
@@ -46,6 +63,31 @@ export type TemplateLongGuide = {
   description?: string | null;
 };
 
+export type TemplateContentVariant = {
+  slot?:
+    | "heroEyebrow"
+    | "primaryKeyword"
+    | "intro"
+    | "description"
+    | "finalCtaTitle"
+    | "finalCtaDescription"
+    | null;
+  text?: string | null;
+  lane?: TemplateLane | null;
+  intent?: "awareness" | "commercial" | "decision" | null;
+  strength?: TemplateTrustMode | null;
+  requiresLocation?: boolean | null;
+  routeKinds?: TemplateRouteKind[] | null;
+  disallowedContexts?: string[] | null;
+};
+
+export type TemplateSourcePolicy = {
+  pricingSource?: TemplateSourceMode | null;
+  proofSource?: TemplateSourceMode | null;
+  testimonialSource?: TemplateSourceMode | null;
+  maxQuickLinks?: number | null;
+};
+
 export type TemplateFaq = {
   question?: string | null;
   answer?: string | null;
@@ -71,6 +113,7 @@ export type TemplateStructured = {
   longGuide?: TemplateLongGuide[] | null;
   finalCtaTitle?: string | null;
   finalCtaDescription?: string | null;
+  contentVariants?: TemplateContentVariant[] | null;
 };
 
 export type TemplateMeta = {
@@ -88,6 +131,9 @@ export type TemplateDoc = {
   title?: string | null;
   slug?: { current?: string | null } | null;
   variant?: string | null;
+  lane?: TemplateLane | null;
+  trustMode?: TemplateTrustMode | null;
+  sourcePolicy?: TemplateSourcePolicy | null;
   isHybrid?: boolean | null;
   shellId?: string | null;
   topBlockCountDefault?: number | null;
@@ -113,6 +159,16 @@ export type TemplatePageDoc = {
   blocks?: any[] | null;
   meta?: TemplateMeta | null;
   template?: TemplateDoc | null;
+  service?: {
+    title?: string | null;
+    slug?: { current?: string | null } | null;
+  } | null;
+  serviceType?: {
+    title?: string | null;
+    slug?: { current?: string | null } | null;
+    category?: string | null;
+    description?: string | null;
+  } | null;
   location?: {
     title?: string | null;
     slug?: { current?: string | null } | null;

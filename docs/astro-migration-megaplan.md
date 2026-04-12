@@ -25,12 +25,13 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
   - [x] top 300 manual legacy URLs curated one-by-one
   - [x] content parity for core templates (blog/service/product/project)
 - UX redesign:
-  - [ ] new design system applied to key templates
+  - [x] new design system applied to key templates
   - [ ] mobile + desktop verified for header/nav/CTA/content pages
 
 ## Current Status Snapshot (Already Done)
 
 - [x] **GSC MIGRATION 100% DONE:** All Top 300 manual curations + Top 1000 auto-redirects fully synced, seeded, and mapped via Sanity and Next.js wildcards.
+- [x] Template rewrite architecture upgraded to lane-aware conversion shells: `pageTemplate` now carries explicit `lane`, `trustMode`, and source-of-truth policy; structured copy supports rule-based content variants; and rewrite pages render one clear variant-driven narrative instead of stacking duplicate hero/pricing/proof layers.
 - [x] SEO Ops automation hardening completed: manual indexing now uses real queue jobs, GSC daily pull now aggregates page/query/country/device, and GA4 imports are persisted in DB for dashboard joins.
 - [x] SEO Opportunity Board added in operations dashboard with quick wins (high impressions + low CTR), decay detection, and indexing blocker monitoring.
 - [x] Seo-dashboard Netlify build hardening completed: Sanity/env-sensitive API imports are now lazy-loaded to prevent `Failed to collect page data` crashes during production build.
@@ -376,6 +377,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Product detail/list
 - [ ] Project detail/list
 - [x] Legacy Astro static service/trust clusters switched to reusable rewrite template shell (Wave 1)
+- [x] Template-backed money pages now use variant-driven section ordering with lane-specific proof/pricing/testimonial filtering and deterministic support-copy selection from Sanity content variants.
 - [x] Root slug static generation expanded for `jasa-cetak-buku-<kota>` pages using deduplicated local dataset adapter
 - [x] `layanan/[slug]` legacy Astro JSON pages now served from code-driven local adapter route with normalized section renderer (`agency-landing`, `biro-jasa-perizinan`, `jasa-pengukuhan-pkp`)
 - Blocker note (2026-04-02): Remaining template refactors depend on final shared UI shell lock from orchestration (`docs/archive/2026-04-historical-plans/rewrite-worker-orchestration.md`) before broader homepage/blog/product rollout.
@@ -415,6 +417,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] `page`-specific Studio actions are now re-enabled on top of the upgraded `5.19.0` runtime, restoring the hybrid preset and page-to-post conversion workflow in Studio.
 - [x] Historical migration planning docs and worker prompt files are now moved under `docs/archive/`, leaving `docs/` focused on current operational guidance and active workflows.
 - [x] Rewrite landing sections now have stronger service/pricing interaction polish, and pricing cards can route package-specific WhatsApp leads through the shared global WhatsApp settings path.
+- [x] Rewrite template UX now enforces a single CTA hierarchy and lane-aware closeout flow: quick links are capped to two, final CTA secondary actions are lane-specific, and raw location tokens are stripped from non-location routes before render.
 - [x] `/home-pepar` has been rewritten away from prototype/internal explanatory language and now reads as a customer-facing homepage candidate that is materially closer to live use.
 - [x] Printing rewrite modules are back to a deployable state after restoring the missing `buildGenericCopy` import for the company profile page module.
 - [x] Netlify edge bundling compatibility hardening applied for Next proxy by explicitly setting proxy runtime to `edge`, avoiding `___netlify-edge-handler-node-middleware` CJS/ESM crash during build.

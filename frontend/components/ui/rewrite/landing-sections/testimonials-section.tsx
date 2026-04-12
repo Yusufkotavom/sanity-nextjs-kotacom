@@ -4,15 +4,19 @@ import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 
 export function TestimonialsSection({
   testimonials,
+  title = "Apa Kata Klien",
+  description = "Kumpulan pengalaman klien yang menilai kualitas, komunikasi, dan konsistensi delivery kami.",
 }: {
   testimonials: NonNullable<LegacyRewriteCopy["testimonials"]>;
+  title?: string;
+  description?: string;
 }) {
   return (
     <SectionShell id="testimoni" className="py-10 md:py-12">
       <SectionIntro
         eyebrow="Testimonials"
-        title="Apa Kata Klien"
-        description="Kumpulan pengalaman klien B2B dan UMKM yang telah membuktikan kualitas serta konsistensi kami di setiap lini produksi."
+        title={title}
+        description={description}
       />
       <div className="grid gap-4 lg:grid-cols-2">
         {testimonials.map((item, index) => (

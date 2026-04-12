@@ -10,6 +10,13 @@ const TEMPLATE_VARIANTS = [
   { title: "Generic Company", value: "generic-company" },
 ];
 
+const TEMPLATE_LANES = [
+  { title: "Website", value: "website" },
+  { title: "Software", value: "software" },
+  { title: "Printing", value: "printing" },
+  { title: "Generic Company", value: "generic" },
+];
+
 export default defineType({
   name: "pageTemplate",
   title: "Page Template",
@@ -47,6 +54,46 @@ export default defineType({
         layout: "dropdown",
       },
       initialValue: "service-hero",
+      validation: (Rule) =>
+        Rule.required().custom((value, context) => {
+          const parent = context.document as { lane?: string } | null;
+          if (value === "generic-company" && parent?.lane && parent.lane !== "generic") {
+            return "Variant Generic Company harus memakai lane generic.";
+          }
+          return true;
+        }),
+    }),
+    defineField({
+      name: "lane",
+      title: "Lane",
+      type: "string",
+      group: "settings",
+      options: {
+        list: TEMPLATE_LANES,
+        layout: "radio",
+      },
+      initialValue: "generic",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "trustMode",
+      title: "Trust Mode",
+      type: "string",
+      group: "settings",
+      options: {
+        list: [
+          { title: "Safe", value: "safe" },
+          { title: "Aggressive Marketing", value: "aggressive" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "aggressive",
+    }),
+    defineField({
+      name: "sourcePolicy",
+      title: "Source of Truth Policy",
+      type: "templateSourcePolicy",
+      group: "settings",
     }),
     defineField({
       name: "isHybrid",
@@ -160,12 +207,13 @@ export default defineType({
     select: {
       title: "title",
       variant: "variant",
+      lane: "lane",
       isHybrid: "isHybrid",
     },
-    prepare({ title, variant, isHybrid }) {
+    prepare({ title, variant, lane, isHybrid }) {
       return {
         title: title || "Page Template",
-        subtitle: `${variant || "template"}${isHybrid ? " · hybrid" : ""}`,
+        subtitle: `${lane || "generic"} · ${variant || "template"}${isHybrid ? " · hybrid" : ""}`,
       };
     },
   },

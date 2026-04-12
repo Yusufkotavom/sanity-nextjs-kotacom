@@ -44,7 +44,9 @@ import templateEeatPoint from "./schemas/objects/template-eeat-point";
 import templateProofItem from "./schemas/objects/template-proof-item";
 import templateTestimonial from "./schemas/objects/template-testimonial";
 import templateLongGuide from "./schemas/objects/template-long-guide";
+import templateContentVariant from "./schemas/objects/template-content-variant";
 import templateRewriteCopy from "./schemas/objects/template-rewrite-copy";
+import templateSourcePolicy from "./schemas/objects/template-source-policy";
 import pricingPackage from "./schemas/objects/pricingPackage";
 import faqItem from "./schemas/objects/faqItem";
 // Schema UI objects
@@ -130,7 +132,9 @@ export const schemaTypes = [
   templateProofItem,
   templateTestimonial,
   templateLongGuide,
+  templateContentVariant,
   templateRewriteCopy,
+  templateSourcePolicy,
   pricingPackage,
   faqItem,
   // blocks

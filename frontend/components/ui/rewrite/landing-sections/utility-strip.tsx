@@ -10,11 +10,15 @@ export function UtilityStrip({
   ctaLinks,
   ctaLabel,
   ctaHref,
+  title = "Navigasi Cepat",
+  ctaTitle = "Aksi Cepat",
 }: {
   tocItems: TocItem[];
   ctaLinks?: LegacyRewriteCopy["ctaLinks"];
   ctaLabel?: string;
   ctaHref?: string;
+  title?: string;
+  ctaTitle?: string;
 }) {
   return (
     <SectionShell id="toc" className="py-8 md:py-10">
@@ -23,7 +27,7 @@ export function UtilityStrip({
         className="grid gap-6 rounded-[1.75rem] p-5 md:grid-cols-[minmax(0,1fr)_minmax(280px,0.78fr)] md:p-7"
       >
         <div>
-          <p className="text-ui-label text-foreground/70">Navigasi Cepat</p>
+          <p className="text-ui-label text-foreground/70">{title}</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {tocItems.map((item) => (
               <a
@@ -38,14 +42,14 @@ export function UtilityStrip({
         </div>
         {ctaLinks?.length || ctaLabel ? (
           <div className="border-t border-black/8 pt-1 md:border-l md:border-t-0 md:pl-6 dark:border-white/10">
-            <p className="text-ui-label text-primary/80">Aksi Cepat</p>
+            <p className="text-ui-label text-primary/80">{ctaTitle}</p>
             <div className="mt-3 flex flex-wrap gap-3">
               <GlobalWhatsAppButton
                 fallbackHref={ctaHref}
                 fallbackLabel={ctaLabel || "Konsultasi via WhatsApp"}
                 size="sm"
               />
-              {ctaLinks?.slice(0, 4).map((item, index) => (
+              {ctaLinks?.slice(0, 2).map((item, index) => (
                 <Button
                   key={item.label}
                   asChild

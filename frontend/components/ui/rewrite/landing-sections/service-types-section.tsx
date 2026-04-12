@@ -6,15 +6,19 @@ import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 
 export function ServiceTypesSection({
   serviceTypes,
+  title = "Jenis Layanan Utama",
+  description = "Kami mengategorikan layanan berdasarkan kebutuhan spesifik Anda untuk mempermudah eksekusi dan meningkatkan hasil kampanye bisnis.",
 }: {
   serviceTypes: NonNullable<LegacyRewriteCopy["serviceTypes"]>;
+  title?: string;
+  description?: string;
 }) {
   return (
     <SectionShell id="layanan" className="py-10 md:py-12">
       <SectionIntro
         eyebrow="Service Focus"
-        title="Jenis Layanan Utama"
-        description="Kami mengategorikan layanan berdasarkan kebutuhan spesifik Anda untuk mempermudah eksekusi dan meningkatkan hasil kampanye bisnis."
+        title={title}
+        description={description}
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {serviceTypes.map((item, index) => (

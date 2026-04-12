@@ -67,7 +67,18 @@ const templateRewriteQuery = `
       description
     },
     finalCtaTitle,
-    finalCtaDescription
+    finalCtaDescription,
+    contentVariants[]{
+      _key,
+      slot,
+      text,
+      lane,
+      intent,
+      strength,
+      requiresLocation,
+      routeKinds,
+      disallowedContexts
+    }
   }
 `;
 
@@ -107,6 +118,14 @@ export const TEMPLATE_PAGE_BY_ROUTE_QUERY = groq`
       title,
       slug,
       variant,
+      lane,
+      trustMode,
+      sourcePolicy{
+        pricingSource,
+        proofSource,
+        testimonialSource,
+        maxQuickLinks
+      },
       isHybrid,
       shellId,
       topBlockCountDefault,
@@ -171,6 +190,14 @@ export const TEMPLATE_PAGE_BY_PATTERN_QUERY = groq`
       title,
       slug,
       variant,
+      lane,
+      trustMode,
+      sourcePolicy{
+        pricingSource,
+        proofSource,
+        testimonialSource,
+        maxQuickLinks
+      },
       isHybrid,
       shellId,
       topBlockCountDefault,

@@ -20,16 +20,20 @@ function buildPricingPlanPrompt({
 export async function PricingPlansSection({
   pricingPlans,
   serviceTitle,
+  title = "Paket & Investasi",
+  description = "Pilihan investasi layanan dirancang secara transparan agar Anda dapat menyesuaikan cakupan dengan anggaran operasional tim.",
 }: {
   pricingPlans: NonNullable<LegacyRewriteCopy["pricingPlans"]>;
   serviceTitle: string;
+  title?: string;
+  description?: string;
 }) {
   return (
     <SectionShell id="paket" className="py-10 md:py-12">
       <SectionIntro
         eyebrow="Investment"
-        title="Paket & Investasi"
-        description="Pilihan investasi layanan dirancang secara transparan agar Anda dapat menyesuaikan cakupan dengan anggaran operasional tim."
+        title={title}
+        description={description}
       />
       <div className="grid gap-4 xl:grid-cols-3">
         {pricingPlans.map((plan, index) => (

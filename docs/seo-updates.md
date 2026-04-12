@@ -4,6 +4,53 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12 — Template Rewrite Architecture Refactor for Lane-Based Conversion
+
+### Changed Files
+- `studio/schema-types.ts`
+- `studio/schemas/documents/page-location.ts`
+- `studio/schemas/documents/page-template.ts`
+- `studio/schemas/documents/service-location.ts`
+- `studio/schemas/objects/template-content-variant.ts`
+- `studio/schemas/objects/template-rewrite-copy.ts`
+- `studio/schemas/objects/template-source-policy.ts`
+- `frontend/types/template.ts`
+- `frontend/sanity/queries/template-page.ts`
+- `frontend/lib/templates/resolve-template.ts`
+- `frontend/lib/legacy-pages/metadata.ts`
+- `frontend/components/ui/rewrite/page-shell.tsx`
+- `frontend/components/ui/rewrite/landing-sections/utility-strip.tsx`
+- `frontend/components/ui/rewrite/landing-sections/service-types-section.tsx`
+- `frontend/components/ui/rewrite/landing-sections/pricing-plans-section.tsx`
+- `frontend/components/ui/rewrite/landing-sections/features-section.tsx`
+- `frontend/components/ui/rewrite/landing-sections/proof-section.tsx`
+- `frontend/components/ui/rewrite/landing-sections/testimonials-section.tsx`
+- `frontend/components/ui/rewrite/landing-sections/long-guide-section.tsx`
+- `frontend/components/ui/rewrite/landing-sections/final-cta-section.tsx`
+- `docs/astro-migration-megaplan.md`
+
+### Summary
+1. Added explicit template `lane`, `trustMode`, and source-of-truth policy for pricing, proof, testimonial, and CTA density so `pageTemplate.variant` now controls a real conversion flow.
+2. Added reusable rule-based content spinner support through `templateContentVariant`, allowing deterministic hero/final-CTA support copy selection by lane, route kind, trust mode, and location availability.
+3. Refactored the frontend template resolver to sanitize unresolved `{lokasi}` tokens, infer route kind, filter lane-mismatched proof/testimonial/FAQ/pricing content, and enforce a single data source per critical section.
+4. Rebuilt the rewrite page shell so template-backed money pages render one narrative spine with variant-driven section order instead of stacked legacy sections.
+5. Tightened CTA/conversion hierarchy by capping quick links to two, making final-CTA secondary actions lane-aware, and aligning section intros with website/software/printing intent.
+6. Added Studio validation guardrails for route formatting, generic-company lane consistency, location-token usage inside spinner variants, and quick-link overload.
+
+### Impact on SEO/Integration
+- Positive SEO impact:
+  - removes placeholder leakage and conflicting pricing/proof/CTA combinations on template-backed commercial pages
+  - improves topical consistency by filtering cross-lane trust/proof content before render
+  - keeps frontend metadata generation aligned with the same sanitized template resolver used by page rendering
+- Integration impact:
+  - Studio schema, GROQ query contract, metadata resolver, and rewrite shell are now synced for the new template fields
+  - reusable support-copy variants can be managed in Sanity without reintroducing raw location tokens on base routes
+
+### Verification Status
+- ✅ `pnpm --filter frontend typecheck`
+- ✅ `pnpm --filter studio typecheck`
+- ✅ `pnpm --filter frontend build`
+
 ## 2026-04-12: Fix Raw Location Tokens Output on Frontend Titles
 
 ### Changed Files

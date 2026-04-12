@@ -49,6 +49,7 @@ import {
   PROJECTS_HOME_QUERY,
   PROJECTS_SLUGS_QUERY,
 } from "@/sanity/queries/project";
+import { isAllowedTemplateRoute } from "@/lib/templates/route-policy";
 import {
   POST_QUERY,
   POSTS_BY_CATEGORY_QUERY,
@@ -161,6 +162,7 @@ export const fetchTemplatePageByRoute = async ({
 }: {
   route: string;
 }): Promise<TemplatePageDoc | null> => {
+  if (!isAllowedTemplateRoute(route)) return null;
   const isDev = process.env.NODE_ENV === "development";
   const data = isDev
     ? await fetchPublished<TemplatePageDoc | null>({
@@ -237,7 +239,7 @@ export const fetchTemplatePageRoutes = async (): Promise<
     query: TEMPLATE_PAGE_ROUTES_QUERY,
   });
 
-  return data || [];
+  return (data || []).filter((item) => isAllowedTemplateRoute(item.route));
 };
 
 export const fetchSanityPagesStaticParams =

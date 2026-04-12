@@ -28,9 +28,8 @@ export async function generateLegacyPageMetadata(
   const resolvedCopy = templatePage
     ? resolveTemplateCopy({
         base: baseCopy,
-        template: templatePage.template?.structured || null,
-        override: templatePage.structured || null,
-        locationName: templatePage.location?.title || null,
+        page: templatePage,
+        template: templatePage.template || null,
       })
     : baseCopy;
   const copy = applyLegacyCopyOverrides(resolvedCopy, override);
