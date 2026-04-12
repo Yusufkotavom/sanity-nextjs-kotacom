@@ -148,7 +148,7 @@ export default async function RewritePageShell({
     }
     return undefined;
   })();
-  const heroImageOverride = override?.heroOverride?.image
+  const heroImageOverride = override?.heroOverride?.image?.asset
     ? {
         src: urlFor(override.heroOverride.image).width(1600).url(),
         alt:
@@ -160,7 +160,7 @@ export default async function RewritePageShell({
     page: templatePage,
     template: templatePage?.template || null,
   });
-  const templateHeroImage = templateHero.image
+  const templateHeroImage = templateHero?.image?.asset
     ? {
         src: urlFor(templateHero.image).width(1600).url(),
         alt:

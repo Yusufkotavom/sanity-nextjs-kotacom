@@ -44,7 +44,7 @@ const pickArray = <T>(
 };
 
 const resolveImageUrl = (image?: any) => {
-  if (!image) return undefined;
+  if (!image || !image.asset) return undefined;
   try {
     return urlFor(image).width(1600).url();
   } catch {
