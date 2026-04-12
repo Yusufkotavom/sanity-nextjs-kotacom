@@ -1044,3 +1044,20 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ Lockfile regeneration completed (`pnpm install --lockfile-only`).
 - ⚠️ Final confirmation requires fresh Netlify deploy and runtime check on production URL.
+
+## 2026-04-12 — Netlify Adapter Strategy Switch (Auto Runtime)
+
+### Changed Files
+- `netlify.toml`
+
+### Summary of Changes
+1. Removed explicit `[[plugins]]` declaration for `@netlify/plugin-nextjs` from `netlify.toml`.
+2. This forces deployment to use Netlify's auto-detected Next.js runtime path instead of pinned plugin declaration in config.
+
+### Impact on SEO/Integration
+- Runtime/deploy compatibility change only.
+- No direct SEO metadata/content behavior change.
+
+### Verification Status
+- ✅ Config updated.
+- ⚠️ Requires redeploy smoke test on production URL.

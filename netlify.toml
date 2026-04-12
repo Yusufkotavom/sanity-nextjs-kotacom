@@ -31,9 +31,6 @@
   node_bundler = "esbuild"
   external_node_modules = ["next", "react", "react-dom"]
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
 # Configuration for Sanity Studio (if deployed as a separate site)
 # Set Base Directory to "studio" in Netlify UI
 # Build command: "pnpm build"
