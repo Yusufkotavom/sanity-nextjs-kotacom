@@ -68,19 +68,21 @@ pnpm wrangler deploy
 
 5. **Set Environment Variables**
    
-   Klik **Add variable** dan tambahkan:
+   **🚀 CARA CEPAT - Upload Otomatis (Recommended)**
    
-   ```env
-   NODE_VERSION=20
-   NEXT_PUBLIC_SANITY_PROJECT_ID=<your-sanity-project-id>
-   NEXT_PUBLIC_SANITY_DATASET=production
-   SANITY_API_READ_TOKEN=<your-sanity-read-token>
-   SUPABASE_URL=<your-supabase-url>
-   SUPABASE_ANON_KEY=<your-supabase-anon-key>
-   GOOGLE_CLIENT_EMAIL=<your-gsc-service-account-email>
-   GOOGLE_PRIVATE_KEY=<your-gsc-private-key>
-   GOOGLE_PROPERTY_URI=<your-gsc-property-uri>
+   Setelah project dibuat di Cloudflare, jalankan script untuk upload semua env vars sekaligus:
+   
+   ```bash
+   cd seo-dashboard
+   node upload-env-to-cloudflare.mjs seo-dashboard-kotacom
    ```
+   
+   Script akan membaca dari `.env.cloudflare` dan upload 40+ variables otomatis.
+   
+   **Cara Manual (Lambat)**
+   
+   Klik **Add variable** satu per satu - tidak disarankan karena ada 40+ variables.
+   Lihat file `.env.cloudflare` untuk daftar lengkap.
 
 6. **Deploy**
    - Klik **Save and Deploy**

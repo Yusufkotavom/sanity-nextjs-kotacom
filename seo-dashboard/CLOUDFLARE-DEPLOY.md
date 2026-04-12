@@ -26,20 +26,22 @@
    Root directory: seo-dashboard
    ```
 
-5. **Environment Variables**
-   Tambahkan environment variables berikut di **Settings > Environment variables**:
+5. **Environment Variables - CARA CEPAT! 🚀**
    
-   ```env
-   NODE_VERSION=20
-   NEXT_PUBLIC_SANITY_PROJECT_ID=<your-project-id>
-   NEXT_PUBLIC_SANITY_DATASET=production
-   SANITY_API_READ_TOKEN=<your-read-token>
-   SUPABASE_URL=<your-supabase-url>
-   SUPABASE_ANON_KEY=<your-supabase-anon-key>
-   GOOGLE_CLIENT_EMAIL=<your-service-account-email>
-   GOOGLE_PRIVATE_KEY=<your-service-account-private-key>
-   GOOGLE_PROPERTY_URI=<your-gsc-property>
+   **Opsi A: Upload Otomatis (Recommended)**
+   
+   Setelah project dibuat, upload semua env vars sekaligus:
+   
+   ```bash
+   cd seo-dashboard
+   node upload-env-to-cloudflare.mjs seo-dashboard-kotacom
    ```
+   
+   Script akan otomatis membaca dari `.env.cloudflare` dan upload 40+ variables dalam beberapa menit.
+   
+   **Opsi B: Manual via Dashboard (Lambat, tidak disarankan)**
+   
+   Tambahkan satu per satu di **Settings > Environment variables**. Lihat `.env.cloudflare` untuk daftar lengkap.
 
 6. **Deploy**
    - Klik **Save and Deploy**
