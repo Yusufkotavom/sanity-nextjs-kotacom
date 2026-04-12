@@ -6,17 +6,23 @@ import type { LegacyRewriteCopy } from "@/lib/legacy-pages/rewrite-content";
 
 export function ServiceTypesSection({
   serviceTypes,
+  eyebrow = "Service Fit",
   title = "Jenis Layanan Utama",
   description = "Kami mengategorikan layanan berdasarkan kebutuhan spesifik Anda untuk mempermudah eksekusi dan meningkatkan hasil kampanye bisnis.",
+  badgeLabel = "Fokus layanan",
+  linkLabel = "Lihat detail",
 }: {
   serviceTypes: NonNullable<LegacyRewriteCopy["serviceTypes"]>;
+  eyebrow?: string;
   title?: string;
   description?: string;
+  badgeLabel?: string;
+  linkLabel?: string;
 }) {
   return (
     <SectionShell id="layanan" className="py-10 md:py-12">
       <SectionIntro
-        eyebrow="Service Focus"
+        eyebrow={eyebrow}
         title={title}
         description={description}
       />
@@ -30,7 +36,7 @@ export function ServiceTypesSection({
             <div className="flex h-full flex-col">
               <div className="inline-flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white/75 px-3 py-1 text-ui-label text-foreground/70 dark:border-white/10 dark:bg-white/5">
                 <BookOpenText className="size-3.5" />
-                Layanan {index + 1}
+                {badgeLabel} {index + 1}
               </div>
               <h3 className="mt-4 text-xl font-semibold tracking-tight">{item.title}</h3>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">
@@ -53,7 +59,7 @@ export function ServiceTypesSection({
                     href={item.href}
                     className="inline-flex rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium text-foreground transition duration-300 hover:bg-white group-hover:border-black/20 group-hover:translate-x-1 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 dark:group-hover:border-white/20"
                   >
-                    Lihat detail
+                    {linkLabel}
                   </Link>
                 </div>
               ) : null}

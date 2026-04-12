@@ -4,6 +4,117 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12 — Reframe Template Guide and FAQ Closing Sections
+
+### Changed Files
+- `frontend/components/ui/rewrite/page-shell.tsx` (MODIFIED)
+- `frontend/components/ui/rewrite/process-faq.tsx` (MODIFIED)
+- `frontend/components/ui/rewrite/landing-sections/long-guide-section.tsx` (MODIFIED)
+- `docs/seo-updates.md` (MODIFIED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+1. Reframed the reusable `longGuide` section from a generic informational block into a decision-support section that better fits BOFU template pages.
+2. Added configurable eyebrow, description, and card labeling to `LongGuideSection` so each lane can present guide content as a buying checklist instead of filler article content.
+3. Enriched `RewriteProcessFaq` with:
+   - process introduction copy
+   - FAQ introduction copy
+   - configurable support link target/label
+4. Fixed the internal secondary CTA in the process/FAQ block to point to the real final CTA anchor (`#cta-final`) instead of the stale `#cta-mid` target.
+5. Added lane-specific guide/process/FAQ framing in the template page shell so website, software, printing, and generic routes now end with more context-aware objection handling and decision guidance.
+
+### Impact on SEO/Integration
+- Positive SEO and conversion impact:
+  - bottom-of-page content is now more aligned with purchase intent and less likely to read as generic SEO padding
+  - FAQ and guide sections now support clearer decision-stage relevance on repeated template routes
+  - fixing the stale CTA anchor improves internal page flow and reduces dead-end interaction risk
+- Integration impact:
+  - no schema/query contract changes
+  - renderer now exposes richer lane-owned framing for process, FAQ, and guide sections
+
+### Verification Status
+- ✅ `pnpm --filter frontend typecheck`
+- ✅ `cd frontend && node --import tsx tests/template-resolver.contract.test.ts`
+- ✅ `pnpm --filter frontend build`
+
+## 2026-04-12 — Enrich Lane Template Section Messaging
+
+### Changed Files
+- `frontend/components/ui/rewrite/page-shell.tsx` (MODIFIED)
+- `frontend/components/ui/rewrite/landing-sections/service-types-section.tsx` (MODIFIED)
+- `frontend/components/ui/rewrite/landing-sections/pricing-plans-section.tsx` (MODIFIED)
+- `frontend/components/ui/rewrite/landing-sections/proof-section.tsx` (MODIFIED)
+- `frontend/components/ui/rewrite/landing-sections/testimonials-section.tsx` (MODIFIED)
+- `frontend/components/ui/rewrite/landing-sections/final-cta-section.tsx` (MODIFIED)
+- `docs/seo-updates.md` (MODIFIED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+1. Enriched the reusable rewrite section components so they no longer rely on one generic framing across all money pages.
+2. Added lane-aware section intros and badge labels for:
+   - service fit / use-case cards
+   - pricing blocks
+   - proof blocks
+   - testimonial blocks
+   - final CTA closeout area
+3. Added route-kind-aware copy enrichment in the page shell so `city`, `service`, and `service-city` pages now sharpen their section descriptions instead of reusing the same broad explanations as base routes.
+4. Final CTA now supports lane-specific eyebrow/journey framing and route-aware follow-up steps, making the closeout block feel closer to the actual buying stage for each descendant route.
+5. Preserved the locked lane backbone and avoided any schema/query contract changes; this pass only enriches rendering logic and reusable section copy props.
+
+### Impact on SEO/Integration
+- Positive SEO and conversion impact:
+  - descendant template pages now read less like duplicated base pages with token swaps and more like decision-stage pages with clearer relevance
+  - section-level scannability is improved because each block now communicates a more specific role in the buying journey
+  - stronger contextual framing should reduce semantic thinness across repeated service/city routes
+- Integration impact:
+  - no Sanity schema/query contract change
+  - frontend section components now accept richer display props from the lane template shell
+
+### Verification Status
+- ✅ `cd frontend && node --import tsx tests/template-resolver.contract.test.ts`
+- ✅ `pnpm --filter frontend typecheck`
+- ✅ `pnpm --filter studio typecheck`
+- ✅ `pnpm --filter frontend build`
+
+## 2026-04-12 — Lock Template Backbone by Lane
+
+### Changed Files
+- `frontend/lib/templates/resolve-template.ts` (MODIFIED)
+- `frontend/components/ui/rewrite/highlights.tsx` (MODIFIED)
+- `frontend/components/ui/rewrite/process-faq.tsx` (MODIFIED)
+- `frontend/components/ui/rewrite/page-shell.tsx` (MODIFIED)
+- `frontend/tests/template-resolver.contract.test.ts` (MODIFIED)
+- `docs/seo-updates.md` (MODIFIED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+1. Locked the effective public template backbone by `lane`, not by editor-selected `variant`.
+2. Public template-backed pages now resolve fixed section order per lane:
+   - `website` -> service-led commercial flow
+   - `printing` -> pricing/specification-led flow
+   - `software` -> proof/workflow-led flow
+   - `generic` -> minimal fallback flow
+3. Prevented legacy page override section-order settings from reshuffling template-backed public pages, so money-page structure stays stable and only `service + kota` context changes.
+4. Enriched the shell section framing so:
+   - `highlights` acts as problem/stakes framing
+   - `serviceTypes` acts as use-case / fit guidance
+   - `process-faq` acts as process + objection handling
+5. Extended contract tests to verify lane backbone enforcement even when stored `variant` is mismatched.
+
+### Impact on SEO/Integration
+- Positive SEO and conversion impact:
+  - stabilizes narrative flow for repeated template pages so route descendants no longer drift structurally
+  - keeps service/city pages aligned to one argument spine per lane instead of ad-hoc section order overrides
+  - improves consistency of objection handling and value framing across money pages
+- Integration impact:
+  - template-backed page rendering is now governed primarily by `lane`
+  - legacy override content can still tune copy, but not reorder the public conversion backbone
+
+### Verification Status
+- ✅ `cd frontend && node --import tsx tests/template-resolver.contract.test.ts`
+- ✅ `pnpm --filter frontend typecheck`
+- ✅ `pnpm --filter studio typecheck`
+
 ## 2026-04-12 — Service-Aware Conversion Copy for Template Spinner
 
 ### Changed Files

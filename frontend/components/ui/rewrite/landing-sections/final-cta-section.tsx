@@ -29,11 +29,27 @@ const laneSecondaryLinks: Record<
 export async function FinalCtaSection({
   copy,
   lane = "generic",
+  eyebrow = "Closeout CTA",
+  secondaryLinks,
+  journeyTitle = "Conversion path",
+  journeySteps,
 }: {
   copy: LegacyRewriteCopy;
   lane?: TemplateLane;
+  eyebrow?: string;
+  secondaryLinks?: Array<{ href: string; label: string; variant: "outline" | "secondary" }>;
+  journeyTitle?: string;
+  journeySteps?: string[];
 }) {
-  const secondaryLinks = laneSecondaryLinks[lane] || laneSecondaryLinks.generic;
+  const resolvedSecondaryLinks = secondaryLinks || laneSecondaryLinks[lane] || laneSecondaryLinks.generic;
+  const resolvedJourneySteps =
+    journeySteps && journeySteps.length > 0
+      ? journeySteps
+      : [
+          "Masuk lewat brief awal",
+          "Scope dan prioritas jadi jelas",
+          "Tim sales bisa follow-up lebih cepat",
+        ];
 
   return (
     <SectionShell id="cta-final" className="py-10 md:py-12">
@@ -43,7 +59,7 @@ export async function FinalCtaSection({
         contentClassName="max-w-3xl"
         content={
           <>
-            <p className="text-ui-label text-foreground/55">Closeout CTA</p>
+            <p className="text-ui-label text-foreground/55">{eyebrow}</p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight md:text-4xl">
               {copy.finalCtaTitle || `Siap Mulai ${copy.primaryKeyword}?`}
             </h2>
@@ -57,7 +73,7 @@ export async function FinalCtaSection({
                 fallbackLabel={copy.ctaLabel || "Konsultasi Gratis Sekarang"}
                 size="lg"
               />
-              {secondaryLinks.map((item) => (
+              {resolvedSecondaryLinks.map((item) => (
                 <Button key={item.href} asChild size="lg" variant={item.variant}>
                   <Link href={item.href}>{item.label}</Link>
                 </Button>
@@ -70,14 +86,10 @@ export async function FinalCtaSection({
           <div className="relative z-10 flex h-full flex-col justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/45">
-                Conversion path
+                {journeyTitle}
               </p>
               <div className="mt-4 space-y-3">
-                {[
-                  "Masuk lewat brief awal",
-                  "Scope dan prioritas jadi jelas",
-                  "Tim sales bisa follow-up lebih cepat",
-                ].map((item, index) => (
+                {resolvedJourneySteps.map((item, index) => (
                   <div
                     key={item}
                     className="flex items-center gap-3 rounded-2xl border border-black/8 bg-white/80 px-4 py-3 dark:border-white/10 dark:bg-white/10"

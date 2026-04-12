@@ -6,15 +6,25 @@ import { SectionIntro, SectionPanel, SectionShell } from "@/components/ui/sectio
 
 type RewriteHighlightsProps = {
   copy: LegacyRewriteCopy;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  secondaryCtaLabel?: string;
 };
 
-export default async function RewriteHighlights({ copy }: RewriteHighlightsProps) {
+export default async function RewriteHighlights({
+  copy,
+  eyebrow = "Problem & Stakes",
+  title = "Kenapa keputusan ini perlu dibuat dengan benar",
+  description = "Bagian ini menyorot risiko, biaya salah pilih, dan alasan kenapa struktur layanan perlu diputuskan dengan lebih jelas sejak awal.",
+  secondaryCtaLabel = "Lihat FAQ Implementasi",
+}: RewriteHighlightsProps) {
   return (
     <SectionShell id="keunggulan" className="py-14 md:py-16">
       <SectionIntro
-        eyebrow="Highlights"
-        title="Keunggulan Layanan"
-        description="Fokus pada kualitas output, kejelasan proses, dan pengalaman klien yang nyaman."
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
       />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {copy.highlights.map((item, index) => (
@@ -31,7 +41,7 @@ export default async function RewriteHighlights({ copy }: RewriteHighlightsProps
       <div className="mt-6 flex flex-wrap gap-3">
         <GlobalWhatsAppButton fallbackHref={copy.ctaHref} fallbackLabel={copy.ctaLabel} />
         <Button asChild variant="outline">
-          <Link href="#faq">Lihat FAQ Implementasi</Link>
+          <Link href="#faq">{secondaryCtaLabel}</Link>
         </Button>
       </div>
     </SectionShell>

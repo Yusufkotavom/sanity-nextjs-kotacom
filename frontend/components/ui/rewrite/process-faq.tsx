@@ -12,9 +12,31 @@ import { SectionPanel, SectionShell } from "@/components/ui/section-shell";
 
 type RewriteProcessFaqProps = {
   copy: LegacyRewriteCopy;
+  processEyebrow?: string;
+  processTitle?: string;
+  processDescription?: string;
+  faqEyebrow?: string;
+  faqTitle?: string;
+  faqDescription?: string;
+  supportPrompt?: string;
+  supportCtaLabel?: string;
+  supportLinkHref?: string;
+  supportLinkLabel?: string;
 };
 
-export default async function RewriteProcessFaq({ copy }: RewriteProcessFaqProps) {
+export default async function RewriteProcessFaq({
+  copy,
+  processEyebrow = "Process",
+  processTitle = "Bagaimana proyek ini berjalan",
+  processDescription = "Bagian ini dipakai untuk menunjukkan bahwa proyek berjalan dengan tahapan yang bisa dipahami, bukan dengan proses yang terasa gelap di tengah jalan.",
+  faqEyebrow = "Objection Handling",
+  faqTitle = "Pertanyaan yang biasanya menahan keputusan",
+  faqDescription = "FAQ di bawah ini dirancang untuk menjawab hambatan pembelian yang paling sering muncul sebelum brief dikirim.",
+  supportPrompt = "Butuh jawaban yang lebih spesifik untuk konteks bisnis Anda?",
+  supportCtaLabel = "Diskusi Kebutuhan",
+  supportLinkHref = "#cta-final",
+  supportLinkLabel = "Lanjut ke CTA Akhir",
+}: RewriteProcessFaqProps) {
   return (
     <SectionShell id="faq" className="py-10 md:py-12">
       <SectionPanel
@@ -22,8 +44,11 @@ export default async function RewriteProcessFaq({ copy }: RewriteProcessFaqProps
         className="grid gap-8 rounded-[1.75rem] p-6 md:grid-cols-[1.2fr_1fr] md:p-8"
       >
         <div>
-          <p className="text-ui-label text-foreground/55">Execution</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight">Proses Eksekusi</h2>
+          <p className="text-ui-label text-foreground/55">{processEyebrow}</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight">{processTitle}</h2>
+          <p className="mt-3 text-sm leading-7 text-muted-foreground">
+            {processDescription}
+          </p>
           <ol className="mt-4 space-y-3">
             {copy.process.map((step, index) => (
               <li key={step} className="flex items-start gap-3">
@@ -36,8 +61,11 @@ export default async function RewriteProcessFaq({ copy }: RewriteProcessFaqProps
           </ol>
         </div>
         <div>
-          <p className="text-ui-label text-foreground/55">FAQ</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight">Pertanyaan Umum</h2>
+          <p className="text-ui-label text-foreground/55">{faqEyebrow}</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight">{faqTitle}</h2>
+          <p className="mt-3 text-sm leading-7 text-muted-foreground">
+            {faqDescription}
+          </p>
           <Accordion
             type="single"
             collapsible
@@ -56,16 +84,16 @@ export default async function RewriteProcessFaq({ copy }: RewriteProcessFaqProps
           </Accordion>
           <div className="mt-4 rounded-2xl border border-black/8 bg-background/70 p-4 dark:border-white/10 dark:bg-black/10">
             <p className="text-sm text-foreground/80">
-              Butuh jawaban yang lebih spesifik untuk konteks bisnis Anda?
+              {supportPrompt}
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <GlobalWhatsAppButton
                 fallbackHref={copy.ctaHref}
-                fallbackLabel="Diskusi Kebutuhan"
+                fallbackLabel={supportCtaLabel}
                 size="sm"
               />
               <Button asChild size="sm" variant="outline">
-                <Link href="#cta-mid">Lanjut ke CTA Cepat</Link>
+                <Link href={supportLinkHref}>{supportLinkLabel}</Link>
               </Button>
             </div>
           </div>

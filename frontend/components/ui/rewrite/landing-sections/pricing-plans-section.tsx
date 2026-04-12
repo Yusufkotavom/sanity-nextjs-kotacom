@@ -20,18 +20,24 @@ function buildPricingPlanPrompt({
 export async function PricingPlansSection({
   pricingPlans,
   serviceTitle,
+  eyebrow = "Investment",
   title = "Paket & Investasi",
   description = "Pilihan investasi layanan dirancang secara transparan agar Anda dapat menyesuaikan cakupan dengan anggaran operasional tim.",
+  recommendedLabel = "Recommended",
+  buttonLabelPrefix = "Pilih",
 }: {
   pricingPlans: NonNullable<LegacyRewriteCopy["pricingPlans"]>;
   serviceTitle: string;
+  eyebrow?: string;
   title?: string;
   description?: string;
+  recommendedLabel?: string;
+  buttonLabelPrefix?: string;
 }) {
   return (
     <SectionShell id="paket" className="py-10 md:py-12">
       <SectionIntro
-        eyebrow="Investment"
+        eyebrow={eyebrow}
         title={title}
         description={description}
       />
@@ -61,7 +67,7 @@ export async function PricingPlansSection({
                 </div>
                 {plan.recommended ? (
                   <span className="inline-flex rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-foreground shadow-sm">
-                    Recommended
+                    {recommendedLabel}
                   </span>
                 ) : null}
               </div>
@@ -83,7 +89,7 @@ export async function PricingPlansSection({
               </ul>
               <div className="mt-6">
                 <GlobalWhatsAppButton
-                  label={`Pilih ${plan.name}`}
+                  label={`${buttonLabelPrefix} ${plan.name}`}
                   predefinedText={buildPricingPlanPrompt({
                     planName: plan.name,
                     serviceTitle,

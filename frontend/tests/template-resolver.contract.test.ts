@@ -180,7 +180,7 @@ async function main() {
   {
     const template = buildTemplate({
       lane: "printing",
-      variant: "pricing-focus",
+      variant: "service-hero",
       sourcePolicy: {
         pricingSource: "template-only",
         proofSource: "template-only",
@@ -245,7 +245,14 @@ async function main() {
     assert.equal(copy.pricingPlans?.[0]?.name, "Cetak Buku Offset");
     assert.equal(copy.proofItems?.[0]?.title, "Cetak katalog produk");
     assert.equal(copy.testimonials?.[0]?.name, "Bagas");
-    assert.deepEqual(sections.slice(0, 5), ["utility", "pricing", "serviceTypes", "features", "proof"]);
+    assert.deepEqual(sections.slice(0, 6), [
+      "utility",
+      "highlights",
+      "serviceTypes",
+      "pricing",
+      "features",
+      "proof",
+    ]);
   }
 
   {
@@ -287,6 +294,49 @@ async function main() {
     assert.equal(experience.lane, "website");
     assert.equal(eyebrow, "Company Profile untuk Jakarta");
     assert.equal(copy.ctaLabel, "Diskusikan Company Profile");
+  }
+
+  {
+    const template = buildTemplate({
+      lane: "software",
+      variant: "pricing-focus",
+      structured: {
+        proofItems: [{ title: "Software inventory", description: "Proof software" }],
+        features: [{ title: "Workflow", description: "Lebih rapi" }],
+        pricingPlans: [
+          {
+            name: "MVP",
+            price: "Rp 15.000.000",
+            description: "Tahap awal",
+            items: ["Discovery", "Build"],
+          },
+        ],
+        testimonials: [{ name: "Ari", role: "Owner", quote: "Lebih rapi." }],
+      },
+    });
+    const page = buildPage({
+      route: "/software",
+      template,
+      location: { title: "Bandung" },
+    });
+
+    const experience = resolveTemplateExperience({ page, template });
+    const sections = resolveNarrativeSections({
+      page,
+      template,
+      copy: resolveTemplateCopy({ base: baseCopy, page, template }),
+    });
+
+    assert.equal(experience.variant, "local-proof");
+    assert.deepEqual(sections.slice(0, 7), [
+      "utility",
+      "highlights",
+      "serviceTypes",
+      "proof",
+      "features",
+      "pricing",
+      "testimonials",
+    ]);
   }
 
   console.log("template resolver contract tests passed");

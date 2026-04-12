@@ -89,6 +89,13 @@ const defaultSourcePolicy: Required<TemplateSourcePolicy> = {
   maxQuickLinks: 2,
 };
 
+const DEFAULT_VARIANT_BY_LANE: Record<TemplateLane, string> = {
+  website: "service-hero",
+  printing: "pricing-focus",
+  software: "local-proof",
+  generic: "generic-company",
+};
+
 const slugifyTag = (value: string) =>
   value
     .trim()
@@ -255,7 +262,7 @@ export const resolveTemplateExperience = ({
     template?.lane ||
     (page?.template?.lane as TemplateLane | null) ||
     inferLaneFromRoute(page?.route);
-  const variant = template?.variant || "service-hero";
+  const variant = DEFAULT_VARIANT_BY_LANE[lane] || template?.variant || "service-hero";
   const trustMode = template?.trustMode || "aggressive";
   const sourcePolicy = {
     ...defaultSourcePolicy,
@@ -874,8 +881,8 @@ export const resolveNarrativeSections = ({
   const hasGuide = Boolean(copy.longGuide?.length);
   const hasEeat = Boolean(copy.eeatPoints?.length);
 
-  const sectionOrderByVariant: Record<string, string[]> = {
-    "service-hero": [
+  const sectionOrderByLane: Record<TemplateLane, string[]> = {
+    website: [
       "utility",
       "highlights",
       "serviceTypes",
@@ -884,49 +891,52 @@ export const resolveNarrativeSections = ({
       "pricing",
       "testimonials",
       "eeat",
-      "longGuide",
       "processFaq",
+      "longGuide",
       "finalCta",
       "relatedLinks",
     ],
-    "pricing-focus": [
+    printing: [
       "utility",
-      "pricing",
+      "highlights",
       "serviceTypes",
+      "pricing",
       "features",
       "proof",
       "testimonials",
-      "longGuide",
       "processFaq",
+      "longGuide",
       "finalCta",
       "relatedLinks",
     ],
-    "local-proof": [
+    software: [
       "utility",
       "location",
-      "proof",
-      "testimonials",
+      "highlights",
       "serviceTypes",
+      "proof",
       "features",
       "pricing",
+      "testimonials",
       "eeat",
       "processFaq",
+      "longGuide",
       "finalCta",
       "relatedLinks",
     ],
-    "generic-company": [
+    generic: [
       "utility",
-      "highlights",
       "serviceTypes",
       "features",
-      "eeat",
+      "proof",
       "processFaq",
       "finalCta",
       "relatedLinks",
     ],
   };
 
-  const requested = sectionOrderByVariant[experience.variant] || sectionOrderByVariant["service-hero"];
+  const requested =
+    sectionOrderByLane[experience.lane] || sectionOrderByLane.generic;
   return requested.filter((section) => {
     switch (section) {
       case "utility":

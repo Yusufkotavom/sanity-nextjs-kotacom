@@ -7,17 +7,21 @@ import { KOTACOM_SPLIT_DEFAULT_ILLUSTRATION } from "@/lib/illustrations/kotacom-
 
 export function ProofSection({
   proofItems,
+  eyebrow = "Proof",
   title = "Portfolio & Bukti Kerja",
   description = "Rekam jejak dan hasil pekerjaan kami yang menunjukkan standar visual serta kualitas layanan dalam memenuhi ragam kebutuhan industri.",
+  badgeLabel = "Bukti kerja",
 }: {
   proofItems: NonNullable<LegacyRewriteCopy["proofItems"]>;
+  eyebrow?: string;
   title?: string;
   description?: string;
+  badgeLabel?: string;
 }) {
   return (
     <SectionShell id="portfolio" className="py-10 md:py-12">
       <SectionIntro
-        eyebrow="Proof"
+        eyebrow={eyebrow}
         title={title}
         description={description}
       />
@@ -31,7 +35,7 @@ export function ProofSection({
             <div className="flex h-full flex-col">
               <div className="inline-flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white/75 px-3 py-1 text-ui-label text-foreground/70 dark:border-white/10 dark:bg-white/5">
                 <LayoutTemplate className="size-3.5" />
-                Bukti kerja
+                {badgeLabel}
               </div>
               <h3 className="mt-4 text-xl font-semibold tracking-tight">
                 {item.title}
