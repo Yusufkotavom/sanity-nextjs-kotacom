@@ -4,6 +4,37 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12 — Template Resolver Contract Test Coverage
+
+### Changed Files
+- `frontend/package.json` (MODIFIED)
+- `frontend/tests/template-resolver.contract.test.ts` (NEW)
+- `docs/seo-updates.md` (MODIFIED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+1. Added a lightweight frontend contract test for the lane-aware template resolver using `tsx`.
+2. The test suite covers the highest-risk regression paths in the new template system:
+   - base routes must not leak raw `{lokasi}` tokens
+   - `trustMode: "safe"` must reject aggressive copy variants
+   - lane filtering must reject cross-category proof/testimonial content
+   - source-policy precedence must keep one pricing/proof/testimonial source of truth
+   - variant-driven narrative ordering must stay stable
+   - `service-city` route inference must still resolve the expected hero support copy
+3. Added a reusable frontend test script:
+   - `pnpm --filter frontend test:templates`
+
+### Impact on SEO/Integration
+- Positive integration impact:
+  - reduces regression risk for token sanitization, lane relevance filtering, and source-policy precedence on money pages
+  - gives the repo a repeatable validation path for template-backed route behavior beyond manual content patching
+- Indirect SEO benefit:
+  - helps preserve clean titles, trust content relevance, and single-intent page structure across reusable template routes
+
+### Verification Status
+- ✅ `pnpm --filter frontend test:templates`
+- ✅ `pnpm --filter frontend typecheck`
+
 ## 2026-04-12 — Activate Indexing for Template-Backed Location Routes
 
 ### Changed Files

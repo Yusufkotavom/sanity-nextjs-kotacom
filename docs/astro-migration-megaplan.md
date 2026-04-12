@@ -36,6 +36,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Obsolete one-off template patch scripts have been removed from `frontend/scripts`, leaving a single maintained upgrade path for live template conversion content and reducing accidental rollback risk.
 - [x] Template-backed location override documents now also have a normalization path for legacy field-shape drift, and the known `jasa-cetak-buku-surabaya` override has been brought in line with the active testimonial contract.
 - [x] Template-backed `pageLocation` and `serviceLocation` documents have been brought out of legacy `draft/noindex` state, so active money pages and location-route descendants now align with the public indexing intent of the new rewrite architecture.
+- [x] Template resolver guardrails now have direct frontend contract coverage for token stripping, lane filtering, trust-mode copy selection, source-policy precedence, and route-kind inference.
 - [x] SEO Ops automation hardening completed: manual indexing now uses real queue jobs, GSC daily pull now aggregates page/query/country/device, and GA4 imports are persisted in DB for dashboard joins.
 - [x] SEO Opportunity Board added in operations dashboard with quick wins (high impressions + low CTR), decay detection, and indexing blocker monitoring.
 - [x] Seo-dashboard Netlify build hardening completed: Sanity/env-sensitive API imports are now lazy-loaded to prevent `Failed to collect page data` crashes during production build.
@@ -423,6 +424,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Rewrite landing sections now have stronger service/pricing interaction polish, and pricing cards can route package-specific WhatsApp leads through the shared global WhatsApp settings path.
 - [x] Rewrite template UX now enforces a single CTA hierarchy and lane-aware closeout flow: quick links are capped to two, final CTA secondary actions are lane-specific, and raw location tokens are stripped from non-location routes before render.
 - [x] Template-backed location/service route indexing state is now operationally normalized via a dedicated Sanity script, and the current active set has been patched from legacy `draft/noindex` flags to public `index` state.
+- [x] The lane-aware template resolver now has an executable contract test entrypoint in `frontend`, reducing reliance on manual QA for pricing/proof/token guardrails after future schema or copy changes.
 - [x] `/home-pepar` has been rewritten away from prototype/internal explanatory language and now reads as a customer-facing homepage candidate that is materially closer to live use.
 - [x] Printing rewrite modules are back to a deployable state after restoring the missing `buildGenericCopy` import for the company profile page module.
 - [x] Netlify edge bundling compatibility hardening applied for Next proxy by explicitly setting proxy runtime to `edge`, avoiding `___netlify-edge-handler-node-middleware` CJS/ESM crash during build.
