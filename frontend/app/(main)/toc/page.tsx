@@ -1,5 +1,4 @@
 import Link from "next/link";
-import docsIndex from "@/content/schemaui-docs.json";
 import { getAstroLocalCatalog } from "@/lib/local-content/astro-catalog";
 import {
   getJasaCetakBukuCityBySlugOrFallback,
@@ -145,12 +144,6 @@ export default async function TocPage() {
     {},
   );
 
-  const localDocsLinks = dedupeLinksSorted(
-    (docsIndex.pages as Array<{ pathname: string; title: string }>).map((item) => ({
-      title: item.title,
-      href: item.pathname,
-    })),
-  );
 
   const staticCoreLinks = dedupeLinksSorted([
     { title: "Home", href: "/" },
@@ -158,7 +151,6 @@ export default async function TocPage() {
     { title: "Services", href: "/services" },
     { title: "Products", href: "/products" },
     { title: "Projects", href: "/projects" },
-    { title: "Docs", href: "/docs" },
     { title: "TOC", href: "/toc" },
   ]);
 
@@ -264,11 +256,6 @@ export default async function TocPage() {
     { title: "Sanity Blog Categories", links: sanityBlogCategoryLinks },
     { title: "Sanity Product Categories", links: sanityProductCategoryLinks },
     { title: "Sanity Service Categories", links: sanityServiceCategoryLinks },
-    { title: "Local Astro Posts", links: dedupeLinksSorted(astroByType.post || []) },
-    { title: "Local Astro Services", links: dedupeLinksSorted(astroByType.service || []) },
-    { title: "Local Astro Products", links: dedupeLinksSorted(astroByType.product || []) },
-    { title: "Local Astro Projects", links: dedupeLinksSorted(astroByType.project || []) },
-    { title: "Local Docs Index", links: localDocsLinks },
   ];
 
   return (

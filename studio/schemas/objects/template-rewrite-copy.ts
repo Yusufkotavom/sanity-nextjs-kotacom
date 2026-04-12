@@ -5,10 +5,24 @@ export default defineType({
   title: "Template Rewrite Copy",
   type: "object",
   fields: [
+    // ----- Headline & Above-Fold -----
+    defineField({
+      name: "heroBadge",
+      title: "Hero Badge / Eyebrow Stat",
+      type: "string",
+      description: "Teks di atas headline. Contoh: ✓ 500+ Klien Puas · 10 Tahun Pengalaman",
+    }),
     defineField({
       name: "primaryKeyword",
-      title: "Primary Keyword / Headline",
+      title: "Headline Utama",
       type: "string",
+      description: "Headline H1 halaman. Gunakan {lokasi} untuk halaman kota.",
+    }),
+    defineField({
+      name: "subheadline",
+      title: "Subheadline / Hero Support",
+      type: "string",
+      description: "Kalimat pendek di bawah headline. Spesifik dan benefit-driven.",
     }),
     defineField({
       name: "secondaryKeywords",
@@ -19,15 +33,54 @@ export default defineType({
     }),
     defineField({
       name: "description",
-      title: "Description",
+      title: "Meta Description",
       type: "text",
       rows: 3,
+      description: "Dipakai sebagai meta description halaman (max 160 karakter).",
     }),
     defineField({
       name: "intro",
-      title: "Intro",
+      title: "Intro Paragraf",
       type: "text",
       rows: 3,
+      description: "Paragraf pembuka di bawah hero. Konteks + manfaat utama.",
+    }),
+    // ----- Value & Differentiation -----
+    defineField({
+      name: "valueProposition",
+      title: "Value Proposition / USP",
+      type: "string",
+      description: "Apa yang membedakan Kotacom dari kompetitor. Spesifik dan dapat dibuktikan.",
+    }),
+    defineField({
+      name: "problemStatement",
+      title: "Problem Statement",
+      type: "text",
+      rows: 3,
+      description: "Pain point utama target audiens. Dimulai dari masalah, bukan solusi.",
+    }),
+    defineField({
+      name: "guarantee",
+      title: "Garansi / Risk Reversal",
+      type: "string",
+      description: "Contoh: Garansi revisi tak terbatas · Uang kembali jika tidak puas",
+    }),
+    // ----- Social Proof Signals -----
+    defineField({
+      name: "stats",
+      title: "Statistik Bisnis",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "value", title: "Angka", type: "string", description: "Contoh: 500+, 10 Tahun, 98%" },
+            { name: "label", title: "Label", type: "string", description: "Contoh: Klien Puas, Pengalaman, Kepuasan" },
+          ],
+          preview: { select: { title: "value", subtitle: "label" } },
+        },
+      ],
+      description: "Angka-angka proof di hero atau utility strip. Max 4 disarankan.",
     }),
     defineField({
       name: "highlights",
