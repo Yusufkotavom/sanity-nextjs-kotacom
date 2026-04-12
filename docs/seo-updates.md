@@ -4,6 +4,38 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12 — Activate Indexing for Template-Backed Location Routes
+
+### Changed Files
+- `frontend/scripts/activate-template-page-indexing.mjs` (NEW)
+- `frontend/package.json` (MODIFIED)
+- `docs/seo-updates.md` (MODIFIED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+1. Added a dedicated Sanity maintenance script for `pageLocation` and `serviceLocation` documents that use `pageTemplate` references.
+2. The script finds template-backed pages still carrying legacy `contentStatus: "draft"` or `meta.noindex: true` flags and patches them to the active publish/indexing state.
+3. Ran the script in write mode and activated 9 public template-backed routes, including:
+   - `/pembuatan-website`
+   - `/pembuatan-website/bandar-lampung`
+   - `/pembuatan-website/ternate`
+   - `/percetakan`
+   - `/software`
+   - `/jasa-cetak-buku-surabaya`
+   - template-pattern service/location documents for website and software flows
+
+### Impact on SEO/Integration
+- Positive SEO impact:
+  - removes stale `noindex` / `draft` state from live money pages and template-backed location routes
+  - aligns stored Sanity publication flags with the lane-based template rendering system already active in the frontend
+- Integration impact:
+  - adds a repeatable operational script for future audits when seeded or migrated template-backed docs inherit outdated indexing flags
+
+### Verification Status
+- ✅ Dry run completed: `node frontend/scripts/activate-template-page-indexing.mjs`
+- ✅ Write run completed: `node frontend/scripts/activate-template-page-indexing.mjs --write`
+- ✅ Read-client verification confirmed zero remaining template-backed `pageLocation` / `serviceLocation` documents with `meta.noindex: true` or `contentStatus != "index"`
+
 ## 2026-04-12 — Live Template Content Upgrade + Safe Patch Workflow
 
 ### Changed Files
