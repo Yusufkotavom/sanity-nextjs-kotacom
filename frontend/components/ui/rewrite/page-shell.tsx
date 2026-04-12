@@ -20,17 +20,14 @@ import RewriteProcessFaq from "@/components/ui/rewrite/process-faq";
 import RewriteRelatedLinks from "@/components/ui/rewrite/related-links";
 import MicroBadges from "@/components/micro-badges";
 import { kotacomSplitIllustrations } from "@/lib/illustrations/kotacom-split";
-import Blocks from "@/components/blocks";
 import { urlFor } from "@/sanity/lib/image";
 import { fetchLegacyPageOverrideByRoute, fetchTemplatePageByRoute } from "@/sanity/lib/fetch";
 import {
   resolveNarrativeSections,
-  resolveTemplateBlocks,
   resolveTemplateCopy,
   resolveTemplateExperience,
   resolveTemplateHero,
   resolvePrimaryHeroEyebrow,
-  resolveTopBlockCount,
 } from "@/lib/templates/resolve-template";
 import { SectionPanel, SectionShell } from "@/components/ui/section-shell";
 import { UtilityStrip } from "@/components/ui/rewrite/landing-sections/utility-strip";
@@ -182,39 +179,6 @@ export default async function RewritePageShell({
   const heroImage = templateHeroImage || heroImageOverride || heroImageBySection;
   const locationOverview = templatePage?.location?.overview;
   const locationHighlights = templatePage?.location?.highlights || [];
-  const customBlocks = override?.customBlocks || [];
-  const customBlocksNode =
-    customBlocks.length > 0 ? (
-      <Blocks blocks={customBlocks} pageTitle={page.title} />
-    ) : null;
-  const templateBlocks = resolveTemplateBlocks({
-    page: templatePage,
-    template: templatePage?.template || null,
-  });
-  const topBlockCount = resolveTopBlockCount({
-    page: templatePage,
-    template: templatePage?.template || null,
-  });
-  const isHybridTemplate = Boolean(templatePage?.template?.isHybrid);
-  const renderBlocks = templateBlocks.length > 0;
-  const splitCount = Math.max(
-    0,
-    Math.min(topBlockCount, templateBlocks.length),
-  );
-  const topBlocks = renderBlocks && isHybridTemplate ? templateBlocks.slice(0, splitCount) : [];
-  const bottomBlocks = renderBlocks
-    ? isHybridTemplate
-      ? templateBlocks.slice(splitCount)
-      : templateBlocks
-    : [];
-  const topBlocksNode =
-    topBlocks.length > 0 ? (
-      <Blocks blocks={topBlocks} pageTitle={templatePage?.title || page.title} />
-    ) : null;
-  const bottomBlocksNode =
-    bottomBlocks.length > 0 ? (
-      <Blocks blocks={bottomBlocks} pageTitle={templatePage?.title || page.title} />
-    ) : null;
 
   const utilityItems = [
     copy.serviceTypes?.length ? { id: "layanan", label: "Layanan" } : null,
@@ -674,9 +638,6 @@ export default async function RewritePageShell({
       </SectionShell>,
     );
   }
-  if (customBlocksNode) {
-    sectionMap.set("custom-blocks", customBlocksNode);
-  }
   sectionMap.set(
     "process-faq",
     <RewriteProcessFaq
@@ -719,7 +680,6 @@ export default async function RewritePageShell({
       template: templatePage?.template || null,
       copy,
     }),
-    ...(customBlocksNode ? ["custom-blocks"] : []),
     "micro-badges",
   ];
   const requestedOrder = templatePage?.template ? baseOrder : resolveSectionOrder(override, baseOrder);
@@ -740,7 +700,6 @@ export default async function RewritePageShell({
 
   return (
     <>
-      {topBlocksNode}
       <JsonLd data={breadcrumbJsonLd} />
       {serviceJsonLd ? <JsonLd data={serviceJsonLd} /> : null}
       {faqJsonLd ? <JsonLd data={faqJsonLd} /> : null}
@@ -757,7 +716,6 @@ export default async function RewritePageShell({
       {orderedIds.map((id) => (
         <Fragment key={id}>{sectionMap.get(id)}</Fragment>
       ))}
-      {bottomBlocksNode}
     </>
   );
 }

@@ -1,4 +1,3 @@
-import PageHybridShell from "@/components/hybrid/page-hybrid-shell";
 import RewritePageShell from "@/components/ui/rewrite/page-shell";
 import {
   getLegacySectionChildren,
@@ -16,11 +15,9 @@ export default function SoftwarePage() {
   if (!page) notFound();
 
   return (
-    <PageHybridShell slug="software">
-      <RewritePageShell
-        page={page}
-        siblings={getLegacySectionChildren("software")}
-      />
-    </PageHybridShell>
+    <RewritePageShell
+      page={page}
+      siblings={getLegacySectionChildren("software")}
+    />
   );
 }

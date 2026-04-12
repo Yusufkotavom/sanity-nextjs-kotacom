@@ -4,6 +4,30 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12 — Revert Hybrid Blocks from Reusable Template Pages
+
+### Changed Files
+- `frontend/app/(main)/pembuatan-website/page.tsx` (MODIFIED)
+- `frontend/app/(main)/percetakan/page.tsx` (MODIFIED)
+- `frontend/app/(main)/software/page.tsx` (MODIFIED)
+- `frontend/components/ui/rewrite/page-shell.tsx` (MODIFIED)
+- `docs/seo-updates.md` (MODIFIED)
+
+### Summary
+1. Removed Sanity hybrid blocks (`RenderBlocks`) integration from `RewritePageShell` and specific lane landing pages (`pembuatan-website`, `percetakan`, `software`).
+2. Removed `topBlocksNode`, `customBlocksNode`, and `bottomBlocksNode` and their injected rendering slots from the Shell.
+3. This resets the template-backed money pages strictly to their code-owned conversion spine (static structure dictated by lane), reverting prior attempts to inject `page.blocks[]` inline with the shell sections.
+
+### Impact on SEO/Integration
+- Integration impact:
+  - Base template pages no longer attempt to query and render ad-hoc Sanity blocks.
+  - Maintains strict enforcement of the lane-based template backbone, ensuring stable layout without hybrid noise.
+
+### Verification Status
+- ✅ Verified frontend builds correctly after block removal.
+
+
+
 ## 2026-04-12 — Reframe Template Guide and FAQ Closing Sections
 
 ### Changed Files
