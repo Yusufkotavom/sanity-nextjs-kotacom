@@ -1006,3 +1006,22 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ `pnpm install --lockfile-only` completed successfully with updated dependency graph.
 - ⚠️ Final confirmation requires fresh Netlify deploy + runtime smoke check (homepage/API response).
+
+## 2026-04-11 — Netlify Runtime Module Packaging Guard
+
+### Changed Files
+- `netlify.toml`
+
+### Summary of Changes
+1. Added explicit function bundling config:
+   - `node_bundler = "esbuild"`
+   - `external_node_modules = ["next", "react", "react-dom"]`
+2. Ensures Next runtime packages are included for Netlify function execution context.
+
+### Impact on SEO/Integration
+- Prevents runtime crashes caused by missing Next server module in deployed server function.
+- No direct SEO logic change.
+
+### Verification Status
+- ✅ Configuration patch applied.
+- ⚠️ Requires redeploy + runtime smoke validation on `https://kotacomweb.netlify.app/`.

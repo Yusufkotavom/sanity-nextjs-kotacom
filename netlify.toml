@@ -27,6 +27,10 @@
   UPSTASH_REDIS_REST_TOKEN = ""
   UPSTASH_REDIS_REST_URL = ""
 
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["next", "react", "react-dom"]
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
