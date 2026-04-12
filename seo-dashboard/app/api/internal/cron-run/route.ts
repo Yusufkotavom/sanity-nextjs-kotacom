@@ -7,6 +7,7 @@ import { updateJobRun, createJobRun } from "@/lib/jobs";
 import { auditHtml } from "@repo/seo";
 import { submitIndexNow, submitSitemap, fetchSearchAnalytics, inspectUrl } from "@repo/search";
 import { desc, inArray } from "drizzle-orm";
+import { createHash } from "node:crypto";
 
 function requireCronSecret(request: NextRequest) {
   const expected = process.env.CRON_SECRET || "";
@@ -174,7 +175,59 @@ async function resolveContentIdsByUrl(urls: string[]) {
   return idByUrl;
 }
 
-async function pullGa4Daily() {
+function buildSyntheticSlugFromUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+    const parts = parsed.pathname
+      .split("/")
+      .filter(Boolean)
+      .map((part) => part.replace(/[^a-zA-Z0-9-]/g, "-"));
+    const joined = parts.join("-").replace(/-+/g, "-").toLowerCase();
+    if (joined) return joined.slice(0, 180);
+  } catch {
+    // no-op, fallback below
+  }
+  const digest = createHash("sha1").update(url).digest("hex").slice(0, 24);
+  return `url-${digest}`;
+}
+
+function buildSyntheticSanityId(url: string) {
+  const digest = createHash("sha1").update(url).digest("hex");
+  return `external-url-${digest}`;
+}
+
+async function ensureContentItemsForUrls(urls: string[]) {
+  if (!urls.length) return new Map<string, string>();
+
+  const idByUrl = await resolveContentIdsByUrl(urls);
+  const missingUrls = urls.filter((url) => !idByUrl.has(url));
+
+  if (missingUrls.length) {
+    for (const url of missingUrls) {
+      const slug = buildSyntheticSlugFromUrl(url);
+      const sanityId = buildSyntheticSanityId(url);
+
+      await db()
+        .insert(schema.contentItems)
+        .values({
+          sanityId,
+          documentType: "external_url",
+          slug,
+          url,
+          title: slug.replace(/-/g, " "),
+          updatedAt: new Date(),
+          lastSeenInSitemapAt: new Date(),
+        })
+        .onConflictDoNothing({
+          target: schema.contentItems.sanityId,
+        });
+    }
+  }
+
+  return resolveContentIdsByUrl(urls);
+}
+
+async function pullGa4Daily(options?: { startDate?: string; endDate?: string }) {
   const propertyIdRaw = process.env.GA4_PROPERTY_ID || "";
   const propertyId = propertyIdRaw.replace(/^properties\//, "");
   const clientEmail = process.env.GA4_CLIENT_EMAIL || process.env.GSC_CLIENT_EMAIL || "";
@@ -203,8 +256,9 @@ async function pullGa4Daily() {
 
   const end = new Date();
   end.setUTCDate(end.getUTCDate() - 1);
-  const endDate = end.toISOString().slice(0, 10);
-  const startDate = endDate;
+  const defaultDate = end.toISOString().slice(0, 10);
+  const startDate = options?.startDate || defaultDate;
+  const endDate = options?.endDate || defaultDate;
 
   const limit = 25000;
   let offset = 0;
@@ -220,55 +274,62 @@ async function pullGa4Daily() {
     }
   >();
 
-  while (true) {
-    const response = await analyticsData.properties.runReport({
-      requestBody: {
+  try {
+    while (true) {
+      const response = await analyticsData.properties.runReport({
         property: `properties/${propertyId}`,
-        dateRanges: [{ startDate, endDate }],
-        dimensions: [{ name: "date" }, { name: "pagePath" }],
-        metrics: [
-          { name: "sessions" },
-          { name: "engagedSessions" },
-          { name: "conversions" },
-          { name: "totalRevenue" },
-        ],
-        limit: String(limit),
-        offset: String(offset),
-      },
-    });
+        requestBody: {
+          dateRanges: [{ startDate, endDate }],
+          dimensions: [{ name: "date" }, { name: "pagePath" }],
+          metrics: [
+            { name: "sessions" },
+            { name: "engagedSessions" },
+            { name: "conversions" },
+            { name: "totalRevenue" },
+          ],
+          limit: String(limit),
+          offset: String(offset),
+        },
+      });
 
-    const rows = response.data.rows || [];
-    for (const row of rows) {
-      const gaDate = row.dimensionValues?.[0]?.value || "";
-      const pagePath = row.dimensionValues?.[1]?.value || "";
-      const date = formatGa4Date(gaDate);
-      const pageUrl = toAbsoluteUrl(pagePath, siteUrl);
-      if (!date || !pageUrl) continue;
+      const rows = response.data.rows || [];
+      for (const row of rows) {
+        const gaDate = row.dimensionValues?.[0]?.value || "";
+        const pagePath = row.dimensionValues?.[1]?.value || "";
+        const date = formatGa4Date(gaDate);
+        const pageUrl = toAbsoluteUrl(pagePath, siteUrl);
+        if (!date || !pageUrl) continue;
 
-      const sessions = Number(row.metricValues?.[0]?.value || 0);
-      const engagedSessions = Number(row.metricValues?.[1]?.value || 0);
-      const conversions = Number(row.metricValues?.[2]?.value || 0);
-      const revenue = Number(row.metricValues?.[3]?.value || 0);
-      const key = `${date}:${pageUrl}`;
-      const current =
-        aggregated.get(key) || {
-          pageUrl,
-          date,
-          sessions: 0,
-          engagedSessions: 0,
-          conversions: 0,
-          revenue: 0,
-        };
+        const sessions = Number(row.metricValues?.[0]?.value || 0);
+        const engagedSessions = Number(row.metricValues?.[1]?.value || 0);
+        const conversions = Number(row.metricValues?.[2]?.value || 0);
+        const revenue = Number(row.metricValues?.[3]?.value || 0);
+        const key = `${date}:${pageUrl}`;
+        const current =
+          aggregated.get(key) || {
+            pageUrl,
+            date,
+            sessions: 0,
+            engagedSessions: 0,
+            conversions: 0,
+            revenue: 0,
+          };
 
-      current.sessions += Number.isFinite(sessions) ? sessions : 0;
-      current.engagedSessions += Number.isFinite(engagedSessions) ? engagedSessions : 0;
-      current.conversions += Number.isFinite(conversions) ? conversions : 0;
-      current.revenue += Number.isFinite(revenue) ? revenue : 0;
-      aggregated.set(key, current);
+        current.sessions += Number.isFinite(sessions) ? sessions : 0;
+        current.engagedSessions += Number.isFinite(engagedSessions) ? engagedSessions : 0;
+        current.conversions += Number.isFinite(conversions) ? conversions : 0;
+        current.revenue += Number.isFinite(revenue) ? revenue : 0;
+        aggregated.set(key, current);
+      }
+
+      if (rows.length < limit) break;
+      offset += limit;
     }
-
-    if (rows.length < limit) break;
-    offset += limit;
+  } catch (error) {
+    return {
+      ok: false as const,
+      message: error instanceof Error ? error.message : "GA4 runReport failed.",
+    };
   }
 
   const records = Array.from(aggregated.values());
@@ -313,7 +374,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: false, message: "Unauthorized" }, { status: 401 });
   }
 
-  const body = (await request.json().catch(() => ({}))) as { type?: string };
+  const body = (await request.json().catch(() => ({}))) as { type?: string; startDate?: string; endDate?: string };
   const type = body.type || "drain-queues";
 
   if (type === "run-scheduled") {
@@ -378,12 +439,12 @@ export async function POST(request: NextRequest) {
     const siteUrl = process.env.GSC_SITE_URL || "";
     if (clientEmail && privateKey && siteUrl) {
       const today = new Date();
-      const end = new Date(today);
-      end.setUTCDate(end.getUTCDate() - 1);
-      const start = new Date(end);
+      const endTimestamp = new Date(today);
+      endTimestamp.setUTCDate(endTimestamp.getUTCDate() - 1);
+      const defaultDateStr = endTimestamp.toISOString().slice(0, 10);
 
-      const startDate = start.toISOString().slice(0, 10);
-      const endDate = end.toISOString().slice(0, 10);
+      const startDate = body.startDate || defaultDateStr;
+      const endDate = body.endDate || defaultDateStr;
 
       const dimensions = ["page", "query", "country", "device"];
       const rowLimit = 25000;
@@ -410,12 +471,7 @@ export async function POST(request: NextRequest) {
 
       const urls = allRows.map((row) => row.keys?.[0]).filter((url): url is string => Boolean(url));
       if (urls.length) {
-        const contentItems = await db()
-          .select({ id: schema.contentItems.id, url: schema.contentItems.url })
-          .from(schema.contentItems)
-          .where(inArray(schema.contentItems.url, urls));
-
-        const idByUrl = new Map(contentItems.map((item) => [item.url, item.id]));
+        const idByUrl = await ensureContentItemsForUrls(urls);
         const aggregateByUrl = new Map<
           string,
           {
@@ -459,8 +515,7 @@ export async function POST(request: NextRequest) {
         }
 
         for (const [url, aggregate] of aggregateByUrl.entries()) {
-          const contentItemId = idByUrl.get(url);
-          if (!contentItemId) continue;
+          const contentItemId = idByUrl.get(url) || null;
 
           const ctr = aggregate.impressions > 0 ? aggregate.clicks / aggregate.impressions : null;
           const position =
@@ -512,7 +567,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (type === "pull-ga4") {
-    const result = await pullGa4Daily();
+    const result = await pullGa4Daily({ startDate: body.startDate, endDate: body.endDate });
     return NextResponse.json(
       {
         type,

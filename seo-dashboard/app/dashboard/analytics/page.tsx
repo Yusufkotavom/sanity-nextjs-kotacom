@@ -85,9 +85,48 @@ export default async function AnalyticsPage({
       ? await query.where(and(...conditions))
       : await query;
 
-    const contentIds = rows
+    let contentIds = rows
       .map((row) => row.contentItemId)
       .filter((id): id is string => Boolean(id));
+
+    // Fallback: when GSC table is empty, surface GA4 daily rows so Analytics page is still usable.
+    if (rows.length === 0) {
+      const ga4BaseQuery = db()
+        .select()
+        .from(schema.analyticsGa4Daily)
+        .orderBy(desc(schema.analyticsGa4Daily.date))
+        .limit(100);
+
+      const ga4Conditions = [];
+      if (params.from) {
+        ga4Conditions.push(gte(schema.analyticsGa4Daily.date, params.from));
+      }
+      if (params.to) {
+        ga4Conditions.push(lte(schema.analyticsGa4Daily.date, params.to));
+      }
+
+      const ga4OnlyRows = ga4Conditions.length > 0
+        ? await ga4BaseQuery.where(and(...ga4Conditions))
+        : await ga4BaseQuery;
+
+      rows = ga4OnlyRows.map((item) => ({
+        id: item.id,
+        contentItemId: item.contentItemId,
+        date: item.date,
+        clicks: 0,
+        impressions: 0,
+        ctr: null,
+        position: null,
+        topQueries: null,
+        topCountries: null,
+        topDevices: null,
+        ga4: item,
+      }));
+
+      contentIds = rows
+        .map((row) => row.contentItemId)
+        .filter((id): id is string => Boolean(id));
+    }
 
     const contentItems = contentIds.length
       ? await db()
@@ -98,19 +137,22 @@ export default async function AnalyticsPage({
 
     urlById = new Map(contentItems.map((item) => [item.id, item.url]));
 
-    const ga4Rows = contentIds.length
-      ? await db()
-          .select()
-          .from(schema.analyticsGa4Daily)
-          .where(inArray(schema.analyticsGa4Daily.contentItemId, contentIds))
-      : [];
-    const ga4ByContentDate = new Map(
-      ga4Rows.map((item) => [`${item.contentItemId || ""}:${item.date}`, item]),
-    );
-    rows = rows.map((row) => ({
-      ...row,
-      ga4: ga4ByContentDate.get(`${row.contentItemId || ""}:${row.date}`) || null,
-    }));
+    const hasInlineGa4Fallback = rows.some((row) => row.ga4);
+    if (!hasInlineGa4Fallback) {
+      const ga4Rows = contentIds.length
+        ? await db()
+            .select()
+            .from(schema.analyticsGa4Daily)
+            .where(inArray(schema.analyticsGa4Daily.contentItemId, contentIds))
+        : [];
+      const ga4ByContentDate = new Map(
+        ga4Rows.map((item) => [`${item.contentItemId || ""}:${item.date}`, item]),
+      );
+      rows = rows.map((row) => ({
+        ...row,
+        ga4: ga4ByContentDate.get(`${row.contentItemId || ""}:${row.date}`) || null,
+      }));
+    }
 
     // Calculate summary metrics
     totalClicks = rows.reduce((sum, row) => sum + (row.clicks || 0), 0);

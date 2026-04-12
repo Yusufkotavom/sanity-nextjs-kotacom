@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +12,7 @@ import { toast } from "sonner";
 import { Send, Plus, X } from "lucide-react";
 
 export function ManualIndexForm() {
+  const router = useRouter();
   const [urls, setUrls] = useState<string[]>([""]);
   const [provider, setProvider] = useState<string>("google");
   const [loading, setLoading] = useState(false);
@@ -63,9 +65,10 @@ export function ManualIndexForm() {
       });
 
       if (response.ok) {
-        const data = await response.json();
+        await response.json();
         toast.success(`${validUrls.length} URL(s) submitted to ${provider}`);
         setUrls([""]);
+        router.refresh();
       } else {
         const data = await response.json().catch(() => ({}));
         toast.error(data?.message || "Failed to submit URLs");

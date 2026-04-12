@@ -1728,3 +1728,162 @@ Automatically added SEO blocks to all money pages:
 
 ### Verification Status
 - ✅ `pnpm --filter frontend run build`
+
+## 2026-04-12 — SEO Dashboard Search Ops Expansion (Sitemap Inspect + Retry + Filters)
+
+### Changed Files
+- `seo-dashboard/lib/seo-ops/inspection.ts`
+- `seo-dashboard/app/api/search/inspect/route.ts`
+- `seo-dashboard/app/api/search/retry-inspection/route.ts`
+- `seo-dashboard/app/api/search/retry-submission/route.ts`
+- `seo-dashboard/components/inspect-url-form.tsx`
+- `seo-dashboard/components/manual-index-form.tsx`
+- `seo-dashboard/components/search-filters.tsx`
+- `seo-dashboard/components/inspect-filters.tsx`
+- `seo-dashboard/components/retry-inspection-button.tsx`
+- `seo-dashboard/components/retry-submission-button.tsx`
+- `seo-dashboard/app/dashboard/search/page.tsx`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Added shared inspection service layer to support URL inspection persistence and sitemap URL extraction (including sitemap index traversal).
+2. Upgraded `/api/search/inspect` to accept either `urls[]` or `sitemap_url` plus `max_urls`.
+3. Added new retry endpoints:
+   - `POST /api/search/retry-inspection`
+   - `POST /api/search/retry-submission`
+4. Expanded dashboard Search UI:
+   - `Inspect URL` form now supports sitemap mode with configurable max URL batch size.
+   - Search Submissions table now includes URL column and retry action per row.
+   - Index Inspections table now includes URL, indexing/fetch/robots/canonical detail columns and retry action per row.
+   - Added dedicated filters for both tables (provider/type/status + URL contains for submissions; verdict/state + URL contains for inspections).
+5. Manual Index Submission form now refreshes page state after successful submission.
+
+### Impact on SEO/Integration
+- Enables direct inspection runs from sitemap sources and stores per-URL results for operator review.
+- Reduces ops friction by allowing instant retry and filtering without manual API calls.
+- Improves observability for indexing workflows via richer table detail and URL-level context.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard exec tsc --noEmit`
+
+## 2026-04-12 — Analytics Manual Trigger 500 Fix (GA4)
+
+### Changed Files
+- `seo-dashboard/app/api/internal/cron-run/route.ts`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Fixed GA4 Data API request shape in `pull-ga4` (`property` moved to top-level request parameter for `runReport`).
+2. Added defensive error handling around GA4 report fetch loop so failures return structured `ok: false` responses instead of crashing the route with HTTP 500.
+
+### Impact on SEO/Integration
+- Prevents manual trigger failures from surfacing as generic server errors.
+- Improves operator visibility of real GA4 configuration issues (API disabled, permission issues, invalid property config).
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard exec tsc --noEmit`
+- ✅ Manual env test: GSC Search Console query succeeds; GA4 now returns explicit `403 SERVICE_DISABLED` diagnostic instead of parameter error.
+
+## 2026-04-12 — GA4 Env Correction (Property ID)
+
+### Changed Files
+- `seo-dashboard/.env.local`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Updated local dashboard env `GA4_PROPERTY_ID` from Data Stream ID to the actual GA4 Property ID (`253436573`) based on property settings.
+2. Re-ran manual GA4 API validation against the updated property target.
+
+### Impact on SEO/Integration
+- Fixes mis-targeted GA4 API calls caused by Stream-vs-Property ID mismatch.
+- Current blocker is now narrowed to GA4 property-level IAM access (`PERMISSION_DENIED`) for the service account, not env format.
+
+### Verification Status
+- ✅ Manual API probe now targets `properties/253436573`.
+- ⚠️ API response still `403 PERMISSION_DENIED` until service-account access is granted on the GA4 property.
+
+## 2026-04-12 — Analytics Page Fallback To GA4 Rows
+
+### Changed Files
+- `seo-dashboard/app/dashboard/analytics/page.tsx`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Added fallback query logic in Analytics page: when `analytics_daily` (GSC) has no rows, page now loads data from `analytics_ga4_daily`.
+2. Mapped GA4-only rows into Analytics table shape with zeroed GSC metrics (`clicks/impressions/ctr/position`) while preserving GA4 sessions/conversions/revenue visibility.
+3. Preserved existing join flow when GSC rows are present.
+
+### Impact on SEO/Integration
+- Prevents blank Analytics dashboard during GSC ingestion gaps or first-run onboarding.
+- Keeps operational visibility for GA4 performance even before Search Console aggregation is available.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard exec tsc --noEmit`
+- ⚠️ Runtime verification (dev/prod UI clickflow) pending manual check in deployed dashboard.
+
+## 2026-04-12 — Review Rich Snippet Validation Hardening
+
+### Changed Files
+- `frontend/lib/seo-jsonld.ts`
+- `frontend/app/layout.tsx`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Hardened JSON-LD entity naming in `buildProductJsonLd` with path-derived fallback names, preventing empty/missing `name` on product-like nodes.
+2. Disabled `aggregateRating` and `review` output in `buildServiceJsonLd` to avoid unsupported/invalid review-rich-result typing for `Service`.
+3. Hardened affiliate review schema output with guaranteed item `name` plus explicit `author` and `itemReviewed` context.
+4. Removed sitewide `aggregateRating` from root `LocalBusiness` JSON-LD in `app/layout.tsx` to reduce global review-snippet validation conflicts.
+
+### Impact on SEO/Integration
+- Reduces Google Search Console Review Snippet errors for:
+  - `Jenis objek untuk kolom "<parent_node>" tidak valid`
+  - `Kolom "name" tidak ada (dalam "<parent_node>")`
+- Keeps structured data aligned with safer rich-result eligibility patterns by limiting review snippets to more compatible entity types.
+
+### Verification Status
+- ✅ `pnpm --filter frontend exec tsc --noEmit`
+
+## 2026-04-12 — Analytics Dashboard Empty-State Ingestion Fix
+
+### Changed Files
+- `seo-dashboard/app/api/internal/cron-run/route.ts`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Added URL-to-content guardrail in `pull-analytics`: when GSC page URLs are not found in `content_items`, the worker now auto-creates deterministic placeholder `content_items` records.
+2. Added deterministic synthetic identifiers for unmatched URLs using SHA-1-based `sanityId` and normalized fallback slug generation.
+3. Updated analytics write flow so rows are no longer silently skipped due to URL mapping mismatch.
+
+### Impact on SEO/Integration
+- Prevents analytics data loss when GSC URL format differs from existing `content_items` URL canonicalization.
+- Restores dashboard visibility for GSC analytics rows without requiring manual pre-seeding of every URL.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard exec tsc --noEmit`
+- ⚠️ Production Rich Results/GSC recrawl validation pending after Google reprocesses updated pages.
+
+## 2026-04-12 — Revert Review Snippet Hardening (Service + LocalBusiness)
+
+### Changed Files
+- `frontend/lib/seo-jsonld.ts`
+- `frontend/app/layout.tsx`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Reverted `Service` JSON-LD behavior to include `aggregateRating` and `review` as before.
+2. Reverted root `LocalBusiness` JSON-LD behavior to include global `aggregateRating` as before.
+3. Reverted related fallback hardening in affiliate/product review schema so runtime output matches the previous production contract.
+
+### Impact on SEO/Integration
+- Restores prior structured-data output exactly as requested by operator.
+- No additional schema restriction is applied in frontend runtime for `Service` and `LocalBusiness`.
+
+### Verification Status
+- ✅ `pnpm --filter frontend exec tsc --noEmit`

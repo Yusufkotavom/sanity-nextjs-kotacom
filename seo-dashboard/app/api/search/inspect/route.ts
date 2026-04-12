@@ -1,19 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
-import { inspectUrl } from "@repo/search";
-import { db } from "@/lib/db";
-import { schema } from "@repo/db";
-import { inArray } from "drizzle-orm";
+import {
+  extractUrlsFromSitemap,
+  inspectAndPersistUrls,
+} from "@/lib/seo-ops/inspection";
 
 export async function POST(request: NextRequest) {
   const auth = await ensureSeoApiAccess(request);
   if (!auth.ok) return auth.response;
 
-  const body = (await request.json().catch(() => ({}))) as { urls?: string[] };
+  const body = (await request.json().catch(() => ({}))) as {
+    urls?: string[];
+    sitemap_url?: string;
+    max_urls?: number;
+  };
   const urls = Array.isArray(body.urls) ? body.urls : [];
+  const sitemapUrl = (body.sitemap_url || "").trim();
+  const maxUrls = Math.max(
+    1,
+    Math.min(Number(body.max_urls || 100), 500),
+  );
 
-  if (urls.length === 0) {
-    return NextResponse.json({ ok: false, message: "urls[] is required" }, { status: 400 });
+  if (urls.length === 0 && !sitemapUrl) {
+    return NextResponse.json(
+      { ok: false, message: "urls[] or sitemap_url is required" },
+      { status: 400 },
+    );
   }
 
   const clientEmail = process.env.GSC_CLIENT_EMAIL || "";
@@ -27,36 +39,39 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const contentItems = await db()
-    .select({ id: schema.contentItems.id, url: schema.contentItems.url })
-    .from(schema.contentItems)
-    .where(inArray(schema.contentItems.url, urls));
-  const idByUrl = new Map(contentItems.map((item) => [item.url, item.id]));
-
-  const results = [];
-  for (const url of urls) {
-    const data = await inspectUrl({ clientEmail, privateKey, siteUrl, url });
-    const inspectionResult = data.inspectionResult;
-
-    await db().insert(schema.indexStatusChecks).values({
-      contentItemId: idByUrl.get(url) || null,
-      provider: "google",
-      verdict: inspectionResult?.indexStatusResult?.verdict || null,
-      coverageState: inspectionResult?.indexStatusResult?.coverageState || null,
-      indexingState: inspectionResult?.indexStatusResult?.indexingState || null,
-      pageFetchState: inspectionResult?.indexStatusResult?.pageFetchState || null,
-      robotsState: inspectionResult?.indexStatusResult?.robotsTxtState || null,
-      lastCrawlTime: inspectionResult?.indexStatusResult?.lastCrawlTime
-        ? new Date(inspectionResult.indexStatusResult.lastCrawlTime)
-        : null,
-      googleCanonical: inspectionResult?.indexStatusResult?.googleCanonical || null,
-      userCanonical: inspectionResult?.indexStatusResult?.userCanonical || null,
-      rawResponse: data as unknown as Record<string, unknown>,
-      checkedAt: new Date(),
-    });
-
-    results.push({ url, verdict: inspectionResult?.indexStatusResult?.verdict || null });
+  let targetUrls = urls;
+  if (sitemapUrl) {
+    try {
+      targetUrls = await extractUrlsFromSitemap(sitemapUrl, maxUrls);
+    } catch (error) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message: error instanceof Error ? error.message : "Failed to read sitemap",
+        },
+        { status: 400 },
+      );
+    }
+  }
+  if (targetUrls.length === 0) {
+    return NextResponse.json(
+      { ok: false, message: "No URLs found to inspect" },
+      { status: 400 },
+    );
   }
 
-  return NextResponse.json({ ok: true, results });
+  const results = await inspectAndPersistUrls({
+    urls: targetUrls,
+    clientEmail,
+    privateKey,
+    siteUrl,
+  });
+
+  const failed = results.filter((item) => !item.ok).length;
+  return NextResponse.json({
+    ok: failed === 0,
+    inspected: results.length,
+    failed,
+    results,
+  });
 }

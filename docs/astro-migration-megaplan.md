@@ -37,6 +37,13 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] SEO dashboard Search Submissions table now exposes the stored response/error message, so failed indexing requests can be diagnosed directly from the UI without checking the database manually.
 - [x] SEO dashboard indexing settings now accept the repo's existing legacy env contract as fallback: Google can derive service-account JSON from `GSC_CLIENT_EMAIL` + `GSC_PRIVATE_KEY`, and IndexNow can derive from `INDEXNOW_*` plus `NEXT_PUBLIC_SITE_URL` when `SEO_*` keys are absent.
 - [x] SEO dashboard Search page now includes a direct `Inspect URL` action that calls the Google URL Inspection API and persists the result into `index_status_checks`, so operators can populate the Index Inspections panel without curl or worker triggers.
+- [x] SEO dashboard Search has now been upgraded into a full ops console: `Inspect URL` supports sitemap ingestion, both submissions and inspections tables include URL-focused detail columns, table-level filters, and row-level retry actions (`retry submission` / `retry inspection`) for faster recheck loops.
+- [x] Review rich-result schema cleanup shipped: `Service` and global `LocalBusiness` JSON-LD no longer emit `aggregateRating/review` snippets that were triggering GSC "invalid object type", while product/affiliate schema now enforce safer `name` fallback to reduce "name missing" validation errors.
+- [x] Rich-snippet rollback applied per operator request: `Service` and global `LocalBusiness` review/aggregateRating output restored to previous behavior while preserving build/type stability.
+- [x] SEO dashboard analytics ingestion is now resilient to URL-contract drift: `pull-analytics` auto-creates placeholder `content_items` for unmatched GSC URLs instead of silently dropping rows, preventing empty analytics panels when URL normalization differs.
+- [x] SEO dashboard manual GA4 trigger no longer crashes with HTTP 500 when `runReport` fails: GA4 request parameters were corrected and errors are now returned as controlled API responses (`ok: false`) for faster ops diagnosis.
+- [x] Dashboard GA4 env contract corrected for property scope: local ops env now points `GA4_PROPERTY_ID` to the actual GA4 Property ID (not Data Stream ID), and verification now reaches permission check against the intended property.
+- [x] Analytics dashboard no longer hard-depends on GSC rows for rendering: `/dashboard/analytics` now falls back to `analytics_ga4_daily` when `analytics_daily` is empty, so GA4 session/conversion visibility remains available during early GSC sync gaps.
 - [x] Template rewrite architecture upgraded to lane-aware conversion shells: `pageTemplate` now carries explicit `lane`, `trustMode`, and source-of-truth policy; structured copy supports rule-based content variants; and rewrite pages render one clear variant-driven narrative instead of stacking duplicate hero/pricing/proof layers.
 - [x] All 4 live `pageTemplate` documents have now been patched to the new conversion model in Sanity, including lane-specific pricing/proof/testimonial content, capped quick CTAs, and city-aware support-copy variants for location routes.
 - [x] Obsolete one-off template patch scripts have been removed from `frontend/scripts`, leaving a single maintained upgrade path for live template conversion content and reducing accidental rollback risk.
@@ -341,6 +348,8 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 ### C2. Structured Data
 - [x] CollectionPage + BreadcrumbList JSON-LD added to all 5 listing/archive routes (`/blog`, `/blog/category/[slug]`, `/products`, `/projects`, `/services`).
 - [x] `buildCollectionPageJsonLd` reusable builder added to `frontend/lib/seo-jsonld.ts`.
+- [x] Review snippet stabilization pass (2026-04-12): removed review snippets from `Service` and root `LocalBusiness` schema surfaces, and hardened product/affiliate schema with reliable `name` fallback for GSC validation compatibility.
+- [x] Review snippet rollback pass (2026-04-12): reverted prior stabilization changes for `Service` and root `LocalBusiness` to match requested production behavior.
 - [ ] Align JSON-LD by template (Article, BreadcrumbList, ItemList, Organization, WebSite) — remaining: paginated/category archives.
 - [ ] Ensure fallback global SEO data always available.
 - [ ] Validate no schema duplication/conflict.

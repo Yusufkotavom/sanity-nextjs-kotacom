@@ -1,9 +1,11 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 export function SearchFilters() {
   const router = useRouter();
@@ -12,6 +14,7 @@ export function SearchFilters() {
   const provider = searchParams.get("provider") || "all";
   const type = searchParams.get("type") || "all";
   const status = searchParams.get("status") || "all";
+  const [urlQuery, setUrlQuery] = useState(searchParams.get("sub_q") || "");
 
   function updateFilter(key: string, value: string) {
     const params = new URLSearchParams(searchParams.toString());
@@ -27,7 +30,18 @@ export function SearchFilters() {
     router.push("/dashboard/search");
   }
 
-  const hasFilters = provider !== "all" || type !== "all" || status !== "all";
+  function applyUrlFilter() {
+    const params = new URLSearchParams(searchParams.toString());
+    if (!urlQuery.trim()) params.delete("sub_q");
+    else params.set("sub_q", urlQuery.trim());
+    router.push(`/dashboard/search?${params.toString()}`);
+  }
+
+  const hasFilters =
+    provider !== "all" ||
+    type !== "all" ||
+    status !== "all" ||
+    Boolean(searchParams.get("sub_q"));
 
   return (
     <div className="flex flex-wrap gap-3 items-end">
@@ -75,6 +89,20 @@ export function SearchFilters() {
             <SelectItem value="pending">Pending</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+
+      <div className="min-w-[240px]">
+        <label className="text-sm font-medium mb-1.5 block">URL contains</label>
+        <div className="flex gap-2">
+          <Input
+            value={urlQuery}
+            onChange={(e) => setUrlQuery(e.target.value)}
+            placeholder="kotacom.id/page"
+          />
+          <Button variant="outline" size="sm" onClick={applyUrlFilter}>
+            Apply
+          </Button>
+        </div>
       </div>
 
       {hasFilters && (
