@@ -71,6 +71,49 @@ const STATIC_REDIRECTS = [
     destination: "/blog",
     permanent: true,
   },
+  // --- Structural redirects: old URL patterns -> new canonical routes ---
+  // /jasa-pembuatan-website-{kota} -> /pembuatan-website/{kota}
+  {
+    source: "/jasa-pembuatan-website-:city",
+    destination: "/pembuatan-website/:city",
+    permanent: true,
+  },
+  // /pembuatan-website-{kota} -> /pembuatan-website/{kota}
+  {
+    source: "/pembuatan-website-:city",
+    destination: "/pembuatan-website/:city",
+    permanent: true,
+  },
+  // /website-{kota} -> /pembuatan-website/{kota}
+  {
+    source: "/website-:city",
+    destination: "/pembuatan-website/:city",
+    permanent: true,
+  },
+  // /jasa-cetak-kalender-{kota} -> /percetakan/cetak-kalender/{kota}
+  {
+    source: "/jasa-cetak-kalender-:city",
+    destination: "/percetakan/cetak-kalender/:city",
+    permanent: true,
+  },
+  // /jasa-cetak-buku-{kota} -> /percetakan/cetak-buku
+  {
+    source: "/jasa-cetak-buku-:city",
+    destination: "/percetakan/cetak-buku",
+    permanent: true,
+  },
+  // /cetak-kalender-{kota} -> /percetakan/cetak-kalender/{kota}
+  {
+    source: "/cetak-kalender-:city",
+    destination: "/percetakan/cetak-kalender/:city",
+    permanent: true,
+  },
+  // /software-{kota} -> /software
+  {
+    source: "/software-:city",
+    destination: "/software",
+    permanent: true,
+  },
 ];
 
 const REDIRECTS_QUERY = `*[
