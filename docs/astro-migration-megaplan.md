@@ -49,6 +49,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] Added Netlify function bundling guard (`external_node_modules` for `next/react/react-dom`) to ensure Next runtime packages are present in deployed server function bundle.
 - [x] Netlify Next.js adapter is now explicitly pinned in workspace dependencies (`@netlify/plugin-nextjs@5.13.3`) to avoid runtime drift with platform default plugin versions.
 - [x] Netlify config now uses auto-detected Next.js runtime path by removing explicit `[[plugins]]` adapter block from `netlify.toml` for compatibility testing.
+- [x] Netlify function packaging now includes explicit fallback includes for `___netlify-server-handler` (`next/react/react-dom`) to reduce runtime module resolution failures.
 - [x] Migration closeout doc cleanup completed: obsolete migration-only docs removed from `docs/` to keep active documentation focused on operational workflows.
 - [x] Post-migration documentation prune wave 2 completed: stale SEO dashboard phase summaries removed and dead doc references in legacy README/script paths replaced with active/archive links.
 - [x] Removed the 8-item validation cap from navigation submenus in the Sanity schema (`link.ts`), permitting expanded menu structures.

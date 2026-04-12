@@ -1061,3 +1061,21 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ Config updated.
 - ⚠️ Requires redeploy smoke test on production URL.
+
+## 2026-04-12 — Netlify Server Handler Include Guard
+
+### Changed Files
+- `netlify.toml`
+
+### Summary of Changes
+1. Added function-specific include guard for `___netlify-server-handler`:
+   - includes `next`, `react`, `react-dom` from both root and `frontend/node_modules`.
+2. Intended to prevent runtime `MODULE_NOT_FOUND` for Next internal server modules in deployed Lambda bundle.
+
+### Impact on SEO/Integration
+- Runtime packaging stability only.
+- No direct SEO behavior change.
+
+### Verification Status
+- ✅ Config patch applied.
+- ⚠️ Requires fresh redeploy and runtime smoke check.
