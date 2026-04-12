@@ -1630,6 +1630,86 @@ Automatically added SEO blocks to all money pages:
 ### Verification Status
 - ✅ `pnpm --filter frontend run build`
 
+## 2026-04-12 — SEO Dashboard Manual Submission Persistence Fix
+
+### Changed Files
+- `seo-dashboard/app/api/search/manual-submit/route.ts`
+- `seo-dashboard/app/dashboard/search/page.tsx`
+- `seo-dashboard/components/search-filters.tsx`
+- `seo-dashboard/lib/seo-ops/jobs.ts`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Changed manual Indexing API submission flow so the dashboard waits for the indexing job to execute and log into `search_submissions` before the API response returns.
+2. Fixed Search Submissions filters to use actual stored values from the database instead of mismatched UI-only labels.
+3. Updated provider/type labels on the Search page so Google, IndexNow, sitemap, and manual indexing rows are readable and filterable.
+
+### Impact on SEO/Integration
+- Restores visibility of manual search submissions in the SEO dashboard after Indexing API requests complete.
+- Aligns dashboard UI filters with the actual DB contract used by indexing and sitemap submission logging.
+
+### Verification Status
+- ⚠️ Build/test skipped on request because the app is currently being run in dev mode.
+
+## 2026-04-12 — SEO Dashboard Failed Submission Error Visibility
+
+### Changed Files
+- `seo-dashboard/app/dashboard/search/page.tsx`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Added an `Error Message` column to the Search Submissions table.
+2. Surfaced the stored `responsePayload.message` from each submission row directly in the dashboard UI.
+3. Kept the full message available via the cell `title` attribute for longer failure details.
+
+### Impact on SEO/Integration
+- Makes failed Google/IndexNow submission reasons visible to operators without direct DB access.
+- Speeds up diagnosis of credential, quota, permission, and request-shape problems in indexing workflows.
+
+### Verification Status
+- ⚠️ Build/test skipped on request because the app is currently being run in dev mode.
+
+## 2026-04-12 — SEO Dashboard Legacy Env Compatibility For Indexing
+
+### Changed Files
+- `seo-dashboard/lib/seo-ops/settings-source.ts`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Added Google indexing fallback so service-account JSON can be constructed from existing `GSC_CLIENT_EMAIL` and `GSC_PRIVATE_KEY` env vars.
+2. Added IndexNow fallback so existing `INDEXNOW_KEY`, `INDEXNOW_ENDPOINT`, and `INDEXNOW_KEY_LOCATION` env vars are accepted when `SEO_INDEXNOW_*` keys are absent.
+3. Derived IndexNow host from `NEXT_PUBLIC_SITE_URL` when no explicit `SEO_INDEXNOW_HOST` is set, and auto-enabled Google/IndexNow when valid legacy credentials are present.
+
+### Impact on SEO/Integration
+- Aligns the SEO dashboard indexing runtime with the env contract already present in `.env.local`.
+- Reduces false `disabled or missing` failures for manual Google and IndexNow submissions in dev and existing deployments.
+
+### Verification Status
+- ⚠️ Build/test skipped on request because the app is currently being run in dev mode.
+
+## 2026-04-12 — SEO Dashboard Direct URL Inspection UI
+
+### Changed Files
+- `seo-dashboard/components/inspect-url-form.tsx`
+- `seo-dashboard/app/dashboard/search/page.tsx`
+- `docs/astro-migration-megaplan.md`
+- `docs/seo-updates.md`
+
+### Summary of Changes
+1. Added a new `Inspect URL` form to the dashboard Search page.
+2. Wired the form to `POST /api/search/inspect` so Google URL Inspection can be run directly from the UI.
+3. Refreshes the page after a successful inspection so the `Index Inspections` panel can show the newly saved record immediately.
+
+### Impact on SEO/Integration
+- Gives operators a direct UI path to populate and verify `index_status_checks`.
+- Removes dependence on curl/manual API calls for one-off index inspections during ops debugging.
+
+### Verification Status
+- ⚠️ Build/test skipped on request because the app is currently being run in dev mode.
+
 ## 2026-04-12 — Hybrid Sanity Rendering For Services Index
 
 ### Changed Files

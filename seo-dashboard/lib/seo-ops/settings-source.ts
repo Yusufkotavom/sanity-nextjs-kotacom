@@ -26,6 +26,27 @@ function pickString(studioValue: StringLike, envValue: string) {
   return studio || envValue;
 }
 
+function buildGoogleServiceAccountJsonFromLegacyEnv() {
+  const clientEmail = (process.env.GSC_CLIENT_EMAIL || "").trim();
+  const privateKey = (process.env.GSC_PRIVATE_KEY || "").trim();
+
+  if (!clientEmail || !privateKey) return "";
+
+  return JSON.stringify({
+    type: "service_account",
+    client_email: clientEmail,
+    private_key: privateKey.replace(/\\n/g, "\n"),
+  });
+}
+
+function deriveHostFromSiteUrl(siteUrl: string) {
+  try {
+    return new URL(siteUrl).host;
+  } catch {
+    return "";
+  }
+}
+
 export async function getSeoOpsResolvedSettings() {
   let studio: Awaited<
     ReturnType<
@@ -43,22 +64,41 @@ export async function getSeoOpsResolvedSettings() {
 
   const studioGoogleJson = decryptSeoSecret(studio?.googleServiceAccountEncrypted);
   const studioIndexNowKey = decryptSeoSecret(studio?.indexNowKeyEncrypted);
+  const legacyGoogleJson = buildGoogleServiceAccountJsonFromLegacyEnv();
+  const fallbackIndexNowKey = process.env.SEO_INDEXNOW_KEY || process.env.INDEXNOW_KEY || "";
+  const fallbackIndexNowHost =
+    process.env.SEO_INDEXNOW_HOST ||
+    deriveHostFromSiteUrl(process.env.NEXT_PUBLIC_SITE_URL || "");
+  const fallbackIndexNowEndpoint =
+    process.env.SEO_INDEXNOW_ENDPOINT ||
+    process.env.INDEXNOW_ENDPOINT ||
+    "https://api.indexnow.org/indexnow";
+  const fallbackIndexNowKeyLocation =
+    process.env.SEO_INDEXNOW_KEY_LOCATION ||
+    process.env.INDEXNOW_KEY_LOCATION ||
+    "";
 
-  const googleEnabled = pickBoolean(studio?.googleEnabled, envTrue(process.env.SEO_GOOGLE_INDEXING_ENABLED));
+  const googleEnabled = pickBoolean(
+    studio?.googleEnabled,
+    envTrue(process.env.SEO_GOOGLE_INDEXING_ENABLED) || Boolean(legacyGoogleJson),
+  );
   const googleAggressiveMode = pickBoolean(
     studio?.googleAggressiveMode,
     envTrue(process.env.SEO_GOOGLE_INDEXING_AGGRESSIVE_MODE),
   );
 
-  const indexNowEnabled = pickBoolean(studio?.indexNowEnabled, envTrue(process.env.SEO_INDEXNOW_ENABLED));
-  const indexNowHost = pickString(studio?.indexNowHost, process.env.SEO_INDEXNOW_HOST || "");
+  const indexNowEnabled = pickBoolean(
+    studio?.indexNowEnabled,
+    envTrue(process.env.SEO_INDEXNOW_ENABLED) || Boolean(fallbackIndexNowKey && fallbackIndexNowHost),
+  );
+  const indexNowHost = pickString(studio?.indexNowHost, fallbackIndexNowHost);
   const indexNowEndpoint = pickString(
     studio?.indexNowEndpoint,
-    process.env.SEO_INDEXNOW_ENDPOINT || "https://api.indexnow.org/indexnow",
+    fallbackIndexNowEndpoint,
   );
   const indexNowKeyLocation = pickString(
     studio?.indexNowKeyLocation,
-    process.env.SEO_INDEXNOW_KEY_LOCATION || "",
+    fallbackIndexNowKeyLocation,
   );
 
   const autoSubmitOnRevalidate = pickBoolean(
@@ -75,9 +115,11 @@ export async function getSeoOpsResolvedSettings() {
     (studio?.dashboardPasswordHash || "").trim() || (process.env.SEO_DASHBOARD_PASSWORD_SHA256 || "").trim();
 
   const googleServiceAccountJson =
-    studioGoogleJson.trim() || process.env.SEO_GOOGLE_SERVICE_ACCOUNT_JSON || "";
+    studioGoogleJson.trim() ||
+    process.env.SEO_GOOGLE_SERVICE_ACCOUNT_JSON ||
+    legacyGoogleJson;
 
-  const indexNowKey = studioIndexNowKey.trim() || process.env.SEO_INDEXNOW_KEY || "";
+  const indexNowKey = studioIndexNowKey.trim() || fallbackIndexNowKey;
 
   return {
     studio,
@@ -92,7 +134,15 @@ export async function getSeoOpsResolvedSettings() {
       aggressive: googleAggressiveMode,
       serviceAccountJson: googleServiceAccountJson,
       hasCredentials: Boolean(process.env.GOOGLE_APPLICATION_CREDENTIALS || googleServiceAccountJson),
-      credentialsSource: studioGoogleJson ? "studio" : process.env.SEO_GOOGLE_SERVICE_ACCOUNT_JSON ? "env" : process.env.GOOGLE_APPLICATION_CREDENTIALS ? "env-file" : "none",
+      credentialsSource: studioGoogleJson
+        ? "studio"
+        : process.env.SEO_GOOGLE_SERVICE_ACCOUNT_JSON
+          ? "env"
+          : legacyGoogleJson
+            ? "gsc-env"
+            : process.env.GOOGLE_APPLICATION_CREDENTIALS
+              ? "env-file"
+              : "none",
     },
     indexNow: {
       enabled: indexNowEnabled,
@@ -100,7 +150,13 @@ export async function getSeoOpsResolvedSettings() {
       endpoint: indexNowEndpoint,
       key: indexNowKey,
       hasKey: Boolean(indexNowHost && indexNowKey),
-      keySource: studioIndexNowKey ? "studio" : process.env.SEO_INDEXNOW_KEY ? "env" : "none",
+      keySource: studioIndexNowKey
+        ? "studio"
+        : process.env.SEO_INDEXNOW_KEY
+          ? "env"
+          : process.env.INDEXNOW_KEY
+            ? "legacy-env"
+            : "none",
       keyLocation:
         indexNowKeyLocation || (indexNowHost && indexNowKey ? `https://${indexNowHost}/${indexNowKey}.txt` : ""),
     },

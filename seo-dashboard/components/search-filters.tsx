@@ -41,7 +41,8 @@ export function SearchFilters() {
             <SelectItem value="all">All Providers</SelectItem>
             <SelectItem value="google">Google</SelectItem>
             <SelectItem value="bing">Bing</SelectItem>
-            <SelectItem value="yandex">Yandex</SelectItem>
+            <SelectItem value="indexnow">IndexNow</SelectItem>
+            <SelectItem value="google_sitemap">Google Sitemap</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -54,9 +55,9 @@ export function SearchFilters() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Types</SelectItem>
-            <SelectItem value="indexnow">IndexNow</SelectItem>
-            <SelectItem value="sitemap">Sitemap</SelectItem>
-            <SelectItem value="url">Single URL</SelectItem>
+            <SelectItem value="indexing_manual">Manual Indexing</SelectItem>
+            <SelectItem value="update">Update</SelectItem>
+            <SelectItem value="sitemap_submit">Sitemap Submit</SelectItem>
           </SelectContent>
         </Select>
       </div>

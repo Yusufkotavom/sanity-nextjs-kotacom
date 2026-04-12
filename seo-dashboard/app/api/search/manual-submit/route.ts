@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
       reason: `manual submit via ${provider}`,
       source: "manual",
       engines,
+      waitForCompletion: true,
     });
 
     if (!result.ok) {

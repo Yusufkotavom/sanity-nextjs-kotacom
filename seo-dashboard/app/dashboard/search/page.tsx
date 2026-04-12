@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { desc, and, eq } from "drizzle-orm";
 import { SearchFilters } from "@/components/search-filters";
 import { ManualIndexForm } from "@/components/manual-index-form";
+import { InspectUrlForm } from "@/components/inspect-url-form";
 import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 
@@ -20,6 +21,32 @@ function formatDate(value: Date | string | null) {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(date);
+}
+
+function formatProvider(value: string | null) {
+  if (!value) return "-";
+  if (value === "google_sitemap") return "Google Sitemap";
+  if (value === "indexnow") return "IndexNow";
+  return value;
+}
+
+function formatSubmissionType(value: string | null) {
+  if (!value) return "-";
+  if (value === "indexing_manual") return "Manual Indexing";
+  if (value === "sitemap_submit") return "Sitemap Submit";
+  if (value === "update") return "Update";
+  return value;
+}
+
+function extractResponseMessage(
+  payload: unknown,
+): string | null {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return null;
+  }
+
+  const message = "message" in payload ? payload.message : null;
+  return typeof message === "string" && message.trim() ? message.trim() : null;
 }
 
 export default async function SearchPage({
@@ -73,6 +100,7 @@ export default async function SearchPage({
     <div className="flex flex-col gap-6">
       {/* Manual Index Form */}
       <ManualIndexForm />
+      <InspectUrlForm />
 
       {/* Submissions History */}
       <Card>
@@ -80,7 +108,7 @@ export default async function SearchPage({
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>Search Submissions</CardTitle>
-              <CardDescription>IndexNow and sitemap submission history</CardDescription>
+              <CardDescription>Google, IndexNow, and sitemap submission history</CardDescription>
             </div>
             <Button variant="outline" size="sm" asChild>
               <Link href="/dashboard/search">
@@ -105,28 +133,39 @@ export default async function SearchPage({
                   <TableHead>Provider</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Status</TableHead>
+                  <TableHead>Error Message</TableHead>
                   <TableHead>URL Count</TableHead>
                   <TableHead>Submitted</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {submissions.map((item) => (
-                  <TableRow key={item.id} className="hover:bg-muted/50">
-                    <TableCell className="font-medium">{item.provider}</TableCell>
-                    <TableCell>{item.submissionType}</TableCell>
-                    <TableCell>
-                      <Badge variant={item.status === "failed" ? "destructive" : "secondary"}>
-                        {item.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      {Array.isArray((item.requestPayload as { urls?: string[] } | null)?.urls)
-                        ? (item.requestPayload as { urls?: string[] }).urls?.length
-                        : "-"}
-                    </TableCell>
-                    <TableCell className="text-sm">{formatDate(item.submittedAt)}</TableCell>
-                  </TableRow>
-                ))}
+                {submissions.map((item) => {
+                  const responseMessage = extractResponseMessage(item.responsePayload);
+
+                  return (
+                    <TableRow key={item.id} className="hover:bg-muted/50">
+                      <TableCell className="font-medium">{formatProvider(item.provider)}</TableCell>
+                      <TableCell>{formatSubmissionType(item.submissionType)}</TableCell>
+                      <TableCell>
+                        <Badge variant={item.status === "failed" ? "destructive" : "secondary"}>
+                          {item.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell
+                        className="max-w-[360px] whitespace-normal text-xs text-muted-foreground"
+                        title={responseMessage || undefined}
+                      >
+                        {responseMessage || "-"}
+                      </TableCell>
+                      <TableCell>
+                        {Array.isArray((item.requestPayload as { urls?: string[] } | null)?.urls)
+                          ? (item.requestPayload as { urls?: string[] }).urls?.length
+                          : "-"}
+                      </TableCell>
+                      <TableCell className="text-sm">{formatDate(item.submittedAt)}</TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           )}

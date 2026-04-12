@@ -226,11 +226,13 @@ export async function enqueueIndexingJob({
   reason,
   source,
   engines,
+  waitForCompletion = false,
 }: {
   urls: string[];
   reason?: string;
   source: SeoIndexingJob["source"];
   engines?: IndexEngine[];
+  waitForCompletion?: boolean;
 }) {
   const cleanUrls = uniqueUrls(urls);
   const maxBatchSize = (await getSeoOpsRuntimeConfig()).defaults.maxBatchSize;
@@ -271,7 +273,12 @@ export async function enqueueIndexingJob({
   };
 
   jobs.set(jobId, job);
-  void processJob(jobId);
+
+  if (waitForCompletion) {
+    await processJob(jobId);
+  } else {
+    void processJob(jobId);
+  }
 
   return { ok: true as const, job };
 }
