@@ -87,17 +87,18 @@ export const resolveTemplateCopy = ({
     override?.primaryKeyword ?? template?.primaryKeyword,
     base.primaryKeyword,
   );
+  primaryKeyword = applyLocationTokens(primaryKeyword, locationName);
   if (
     locationName &&
     !primaryKeyword.toLowerCase().includes(locationName.toLowerCase())
   ) {
     primaryKeyword = `${primaryKeyword} ${locationName}`;
   }
-  primaryKeyword = applyLocationTokens(primaryKeyword, locationName);
-  const secondaryKeywords = pickArray(
+  const secondaryKeywordsRaw = pickArray(
     override?.secondaryKeywords ?? template?.secondaryKeywords,
     base.secondaryKeywords,
   );
+  const secondaryKeywords = applyLocationTokensArray(secondaryKeywordsRaw, locationName);
   const locationKeyword =
     locationName && !secondaryKeywords.some((item) =>
       item.toLowerCase().includes(locationName.toLowerCase()),

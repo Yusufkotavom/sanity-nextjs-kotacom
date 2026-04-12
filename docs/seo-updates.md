@@ -4,6 +4,22 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12: Fix Raw Location Tokens Output on Frontend Titles
+
+### Changed Files
+- `frontend/lib/templates/resolve-template.ts` (MODIFIED)
+
+### Summary
+- Fixed logical bug in `resolveTemplateCopy` where `{lokasi}` tokens inside `primaryKeyword` and `secondaryKeywords` variables could result in raw unparsed strings or duplicated location words string combinations. The parsing function is now strategically executing token replacement before checking for existing occurrences or string generation.
+
+### Impact on SEO/Integration
+- **Positive SEO impact**: Removes raw placeholders natively leaked to the frontend metadata logic padding (i.e. `{lokasi}` and duplicated `Bandar Lampung Bandar Lampung`) eliminating unprofessional artifacts on page titles.
+
+### Verification Status
+- Latest local build passed successfully resolving the token duplications appropriately.
+
+---
+
 ## 2026-04-12: Allow Sanity Studio Preview in Frame (CSP Update)
 
 ### Changed Files
