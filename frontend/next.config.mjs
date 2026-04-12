@@ -96,12 +96,6 @@ const STATIC_REDIRECTS = [
     destination: "/percetakan/cetak-kalender/:city",
     permanent: true,
   },
-  // /jasa-cetak-buku-{kota} -> /percetakan/cetak-buku
-  {
-    source: "/jasa-cetak-buku-:city",
-    destination: "/percetakan/cetak-buku",
-    permanent: true,
-  },
   // /cetak-kalender-{kota} -> /percetakan/cetak-kalender/{kota}
   {
     source: "/cetak-kalender-:city",
