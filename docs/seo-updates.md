@@ -8,7 +8,6 @@ This document tracks all SEO-related changes made to the repository.
 
 ### Changed Files
 - `frontend/scripts/upgrade-template-conversion-content.mjs` (NEW)
-- `frontend/scripts/patch-all-templates.mjs` (MODIFIED — deprecated wrapper)
 - `frontend/scripts/export-templates.mjs` (MODIFIED)
 - `frontend/package.json` (MODIFIED)
 
@@ -28,7 +27,7 @@ This document tracks all SEO-related changes made to the repository.
    - city-safe `contentVariants` for location routes
 3. Patched live Sanity template content using dev-first credentials via:
    - `node frontend/scripts/upgrade-template-conversion-content.mjs --write`
-4. Deprecated the old `patch-all-templates.mjs` script because it contained placeholder-heavy copy, cross-lane proof, and conflicting pricing data that no longer matches the active template architecture.
+4. Replaced the old one-off template patch workflow with the new upgrade script because the previous scripts contained placeholder-heavy copy, cross-lane proof, and conflicting pricing data that no longer match the active template architecture.
 5. Updated the export script and `frontend/package.json` so future audits can see the new template fields and use the new patch workflow directly.
 
 ### Impact on SEO/Integration
@@ -48,6 +47,35 @@ This document tracks all SEO-related changes made to the repository.
   - confirmed `trustMode`
   - confirmed reduced quick CTA counts
   - confirmed `contentVariants` on active location-aware templates
+
+## 2026-04-12 — Obsolete Template Patch Script Cleanup
+
+### Changed Files
+- `frontend/scripts/patch-all-templates.mjs` (DELETED)
+- `frontend/scripts/update-pricing.mjs` (DELETED)
+- `frontend/scripts/find-template.mjs` (DELETED)
+- `frontend/scripts/find-cetak.mjs` (DELETED)
+- `frontend/scripts/find-cetak-all.mjs` (DELETED)
+- `frontend/scripts/fix-cetak-buku.mjs` (DELETED)
+- `frontend/scripts/execute-fix-cetak.mjs` (DELETED)
+- `frontend/scripts/seed-template-samples.mjs` (DELETED)
+- `docs/seo-updates.md` (MODIFIED)
+- `docs/astro-migration-megaplan.md` (MODIFIED)
+
+### Summary
+1. Removed obsolete one-off scripts that targeted old template/content patch flows and no longer match the active lane-based template architecture.
+2. Deleted ad-hoc finder/patcher scripts that were specific to earlier `cetak-buku` and website pricing fixes and could now reintroduce outdated copy or conflicting structure if reused.
+3. Consolidated the operational path around the maintained script:
+   - `frontend/scripts/upgrade-template-conversion-content.mjs`
+
+### Impact on SEO/Integration
+- **No direct SEO impact**.
+- Integration impact:
+  - lowers the risk of accidentally overwriting live Sanity template content with outdated script payloads
+  - simplifies the repo workflow to one maintained template-upgrade path
+
+### Verification Status
+- ✅ Repo reference scan confirms no remaining live references to the deleted script names outside this changelog entry.
 
 ## 2026-04-12 — Template Rewrite Architecture Refactor for Lane-Based Conversion
 

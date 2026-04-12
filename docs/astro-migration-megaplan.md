@@ -33,6 +33,7 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] **GSC MIGRATION 100% DONE:** All Top 300 manual curations + Top 1000 auto-redirects fully synced, seeded, and mapped via Sanity and Next.js wildcards.
 - [x] Template rewrite architecture upgraded to lane-aware conversion shells: `pageTemplate` now carries explicit `lane`, `trustMode`, and source-of-truth policy; structured copy supports rule-based content variants; and rewrite pages render one clear variant-driven narrative instead of stacking duplicate hero/pricing/proof layers.
 - [x] All 4 live `pageTemplate` documents have now been patched to the new conversion model in Sanity, including lane-specific pricing/proof/testimonial content, capped quick CTAs, and city-aware support-copy variants for location routes.
+- [x] Obsolete one-off template patch scripts have been removed from `frontend/scripts`, leaving a single maintained upgrade path for live template conversion content and reducing accidental rollback risk.
 - [x] SEO Ops automation hardening completed: manual indexing now uses real queue jobs, GSC daily pull now aggregates page/query/country/device, and GA4 imports are persisted in DB for dashboard joins.
 - [x] SEO Opportunity Board added in operations dashboard with quick wins (high impressions + low CTR), decay detection, and indexing blocker monitoring.
 - [x] Seo-dashboard Netlify build hardening completed: Sanity/env-sensitive API imports are now lazy-loaded to prevent `Failed to collect page data` crashes during production build.
