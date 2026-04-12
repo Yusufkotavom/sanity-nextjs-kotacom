@@ -4,6 +4,51 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-12 — Live Template Content Upgrade + Safe Patch Workflow
+
+### Changed Files
+- `frontend/scripts/upgrade-template-conversion-content.mjs` (NEW)
+- `frontend/scripts/patch-all-templates.mjs` (MODIFIED — deprecated wrapper)
+- `frontend/scripts/export-templates.mjs` (MODIFIED)
+- `frontend/package.json` (MODIFIED)
+
+### Summary
+1. Added a new Sanity patch script for the 4 active `pageTemplate` documents:
+   - `page-template-pembuatan-website`
+   - `page-template-percetakan`
+   - `page-template-software`
+   - `page-template-generic-company`
+2. The new script now writes:
+   - `lane`
+   - `trustMode`
+   - `sourcePolicy`
+   - cleaned `structured` copy per lane
+   - max 2 quick CTA links
+   - lane-specific proof/pricing/testimonial content
+   - city-safe `contentVariants` for location routes
+3. Patched live Sanity template content using dev-first credentials via:
+   - `node frontend/scripts/upgrade-template-conversion-content.mjs --write`
+4. Deprecated the old `patch-all-templates.mjs` script because it contained placeholder-heavy copy, cross-lane proof, and conflicting pricing data that no longer matches the active template architecture.
+5. Updated the export script and `frontend/package.json` so future audits can see the new template fields and use the new patch workflow directly.
+
+### Impact on SEO/Integration
+- Positive SEO impact:
+  - removes raw `{lokasi}`-style base-template copy from active template documents
+  - reduces pricing/proof/testimonial conflicts in repeated commercial template content
+  - improves topical consistency between each lane (`website`, `software`, `printing`) and the copy rendered on derived pages
+- Integration impact:
+  - live Sanity content is now aligned with the new schema/query/resolver architecture added earlier today
+  - the old unsafe patch path is blocked to prevent accidental rollback to lower-quality template content
+
+### Verification Status
+- ✅ Dry run completed: `node frontend/scripts/upgrade-template-conversion-content.mjs`
+- ✅ Write run completed: `node frontend/scripts/upgrade-template-conversion-content.mjs --write`
+- ✅ Public/read-client verification completed with no write token required for template reads:
+  - confirmed `lane`
+  - confirmed `trustMode`
+  - confirmed reduced quick CTA counts
+  - confirmed `contentVariants` on active location-aware templates
+
 ## 2026-04-12 — Template Rewrite Architecture Refactor for Lane-Based Conversion
 
 ### Changed Files

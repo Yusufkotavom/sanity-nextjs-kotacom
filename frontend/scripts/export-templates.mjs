@@ -5,17 +5,17 @@ async function main() {
   await loadSanityEnv();
   const client = await createSanityReadClient();
   const docs = await client.fetch(`*[_type == "pageTemplate"]{
-    _id, title, slug, variant, isHybrid, shellId,
+    _id, title, slug, variant, lane, trustMode, sourcePolicy, isHybrid, shellId,
     structured {
       primaryKeyword, secondaryKeywords, description, intro,
       highlights, eeatPoints, process, faqs, ctaLabel, ctaLinks,
       serviceTypes, pricingPlans, features, proofItems, testimonials,
-      longGuide, finalCtaTitle, finalCtaDescription
+      longGuide, finalCtaTitle, finalCtaDescription, contentVariants
     }
   }`);
   writeFileSync("/tmp/templates.json", JSON.stringify(docs, null, 2));
   console.log(`Found ${docs.length} templates`);
-  docs.forEach(d => console.log(`  - ${d._id}  slug=${d.slug?.current}  variant=${d.variant}`));
+  docs.forEach(d => console.log(`  - ${d._id}  slug=${d.slug?.current}  lane=${d.lane || "-"}  variant=${d.variant}`));
 }
 
 main().catch(console.error);

@@ -21,6 +21,7 @@
     "sanity:bulk:delete": "node scripts/bulk-delete-by-query.mjs",
     "page:to-post": "node scripts/convert-page-to-post.mjs",
     "nav:icons:migrate": "node scripts/migrate-navigation-ui-icons.mjs",
+    "templates:upgrade-conversion": "node scripts/upgrade-template-conversion-content.mjs --write",
     "typegen": "npx sanity schema extract && npx sanity typegen generate",
     "typecheck": "tsc --noEmit",
     "psi:batch": "node scripts/pagespeed-insights-batch.mjs"
