@@ -109,6 +109,70 @@ async function processQueue(queue: string) {
   }
 }
 
+async function processAiContentGeneration(jobId: string, taskId: string, payload: any) {
+  const { generateContent } = await import("@/lib/ai-writer/content-generator");
+  const { updateScheduleRunTimes } = await import("@/lib/ai-writer/schedule-manager");
+  
+  await updateJobRun(jobId, { status: "processing", startedAt: new Date() });
+  
+  const batchSize = payload.batchSize || 1;
+  const generated: string[] = [];
+  const published: string[] = [];
+  const failed: string[] = [];
+  
+  try {
+    // Generate content items in batch
+    for (let i = 0; i < batchSize; i++) {
+      try {
+        const result = await generateContent({
+          contentType: payload.contentType,
+          promptTemplateId: payload.promptTemplateId,
+          customPrompt: payload.customPrompt,
+          generateOgImage: payload.generateOgImage !== false,
+          autoPublish: payload.autoPublish === true,
+          metadata: {
+            sourceType: "scheduled",
+            jobRunId: jobId,
+            tags: payload.tags || [],
+          },
+        });
+        
+        generated.push(result.id);
+        
+        if (result.sanityDocumentId) {
+          published.push(result.sanityDocumentId);
+        }
+      } catch (error) {
+        console.error(`Failed to generate item ${i + 1}/${batchSize}:`, error);
+        failed.push(`item-${i + 1}`);
+      }
+    }
+    
+    // Update job run with results
+    await updateJobRun(jobId, {
+      status: failed.length === batchSize ? "failed" : "success",
+      result: {
+        generated: generated.length,
+        published: published.length,
+        failed: failed.length,
+        generationIds: generated,
+      },
+      errorMessage: failed.length > 0 ? `${failed.length} items failed` : null,
+      finishedAt: new Date(),
+    });
+    
+    // Update schedule run times
+    await updateScheduleRunTimes(taskId);
+    
+  } catch (error) {
+    await updateJobRun(jobId, {
+      status: "failed",
+      errorMessage: error instanceof Error ? error.message : "Content generation failed",
+      finishedAt: new Date(),
+    });
+  }
+}
+
 async function runScheduledTasks() {
   const database = db();
   const now = new Date();
@@ -124,6 +188,16 @@ async function runScheduledTasks() {
       payload: task.payload,
     });
 
+    // Handle AI content generation directly (not via queue)
+    if (task.taskType === "ai_content_generation") {
+      // Process immediately without queue
+      processAiContentGeneration(job.id, task.id, task.payload).catch((error) => {
+        console.error(`Failed to process AI content generation for task ${task.id}:`, error);
+      });
+      continue;
+    }
+
+    // Handle other task types via queue
     const queue = task.taskType === "ai_generate" ? QUEUES.ai : task.taskType === "seo_audit" ? QUEUES.seo : QUEUES.search;
     await enqueueJob(queue, job.id, task.taskType, task.payload);
 

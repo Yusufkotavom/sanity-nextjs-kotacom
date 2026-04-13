@@ -9,12 +9,14 @@ import { publishContentSafe } from "./sanity-publisher";
 
 export interface GenerateContentParams {
   contentType: "post" | "service" | "product";
-  prompt: string;
+  prompt?: string;
   system?: string;
   model?: string;
   provider?: "gateway" | "groq" | "gemini";
   metadata?: Record<string, any>;
   templateId?: string;
+  promptTemplateId?: string;
+  customPrompt?: string;
   jobRunId?: string;
   generateOgImage?: boolean;
   autoPublish?: boolean;
@@ -270,8 +272,22 @@ function parseContent(rawOutput: string, contentType: string): {
 export async function generateContent(params: GenerateContentParams): Promise<GeneratedContent> {
   const database = db();
 
+  // Resolve prompt if not provided
+  let prompt = params.prompt || params.customPrompt || "";
+  let system = params.system;
+  
+  if (!prompt) {
+    const resolved = await resolvePrompt({
+      customPrompt: params.customPrompt,
+      templateId: params.promptTemplateId || params.templateId,
+      contentType: params.contentType,
+      variables: params.metadata as Record<string, string>,
+    });
+    prompt = resolved.prompt;
+    system = resolved.system || system;
+  }
+
   // Truncate prompt if too long
-  let prompt = params.prompt;
   if (prompt.length > MAX_PROMPT_LENGTH) {
     console.warn(`Prompt exceeds ${MAX_PROMPT_LENGTH} characters, truncating`);
     prompt = prompt.substring(0, MAX_PROMPT_LENGTH);
