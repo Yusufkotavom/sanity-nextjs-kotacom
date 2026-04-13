@@ -98,8 +98,21 @@ export default async function AiPage({
 
     generations = generations.slice(0, 50).map((item) => {
       const inputJson = item.inputJson as Record<string, unknown> | null;
+      const parsedOutput = item.parsedOutput as Record<string, unknown> | null;
+      
+      let title = "Untitled";
+      if (parsedOutput?.title) {
+        title = String(parsedOutput.title);
+      } else if (inputJson?.metadata && (inputJson.metadata as any).keyword) {
+        title = `Keyword: ${String((inputJson.metadata as any).keyword)}`;
+      } else if (inputJson?.prompt) {
+        const promptStr = String(inputJson.prompt);
+        title = promptStr.length > 60 ? promptStr.substring(0, 60) + "..." : promptStr;
+      }
+      
       return {
         ...item,
+        title,
         contentType: (inputJson?.contentType as string) || "post",
         templateName: item.templateId ? templatesById.get(item.templateId) || null : null,
       };
@@ -145,12 +158,12 @@ export default async function AiPage({
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <CardTitle>AI Generations</CardTitle>
               <CardDescription>Monitor AI content generation and validation</CardDescription>
             </div>
-            <Button variant="outline" size="sm" asChild>
+            <Button variant="outline" size="sm" asChild className="w-full sm:w-auto">
               <Link href="/dashboard/ai">
                 <RefreshCw className="size-4 mr-2" />
                 Refresh
@@ -189,7 +202,7 @@ export default async function AiPage({
             </Card>
           </div>
 
-          <form method="GET" className="flex flex-wrap items-end gap-3 rounded-md border p-3">
+          <form method="GET" className="grid grid-cols-1 gap-3 rounded-md border p-3 sm:grid-cols-3 sm:items-end">
             <div>
               <label className="mb-1 block text-sm font-medium">From</label>
               <input
@@ -208,7 +221,7 @@ export default async function AiPage({
                 className="h-9 rounded-md border px-2 text-sm"
               />
             </div>
-            <Button type="submit" size="sm" variant="outline">
+            <Button type="submit" size="sm" variant="outline" className="w-full sm:w-auto">
               Apply Date Range
             </Button>
           </form>

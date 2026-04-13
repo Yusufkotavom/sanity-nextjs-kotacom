@@ -48,14 +48,24 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare variables for template
+    const resolvedAudience = idea.audience || "general audience";
+    const resolvedKeyword = idea.keyword || idea.topic;
+    const resolvedWordCount = idea.wordCount || "1500";
+    const resolvedLocation = idea.location || "general";
+
     const variables: Record<string, string> = {
       topic: idea.topic,
       idea: idea.idea,
-      // Use stored values or provide defaults
-      audience: idea.audience || "general audience",
-      keyword: idea.keyword || idea.topic,
-      word_count: idea.wordCount || "1500",
-      location: idea.location || "general",
+      audience: resolvedAudience,
+      target_audience: resolvedAudience,
+      keyword: resolvedKeyword,
+      keywords: resolvedKeyword,
+      target_keyword: resolvedKeyword,
+      word_count: resolvedWordCount,
+      wordCount: resolvedWordCount,
+      length: resolvedWordCount,
+      location: resolvedLocation,
+      target_location: resolvedLocation,
       problem: idea.idea,
       solution: idea.outline || idea.idea,
       product_name: idea.topic,

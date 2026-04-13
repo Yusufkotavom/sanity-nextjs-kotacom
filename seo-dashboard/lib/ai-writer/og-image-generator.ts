@@ -30,6 +30,7 @@ const MAX_CONCURRENT_GENERATIONS = 5;
 const GENERATION_TIMEOUT = 30000; // 30 seconds
 
 let currentGenerations = 0;
+let skipSanityUploadDueToPermissions = false;
 
 /**
  * Truncates text to specified length
@@ -37,6 +38,30 @@ let currentGenerations = 0;
 function truncate(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength - 3) + "...";
+}
+
+function resolveOgBaseUrl(): string {
+  const explicitBase =
+    process.env.OG_BASE_URL ||
+    process.env.VERCEL_OG_BASE_URL ||
+    process.env.NEXT_PUBLIC_BASE_URL;
+  if (explicitBase) return explicitBase.replace(/\/$/, "");
+
+  // In local dev, prefer current process port to avoid hardcoded 3000 mismatch.
+  if (process.env.NODE_ENV === "development") {
+    const port = process.env.PORT || "3002";
+    return `http://127.0.0.1:${port}`;
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`.replace(/\/$/, "");
+  }
+
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
+  }
+
+  return "http://127.0.0.1:3000";
 }
 
 /**
@@ -69,16 +94,13 @@ async function generateImageUrl(params: OGImageParams): Promise<string> {
   // If ogEndpoint is relative, construct absolute URL
   let imageUrl: string;
   if (ogEndpoint.startsWith("http")) {
-    // Already absolute URL
     imageUrl = `${ogEndpoint}?${searchParams.toString()}`;
   } else {
-    // Relative URL - construct absolute URL
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : "http://localhost:3000";
+    const baseUrl = resolveOgBaseUrl();
     imageUrl = `${baseUrl}${ogEndpoint}?${searchParams.toString()}`;
   }
   
+  console.log(`[OG Image Generator] Resolved URL: ${imageUrl}`);
   return imageUrl;
 }
 
@@ -93,7 +115,12 @@ async function uploadImageToSanity(
     source: string;
   }
 ): Promise<SanityAsset> {
-  const sanityAuthToken = process.env.SANITY_AUTH_TOKEN || process.env.SANITY_DEV;
+  if (skipSanityUploadDueToPermissions) {
+    throw new Error("Sanity upload skipped: token lacks create permission");
+  }
+
+  // AGENTS rule: prefer SANITY_DEV token first for agent-driven Sanity operations.
+  const sanityAuthToken = process.env.SANITY_DEV || process.env.SANITY_AUTH_TOKEN;
   
   if (!sanityAuthToken) {
     throw new Error("SANITY_AUTH_TOKEN or SANITY_DEV environment variable is required");
@@ -115,36 +142,67 @@ async function uploadImageToSanity(
   });
 
   // Fetch the image
+  console.log(`[OG Image Generator] Fetching generated image...`);
   const response = await fetch(imageUrl);
   if (!response.ok) {
+    console.error(`[OG Image Generator] Failed to fetch image. Status: ${response.status} ${response.statusText}`);
+    try {
+      const errorText = await response.text();
+      console.error(`[OG Image Generator] Error details:`, errorText);
+    } catch (e) {
+      // Ignore
+    }
     throw new Error(`Failed to fetch image: ${response.statusText}`);
   }
 
   const imageBuffer = await response.arrayBuffer();
-  const imageBlob = new Blob([imageBuffer], { type: "image/png" });
+  console.log(`[OG Image Generator] Image fetched successfully. Size: ${imageBuffer.byteLength} bytes`);
+  const buffer = Buffer.from(imageBuffer);
 
-  // Upload to Sanity
-  const asset = await client.assets.upload("image", imageBlob, {
-    filename: `og-${metadata.contentType}-${Date.now()}.png`,
-    title: metadata.title,
-    description: `AI-generated OG image for ${metadata.contentType}`,
-    source: {
-      name: metadata.source,
-      id: `ai-generated-${Date.now()}`,
-    },
-  });
-
-  return {
-    _id: asset._id,
-    url: asset.url,
-    metadata: {
-      dimensions: {
-        width: asset.metadata.dimensions?.width || DEFAULT_DIMENSIONS.width,
-        height: asset.metadata.dimensions?.height || DEFAULT_DIMENSIONS.height,
+  try {
+    const asset = await client.assets.upload("image", buffer, {
+      filename: `og-${metadata.contentType}-${Date.now()}.png`,
+      title: metadata.title,
+      description: `AI-generated OG image for ${metadata.contentType}`,
+      source: {
+        name: metadata.source,
+        id: `ai-generated-${Date.now()}`,
       },
-      lqip: asset.metadata.lqip || "",
-    },
-  };
+    });
+
+    console.log(`[OG Image Generator] Successfully uploaded image to Sanity: ${asset._id}`);
+    return {
+      _id: asset._id,
+      url: asset.url,
+      metadata: {
+        dimensions: {
+          width: asset.metadata.dimensions?.width || DEFAULT_DIMENSIONS.width,
+          height: asset.metadata.dimensions?.height || DEFAULT_DIMENSIONS.height,
+        },
+        lqip: asset.metadata.lqip || "",
+      },
+    };
+  } catch (sanityError) {
+    const statusCode =
+      typeof sanityError === "object" &&
+      sanityError !== null &&
+      "statusCode" in sanityError
+        ? Number((sanityError as { statusCode?: unknown }).statusCode)
+        : undefined;
+    const message =
+      sanityError instanceof Error ? sanityError.message : String(sanityError || "");
+
+    if (statusCode === 403 || /Insufficient permissions/i.test(message)) {
+      skipSanityUploadDueToPermissions = true;
+      console.error(
+        "[OG Image Generator] Sanity upload disabled: token lacks create permission for assets."
+      );
+      throw new Error("Sanity token missing create permission for assets");
+    }
+
+    console.error(`[OG Image Generator] Failed to upload to Sanity:`, sanityError);
+    throw sanityError;
+  }
 }
 
 /**

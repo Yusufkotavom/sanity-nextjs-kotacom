@@ -37,8 +37,8 @@ export function AiFilters() {
     contentType !== "all";
 
   return (
-    <div className="flex flex-wrap gap-3 items-end">
-      <div className="min-w-[150px]">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="min-w-0">
         <label className="text-sm font-medium mb-1.5 block">Provider</label>
         <Select value={provider} onValueChange={(value) => updateFilter("provider", value)}>
           <SelectTrigger>
@@ -53,7 +53,7 @@ export function AiFilters() {
         </Select>
       </div>
 
-      <div className="min-w-[150px]">
+      <div className="min-w-0">
         <label className="text-sm font-medium mb-1.5 block">Validation</label>
         <Select value={validation} onValueChange={(value) => updateFilter("validation", value)}>
           <SelectTrigger>
@@ -68,7 +68,7 @@ export function AiFilters() {
         </Select>
       </div>
 
-      <div className="min-w-[150px]">
+      <div className="min-w-0">
         <label className="text-sm font-medium mb-1.5 block">Sanity Status</label>
         <Select value={sanityStatus} onValueChange={(value) => updateFilter("sanity", value)}>
           <SelectTrigger>
@@ -83,7 +83,7 @@ export function AiFilters() {
         </Select>
       </div>
 
-      <div className="min-w-[150px]">
+      <div className="min-w-0">
         <label className="text-sm font-medium mb-1.5 block">Source Type</label>
         <Select value={sourceType} onValueChange={(value) => updateFilter("source", value)}>
           <SelectTrigger>
@@ -98,7 +98,7 @@ export function AiFilters() {
         </Select>
       </div>
 
-      <div className="min-w-[150px]">
+      <div className="min-w-0">
         <label className="text-sm font-medium mb-1.5 block">Content Type</label>
         <Select value={contentType} onValueChange={(value) => updateFilter("contentType", value)}>
           <SelectTrigger>
@@ -114,7 +114,7 @@ export function AiFilters() {
       </div>
 
       {hasFilters && (
-        <Button variant="outline" size="sm" onClick={clearFilters}>
+        <Button variant="outline" size="sm" onClick={clearFilters} className="w-full sm:w-auto lg:self-end">
           <X className="size-4 mr-1" />
           Clear
         </Button>

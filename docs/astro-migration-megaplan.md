@@ -263,6 +263,18 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] CWV batch tuning pass: Sanity image default quality set to 75, grid/card imagery constrained to width hints, detail hero images now include LQIP blur, and grid image preloads reduced to the first item to limit LCP contention.
 - [x] Build fix: Lucide icon imports reverted to package entry points to avoid ESM subpath resolution failures on Vercel.
 - [x] Consolidated `/layanan` into `/services` with richer service catalog content and removed the `/layanan` routes (sitemap/TOC/internal links updated).
+- [x] `seo-dashboard` OG endpoint now uses a split-layout visual style and resolves related preview imagery from published Sanity content (`post/service/project/product/page`) with safe fallback chaining.
+- [x] `seo-dashboard` OG endpoint now applies Geist typography (best-effort font loading for `next/og`) plus transparent line-grid background overlay to match the active visual direction.
+- [x] `seo-dashboard` OG font pipeline compatibility fix shipped: Geist loader switched from WOFF2 to TTF after local runtime `wOF2` signature failures.
+- [x] `seo-dashboard` OG footer label now includes WhatsApp contact (`WA 085799520350`) alongside domain branding for clearer social card contact CTA.
+- [x] `seo-dashboard` OG footer label styling now uses black badge + white text, and line-grid overlays were strengthened (global + left panel) to ensure visible striped background.
+- [x] `seo-dashboard` OG WA badge final polish shipped: moved slightly lower and switched from rounded-pill style to flat square box per final visual direction.
+- [x] AI Ideas content generation no longer fails on template naming mismatch (`target_audience` vs `audience`): template renderer now supports alias resolution + fallback, and single/bulk generate routes send expanded alias variables.
+- [x] `seo-dashboard` OG image source simplified per operator request: related-image lookup from Sanity disabled; route now uses explicit `image` query param or direct fallback image only.
+- [x] `seo-dashboard` OG upload pipeline now resolves base URL correctly for local dev ports (prefers `PORT`, supports `OG_BASE_URL` override), eliminating recurring `/api/og` 404 fetch failures during AI content generation.
+- [x] `seo-dashboard` OG upload now has permission guardrails: prefers `SANITY_DEV` token first and disables repeated asset-upload attempts after detecting `403 create permission` errors.
+- [x] `seo-dashboard` OG layout overflow hardening shipped: long title/description now capped with adaptive type scale and overflow guards so WA footer badge no longer gets clipped.
+- [x] `seo-dashboard` mobile UI remap shipped for AI operations pages (`History`, `Templates`, `Generate`, `Content Ideas`): mobile card/list patterns and stacked action controls now replace cramped desktop layouts on small screens.
 ## Workstream A - Platform & Data Foundation
 
 ### A1. CMS Contract Freeze
@@ -343,6 +355,18 @@ Migrate legacy Astro source into current Next.js + Sanity stack with:
 - [x] `/pembuatan-website` specialist pages now also expose stronger SEO-supporting section copy (secondary keywords, highlights, process steps, and FAQs) for price, migration, vertical-specific, and template routes.
 - [x] `software` and `percetakan` rewrite pages now also avoid internal/editorial phrasing and have cleaner public-facing descriptions, helping the broader rewrite cluster align better with real visitor intent.
 - [x] Local homepage/public content sources now also avoid internal editorial notes such as upstream rewrite references and internal QA wording, so the remaining scan hits are concentrated in intentional internal tools and debug surfaces.
+- [x] `seo-dashboard/app/api/og` visual refresh shipped with content-related Sanity image selection + explicit external fallback image, improving social preview relevance for generated OG assets.
+- [x] `seo-dashboard/app/api/og` typography/styling pass shipped: Geist font family and transparent grid background overlay now applied for consistent branded OG appearance.
+- [x] `seo-dashboard/app/api/og` runtime hardening shipped: Geist font source changed to TTF so OG endpoint no longer fails with `Unsupported OpenType signature wOF2`.
+- [x] `seo-dashboard/app/api/og` footer copy now includes direct WhatsApp number (`085799520350`) for stronger contact signaling in shared previews.
+- [x] `seo-dashboard/app/api/og` footer CTA strip now renders as high-contrast black badge with white text, and grid-pattern visibility has been increased to avoid missing line background.
+- [x] `seo-dashboard/app/api/og` footer CTA strip spacing/shape adjusted again: badge lowered slightly and rendered as flat (non-rounded) box.
+- [x] `seo-dashboard` AI ideas pipeline hardening shipped: template variable aliases (`audience/target_audience`, `keyword/target_keyword`, `word_count/length`, `location/target_location`) and fallback defaults now prevent false-required-variable 500 errors in single and bulk content generation.
+- [x] `seo-dashboard/app/api/og` no longer fetches related images from Sanity at runtime; visual image selection is now fallback-only unless explicit `image` URL is provided in query params.
+- [x] `seo-dashboard/lib/ai-writer/og-image-generator` now resolves local OG base URL using explicit envs and active dev port, preventing misrouted `127.0.0.1:3000` calls when dashboard runs on other ports.
+- [x] `seo-dashboard/lib/ai-writer/og-image-generator` now handles Sanity write-permission failures defensively (403 guard + skip repeated uploads) and follows dev-token-first auth priority.
+- [x] `seo-dashboard/app/api/og` text rendering now applies overflow bounds (title + description + content wrapper) and safer sizing so the contact strip stays fully visible in long-copy scenarios.
+- [x] `seo-dashboard` responsive UX pass completed: AI tab navigation, filters, history, template management, generate form, and content-idea action clusters now adapt for mobile-first readability and tap targets.
 - Blocker note (2026-04-02): Live SEO sample audit (`120` URLs) still reports unresolved issues outside migrated frontend scope (`meta_description_too_long: 106`, `title_too_long: 22`, `http_status_not_200: 10`) dominated by legacy live pages/redirect gaps; requires content import/redirect wave plus metadata cleanup on production routes.
 
 ### C2. Structured Data

@@ -49,6 +49,19 @@ let templateListCache: {
 
 let templateByIdCache = new Map<string, { timestamp: number; data: PromptTemplate | null }>();
 
+const VARIABLE_ALIASES: Record<string, string[]> = {
+  audience: ["target_audience"],
+  target_audience: ["audience"],
+  keyword: ["keywords", "target_keyword"],
+  keywords: ["keyword", "target_keyword"],
+  target_keyword: ["keyword", "keywords"],
+  word_count: ["wordcount", "length"],
+  wordcount: ["word_count", "length"],
+  length: ["word_count", "wordcount"],
+  location: ["target_location", "city", "area"],
+  target_location: ["location", "city", "area"],
+};
+
 function invalidateTemplateCache(id?: string) {
   templateListCache = { timestamp: 0, data: null };
   if (id) {
@@ -63,6 +76,72 @@ function invalidateTemplateCache(id?: string) {
  */
 function validateVariableName(name: string): boolean {
   return /^[a-zA-Z0-9_]+$/.test(name);
+}
+
+function normalizeVariableName(name: string): string {
+  return name.trim().toLowerCase().replace(/[\s-]+/g, "_");
+}
+
+function readVariableValue(
+  variableName: string,
+  variables: Record<string, string>
+): string | undefined {
+  const direct = variables[variableName];
+  if (typeof direct === "string" && direct.trim().length > 0) {
+    return direct;
+  }
+
+  const normalized = normalizeVariableName(variableName);
+
+  for (const [key, value] of Object.entries(variables)) {
+    if (normalizeVariableName(key) === normalized && value?.trim()) {
+      return value;
+    }
+  }
+
+  const aliases = VARIABLE_ALIASES[normalized] || [];
+  for (const alias of aliases) {
+    const aliased = variables[alias];
+    if (typeof aliased === "string" && aliased.trim().length > 0) {
+      return aliased;
+    }
+    for (const [key, value] of Object.entries(variables)) {
+      if (normalizeVariableName(key) === alias && value?.trim()) {
+        return value;
+      }
+    }
+  }
+
+  return undefined;
+}
+
+function fallbackVariableValue(
+  variableName: string,
+  variables: Record<string, string>
+): string | undefined {
+  const normalized = normalizeVariableName(variableName);
+  const topic = readVariableValue("topic", variables);
+
+  if (normalized.includes("audience")) {
+    return readVariableValue("audience", variables) || "general audience";
+  }
+  if (normalized.includes("keyword")) {
+    return readVariableValue("keyword", variables) || topic || "general keyword";
+  }
+  if (normalized.includes("word") || normalized === "length") {
+    return readVariableValue("word_count", variables) || "1500";
+  }
+  if (normalized.includes("location") || normalized === "city" || normalized === "area") {
+    return readVariableValue("location", variables) || "general";
+  }
+  if (normalized === "service_name" || normalized === "product_name" || normalized === "idea") {
+    return topic || "general topic";
+  }
+  if (normalized === "competitor") {
+    return "alternatives";
+  }
+
+  return undefined;
 }
 
 /**
@@ -242,21 +321,28 @@ export async function renderTemplate(
     throw new Error(`Template with id ${templateId} not found`);
   }
 
-  // Check for required variables
-  const requiredVars = template.variables.filter((v) => v.required);
-  for (const requiredVar of requiredVars) {
-    if (!(requiredVar.name in variables) && !requiredVar.defaultValue) {
-      throw new Error(`Required variable "${requiredVar.name}" is missing`);
-    }
-  }
-
-  // Build variable map with defaults
+  // Build variable map with aliases/defaults/fallbacks
   const varMap: Record<string, string> = {};
   for (const variable of template.variables) {
-    if (variable.name in variables) {
-      varMap[variable.name] = variables[variable.name];
-    } else if (variable.defaultValue) {
+    const provided = readVariableValue(variable.name, variables);
+    if (provided) {
+      varMap[variable.name] = provided;
+      continue;
+    }
+
+    if (variable.defaultValue) {
       varMap[variable.name] = variable.defaultValue;
+      continue;
+    }
+
+    const fallback = fallbackVariableValue(variable.name, variables);
+    if (fallback) {
+      varMap[variable.name] = fallback;
+      continue;
+    }
+
+    if (variable.required) {
+      throw new Error(`Required variable "${variable.name}" is missing`);
     }
   }
 

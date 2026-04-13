@@ -14,6 +14,7 @@ import { OGImagePreview } from "@/components/og-image-preview";
 
 interface Generation {
   id: string;
+  title?: string;
   sourceType: string;
   contentType?: string;
   templateName?: string | null;
@@ -171,16 +172,17 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
       {/* Bulk Actions Bar */}
       {selectedIds.size > 0 && (
         <div className="border rounded-lg p-4 bg-muted/50">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm font-medium">
               {selectedIds.size} item(s) selected
             </p>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Button
                 size="sm"
                 variant="outline"
                 onClick={handleBulkMarkReady}
                 disabled={bulkProcessing}
+                className="w-full sm:w-auto"
               >
                 <CheckCircle className="size-4 mr-2" />
                 Mark Ready
@@ -190,6 +192,7 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
                 variant="outline"
                 onClick={handleBulkPublish}
                 disabled={bulkProcessing}
+                className="w-full sm:w-auto"
               >
                 <Send className="size-4 mr-2" />
                 Publish to Sanity
@@ -199,6 +202,7 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
                 variant="destructive"
                 onClick={handleBulkDelete}
                 disabled={bulkProcessing}
+                className="w-full sm:w-auto"
               >
                 <Trash2 className="size-4 mr-2" />
                 Delete
@@ -208,7 +212,60 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
         </div>
       )}
 
+      {/* Mobile Cards */}
+      <div className="space-y-3 md:hidden">
+        {generations.map((item) => (
+          <div key={item.id} className="rounded-lg border p-3 space-y-3">
+            <div className="flex items-start gap-3">
+              <Checkbox
+                checked={selectedIds.has(item.id)}
+                onCheckedChange={() => toggleSelect(item.id)}
+              />
+              <div className="min-w-0 flex-1">
+                <p className="font-medium text-sm line-clamp-2">{item.title || "Untitled"}</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {item.provider} · {item.contentType || "-"} · {formatDate(item.createdAt)}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <Badge variant={item.validationStatus === "invalid" ? "destructive" : "secondary"}>
+                {item.validationStatus}
+              </Badge>
+              <Badge
+                variant={
+                  item.sanityWriteStatus === "failed"
+                    ? "destructive"
+                    : item.sanityWriteStatus === "success"
+                      ? "default"
+                      : "secondary"
+                }
+              >
+                {item.sanityWriteStatus}
+              </Badge>
+              {item.templateName ? <Badge variant="outline">{item.templateName}</Badge> : null}
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {item.sanityWriteStatus !== "success" ? (
+                <ReadyCheckbox generationId={item.id} initialChecked={item.readyToPublish || false} />
+              ) : null}
+              <Button variant="outline" size="sm" asChild>
+                <Link href={`/dashboard/ai/${item.id}`}>Edit</Link>
+              </Button>
+              <AiActions
+                generationId={item.id}
+                content={item.generatedContent}
+                validationStatus={item.validationStatus}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* Table */}
+      <div className="hidden md:block overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
@@ -218,6 +275,7 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
                 onCheckedChange={toggleSelectAll}
               />
             </TableHead>
+            <TableHead>Title / Context</TableHead>
             <TableHead>Provider</TableHead>
             <TableHead>Source</TableHead>
             <TableHead>Content</TableHead>
@@ -240,7 +298,12 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
                   onCheckedChange={() => toggleSelect(item.id)}
                 />
               </TableCell>
-              <TableCell className="font-medium">{item.provider}</TableCell>
+              <TableCell>
+                <div className="font-medium text-sm line-clamp-2 min-w-[150px] max-w-[250px]" title={item.title}>
+                  {item.title || "Untitled"}
+                </div>
+              </TableCell>
+              <TableCell className="text-sm font-medium">{item.provider}</TableCell>
               <TableCell className="text-sm capitalize">{item.sourceType || "-"}</TableCell>
               <TableCell className="text-sm capitalize">{item.contentType || "-"}</TableCell>
               <TableCell className="text-sm">{item.templateName || "-"}</TableCell>
@@ -354,6 +417,7 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
           ))}
         </TableBody>
       </Table>
+      </div>
     </div>
   );
 }

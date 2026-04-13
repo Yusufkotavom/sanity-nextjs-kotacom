@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Lightbulb, FileText, Sparkles, ArrowRight, Trash2, Loader2 } from "lucide-react";
+import { Lightbulb, FileText, Sparkles, ArrowRight, Trash2, Loader2, Settings, Filter } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
 
@@ -523,243 +523,283 @@ Return a structured outline with:
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Generate Ideas Form */}
-          <div className="border rounded-lg p-4 space-y-4">
-            <h3 className="font-medium flex items-center gap-2">
-              <Lightbulb className="size-4" />
-              Step 1: Generate Content Ideas
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="md:col-span-2">
-                <Label htmlFor="topic">Topic or Keywords</Label>
-                <Input
-                  id="topic"
-                  value={topic}
-                  onChange={(e) => setTopic(e.target.value)}
-                  placeholder="e.g., digital marketing strategies"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="contentType">Content Type</Label>
-                <Select
-                  value={contentType}
-                  onValueChange={(value) => setContentType(value as "post" | "service" | "product")}
-                >
-                  <SelectTrigger id="contentType">
-                    <SelectValue placeholder="Select content type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="post">Blog Post</SelectItem>
-                    <SelectItem value="service">Service Page</SelectItem>
-                    <SelectItem value="product">Product Page</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+          <Accordion type="multiple" defaultValue={["generate-ideas"]} className="space-y-4 mb-4">
+            {/* Generate Ideas Section */}
+            <AccordionItem value="generate-ideas" className="border rounded-lg bg-card overflow-hidden">
+              <AccordionTrigger className="px-4 py-3 hover:no-underline font-medium hover:bg-muted/50 transition-colors border-b-0 data-[state=open]:border-b">
+                <div className="flex items-center gap-2">
+                  <Lightbulb className="size-4 text-primary" />
+                  Step 1: AI Idea Generator
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="p-4 pt-4 space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="md:col-span-2">
+                    <Label htmlFor="topic">Topic or Keywords</Label>
+                    <Input
+                      id="topic"
+                      value={topic}
+                      onChange={(e) => setTopic(e.target.value)}
+                      placeholder="e.g., digital marketing strategies"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="contentType">Content Type</Label>
+                    <Select
+                      value={contentType}
+                      onValueChange={(value) => setContentType(value as "post" | "service" | "product")}
+                    >
+                      <SelectTrigger id="contentType">
+                        <SelectValue placeholder="Select content type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="post">Blog Post</SelectItem>
+                        <SelectItem value="service">Service Page</SelectItem>
+                        <SelectItem value="product">Product Page</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
 
-            <div className="flex items-center gap-4">
-              <div className="flex-1">
-                <Label htmlFor="ideaCount">Number of Ideas</Label>
-                <Input
-                  id="ideaCount"
-                  type="number"
-                  min="1"
-                  max="10"
-                  value={ideaCount}
-                  onChange={(e) => setIdeaCount(parseInt(e.target.value) || 5)}
-                />
-              </div>
-              
-              <Button 
-                onClick={handleGenerateIdeas} 
-                disabled={generating}
-                className="mt-6"
-              >
-                <Sparkles className="size-4 mr-2" />
-                {generating ? "Generating..." : "Generate Ideas"}
-              </Button>
-            </div>
-          </div>
+                <div className="flex flex-col sm:flex-row sm:items-end gap-4 mt-2">
+                  <div className="flex-1 w-full">
+                    <Label htmlFor="ideaCount">Number of Ideas</Label>
+                    <Input
+                      id="ideaCount"
+                      type="number"
+                      min="1"
+                      max="10"
+                      value={ideaCount}
+                      onChange={(e) => setIdeaCount(parseInt(e.target.value) || 5)}
+                    />
+                  </div>
+                  
+                  <Button 
+                    onClick={handleGenerateIdeas} 
+                    disabled={generating}
+                    className="w-full sm:w-auto"
+                  >
+                    <Sparkles className="size-4 mr-2" />
+                    {generating ? "Generating..." : "Generate Ideas"}
+                  </Button>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Prompt Editors */}
-          <div className="border rounded-lg p-4 space-y-3">
-            <h3 className="font-medium">Prompt Editor</h3>
-            <p className="text-xs text-muted-foreground">
-              Editable prompt for AI Idea generation and Outline generation.
-              You can use placeholders: <code>{"{{topic}}"}</code>, <code>{"{{contentType}}"}</code>,{" "}
-              <code>{"{{count}}"}</code>, <code>{"{{idea}}"}</code>.
-            </p>
-            <div className="grid gap-3 md:grid-cols-2">
-              <div>
-                <Label htmlFor="ideaPrompt">Generate Ideas Prompt</Label>
-                <Textarea
-                  id="ideaPrompt"
-                  value={ideaPrompt}
-                  onChange={(e) => setIdeaPrompt(e.target.value)}
-                  rows={8}
-                />
-              </div>
-              <div>
-                <Label htmlFor="outlinePrompt">Generate Outline Prompt</Label>
-                <Textarea
-                  id="outlinePrompt"
-                  value={outlinePrompt}
-                  onChange={(e) => setOutlinePrompt(e.target.value)}
-                  rows={8}
-                />
-              </div>
-            </div>
-          </div>
+            {/* Manual Input Section */}
+            <AccordionItem value="manual-input" className="border rounded-lg bg-card overflow-hidden">
+              <AccordionTrigger className="px-4 py-3 hover:no-underline font-medium hover:bg-muted/50 transition-colors border-b-0 data-[state=open]:border-b">
+                <div className="flex items-center gap-2">
+                  <FileText className="size-4 text-primary" />
+                  Manual Idea Input (Single / Bulk)
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="p-4 pt-4 space-y-4">
+                <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
+                  <div>
+                    <Label htmlFor="manualIdea">Single Idea</Label>
+                    <Input
+                      id="manualIdea"
+                      value={manualIdea}
+                      onChange={(e) => setManualIdea(e.target.value)}
+                      placeholder="Tulis 1 ide manual..."
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="manualTopic">Topic (optional, default for manual ideas)</Label>
+                    <Input
+                      id="manualTopic"
+                      value={topic}
+                      onChange={(e) => setTopic(e.target.value)}
+                      placeholder="contoh: digital marketing"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="bulkIdeas">Bulk Ideas (1 line = 1 idea)</Label>
+                  <Textarea
+                    id="bulkIdeas"
+                    value={bulkIdeasText}
+                    onChange={(e) => setBulkIdeasText(e.target.value)}
+                    rows={6}
+                    placeholder={"Idea A\nIdea B\nIdea C"}
+                  />
+                </div>
+                <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+                  <div>
+                    <Label htmlFor="manualAudience">Audience</Label>
+                    <Input
+                      id="manualAudience"
+                      value={audience}
+                      onChange={(e) => setAudience(e.target.value)}
+                      placeholder="general audience"
+                      className="text-sm"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="manualKeyword">Keyword</Label>
+                    <Input
+                      id="manualKeyword"
+                      value={keyword}
+                      onChange={(e) => setKeyword(e.target.value)}
+                      placeholder="keyword utama"
+                      className="text-sm"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="manualWordCount">Word Count</Label>
+                    <Input
+                      id="manualWordCount"
+                      value={wordCount}
+                      onChange={(e) => setWordCount(e.target.value)}
+                      placeholder="1500"
+                      className="text-sm"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="manualLocation">Location</Label>
+                    <Input
+                      id="manualLocation"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      placeholder="general"
+                      className="text-sm"
+                    />
+                  </div>
+                </div>
+                <Button onClick={handleManualCreateIdeas} disabled={generating} className="w-full sm:w-auto">
+                  {generating ? "Saving..." : "Add Manual Ideas"}
+                </Button>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Manual Input */}
-          <div className="border rounded-lg p-4 space-y-4">
-            <h3 className="font-medium">Manual Idea Input (Single / Bulk)</h3>
-            <div className="grid gap-3 md:grid-cols-2">
-              <div>
-                <Label htmlFor="manualIdea">Single Idea</Label>
-                <Input
-                  id="manualIdea"
-                  value={manualIdea}
-                  onChange={(e) => setManualIdea(e.target.value)}
-                  placeholder="Tulis 1 ide manual..."
-                />
-              </div>
-              <div>
-                <Label htmlFor="manualTopic">Topic (optional, default for manual ideas)</Label>
-                <Input
-                  id="manualTopic"
-                  value={topic}
-                  onChange={(e) => setTopic(e.target.value)}
-                  placeholder="contoh: digital marketing"
-                />
-              </div>
-            </div>
-            <div>
-              <Label htmlFor="bulkIdeas">Bulk Ideas (1 line = 1 idea)</Label>
-              <Textarea
-                id="bulkIdeas"
-                value={bulkIdeasText}
-                onChange={(e) => setBulkIdeasText(e.target.value)}
-                rows={6}
-                placeholder={"Idea A\nIdea B\nIdea C"}
-              />
-            </div>
-            <div className="grid gap-3 md:grid-cols-4">
-              <div>
-                <Label htmlFor="manualAudience">Audience</Label>
-                <Input
-                  id="manualAudience"
-                  value={audience}
-                  onChange={(e) => setAudience(e.target.value)}
-                  placeholder="general audience"
-                />
-              </div>
-              <div>
-                <Label htmlFor="manualKeyword">Keyword</Label>
-                <Input
-                  id="manualKeyword"
-                  value={keyword}
-                  onChange={(e) => setKeyword(e.target.value)}
-                  placeholder="keyword utama"
-                />
-              </div>
-              <div>
-                <Label htmlFor="manualWordCount">Word Count</Label>
-                <Input
-                  id="manualWordCount"
-                  value={wordCount}
-                  onChange={(e) => setWordCount(e.target.value)}
-                  placeholder="1500"
-                />
-              </div>
-              <div>
-                <Label htmlFor="manualLocation">Location</Label>
-                <Input
-                  id="manualLocation"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  placeholder="general"
-                />
-              </div>
-            </div>
-            <Button onClick={handleManualCreateIdeas} disabled={generating}>
-              {generating ? "Saving..." : "Add Manual Ideas"}
-            </Button>
-          </div>
+            {/* Template & Settings Section */}
+            <AccordionItem value="settings" className="border rounded-lg bg-card overflow-hidden">
+              <AccordionTrigger className="px-4 py-3 hover:no-underline font-medium hover:bg-muted/50 transition-colors border-b-0 data-[state=open]:border-b">
+                <div className="flex items-center gap-2">
+                  <Settings className="size-4 text-primary" />
+                  Templates & Prompts Settings
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="p-4 pt-4 space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="template" className="font-semibold text-base">Content Master Template</Label>
+                  <p className="text-sm text-muted-foreground mb-4">Pilih template panduan struktur untuk saat men-generate konten secara utuh.</p>
+                  <div className="max-w-md">
+                    <Select value={selectedTemplate} onValueChange={setSelectedTemplate}>
+                      <SelectTrigger id="template" className="text-left w-full">
+                        <SelectValue placeholder="Select a template..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {templates.map((template) => (
+                          <SelectItem key={template.id} value={template.id}>
+                            {template.name} ({template.contentType})
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
 
-          {/* Template Selection */}
-          <div className="border rounded-lg p-4">
-            <Label htmlFor="template">Template for Full Content Generation</Label>
-            <Select value={selectedTemplate} onValueChange={setSelectedTemplate}>
-              <SelectTrigger id="template" className="mt-2">
-                <SelectValue placeholder="Select a template..." />
-              </SelectTrigger>
-              <SelectContent>
-                {templates.map((template) => (
-                  <SelectItem key={template.id} value={template.id}>
-                    {template.name} ({template.contentType})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+                <div className="space-y-4 pt-4 border-t">
+                  <div className="space-y-1">
+                    <Label className="font-semibold text-base">Prompt Editor</Label>
+                    <p className="text-xs text-muted-foreground">
+                      Editable prompt for AI Idea generation and Outline generation.
+                      You can use placeholders: <code>{"{{topic}}"}</code>, <code>{"{{contentType}}"}</code>,{" "}
+                      <code>{"{{count}}"}</code>, <code>{"{{idea}}"}</code>.
+                    </p>
+                  </div>
+                  <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+                    <div className="flex flex-col">
+                      <Label htmlFor="ideaPrompt" className="mb-2 text-sm">Generate Ideas Prompt</Label>
+                      <Textarea
+                        id="ideaPrompt"
+                        value={ideaPrompt}
+                        onChange={(e) => setIdeaPrompt(e.target.value)}
+                        rows={8}
+                        className="resize-y font-mono text-xs"
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <Label htmlFor="outlinePrompt" className="mb-2 text-sm">Generate Outline Prompt</Label>
+                      <Textarea
+                        id="outlinePrompt"
+                        value={outlinePrompt}
+                        onChange={(e) => setOutlinePrompt(e.target.value)}
+                        rows={8}
+                        className="resize-y font-mono text-xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Filters */}
-          <div className="border rounded-lg p-4 space-y-4">
-            <h3 className="font-medium">Filters</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <Label htmlFor="filterStatus">Status</Label>
-                <Select value={filterStatus} onValueChange={setFilterStatus}>
-                  <SelectTrigger id="filterStatus">
-                    <SelectValue placeholder="All Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="idea">💡 Idea Only</SelectItem>
-                    <SelectItem value="outline">📝 Has Outline</SelectItem>
-                    <SelectItem value="generated">✓ Generated</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div>
-                <Label htmlFor="filterContentType">Content Type</Label>
-                <Select value={filterContentType} onValueChange={setFilterContentType}>
-                  <SelectTrigger id="filterContentType">
-                    <SelectValue placeholder="All Types" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Types</SelectItem>
-                    <SelectItem value="post">Blog Post</SelectItem>
-                    <SelectItem value="service">Service Page</SelectItem>
-                    <SelectItem value="product">Product Page</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div>
-                <Label htmlFor="searchQuery">Search</Label>
-                <Input
-                  id="searchQuery"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search ideas..."
-                />
-              </div>
-            </div>
-          </div>
+            {/* Filters Section */}
+            <AccordionItem value="filters" className="border rounded-lg bg-card overflow-hidden">
+              <AccordionTrigger className="px-4 py-3 hover:no-underline font-medium hover:bg-muted/50 transition-colors border-b-0 data-[state=open]:border-b">
+                <div className="flex items-center gap-2">
+                  <Filter className="size-4 text-primary" />
+                  Search & Filters
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="p-4 pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="filterStatus" className="block mb-2 text-sm">Status</Label>
+                    <Select value={filterStatus} onValueChange={setFilterStatus}>
+                      <SelectTrigger id="filterStatus" className="w-full">
+                        <SelectValue placeholder="All Status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Status</SelectItem>
+                        <SelectItem value="idea">💡 Idea Only</SelectItem>
+                        <SelectItem value="outline">📝 Has Outline</SelectItem>
+                        <SelectItem value="generated">✓ Generated</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="filterContentType" className="block mb-2 text-sm">Content Type</Label>
+                    <Select value={filterContentType} onValueChange={setFilterContentType}>
+                      <SelectTrigger id="filterContentType" className="w-full">
+                        <SelectValue placeholder="All Types" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Types</SelectItem>
+                        <SelectItem value="post">Blog Post</SelectItem>
+                        <SelectItem value="service">Service Page</SelectItem>
+                        <SelectItem value="product">Product Page</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="sm:col-span-2 lg:col-span-1">
+                    <Label htmlFor="searchQuery" className="block mb-2 text-sm">Search</Label>
+                    <Input
+                      id="searchQuery"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search ideas..."
+                      className="w-full"
+                    />
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
           {/* Bulk Actions */}
           {selectedIds.size > 0 && (
             <div className="border rounded-lg p-4 bg-muted/50">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <p className="text-sm font-medium">
                   {selectedIds.size} item(s) selected
                 </p>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <Button
                     size="sm"
                     variant="outline"
@@ -793,9 +833,9 @@ Return a structured outline with:
           )}
 
           {/* Ideas List */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
+            <div className="space-y-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                 <h3 className="font-medium">Your Content Ideas</h3>
                 {filteredIdeas.length > 0 && (
                   <Button variant="outline" size="sm" onClick={toggleSelectAll}>
@@ -803,14 +843,14 @@ Return a structured outline with:
                   </Button>
                 )}
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 {processingJobs.size > 0 && (
                   <Badge variant="secondary" className="animate-pulse">
                     <Loader2 className="size-3 mr-1 animate-spin" />
                     {processingJobs.size} processing
                   </Badge>
                 )}
-                <Button variant="outline" size="sm" onClick={loadIdeas}>
+                <Button variant="outline" size="sm" onClick={loadIdeas} className="w-full sm:w-auto">
                   Refresh
                 </Button>
               </div>
@@ -898,7 +938,7 @@ Return a structured outline with:
                                 </div>
                                 
                                 {/* Metadata fields - editable */}
-                                <div className="grid grid-cols-2 gap-3 p-3 bg-muted/50 rounded-md">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-3 bg-muted/50 rounded-md">
                                   <div>
                                     <Label htmlFor={`audience-${idea.id}`} className="text-xs">Audience</Label>
                                     <Input
@@ -975,12 +1015,13 @@ Return a structured outline with:
                                 )}
 
                                 {/* Action buttons */}
-                                <div className="flex items-center gap-2 pt-2">
+                                <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:items-center">
                                   {idea.status === "idea" && !isProcessing && (
                                     <Button
                                       size="sm"
                                       variant="outline"
                                       onClick={() => handleGenerateOutline(idea.id)}
+                                      className="w-full sm:w-auto"
                                     >
                                       <FileText className="size-4 mr-2" />
                                       Generate Outline
@@ -992,6 +1033,7 @@ Return a structured outline with:
                                       size="sm"
                                       onClick={() => handleGenerateContent(idea.id)}
                                       disabled={!selectedTemplate}
+                                      className="w-full sm:w-auto"
                                     >
                                       <ArrowRight className="size-4 mr-2" />
                                       Generate Content
@@ -1003,6 +1045,7 @@ Return a structured outline with:
                                       size="sm"
                                       variant="outline"
                                       asChild
+                                      className="w-full sm:w-auto"
                                     >
                                       <Link href={`/dashboard/ai/${idea.generationId}`}>
                                         <ArrowRight className="size-4 mr-2" />

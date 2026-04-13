@@ -4,6 +4,398 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-13 — Mobile Responsive Remap (AI History, Templates, Generate, Content Ideas)
+
+### Changed Files
+- `seo-dashboard/app/dashboard/ai/layout.tsx` (MODIFIED) - AI tabs now 2 columns on mobile, 4 columns on desktop
+- `seo-dashboard/components/ai-filters.tsx` (MODIFIED) - Filters switched from wrap row to responsive grid
+- `seo-dashboard/components/ai-history-table.tsx` (MODIFIED) - Added dedicated mobile card view; desktop table kept with horizontal scroll wrapper
+- `seo-dashboard/app/dashboard/ai/templates/page.tsx` (MODIFIED) - Added mobile template card list and responsive header controls
+- `seo-dashboard/app/dashboard/ai/generate/page.tsx` (MODIFIED) - Improved mobile stacking for options/status badges
+- `seo-dashboard/app/dashboard/ai/ideas/page.tsx` (MODIFIED) - Responsive remap for list header/actions and per-idea buttons
+- `seo-dashboard/app/dashboard/ai/page.tsx` (MODIFIED) - Responsive remap for header and date range controls
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Refactored AI dashboard UI surfaces to reduce visual density and control overflow on mobile:
+1. **History page**:
+   - Mobile now uses compact cards (instead of full data table columns).
+   - Bulk action bar stacks cleanly on small screens.
+2. **Templates page**:
+   - Added mobile card list with edit/delete actions.
+   - Header controls (filter + new template) now stack on mobile.
+3. **Generate page**:
+   - Checkbox controls and status badges now wrap/stack responsively.
+4. **Content Ideas page**:
+   - Top list controls now stack/wrap on mobile.
+   - Per-idea action buttons changed to full-width stack on mobile.
+5. **Global AI nav and filters**:
+   - Tabs and filters redesigned for narrow screens to avoid crowding and horizontal squeeze.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**
+- **Positive integration/UX impact**:
+  - Better usability on small screens for AI operations pages.
+  - Reduced button/field overlap and table overflow in mobile view.
+  - Maintains existing API/data behavior (UI-only remap).
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code review completed for responsive class remap across affected pages
+- ⏳ Runtime visual check recommended on mobile viewport for `/dashboard/ai`, `/dashboard/ai/templates`, `/dashboard/ai/generate`, `/dashboard/ai/ideas`
+
+---
+
+## 2026-04-13 — OG Text Overflow Guard (Prevent WA Badge Clipping)
+
+### Changed Files
+- `seo-dashboard/app/api/og/route.tsx` (MODIFIED) - Added adaptive title sizing and text overflow bounds to keep WA badge visible
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Addressed OG card visual clipping issue where footer WA badge could be cut off for long titles:
+1. Reduced max title/description source length (`title` 72, `description` 96).
+2. Added adaptive title font sizing with safer ranges (42–56).
+3. Tightened left panel spacing and logo/brand sizing.
+4. Added overflow guards:
+   - title: `maxHeight` + `overflow: hidden`
+   - description: `maxHeight` + `overflow: hidden`
+   - top content wrapper: `minHeight: 0` + `overflow: hidden`
+5. Moved WA badge slightly lower while keeping fixed visible footer position.
+
+### Impact on SEO/Integration
+- **No direct SEO ranking impact**
+- **Social preview quality impact**:
+  - Prevents visual truncation/clipping in generated OG cards on long copy.
+  - Keeps contact CTA strip visible and readable.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual layout review completed for long-title overflow behavior
+
+---
+
+## 2026-04-13 — OG Sanity Upload Permission Guard + Dev Token Priority
+
+### Changed Files
+- `seo-dashboard/lib/ai-writer/og-image-generator.ts` (MODIFIED) - Added permission-aware upload guard and token priority fix (`SANITY_DEV` first)
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Analyzed latest logs and confirmed:
+- `/api/og` image rendering/fetch is now successful.
+- Remaining failure is Sanity asset upload with `403 Insufficient permissions; permission "create" required`.
+
+Implemented hardening:
+1. Token priority updated to match repo rule:
+   - `SANITY_DEV` first
+   - fallback `SANITY_AUTH_TOKEN`
+2. Added permission guard:
+   - On first 403/insufficient-permission upload error, set in-process flag to skip further Sanity upload attempts.
+   - Prevents repeated noisy failures and extra latency on subsequent generations.
+3. Added clearer log message for missing asset create permission.
+
+### Impact on SEO/Integration
+- **No direct SEO ranking impact**
+- **Integration reliability impact**:
+  - Keeps content generation stable when Sanity write token is misconfigured/read-only.
+  - Reduces repeated failing upload attempts and log noise.
+  - Aligns Sanity auth behavior with AGENTS rule (dev token preferred).
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual review of OG upload error path and guard behavior completed
+- ⏳ Runtime verify recommended: rerun `generate-with-template` and confirm no repeated 403 upload attempts after first detection
+
+---
+
+## 2026-04-13 — OG Upload 404 Fix (Correct Local Base URL Resolution)
+
+### Changed Files
+- `seo-dashboard/lib/ai-writer/og-image-generator.ts` (MODIFIED) - Improved OG base URL resolution to avoid wrong localhost port in dev
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Investigated recurring OG generation failures:
+- Log symptom: `Failed to fetch image: Not Found` during upload step in `uploadImageToSanity`.
+- Root cause: OG URL builder defaulted to `http://127.0.0.1:3000` in development when env base URL was missing, while app runs on different local port (e.g., `3002`).
+
+Fix implemented:
+1. Added `resolveOgBaseUrl()` in `og-image-generator.ts`.
+2. New base URL priority:
+   - `OG_BASE_URL`
+   - `VERCEL_OG_BASE_URL`
+   - `NEXT_PUBLIC_BASE_URL`
+   - (dev) `http://127.0.0.1:${PORT || 3002}`
+   - `VERCEL_URL`
+   - `NEXT_PUBLIC_APP_URL`
+   - fallback `http://127.0.0.1:3000`
+3. Relative OG endpoint (`/api/og`) now always uses resolved base URL above.
+
+### Impact on SEO/Integration
+- **No direct SEO ranking impact**
+- **Integration reliability impact**:
+  - Prevents repeated 404 failures in OG fetch/upload flow caused by host/port mismatch.
+  - Stabilizes AI generation pipeline when `generateOgImage` is enabled.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code review completed for base URL resolution logic
+- ⏳ Runtime verification recommended by re-running `/api/ai/generate-with-template` and checking `Resolved URL` log
+
+---
+
+## 2026-04-13 — OG Image Source Simplified (Disable Sanity Related Lookup)
+
+### Changed Files
+- `seo-dashboard/app/api/og/route.tsx` (MODIFIED) - Removed related-image fetch/scoring from Sanity and switched to direct fallback image flow
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Per request, OG image source no longer attempts to query/find related images from Sanity.
+
+Current behavior:
+1. Use `image` query param when provided and valid (`https`).
+2. Otherwise use `FALLBACK_OG_IMAGE_URL` directly.
+
+Removed from OG route:
+- Sanity query constants
+- candidate scoring/tokenization logic
+- related-image resolver fetch flow
+
+### Impact on SEO/Integration
+- **No direct SEO ranking impact**
+- **Integration impact**:
+  - OG generation is now deterministic and simpler (no Sanity dependency for image selection).
+  - Reduces runtime variability/failure surface tied to Sanity query resolution.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code review completed for fallback-only OG image flow
+
+---
+
+## 2026-04-13 — AI Ideas Template Variable Fallback Fix (`target_audience`)
+
+### Changed Files
+- `seo-dashboard/lib/ai-writer/prompt-templates.ts` (MODIFIED) - Added variable alias resolution and required-variable fallback values
+- `seo-dashboard/app/api/ai/ideas/generate-content/route.ts` (MODIFIED) - Added alias payload keys (`target_audience`, `target_keyword`, `length`, `target_location`, etc.)
+- `seo-dashboard/app/api/ai/ideas/generate-content-bulk/route.ts` (MODIFIED) - Synced alias payload keys for bulk generation path
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Fixed content generation failures when selected template uses variable names different from idea field names (example: required `target_audience` while data was provided as `audience`):
+1. `renderTemplate()` now resolves variables through:
+   - exact key
+   - normalized key
+   - alias map (e.g., `audience <-> target_audience`, `keyword <-> target_keyword/keywords`, `word_count <-> length`, `location <-> target_location`)
+2. Added fallback values for common required variables if alias/default is missing (audience/keyword/word_count/location).
+3. Single and bulk generate-content routes now send expanded alias variables so template matching is robust across naming styles.
+
+### Impact on SEO/Integration
+- **No direct SEO ranking impact**
+- **Positive integration impact**:
+  - Prevents false 500 errors for templates that use snake_case variants like `target_audience`.
+  - Keeps AI content generation stable even when template variable naming differs from UI/DB field naming.
+  - Aligns single and bulk generation behavior.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code-path review completed for single + bulk generation routes and template renderer
+- ⏳ Runtime check recommended on `/dashboard/ai/ideas` with template requiring `target_audience`
+
+---
+
+## 2026-04-13 — OG WA Badge Position + Flat Box Style
+
+### Changed Files
+- `seo-dashboard/app/api/og/route.tsx` (MODIFIED) - Moved WA badge slightly lower and changed badge shape from rounded pill to flat square box
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Refined WA contact badge styling in OG card:
+1. Badge moved down slightly (`marginTop: 8px`).
+2. Rounded style removed (`borderRadius: 0px`) to produce a flat box look.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**
+- **Visual/social integration impact**:
+  - OG contact strip now matches requested flat design direction.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual style review completed for WA badge position/shape
+
+---
+
+## 2026-04-13 — OG Footer Badge + Stronger Grid Visibility
+
+### Changed Files
+- `seo-dashboard/app/api/og/route.tsx` (MODIFIED) - Changed WA/site footer into black badge with white text and increased visible line-grid background
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Adjusted OG visual output per feedback:
+1. Footer label now uses **black background + white text**:
+   - `WA 085799520350 · kotacom.id`
+2. Background line pattern made more visible:
+   - Increased global grid opacity/density.
+   - Added additional subtle grid overlay inside left content panel.
+
+### Impact on SEO/Integration
+- **No direct ranking impact**
+- **Social card integration impact**:
+  - Contact strip now has stronger contrast and clearer CTA.
+  - Grid background styling is visibly present and closer to requested direction.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code review for OG style changes completed
+
+---
+
+## 2026-04-13 — OG Footer Contact Text Update (WhatsApp)
+
+### Changed Files
+- `seo-dashboard/app/api/og/route.tsx` (MODIFIED) - Updated OG footer label to include WhatsApp contact number
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Updated OG card footer text from:
+- `kotacom.id`
+
+to:
+- `WA 085799520350 · kotacom.id`
+
+This ensures the WhatsApp contact appears directly in generated OG images.
+
+### Impact on SEO/Integration
+- **No direct SEO ranking impact**
+- **Social integration impact**:
+  - OG previews now expose direct WhatsApp contact context in visual card footer.
+  - Improves lead/contact clarity when shared on social/messaging channels.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code review for text rendering update completed
+
+---
+
+## 2026-04-13 — OG Font Loader Fix (WOFF2 -> TTF)
+
+### Changed Files
+- `seo-dashboard/app/api/og/route.tsx` (MODIFIED) - Switched Geist font source from `.woff2` to `.ttf` for `next/og` compatibility
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Fixed OG endpoint runtime failure:
+- Previous error: `Unsupported OpenType signature wOF2`
+- Root cause: `next/og` pipeline in this runtime did not accept loaded WOFF2 font data
+- Fix: switched Geist font loading to TTF files (`Geist-Regular.ttf`, `Geist-SemiBold.ttf`, `Geist-Bold.ttf`)
+
+### Impact on SEO/Integration
+- **Direct integration impact**: Restores successful OG image response generation (no more 500 caused by font format).
+- **SEO/social impact**: OG cards keep branded Geist typography while staying render-compatible.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual error-path validation from logs (wOF2 issue addressed by format switch)
+- ⏳ Runtime endpoint check recommended by reloading `/api/og?...` in local dev
+
+---
+
+## 2026-04-13 — OG Fallback Image URL Update
+
+### Changed Files
+- `seo-dashboard/app/api/og/route.tsx` (MODIFIED) - Replaced fallback OG image URL
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Updated OG API fallback image source to:
+`https://www.kotacom.id/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fb017f7tl%2Fproduction%2Fadbb1e64ffa7b2b719d8c705aff151901082526e-1024x1024.jpg%3Fw%3D960%26fm%3Dwebp%26q%3D75%26fit%3Dcrop&w=828&q=75`
+
+### Impact on SEO/Integration
+- **Direct SEO/social impact**: OG fallback preview now uses the requested Kotacom image endpoint when explicit/similar Sanity image is not selected.
+- **Integration impact**: No API contract change; only fallback asset source changed.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual check completed for constant update in OG route
+
+---
+
+## 2026-04-13 — OG Route Font Geist + Transparent Grid Background
+
+### Changed Files
+- `seo-dashboard/app/api/og/route.tsx` (MODIFIED) - Added Geist font loading for OG rendering and transparent line-grid background layer
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Refined the OG renderer based on design feedback:
+1. Added **Geist** font support in `next/og` by loading `Geist-Regular`, `Geist-SemiBold`, and `Geist-Bold` (best-effort with graceful fallback).
+2. Applied `fontFamily: "Geist"` on key text nodes (brand/title/description/domain).
+3. Added **transparent line-grid background** overlay to match requested visual style (`bg transparant garis-garis`).
+4. Preserved existing related-Sanity-image logic and fallback chain.
+
+### Impact on SEO/Integration
+- **Direct SEO/social impact**:
+  - More consistent social card typography with project branding (Geist).
+  - Better visual clarity/readability for OG cards via subtle transparent grid treatment.
+- **Integration impact**:
+  - No schema/query contract changes.
+  - Backward compatible with existing OG API parameters.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual review completed for font fallback and background rendering logic
+- ⏳ Runtime visual check recommended at `/api/og?...` in local browser
+
+---
+
+## 2026-04-13 — OG Image API Redesign (Sanity-related visual + split layout)
+
+### Changed Files
+- `seo-dashboard/app/api/og/route.tsx` (MODIFIED) - Redesigned OG canvas and added related-image resolver from Sanity content
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot and workstream checklist
+
+### Summary
+Updated the OG generation endpoint to produce a modern split composition similar to the provided visual reference:
+1. **New split layout**: left panel for brand + large headline, right panel for visual preview image.
+2. **Related image from Sanity**: OG route now queries published Sanity documents (`post`, `service`, `project`, `product`, `page`) and scores candidates by title/description/slug relevance.
+3. **Safe fallback chain**:
+   - explicit `image` query param (if valid `https`)
+   - best related image from Sanity
+   - fallback image: `https://cdn.prod.website-files.com/6040ba28127600ad9182e1be/69c0789fa0f923be92752563_v0.webp`
+4. **Safer remote image handling**: only accepts valid `https` image URLs.
+
+### Impact on SEO/Integration
+- **Direct SEO/social impact**:
+  - Improves OG visual quality and social preview consistency.
+  - Better relevance by using Sanity images tied to content context (title/description/slug).
+- **Integration impact**:
+  - Uses existing Sanity published-content API contract (read-only) without changing schema.
+  - Compatible with existing OG generator flow in `seo-dashboard/lib/ai-writer/og-image-generator.ts`.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code review for Sanity fallback flow and URL safety checks completed
+- ⏳ Visual runtime check recommended on `/api/og` with real title/description/slug payload
+
+---
+
 ## 2026-04-13 — CI Typecheck Fixes (worker + seo-dashboard)
 
 ### Changed Files

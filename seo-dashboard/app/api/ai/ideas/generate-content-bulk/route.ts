@@ -13,13 +13,24 @@ export const dynamic = "force-dynamic";
 const BULK_CONCURRENCY = 3;
 
 async function processSingleIdea(idea: any, templateId: string, generateOgImage: boolean) {
+  const resolvedAudience = idea.audience || "general audience";
+  const resolvedKeyword = idea.keyword || idea.topic;
+  const resolvedWordCount = idea.wordCount || "1500";
+  const resolvedLocation = idea.location || "general";
+
   const variables: Record<string, string> = {
     topic: idea.topic,
     idea: idea.idea,
-    audience: idea.audience || "general audience",
-    keyword: idea.keyword || idea.topic,
-    word_count: idea.wordCount || "1500",
-    location: idea.location || "general",
+    audience: resolvedAudience,
+    target_audience: resolvedAudience,
+    keyword: resolvedKeyword,
+    keywords: resolvedKeyword,
+    target_keyword: resolvedKeyword,
+    word_count: resolvedWordCount,
+    wordCount: resolvedWordCount,
+    length: resolvedWordCount,
+    location: resolvedLocation,
+    target_location: resolvedLocation,
     problem: idea.idea,
     solution: idea.outline || idea.idea,
     product_name: idea.topic,
@@ -129,4 +140,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Bulk generate content failed" }, { status: 500 });
   }
 }
-

@@ -169,7 +169,7 @@ export default function GeneratePage() {
             </div>
           )}
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             <label className="flex items-center gap-2 text-sm">
               <input
                 type="checkbox"
@@ -213,7 +213,7 @@ export default function GeneratePage() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Generated Content</CardTitle>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge variant={result.validationStatus === "valid" ? "default" : "destructive"}>
                   {result.validationStatus}
                 </Badge>

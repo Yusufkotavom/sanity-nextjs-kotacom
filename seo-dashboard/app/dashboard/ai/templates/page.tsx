@@ -98,15 +98,15 @@ export default function TemplatesPage() {
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <CardTitle>Prompt Templates</CardTitle>
               <CardDescription>
                 Create reusable prompt templates with variables for consistent content generation
               </CardDescription>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-[180px]">
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+              <div className="w-full sm:w-[180px]">
                 <Select value={contentTypeFilter} onValueChange={setContentTypeFilter}>
                   <SelectTrigger>
                     <SelectValue placeholder="Filter content type" />
@@ -119,7 +119,7 @@ export default function TemplatesPage() {
                   </SelectContent>
                 </Select>
               </div>
-              <Button onClick={handleCreate}>
+              <Button onClick={handleCreate} className="w-full sm:w-auto">
                 <Plus className="size-4 mr-2" />
                 New Template
               </Button>
@@ -135,6 +135,36 @@ export default function TemplatesPage() {
               <p className="text-sm mt-1">Create your first template to get started</p>
             </div>
           ) : (
+            <>
+            <div className="space-y-3 md:hidden">
+              {templates.map((template) => (
+                <div key={template.id} className="rounded-lg border p-3 space-y-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="font-medium text-sm">{template.name}</p>
+                    <Badge variant="secondary">{template.contentType}</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground line-clamp-2">
+                    {template.variables.length > 0
+                      ? template.variables.map((v) => v.name).join(", ")
+                      : "No variables"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Created {new Date(template.createdAt).toLocaleDateString()}
+                  </p>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={() => handleEdit(template)} className="flex-1">
+                      <Pencil className="size-4 mr-1" />
+                      Edit
+                    </Button>
+                    <Button variant="destructive" size="sm" onClick={() => handleDelete(template.id)} className="flex-1">
+                      <Trash2 className="size-4 mr-1" />
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="hidden md:block overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -182,6 +212,8 @@ export default function TemplatesPage() {
                 ))}
               </TableBody>
             </Table>
+            </div>
+            </>
           )}
         </CardContent>
       </Card>

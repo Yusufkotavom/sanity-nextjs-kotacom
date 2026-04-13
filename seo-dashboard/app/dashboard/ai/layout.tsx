@@ -10,7 +10,7 @@ export default function AILayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-4">
       <Tabs value={pathname} className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-4">
           <TabsTrigger value="/dashboard/ai" asChild>
             <Link href="/dashboard/ai">History</Link>
           </TabsTrigger>

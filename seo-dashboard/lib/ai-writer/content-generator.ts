@@ -154,6 +154,97 @@ function stripMarkdownCodeBlocks(text: string): string {
 }
 
 /**
+ * Attempts to parse the first JSON object found in text
+ */
+function parseEmbeddedJsonObject(text: string): Record<string, any> | null {
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
+  if (start === -1 || end === -1 || end <= start) return null;
+
+  const candidate = text.slice(start, end + 1).trim();
+  const candidates = [
+    candidate,
+    candidate.replace(/,\s*([}\]])/g, "$1"), // remove trailing commas
+  ];
+
+  for (const item of candidates) {
+    try {
+      const parsed = JSON.parse(item);
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        return parsed as Record<string, any>;
+      }
+    } catch {
+      // try next candidate
+    }
+  }
+
+  return null;
+}
+
+function extractJsonField(text: string, fieldName: "title" | "excerpt" | "body" | "content"): string {
+  const searchKey = `"${fieldName}"`;
+  const openIdx = text.indexOf(searchKey);
+  if (openIdx === -1) return "";
+  
+  const colonIdx = text.indexOf(":", openIdx + searchKey.length);
+  if (colonIdx === -1) return "";
+  
+  const firstQuoteIdx = text.indexOf('"', colonIdx);
+  if (firstQuoteIdx === -1) return "";
+  
+  const startIdx = firstQuoteIdx + 1;
+  const endRegex = /"(?=\s*,|\s*\})/g;
+  endRegex.lastIndex = startIdx;
+  
+  let match;
+  while ((match = endRegex.exec(text)) !== null) {
+      let backslashCount = 0;
+      let i = match.index - 1;
+      while (i >= 0 && text[i] === '\\') {
+          backslashCount++;
+          i--;
+      }
+      
+      if (backslashCount % 2 === 0) {
+          let result = text.substring(startIdx, match.index);
+          try {
+              const jsonSafe = result.replace(/\n/g, "\\n").replace(/\r/g, "");
+              return JSON.parse(`"${jsonSafe}"`);
+          } catch {
+              return result
+                .replace(/\\n/g, "\n")
+                .replace(/\\"/g, '"')
+                .replace(/\\\\/g, "\\")
+                .trim();
+          }
+      }
+  }
+  
+  const nextKeyMatch = text.substring(startIdx).match(/\n\s*"[^"]+"\s*:/);
+  if (nextKeyMatch && nextKeyMatch.index !== undefined) {
+      let result = text.substring(startIdx, startIdx + nextKeyMatch.index);
+      result = result.replace(/"\s*,?\s*$/, ""); 
+      return result
+        .replace(/\\n/g, "\n")
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, "\\")
+        .trim();
+  }
+  
+  let rest = text.substring(startIdx);
+  const lastBraceIdx = rest.lastIndexOf("}");
+  if (lastBraceIdx > -1) {
+      rest = rest.substring(0, lastBraceIdx);
+  }
+  rest = rest.replace(/"\s*,?\s*$/, "");
+  return rest
+    .replace(/\\n/g, "\n")
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, "\\")
+    .trim();
+}
+
+/**
  * Parses AI output into structured content fields
  */
 function parseContent(rawOutput: string, contentType: string): {
@@ -175,47 +266,59 @@ function parseContent(rawOutput: string, contentType: string): {
   console.log("Raw output length:", rawOutput.length);
   console.log("Cleaned output preview:", cleanedOutput.substring(0, 200));
 
-  try {
-    // Try to parse as JSON first
-    const parsed = JSON.parse(cleanedOutput);
-    console.log("Parsed as JSON:", { 
-      hasTitle: !!parsed.title, 
-      hasExcerpt: !!parsed.excerpt, 
-      hasBody: !!(parsed.body || parsed.content) 
+  const parsedObject = parseEmbeddedJsonObject(cleanedOutput);
+
+  if (parsedObject) {
+    console.log("Parsed as JSON object:", {
+      hasTitle: !!parsedObject.title,
+      hasExcerpt: !!parsedObject.excerpt,
+      hasBody: !!(parsedObject.body || parsedObject.content),
     });
-    
-    title = parsed.title || "";
-    excerpt = parsed.excerpt || "";
-    body = parsed.body || parsed.content || "";
-  } catch (parseError) {
+    title = String(parsedObject.title || "").trim();
+    excerpt = String(parsedObject.excerpt || "").trim();
+    body = String(parsedObject.body || parsedObject.content || "").trim();
+  } else {
     console.log("JSON parse failed, trying markdown extraction");
+
+    // Try extracting quoted JSON fields from non-parseable payload
+    title = extractJsonField(cleanedOutput, "title");
+    excerpt = extractJsonField(cleanedOutput, "excerpt");
+    body = extractJsonField(cleanedOutput, "body") || extractJsonField(cleanedOutput, "content");
     
-    // If not JSON, try to extract from markdown-style format
-    const lines = cleanedOutput.split("\n");
-    let currentSection = "";
+    // If still missing, fallback to markdown style extraction
+    if (!title || !body) {
+      const isJsonLookalike = cleanedOutput.trim().startsWith('{');
+      const lines = cleanedOutput.split("\n");
+      let currentSection = "";
 
-    for (const line of lines) {
-      const trimmed = line.trim();
-      
-      if (trimmed.toLowerCase().startsWith("title:")) {
-        title = trimmed.substring(6).trim();
-      } else if (trimmed.toLowerCase().startsWith("excerpt:")) {
-        excerpt = trimmed.substring(8).trim();
-      } else if (trimmed.toLowerCase().startsWith("body:") || trimmed.toLowerCase().startsWith("content:")) {
-        currentSection = "body";
-      } else if (currentSection === "body" && trimmed) {
-        body += (body ? "\n\n" : "") + trimmed;
+      for (const line of lines) {
+        const trimmed = line.trim();
+
+        if (trimmed.toLowerCase().startsWith("title:")) {
+          title = title || trimmed.substring(6).trim();
+        } else if (trimmed.toLowerCase().startsWith("excerpt:")) {
+          excerpt = excerpt || trimmed.substring(8).trim();
+        } else if (
+          trimmed.toLowerCase().startsWith("body:") ||
+          trimmed.toLowerCase().startsWith("content:")
+        ) {
+          currentSection = "body";
+        } else if (currentSection === "body" && trimmed) {
+          body += (body ? "\n\n" : "") + trimmed;
+        }
       }
-    }
 
-    // If still no title, use first line
-    if (!title && lines.length > 0) {
-      title = lines[0].replace(/^#+\s*/, "").trim();
-    }
+      if (!isJsonLookalike) {
+        // If still no title, use first line
+        if (!title && lines.length > 0) {
+          title = lines[0].replace(/^#+\s*/, "").trim();
+        }
 
-    // If still no body, use everything after title
-    if (!body) {
-      body = lines.slice(1).join("\n").trim();
+        // If still no body, use everything after title
+        if (!body) {
+          body = lines.slice(1).join("\n").trim();
+        }
+      }
     }
     
     console.log("Markdown extraction result:", { 
