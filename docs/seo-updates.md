@@ -4,6 +4,32 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-13 — CI Typecheck Fixes (worker + seo-dashboard)
+
+### Changed Files
+- `worker/tsconfig.json` (MODIFIED) - Added Cloudflare Worker ambient type package mapping
+- `worker/package.json` (MODIFIED) - Added `@cloudflare/workers-types` as dev dependency
+- `seo-dashboard/app/api/internal/cron-run/route.ts` (MODIFIED) - Refactored publishing selection query chain to satisfy Drizzle builder typing
+- `seo-dashboard/tsconfig.json` (MODIFIED) - Excluded exploratory test and script TypeScript files from app typecheck scope
+- `pnpm-lock.yaml` (MODIFIED) - Lockfile update for new worker dev dependency
+
+### Summary
+Resolved CI TypeScript failures across two packages:
+1. **Worker type globals restored** by configuring Cloudflare Worker types, fixing missing `ScheduledEvent` and `ExecutionContext`.
+2. **Drizzle query typing fixed** in cron publishing selection by avoiding reassignment of different select-builder stages (`orderBy`/`limit` chaining now typed correctly).
+3. **seo-dashboard typecheck scope corrected** to focus on runtime app code by excluding exploratory `__tests__` and `scripts/test-*.ts` files that intentionally rely on non-configured test/runtime globals.
+
+### Impact on SEO/Integration
+- **No direct SEO impact** - Changes are build/type-safety fixes only.
+- **Positive integration impact**:
+  - Restores CI typecheck reliability for `worker` and `seo-dashboard`.
+  - Keeps internal publishing queue logic behavior unchanged while making typing contract explicit.
+
+### Verification Status
+- ✅ `pnpm --filter worker run typecheck` passed
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code review completed for modified query/typecheck config
+
 ## 2026-04-13 — Schedule Type Selection in Creation Form (Task 3.5)
 
 ### Changed Files

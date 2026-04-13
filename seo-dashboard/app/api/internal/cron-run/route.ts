@@ -111,31 +111,25 @@ async function processQueue(queue: string) {
 
 async function selectContentForPublishing(publishingQueueConfig: any) {
   const database = db();
-  
-  // Build query: WHERE readyToPublish = true AND sanityWriteStatus != 'success'
-  let query = database
+
+  // Build query: WHERE readyToPublish = true AND sanityWriteStatus = 'pending'
+  const baseQuery = database
     .select()
     .from(schema.aiGenerations)
     .where(
       and(
         eq(schema.aiGenerations.readyToPublish, true),
-        eq(schema.aiGenerations.sanityWriteStatus, "pending")
+        eq(schema.aiGenerations.sanityWriteStatus, "pending"),
       )
     );
-  
-  // Apply content type filter if specified
-  // Note: We need to filter by sourceType or inputJson.contentType
-  // For now, we'll fetch all and filter in memory since contentType is in inputJson
-  
-  // Order by createdAt ASC (FIFO)
-  query = query.orderBy(schema.aiGenerations.createdAt);
-  
+
+  // Note: contentType currently lives in inputJson, so this filter remains in-memory.
   // Limit by batch size
   const batchSize = publishingQueueConfig?.batchSize || 10;
-  query = query.limit(batchSize);
-  
-  const items = await query;
-  
+  const items = await baseQuery
+    .orderBy(schema.aiGenerations.createdAt)
+    .limit(batchSize);
+
   // Apply content type filter if specified (filter in memory)
   if (publishingQueueConfig?.contentType) {
     return items.filter((item) => {
@@ -143,7 +137,7 @@ async function selectContentForPublishing(publishingQueueConfig: any) {
       return inputJson?.contentType === publishingQueueConfig.contentType;
     });
   }
-  
+
   return items;
 }
 
