@@ -1,12 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSchedule, type CreateScheduleParams } from "@/lib/ai-writer/schedule-manager";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
+import { sanitizeText } from "@/lib/sanitize";
+import { assertSupportedContentType } from "@/lib/ai-writer/content-type";
 
 export async function POST(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await request.json();
+    const name = sanitizeText(body.name, 120);
+    const cronExpr = sanitizeText(body.cronExpr, 128);
+    const timezone = sanitizeText(body.timezone, 80);
 
     // Validate required fields
-    if (!body.name || !body.cronExpr || !body.timezone) {
+    if (!name || !cronExpr || !timezone) {
       return NextResponse.json(
         { error: "Missing required fields: name, cronExpr, timezone" },
         { status: 400 }
@@ -39,6 +48,9 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         );
       }
+      if (Number(body.payload.publishingQueueConfig.batchSize) > 50) {
+        return NextResponse.json({ error: "Batch size must be <= 50" }, { status: 400 });
+      }
     } else if (scheduleType === "ai_generation") {
       if (!body.payload) {
         return NextResponse.json(
@@ -52,6 +64,14 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         );
       }
+      try {
+        assertSupportedContentType(body.payload.contentType);
+      } catch (error) {
+        return NextResponse.json({ error: error instanceof Error ? error.message : "Invalid content type" }, { status: 400 });
+      }
+      if (Number(body.payload.batchSize) > 50) {
+        return NextResponse.json({ error: "Batch size must be <= 50" }, { status: 400 });
+      }
     }
 
     // Create schedule with appropriate payload structure
@@ -59,11 +79,11 @@ export async function POST(request: NextRequest) {
     
     if (body.scheduleType === "publishing_queue") {
       params = {
-        name: body.name,
+        name,
         taskType: "ai_content_generation",
         scheduleType: "publishing_queue",
-        cronExpr: body.cronExpr,
-        timezone: body.timezone,
+        cronExpr,
+        timezone,
         enabled: body.enabled !== undefined ? body.enabled : true,
         payload: {
           publishingQueueConfig: {
@@ -74,14 +94,14 @@ export async function POST(request: NextRequest) {
       };
     } else {
       params = {
-        name: body.name,
+        name,
         taskType: "ai_content_generation",
         scheduleType: "ai_generation",
-        cronExpr: body.cronExpr,
-        timezone: body.timezone,
+        cronExpr,
+        timezone,
         enabled: body.enabled !== undefined ? body.enabled : true,
         payload: {
-          contentType: body.payload.contentType,
+          contentType: assertSupportedContentType(body.payload.contentType),
           promptTemplateId: body.payload.promptTemplateId,
           customPrompt: body.payload.customPrompt,
           batchSize: body.payload.batchSize,

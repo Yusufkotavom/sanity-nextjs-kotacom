@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { TemplateDialog } from "@/components/template-dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface Template {
   id: string;
@@ -29,10 +30,15 @@ export default function TemplatesPage() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState<Template | null>(null);
+  const [contentTypeFilter, setContentTypeFilter] = useState("all");
 
-  const loadTemplates = async () => {
+  const loadTemplates = async (contentType?: string) => {
     try {
-      const response = await fetch("/api/ai/templates/list");
+      const query =
+        contentType && contentType !== "all"
+          ? `?contentType=${encodeURIComponent(contentType)}`
+          : "";
+      const response = await fetch(`/api/ai/templates/list${query}`);
       const data = await response.json();
       if (data.success) {
         setTemplates(data.data);
@@ -45,19 +51,25 @@ export default function TemplatesPage() {
   };
 
   useEffect(() => {
-    loadTemplates();
-  }, []);
+    loadTemplates(contentTypeFilter);
+  }, [contentTypeFilter]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this template?")) return;
+    if (
+      !confirm(
+        "Delete this template? Existing schedules that reference it will fall back to default prompts.",
+      )
+    ) {
+      return;
+    }
 
     try {
-      const response = await fetch(`/api/ai/templates/test?id=${id}`, {
+      const response = await fetch(`/api/ai/templates/${id}`, {
         method: "DELETE",
       });
 
       if (response.ok) {
-        loadTemplates();
+        loadTemplates(contentTypeFilter);
       }
     } catch (error) {
       console.error("Failed to delete template:", error);
@@ -78,7 +90,7 @@ export default function TemplatesPage() {
     setDialogOpen(false);
     setEditingTemplate(null);
     if (refresh) {
-      loadTemplates();
+      loadTemplates(contentTypeFilter);
     }
   };
 
@@ -93,10 +105,25 @@ export default function TemplatesPage() {
                 Create reusable prompt templates with variables for consistent content generation
               </CardDescription>
             </div>
-            <Button onClick={handleCreate}>
-              <Plus className="size-4 mr-2" />
-              New Template
-            </Button>
+            <div className="flex items-center gap-2">
+              <div className="w-[180px]">
+                <Select value={contentTypeFilter} onValueChange={setContentTypeFilter}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Filter content type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All content types</SelectItem>
+                    <SelectItem value="post">Post</SelectItem>
+                    <SelectItem value="service">Service</SelectItem>
+                    <SelectItem value="product">Product</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <Button onClick={handleCreate}>
+                <Plus className="size-4 mr-2" />
+                New Template
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent>

@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { aiGenerations } from "@repo/db/schema";
 import { eq } from "drizzle-orm";
 import { publishContentSafe } from "@/lib/ai-writer/sanity-publisher";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +15,9 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const { id } = await params;
     const database = db();
@@ -58,12 +62,14 @@ export async function POST(
 
     if (!publishResult.success) {
       // Update status to failed
-      await database
-        .update(aiGenerations)
-        .set({
-          sanityWriteStatus: "failed",
-        })
-        .where(eq(aiGenerations.id, id));
+      await database.transaction(async (tx) => {
+        await tx
+          .update(aiGenerations)
+          .set({
+            sanityWriteStatus: "failed",
+          })
+          .where(eq(aiGenerations.id, id));
+      });
 
       return NextResponse.json(
         { error: publishResult.error || "Failed to publish to Sanity" },
@@ -72,13 +78,15 @@ export async function POST(
     }
 
     // Update generation with Sanity document ID
-    await database
-      .update(aiGenerations)
-      .set({
-        sanityDocumentId: publishResult.result.documentId,
-        sanityWriteStatus: "success",
-      })
-      .where(eq(aiGenerations.id, id));
+    await database.transaction(async (tx) => {
+      await tx
+        .update(aiGenerations)
+        .set({
+          sanityDocumentId: publishResult.result.documentId,
+          sanityWriteStatus: "success",
+        })
+        .where(eq(aiGenerations.id, id));
+    });
 
     return NextResponse.json({
       success: true,

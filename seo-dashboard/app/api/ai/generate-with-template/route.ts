@@ -1,7 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateContent, resolvePrompt } from "@/lib/ai-writer/content-generator";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
+import { checkSimpleRateLimit } from "@/lib/rate-limit";
+import { assertSupportedContentType } from "@/lib/ai-writer/content-type";
 
 export async function POST(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const rate = checkSimpleRateLimit({
+    key: `ai-generate-with-template:${ip}`,
+    limit: 30,
+    windowMs: 60_000,
+  });
+  if (!rate.ok) {
+    return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+  }
+
   try {
     const body = await request.json();
     const {
@@ -13,24 +28,19 @@ export async function POST(request: NextRequest) {
       autoPublish = false,
     } = body;
 
-    if (!contentType || !["post", "service", "product"].includes(contentType)) {
-      return NextResponse.json(
-        { error: "Invalid content type. Must be 'post', 'service', or 'product'" },
-        { status: 400 }
-      );
-    }
+    const validatedContentType = assertSupportedContentType(contentType);
 
     // Resolve prompt
     const resolved = await resolvePrompt({
       customPrompt,
       templateId,
-      contentType,
+      contentType: validatedContentType,
       variables,
     });
 
     // Generate content
     const result = await generateContent({
-      contentType,
+      contentType: validatedContentType,
       prompt: resolved.prompt,
       system: resolved.system,
       templateId,

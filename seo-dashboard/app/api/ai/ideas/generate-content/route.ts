@@ -4,6 +4,9 @@ import { contentIdeas } from "@repo/db/schema";
 import { eq } from "drizzle-orm";
 import { generateContent } from "@/lib/ai-writer/content-generator";
 import { renderTemplate } from "@/lib/ai-writer/prompt-templates";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
+import { checkSimpleRateLimit } from "@/lib/rate-limit";
+import { assertSupportedContentType } from "@/lib/ai-writer/content-type";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +15,12 @@ export const dynamic = "force-dynamic";
  * Generate full content from idea using template
  */
 export async function POST(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const rate = checkSimpleRateLimit({ key: `ideas-generate-content:${ip}`, limit: 20, windowMs: 60_000 });
+  if (!rate.ok) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+
   try {
     const body = await request.json();
     const { ideaId, templateId, generateOgImage = true } = body; // Default true
@@ -63,7 +72,7 @@ export async function POST(request: NextRequest) {
 
     // Generate content
     const result = await generateContent({
-      contentType: idea.contentType as any,
+      contentType: assertSupportedContentType(idea.contentType),
       prompt,
       templateId,
       generateOgImage,

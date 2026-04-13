@@ -15,6 +15,13 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Edit, Trash2, Play, Pause, Sparkles, Clock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Schedule {
   id: string;
@@ -25,10 +32,14 @@ interface Schedule {
   timezone: string;
   enabled: boolean;
   payload: {
-    contentType: string;
-    batchSize: number;
-    autoPublish: boolean;
-    generateOgImage: boolean;
+    contentType?: string;
+    batchSize?: number;
+    autoPublish?: boolean;
+    generateOgImage?: boolean;
+    publishingQueueConfig?: {
+      contentType?: string;
+      batchSize?: number;
+    };
   };
   lastRunAt: string | null;
   nextRunAt: string | null;
@@ -39,14 +50,19 @@ export default function SchedulesPage() {
   const router = useRouter();
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState(true);
+  const [contentTypeFilter, setContentTypeFilter] = useState<string>("all");
 
   useEffect(() => {
-    fetchSchedules();
-  }, []);
+    fetchSchedules(contentTypeFilter);
+  }, [contentTypeFilter]);
 
-  async function fetchSchedules() {
+  async function fetchSchedules(contentType?: string) {
     try {
-      const response = await fetch("/api/ai/schedule/list");
+      const query =
+        contentType && contentType !== "all"
+          ? `?contentType=${encodeURIComponent(contentType)}`
+          : "";
+      const response = await fetch(`/api/ai/schedule/list${query}`);
       const data = await response.json();
       
       if (data.success) {
@@ -72,7 +88,7 @@ export default function SchedulesPage() {
       
       if (data.success) {
         toast.success(`Schedule ${!enabled ? "enabled" : "disabled"}`);
-        fetchSchedules();
+        fetchSchedules(contentTypeFilter);
       } else {
         toast.error(data.error || "Failed to update schedule");
       }
@@ -96,7 +112,7 @@ export default function SchedulesPage() {
       
       if (data.success) {
         toast.success("Schedule deleted");
-        fetchSchedules();
+        fetchSchedules(contentTypeFilter);
       } else {
         toast.error(data.error || "Failed to delete schedule");
       }
@@ -136,6 +152,13 @@ export default function SchedulesPage() {
     }
   }
 
+  function resolveScheduleContentType(schedule: Schedule) {
+    if (schedule.scheduleType === "publishing_queue") {
+      return schedule.payload?.publishingQueueConfig?.contentType || "all";
+    }
+    return schedule.payload?.contentType || "all";
+  }
+
   if (loading) {
     return (
       <div className="p-6">
@@ -158,10 +181,25 @@ export default function SchedulesPage() {
             Manage automated content generation schedules
           </p>
         </div>
-        <Button onClick={() => router.push("/dashboard/schedules/create")}>
-          <Plus className="w-4 h-4 mr-2" />
-          Create Schedule
-        </Button>
+        <div className="flex items-center gap-2">
+          <div className="w-[180px]">
+            <Select value={contentTypeFilter} onValueChange={setContentTypeFilter}>
+              <SelectTrigger>
+                <SelectValue placeholder="Filter content type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All content types</SelectItem>
+                <SelectItem value="post">Post</SelectItem>
+                <SelectItem value="service">Service</SelectItem>
+                <SelectItem value="product">Product</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button onClick={() => router.push("/dashboard/schedules/create")}>
+            <Plus className="w-4 h-4 mr-2" />
+            Create Schedule
+          </Button>
+        </div>
       </div>
 
       {schedules.length === 0 ? (
@@ -196,7 +234,7 @@ export default function SchedulesPage() {
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline">
-                      {schedule.payload.contentType}
+                      {resolveScheduleContentType(schedule)}
                     </Badge>
                   </TableCell>
                   <TableCell className="font-mono text-sm">

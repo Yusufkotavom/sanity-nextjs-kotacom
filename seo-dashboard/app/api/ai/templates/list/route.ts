@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { listTemplates } from "@/lib/ai-writer/prompt-templates";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 
 export async function GET(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const searchParams = request.nextUrl.searchParams;
     const contentType = searchParams.get("contentType");

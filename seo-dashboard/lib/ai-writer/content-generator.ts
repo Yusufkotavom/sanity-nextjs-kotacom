@@ -6,6 +6,7 @@ import { getTemplate, renderTemplate } from "./prompt-templates";
 import { getAiWriterResolvedSettings } from "./settings-source";
 import { generateImageSafe } from "./og-image-generator";
 import { publishContentSafe } from "./sanity-publisher";
+import { assertSupportedContentType, toSanityPublishType } from "./content-type";
 
 export interface GenerateContentParams {
   contentType: "post" | "service" | "product";
@@ -54,6 +55,8 @@ export interface BatchGenerateParams {
 const MAX_BATCH_SIZE = 50;
 const DEFAULT_CONCURRENCY = 3;
 const MAX_PROMPT_LENGTH = 20000;
+const AI_RETRY_ATTEMPTS = 3;
+const AI_RETRY_BASE_DELAY_MS = 500;
 
 // Cache for AI Writer Settings
 let settingsCache: {
@@ -253,6 +256,13 @@ function parseContent(rawOutput: string, contentType: string): {
     body = body || "No content generated";
   }
 
+  if (contentType === "service" && !/layanan|service|jasa/i.test(`${title} ${excerpt} ${body}`)) {
+    errors.push("Service content should clearly mention service context");
+  }
+  if (contentType === "product" && !/produk|product|fitur|spesifikasi/i.test(`${title} ${excerpt} ${body}`)) {
+    errors.push("Product content should mention product context");
+  }
+
   // Always valid now, but keep errors for warning
   const valid = true; // Changed: always save, show warnings instead
 
@@ -266,11 +276,31 @@ function parseContent(rawOutput: string, contentType: string): {
   return { title, excerpt, body, valid, errors };
 }
 
+async function generateAiTextWithBackoff(params: {
+  prompt: string;
+  system?: string;
+  provider?: "gateway" | "groq" | "gemini";
+}) {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= AI_RETRY_ATTEMPTS; attempt++) {
+    try {
+      return await generateAiText(params);
+    } catch (error) {
+      lastError = error;
+      if (attempt === AI_RETRY_ATTEMPTS) break;
+      const delayMs = AI_RETRY_BASE_DELAY_MS * 2 ** (attempt - 1);
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error("AI generation failed after retries");
+}
+
 /**
  * Generates content using AI providers with fallback
  */
 export async function generateContent(params: GenerateContentParams): Promise<GeneratedContent> {
   const database = db();
+  const normalizedContentType = assertSupportedContentType(params.contentType);
 
   // Resolve prompt if not provided
   let prompt = params.prompt || params.customPrompt || "";
@@ -280,7 +310,7 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
     const resolved = await resolvePrompt({
       customPrompt: params.customPrompt,
       templateId: params.promptTemplateId || params.templateId,
-      contentType: params.contentType,
+      contentType: normalizedContentType,
       variables: params.metadata as Record<string, string>,
     });
     prompt = resolved.prompt;
@@ -299,9 +329,9 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
   let model = "";
 
   try {
-    const result = await generateAiText({
+    const result = await generateAiTextWithBackoff({
       prompt,
-      system: params.system,
+      system,
       provider: params.provider,
     });
 
@@ -323,7 +353,7 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
         inputJson: {
           prompt: params.prompt,
           system: params.system || "",
-          contentType: params.contentType,
+          contentType: normalizedContentType,
           metadata: params.metadata,
         } as any,
         provider: "unknown",
@@ -339,7 +369,7 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
   }
 
   // Parse content
-  const parsed = parseContent(rawOutput, params.contentType);
+  const parsed = parseContent(rawOutput, normalizedContentType);
 
   // Store generation in database
   const [generation] = await database
@@ -351,7 +381,7 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
       inputJson: {
         prompt: params.prompt,
         system: params.system || "",
-        contentType: params.contentType,
+        contentType: normalizedContentType,
         metadata: params.metadata,
       } as any,
       provider,
@@ -379,7 +409,7 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
     const ogImage = await generateImageSafe({
       title: parsed.title,
       excerpt: parsed.excerpt,
-      contentType: params.contentType,
+      contentType: normalizedContentType,
     });
 
     if (ogImage) {
@@ -396,7 +426,7 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
   // Publish to Sanity if auto-publish enabled and content is valid
   if (params.autoPublish && parsed.valid) {
     const publishResult = await publishContentSafe({
-      contentType: params.contentType === "product" ? "project" : params.contentType,
+      contentType: toSanityPublishType(normalizedContentType),
       title: parsed.title,
       excerpt: parsed.excerpt,
       body: parsed.body,
@@ -422,7 +452,7 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
 
   return {
     id: generation.id,
-    contentType: params.contentType,
+    contentType: normalizedContentType,
     title: parsed.title,
     excerpt: parsed.excerpt,
     body: parsed.body,
@@ -443,6 +473,7 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
 export async function generateBatch(params: BatchGenerateParams): Promise<GeneratedContent[]> {
   const batchSize = Math.min(params.batchSize, MAX_BATCH_SIZE);
   const concurrency = params.concurrency || DEFAULT_CONCURRENCY;
+  const normalizedContentType = assertSupportedContentType(params.contentType);
 
   const results: GeneratedContent[] = [];
   const errors: Array<{ index: number; error: string }> = [];
@@ -456,7 +487,7 @@ export async function generateBatch(params: BatchGenerateParams): Promise<Genera
       
       batch.push(
         generateContent({
-          contentType: params.contentType,
+          contentType: normalizedContentType,
           prompt: params.prompt,
           system: params.system,
           templateId: params.templateId,
@@ -510,10 +541,14 @@ export async function retryGeneration(generationId: string): Promise<GeneratedCo
 
   // Retry with original parameters
   return generateContent({
-    contentType: inputJson.contentType,
+    contentType: assertSupportedContentType(inputJson.contentType),
     prompt: inputJson.prompt,
     system: inputJson.system,
-    metadata: inputJson.metadata,
+    metadata: {
+      ...(inputJson.metadata || {}),
+      retryOf: generationId,
+      retryAttempt: ((inputJson.metadata?.retryAttempt as number) || 0) + 1,
+    },
     templateId: original.templateId || undefined,
     jobRunId: original.jobRunId || undefined,
   });

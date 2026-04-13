@@ -9,6 +9,9 @@ import { submitIndexNow, submitSitemap, fetchSearchAnalytics, inspectUrl } from 
 import { desc, inArray } from "drizzle-orm";
 import { createHash } from "node:crypto";
 
+const AI_SCHEDULE_CONCURRENCY_LIMIT = Number(process.env.AI_SCHEDULE_CONCURRENCY || 3);
+const AI_SCHEDULE_TIMEOUT_MS = Number(process.env.AI_SCHEDULE_TIMEOUT_MS || 5 * 60 * 1000);
+
 function requireCronSecret(request: NextRequest) {
   const expected = process.env.CRON_SECRET || "";
   const provided = request.headers.get("x-cron-secret") || "";
@@ -103,6 +106,9 @@ async function processQueue(queue: string) {
       await updateJobRun(jobId, {
         status: "failed",
         errorMessage: error instanceof Error ? error.message : "job failed",
+        result: {
+          errorStack: error instanceof Error ? error.stack : null,
+        },
         finishedAt: new Date(),
       });
     }
@@ -150,6 +156,7 @@ async function executePublishingQueue(jobId: string, taskId: string, publishingQ
   
   const published: string[] = [];
   const failed: string[] = [];
+  const startedAt = Date.now();
   
   try {
     // Select content for publishing
@@ -231,6 +238,7 @@ async function executePublishingQueue(jobId: string, taskId: string, publishingQ
         published: published.length,
         failed: failed.length,
         publishedIds: published,
+        durationMs: Date.now() - startedAt,
       },
       errorMessage: failed.length > 0 ? `${failed.length} items failed to publish` : null,
       finishedAt: new Date(),
@@ -243,6 +251,10 @@ async function executePublishingQueue(jobId: string, taskId: string, publishingQ
     await updateJobRun(jobId, {
       status: "failed",
       errorMessage: error instanceof Error ? error.message : "Publishing queue execution failed",
+      result: {
+        errorStack: error instanceof Error ? error.stack : null,
+        durationMs: Date.now() - startedAt,
+      },
       finishedAt: new Date(),
     });
   }
@@ -267,6 +279,9 @@ async function processAiContentGeneration(jobId: string, taskId: string, payload
   const generated: string[] = [];
   const published: string[] = [];
   const failed: string[] = [];
+  const providerCounts: Record<string, number> = {};
+  const modelCounts: Record<string, number> = {};
+  const startedAt = Date.now();
   
   try {
     // Generate content items in batch
@@ -286,6 +301,8 @@ async function processAiContentGeneration(jobId: string, taskId: string, payload
         });
         
         generated.push(result.id);
+        providerCounts[result.provider] = (providerCounts[result.provider] || 0) + 1;
+        modelCounts[result.model] = (modelCounts[result.model] || 0) + 1;
         
         if (result.sanityDocumentId) {
           published.push(result.sanityDocumentId);
@@ -304,6 +321,9 @@ async function processAiContentGeneration(jobId: string, taskId: string, payload
         published: published.length,
         failed: failed.length,
         generationIds: generated,
+        providerCounts,
+        modelCounts,
+        durationMs: Date.now() - startedAt,
       },
       errorMessage: failed.length > 0 ? `${failed.length} items failed` : null,
       finishedAt: new Date(),
@@ -316,8 +336,42 @@ async function processAiContentGeneration(jobId: string, taskId: string, payload
     await updateJobRun(jobId, {
       status: "failed",
       errorMessage: error instanceof Error ? error.message : "Content generation failed",
+      result: {
+        errorStack: error instanceof Error ? error.stack : null,
+        durationMs: Date.now() - startedAt,
+      },
       finishedAt: new Date(),
     });
+  }
+}
+
+async function processAiTaskWithTimeout(task: typeof schema.scheduledTasks.$inferSelect) {
+  const job = await createJobRun({
+    taskId: task.id,
+    jobType: task.taskType,
+    payload: task.payload,
+  });
+
+  const scheduleType = task.scheduleType || "ai_generation";
+
+  let timeoutHandle: NodeJS.Timeout | undefined;
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    timeoutHandle = setTimeout(() => reject(new Error("AI schedule execution timed out after 5 minutes")), AI_SCHEDULE_TIMEOUT_MS);
+  });
+
+  try {
+    await Promise.race([
+      processAiContentGeneration(job.id, task.id, task.payload, scheduleType),
+      timeoutPromise,
+    ]);
+  } catch (error) {
+    await updateJobRun(job.id, {
+      status: "failed",
+      errorMessage: error instanceof Error ? error.message : "AI schedule execution failed",
+      finishedAt: new Date(),
+    });
+  } finally {
+    if (timeoutHandle) clearTimeout(timeoutHandle);
   }
 }
 
@@ -329,22 +383,28 @@ async function runScheduledTasks() {
     .from(schema.scheduledTasks)
     .where(and(eq(schema.scheduledTasks.enabled, true), lte(schema.scheduledTasks.nextRunAt, now)));
 
-  for (const task of tasks) {
+  const aiTasks = tasks.filter((task) => task.taskType === "ai_content_generation");
+  const otherTasks = tasks.filter((task) => task.taskType !== "ai_content_generation");
+
+  for (let index = 0; index < aiTasks.length; index += AI_SCHEDULE_CONCURRENCY_LIMIT) {
+    const batch = aiTasks.slice(index, index + AI_SCHEDULE_CONCURRENCY_LIMIT);
+    await Promise.all(
+      batch.map(async (task) => {
+        try {
+          await processAiTaskWithTimeout(task);
+        } catch (error) {
+          console.error(`Failed to process AI content generation for task ${task.id}:`, error);
+        }
+      }),
+    );
+  }
+
+  for (const task of otherTasks) {
     const job = await createJobRun({
       taskId: task.id,
       jobType: task.taskType,
       payload: task.payload,
     });
-
-    // Handle AI content generation directly (not via queue)
-    if (task.taskType === "ai_content_generation") {
-      // Process immediately without queue
-      const scheduleType = task.scheduleType || "ai_generation";
-      processAiContentGeneration(job.id, task.id, task.payload, scheduleType).catch((error) => {
-        console.error(`Failed to process AI content generation for task ${task.id}:`, error);
-      });
-      continue;
-    }
 
     // Handle other task types via queue
     const queue = task.taskType === "ai_generate" ? QUEUES.ai : task.taskType === "seo_audit" ? QUEUES.seo : QUEUES.search;
@@ -592,6 +652,25 @@ async function pullGa4Daily(options?: { startDate?: string; endDate?: string }) 
   };
 }
 
+async function cleanupOldJobRuns() {
+  const cutoff = new Date();
+  cutoff.setUTCDate(cutoff.getUTCDate() - 30);
+
+  const oldRuns = await db()
+    .select({ id: schema.jobRuns.id })
+    .from(schema.jobRuns)
+    .where(lte(schema.jobRuns.createdAt, cutoff))
+    .limit(5000);
+
+  if (!oldRuns.length) {
+    return { deleted: 0, cutoff: cutoff.toISOString() };
+  }
+
+  const ids = oldRuns.map((row) => row.id);
+  await db().delete(schema.jobRuns).where(inArray(schema.jobRuns.id, ids));
+  return { deleted: ids.length, cutoff: cutoff.toISOString() };
+}
+
 export async function POST(request: NextRequest) {
   if (!requireCronSecret(request)) {
     return NextResponse.json({ ok: false, message: "Unauthorized" }, { status: 401 });
@@ -798,6 +877,15 @@ export async function POST(request: NextRequest) {
       },
       { status: result.ok ? 200 : 400 },
     );
+  }
+
+  if (type === "cleanup-jobs") {
+    const cleanup = await cleanupOldJobRuns();
+    return NextResponse.json({
+      type,
+      ok: true,
+      ...cleanup,
+    });
   }
 
   if (type === "inspect-index") {

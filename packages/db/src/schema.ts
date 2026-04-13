@@ -36,19 +36,26 @@ export const contentItems = pgTable(
   }),
 );
 
-export const scheduledTasks = pgTable("scheduled_tasks", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  taskType: text("task_type").notNull(),
-  scheduleType: scheduleTypeEnum("schedule_type").default("ai_generation").notNull(),
-  name: text("name").notNull(),
-  cronExpr: text("cron_expr").notNull(),
-  timezone: text("timezone").default("Asia/Jakarta"),
-  enabled: boolean("enabled").default(true).notNull(),
-  payload: jsonb("payload").notNull(),
-  lastRunAt: timestamp("last_run_at", { withTimezone: true }),
-  nextRunAt: timestamp("next_run_at", { withTimezone: true }),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-});
+export const scheduledTasks = pgTable(
+  "scheduled_tasks",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    taskType: text("task_type").notNull(),
+    scheduleType: scheduleTypeEnum("schedule_type").default("ai_generation").notNull(),
+    name: text("name").notNull(),
+    cronExpr: text("cron_expr").notNull(),
+    timezone: text("timezone").default("Asia/Jakarta"),
+    enabled: boolean("enabled").default(true).notNull(),
+    payload: jsonb("payload").notNull(),
+    lastRunAt: timestamp("last_run_at", { withTimezone: true }),
+    nextRunAt: timestamp("next_run_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    nextRunAtIndex: index("scheduled_tasks_next_run_at_idx").on(table.nextRunAt),
+    enabledNextRunIndex: index("scheduled_tasks_enabled_next_run_at_idx").on(table.enabled, table.nextRunAt),
+  }),
+);
 
 export const jobRuns = pgTable(
   "job_runs",

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 
 export async function POST(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await request.json();
     const { template, variables, temperature, maxTokens } = body;

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { contentIdeas, aiGenerations } from "@repo/db/schema";
 import { desc, eq } from "drizzle-orm";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +11,9 @@ export const dynamic = "force-dynamic";
  * List all content ideas with generation info
  */
 export async function GET(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const database = db();
 

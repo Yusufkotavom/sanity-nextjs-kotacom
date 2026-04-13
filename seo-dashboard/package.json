@@ -15,7 +15,8 @@
     "seo:audit": "node scripts/audit-seo-metadata.mjs",
     "seo:test:indexing": "node scripts/test-indexing.mjs",
     "seo:test:audit": "node scripts/test-seo-audit.mjs",
-    "seo:test:revalidate": "node scripts/test-revalidate.mjs"
+    "seo:test:revalidate": "node scripts/test-revalidate.mjs",
+    "ai:test:cron": "tsx scripts/test-cron-execution.ts"
   },
   "dependencies": {
     "@ai-sdk/gateway": "^3.0.85",

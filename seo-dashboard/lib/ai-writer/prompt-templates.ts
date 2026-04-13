@@ -37,6 +37,26 @@ export interface UpdateTemplateParams {
 
 const MAX_SYSTEM_PROMPT_LENGTH = 5000;
 const MAX_USER_PROMPT_LENGTH = 10000;
+const TEMPLATE_CACHE_TTL = 10 * 60 * 1000;
+
+let templateListCache: {
+  timestamp: number;
+  data: PromptTemplate[] | null;
+} = {
+  timestamp: 0,
+  data: null,
+};
+
+let templateByIdCache = new Map<string, { timestamp: number; data: PromptTemplate | null }>();
+
+function invalidateTemplateCache(id?: string) {
+  templateListCache = { timestamp: 0, data: null };
+  if (id) {
+    templateByIdCache.delete(id);
+  } else {
+    templateByIdCache.clear();
+  }
+}
 
 /**
  * Validates template variable names (alphanumeric with underscores only)
@@ -91,10 +111,12 @@ export async function createTemplate(params: CreateTemplateParams): Promise<Prom
     })
     .returning();
 
-  return {
+  const mapped = {
     ...template,
     variables: template.variables as TemplateVariable[],
   } as PromptTemplate;
+  invalidateTemplateCache();
+  return mapped;
 }
 
 /**
@@ -127,10 +149,12 @@ export async function updateTemplate(
     throw new Error(`Template with id ${id} not found`);
   }
 
-  return {
+  const mapped = {
     ...template,
     variables: template.variables as TemplateVariable[],
   } as PromptTemplate;
+  invalidateTemplateCache(id);
+  return mapped;
 }
 
 /**
@@ -142,12 +166,18 @@ export async function deleteTemplate(id: string): Promise<void> {
   await database
     .delete(promptTemplates)
     .where(eq(promptTemplates.id, id));
+  invalidateTemplateCache(id);
 }
 
 /**
  * Lists all prompt templates, optionally filtered by content type
  */
 export async function listTemplates(contentType?: string): Promise<PromptTemplate[]> {
+  const now = Date.now();
+  if (!contentType && templateListCache.data && now - templateListCache.timestamp < TEMPLATE_CACHE_TTL) {
+    return templateListCache.data;
+  }
+
   const database = db();
   
   let query = database.select().from(promptTemplates);
@@ -158,16 +188,27 @@ export async function listTemplates(contentType?: string): Promise<PromptTemplat
 
   const templates = await query;
 
-  return templates.map((template) => ({
+  const mapped = templates.map((template) => ({
     ...template,
     variables: template.variables as TemplateVariable[],
   } as PromptTemplate));
+
+  if (!contentType) {
+    templateListCache = { timestamp: now, data: mapped };
+  }
+  return mapped;
 }
 
 /**
  * Gets a single prompt template by ID
  */
 export async function getTemplate(id: string): Promise<PromptTemplate | null> {
+  const now = Date.now();
+  const cached = templateByIdCache.get(id);
+  if (cached && now - cached.timestamp < TEMPLATE_CACHE_TTL) {
+    return cached.data;
+  }
+
   const database = db();
   
   const [template] = await database
@@ -176,13 +217,16 @@ export async function getTemplate(id: string): Promise<PromptTemplate | null> {
     .where(eq(promptTemplates.id, id));
 
   if (!template) {
+    templateByIdCache.set(id, { timestamp: now, data: null });
     return null;
   }
 
-  return {
+  const mapped = {
     ...template,
     variables: template.variables as TemplateVariable[],
   } as PromptTemplate;
+  templateByIdCache.set(id, { timestamp: now, data: mapped });
+  return mapped;
 }
 
 /**

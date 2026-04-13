@@ -3,11 +3,15 @@ import { getSchedule, updateSchedule, deleteSchedule } from "@/lib/ai-writer/sch
 import { db } from "@/lib/db";
 import { jobRuns } from "@repo/db/schema";
 import { eq, desc } from "drizzle-orm";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const { id } = await params;
     
@@ -46,6 +50,9 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const { id } = await params;
     const body = await request.json();
@@ -76,6 +83,9 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const { id } = await params;
     

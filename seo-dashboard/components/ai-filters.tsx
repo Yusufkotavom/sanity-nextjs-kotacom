@@ -12,6 +12,8 @@ export function AiFilters() {
   const provider = searchParams.get("provider") || "all";
   const validation = searchParams.get("validation") || "all";
   const sanityStatus = searchParams.get("sanity") || "all";
+  const sourceType = searchParams.get("source") || "all";
+  const contentType = searchParams.get("contentType") || "all";
 
   function updateFilter(key: string, value: string) {
     const params = new URLSearchParams(searchParams.toString());
@@ -27,7 +29,12 @@ export function AiFilters() {
     router.push("/dashboard/ai");
   }
 
-  const hasFilters = provider !== "all" || validation !== "all" || sanityStatus !== "all";
+  const hasFilters =
+    provider !== "all" ||
+    validation !== "all" ||
+    sanityStatus !== "all" ||
+    sourceType !== "all" ||
+    contentType !== "all";
 
   return (
     <div className="flex flex-wrap gap-3 items-end">
@@ -72,6 +79,36 @@ export function AiFilters() {
             <SelectItem value="success">Success</SelectItem>
             <SelectItem value="failed">Failed</SelectItem>
             <SelectItem value="pending">Pending</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="min-w-[150px]">
+        <label className="text-sm font-medium mb-1.5 block">Source Type</label>
+        <Select value={sourceType} onValueChange={(value) => updateFilter("source", value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="All Sources" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Sources</SelectItem>
+            <SelectItem value="manual">Manual</SelectItem>
+            <SelectItem value="scheduled">Scheduled</SelectItem>
+            <SelectItem value="batch">Batch</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="min-w-[150px]">
+        <label className="text-sm font-medium mb-1.5 block">Content Type</label>
+        <Select value={contentType} onValueChange={(value) => updateFilter("contentType", value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="All Types" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Types</SelectItem>
+            <SelectItem value="post">Post</SelectItem>
+            <SelectItem value="service">Service</SelectItem>
+            <SelectItem value="product">Product</SelectItem>
           </SelectContent>
         </Select>
       </div>

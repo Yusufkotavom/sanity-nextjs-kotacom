@@ -301,3 +301,135 @@ No direct SEO impact. Verification step confirming no regressions in the schedul
 
 ### Verification Status
 ✅ All 17 preservation tests passed (0 failures)
+
+## 2026-04-13 — Kiro Task Verification + Main Task Completion (AI Scheduler)
+
+### Changed Files
+- `.kiro/specs/ai-content-scheduler/tasks.md` (MODIFIED) - Updated checklist statuses after implementation verification and completion pass
+- `.kiro/specs/schedule-system-clarity-fix/tasks.md` (MODIFIED) - Marked parent task 3 as completed to match completed subtasks
+- `seo-dashboard/app/api/ai/templates/[id]/route.ts` (NEW) - Added per-template GET/PUT/DELETE API route
+- `seo-dashboard/app/api/ai/push-to-sanity/route.ts` (MODIFIED) - Extended retry publish flow for generation IDs and publisher-based retry
+- `seo-dashboard/app/api/internal/cron-run/route.ts` (MODIFIED) - Added AI schedule concurrency limiting and per-task timeout guard
+- `seo-dashboard/app/dashboard/ai/page.tsx` (MODIFIED) - Added source/content filters and template-name hydration in generation list data
+- `seo-dashboard/app/dashboard/ai/templates/page.tsx` (MODIFIED) - Added content-type filtering and corrected delete flow to per-ID endpoint
+- `seo-dashboard/components/ai-filters.tsx` (MODIFIED) - Added source type and content type filter controls
+- `seo-dashboard/components/ai-history-table.tsx` (MODIFIED) - Added source/content/template columns, OG preview thumbnail, validation error preview, and retry publish action
+- `seo-dashboard/components/template-dialog.tsx` (MODIFIED) - Reworked to Shadcn select/checkbox usage, edit/create API branching, and client-side variable/prompt validation
+
+### Summary
+Verified unchecked Kiro tasks against implementation and completed the main pending scheduler-related work:
+1. Completed cron-run hardening for scheduled AI tasks with explicit concurrency cap (`3`) and 5-minute timeout handling per AI schedule run.
+2. Completed retry-publish API path by extending `/api/ai/push-to-sanity` to handle generation retry flow through the existing Sanity publisher service.
+3. Completed prompt-template dashboard gaps by adding per-template CRUD route support, fixed delete path usage, added content-type filter, and strengthened template form validation.
+4. Completed generation list enhancement scope by adding source/content filtering, OG preview thumbnail rendering, template name visibility, retry publish button for failed writes, and validation error visibility.
+5. Synced Kiro task checklist files with verified implementation state.
+
+### Impact on SEO/Integration
+- No direct SEO impact.
+- Integration impact:
+  - Improves operational reliability for scheduled publishing/generation workflows.
+  - Reduces manual recovery friction for failed Sanity publishes.
+  - Improves AI content operations visibility (source/content/template/error context) in the dashboard UI.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard typecheck` passed.
+- ✅ Manual code verification completed for Kiro tasks 8.1, 11.1, 14.1–14.3, and 15.1.
+- ⚠️ Integration tests for cron execution (task 8.2) are still not present in this pass.
+
+## 2026-04-13 — Essential Hardening: AI API Auth Coverage
+
+### Changed Files
+- `.kiro/specs/ai-content-scheduler/tasks.md` (MODIFIED) - Marked task 18.2 auth checks as completed
+- `seo-dashboard/app/api/ai/schedule/create/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/schedule/list/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/schedule/[id]/route.ts` (MODIFIED) - Added SEO API auth guard for GET/PUT/DELETE
+- `seo-dashboard/app/api/ai/templates/create/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/templates/list/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/templates/[id]/route.ts` (MODIFIED) - Added SEO API auth guard for GET/PUT/DELETE
+- `seo-dashboard/app/api/ai/templates/test/route.ts` (MODIFIED) - Added SEO API auth guard for GET/POST/DELETE
+- `seo-dashboard/app/api/ai/generations/[id]/route.ts` (MODIFIED) - Added SEO API auth guard for GET/PUT
+- `seo-dashboard/app/api/ai/generations/[id]/ready/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/generations/[id]/publish/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/generations/bulk-delete/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/generate-with-template/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/ideas/[id]/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/ideas/bulk-delete/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/ideas/generate-content/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/ideas/generate-outline/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/ideas/generate/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/ideas/list/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/save-prompt/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/test-generate/route.ts` (MODIFIED) - Added SEO API auth guard
+- `seo-dashboard/app/api/ai/test-prompt/route.ts` (MODIFIED) - Added SEO API auth guard
+
+### Summary
+Completed essential API security hardening for AI scheduler and related AI operations endpoints by enforcing `ensureSeoApiAccess` checks across the entire `/api/ai/**` route surface (with internal cron and action-secret route patterns preserved where applicable).
+
+This closes the highest-risk gap remaining after scheduler execution and retry-publish work by ensuring all AI-facing API operations are authenticated before request handling.
+
+### Impact on SEO/Integration
+- No direct SEO impact.
+- Integration/Security impact:
+  - Prevents unauthorized use of AI generation, scheduling, template, and publish APIs.
+  - Aligns AI routes with existing SEO dashboard auth contract.
+  - Reduces risk of accidental public API exposure and abuse.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard typecheck` passed.
+- ✅ Coverage scan confirms no remaining `/api/ai/**` route without `ensureSeoApiAccess` (except routes protected by dedicated internal-secret patterns).
+
+## 2026-04-13 — Complete Remaining AI Scheduler Tasks (All Remaining Checklist Items)
+
+### Changed Files
+- `.kiro/specs/ai-content-scheduler/tasks.md` (MODIFIED) - Completed remaining task checklist from sections 8, 15-22
+- `seo-dashboard/lib/ai-writer/content-type.ts` (NEW) - Centralized content type validation and Sanity type mapping
+- `seo-dashboard/lib/sanitize.ts` (NEW) - Input sanitization helpers
+- `seo-dashboard/lib/rate-limit.ts` (NEW) - In-memory API rate limit helper
+- `seo-dashboard/lib/ai-writer/content-generator.ts` (MODIFIED) - Added AI backoff retries, content-type validation hints, retry metadata, and stronger typed content flow
+- `seo-dashboard/lib/ai-writer/prompt-templates.ts` (MODIFIED) - Added 10-minute template cache + cache invalidation on CRUD updates
+- `seo-dashboard/lib/ai-writer/og-image-generator.ts` (MODIFIED) - Added content-type-specific OG template defaults
+- `seo-dashboard/app/api/internal/cron-run/route.ts` (MODIFIED) - Added richer job logging metadata, stack capture, duration metrics, env-driven scheduler limits, and `cleanup-jobs` mode
+- `seo-dashboard/app/api/ai/schedule/create/route.ts` (MODIFIED) - Added sanitization + batch/contentType resource limit checks
+- `seo-dashboard/app/api/ai/schedule/list/route.ts` (MODIFIED) - Added contentType filtering support
+- `seo-dashboard/app/dashboard/schedules/page.tsx` (MODIFIED) - Added content-type filter UI and publishing queue payload-safe rendering
+- `seo-dashboard/app/dashboard/ai/page.tsx` (MODIFIED) - Added generation stats widget (total, success rate, avg duration, breakdown) + date range filter
+- `seo-dashboard/app/dashboard/jobs/[id]/page.tsx` (NEW) - Added job run detail view with timeline, result JSON, and related generation links
+- `seo-dashboard/components/job-details-row.tsx` (MODIFIED) - Added quick link to new job detail page
+- `seo-dashboard/app/api/ai/generations/[id]/retry/route.ts` (NEW) - Added retry generation endpoint using existing retry mechanism
+- `seo-dashboard/app/api/ai/generations/[id]/publish/route.ts` (MODIFIED) - Wrapped critical DB status updates in transactions
+- `seo-dashboard/app/api/ai/push-to-sanity/route.ts` (MODIFIED) - Wrapped critical DB status updates in transactions
+- `seo-dashboard/app/api/ai/generate-with-template/route.ts` (MODIFIED) - Added rate limit + strict content type validation
+- `seo-dashboard/app/api/ai/ideas/generate/route.ts` (MODIFIED) - Added rate limit + sanitization + resource limit for count
+- `seo-dashboard/app/api/ai/ideas/generate-outline/route.ts` (MODIFIED) - Added rate limit
+- `seo-dashboard/app/api/ai/ideas/generate-content/route.ts` (MODIFIED) - Added rate limit + strict content type validation
+- `seo-dashboard/app/api/ai/templates/create/route.ts` (MODIFIED) - Added input sanitization and structured variable normalization
+- `seo-dashboard/app/api/ai/templates/[id]/route.ts` (MODIFIED) - Added sanitized update payload handling
+- `seo-dashboard/app/api/ai/test-generate/route.ts` (MODIFIED) - Added rate limit + strict content type validation
+- `seo-dashboard/package.json` (MODIFIED) - Added `ai:test:cron` script using local `tsx`
+- `seo-dashboard/scripts/test-cron-execution.ts` (NEW) - Added integration test script for cron schedule execution path with no-DB skip guard
+- `seo-dashboard/.env.example` (MODIFIED) - Added optional scheduler/rate-limit env documentation
+- `seo-dashboard/README.md` (MODIFIED) - Added scheduler operations, expanded AI API docs, troubleshooting, and cron test script docs
+
+### Summary
+Completed the remaining main scheduler/task backlog in the Kiro spec by implementing missing operational, observability, recovery, security, content-type, and documentation components:
+1. Added stats + filtering enhancements for generation operations UI (including date-range driven dashboard widget).
+2. Added job-run detail page and richer cron logging payloads (provider/model counts, durations, stack metadata).
+3. Added retry generation API endpoint and DB transaction wrapping on publish-status critical updates.
+4. Added backoff retries for AI generation, route-level API rate limiting, and endpoint input sanitization.
+5. Added content-type validation/mapping utility and content-type-specific OG template default selection.
+6. Added prompt template caching and job-run cleanup mode in cron worker endpoint.
+7. Added cron integration test script and updated env/README operational docs.
+8. Synced the Kiro checklist to fully completed status.
+
+### Impact on SEO/Integration
+- No direct SEO ranking impact.
+- Integration impact:
+  - Improves scheduler runtime reliability, visibility, and safety.
+  - Reduces operational risk from unauthenticated or abusive API usage.
+  - Improves recovery paths for failed generation/publish workflows.
+  - Improves maintainability with typed content contracts and documented operational controls.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard typecheck` passed after all changes.
+- ✅ `pnpm --filter seo-dashboard ai:test:cron` executed successfully in guarded mode (skipped in this environment due missing `DATABASE_URL`).
+- ⚠️ Full DB-backed integration execution requires runtime `DATABASE_URL` and scheduler-capable environment.

@@ -6,6 +6,7 @@ import {
   renderTemplate,
   deleteTemplate,
 } from "@/lib/ai-writer/prompt-templates";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 
 /**
  * Test endpoint for prompt template operations
@@ -17,6 +18,9 @@ import {
  * DELETE /api/ai/templates/test?id=<uuid>
  */
 export async function GET(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const searchParams = request.nextUrl.searchParams;
     const action = searchParams.get("action");
@@ -71,6 +75,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await request.json();
     const { action } = body;
@@ -134,6 +141,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const searchParams = request.nextUrl.searchParams;
     const id = searchParams.get("id");

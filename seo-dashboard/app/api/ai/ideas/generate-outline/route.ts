@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { contentIdeas } from "@repo/db/schema";
 import { eq } from "drizzle-orm";
 import { generateAiText } from "@/lib/ai-writer/generate";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
+import { checkSimpleRateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +13,12 @@ export const dynamic = "force-dynamic";
  * Generate outline from content idea
  */
 export async function POST(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const rate = checkSimpleRateLimit({ key: `ideas-outline:${ip}`, limit: 30, windowMs: 60_000 });
+  if (!rate.ok) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+
   try {
     const body = await request.json();
     const { ideaId } = body;

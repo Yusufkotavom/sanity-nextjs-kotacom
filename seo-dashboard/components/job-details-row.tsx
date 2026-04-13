@@ -5,6 +5,7 @@ import { ChevronDown, ChevronRight, Clock, AlertCircle, CheckCircle } from "luci
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DeleteJobButton } from "@/components/delete-job-button";
+import Link from "next/link";
 
 interface JobDetailsRowProps {
   job: {
@@ -56,7 +57,12 @@ export function JobDetailsRow({ job }: JobDetailsRowProps) {
           }).format(new Date(job.createdAt))}
         </td>
         <td className="px-4 py-3">
-          <DeleteJobButton jobId={job.id} jobType={job.jobType} />
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="sm" asChild>
+              <Link href={`/dashboard/jobs/${job.id}`}>View</Link>
+            </Button>
+            <DeleteJobButton jobId={job.id} jobType={job.jobType} />
+          </div>
         </td>
       </tr>
       {isExpanded && (

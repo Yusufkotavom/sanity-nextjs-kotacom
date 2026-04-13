@@ -2,10 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { aiGenerations } from "@repo/db/schema";
 import { inArray } from "drizzle-orm";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const { ids } = await request.json();
 

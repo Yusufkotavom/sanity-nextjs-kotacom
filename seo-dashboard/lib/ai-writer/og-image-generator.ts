@@ -43,7 +43,13 @@ function truncate(text: string, maxLength: number): string {
  * Generates OG image using Vercel OG or alternative service
  */
 async function generateImageUrl(params: OGImageParams): Promise<string> {
-  const { title, excerpt, template = "default", dimensions = DEFAULT_DIMENSIONS } = params;
+  const templateByType: Record<OGImageParams["contentType"], "default" | "minimal" | "branded"> = {
+    post: "default",
+    service: "branded",
+    product: "minimal",
+  };
+  const { title, excerpt, dimensions = DEFAULT_DIMENSIONS } = params;
+  const template = params.template || templateByType[params.contentType];
 
   // Truncate text for image generation
   const truncatedTitle = truncate(title, 60);

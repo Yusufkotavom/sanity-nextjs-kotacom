@@ -13,8 +13,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Plus, X } from "lucide-react";
+import { toast } from "sonner";
 
 interface Variable {
   name: string;
@@ -45,6 +53,7 @@ export function TemplateDialog({ open, onClose, template }: TemplateDialogProps)
   const [userPromptTemplate, setUserPromptTemplate] = useState("");
   const [variables, setVariables] = useState<Variable[]>([]);
   const [saving, setSaving] = useState(false);
+  const variableNameRegex = /^[a-zA-Z0-9_]+$/;
 
   useEffect(() => {
     if (template) {
@@ -80,10 +89,31 @@ export function TemplateDialog({ open, onClose, template }: TemplateDialogProps)
   };
 
   const handleSave = async () => {
+    if (systemPrompt.length > 5000) {
+      toast.error("System prompt must be 5000 characters or less");
+      return;
+    }
+
+    if (userPromptTemplate.length > 10000) {
+      toast.error("User prompt template must be 10000 characters or less");
+      return;
+    }
+
+    const invalidVariable = variables.find(
+      (v) => v.name.trim() && !variableNameRegex.test(v.name.trim()),
+    );
+    if (invalidVariable) {
+      toast.error(`Invalid variable name: "${invalidVariable.name}"`);
+      return;
+    }
+
     setSaving(true);
     try {
-      const response = await fetch("/api/ai/templates/create", {
-        method: "POST",
+      const isEdit = Boolean(template?.id);
+      const response = await fetch(
+        isEdit ? `/api/ai/templates/${template!.id}` : "/api/ai/templates/create",
+        {
+          method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,
@@ -92,16 +122,18 @@ export function TemplateDialog({ open, onClose, template }: TemplateDialogProps)
           userPromptTemplate,
           variables: variables.filter((v) => v.name.trim() !== ""),
         }),
-      });
+        },
+      );
 
       if (response.ok) {
+        toast.success(isEdit ? "Template updated" : "Template created");
         onClose(true);
       } else {
         const error = await response.json();
-        alert(`Failed to save template: ${error.error}`);
+        toast.error(error.error || "Failed to save template");
       }
-    } catch (error) {
-      alert("Failed to save template");
+    } catch {
+      toast.error("Failed to save template");
     } finally {
       setSaving(false);
     }
@@ -130,16 +162,17 @@ export function TemplateDialog({ open, onClose, template }: TemplateDialogProps)
 
           <div>
             <Label htmlFor="contentType">Content Type</Label>
-            <select
-              id="contentType"
-              value={contentType}
-              onChange={(e) => setContentType(e.target.value)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-            >
-              <option value="post">Post</option>
-              <option value="service">Service</option>
-              <option value="product">Product</option>
-            </select>
+            <Select value={contentType} onValueChange={setContentType}>
+              <SelectTrigger id="contentType">
+                <SelectValue placeholder="Select content type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="post">Post</SelectItem>
+                <SelectItem value="service">Service</SelectItem>
+                <SelectItem value="product">Product</SelectItem>
+                <SelectItem value="all">All</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
@@ -206,11 +239,10 @@ export function TemplateDialog({ open, onClose, template }: TemplateDialogProps)
                     />
                     <div className="flex items-center gap-4">
                       <label className="flex items-center gap-2 text-sm">
-                        <input
-                          type="checkbox"
+                        <Checkbox
                           checked={variable.required}
-                          onChange={(e) =>
-                            handleVariableChange(index, "required", e.target.checked)
+                          onCheckedChange={(checked) =>
+                            handleVariableChange(index, "required", checked === true)
                           }
                         />
                         Required
@@ -228,6 +260,9 @@ export function TemplateDialog({ open, onClose, template }: TemplateDialogProps)
                 ))}
               </div>
             )}
+            <p className="mt-2 text-xs text-muted-foreground">
+              Variable name format: letters, numbers, underscore only (example: <code>topic_name</code>)
+            </p>
           </div>
         </div>
 

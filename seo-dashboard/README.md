@@ -150,8 +150,17 @@ wrangler secret put CRON_SECRET
 ### AI
 
 - `POST /api/ai/generate` - Generate AI content
+- `POST /api/ai/generate-with-template` - Generate content from template/custom prompt
 - `POST /api/ai/retry-parse` - Retry parsing output
 - `POST /api/ai/push-to-sanity` - Push to Sanity draft
+- `PATCH /api/ai/generations/:id/ready` - Toggle ready-to-publish
+- `POST /api/ai/generations/:id/publish` - Publish generation to Sanity
+- `GET|PUT /api/ai/generations/:id` - Generation detail/edit
+- `POST /api/ai/generations/bulk-delete` - Bulk delete generations
+- `GET|PUT|DELETE /api/ai/templates/:id` - Template CRUD by ID
+- `POST /api/ai/schedule/create` - Create AI schedule
+- `GET /api/ai/schedule/list` - List schedules (supports `contentType` filter)
+- `GET|PUT|DELETE /api/ai/schedule/:id` - Schedule detail/update/delete
 
 ### SEO
 
@@ -170,6 +179,18 @@ wrangler secret put CRON_SECRET
 - `POST /api/internal/cron-run` - Worker cron trigger
 - `POST /api/internal/content-published-webhook` - Sanity webhook
 - `POST /api/internal/revalidate` - Revalidate frontend
+
+## AI Scheduler Operations
+
+- Scheduled execution route type:
+  - `run-scheduled` executes due schedules (`scheduled_tasks.enabled = true` and `next_run_at <= now`)
+  - `cleanup-jobs` removes `job_runs` older than 30 days
+- Scheduler controls:
+  - `AI_SCHEDULE_CONCURRENCY` (default `3`)
+  - `AI_SCHEDULE_TIMEOUT_MS` (default `300000`)
+- Security:
+  - All `/api/ai/**` routes require dashboard auth (`ensureSeoApiAccess`)
+  - `/api/internal/cron-run` requires `x-cron-secret = CRON_SECRET`
 
 ## AI Provider Routing
 
@@ -246,6 +267,9 @@ pnpm seo:test:audit
 
 # Test revalidate
 pnpm seo:test:revalidate
+
+# AI scheduler cron integration smoke test
+pnpm ai:test:cron
 ```
 
 ## Documentation
@@ -255,6 +279,17 @@ pnpm seo:test:revalidate
 - [docs/ops-dashboard-files-summary.md](../docs/ops-dashboard-files-summary.md) - Implementation summary
 
 ## Monitoring
+
+## Troubleshooting
+
+1. Cron run returns `401 Unauthorized`:
+   Ensure worker sends `x-cron-secret` matching `CRON_SECRET`.
+2. AI schedule stuck on failed:
+   Open `/dashboard/jobs/:id` and inspect `result.errorStack` + `errorMessage`.
+3. Publish retry fails:
+   Verify `SANITY_AUTH_TOKEN` or `SANITY_DEV` is set and has write scope.
+4. Rate-limit responses (`429`) on AI routes:
+   Reduce burst requests or increase per-route limit in `lib/rate-limit.ts`.
 
 ### Database Queries
 

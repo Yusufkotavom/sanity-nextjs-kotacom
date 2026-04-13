@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { contentIdeas } from "@repo/db/schema";
 import { generateAiText } from "@/lib/ai-writer/generate";
+import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
+import { checkSimpleRateLimit } from "@/lib/rate-limit";
+import { sanitizeText } from "@/lib/sanitize";
+import { assertSupportedContentType } from "@/lib/ai-writer/content-type";
 
 export const dynamic = "force-dynamic";
 
@@ -10,9 +14,17 @@ export const dynamic = "force-dynamic";
  * Generate content ideas using AI
  */
 export async function POST(request: NextRequest) {
+  const auth = await ensureSeoApiAccess(request);
+  if (!auth.ok) return auth.response;
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const rate = checkSimpleRateLimit({ key: `ideas-generate:${ip}`, limit: 20, windowMs: 60_000 });
+  if (!rate.ok) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+
   try {
     const body = await request.json();
-    const { topic, contentType, count = 5 } = body;
+    const topic = sanitizeText(body.topic, 200);
+    const contentType = assertSupportedContentType(body.contentType);
+    const count = Math.min(Number(body.count || 5), 50);
 
     if (!topic || !contentType) {
       return NextResponse.json(

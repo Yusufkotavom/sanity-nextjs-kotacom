@@ -10,12 +10,17 @@ import { ReadyCheckbox } from "@/components/ready-checkbox";
 import { Trash2, Send, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { OGImagePreview } from "@/components/og-image-preview";
 
 interface Generation {
   id: string;
+  sourceType: string;
+  contentType?: string;
+  templateName?: string | null;
   provider: string;
   model: string;
   validationStatus: string;
+  validationErrors?: string[] | null;
   sanityWriteStatus: string;
   ogImageAssetId: string | null;
   readyToPublish: boolean;
@@ -214,6 +219,9 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
               />
             </TableHead>
             <TableHead>Provider</TableHead>
+            <TableHead>Source</TableHead>
+            <TableHead>Content</TableHead>
+            <TableHead>Template</TableHead>
             <TableHead>Model</TableHead>
             <TableHead>Validation</TableHead>
             <TableHead>Sanity</TableHead>
@@ -233,11 +241,23 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
                 />
               </TableCell>
               <TableCell className="font-medium">{item.provider}</TableCell>
+              <TableCell className="text-sm capitalize">{item.sourceType || "-"}</TableCell>
+              <TableCell className="text-sm capitalize">{item.contentType || "-"}</TableCell>
+              <TableCell className="text-sm">{item.templateName || "-"}</TableCell>
               <TableCell className="text-sm">{item.model}</TableCell>
               <TableCell>
-                <Badge variant={item.validationStatus === "invalid" ? "destructive" : "secondary"}>
-                  {item.validationStatus}
-                </Badge>
+                <div className="space-y-1">
+                  <Badge variant={item.validationStatus === "invalid" ? "destructive" : "secondary"}>
+                    {item.validationStatus}
+                  </Badge>
+                  {item.validationStatus === "invalid" &&
+                    Array.isArray(item.validationErrors) &&
+                    item.validationErrors.length > 0 && (
+                      <p className="max-w-[240px] text-xs text-destructive line-clamp-2">
+                        {item.validationErrors.join(", ")}
+                      </p>
+                    )}
+                </div>
               </TableCell>
               <TableCell>
                 <Badge 
@@ -254,7 +274,9 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
               </TableCell>
               <TableCell>
                 {item.ogImageAssetId ? (
-                  <Badge variant="outline">✓</Badge>
+                  <div className="w-16 overflow-hidden rounded border">
+                    <OGImagePreview assetId={item.ogImageAssetId} className="h-10 w-16 object-cover" />
+                  </div>
                 ) : (
                   <span className="text-muted-foreground text-sm">-</span>
                 )}
@@ -272,6 +294,50 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
               <TableCell className="text-sm">{formatDate(item.createdAt)}</TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
+                  {item.validationStatus === "invalid" && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={async () => {
+                        try {
+                          const response = await fetch(`/api/ai/generations/${item.id}/retry`, {
+                            method: "POST",
+                          });
+                          if (!response.ok) {
+                            throw new Error("Retry generation failed");
+                          }
+                          toast.success("Generation retried");
+                          window.location.reload();
+                        } catch {
+                          toast.error("Retry generation failed");
+                        }
+                      }}
+                    >
+                      Retry Gen
+                    </Button>
+                  )}
+                  {item.sanityWriteStatus === "failed" && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={async () => {
+                        try {
+                          const response = await fetch(`/api/ai/generations/${item.id}/publish`, {
+                            method: "POST",
+                          });
+                          if (!response.ok) {
+                            throw new Error("Retry publish failed");
+                          }
+                          toast.success("Retry publish started");
+                          window.location.reload();
+                        } catch {
+                          toast.error("Retry publish failed");
+                        }
+                      }}
+                    >
+                      Retry Publish
+                    </Button>
+                  )}
                   <Button variant="outline" size="sm" asChild>
                     <Link href={`/dashboard/ai/${item.id}`}>
                       Edit
