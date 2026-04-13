@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
     const topic = sanitizeText(body.topic, 200);
     const contentType = assertSupportedContentType(body.contentType);
     const count = Math.min(Number(body.count || 5), 50);
+    const customPrompt = sanitizeText(body.customPrompt, 20000);
 
     if (!topic || !contentType) {
       return NextResponse.json(
@@ -33,8 +34,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate ideas using AI
-    const prompt = `Generate ${count} unique content ideas for ${contentType} about: ${topic}
+    const defaultPrompt = `Generate ${count} unique content ideas for ${contentType} about: ${topic}
 
 For each idea, provide:
 - idea: The content idea/title
@@ -59,6 +59,13 @@ Make each idea:
 - SEO-friendly
 - Relevant to the topic
 - Unique from each other`;
+
+    const prompt = customPrompt
+      ? customPrompt
+          .replace(/\{\{\s*topic\s*\}\}/gi, topic)
+          .replace(/\{\{\s*contentType\s*\}\}/gi, contentType)
+          .replace(/\{\{\s*count\s*\}\}/gi, String(count))
+      : defaultPrompt;
 
     const result = await generateAiText({
       prompt,

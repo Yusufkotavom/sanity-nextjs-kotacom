@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { generateAiText } from "@/lib/ai-writer/generate";
 import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 import { checkSimpleRateLimit } from "@/lib/rate-limit";
+import { sanitizeText } from "@/lib/sanitize";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +23,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { ideaId } = body;
+    const customPrompt = sanitizeText(body.customPrompt, 20000);
 
     if (!ideaId) {
       return NextResponse.json(
@@ -45,8 +47,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate outline using AI
-    const prompt = `Create a detailed content outline for this ${idea.contentType}:
+    const defaultPrompt = `Create a detailed content outline for this ${idea.contentType}:
 
 "${idea.idea}"
 
@@ -57,6 +58,17 @@ Return a structured outline with:
 - SEO keywords to target
 
 Format as a clear, hierarchical outline.`;
+
+    const prompt = customPrompt
+      ? customPrompt
+          .replace(/\{\{\s*idea\s*\}\}/gi, idea.idea)
+          .replace(/\{\{\s*topic\s*\}\}/gi, idea.topic)
+          .replace(/\{\{\s*contentType\s*\}\}/gi, idea.contentType)
+          .replace(/\{\{\s*audience\s*\}\}/gi, idea.audience || "general audience")
+          .replace(/\{\{\s*keyword\s*\}\}/gi, idea.keyword || idea.topic)
+          .replace(/\{\{\s*wordCount\s*\}\}/gi, idea.wordCount || "1500")
+          .replace(/\{\{\s*location\s*\}\}/gi, idea.location || "general")
+      : defaultPrompt;
 
     const result = await generateAiText({
       prompt,

@@ -43,8 +43,10 @@ export default function CreateSchedulePage() {
     useTemplate: false,
     templateId: "",
     customPrompt: "",
-    publishingQueueContentType: "",
+    publishingQueueContentType: "all",
     publishingQueueBatchSize: 5,
+    ideationInput: "",
+    ideationKeywords: "",
   });
 
   useEffect(() => {
@@ -74,7 +76,10 @@ export default function CreateSchedulePage() {
       if (formData.scheduleType === "publishing_queue") {
         payload = {
           publishingQueueConfig: {
-            contentType: formData.publishingQueueContentType || undefined,
+            contentType:
+              formData.publishingQueueContentType === "all"
+                ? undefined
+                : formData.publishingQueueContentType,
             batchSize: formData.publishingQueueBatchSize,
           },
         };
@@ -84,6 +89,13 @@ export default function CreateSchedulePage() {
           batchSize: formData.batchSize,
           autoPublish: formData.autoPublish,
           generateOgImage: formData.generateOgImage,
+          ideationInput: formData.ideationInput || undefined,
+          ideationKeywords: formData.ideationKeywords
+            ? formData.ideationKeywords
+                .split(",")
+                .map((item) => item.trim())
+                .filter(Boolean)
+            : undefined,
         };
 
         if (formData.useTemplate && formData.templateId) {
@@ -244,7 +256,7 @@ export default function CreateSchedulePage() {
                         <SelectValue placeholder="All content types" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All content types</SelectItem>
+                        <SelectItem value="all">All content types</SelectItem>
                         <SelectItem value="post">Blog Post</SelectItem>
                         <SelectItem value="service">Service Page</SelectItem>
                         <SelectItem value="product">Product Page</SelectItem>
@@ -313,6 +325,31 @@ export default function CreateSchedulePage() {
                     />
                     <p className="text-xs text-muted-foreground mt-1">
                       Number of items to generate per run (1-50)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <Label htmlFor="ideationInput">Ideation Input (Optional)</Label>
+                    <Textarea
+                      id="ideationInput"
+                      value={formData.ideationInput}
+                      onChange={(e) => setFormData({ ...formData, ideationInput: e.target.value })}
+                      placeholder="Context, angle, or target intent for generated content..."
+                      rows={3}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="ideationKeywords">Ideation Keywords (Optional)</Label>
+                    <Input
+                      id="ideationKeywords"
+                      value={formData.ideationKeywords}
+                      onChange={(e) => setFormData({ ...formData, ideationKeywords: e.target.value })}
+                      placeholder="seo dashboard, technical seo, index coverage"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Separate multiple keywords with commas.
                     </p>
                   </div>
                 </div>

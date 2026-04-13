@@ -4,6 +4,8 @@ import { db } from "@/lib/db";
 import { jobRuns } from "@repo/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
+import { sanitizeText } from "@/lib/sanitize";
+import { assertSupportedContentType } from "@/lib/ai-writer/content-type";
 
 export async function GET(
   request: NextRequest,
@@ -58,11 +60,31 @@ export async function PUT(
     const body = await request.json();
 
     const updateParams: any = {};
-    if (body.name) updateParams.name = body.name;
-    if (body.cronExpr) updateParams.cronExpr = body.cronExpr;
-    if (body.timezone) updateParams.timezone = body.timezone;
+    if (body.name) updateParams.name = sanitizeText(body.name, 120);
+    if (body.cronExpr) updateParams.cronExpr = sanitizeText(body.cronExpr, 120);
+    if (body.timezone) updateParams.timezone = sanitizeText(body.timezone, 80);
     if (body.enabled !== undefined) updateParams.enabled = body.enabled;
-    if (body.payload) updateParams.payload = body.payload;
+    if (body.payload) {
+      const payload = body.payload as any;
+      if (payload.contentType) {
+        payload.contentType = assertSupportedContentType(payload.contentType);
+      }
+      if (payload.publishingQueueConfig?.contentType) {
+        payload.publishingQueueConfig.contentType = assertSupportedContentType(
+          payload.publishingQueueConfig.contentType,
+        );
+      }
+      if (payload.batchSize && Number(payload.batchSize) > 50) {
+        return NextResponse.json({ error: "Batch size must be <= 50" }, { status: 400 });
+      }
+      if (
+        payload.publishingQueueConfig?.batchSize &&
+        Number(payload.publishingQueueConfig.batchSize) > 50
+      ) {
+        return NextResponse.json({ error: "Publishing queue batch size must be <= 50" }, { status: 400 });
+      }
+      updateParams.payload = payload;
+    }
 
     const updated = await updateSchedule(id, updateParams);
 

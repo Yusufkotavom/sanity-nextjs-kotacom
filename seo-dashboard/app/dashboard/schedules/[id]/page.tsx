@@ -5,6 +5,16 @@ import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -25,12 +35,18 @@ interface Schedule {
   timezone: string;
   enabled: boolean;
   payload: {
-    contentType: string;
-    batchSize: number;
-    autoPublish: boolean;
-    generateOgImage: boolean;
+    contentType?: string;
+    batchSize?: number;
+    autoPublish?: boolean;
+    generateOgImage?: boolean;
     promptTemplateId?: string;
     customPrompt?: string;
+    ideationInput?: string;
+    ideationKeywords?: string[];
+    publishingQueueConfig?: {
+      contentType?: string;
+      batchSize: number;
+    };
   };
   lastRunAt: string | null;
   nextRunAt: string | null;
@@ -53,6 +69,21 @@ export default function ScheduleDetailPage() {
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [jobRuns, setJobRuns] = useState<JobRun[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [editForm, setEditForm] = useState({
+    name: "",
+    cronExpr: "",
+    timezone: "UTC",
+    contentType: "post",
+    batchSize: 1,
+    autoPublish: false,
+    generateOgImage: true,
+    customPrompt: "",
+    ideationInput: "",
+    ideationKeywords: "",
+    publishingQueueContentType: "all",
+    publishingQueueBatchSize: 1,
+  });
 
   useEffect(() => {
     if (params.id) {
@@ -68,6 +99,23 @@ export default function ScheduleDetailPage() {
       if (data.success) {
         setSchedule(data.schedule);
         setJobRuns(data.recentRuns || []);
+        const payload = data.schedule.payload || {};
+        setEditForm({
+          name: data.schedule.name || "",
+          cronExpr: data.schedule.cronExpr || "",
+          timezone: data.schedule.timezone || "UTC",
+          contentType: payload.contentType || "post",
+          batchSize: payload.batchSize || 1,
+          autoPublish: Boolean(payload.autoPublish),
+          generateOgImage: payload.generateOgImage !== false,
+          customPrompt: payload.customPrompt || "",
+          ideationInput: payload.ideationInput || "",
+          ideationKeywords: Array.isArray(payload.ideationKeywords)
+            ? payload.ideationKeywords.join(", ")
+            : "",
+          publishingQueueContentType: payload.publishingQueueConfig?.contentType || "all",
+          publishingQueueBatchSize: payload.publishingQueueConfig?.batchSize || 1,
+        });
       } else {
         toast.error("Schedule not found");
         router.push("/dashboard/schedules");
@@ -77,6 +125,58 @@ export default function ScheduleDetailPage() {
       toast.error("Failed to load schedule");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function saveScheduleChanges() {
+    if (!schedule) return;
+    try {
+      const payload =
+        schedule.scheduleType === "publishing_queue"
+          ? {
+              publishingQueueConfig: {
+                contentType:
+                  editForm.publishingQueueContentType === "all"
+                    ? undefined
+                    : editForm.publishingQueueContentType,
+                batchSize: editForm.publishingQueueBatchSize,
+              },
+            }
+          : {
+              contentType: editForm.contentType,
+              batchSize: editForm.batchSize,
+              autoPublish: editForm.autoPublish,
+              generateOgImage: editForm.generateOgImage,
+              customPrompt: editForm.customPrompt || undefined,
+              ideationInput: editForm.ideationInput || undefined,
+              ideationKeywords: editForm.ideationKeywords
+                ? editForm.ideationKeywords
+                    .split(",")
+                    .map((item) => item.trim())
+                    .filter(Boolean)
+                : undefined,
+            };
+
+      const response = await fetch(`/api/ai/schedule/${schedule.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: editForm.name,
+          cronExpr: editForm.cronExpr,
+          timezone: editForm.timezone,
+          payload,
+        }),
+      });
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.error || "Failed to update schedule");
+      }
+      toast.success("Schedule updated");
+      setEditing(false);
+      await fetchSchedule();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update schedule");
     }
   }
 
@@ -208,6 +308,10 @@ export default function ScheduleDetailPage() {
             </p>
           </div>
           <div className="flex gap-2">
+            <Button variant="outline" onClick={() => setEditing((prev) => !prev)}>
+              <Edit className="w-4 h-4 mr-2" />
+              {editing ? "Cancel Edit" : "Edit"}
+            </Button>
             <Button variant="outline" onClick={toggleSchedule}>
               {schedule.enabled ? (
                 <>
@@ -251,7 +355,11 @@ export default function ScheduleDetailPage() {
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Content Type</p>
-            <p className="mt-1 font-medium">{schedule.payload.contentType}</p>
+            <p className="mt-1 font-medium">
+              {schedule.scheduleType === "publishing_queue"
+                ? schedule.payload.publishingQueueConfig?.contentType || "all"
+                : schedule.payload.contentType}
+            </p>
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Cron Expression</p>
@@ -263,7 +371,12 @@ export default function ScheduleDetailPage() {
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Batch Size</p>
-            <p className="mt-1">{schedule.payload.batchSize} items per run</p>
+            <p className="mt-1">
+              {schedule.scheduleType === "publishing_queue"
+                ? schedule.payload.publishingQueueConfig?.batchSize
+                : schedule.payload.batchSize}{" "}
+              items per run
+            </p>
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Options</p>
@@ -285,6 +398,149 @@ export default function ScheduleDetailPage() {
             <p className="mt-1">{formatDate(schedule.nextRunAt)}</p>
           </div>
         </div>
+
+        {editing && (
+          <div className="mt-6 border-t pt-6 space-y-4">
+            <h3 className="text-base font-semibold">Edit Schedule</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="edit-name">Name</Label>
+                <Input
+                  id="edit-name"
+                  value={editForm.name}
+                  onChange={(e) => setEditForm((prev) => ({ ...prev, name: e.target.value }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-timezone">Timezone</Label>
+                <Input
+                  id="edit-timezone"
+                  value={editForm.timezone}
+                  onChange={(e) => setEditForm((prev) => ({ ...prev, timezone: e.target.value }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-cron">Cron Expression</Label>
+                <Input
+                  id="edit-cron"
+                  value={editForm.cronExpr}
+                  onChange={(e) => setEditForm((prev) => ({ ...prev, cronExpr: e.target.value }))}
+                />
+              </div>
+
+              {schedule.scheduleType === "publishing_queue" ? (
+                <>
+                  <div>
+                    <Label>Publishing Queue Content Type</Label>
+                    <Select
+                      value={editForm.publishingQueueContentType}
+                      onValueChange={(value) =>
+                        setEditForm((prev) => ({ ...prev, publishingQueueContentType: value }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All content types</SelectItem>
+                        <SelectItem value="post">Blog Post</SelectItem>
+                        <SelectItem value="service">Service Page</SelectItem>
+                        <SelectItem value="product">Product Page</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="edit-pq-batch">Publishing Queue Batch Size</Label>
+                    <Input
+                      id="edit-pq-batch"
+                      type="number"
+                      min={1}
+                      max={50}
+                      value={editForm.publishingQueueBatchSize}
+                      onChange={(e) =>
+                        setEditForm((prev) => ({
+                          ...prev,
+                          publishingQueueBatchSize: Number(e.target.value) || 1,
+                        }))
+                      }
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <Label>Content Type</Label>
+                    <Select
+                      value={editForm.contentType}
+                      onValueChange={(value) =>
+                        setEditForm((prev) => ({ ...prev, contentType: value }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="post">Blog Post</SelectItem>
+                        <SelectItem value="service">Service Page</SelectItem>
+                        <SelectItem value="product">Product Page</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="edit-batch">Batch Size</Label>
+                    <Input
+                      id="edit-batch"
+                      type="number"
+                      min={1}
+                      max={50}
+                      value={editForm.batchSize}
+                      onChange={(e) =>
+                        setEditForm((prev) => ({ ...prev, batchSize: Number(e.target.value) || 1 }))
+                      }
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <Label htmlFor="edit-custom-prompt">Custom Prompt</Label>
+                    <Textarea
+                      id="edit-custom-prompt"
+                      rows={3}
+                      value={editForm.customPrompt}
+                      onChange={(e) =>
+                        setEditForm((prev) => ({ ...prev, customPrompt: e.target.value }))
+                      }
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <Label htmlFor="edit-ideation-input">Ideation Input</Label>
+                    <Textarea
+                      id="edit-ideation-input"
+                      rows={2}
+                      value={editForm.ideationInput}
+                      onChange={(e) =>
+                        setEditForm((prev) => ({ ...prev, ideationInput: e.target.value }))
+                      }
+                      placeholder="Context/angle for generation"
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <Label htmlFor="edit-ideation-keywords">Ideation Keywords</Label>
+                    <Input
+                      id="edit-ideation-keywords"
+                      value={editForm.ideationKeywords}
+                      onChange={(e) =>
+                        setEditForm((prev) => ({ ...prev, ideationKeywords: e.target.value }))
+                      }
+                      placeholder="keyword1, keyword2, keyword3"
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="flex justify-end">
+              <Button onClick={saveScheduleChanges}>Save Changes</Button>
+            </div>
+          </div>
+        )}
       </Card>
 
       {/* Recent Job Runs */}

@@ -282,6 +282,26 @@ async function processAiContentGeneration(jobId: string, taskId: string, payload
   const providerCounts: Record<string, number> = {};
   const modelCounts: Record<string, number> = {};
   const startedAt = Date.now();
+
+  const ideationKeywords = Array.isArray(payload.ideationKeywords)
+    ? payload.ideationKeywords.filter((item: unknown) => typeof item === "string" && item.trim().length > 0)
+    : [];
+  const ideationInput =
+    typeof payload.ideationInput === "string" && payload.ideationInput.trim().length > 0
+      ? payload.ideationInput.trim()
+      : "";
+
+  const ideationContext =
+    ideationInput || ideationKeywords.length > 0
+      ? [
+          ideationInput ? `Ideation context: ${ideationInput}` : null,
+          ideationKeywords.length > 0
+            ? `Focus keywords: ${ideationKeywords.join(", ")}`
+            : null,
+        ]
+          .filter(Boolean)
+          .join("\n")
+      : "";
   
   try {
     // Generate content items in batch
@@ -290,13 +310,19 @@ async function processAiContentGeneration(jobId: string, taskId: string, payload
         const result = await generateContent({
           contentType: payload.contentType,
           promptTemplateId: payload.promptTemplateId,
-          customPrompt: payload.customPrompt,
+          customPrompt:
+            payload.customPrompt && ideationContext
+              ? `${payload.customPrompt}\n\n${ideationContext}`
+              : payload.customPrompt,
           generateOgImage: payload.generateOgImage !== false,
           autoPublish: payload.autoPublish === true,
           metadata: {
             sourceType: "scheduled",
             jobRunId: jobId,
             tags: payload.tags || [],
+            ideationInput: ideationInput || undefined,
+            ideationKeywords: ideationKeywords.length > 0 ? ideationKeywords : undefined,
+            contentContext: ideationContext || undefined,
           },
         });
         

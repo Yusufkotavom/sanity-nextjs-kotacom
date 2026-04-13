@@ -433,3 +433,56 @@ Completed the remaining main scheduler/task backlog in the Kiro spec by implemen
 - ✅ `pnpm --filter seo-dashboard typecheck` passed after all changes.
 - ✅ `pnpm --filter seo-dashboard ai:test:cron` executed successfully in guarded mode (skipped in this environment due missing `DATABASE_URL`).
 - ⚠️ Full DB-backed integration execution requires runtime `DATABASE_URL` and scheduler-capable environment.
+
+## 2026-04-13 — Ideas Pipeline: Manual Input (Single/Bulk), Bulk Content Execution, Editable Prompts
+
+### Changed Files
+- `seo-dashboard/app/dashboard/ai/ideas/page.tsx` (MODIFIED) - Added manual idea input UI (single + bulk), editable prompts for idea/outline generation, and one-request bulk content generation flow
+- `seo-dashboard/app/api/ai/ideas/create/route.ts` (NEW) - Added manual idea creation endpoint supporting single and bulk payloads
+- `seo-dashboard/app/api/ai/ideas/generate-content-bulk/route.ts` (NEW) - Added bulk full-content generation endpoint (single execution request with internal concurrency)
+- `seo-dashboard/app/api/ai/ideas/generate/route.ts` (MODIFIED) - Added support for editable custom prompt with placeholder interpolation (`{{topic}}`, `{{contentType}}`, `{{count}}`)
+- `seo-dashboard/app/api/ai/ideas/generate-outline/route.ts` (MODIFIED) - Added support for editable custom prompt with placeholder interpolation (`{{idea}}`, `{{topic}}`, `{{contentType}}`, etc.)
+
+### Summary
+Implemented requested Ideas workflow enhancements:
+1. **Manual input support** in Ideas page for both single idea and bulk ideas (one line per idea), with default metadata propagation.
+2. **Bulk content generation in one execution call** via new `/api/ai/ideas/generate-content-bulk` endpoint so selected ideas are processed together server-side instead of client-triggered per-item loops.
+3. **Editable prompts** for both Idea Generation and Outline Generation directly in UI, using placeholder-based templates similar to existing prompt-driven generation workflows.
+4. Preserved existing pipeline behavior (idea -> outline -> generated content), while expanding entry and execution modes.
+
+### Impact on SEO/Integration
+- No direct SEO ranking impact.
+- Positive integration impact:
+  - Speeds editorial throughput by enabling manual curation + bulk content runs.
+  - Reduces operational friction for campaign/topic imports from external sources.
+  - Gives operators prompt-level control for idea and outline quality without code changes.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard typecheck` passed.
+- ✅ API routes compile and UI integration is wired for manual + bulk ideas and prompt editing.
+
+## 2026-04-13 — Schedule UX Bugfix: Editable Detail, Publishing Queue Click Crash, Ideation/Keyword Inputs
+
+### Changed Files
+- `seo-dashboard/app/dashboard/schedules/create/page.tsx` (MODIFIED) - Fixed publishing queue select value handling, added ideation input + ideation keywords fields for AI generation schedules
+- `seo-dashboard/app/dashboard/schedules/[id]/page.tsx` (MODIFIED) - Added editable schedule detail form (name/cron/timezone/payload), publishing queue safe payload handling, and save update flow
+- `seo-dashboard/app/api/ai/schedule/[id]/route.ts` (MODIFIED) - Added payload validation/sanitization for update requests including content type and batch-size checks
+- `seo-dashboard/app/api/internal/cron-run/route.ts` (MODIFIED) - Included ideation context/keywords propagation into scheduled generation metadata and custom prompt augmentation
+- `seo-dashboard/lib/ai-writer/schedule-manager.ts` (MODIFIED) - Fixed payload type-safe update validation for both ai-generation and publishing-queue batch size fields
+
+### Summary
+Resolved the reported schedule issues:
+1. **Schedule now editable after creation** from detail page (`/dashboard/schedules/[id]`) via inline edit mode and save.
+2. **Publishing Queue crash fixed** by removing invalid empty-value select item usage and normalizing `all` sentinel handling.
+3. **AI generation schedule now supports ideation input + keyword fields** and propagates this context into scheduled execution metadata/prompt context.
+
+### Impact on SEO/Integration
+- No direct SEO impact.
+- Integration impact:
+  - Stabilizes scheduler UX and prevents client-side crash in publishing queue mode.
+  - Improves AI generation scheduling control with ideation/keyword context.
+  - Reduces misconfiguration risk through stronger update payload validation.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard typecheck` passed.
+- ✅ Manual code-path verification completed for create/edit/update schedule flows.

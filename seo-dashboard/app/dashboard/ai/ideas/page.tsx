@@ -7,9 +7,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Select } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Lightbulb, FileText, Sparkles, ArrowRight, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -50,6 +56,33 @@ export default function ContentIdeasPage() {
   const [keyword, setKeyword] = useState("");
   const [wordCount, setWordCount] = useState("1500");
   const [location, setLocation] = useState("");
+  const [manualIdea, setManualIdea] = useState("");
+  const [bulkIdeasText, setBulkIdeasText] = useState("");
+
+  const [ideaPrompt, setIdeaPrompt] = useState(
+    `Generate {{count}} unique content ideas for {{contentType}} about: {{topic}}
+
+For each idea, provide:
+- idea: The content idea/title
+- audience: Target audience for this content
+- keyword: Primary SEO keyword
+- wordCount: Suggested word count (e.g., "1500", "2000")
+- location: If relevant, otherwise "general"
+
+Return ONLY a JSON array.`,
+  );
+
+  const [outlinePrompt, setOutlinePrompt] = useState(
+    `Create a detailed content outline for this {{contentType}}:
+
+"{{idea}}"
+
+Return a structured outline with:
+- Main sections/headings
+- Key points for each section
+- Suggested word count per section
+- SEO keywords to target`,
+  );
 
   // Templates
   const [templates, setTemplates] = useState<any[]>([]);
@@ -193,6 +226,7 @@ export default function ContentIdeasPage() {
           topic,
           contentType,
           count: ideaCount,
+          customPrompt: ideaPrompt,
         }),
       });
 
@@ -213,6 +247,46 @@ export default function ContentIdeasPage() {
     }
   };
 
+  const handleManualCreateIdeas = async () => {
+    if (!manualIdea.trim() && !bulkIdeasText.trim()) {
+      toast.error("Isi minimal satu ide manual atau bulk ideas");
+      return;
+    }
+
+    setGenerating(true);
+    try {
+      const response = await fetch("/api/ai/ideas/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentType,
+          topic,
+          idea: manualIdea,
+          bulkIdeas: bulkIdeasText,
+          audience,
+          keyword,
+          wordCount,
+          location,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create manual ideas");
+      }
+
+      const data = await response.json();
+      toast.success(`Added ${data.createdCount} manual idea(s)`);
+      setIdeas([...data.ideas, ...ideas]);
+      setManualIdea("");
+      setBulkIdeasText("");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to add manual ideas");
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   const handleGenerateOutline = async (ideaId: string) => {
     // Add to processing jobs
     const newJob: ProcessingJob = { id: ideaId, type: "outline", status: "processing" };
@@ -224,7 +298,7 @@ export default function ContentIdeasPage() {
       const response = await fetch("/api/ai/ideas/generate-outline", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ideaId }),
+        body: JSON.stringify({ ideaId, customPrompt: outlinePrompt }),
       });
 
       if (!response.ok) {
@@ -406,17 +480,37 @@ export default function ContentIdeasPage() {
       return;
     }
     
-    const ideaItems = ideas.filter(i => selectedIds.has(i.id) && i.status !== "generated");
+    const ideaItems = ideas.filter(i => selectedIds.has(i.id) && i.status === "idea");
     if (ideaItems.length === 0) {
-      toast.error("No ideas available for content generation");
+      toast.error("No ideas with status 'idea' selected");
       return;
     }
 
-    toast.info(`Generating ${ideaItems.length} contents in background...`);
-    
-    // Process in background
-    ideaItems.forEach(idea => handleGenerateContent(idea.id));
-    setSelectedIds(new Set());
+    setBulkProcessing(true);
+    try {
+      const response = await fetch("/api/ai/ideas/generate-content-bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ideaIds: ideaItems.map((item) => item.id),
+          templateId: selectedTemplate,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Bulk generation failed");
+      }
+      const data = await response.json();
+      toast.success(
+        `Bulk generate done: ${data.summary.succeeded} success, ${data.summary.failed} failed`,
+      );
+      setSelectedIds(new Set());
+      await loadIdeas();
+    } catch (error) {
+      console.error(error);
+      toast.error("Bulk generate content failed");
+    } finally {
+      setBulkProcessing(false);
+    }
   };
 
   return (
@@ -449,16 +543,19 @@ export default function ContentIdeasPage() {
               
               <div>
                 <Label htmlFor="contentType">Content Type</Label>
-                <select
-                  id="contentType"
+                <Select
                   value={contentType}
-                  onChange={(e) => setContentType(e.target.value as any)}
-                  className="w-full h-10 px-3 rounded-md border border-input bg-background"
+                  onValueChange={(value) => setContentType(value as "post" | "service" | "product")}
                 >
-                  <option value="post">Blog Post</option>
-                  <option value="service">Service Page</option>
-                  <option value="product">Product Page</option>
-                </select>
+                  <SelectTrigger id="contentType">
+                    <SelectValue placeholder="Select content type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="post">Blog Post</SelectItem>
+                    <SelectItem value="service">Service Page</SelectItem>
+                    <SelectItem value="product">Product Page</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
@@ -486,22 +583,127 @@ export default function ContentIdeasPage() {
             </div>
           </div>
 
+          {/* Prompt Editors */}
+          <div className="border rounded-lg p-4 space-y-3">
+            <h3 className="font-medium">Prompt Editor</h3>
+            <p className="text-xs text-muted-foreground">
+              Editable prompt for AI Idea generation and Outline generation.
+              You can use placeholders: <code>{"{{topic}}"}</code>, <code>{"{{contentType}}"}</code>,{" "}
+              <code>{"{{count}}"}</code>, <code>{"{{idea}}"}</code>.
+            </p>
+            <div className="grid gap-3 md:grid-cols-2">
+              <div>
+                <Label htmlFor="ideaPrompt">Generate Ideas Prompt</Label>
+                <Textarea
+                  id="ideaPrompt"
+                  value={ideaPrompt}
+                  onChange={(e) => setIdeaPrompt(e.target.value)}
+                  rows={8}
+                />
+              </div>
+              <div>
+                <Label htmlFor="outlinePrompt">Generate Outline Prompt</Label>
+                <Textarea
+                  id="outlinePrompt"
+                  value={outlinePrompt}
+                  onChange={(e) => setOutlinePrompt(e.target.value)}
+                  rows={8}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Manual Input */}
+          <div className="border rounded-lg p-4 space-y-4">
+            <h3 className="font-medium">Manual Idea Input (Single / Bulk)</h3>
+            <div className="grid gap-3 md:grid-cols-2">
+              <div>
+                <Label htmlFor="manualIdea">Single Idea</Label>
+                <Input
+                  id="manualIdea"
+                  value={manualIdea}
+                  onChange={(e) => setManualIdea(e.target.value)}
+                  placeholder="Tulis 1 ide manual..."
+                />
+              </div>
+              <div>
+                <Label htmlFor="manualTopic">Topic (optional, default for manual ideas)</Label>
+                <Input
+                  id="manualTopic"
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                  placeholder="contoh: digital marketing"
+                />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="bulkIdeas">Bulk Ideas (1 line = 1 idea)</Label>
+              <Textarea
+                id="bulkIdeas"
+                value={bulkIdeasText}
+                onChange={(e) => setBulkIdeasText(e.target.value)}
+                rows={6}
+                placeholder={"Idea A\nIdea B\nIdea C"}
+              />
+            </div>
+            <div className="grid gap-3 md:grid-cols-4">
+              <div>
+                <Label htmlFor="manualAudience">Audience</Label>
+                <Input
+                  id="manualAudience"
+                  value={audience}
+                  onChange={(e) => setAudience(e.target.value)}
+                  placeholder="general audience"
+                />
+              </div>
+              <div>
+                <Label htmlFor="manualKeyword">Keyword</Label>
+                <Input
+                  id="manualKeyword"
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
+                  placeholder="keyword utama"
+                />
+              </div>
+              <div>
+                <Label htmlFor="manualWordCount">Word Count</Label>
+                <Input
+                  id="manualWordCount"
+                  value={wordCount}
+                  onChange={(e) => setWordCount(e.target.value)}
+                  placeholder="1500"
+                />
+              </div>
+              <div>
+                <Label htmlFor="manualLocation">Location</Label>
+                <Input
+                  id="manualLocation"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="general"
+                />
+              </div>
+            </div>
+            <Button onClick={handleManualCreateIdeas} disabled={generating}>
+              {generating ? "Saving..." : "Add Manual Ideas"}
+            </Button>
+          </div>
+
           {/* Template Selection */}
           <div className="border rounded-lg p-4">
             <Label htmlFor="template">Template for Full Content Generation</Label>
-            <select
-              id="template"
-              value={selectedTemplate}
-              onChange={(e) => setSelectedTemplate(e.target.value)}
-              className="w-full h-10 px-3 rounded-md border border-input bg-background mt-2"
-            >
-              <option value="">Select a template...</option>
-              {templates.map((template) => (
-                <option key={template.id} value={template.id}>
-                  {template.name} ({template.contentType})
-                </option>
-              ))}
-            </select>
+            <Select value={selectedTemplate} onValueChange={setSelectedTemplate}>
+              <SelectTrigger id="template" className="mt-2">
+                <SelectValue placeholder="Select a template..." />
+              </SelectTrigger>
+              <SelectContent>
+                {templates.map((template) => (
+                  <SelectItem key={template.id} value={template.id}>
+                    {template.name} ({template.contentType})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Filters */}
@@ -510,32 +712,32 @@ export default function ContentIdeasPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="filterStatus">Status</Label>
-                <select
-                  id="filterStatus"
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                  className="w-full h-10 px-3 rounded-md border border-input bg-background"
-                >
-                  <option value="all">All Status</option>
-                  <option value="idea">💡 Idea Only</option>
-                  <option value="outline">📝 Has Outline</option>
-                  <option value="generated">✓ Generated</option>
-                </select>
+                <Select value={filterStatus} onValueChange={setFilterStatus}>
+                  <SelectTrigger id="filterStatus">
+                    <SelectValue placeholder="All Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="idea">💡 Idea Only</SelectItem>
+                    <SelectItem value="outline">📝 Has Outline</SelectItem>
+                    <SelectItem value="generated">✓ Generated</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               
               <div>
                 <Label htmlFor="filterContentType">Content Type</Label>
-                <select
-                  id="filterContentType"
-                  value={filterContentType}
-                  onChange={(e) => setFilterContentType(e.target.value)}
-                  className="w-full h-10 px-3 rounded-md border border-input bg-background"
-                >
-                  <option value="all">All Types</option>
-                  <option value="post">Blog Post</option>
-                  <option value="service">Service Page</option>
-                  <option value="product">Product Page</option>
-                </select>
+                <Select value={filterContentType} onValueChange={setFilterContentType}>
+                  <SelectTrigger id="filterContentType">
+                    <SelectValue placeholder="All Types" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Types</SelectItem>
+                    <SelectItem value="post">Blog Post</SelectItem>
+                    <SelectItem value="service">Service Page</SelectItem>
+                    <SelectItem value="product">Product Page</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               
               <div>

@@ -24,6 +24,8 @@ export interface ContentGenerationPayload {
   contentType: "post" | "service" | "product";
   promptTemplateId?: string;
   customPrompt?: string;
+  ideationInput?: string;
+  ideationKeywords?: string[];
   batchSize: number;
   autoPublish: boolean;
   generateOgImage: boolean;
@@ -42,7 +44,7 @@ export interface UpdateScheduleParams {
   cronExpr?: string;
   timezone?: string;
   enabled?: boolean;
-  payload?: Partial<ContentGenerationPayload>;
+  payload?: Partial<ContentGenerationPayload> | Partial<PublishingQueuePayload>;
 }
 
 export interface ScheduleFilters {
@@ -245,9 +247,18 @@ export async function updateSchedule(id: string, params: UpdateScheduleParams) {
     };
 
     // Validate batch size if changed
-    if (params.payload.batchSize !== undefined) {
+    if ("batchSize" in params.payload && params.payload.batchSize !== undefined) {
       if (params.payload.batchSize < 1 || params.payload.batchSize > 50) {
         throw new Error("Batch size must be between 1 and 50");
+      }
+    }
+    if (
+      "publishingQueueConfig" in params.payload &&
+      params.payload.publishingQueueConfig?.batchSize !== undefined
+    ) {
+      const batchSize = params.payload.publishingQueueConfig.batchSize;
+      if (batchSize < 1 || batchSize > 50) {
+        throw new Error("Publishing queue batch size must be between 1 and 50");
       }
     }
   }
