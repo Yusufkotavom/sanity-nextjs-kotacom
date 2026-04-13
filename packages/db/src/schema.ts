@@ -10,7 +10,11 @@ import {
   date,
   uniqueIndex,
   index,
+  pgEnum,
 } from "drizzle-orm/pg-core";
+
+// Enums
+export const scheduleTypeEnum = pgEnum("schedule_type", ["ai_generation", "publishing_queue"]);
 
 export const contentItems = pgTable(
   "content_items",
@@ -35,6 +39,7 @@ export const contentItems = pgTable(
 export const scheduledTasks = pgTable("scheduled_tasks", {
   id: uuid("id").defaultRandom().primaryKey(),
   taskType: text("task_type").notNull(),
+  scheduleType: scheduleTypeEnum("schedule_type").default("ai_generation").notNull(),
   name: text("name").notNull(),
   cronExpr: text("cron_expr").notNull(),
   timezone: text("timezone").default("Asia/Jakarta"),
@@ -108,6 +113,7 @@ export const aiGenerations = pgTable(
   (table) => ({
     validationIndex: index("ai_generations_validation_idx").on(table.validationStatus),
     createdIndex: index("ai_generations_created_idx").on(table.createdAt),
+    readyToPublishIndex: index("ai_generations_ready_to_publish_idx").on(table.readyToPublish),
   }),
 );
 
@@ -228,3 +234,22 @@ export const contentIdeas = pgTable(
     createdIndex: index("content_ideas_created_idx").on(table.createdAt),
   }),
 );
+
+// TypeScript types for schedule payload configurations
+export type PublishingQueueConfig = {
+  contentType?: "post" | "service" | "product";
+  batchSize: number;
+};
+
+export type AIGenerationConfig = {
+  templateId: string;
+  autoPublish: boolean;
+  generateOgImage?: boolean;
+  [key: string]: any; // Allow additional configuration fields
+};
+
+export type SchedulePayload = {
+  publishingQueueConfig?: PublishingQueueConfig;
+  aiGenerationConfig?: AIGenerationConfig;
+  [key: string]: any; // Allow additional fields for backward compatibility
+};

@@ -260,10 +260,14 @@ export function AiHistoryTable({ generations }: AiHistoryTableProps) {
                 )}
               </TableCell>
               <TableCell>
-                <ReadyCheckbox 
-                  generationId={item.id} 
-                  initialChecked={item.readyToPublish || false} 
-                />
+                {item.sanityWriteStatus !== "success" ? (
+                  <ReadyCheckbox 
+                    generationId={item.id} 
+                    initialChecked={item.readyToPublish || false} 
+                  />
+                ) : (
+                  <span className="text-muted-foreground text-sm">-</span>
+                )}
               </TableCell>
               <TableCell className="text-sm">{formatDate(item.createdAt)}</TableCell>
               <TableCell>

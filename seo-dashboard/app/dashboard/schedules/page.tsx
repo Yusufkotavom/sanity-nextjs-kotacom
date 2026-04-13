@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Edit, Trash2, Play, Pause } from "lucide-react";
+import { Plus, Edit, Trash2, Play, Pause, Sparkles, Clock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -20,6 +20,7 @@ interface Schedule {
   id: string;
   name: string;
   taskType: string;
+  scheduleType: "ai_generation" | "publishing_queue";
   cronExpr: string;
   timezone: string;
   enabled: boolean;
@@ -117,6 +118,24 @@ export default function SchedulesPage() {
     });
   }
 
+  function renderScheduleTypeBadge(scheduleType: "ai_generation" | "publishing_queue") {
+    if (scheduleType === "ai_generation") {
+      return (
+        <Badge className="bg-blue-500 hover:bg-blue-600 text-white">
+          <Sparkles className="w-3 h-3 mr-1" />
+          AI Generation + Auto-Publish
+        </Badge>
+      );
+    } else {
+      return (
+        <Badge className="bg-purple-500 hover:bg-purple-600 text-white">
+          <Clock className="w-3 h-3 mr-1" />
+          Publishing Queue
+        </Badge>
+      );
+    }
+  }
+
   if (loading) {
     return (
       <div className="p-6">
@@ -159,6 +178,7 @@ export default function SchedulesPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
+                <TableHead>Schedule Type</TableHead>
                 <TableHead>Content Type</TableHead>
                 <TableHead>Schedule</TableHead>
                 <TableHead>Status</TableHead>
@@ -171,6 +191,9 @@ export default function SchedulesPage() {
               {schedules.map((schedule) => (
                 <TableRow key={schedule.id}>
                   <TableCell className="font-medium">{schedule.name}</TableCell>
+                  <TableCell>
+                    {renderScheduleTypeBadge(schedule.scheduleType)}
+                  </TableCell>
                   <TableCell>
                     <Badge variant="outline">
                       {schedule.payload.contentType}

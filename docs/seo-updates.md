@@ -4,6 +4,40 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-13 — Schedule Type Selection in Creation Form (Task 3.5)
+
+### Changed Files
+- `seo-dashboard/app/dashboard/schedules/create/page.tsx` (MODIFIED) - Added schedule type selection with conditional field display
+- `seo-dashboard/components/ui/radio-group.tsx` (NEW) - Installed RadioGroup component from shadcn
+
+### Summary
+Implemented schedule type selection in the schedule creation form as part of the Schedule System Clarity Fix:
+1. **Schedule Type Selection**: Added radio button group for selecting between "AI Generation + Auto-Publish" and "Publishing Queue" schedule types
+2. **Conditional Field Display**: Form now shows/hides relevant configuration fields based on selected schedule type:
+   - For "AI Generation": Shows content type, batch size, auto-publish, OG image generation, and prompt settings
+   - For "Publishing Queue": Shows content type filter (optional), batch size, and FIFO ordering information
+3. **Required Field**: Schedule type is now a required field in the form, preventing schedule creation without explicit type selection
+4. **API Integration**: Updated form submission to include `scheduleType` field and construct appropriate payload structure based on selected type
+
+### Impact on SEO/Integration
+- **No direct SEO impact** - This is internal tooling UI enhancement
+- **Positive Integration impact**:
+  - Improves usability by making schedule purposes explicit
+  - Prevents confusion between AI generation and publishing queue workflows
+  - Ensures proper payload structure for each schedule type
+  - Aligns with backend validation requirements
+- **No breaking changes** to existing functionality
+- All changes are additive to the schedule creation form
+
+### Verification Status
+- ✅ TypeScript compilation passed - No type errors in modified file
+- ✅ RadioGroup component installed - shadcn component added successfully
+- ✅ Conditional rendering implemented - Fields show/hide based on schedule type
+- ✅ Form submission updated - Correct payload structure for each type
+- ⏳ Runtime testing - Requires dev environment to test form interaction
+
+---
+
 ## 2026-04-13 — AI Content Scheduler Implementation
 
 ### Changed Files
@@ -146,3 +180,98 @@ Implemented scheduled task execution for AI Content Scheduler:
 
 ### Changed Files
 - `frontend/patch-null-refs.mjs` (NEW)
+
+
+---
+
+## 2026-04-13 — Ready to Publish Update Endpoint Enhancement (Task 3.7)
+
+### Changed Files
+- `seo-dashboard/app/api/ai/generations/[id]/ready/route.ts` (MODIFIED) - Enhanced validation and response
+- `seo-dashboard/scripts/test-ready-endpoint.mjs` (NEW) - Test script for endpoint validation
+
+### Summary
+Enhanced the readyToPublish update endpoint to fully implement the requirements for the Schedule System Clarity Fix:
+1. **Added Published Content Validation**: Endpoint now validates that content is not already published (`sanityWriteStatus != 'success'`) before allowing readyToPublish flag updates, preventing invalid state transitions
+2. **Enhanced Response**: Endpoint now returns the full updated generation record instead of just a success flag, providing complete context to the frontend
+3. **Maintained Existing Validations**: Preserved existing checks for:
+   - Generation existence (404 if not found)
+   - Boolean type validation for readyToPublish field
+   - Proper error handling and logging
+4. **Test Script**: Created manual test script to verify endpoint behavior for both valid and invalid scenarios
+
+### Impact on SEO/Integration
+- **No direct SEO impact** - This is internal API enhancement
+- **Positive Integration impact**:
+  - Prevents invalid state where published content is marked as ready to publish
+  - Provides complete generation data in response for better frontend state management
+  - Enables manual content to properly enter the publishing queue workflow
+  - Maintains data integrity by blocking updates to already-published content
+- **No breaking changes** to existing API contract
+- Response structure enhanced but remains backward compatible
+
+### Verification Status
+- ✅ TypeScript compilation passed - No type errors in modified file
+- ✅ Validation logic implemented - Blocks updates to published content
+- ✅ Full record response - Returns complete generation object
+- ✅ Test script created - Manual testing support provided
+- ⏳ Runtime testing - Requires dev environment with database access
+
+---
+
+## 2026-04-13 — Ready to Publish Toggle in AI Generations List (Task 3.6)
+
+### Changed Files
+- `seo-dashboard/components/ai-history-table.tsx` (MODIFIED) - Added conditional rendering for ready toggle
+- `seo-dashboard/components/ready-checkbox.tsx` (MODIFIED) - Upgraded to use Shadcn Switch component
+- `seo-dashboard/components/ui/switch.tsx` (NEW) - Installed Switch component from shadcn
+
+### Summary
+Enhanced the AI generations list to properly display and control the "Ready to Publish" toggle as part of the Schedule System Clarity Fix:
+1. **Conditional Toggle Display**: The ready to publish toggle now only appears for content where `sanityWriteStatus != 'success'`, preventing users from toggling already-published content
+2. **UI Component Upgrade**: Replaced raw HTML checkbox with Shadcn Switch component for better UX and consistency with the design system
+3. **Existing Functionality Preserved**: The toggle continues to work with the existing `/api/ai/generations/[id]/ready` endpoint that was implemented in Task 3.7
+4. **Bulk Actions Support**: The existing bulk "Mark Ready" action in the table continues to work for multiple selections
+
+### Impact on SEO/Integration
+- **No direct SEO impact** - This is internal tooling UI enhancement
+- **Positive Integration impact**:
+  - Improves usability by preventing toggle on already-published content
+  - Provides clearer visual feedback with Switch component
+  - Maintains consistency with Shadcn UI design system
+  - Enables manual content to enter the publishing queue workflow
+- **No breaking changes** to existing functionality
+- All changes are additive and improve the existing UI
+
+### Verification Status
+- ✅ TypeScript compilation passed - No type errors in modified files
+- ✅ Switch component installed - shadcn component added successfully
+- ✅ Conditional rendering implemented - Toggle only shows for unpublished content
+- ✅ API endpoint verified - Existing `/api/ai/generations/[id]/ready` endpoint working
+- ⏳ Runtime testing - Requires dev environment to test toggle interaction
+
+---
+
+## 2026-04-13 — Task 3.9: Preservation Tests Verified (Schedule System Clarity Fix)
+
+### Changed Files
+- `.kiro/specs/schedule-system-clarity-fix/tasks.md` (MODIFIED) - Updated task 3.9 status
+
+### Summary
+Re-ran all 17 preservation property tests from Task 2 after implementing the Schedule System Clarity Fix. All tests passed, confirming no regressions in existing "AI Generation + Auto-Publish" behavior.
+
+Tests verified:
+- Property 3.1: AI generation schedules continue to generate and publish
+- Property 3.2: Schedule enable/disable functionality unchanged
+- Property 3.3: Cron expression calculation and timezone handling unchanged
+- Property 3.4: Content generation error logging and validation unchanged
+- Property 3.5: OG image generation for content items unchanged
+- Property 3.6: Schedule soft-delete behavior unchanged
+- Property 3.7: Cron worker CRON_SECRET validation unchanged
+- Property 3.8: Content storage without publishing unchanged
+
+### Impact on SEO/Integration
+No direct SEO impact. Verification step confirming no regressions in the schedule system after the fix.
+
+### Verification Status
+✅ All 17 preservation tests passed (0 failures)

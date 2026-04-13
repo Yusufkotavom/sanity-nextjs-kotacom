@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
 interface ReadyCheckboxProps {
@@ -36,12 +37,10 @@ export function ReadyCheckbox({ generationId, initialChecked }: ReadyCheckboxPro
   };
 
   return (
-    <input
-      type="checkbox"
+    <Switch
       checked={checked}
       disabled={updating}
-      onChange={(e) => handleChange(e.target.checked)}
-      className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+      onCheckedChange={handleChange}
     />
   );
 }

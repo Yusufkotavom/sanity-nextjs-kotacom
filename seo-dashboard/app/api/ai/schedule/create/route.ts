@@ -6,38 +6,91 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Validate required fields
-    if (!body.name || !body.cronExpr || !body.timezone || !body.payload) {
+    if (!body.name || !body.cronExpr || !body.timezone) {
       return NextResponse.json(
-        { error: "Missing required fields: name, cronExpr, timezone, payload" },
+        { error: "Missing required fields: name, cronExpr, timezone" },
         { status: 400 }
       );
     }
 
-    // Validate payload fields
-    if (!body.payload.contentType || !body.payload.batchSize) {
+    // Default scheduleType to "ai_generation" for backward compatibility
+    const scheduleType = body.scheduleType || "ai_generation";
+
+    // Validate scheduleType
+    const validScheduleTypes = ["ai_generation", "publishing_queue"];
+    if (!validScheduleTypes.includes(scheduleType)) {
       return NextResponse.json(
-        { error: "Missing required payload fields: contentType, batchSize" },
+        { error: `scheduleType must be one of: ${validScheduleTypes.join(", ")}` },
         { status: 400 }
       );
     }
 
-    // Create schedule
-    const params: CreateScheduleParams = {
-      name: body.name,
-      taskType: "ai_content_generation",
-      cronExpr: body.cronExpr,
-      timezone: body.timezone,
-      enabled: body.enabled !== undefined ? body.enabled : true,
-      payload: {
-        contentType: body.payload.contentType,
-        promptTemplateId: body.payload.promptTemplateId,
-        customPrompt: body.payload.customPrompt,
-        batchSize: body.payload.batchSize,
-        autoPublish: body.payload.autoPublish !== undefined ? body.payload.autoPublish : false,
-        generateOgImage: body.payload.generateOgImage !== undefined ? body.payload.generateOgImage : true,
-        tags: body.payload.tags,
-      },
-    };
+    // Validate payload structure based on schedule type
+    if (scheduleType === "publishing_queue") {
+      if (!body.payload || !body.payload.publishingQueueConfig) {
+        return NextResponse.json(
+          { error: "Publishing queue schedules require payload.publishingQueueConfig" },
+          { status: 400 }
+        );
+      }
+      if (!body.payload.publishingQueueConfig.batchSize) {
+        return NextResponse.json(
+          { error: "publishingQueueConfig.batchSize is required" },
+          { status: 400 }
+        );
+      }
+    } else if (scheduleType === "ai_generation") {
+      if (!body.payload) {
+        return NextResponse.json(
+          { error: "AI generation schedules require payload" },
+          { status: 400 }
+        );
+      }
+      if (!body.payload.contentType || !body.payload.batchSize) {
+        return NextResponse.json(
+          { error: "Missing required payload fields: contentType, batchSize" },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Create schedule with appropriate payload structure
+    let params: CreateScheduleParams;
+    
+    if (body.scheduleType === "publishing_queue") {
+      params = {
+        name: body.name,
+        taskType: "ai_content_generation",
+        scheduleType: "publishing_queue",
+        cronExpr: body.cronExpr,
+        timezone: body.timezone,
+        enabled: body.enabled !== undefined ? body.enabled : true,
+        payload: {
+          publishingQueueConfig: {
+            contentType: body.payload.publishingQueueConfig.contentType,
+            batchSize: body.payload.publishingQueueConfig.batchSize,
+          },
+        },
+      };
+    } else {
+      params = {
+        name: body.name,
+        taskType: "ai_content_generation",
+        scheduleType: "ai_generation",
+        cronExpr: body.cronExpr,
+        timezone: body.timezone,
+        enabled: body.enabled !== undefined ? body.enabled : true,
+        payload: {
+          contentType: body.payload.contentType,
+          promptTemplateId: body.payload.promptTemplateId,
+          customPrompt: body.payload.customPrompt,
+          batchSize: body.payload.batchSize,
+          autoPublish: body.payload.autoPublish !== undefined ? body.payload.autoPublish : false,
+          generateOgImage: body.payload.generateOgImage !== undefined ? body.payload.generateOgImage : true,
+          tags: body.payload.tags,
+        },
+      };
+    }
 
     const schedule = await createSchedule(params);
 

@@ -109,7 +109,161 @@ async function processQueue(queue: string) {
   }
 }
 
-async function processAiContentGeneration(jobId: string, taskId: string, payload: any) {
+async function selectContentForPublishing(publishingQueueConfig: any) {
+  const database = db();
+  
+  // Build query: WHERE readyToPublish = true AND sanityWriteStatus != 'success'
+  let query = database
+    .select()
+    .from(schema.aiGenerations)
+    .where(
+      and(
+        eq(schema.aiGenerations.readyToPublish, true),
+        eq(schema.aiGenerations.sanityWriteStatus, "pending")
+      )
+    );
+  
+  // Apply content type filter if specified
+  // Note: We need to filter by sourceType or inputJson.contentType
+  // For now, we'll fetch all and filter in memory since contentType is in inputJson
+  
+  // Order by createdAt ASC (FIFO)
+  query = query.orderBy(schema.aiGenerations.createdAt);
+  
+  // Limit by batch size
+  const batchSize = publishingQueueConfig?.batchSize || 10;
+  query = query.limit(batchSize);
+  
+  const items = await query;
+  
+  // Apply content type filter if specified (filter in memory)
+  if (publishingQueueConfig?.contentType) {
+    return items.filter((item) => {
+      const inputJson = item.inputJson as any;
+      return inputJson?.contentType === publishingQueueConfig.contentType;
+    });
+  }
+  
+  return items;
+}
+
+async function executePublishingQueue(jobId: string, taskId: string, publishingQueueConfig: any) {
+  const { publishContentSafe } = await import("@/lib/ai-writer/sanity-publisher");
+  const { updateScheduleRunTimes } = await import("@/lib/ai-writer/schedule-manager");
+  const database = db();
+  
+  await updateJobRun(jobId, { status: "processing", startedAt: new Date() });
+  
+  const published: string[] = [];
+  const failed: string[] = [];
+  
+  try {
+    // Select content for publishing
+    const contentItems = await selectContentForPublishing(publishingQueueConfig);
+    
+    console.log(`Publishing queue: Found ${contentItems.length} items ready to publish`);
+    
+    // Publish each selected content item
+    for (const item of contentItems) {
+      try {
+        const parsedOutput = item.parsedOutput as any;
+        
+        if (!parsedOutput) {
+          console.error(`Item ${item.id} has no parsed output, skipping`);
+          failed.push(item.id);
+          continue;
+        }
+        
+        const inputJson = item.inputJson as any;
+        const contentType = inputJson?.contentType || "post";
+        
+        // Map "product" to "project" for Sanity
+        const sanityContentType = contentType === "product" ? "project" : contentType;
+        
+        // Call existing Sanity publishing logic
+        const publishResult = await publishContentSafe({
+          contentType: sanityContentType,
+          title: parsedOutput.title,
+          excerpt: parsedOutput.excerpt,
+          body: parsedOutput.body,
+          ogImageAssetId: item.ogImageAssetId || undefined,
+        });
+        
+        if (publishResult.success) {
+          // Update sanityWriteStatus to 'success' and set sanityDocumentId
+          await database
+            .update(schema.aiGenerations)
+            .set({
+              sanityWriteStatus: "success",
+              sanityDocumentId: publishResult.result.documentId,
+            })
+            .where(eq(schema.aiGenerations.id, item.id));
+          
+          published.push(item.id);
+          console.log(`Successfully published item ${item.id} to Sanity: ${publishResult.result.documentId}`);
+        } else {
+          // Log error but continue with remaining items
+          console.error(`Failed to publish item ${item.id}:`, publishResult.error);
+          failed.push(item.id);
+          
+          // Update status to failed
+          await database
+            .update(schema.aiGenerations)
+            .set({
+              sanityWriteStatus: "failed",
+            })
+            .where(eq(schema.aiGenerations.id, item.id));
+        }
+      } catch (error) {
+        // Log error but continue with remaining items
+        console.error(`Failed to publish item ${item.id}:`, error);
+        failed.push(item.id);
+        
+        // Update status to failed
+        await database
+          .update(schema.aiGenerations)
+          .set({
+            sanityWriteStatus: "failed",
+          })
+          .where(eq(schema.aiGenerations.id, item.id));
+      }
+    }
+    
+    // Update job run with results
+    await updateJobRun(jobId, {
+      status: published.length > 0 ? "success" : failed.length > 0 ? "failed" : "success",
+      result: {
+        selected: contentItems.length,
+        published: published.length,
+        failed: failed.length,
+        publishedIds: published,
+      },
+      errorMessage: failed.length > 0 ? `${failed.length} items failed to publish` : null,
+      finishedAt: new Date(),
+    });
+    
+    // Update schedule run times
+    await updateScheduleRunTimes(taskId);
+    
+  } catch (error) {
+    await updateJobRun(jobId, {
+      status: "failed",
+      errorMessage: error instanceof Error ? error.message : "Publishing queue execution failed",
+      finishedAt: new Date(),
+    });
+  }
+}
+
+async function processAiContentGeneration(jobId: string, taskId: string, payload: any, scheduleType: string) {
+  // Route execution based on scheduleType
+  if (scheduleType === "publishing_queue") {
+    // Execute publishing queue flow
+    const publishingQueueConfig = payload.publishingQueueConfig || {};
+    await executePublishingQueue(jobId, taskId, publishingQueueConfig);
+    return;
+  }
+  
+  // Execute existing AI generation + auto-publish flow
   const { generateContent } = await import("@/lib/ai-writer/content-generator");
   const { updateScheduleRunTimes } = await import("@/lib/ai-writer/schedule-manager");
   
@@ -191,7 +345,8 @@ async function runScheduledTasks() {
     // Handle AI content generation directly (not via queue)
     if (task.taskType === "ai_content_generation") {
       // Process immediately without queue
-      processAiContentGeneration(job.id, task.id, task.payload).catch((error) => {
+      const scheduleType = task.scheduleType || "ai_generation";
+      processAiContentGeneration(job.id, task.id, task.payload, scheduleType).catch((error) => {
         console.error(`Failed to process AI content generation for task ${task.id}:`, error);
       });
       continue;

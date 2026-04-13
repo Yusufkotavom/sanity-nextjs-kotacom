@@ -40,15 +40,44 @@ export async function PATCH(
       );
     }
 
+    // Validate that content is not already published
+    if (existing.sanityWriteStatus === "success") {
+      return NextResponse.json(
+        { error: "Cannot update ready status for already published content" },
+        { status: 400 }
+      );
+    }
+
     // Update ready status
     await database
       .update(aiGenerations)
       .set({ readyToPublish })
       .where(eq(aiGenerations.id, id));
 
+    // Fetch and return updated generation record
+    const [updated] = await database
+      .select()
+      .from(aiGenerations)
+      .where(eq(aiGenerations.id, id));
+
+    const inputJson = updated.inputJson as any;
+    const parsedOutput = updated.parsedOutput as any;
+
     return NextResponse.json({
-      success: true,
-      readyToPublish,
+      id: updated.id,
+      title: parsedOutput?.title || "",
+      excerpt: parsedOutput?.excerpt || "",
+      body: parsedOutput?.body || "",
+      contentType: inputJson?.contentType || "post",
+      provider: updated.provider,
+      model: updated.model,
+      validationStatus: updated.validationStatus,
+      validationErrors: updated.validationErrors as string[] | undefined,
+      sanityWriteStatus: updated.sanityWriteStatus,
+      sanityDocumentId: updated.sanityDocumentId,
+      ogImageAssetId: updated.ogImageAssetId,
+      readyToPublish: updated.readyToPublish,
+      createdAt: updated.createdAt,
     });
   } catch (error) {
     console.error("Failed to update ready status:", error);

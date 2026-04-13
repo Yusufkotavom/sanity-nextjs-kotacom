@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
@@ -31,6 +32,7 @@ export default function CreateSchedulePage() {
   
   const [formData, setFormData] = useState({
     name: "",
+    scheduleType: "ai_generation" as "ai_generation" | "publishing_queue",
     cronExpr: "0 9 * * *",
     timezone: "Asia/Jakarta",
     enabled: true,
@@ -41,6 +43,8 @@ export default function CreateSchedulePage() {
     useTemplate: false,
     templateId: "",
     customPrompt: "",
+    publishingQueueContentType: "",
+    publishingQueueBatchSize: 5,
   });
 
   useEffect(() => {
@@ -65,17 +69,28 @@ export default function CreateSchedulePage() {
     setLoading(true);
 
     try {
-      const payload: any = {
-        contentType: formData.contentType,
-        batchSize: formData.batchSize,
-        autoPublish: formData.autoPublish,
-        generateOgImage: formData.generateOgImage,
-      };
+      let payload: any;
 
-      if (formData.useTemplate && formData.templateId) {
-        payload.promptTemplateId = formData.templateId;
-      } else if (formData.customPrompt) {
-        payload.customPrompt = formData.customPrompt;
+      if (formData.scheduleType === "publishing_queue") {
+        payload = {
+          publishingQueueConfig: {
+            contentType: formData.publishingQueueContentType || undefined,
+            batchSize: formData.publishingQueueBatchSize,
+          },
+        };
+      } else {
+        payload = {
+          contentType: formData.contentType,
+          batchSize: formData.batchSize,
+          autoPublish: formData.autoPublish,
+          generateOgImage: formData.generateOgImage,
+        };
+
+        if (formData.useTemplate && formData.templateId) {
+          payload.promptTemplateId = formData.templateId;
+        } else if (formData.customPrompt) {
+          payload.customPrompt = formData.customPrompt;
+        }
       }
 
       const response = await fetch("/api/ai/schedule/create", {
@@ -83,6 +98,7 @@ export default function CreateSchedulePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.name,
+          scheduleType: formData.scheduleType,
           cronExpr: formData.cronExpr,
           timezone: formData.timezone,
           enabled: formData.enabled,
@@ -140,6 +156,38 @@ export default function CreateSchedulePage() {
               />
             </div>
 
+            <div>
+              <Label>Schedule Type *</Label>
+              <RadioGroup
+                value={formData.scheduleType}
+                onValueChange={(value) => setFormData({ ...formData, scheduleType: value as "ai_generation" | "publishing_queue" })}
+                className="mt-2"
+              >
+                <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <RadioGroupItem value="ai_generation" id="ai_generation" />
+                  <div className="space-y-1 leading-none">
+                    <Label htmlFor="ai_generation" className="cursor-pointer font-medium">
+                      AI Generation + Auto-Publish
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      Automatically generate new content using AI and optionally publish to Sanity
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <RadioGroupItem value="publishing_queue" id="publishing_queue" />
+                  <div className="space-y-1 leading-none">
+                    <Label htmlFor="publishing_queue" className="cursor-pointer font-medium">
+                      Publishing Queue
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      Publish manually-created content that's marked as "Ready to Publish"
+                    </p>
+                  </div>
+                </div>
+              </RadioGroup>
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="cronExpr">Cron Expression</Label>
@@ -178,136 +226,194 @@ export default function CreateSchedulePage() {
 
           {/* Content Settings */}
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Content Settings</h2>
+            <h2 className="text-lg font-semibold">
+              {formData.scheduleType === "publishing_queue" ? "Publishing Queue Configuration" : "Content Settings"}
+            </h2>
             
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="contentType">Content Type</Label>
-                <Select
-                  value={formData.contentType}
-                  onValueChange={(value) => setFormData({ ...formData, contentType: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="post">Blog Post</SelectItem>
-                    <SelectItem value="service">Service Page</SelectItem>
-                    <SelectItem value="product">Product Page</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            {formData.scheduleType === "publishing_queue" ? (
+              // Publishing Queue Configuration
+              <>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="publishingQueueContentType">Content Type Filter (Optional)</Label>
+                    <Select
+                      value={formData.publishingQueueContentType}
+                      onValueChange={(value) => setFormData({ ...formData, publishingQueueContentType: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="All content types" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All content types</SelectItem>
+                        <SelectItem value="post">Blog Post</SelectItem>
+                        <SelectItem value="service">Service Page</SelectItem>
+                        <SelectItem value="product">Product Page</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Leave empty to publish all content types
+                    </p>
+                  </div>
 
-              <div>
-                <Label htmlFor="batchSize">Batch Size</Label>
-                <Input
-                  id="batchSize"
-                  type="number"
-                  min="1"
-                  max="50"
-                  value={formData.batchSize}
-                  onChange={(e) => setFormData({ ...formData, batchSize: parseInt(e.target.value) })}
-                  required
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  Number of items to generate per run (1-50)
-                </p>
-              </div>
-            </div>
+                  <div>
+                    <Label htmlFor="publishingQueueBatchSize">Batch Size</Label>
+                    <Input
+                      id="publishingQueueBatchSize"
+                      type="number"
+                      min="1"
+                      max="50"
+                      value={formData.publishingQueueBatchSize}
+                      onChange={(e) => setFormData({ ...formData, publishingQueueBatchSize: parseInt(e.target.value) })}
+                      required
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Number of items to publish per run (1-50)
+                    </p>
+                  </div>
+                </div>
 
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="autoPublish"
-                  checked={formData.autoPublish}
-                  onCheckedChange={(checked) =>
-                    setFormData({ ...formData, autoPublish: checked as boolean })
-                  }
-                />
-                <Label htmlFor="autoPublish" className="cursor-pointer">
-                  Auto-publish to Sanity
-                </Label>
-              </div>
+                <div className="rounded-md bg-muted p-4">
+                  <p className="text-sm text-muted-foreground">
+                    This schedule will publish content marked as "Ready to Publish" in FIFO order (oldest first).
+                    Only unpublished content will be selected.
+                  </p>
+                </div>
+              </>
+            ) : (
+              // AI Generation Configuration
+              <>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="contentType">Content Type</Label>
+                    <Select
+                      value={formData.contentType}
+                      onValueChange={(value) => setFormData({ ...formData, contentType: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="post">Blog Post</SelectItem>
+                        <SelectItem value="service">Service Page</SelectItem>
+                        <SelectItem value="product">Product Page</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="generateOgImage"
-                  checked={formData.generateOgImage}
-                  onCheckedChange={(checked) =>
-                    setFormData({ ...formData, generateOgImage: checked as boolean })
-                  }
-                />
-                <Label htmlFor="generateOgImage" className="cursor-pointer">
-                  Generate OG images
-                </Label>
-              </div>
+                  <div>
+                    <Label htmlFor="batchSize">Batch Size</Label>
+                    <Input
+                      id="batchSize"
+                      type="number"
+                      min="1"
+                      max="50"
+                      value={formData.batchSize}
+                      onChange={(e) => setFormData({ ...formData, batchSize: parseInt(e.target.value) })}
+                      required
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Number of items to generate per run (1-50)
+                    </p>
+                  </div>
+                </div>
 
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="enabled"
-                  checked={formData.enabled}
-                  onCheckedChange={(checked) =>
-                    setFormData({ ...formData, enabled: checked as boolean })
-                  }
-                />
-                <Label htmlFor="enabled" className="cursor-pointer">
-                  Enable schedule immediately
-                </Label>
-              </div>
-            </div>
-          </div>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="autoPublish"
+                      checked={formData.autoPublish}
+                      onCheckedChange={(checked) =>
+                        setFormData({ ...formData, autoPublish: checked as boolean })
+                      }
+                    />
+                    <Label htmlFor="autoPublish" className="cursor-pointer">
+                      Auto-publish to Sanity
+                    </Label>
+                  </div>
 
-          {/* Prompt Settings */}
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Prompt Settings</h2>
-            
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="generateOgImage"
+                      checked={formData.generateOgImage}
+                      onCheckedChange={(checked) =>
+                        setFormData({ ...formData, generateOgImage: checked as boolean })
+                      }
+                    />
+                    <Label htmlFor="generateOgImage" className="cursor-pointer">
+                      Generate OG images
+                    </Label>
+                  </div>
+                </div>
+              </>
+            )}
+
             <div className="flex items-center space-x-2">
               <Checkbox
-                id="useTemplate"
-                checked={formData.useTemplate}
+                id="enabled"
+                checked={formData.enabled}
                 onCheckedChange={(checked) =>
-                  setFormData({ ...formData, useTemplate: checked as boolean })
+                  setFormData({ ...formData, enabled: checked as boolean })
                 }
               />
-              <Label htmlFor="useTemplate" className="cursor-pointer">
-                Use prompt template
+              <Label htmlFor="enabled" className="cursor-pointer">
+                Enable schedule immediately
               </Label>
             </div>
-
-            {formData.useTemplate ? (
-              <div>
-                <Label htmlFor="templateId">Select Template</Label>
-                <Select
-                  value={formData.templateId}
-                  onValueChange={(value) => setFormData({ ...formData, templateId: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choose a template" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {templates
-                      .filter(t => t.contentType === formData.contentType || t.contentType === "all")
-                      .map((template) => (
-                        <SelectItem key={template.id} value={template.id}>
-                          {template.name}
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            ) : (
-              <div>
-                <Label htmlFor="customPrompt">Custom Prompt (Optional)</Label>
-                <Textarea
-                  id="customPrompt"
-                  value={formData.customPrompt}
-                  onChange={(e) => setFormData({ ...formData, customPrompt: e.target.value })}
-                  placeholder="Leave empty to use default prompts from AI Writer Settings"
-                  rows={4}
-                />
-              </div>
-            )}
           </div>
+
+          {/* Prompt Settings - Only for AI Generation */}
+          {formData.scheduleType === "ai_generation" && (
+            <div className="space-y-4">
+              <h2 className="text-lg font-semibold">Prompt Settings</h2>
+              
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="useTemplate"
+                  checked={formData.useTemplate}
+                  onCheckedChange={(checked) =>
+                    setFormData({ ...formData, useTemplate: checked as boolean })
+                  }
+                />
+                <Label htmlFor="useTemplate" className="cursor-pointer">
+                  Use prompt template
+                </Label>
+              </div>
+
+              {formData.useTemplate ? (
+                <div>
+                  <Label htmlFor="templateId">Select Template</Label>
+                  <Select
+                    value={formData.templateId}
+                    onValueChange={(value) => setFormData({ ...formData, templateId: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose a template" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {templates
+                        .filter(t => t.contentType === formData.contentType || t.contentType === "all")
+                        .map((template) => (
+                          <SelectItem key={template.id} value={template.id}>
+                            {template.name}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ) : (
+                <div>
+                  <Label htmlFor="customPrompt">Custom Prompt (Optional)</Label>
+                  <Textarea
+                    id="customPrompt"
+                    value={formData.customPrompt}
+                    onChange={(e) => setFormData({ ...formData, customPrompt: e.target.value })}
+                    placeholder="Leave empty to use default prompts from AI Writer Settings"
+                    rows={4}
+                  />
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="flex justify-end gap-3">
             <Button

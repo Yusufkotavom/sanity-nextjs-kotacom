@@ -13,10 +13,11 @@ import { CronExpressionParser } from "cron-parser";
 export interface CreateScheduleParams {
   name: string;
   taskType: "ai_content_generation";
+  scheduleType?: "ai_generation" | "publishing_queue";
   cronExpr: string;
   timezone: string;
   enabled: boolean;
-  payload: ContentGenerationPayload;
+  payload: ContentGenerationPayload | PublishingQueuePayload;
 }
 
 export interface ContentGenerationPayload {
@@ -27,6 +28,13 @@ export interface ContentGenerationPayload {
   autoPublish: boolean;
   generateOgImage: boolean;
   tags?: string[];
+}
+
+export interface PublishingQueuePayload {
+  publishingQueueConfig: {
+    contentType?: "post" | "service" | "product";
+    batchSize: number;
+  };
 }
 
 export interface UpdateScheduleParams {
@@ -95,6 +103,50 @@ export function calculateNextRunTime(cronExpr: string, timezone: string): Date {
  * Creates a new scheduled task
  */
 export async function createSchedule(params: CreateScheduleParams) {
+  // Default scheduleType to "ai_generation" for backward compatibility
+  const scheduleType = params.scheduleType || "ai_generation";
+  
+  // Validate scheduleType
+  const validScheduleTypes = ["ai_generation", "publishing_queue"];
+  if (!validScheduleTypes.includes(scheduleType)) {
+    throw new Error(`scheduleType must be one of: ${validScheduleTypes.join(", ")}`);
+  }
+
+  // Validate payload structure matches schedule type
+  if (scheduleType === "publishing_queue") {
+    const payload = params.payload as PublishingQueuePayload;
+    if (!payload.publishingQueueConfig) {
+      throw new Error("Publishing queue schedules require publishingQueueConfig in payload");
+    }
+    if (!payload.publishingQueueConfig.batchSize || payload.publishingQueueConfig.batchSize < 1) {
+      throw new Error("publishingQueueConfig.batchSize is required and must be at least 1");
+    }
+    if (payload.publishingQueueConfig.batchSize > 50) {
+      throw new Error("publishingQueueConfig.batchSize must not exceed 50");
+    }
+    if (payload.publishingQueueConfig.contentType) {
+      const validContentTypes = ["post", "service", "product"];
+      if (!validContentTypes.includes(payload.publishingQueueConfig.contentType)) {
+        throw new Error(`publishingQueueConfig.contentType must be one of: ${validContentTypes.join(", ")}`);
+      }
+    }
+  } else if (scheduleType === "ai_generation") {
+    const payload = params.payload as ContentGenerationPayload;
+    if (!payload.contentType) {
+      throw new Error("AI generation schedules require contentType in payload");
+    }
+    if (!payload.batchSize || payload.batchSize < 1) {
+      throw new Error("batchSize is required and must be at least 1");
+    }
+    if (payload.batchSize > 50) {
+      throw new Error("batchSize must not exceed 50");
+    }
+    const validContentTypes = ["post", "service", "product"];
+    if (!validContentTypes.includes(payload.contentType)) {
+      throw new Error(`contentType must be one of: ${validContentTypes.join(", ")}`);
+    }
+  }
+
   // Validate cron expression
   const cronValidation = validateCronExpression(params.cronExpr);
   if (!cronValidation.valid) {
@@ -107,15 +159,20 @@ export async function createSchedule(params: CreateScheduleParams) {
     throw new Error(timezoneValidation.error);
   }
 
-  // Validate batch size
-  if (params.payload.batchSize < 1 || params.payload.batchSize > 50) {
-    throw new Error("Batch size must be between 1 and 50");
-  }
+  // Legacy validation for backward compatibility (only for ai_generation)
+  if (scheduleType === "ai_generation") {
+    const payload = params.payload as ContentGenerationPayload;
+    
+    // Validate batch size
+    if (payload.batchSize < 1 || payload.batchSize > 50) {
+      throw new Error("Batch size must be between 1 and 50");
+    }
 
-  // Validate content type
-  const validContentTypes = ["post", "service", "product"];
-  if (!validContentTypes.includes(params.payload.contentType)) {
-    throw new Error(`Content type must be one of: ${validContentTypes.join(", ")}`);
+    // Validate content type
+    const validContentTypes = ["post", "service", "product"];
+    if (!validContentTypes.includes(payload.contentType)) {
+      throw new Error(`Content type must be one of: ${validContentTypes.join(", ")}`);
+    }
   }
 
   // Check schedule limit (50 per user)
@@ -137,6 +194,7 @@ export async function createSchedule(params: CreateScheduleParams) {
     .values({
       name: params.name,
       taskType: params.taskType,
+      scheduleType: scheduleType,
       cronExpr: params.cronExpr,
       timezone: params.timezone,
       enabled: params.enabled,

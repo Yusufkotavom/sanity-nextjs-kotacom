@@ -13,13 +13,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ArrowLeft, Edit, Trash2, Play, Pause } from "lucide-react";
+import { ArrowLeft, Edit, Trash2, Play, Pause, Sparkles, Clock } from "lucide-react";
 import { toast } from "sonner";
 
 interface Schedule {
   id: string;
   name: string;
   taskType: string;
+  scheduleType: "ai_generation" | "publishing_queue";
   cronExpr: string;
   timezone: string;
   enabled: boolean;
@@ -149,6 +150,24 @@ export default function ScheduleDetailPage() {
     return `${duration.toFixed(1)}s`;
   }
 
+  function renderScheduleTypeBadge(scheduleType: "ai_generation" | "publishing_queue") {
+    if (scheduleType === "ai_generation") {
+      return (
+        <Badge className="bg-blue-500 hover:bg-blue-600 text-white">
+          <Sparkles className="w-3 h-3 mr-1" />
+          AI Generation + Auto-Publish
+        </Badge>
+      );
+    } else {
+      return (
+        <Badge className="bg-purple-500 hover:bg-purple-600 text-white">
+          <Clock className="w-3 h-3 mr-1" />
+          Publishing Queue
+        </Badge>
+      );
+    }
+  }
+
   if (loading) {
     return (
       <div className="p-6">
@@ -214,6 +233,12 @@ export default function ScheduleDetailPage() {
       <Card className="p-6">
         <h2 className="text-lg font-semibold mb-4">Configuration</h2>
         <div className="grid grid-cols-2 gap-6">
+          <div>
+            <p className="text-sm text-muted-foreground">Schedule Type</p>
+            <div className="mt-1">
+              {renderScheduleTypeBadge(schedule.scheduleType)}
+            </div>
+          </div>
           <div>
             <p className="text-sm text-muted-foreground">Status</p>
             <div className="mt-1">
