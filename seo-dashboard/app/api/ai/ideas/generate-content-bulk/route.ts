@@ -7,12 +7,22 @@ import { generateContent } from "@/lib/ai-writer/content-generator";
 import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 import { checkSimpleRateLimit } from "@/lib/rate-limit";
 import { assertSupportedContentType } from "@/lib/ai-writer/content-type";
+import { normalizeQualityMode, normalizeRuntimeProvider } from "@/lib/ai-writer/model-selection";
 
 export const dynamic = "force-dynamic";
 
 const BULK_CONCURRENCY = 3;
 
-async function processSingleIdea(idea: any, templateId: string, generateOgImage: boolean) {
+async function processSingleIdea(
+  idea: any,
+  templateId: string,
+  generateOgImage: boolean,
+  options: {
+    qualityMode: "economy" | "standard" | "high";
+    provider?: "gateway" | "groq" | "gemini";
+    model?: string;
+  },
+) {
   const resolvedAudience = idea.audience || "general audience";
   const resolvedKeyword = idea.keyword || idea.topic;
   const resolvedWordCount = idea.wordCount || "1500";
@@ -48,6 +58,9 @@ async function processSingleIdea(idea: any, templateId: string, generateOgImage:
     prompt,
     templateId,
     generateOgImage,
+    qualityMode: options.qualityMode,
+    provider: options.provider,
+    model: options.model,
     metadata: {
       ideaId: idea.id,
       source: "content-ideas-bulk",
@@ -78,6 +91,12 @@ export async function POST(request: NextRequest) {
     const ideaIds: string[] = Array.isArray(body.ideaIds) ? body.ideaIds : [];
     const templateId: string = body.templateId;
     const generateOgImage: boolean = body.generateOgImage !== false;
+    const qualityMode = normalizeQualityMode(body.qualityMode);
+    const provider = normalizeRuntimeProvider(body.provider);
+    const model: string | undefined =
+      typeof body.model === "string" && body.model.trim().length > 0
+        ? body.model.trim()
+        : undefined;
 
     if (!templateId || ideaIds.length === 0) {
       return NextResponse.json({ error: "ideaIds and templateId are required" }, { status: 400 });
@@ -103,7 +122,11 @@ export async function POST(request: NextRequest) {
       const results = await Promise.all(
         chunk.map(async (idea) => {
           try {
-            const generation = await processSingleIdea(idea, templateId, generateOgImage);
+            const generation = await processSingleIdea(idea, templateId, generateOgImage, {
+              qualityMode,
+              provider,
+              model,
+            });
             return { ok: true as const, ideaId: idea.id, generationId: generation.id };
           } catch (error) {
             return {

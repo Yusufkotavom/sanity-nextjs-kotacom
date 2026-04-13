@@ -7,6 +7,11 @@ import { getAiWriterResolvedSettings } from "./settings-source";
 import { generateImageSafe } from "./og-image-generator";
 import { publishContentSafe } from "./sanity-publisher";
 import { assertSupportedContentType, toSanityPublishType } from "./content-type";
+import {
+  resolveModelSelection,
+  type ResolveModelSelectionInput,
+  type ResolveModelSelectionResult,
+} from "./model-selection";
 
 export interface GenerateContentParams {
   contentType: "post" | "service" | "product";
@@ -14,6 +19,7 @@ export interface GenerateContentParams {
   system?: string;
   model?: string;
   provider?: "gateway" | "groq" | "gemini";
+  qualityMode?: "economy" | "standard" | "high";
   metadata?: Record<string, any>;
   templateId?: string;
   promptTemplateId?: string;
@@ -383,6 +389,7 @@ async function generateAiTextWithBackoff(params: {
   prompt: string;
   system?: string;
   provider?: "gateway" | "groq" | "gemini";
+  model?: string;
 }) {
   let lastError: unknown;
   for (let attempt = 1; attempt <= AI_RETRY_ATTEMPTS; attempt++) {
@@ -404,6 +411,12 @@ async function generateAiTextWithBackoff(params: {
 export async function generateContent(params: GenerateContentParams): Promise<GeneratedContent> {
   const database = db();
   const normalizedContentType = assertSupportedContentType(params.contentType);
+
+  const resolvedSelection = await resolveModelSelection({
+    qualityMode: params.qualityMode,
+    provider: params.provider,
+    model: params.model,
+  } as ResolveModelSelectionInput);
 
   // Resolve prompt if not provided
   let prompt = params.prompt || params.customPrompt || "";
@@ -435,7 +448,8 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
     const result = await generateAiTextWithBackoff({
       prompt,
       system,
-      provider: params.provider,
+      provider: resolvedSelection.provider,
+      model: resolvedSelection.model,
     });
 
     rawOutput = result.text;
@@ -457,6 +471,9 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
           prompt: params.prompt,
           system: params.system || "",
           contentType: normalizedContentType,
+          model: resolvedSelection.model,
+          provider: resolvedSelection.provider,
+          qualityMode: resolvedSelection.qualityMode,
           metadata: params.metadata,
         } as any,
         provider: "unknown",
@@ -485,6 +502,9 @@ export async function generateContent(params: GenerateContentParams): Promise<Ge
         prompt: params.prompt,
         system: params.system || "",
         contentType: normalizedContentType,
+        model: resolvedSelection.model,
+        provider: resolvedSelection.provider,
+        qualityMode: resolvedSelection.qualityMode,
         metadata: params.metadata,
       } as any,
       provider,

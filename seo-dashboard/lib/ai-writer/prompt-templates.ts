@@ -55,6 +55,9 @@ const VARIABLE_ALIASES: Record<string, string[]> = {
   keyword: ["keywords", "target_keyword"],
   keywords: ["keyword", "target_keyword"],
   target_keyword: ["keyword", "keywords"],
+  topic: ["title", "idea", "keyword", "keywords", "target_keyword"],
+  title: ["topic", "idea"],
+  idea: ["topic", "title"],
   word_count: ["wordcount", "length"],
   wordcount: ["word_count", "length"],
   length: ["word_count", "wordcount"],
@@ -133,6 +136,14 @@ function fallbackVariableValue(
   }
   if (normalized.includes("location") || normalized === "city" || normalized === "area") {
     return readVariableValue("location", variables) || "general";
+  }
+  if (normalized === "topic") {
+    return (
+      readVariableValue("title", variables) ||
+      readVariableValue("idea", variables) ||
+      readVariableValue("keyword", variables) ||
+      "general topic"
+    );
   }
   if (normalized === "service_name" || normalized === "product_name" || normalized === "idea") {
     return topic || "general topic";

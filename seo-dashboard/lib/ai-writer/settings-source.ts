@@ -1,4 +1,25 @@
 export type AiWriterMode = "gateway" | "direct-gemini" | "direct-groq";
+export type AiRuntimeProvider = "gateway" | "gemini" | "groq";
+export type AiQualityMode = "economy" | "standard" | "high";
+
+function normalizeRuntimeProvider(value: string): AiRuntimeProvider | undefined {
+  if (value === "gateway" || value === "gemini" || value === "groq") return value;
+  return undefined;
+}
+
+function resolveProfile(
+  studioProfile: { provider?: string; model?: string } | undefined,
+  envProvider: AiRuntimeProvider | undefined,
+  envModel: string,
+  fallbackProvider: AiRuntimeProvider,
+  fallbackModel: string,
+) {
+  const studioProvider = normalizeRuntimeProvider((studioProfile?.provider || "").trim());
+  const studioModel = (studioProfile?.model || "").trim();
+  const provider = envProvider || studioProvider || fallbackProvider;
+  const model = envModel || studioModel || fallbackModel;
+  return { provider, model };
+}
 
 export async function getAiWriterResolvedSettings() {
   let studio: Awaited<
@@ -29,6 +50,44 @@ export async function getAiWriterResolvedSettings() {
     (studio?.customModelGroq || "").trim() ||
     (studio?.defaultModelGroq || "meta-llama/llama-4-scout-17b-16e-instruct").trim();
 
+  const defaultRuntimeProvider: AiRuntimeProvider =
+    mode === "direct-gemini" ? "gemini" : mode === "direct-groq" ? "groq" : "gateway";
+  const defaultRuntimeModel =
+    defaultRuntimeProvider === "gemini"
+      ? defaultGeminiModel
+      : defaultRuntimeProvider === "groq"
+        ? defaultGroqModel
+        : defaultGatewayModel;
+
+  const envStandardProvider = normalizeRuntimeProvider((process.env.AI_MODEL_PROFILE_STANDARD_PROVIDER || "").trim());
+  const envStandardModel = (process.env.AI_MODEL_PROFILE_STANDARD_MODEL || "").trim();
+  const envHighProvider = normalizeRuntimeProvider((process.env.AI_MODEL_PROFILE_HIGH_PROVIDER || "").trim());
+  const envHighModel = (process.env.AI_MODEL_PROFILE_HIGH_MODEL || "").trim();
+  const envEconomyProvider = normalizeRuntimeProvider((process.env.AI_MODEL_PROFILE_ECONOMY_PROVIDER || "").trim());
+  const envEconomyModel = (process.env.AI_MODEL_PROFILE_ECONOMY_MODEL || "").trim();
+
+  const standardProfile = resolveProfile(
+    studio?.modelProfiles?.standard,
+    envStandardProvider,
+    envStandardModel,
+    defaultRuntimeProvider,
+    defaultRuntimeModel,
+  );
+  const highProfile = resolveProfile(
+    studio?.modelProfiles?.high,
+    envHighProvider,
+    envHighModel,
+    standardProfile.provider,
+    standardProfile.model,
+  );
+  const economyProfile = resolveProfile(
+    studio?.modelProfiles?.economy,
+    envEconomyProvider,
+    envEconomyModel,
+    "gemini",
+    defaultGeminiModel,
+  );
+
   // API keys are always sourced from Vercel environment variables only
   const gatewayApiKey = process.env.AI_GATEWAY_API_KEY || "";
   const geminiKeys = (process.env.AI_WRITER_GEMINI_KEYS || "")
@@ -49,6 +108,20 @@ export async function getAiWriterResolvedSettings() {
       groq: defaultGroqModel,
       gemini: defaultGeminiModel,
     },
+    modelProfiles: {
+      standard: {
+        provider: standardProfile.provider,
+        model: standardProfile.model,
+      },
+      high: {
+        provider: highProfile.provider,
+        model: highProfile.model,
+      },
+      economy: {
+        provider: economyProfile.provider,
+        model: economyProfile.model,
+      },
+    } as Record<AiQualityMode, { provider: AiRuntimeProvider; model: string }>,
     providerOrder: ["gateway", "groq", "gemini"] as AiWriterMode[],
     fallbackModels: (studio?.fallbackModels || []).filter(Boolean),
     gatewayProviderOrder: [] as string[],
@@ -65,6 +138,9 @@ export async function getAiWriterResolvedSettings() {
       postRewrite: studio?.prompts?.postRewrite || "",
       serviceRewrite: studio?.prompts?.serviceRewrite || "",
       projectRewrite: studio?.prompts?.projectRewrite || "",
+      postBodyExtend: studio?.prompts?.postBodyExtend || "",
+      serviceBodyExtend: studio?.prompts?.serviceBodyExtend || "",
+      projectBodyExtend: studio?.prompts?.projectBodyExtend || "",
     },
     secrets: {
       gatewayApiKey,

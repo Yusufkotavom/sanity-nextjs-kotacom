@@ -10,6 +10,20 @@ type SaveBody = {
   defaultModelGroq?: string;
   customModelGroq?: string;
   fallbackModels?: string[];
+  modelProfiles?: {
+    economy?: {
+      provider?: "gateway" | "groq" | "gemini";
+      model?: string;
+    };
+    standard?: {
+      provider?: "gateway" | "groq" | "gemini";
+      model?: string;
+    };
+    high?: {
+      provider?: "gateway" | "groq" | "gemini";
+      model?: string;
+    };
+  };
   temperature?: number;
   maxOutputTokens?: number;
   prompts?: {
@@ -17,6 +31,9 @@ type SaveBody = {
     postRewrite?: string;
     serviceRewrite?: string;
     projectRewrite?: string;
+    postBodyExtend?: string;
+    serviceBodyExtend?: string;
+    projectBodyExtend?: string;
   };
   notes?: string;
 };
@@ -42,6 +59,12 @@ function normalizeNumber(value: unknown, fallback: number, min: number, max: num
   const parsed = Number(value);
   if (!Number.isFinite(parsed)) return fallback;
   return Math.max(min, Math.min(max, parsed));
+}
+
+function normalizeProvider(value: unknown) {
+  const v = normalizeString(value);
+  if (v === "gateway" || v === "groq" || v === "gemini") return v;
+  return undefined;
 }
 
 export async function POST(request: NextRequest) {
@@ -94,6 +117,21 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  for (const [profileName, profile] of Object.entries(body.modelProfiles || {})) {
+    const provider = normalizeProvider((profile as any)?.provider);
+    const model = normalizeString((profile as any)?.model);
+    if (!provider || !model) continue;
+    if (provider === "gateway" && !isGatewayModel(model)) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message: `Profile ${profileName} with gateway provider requires provider/model format.`,
+        },
+        { status: 400 },
+      );
+    }
+  }
+
   const mutation = {
     enabled: normalizeBool(body.enabled, false),
     mode,
@@ -104,6 +142,20 @@ export async function POST(request: NextRequest) {
     defaultModelGroq: normalizeString(body.defaultModelGroq),
     customModelGroq: normalizeString(body.customModelGroq),
     fallbackModels,
+    modelProfiles: {
+      economy: {
+        provider: normalizeProvider(body.modelProfiles?.economy?.provider),
+        model: normalizeString(body.modelProfiles?.economy?.model),
+      },
+      standard: {
+        provider: normalizeProvider(body.modelProfiles?.standard?.provider),
+        model: normalizeString(body.modelProfiles?.standard?.model),
+      },
+      high: {
+        provider: normalizeProvider(body.modelProfiles?.high?.provider),
+        model: normalizeString(body.modelProfiles?.high?.model),
+      },
+    },
     temperature: normalizeNumber(body.temperature, 0.4, 0, 2),
     maxOutputTokens: Math.round(normalizeNumber(body.maxOutputTokens, 1400, 128, 8192)),
     prompts: {
@@ -111,6 +163,9 @@ export async function POST(request: NextRequest) {
       postRewrite: normalizeString(prompts.postRewrite),
       serviceRewrite: normalizeString(prompts.serviceRewrite),
       projectRewrite: normalizeString(prompts.projectRewrite),
+      postBodyExtend: normalizeString(prompts.postBodyExtend),
+      serviceBodyExtend: normalizeString(prompts.serviceBodyExtend),
+      projectBodyExtend: normalizeString(prompts.projectBodyExtend),
     },
     notes: normalizeString(body.notes),
   };

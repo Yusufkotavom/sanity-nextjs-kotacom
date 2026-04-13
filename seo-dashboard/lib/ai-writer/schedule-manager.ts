@@ -26,6 +26,22 @@ export interface ContentGenerationPayload {
   customPrompt?: string;
   ideationInput?: string;
   ideationKeywords?: string[];
+  qualityMode?: "economy" | "standard" | "high";
+  provider?: "gateway" | "groq" | "gemini";
+  model?: string;
+  pipelineMode?: "keyword_pipeline";
+  keywords?: string[];
+  keywordsPerRun?: number;
+  articlesPerKeyword?: number;
+  currentKeywordIndex?: number;
+  outlineQualityMode?: "economy" | "standard" | "high";
+  fullQualityMode?: "economy" | "standard" | "high";
+  outlineProvider?: "gateway" | "groq" | "gemini";
+  outlineModel?: string;
+  fullProvider?: "gateway" | "groq" | "gemini";
+  fullModel?: string;
+  lastProcessedKeywords?: string[];
+  lastKeywordPipelineRunAt?: string;
   batchSize: number;
   autoPublish: boolean;
   generateOgImage: boolean;
@@ -52,6 +68,23 @@ export interface ScheduleFilters {
   taskType?: string;
   limit?: number;
   offset?: number;
+}
+
+function mergeSchedulePayload(
+  existingPayload: Record<string, any> | null | undefined,
+  incomingPayload: Record<string, any>,
+) {
+  const base = { ...(existingPayload || {}) };
+  const merged = { ...base, ...incomingPayload };
+
+  if ("publishingQueueConfig" in incomingPayload) {
+    merged.publishingQueueConfig = {
+      ...(base.publishingQueueConfig || {}),
+      ...(incomingPayload.publishingQueueConfig || {}),
+    };
+  }
+
+  return merged;
 }
 
 /**
@@ -241,10 +274,10 @@ export async function updateSchedule(id: string, params: UpdateScheduleParams) {
   // Merge payload if provided
   let mergedPayload = existing.payload as any;
   if (params.payload) {
-    mergedPayload = {
-      ...(existing.payload as any),
-      ...params.payload,
-    };
+    mergedPayload = mergeSchedulePayload(
+      (existing.payload as Record<string, any>) || {},
+      params.payload as Record<string, any>,
+    );
 
     // Validate batch size if changed
     if ("batchSize" in params.payload && params.payload.batchSize !== undefined) {

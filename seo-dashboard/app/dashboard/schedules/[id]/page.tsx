@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -30,7 +31,7 @@ interface Schedule {
   id: string;
   name: string;
   taskType: string;
-  scheduleType: "ai_generation" | "publishing_queue";
+  scheduleType: "ai_generation" | "publishing_queue" | "keyword_pipeline";
   cronExpr: string;
   timezone: string;
   enabled: boolean;
@@ -43,6 +44,16 @@ interface Schedule {
     customPrompt?: string;
     ideationInput?: string;
     ideationKeywords?: string[];
+    keywords?: string[];
+    keywordsPerRun?: number;
+    articlesPerKeyword?: number;
+    currentKeywordIndex?: number;
+    pipelineMode?: string;
+    qualityMode?: "economy" | "standard" | "high";
+    provider?: "gateway" | "groq" | "gemini";
+    model?: string;
+    outlineQualityMode?: "economy" | "standard" | "high";
+    fullQualityMode?: "economy" | "standard" | "high";
     publishingQueueConfig?: {
       contentType?: string;
       batchSize: number;
@@ -78,9 +89,19 @@ export default function ScheduleDetailPage() {
     batchSize: 1,
     autoPublish: false,
     generateOgImage: true,
+    promptTemplateId: "",
+    tags: "",
     customPrompt: "",
     ideationInput: "",
     ideationKeywords: "",
+    keywordList: "",
+    keywordsPerRun: 5,
+    articlesPerKeyword: 1,
+    qualityMode: "standard" as "economy" | "standard" | "high",
+    providerOverride: "auto" as "auto" | "gateway" | "groq" | "gemini",
+    modelOverride: "",
+    outlineQualityMode: "standard" as "economy" | "standard" | "high",
+    fullQualityMode: "standard" as "economy" | "standard" | "high",
     publishingQueueContentType: "all",
     publishingQueueBatchSize: 1,
   });
@@ -108,11 +129,21 @@ export default function ScheduleDetailPage() {
           batchSize: payload.batchSize || 1,
           autoPublish: Boolean(payload.autoPublish),
           generateOgImage: payload.generateOgImage !== false,
+          promptTemplateId: payload.promptTemplateId || "",
+          tags: Array.isArray(payload.tags) ? payload.tags.join(", ") : "",
           customPrompt: payload.customPrompt || "",
           ideationInput: payload.ideationInput || "",
           ideationKeywords: Array.isArray(payload.ideationKeywords)
             ? payload.ideationKeywords.join(", ")
             : "",
+          keywordList: Array.isArray(payload.keywords) ? payload.keywords.join(", ") : "",
+          keywordsPerRun: payload.keywordsPerRun || payload.batchSize || 5,
+          articlesPerKeyword: payload.articlesPerKeyword || 1,
+          qualityMode: payload.qualityMode || "standard",
+          providerOverride: payload.provider || "auto",
+          modelOverride: payload.model || "",
+          outlineQualityMode: payload.outlineQualityMode || payload.qualityMode || "standard",
+          fullQualityMode: payload.fullQualityMode || payload.qualityMode || "standard",
           publishingQueueContentType: payload.publishingQueueConfig?.contentType || "all",
           publishingQueueBatchSize: payload.publishingQueueConfig?.batchSize || 1,
         });
@@ -135,18 +166,67 @@ export default function ScheduleDetailPage() {
         schedule.scheduleType === "publishing_queue"
           ? {
               publishingQueueConfig: {
+                ...(schedule.payload.publishingQueueConfig || {}),
                 contentType:
                   editForm.publishingQueueContentType === "all"
-                    ? undefined
+                    ? null
                     : editForm.publishingQueueContentType,
                 batchSize: editForm.publishingQueueBatchSize,
               },
             }
+          : schedule.scheduleType === "keyword_pipeline"
+            ? {
+                ...(schedule.payload || {}),
+                pipelineMode: "keyword_pipeline",
+                contentType: editForm.contentType,
+                keywords: editForm.keywordList
+                  ? editForm.keywordList
+                      .split(/[\n,]/)
+                      .map((item) => item.trim())
+                      .filter(Boolean)
+                  : [],
+                keywordsPerRun: editForm.keywordsPerRun,
+                articlesPerKeyword: editForm.articlesPerKeyword,
+                batchSize: editForm.keywordsPerRun * editForm.articlesPerKeyword,
+                qualityMode: editForm.qualityMode,
+                provider: editForm.providerOverride === "auto" ? undefined : editForm.providerOverride,
+                model: editForm.modelOverride || undefined,
+                outlineQualityMode: editForm.outlineQualityMode,
+                fullQualityMode: editForm.fullQualityMode,
+                autoPublish: editForm.autoPublish,
+                generateOgImage: editForm.generateOgImage,
+                promptTemplateId: editForm.promptTemplateId || undefined,
+                tags: editForm.tags
+                  ? editForm.tags
+                      .split(",")
+                      .map((item) => item.trim())
+                      .filter(Boolean)
+                  : undefined,
+                customPrompt: editForm.customPrompt || undefined,
+                ideationInput: editForm.ideationInput || undefined,
+                ideationKeywords: editForm.ideationKeywords
+                  ? editForm.ideationKeywords
+                      .split(",")
+                      .map((item) => item.trim())
+                      .filter(Boolean)
+                  : undefined,
+              }
           : {
+              ...(schedule.payload || {}),
               contentType: editForm.contentType,
               batchSize: editForm.batchSize,
+              qualityMode: editForm.qualityMode,
+              provider: editForm.providerOverride === "auto" ? undefined : editForm.providerOverride,
+              model: editForm.modelOverride || undefined,
               autoPublish: editForm.autoPublish,
               generateOgImage: editForm.generateOgImage,
+              promptTemplateId: editForm.promptTemplateId || undefined,
+              tags: editForm.tags
+                ? editForm.tags
+                    .split(",")
+                    .map((item) => item.trim())
+                    .filter(Boolean)
+                : undefined,
               customPrompt: editForm.customPrompt || undefined,
               ideationInput: editForm.ideationInput || undefined,
               ideationKeywords: editForm.ideationKeywords
@@ -250,7 +330,7 @@ export default function ScheduleDetailPage() {
     return `${duration.toFixed(1)}s`;
   }
 
-  function renderScheduleTypeBadge(scheduleType: "ai_generation" | "publishing_queue") {
+  function renderScheduleTypeBadge(scheduleType: "ai_generation" | "publishing_queue" | "keyword_pipeline") {
     if (scheduleType === "ai_generation") {
       return (
         <Badge className="bg-blue-500 hover:bg-blue-600 text-white">
@@ -258,7 +338,7 @@ export default function ScheduleDetailPage() {
           AI Generation + Auto-Publish
         </Badge>
       );
-    } else {
+    } else if (scheduleType === "publishing_queue") {
       return (
         <Badge className="bg-purple-500 hover:bg-purple-600 text-white">
           <Clock className="w-3 h-3 mr-1" />
@@ -266,6 +346,12 @@ export default function ScheduleDetailPage() {
         </Badge>
       );
     }
+    return (
+      <Badge className="bg-indigo-500 hover:bg-indigo-600 text-white">
+        <Sparkles className="w-3 h-3 mr-1" />
+        Keyword Pipeline
+      </Badge>
+    );
   }
 
   if (loading) {
@@ -373,9 +459,10 @@ export default function ScheduleDetailPage() {
             <p className="text-sm text-muted-foreground">Batch Size</p>
             <p className="mt-1">
               {schedule.scheduleType === "publishing_queue"
-                ? schedule.payload.publishingQueueConfig?.batchSize
-                : schedule.payload.batchSize}{" "}
-              items per run
+                ? `${schedule.payload.publishingQueueConfig?.batchSize || 0} items per run`
+                : schedule.scheduleType === "keyword_pipeline"
+                  ? `${schedule.payload.keywordsPerRun || 0} keywords x ${schedule.payload.articlesPerKeyword || 1} article(s)`
+                  : `${schedule.payload.batchSize || 0} items per run`}
             </p>
           </div>
           <div>
@@ -487,16 +574,176 @@ export default function ScheduleDetailPage() {
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="edit-batch">Batch Size</Label>
+                    <Label htmlFor="edit-batch">
+                      {schedule.scheduleType === "keyword_pipeline" ? "Keywords Per Run" : "Batch Size"}
+                    </Label>
                     <Input
                       id="edit-batch"
                       type="number"
                       min={1}
                       max={50}
-                      value={editForm.batchSize}
-                      onChange={(e) =>
-                        setEditForm((prev) => ({ ...prev, batchSize: Number(e.target.value) || 1 }))
+                      value={
+                        schedule.scheduleType === "keyword_pipeline"
+                          ? editForm.keywordsPerRun
+                          : editForm.batchSize
                       }
+                      onChange={(e) =>
+                        setEditForm((prev) => ({
+                          ...prev,
+                          ...(schedule.scheduleType === "keyword_pipeline"
+                            ? { keywordsPerRun: Number(e.target.value) || 1 }
+                            : { batchSize: Number(e.target.value) || 1 }),
+                        }))
+                      }
+                    />
+                  </div>
+                  {schedule.scheduleType === "keyword_pipeline" && (
+                    <>
+                      <div>
+                        <Label htmlFor="edit-articles-per-keyword">Articles Per Keyword</Label>
+                        <Input
+                          id="edit-articles-per-keyword"
+                          type="number"
+                          min={1}
+                          max={10}
+                          value={editForm.articlesPerKeyword}
+                          onChange={(e) =>
+                            setEditForm((prev) => ({
+                              ...prev,
+                              articlesPerKeyword: Number(e.target.value) || 1,
+                            }))
+                          }
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <Label htmlFor="edit-keyword-list">Keyword List</Label>
+                        <Textarea
+                          id="edit-keyword-list"
+                          rows={3}
+                          value={editForm.keywordList}
+                          onChange={(e) =>
+                            setEditForm((prev) => ({ ...prev, keywordList: e.target.value }))
+                          }
+                          placeholder="keyword1, keyword2, keyword3"
+                        />
+                      </div>
+                    </>
+                  )}
+                  <div>
+                    <Label>Quality Mode</Label>
+                    <Select
+                      value={editForm.qualityMode}
+                      onValueChange={(value) =>
+                        setEditForm((prev) => ({ ...prev, qualityMode: value as "economy" | "standard" | "high" }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="economy">Economy</SelectItem>
+                        <SelectItem value="standard">Standard</SelectItem>
+                        <SelectItem value="high">High Quality</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label>Provider Override</Label>
+                    <Select
+                      value={editForm.providerOverride}
+                      onValueChange={(value) =>
+                        setEditForm((prev) => ({
+                          ...prev,
+                          providerOverride: value as "auto" | "gateway" | "groq" | "gemini",
+                        }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="auto">Auto (from settings)</SelectItem>
+                        <SelectItem value="gateway">Gateway</SelectItem>
+                        <SelectItem value="groq">Groq</SelectItem>
+                        <SelectItem value="gemini">Gemini</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className={schedule.scheduleType === "keyword_pipeline" ? "col-span-2" : ""}>
+                    <Label htmlFor="edit-model-override">Model Override (Optional)</Label>
+                    <Input
+                      id="edit-model-override"
+                      value={editForm.modelOverride}
+                      onChange={(e) =>
+                        setEditForm((prev) => ({ ...prev, modelOverride: e.target.value }))
+                      }
+                      placeholder="e.g. gpt-5.4 / gemini-2.5-pro"
+                    />
+                  </div>
+                  {schedule.scheduleType === "keyword_pipeline" && (
+                    <>
+                      <div>
+                        <Label>Outline Quality Mode</Label>
+                        <Select
+                          value={editForm.outlineQualityMode}
+                          onValueChange={(value) =>
+                            setEditForm((prev) => ({
+                              ...prev,
+                              outlineQualityMode: value as "economy" | "standard" | "high",
+                            }))
+                          }
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="economy">Economy</SelectItem>
+                            <SelectItem value="standard">Standard</SelectItem>
+                            <SelectItem value="high">High Quality</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label>Full Content Quality Mode</Label>
+                        <Select
+                          value={editForm.fullQualityMode}
+                          onValueChange={(value) =>
+                            setEditForm((prev) => ({
+                              ...prev,
+                              fullQualityMode: value as "economy" | "standard" | "high",
+                            }))
+                          }
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="economy">Economy</SelectItem>
+                            <SelectItem value="standard">Standard</SelectItem>
+                            <SelectItem value="high">High Quality</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </>
+                  )}
+                  <div>
+                    <Label htmlFor="edit-template-id">Prompt Template ID (Optional)</Label>
+                    <Input
+                      id="edit-template-id"
+                      value={editForm.promptTemplateId}
+                      onChange={(e) =>
+                        setEditForm((prev) => ({ ...prev, promptTemplateId: e.target.value }))
+                      }
+                      placeholder="Template UUID"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="edit-tags">Tags (Optional)</Label>
+                    <Input
+                      id="edit-tags"
+                      value={editForm.tags}
+                      onChange={(e) => setEditForm((prev) => ({ ...prev, tags: e.target.value }))}
+                      placeholder="tag1, tag2, tag3"
                     />
                   </div>
                   <div className="col-span-2">
@@ -532,6 +779,32 @@ export default function ScheduleDetailPage() {
                       }
                       placeholder="keyword1, keyword2, keyword3"
                     />
+                  </div>
+                  <div className="col-span-2 flex flex-wrap gap-6 pt-1">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="edit-auto-publish"
+                        checked={editForm.autoPublish}
+                        onCheckedChange={(checked) =>
+                          setEditForm((prev) => ({ ...prev, autoPublish: checked === true }))
+                        }
+                      />
+                      <Label htmlFor="edit-auto-publish" className="cursor-pointer">
+                        Auto-publish to Sanity
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="edit-generate-og"
+                        checked={editForm.generateOgImage}
+                        onCheckedChange={(checked) =>
+                          setEditForm((prev) => ({ ...prev, generateOgImage: checked === true }))
+                        }
+                      />
+                      <Label htmlFor="edit-generate-og" className="cursor-pointer">
+                        Generate OG image
+                      </Label>
+                    </div>
                   </div>
                 </>
               )}

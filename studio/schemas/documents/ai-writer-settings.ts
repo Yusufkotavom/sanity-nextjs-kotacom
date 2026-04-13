@@ -182,6 +182,94 @@ export default defineType({
       hidden: ({ document }) => document?.mode !== "gateway",
       group: "model",
     }),
+    defineField({
+      name: "modelProfiles",
+      title: "Profil Kualitas Model (Economy / Standard / High)",
+      description:
+        "Profil ini dipakai oleh Schedule, Ideas, dan alur generation lain saat memilih quality mode.",
+      type: "object",
+      group: "model",
+      fields: [
+        defineField({
+          name: "economy",
+          title: "Economy Profile",
+          type: "object",
+          fields: [
+            defineField({
+              name: "provider",
+              title: "Provider",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Gateway", value: "gateway" },
+                  { title: "Gemini", value: "gemini" },
+                  { title: "Groq", value: "groq" },
+                ],
+              },
+            }),
+            defineField({
+              name: "model",
+              title: "Model",
+              type: "string",
+              description:
+                "Untuk provider gateway gunakan format provider/model, contoh: openai/gpt-4o-mini",
+            }),
+          ],
+        }),
+        defineField({
+          name: "standard",
+          title: "Standard Profile",
+          type: "object",
+          fields: [
+            defineField({
+              name: "provider",
+              title: "Provider",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Gateway", value: "gateway" },
+                  { title: "Gemini", value: "gemini" },
+                  { title: "Groq", value: "groq" },
+                ],
+              },
+            }),
+            defineField({
+              name: "model",
+              title: "Model",
+              type: "string",
+              description:
+                "Untuk provider gateway gunakan format provider/model, contoh: google/gemini-2.5-flash",
+            }),
+          ],
+        }),
+        defineField({
+          name: "high",
+          title: "High Quality Profile",
+          type: "object",
+          fields: [
+            defineField({
+              name: "provider",
+              title: "Provider",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Gateway", value: "gateway" },
+                  { title: "Gemini", value: "gemini" },
+                  { title: "Groq", value: "groq" },
+                ],
+              },
+            }),
+            defineField({
+              name: "model",
+              title: "Model",
+              type: "string",
+              description:
+                "Untuk provider gateway gunakan format provider/model, contoh: anthropic/claude-3-7-sonnet-20250219",
+            }),
+          ],
+        }),
+      ],
+    }),
 
     // ── PROMPTS ───────────────────────────────────────────────────────────────
     defineField({

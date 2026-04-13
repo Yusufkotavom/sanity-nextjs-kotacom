@@ -7,6 +7,7 @@ import { renderTemplate } from "@/lib/ai-writer/prompt-templates";
 import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 import { checkSimpleRateLimit } from "@/lib/rate-limit";
 import { assertSupportedContentType } from "@/lib/ai-writer/content-type";
+import { normalizeQualityMode, normalizeRuntimeProvider } from "@/lib/ai-writer/model-selection";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +25,9 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { ideaId, templateId, generateOgImage = true } = body; // Default true
+    const qualityMode = normalizeQualityMode(body.qualityMode);
+    const provider = normalizeRuntimeProvider(body.provider);
+    const model = typeof body.model === "string" ? body.model.trim() : "";
 
     if (!ideaId || !templateId) {
       return NextResponse.json(
@@ -86,6 +90,9 @@ export async function POST(request: NextRequest) {
       prompt,
       templateId,
       generateOgImage,
+      qualityMode,
+      provider,
+      model: model || undefined,
       metadata: {
         ideaId: idea.id,
         source: "content-ideas",

@@ -93,6 +93,20 @@ export const fetchSanityAiWriterSettings = async (): Promise<{
   defaultModelGroq?: string;
   customModelGroq?: string;
   fallbackModels?: string[];
+  modelProfiles?: {
+    economy?: {
+      provider?: "gateway" | "gemini" | "groq";
+      model?: string;
+    };
+    standard?: {
+      provider?: "gateway" | "gemini" | "groq";
+      model?: string;
+    };
+    high?: {
+      provider?: "gateway" | "gemini" | "groq";
+      model?: string;
+    };
+  };
   temperature?: number;
   maxOutputTokens?: number;
   prompts?: {
@@ -100,6 +114,9 @@ export const fetchSanityAiWriterSettings = async (): Promise<{
     postRewrite?: string;
     serviceRewrite?: string;
     projectRewrite?: string;
+    postBodyExtend?: string;
+    serviceBodyExtend?: string;
+    projectBodyExtend?: string;
   };
   notes?: string;
 } | null> => {
@@ -113,6 +130,20 @@ export const fetchSanityAiWriterSettings = async (): Promise<{
     defaultModelGroq?: string;
     customModelGroq?: string;
     fallbackModels?: string[];
+    modelProfiles?: {
+      economy?: {
+        provider?: "gateway" | "gemini" | "groq";
+        model?: string;
+      };
+      standard?: {
+        provider?: "gateway" | "gemini" | "groq";
+        model?: string;
+      };
+      high?: {
+        provider?: "gateway" | "gemini" | "groq";
+        model?: string;
+      };
+    };
     temperature?: number;
     maxOutputTokens?: number;
     prompts?: {
@@ -120,6 +151,9 @@ export const fetchSanityAiWriterSettings = async (): Promise<{
       postRewrite?: string;
       serviceRewrite?: string;
       projectRewrite?: string;
+      postBodyExtend?: string;
+      serviceBodyExtend?: string;
+      projectBodyExtend?: string;
     };
     notes?: string;
   } | null>({
@@ -137,6 +171,20 @@ export const fetchSanityAiWriterSettingsPrivate = async (): Promise<{
   defaultModelGroq?: string;
   customModelGroq?: string;
   fallbackModels?: string[];
+  modelProfiles?: {
+    economy?: {
+      provider?: "gateway" | "gemini" | "groq";
+      model?: string;
+    };
+    standard?: {
+      provider?: "gateway" | "gemini" | "groq";
+      model?: string;
+    };
+    high?: {
+      provider?: "gateway" | "gemini" | "groq";
+      model?: string;
+    };
+  };
   temperature?: number;
   maxOutputTokens?: number;
   prompts?: {
@@ -144,6 +192,9 @@ export const fetchSanityAiWriterSettingsPrivate = async (): Promise<{
     postRewrite?: string;
     serviceRewrite?: string;
     projectRewrite?: string;
+    postBodyExtend?: string;
+    serviceBodyExtend?: string;
+    projectBodyExtend?: string;
   };
   notes?: string;
 } | null> => {
@@ -157,6 +208,20 @@ export const fetchSanityAiWriterSettingsPrivate = async (): Promise<{
     defaultModelGroq?: string;
     customModelGroq?: string;
     fallbackModels?: string[];
+    modelProfiles?: {
+      economy?: {
+        provider?: "gateway" | "gemini" | "groq";
+        model?: string;
+      };
+      standard?: {
+        provider?: "gateway" | "gemini" | "groq";
+        model?: string;
+      };
+      high?: {
+        provider?: "gateway" | "gemini" | "groq";
+        model?: string;
+      };
+    };
     temperature?: number;
     maxOutputTokens?: number;
     prompts?: {
@@ -164,6 +229,9 @@ export const fetchSanityAiWriterSettingsPrivate = async (): Promise<{
       postRewrite?: string;
       serviceRewrite?: string;
       projectRewrite?: string;
+      postBodyExtend?: string;
+      serviceBodyExtend?: string;
+      projectBodyExtend?: string;
     };
     notes?: string;
   } | null>({

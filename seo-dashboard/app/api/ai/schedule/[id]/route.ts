@@ -7,6 +7,15 @@ import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 import { sanitizeText } from "@/lib/sanitize";
 import { assertSupportedContentType } from "@/lib/ai-writer/content-type";
 
+const VALID_AI_PROVIDERS = ["gateway", "groq", "gemini"];
+const VALID_QUALITY_MODES = ["economy", "standard", "high"];
+
+function resolveScheduleType(schedule: any) {
+  const payload = schedule?.payload as any;
+  if (payload?.pipelineMode === "keyword_pipeline") return "keyword_pipeline";
+  return schedule?.scheduleType;
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -36,7 +45,10 @@ export async function GET(
 
     return NextResponse.json({
       success: true,
-      schedule,
+      schedule: {
+        ...schedule,
+        scheduleType: resolveScheduleType(schedule),
+      },
       recentRuns,
     });
   } catch (error) {
@@ -66,6 +78,42 @@ export async function PUT(
     if (body.enabled !== undefined) updateParams.enabled = body.enabled;
     if (body.payload) {
       const payload = body.payload as any;
+      for (const key of ["provider", "outlineProvider", "fullProvider"]) {
+        if (payload[key] && !VALID_AI_PROVIDERS.includes(payload[key])) {
+          return NextResponse.json({ error: `Invalid ${key}` }, { status: 400 });
+        }
+      }
+      for (const key of ["qualityMode", "outlineQualityMode", "fullQualityMode"]) {
+        if (payload[key] && !VALID_QUALITY_MODES.includes(payload[key])) {
+          return NextResponse.json({ error: `Invalid ${key}` }, { status: 400 });
+        }
+      }
+      if (payload.pipelineMode === "keyword_pipeline") {
+        if (payload.contentType) {
+          payload.contentType = assertSupportedContentType(payload.contentType);
+        }
+        const keywords = Array.isArray(payload.keywords)
+          ? payload.keywords.filter((item: unknown) => typeof item === "string" && item.trim().length > 0)
+          : [];
+        if (!keywords.length) {
+          return NextResponse.json({ error: "Keyword pipeline requires at least 1 keyword" }, { status: 400 });
+        }
+        const keywordsPerRun = Number(payload.keywordsPerRun || 1);
+        const articlesPerKeyword = Number(payload.articlesPerKeyword || 1);
+        if (!Number.isFinite(keywordsPerRun) || keywordsPerRun < 1 || keywordsPerRun > 20) {
+          return NextResponse.json({ error: "keywordsPerRun must be between 1 and 20" }, { status: 400 });
+        }
+        if (!Number.isFinite(articlesPerKeyword) || articlesPerKeyword < 1 || articlesPerKeyword > 10) {
+          return NextResponse.json({ error: "articlesPerKeyword must be between 1 and 10" }, { status: 400 });
+        }
+        payload.batchSize = keywordsPerRun * articlesPerKeyword;
+        if (payload.batchSize > 50) {
+          return NextResponse.json(
+            { error: "keywordsPerRun * articlesPerKeyword must be <= 50" },
+            { status: 400 },
+          );
+        }
+      }
       if (payload.contentType) {
         payload.contentType = assertSupportedContentType(payload.contentType);
       }

@@ -4,6 +4,240 @@ This document tracks all SEO-related changes made to the repository.
 
 ---
 
+## 2026-04-13 — Flexible AI Model Routing (Global Profiles + Schedule + Ideation Overrides)
+
+### Changed Files
+- `seo-dashboard/lib/ai-writer/settings-source.ts` (MODIFIED) - Added runtime model profiles (`economy`, `standard`, `high`) with env-driven overrides
+- `seo-dashboard/lib/ai-writer/model-selection.ts` (ADDED) - Shared resolver for quality mode + provider/model selection
+- `seo-dashboard/lib/ai-writer/content-generator.ts` (MODIFIED) - Added `qualityMode/provider/model` support in content generation pipeline
+- `seo-dashboard/app/api/internal/cron-run/route.ts` (MODIFIED) - Schedule runner now respects model overrides; keyword pipeline now runs explicit outline-step + full-content-step with separate quality controls
+- `seo-dashboard/app/api/ai/schedule/create/route.ts` (MODIFIED) - Added model/quality fields validation + persistence for AI schedule payloads
+- `seo-dashboard/app/api/ai/schedule/[id]/route.ts` (MODIFIED) - Added model/quality validation on updates
+- `seo-dashboard/lib/ai-writer/schedule-manager.ts` (MODIFIED) - Extended schedule payload typing for model/quality/pipeline fields
+- `seo-dashboard/app/dashboard/schedules/create/page.tsx` (MODIFIED) - Added UI controls for quality mode, provider/model override, and keyword-pipeline outline/full quality controls
+- `seo-dashboard/app/dashboard/schedules/[id]/page.tsx` (MODIFIED) - Added edit controls for model/quality overrides
+- `seo-dashboard/app/api/ai/ideas/generate/route.ts` (MODIFIED) - Ideation now accepts quality/provider/model override
+- `seo-dashboard/app/api/ai/ideas/generate-outline/route.ts` (MODIFIED) - Outline generation now accepts quality/provider/model override
+- `seo-dashboard/app/api/ai/ideas/generate-content/route.ts` (MODIFIED) - Full content generation from ideas now accepts quality/provider/model override
+- `seo-dashboard/app/api/ai/ideas/generate-content-bulk/route.ts` (MODIFIED) - Bulk content generation now accepts quality/provider/model override
+- `seo-dashboard/app/dashboard/ai/ideas/page.tsx` (MODIFIED) - Added ideation-side model controls (quality mode + provider/model override)
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Implemented flexible model selection architecture across scheduling and ideation workflows:
+1. Added **global profile routing** (`economy/standard/high`) resolved from runtime settings + env profile overrides.
+2. Added **per-schedule override support**:
+   - AI generation schedule: `qualityMode`, optional `provider`, optional `model`.
+   - Keyword pipeline schedule: separate `outlineQualityMode` and `fullQualityMode` plus optional provider/model overrides.
+3. Keyword pipeline runner now executes **two-stage flow**:
+   - Stage A: explicit outline generation
+   - Stage B: full content generation based on generated outline
+4. Added **ideation-level override controls** in UI and API:
+   - Idea generation
+   - Outline generation
+   - Single/bulk full-content generation
+5. Extended validation guards in schedule APIs for provider/quality values.
+
+### Impact on SEO/Integration
+- **Positive integration impact**
+  - Enables quality/cost tuning per use-case (long-form vs lighter outputs) without hardcoding one model path.
+  - Improves keyword-pipeline quality by separating outline and full-content stages.
+- **No direct technical SEO metadata impact**
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code-path verification completed for schedule + ideation API/UI wiring
+- ⏳ Runtime verification recommended on staging:
+  - Create `keyword_pipeline` schedule with `articlesPerKeyword > 1`
+  - Validate outline/full stage model routing in execution logs
+
+---
+
+## 2026-04-13 — New Schedule Flow: Keyword Pipeline (`articlesPerKeyword` Supported)
+
+### Changed Files
+- `seo-dashboard/app/api/ai/schedule/create/route.ts` (MODIFIED) - Added `keyword_pipeline` create flow and validation (`keywords`, `keywordsPerRun`, `articlesPerKeyword`)
+- `seo-dashboard/app/api/ai/schedule/[id]/route.ts` (MODIFIED) - Added keyword pipeline type resolution + update validation
+- `seo-dashboard/app/api/ai/schedule/list/route.ts` (MODIFIED) - Added keyword pipeline type resolution for schedule list responses
+- `seo-dashboard/app/api/internal/cron-run/route.ts` (MODIFIED) - Added keyword-pipeline runner (keyword-by-keyword, outline->full-content prompt flow, cursor progression)
+- `seo-dashboard/app/dashboard/schedules/create/page.tsx` (MODIFIED) - Added schedule type option `Keyword Pipeline`, keyword list input, `keywordsPerRun`, and `articlesPerKeyword`
+- `seo-dashboard/app/dashboard/schedules/[id]/page.tsx` (MODIFIED) - Added keyword-pipeline edit/view support and additional payload controls
+- `seo-dashboard/app/dashboard/schedules/page.tsx` (MODIFIED) - Added keyword-pipeline badge/type handling
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Implemented a new keyword-focused schedule path for bulk keyword input (10-20+) with per-keyword content expansion:
+1. New schedule type exposed in dashboard: `Keyword Pipeline`.
+2. New config fields:
+   - `keywords` (comma/newline list)
+   - `keywordsPerRun`
+   - `articlesPerKeyword` (default 1; supports >1 variants per keyword)
+3. Worker execution now processes selected keywords per run and generates content per keyword variant.
+4. Keyword cursor (`currentKeywordIndex`) is persisted in payload so next run continues through the list instead of repeating from start.
+5. Pipeline mode is represented via payload (`pipelineMode: "keyword_pipeline"`) and mapped to response schedule type for UI display.
+
+### Impact on SEO/Integration
+- **Indirect positive SEO impact**
+  - Improves topical targeting control for keyword-driven content scheduling.
+  - Supports multi-variant generation per keyword for broader SERP-angle coverage.
+- **Integration impact**
+  - Adds a new scheduling workflow without requiring separate task table.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code-path verification for create/list/detail/update + cron runner branching
+- ⏳ Runtime verification recommended: create keyword pipeline schedule and trigger `run-scheduled` to confirm keyword cursor progression
+
+---
+
+## 2026-04-13 — Upstash Redis Env Sync Across Workspace
+
+### Changed Files
+- `.env` (MODIFIED) - Updated `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`
+- `frontend/.env` (MODIFIED) - Updated `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Synchronized Upstash Redis runtime credentials in local workspace env files so worker and dashboard flows target the same Upstash instance.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**
+- **Integration impact**:
+  - Aligns queue/cron runtime configuration across root and frontend app env contracts.
+
+### Verification Status
+- ✅ Manual env verification completed (URL match + token prefix/length match across files)
+- ⚠️ No build/test required for env-value-only update
+
+---
+
+## 2026-04-13 — Schedule Create/Edit Data Loss Fix (Ideation + Options Visibility)
+
+### Changed Files
+- `seo-dashboard/app/api/ai/schedule/create/route.ts` (MODIFIED) - Persisted `ideationInput` and `ideationKeywords` in schedule payload on create
+- `seo-dashboard/app/dashboard/schedules/[id]/page.tsx` (MODIFIED) - Restored editable controls for `autoPublish`, `generateOgImage`, `promptTemplateId`, and `tags`
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Investigated reported schedule edit anomaly where fields appeared to disappear:
+1. Confirmed DB payload for affected schedule lacked ideation fields (`ideationInput`, `ideationKeywords`) after create.
+2. Root cause: create API accepted ideation inputs from UI but did not persist them to `scheduled_tasks.payload`.
+3. Implemented fix in create API to store both ideation fields.
+4. Improved edit page to expose critical payload options that previously had no visible controls:
+   - `autoPublish`
+   - `generateOgImage`
+   - `promptTemplateId`
+   - `tags`
+
+### Impact on SEO/Integration
+- **No direct SEO impact**
+- **Scheduler integration impact**:
+  - Prevents hidden ideation context loss between schedule create and subsequent edit/view.
+  - Improves UI/DB contract transparency for AI generation schedule options.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual DB verification performed on reported schedule ID and payload shape
+
+---
+
+## 2026-04-13 — Schedule Edit Data Preservation Fix
+
+### Changed Files
+- `seo-dashboard/app/api/ai/schedule/create/route.ts` (MODIFIED) - Fixed schedule type branching to use normalized `scheduleType` consistently
+- `seo-dashboard/lib/ai-writer/schedule-manager.ts` (MODIFIED) - Replaced shallow payload merge with safer nested merge for `publishingQueueConfig`
+- `seo-dashboard/app/dashboard/schedules/[id]/page.tsx` (MODIFIED) - Edit save now preserves existing payload keys and avoids accidental field drops
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Fixed anomaly where editing schedule could make configuration appear lost:
+1. **Create API consistency fix**
+   - Branching now uses normalized `scheduleType` variable, not raw `body.scheduleType`, preventing incorrect behavior in edge cases.
+2. **Update payload merge hardening**
+   - Payload merge in schedule manager now merges nested `publishingQueueConfig` safely instead of shallow overwrite.
+3. **Edit UI save hardening**
+   - Edit submit now starts from existing payload and overlays changed values, reducing accidental key drops on partial edits.
+   - Publishing queue “all content types” now clears filter with explicit nullable value, instead of silent omission.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**
+- **Scheduler integration impact**:
+  - Improves schedule configuration integrity after edit operations.
+  - Reduces risk of payload contract drift between UI/API/DB layers.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual code-path verification for create + update + edit flows
+
+---
+
+## 2026-04-13 — Cron Upstash Quota Guard + Template `topic` Fallback
+
+### Changed Files
+- `seo-dashboard/app/api/internal/cron-run/route.ts` (MODIFIED) - Added Upstash max-request quota guard for `drain-queues` to avoid opaque 500 failures
+- `seo-dashboard/lib/ai-writer/prompt-templates.ts` (MODIFIED) - Added alias/fallback mapping for `topic` variable resolution
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Addressed two production scheduler failures observed in logs:
+1. **Upstash quota exhaustion** (`ERR max requests limit exceeded`)
+   - `POST /api/internal/cron-run` with `type=drain-queues` now catches quota errors and returns explicit `429` JSON message instead of empty `500`.
+   - Existing missing-Redis-env guard remains intact.
+2. **AI template variable mismatch** (`Required variable "topic" is missing`)
+   - Prompt template resolver now supports `topic` aliases from `title`, `idea`, and keyword variants.
+   - Added fallback for required `topic` when source payload has title/idea/keyword but not explicit `topic`.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**
+- **Ops/integration impact**:
+  - Cron diagnostics are clearer when Redis quota is exhausted.
+  - Scheduled AI generation is more resilient across template-variable naming differences.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual runtime evidence aligned with fix scope (quota-triggered failures and missing `topic` variable observed in production logs)
+- ⏳ Runtime verification recommended after deploy:
+  - trigger `run-scheduled`
+  - trigger `drain-queues` during quota-limit state and confirm explicit `429` JSON message
+
+---
+
+## 2026-04-13 — Cron Worker Error Clarity for Queue Drain
+
+### Changed Files
+- `seo-dashboard/app/api/internal/cron-run/route.ts` (MODIFIED) - Added guarded error handling for `drain-queues` when Upstash Redis env is missing
+- `docs/seo-updates.md` (MODIFIED) - Added this update log entry
+- `docs/astro-migration-megaplan.md` (MODIFIED) - Updated status snapshot/workstream checklist
+
+### Summary
+Hardened `POST /api/internal/cron-run` queue drain path so missing Redis configuration no longer surfaces as a silent `500`:
+1. Wrapped `drain-queues` execution in explicit `try/catch`.
+2. If failure is `Missing Upstash Redis environment variables`, API now returns controlled `400` JSON with actionable message:
+   - requires `UPSTASH_REDIS_REST_URL`
+   - requires `UPSTASH_REDIS_REST_TOKEN`
+3. Non-Redis errors still rethrow to preserve existing failure semantics.
+
+### Impact on SEO/Integration
+- **No direct SEO impact**
+- **Operations integration impact**:
+  - Improves scheduler diagnostics for manual/internal cron triggering.
+  - Prevents ambiguous empty 500 responses for queue-only misconfiguration.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed
+- ✅ Manual runtime verification against production endpoint:
+  - `type=run-scheduled` returns `200`
+  - `type=cleanup-jobs` returns `200`
+  - `type=drain-queues` now has explicit handled path in code for missing Redis env
+
+---
+
 ## 2026-04-13 — Mobile Responsive Remap (AI History, Templates, Generate, Content Ideas)
 
 ### Changed Files
@@ -878,3 +1112,30 @@ Resolved the reported schedule issues:
 ### Verification Status
 - ✅ `pnpm --filter seo-dashboard typecheck` passed.
 - ✅ Manual code-path verification completed for create/edit/update schedule flows.
+
+## 2026-04-13 — AI Settings Full Implementation (Model Profiles + Runtime Config UI)
+
+### Changed Files
+- `seo-dashboard/app/dashboard/ai-settings/page.tsx` (MODIFIED) - Replaced static prompt editor with full runtime-backed AI settings page (status fetch, save action, mode/default model controls, quality profile controls, full prompt fields, and env source visibility)
+- `seo-dashboard/app/api/ai/config/save/route.ts` (MODIFIED) - Extended save payload to persist `modelProfiles` and body-extend prompt fields (`postBodyExtend`, `serviceBodyExtend`, `projectBodyExtend`)
+- `seo-dashboard/lib/ai-writer/settings-source.ts` (MODIFIED) - Added Studio-backed `modelProfiles` resolution (with env override precedence) and expanded prompt passthrough fields
+- `seo-dashboard/sanity/queries/ai-writer-settings.ts` (MODIFIED) - Added `modelProfiles` to public/private settings queries
+- `seo-dashboard/sanity/lib/fetch.ts` (MODIFIED) - Synced AI writer settings TypeScript contracts to include `modelProfiles` and body-extend prompts
+- `studio/schemas/documents/ai-writer-settings.ts` (MODIFIED) - Added editable `modelProfiles` object (economy/standard/high) to Studio schema for cross-layer consistency
+
+### Summary
+Completed full AI settings implementation requested for flexible model control:
+1. Dashboard AI settings now loads real runtime/studio config from API and saves back to Sanity.
+2. Operators can set global mode/default models plus per-quality profile provider/model (`economy`, `standard`, `high`).
+3. Prompt settings now preserve and save extend-body templates, preventing accidental prompt-field loss on save.
+4. Studio schema, Sanity query layer, and frontend fetch/runtime contracts were synchronized for new profile fields.
+
+### Impact on SEO/Integration
+- No direct SEO impact.
+- Integration impact:
+  - Centralized and safer AI model governance across ideation, schedules, and generation flows.
+  - Eliminates config drift between dashboard UI, runtime resolution, and Studio document shape.
+  - Reduces accidental data loss risk when editing AI settings.
+
+### Verification Status
+- ✅ `pnpm --filter seo-dashboard run typecheck` passed after changes.

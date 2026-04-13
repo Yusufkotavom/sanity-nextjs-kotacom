@@ -8,9 +8,15 @@ import { auditHtml } from "@repo/seo";
 import { submitIndexNow, submitSitemap, fetchSearchAnalytics, inspectUrl } from "@repo/search";
 import { desc, inArray } from "drizzle-orm";
 import { createHash } from "node:crypto";
+import { resolveModelSelection } from "@/lib/ai-writer/model-selection";
 
 const AI_SCHEDULE_CONCURRENCY_LIMIT = Number(process.env.AI_SCHEDULE_CONCURRENCY || 3);
 const AI_SCHEDULE_TIMEOUT_MS = Number(process.env.AI_SCHEDULE_TIMEOUT_MS || 5 * 60 * 1000);
+
+function isUpstashQuotaErrorMessage(message: string) {
+  const normalized = message.toLowerCase();
+  return normalized.includes("upstasherror") && normalized.includes("max requests limit exceeded");
+}
 
 function requireCronSecret(request: NextRequest) {
   const expected = process.env.CRON_SECRET || "";
@@ -260,12 +266,196 @@ async function executePublishingQueue(jobId: string, taskId: string, publishingQ
   }
 }
 
+async function executeKeywordPipeline(jobId: string, taskId: string, payload: any) {
+  const { generateContent } = await import("@/lib/ai-writer/content-generator");
+  const { generateAiText } = await import("@/lib/ai-writer/generate");
+  const { updateScheduleRunTimes } = await import("@/lib/ai-writer/schedule-manager");
+  const database = db();
+
+  await updateJobRun(jobId, { status: "processing", startedAt: new Date() });
+
+  const keywords = Array.isArray(payload.keywords)
+    ? payload.keywords.filter((item: unknown) => typeof item === "string" && item.trim().length > 0)
+    : [];
+
+  if (!keywords.length) {
+    await updateJobRun(jobId, {
+      status: "failed",
+      errorMessage: "Keyword pipeline has no keywords",
+      finishedAt: new Date(),
+    });
+    await updateScheduleRunTimes(taskId);
+    return;
+  }
+
+  const keywordsPerRun = Math.min(Math.max(Number(payload.keywordsPerRun || 1), 1), 20);
+  const articlesPerKeyword = Math.min(Math.max(Number(payload.articlesPerKeyword || 1), 1), 10);
+  const startIndexRaw = Number(payload.currentKeywordIndex || 0);
+  const startIndex = Number.isFinite(startIndexRaw)
+    ? ((startIndexRaw % keywords.length) + keywords.length) % keywords.length
+    : 0;
+
+  const runKeywordCount = Math.min(keywordsPerRun, keywords.length);
+  const selectedKeywords: string[] = [];
+  for (let i = 0; i < runKeywordCount; i += 1) {
+    selectedKeywords.push(keywords[(startIndex + i) % keywords.length]);
+  }
+
+  const generated: string[] = [];
+  const published: string[] = [];
+  const failed: string[] = [];
+  const providerCounts: Record<string, number> = {};
+  const modelCounts: Record<string, number> = {};
+  const startedAt = Date.now();
+
+  try {
+    const outlineSelection = await resolveModelSelection({
+      qualityMode: payload.outlineQualityMode || payload.qualityMode || "standard",
+      provider: payload.outlineProvider || payload.provider,
+      model: payload.outlineModel || payload.model,
+    });
+    const fullSelection = await resolveModelSelection({
+      qualityMode: payload.fullQualityMode || payload.qualityMode || "standard",
+      provider: payload.fullProvider || payload.provider,
+      model: payload.fullModel || payload.model,
+    });
+
+    for (const keyword of selectedKeywords) {
+      for (let variant = 0; variant < articlesPerKeyword; variant += 1) {
+        try {
+          const outlinePrompt = [
+            `Create a practical SEO content outline for keyword: ${keyword}`,
+            `Content type: ${payload.contentType}`,
+            articlesPerKeyword > 1
+              ? `Variation ${variant + 1} of ${articlesPerKeyword}. Use a distinct user intent angle.`
+              : null,
+            "Return a clear hierarchy with H2/H3 sections and key talking points.",
+          ]
+            .filter(Boolean)
+            .join("\n");
+
+          const outlineResult = await generateAiText({
+            prompt: outlinePrompt,
+            system: "You are an SEO strategist. Produce high-quality content outlines.",
+            provider: outlineSelection.provider,
+            model: outlineSelection.model,
+          });
+
+          const pipelineInstruction = [
+            `Target keyword: ${keyword}`,
+            "Use the following outline as the backbone for full content:",
+            outlineResult.text,
+            articlesPerKeyword > 1
+              ? `Variation ${variant + 1} of ${articlesPerKeyword}. Keep the angle distinct from other variants.`
+              : null,
+          ]
+            .filter(Boolean)
+            .join("\n\n");
+
+          const pipelinePrompt = payload.customPrompt
+            ? `${payload.customPrompt}\n\n${pipelineInstruction}`
+            : pipelineInstruction;
+
+          const result = await generateContent({
+            contentType: payload.contentType,
+            promptTemplateId: payload.promptTemplateId,
+            customPrompt: pipelinePrompt,
+            generateOgImage: payload.generateOgImage !== false,
+            autoPublish: payload.autoPublish === true,
+            qualityMode: fullSelection.qualityMode,
+            provider: fullSelection.provider,
+            model: fullSelection.model,
+            metadata: {
+              sourceType: "scheduled",
+              jobRunId: jobId,
+              tags: payload.tags || [],
+              ideationInput: payload.ideationInput || undefined,
+              ideationKeywords: [keyword],
+              contentContext: `Keyword pipeline for: ${keyword}`,
+              pipelineMode: "keyword_pipeline",
+              keyword,
+              keywordVariant: variant + 1,
+              outlineModel: outlineResult.model,
+              outlineProvider: outlineResult.providerMode,
+              fullModel: fullSelection.model,
+              fullProvider: fullSelection.provider,
+            },
+          });
+
+          generated.push(result.id);
+          providerCounts[result.provider] = (providerCounts[result.provider] || 0) + 1;
+          modelCounts[result.model] = (modelCounts[result.model] || 0) + 1;
+
+          if (result.sanityDocumentId) {
+            published.push(result.sanityDocumentId);
+          }
+        } catch (error) {
+          console.error(`Failed keyword pipeline generation for "${keyword}" variant ${variant + 1}:`, error);
+          failed.push(`${keyword}#${variant + 1}`);
+        }
+      }
+    }
+
+    const nextKeywordIndex = (startIndex + selectedKeywords.length) % keywords.length;
+    const nextPayload = {
+      ...payload,
+      currentKeywordIndex: nextKeywordIndex,
+      batchSize: keywordsPerRun * articlesPerKeyword,
+      lastProcessedKeywords: selectedKeywords,
+      lastKeywordPipelineRunAt: new Date().toISOString(),
+    };
+
+    await database
+      .update(schema.scheduledTasks)
+      .set({ payload: nextPayload as any })
+      .where(eq(schema.scheduledTasks.id, taskId));
+
+    await updateJobRun(jobId, {
+      status: failed.length === generated.length && generated.length > 0 ? "failed" : "success",
+      result: {
+        generated: generated.length,
+        published: published.length,
+        failed: failed.length,
+        generationIds: generated,
+        providerCounts,
+        modelCounts,
+        processedKeywords: selectedKeywords,
+        articlesPerKeyword,
+        keywordsPerRun,
+        outlineQualityMode: outlineSelection.qualityMode,
+        fullQualityMode: fullSelection.qualityMode,
+        nextKeywordIndex,
+        durationMs: Date.now() - startedAt,
+      },
+      errorMessage: failed.length > 0 ? `${failed.length} items failed` : null,
+      finishedAt: new Date(),
+    });
+
+    await updateScheduleRunTimes(taskId);
+  } catch (error) {
+    await updateJobRun(jobId, {
+      status: "failed",
+      errorMessage: error instanceof Error ? error.message : "Keyword pipeline failed",
+      result: {
+        errorStack: error instanceof Error ? error.stack : null,
+        durationMs: Date.now() - startedAt,
+      },
+      finishedAt: new Date(),
+    });
+  }
+}
+
 async function processAiContentGeneration(jobId: string, taskId: string, payload: any, scheduleType: string) {
   // Route execution based on scheduleType
   if (scheduleType === "publishing_queue") {
     // Execute publishing queue flow
     const publishingQueueConfig = payload.publishingQueueConfig || {};
     await executePublishingQueue(jobId, taskId, publishingQueueConfig);
+    return;
+  }
+
+  if (scheduleType === "keyword_pipeline" || payload?.pipelineMode === "keyword_pipeline") {
+    await executeKeywordPipeline(jobId, taskId, payload);
     return;
   }
   
@@ -316,6 +506,9 @@ async function processAiContentGeneration(jobId: string, taskId: string, payload
               : payload.customPrompt,
           generateOgImage: payload.generateOgImage !== false,
           autoPublish: payload.autoPublish === true,
+          qualityMode: payload.qualityMode || "standard",
+          provider: payload.provider,
+          model: payload.model,
           metadata: {
             sourceType: "scheduled",
             jobRunId: jobId,
@@ -710,9 +903,36 @@ export async function POST(request: NextRequest) {
   }
 
   if (type === "drain-queues") {
-    await processQueue(QUEUES.ai);
-    await processQueue(QUEUES.seo);
-    await processQueue(QUEUES.search);
+    try {
+      await processQueue(QUEUES.ai);
+      await processQueue(QUEUES.seo);
+      await processQueue(QUEUES.search);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to drain queues";
+      if (message.includes("Missing Upstash Redis environment variables")) {
+        return NextResponse.json(
+          {
+            ok: false,
+            type,
+            message:
+              "Queue worker is not configured. Missing UPSTASH_REDIS_REST_URL/UPSTASH_REDIS_REST_TOKEN.",
+          },
+          { status: 400 },
+        );
+      }
+      if (isUpstashQuotaErrorMessage(message)) {
+        return NextResponse.json(
+          {
+            ok: false,
+            type,
+            message:
+              "Upstash Redis request quota reached. Queue draining skipped temporarily; upgrade/reset quota or reduce queue cron frequency.",
+          },
+          { status: 429 },
+        );
+      }
+      throw error;
+    }
   }
 
   if (type === "run-seo-audits") {

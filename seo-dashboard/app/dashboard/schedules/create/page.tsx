@@ -32,12 +32,20 @@ export default function CreateSchedulePage() {
   
   const [formData, setFormData] = useState({
     name: "",
-    scheduleType: "ai_generation" as "ai_generation" | "publishing_queue",
+    scheduleType: "ai_generation" as "ai_generation" | "publishing_queue" | "keyword_pipeline",
     cronExpr: "0 9 * * *",
     timezone: "Asia/Jakarta",
     enabled: true,
     contentType: "post",
     batchSize: 5,
+    keywordsPerRun: 5,
+    articlesPerKeyword: 1,
+    keywordList: "",
+    qualityMode: "standard" as "economy" | "standard" | "high",
+    providerOverride: "auto" as "auto" | "gateway" | "groq" | "gemini",
+    modelOverride: "",
+    outlineQualityMode: "standard" as "economy" | "standard" | "high",
+    fullQualityMode: "standard" as "economy" | "standard" | "high",
     autoPublish: false,
     generateOgImage: true,
     useTemplate: false,
@@ -84,9 +92,22 @@ export default function CreateSchedulePage() {
           },
         };
       } else {
+        const parsedKeywords = formData.keywordList
+          ? formData.keywordList
+              .split(/[\n,]/)
+              .map((item) => item.trim())
+              .filter(Boolean)
+          : [];
+
         payload = {
           contentType: formData.contentType,
-          batchSize: formData.batchSize,
+          batchSize:
+            formData.scheduleType === "keyword_pipeline"
+              ? formData.keywordsPerRun * formData.articlesPerKeyword
+              : formData.batchSize,
+          qualityMode: formData.qualityMode,
+          provider: formData.providerOverride === "auto" ? undefined : formData.providerOverride,
+          model: formData.modelOverride || undefined,
           autoPublish: formData.autoPublish,
           generateOgImage: formData.generateOgImage,
           ideationInput: formData.ideationInput || undefined,
@@ -97,6 +118,14 @@ export default function CreateSchedulePage() {
                 .filter(Boolean)
             : undefined,
         };
+
+        if (formData.scheduleType === "keyword_pipeline") {
+          payload.keywords = parsedKeywords;
+          payload.keywordsPerRun = formData.keywordsPerRun;
+          payload.articlesPerKeyword = formData.articlesPerKeyword;
+          payload.outlineQualityMode = formData.outlineQualityMode;
+          payload.fullQualityMode = formData.fullQualityMode;
+        }
 
         if (formData.useTemplate && formData.templateId) {
           payload.promptTemplateId = formData.templateId;
@@ -172,7 +201,7 @@ export default function CreateSchedulePage() {
               <Label>Schedule Type *</Label>
               <RadioGroup
                 value={formData.scheduleType}
-                onValueChange={(value) => setFormData({ ...formData, scheduleType: value as "ai_generation" | "publishing_queue" })}
+                onValueChange={(value) => setFormData({ ...formData, scheduleType: value as "ai_generation" | "publishing_queue" | "keyword_pipeline" })}
                 className="mt-2"
               >
                 <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4">
@@ -194,6 +223,17 @@ export default function CreateSchedulePage() {
                     </Label>
                     <p className="text-sm text-muted-foreground">
                       Publish manually-created content that's marked as "Ready to Publish"
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <RadioGroupItem value="keyword_pipeline" id="keyword_pipeline" />
+                  <div className="space-y-1 leading-none">
+                    <Label htmlFor="keyword_pipeline" className="cursor-pointer font-medium">
+                      Keyword Pipeline (Outline -&gt; Full Content)
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      Process keyword list in sequence. Each keyword is expanded into outline and full article.
                     </p>
                   </div>
                 </div>
@@ -239,7 +279,11 @@ export default function CreateSchedulePage() {
           {/* Content Settings */}
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">
-              {formData.scheduleType === "publishing_queue" ? "Publishing Queue Configuration" : "Content Settings"}
+              {formData.scheduleType === "publishing_queue"
+                ? "Publishing Queue Configuration"
+                : formData.scheduleType === "keyword_pipeline"
+                  ? "Keyword Pipeline Configuration"
+                  : "Content Settings"}
             </h2>
             
             {formData.scheduleType === "publishing_queue" ? (
@@ -313,21 +357,170 @@ export default function CreateSchedulePage() {
                   </div>
 
                   <div>
-                    <Label htmlFor="batchSize">Batch Size</Label>
+                    <Label htmlFor="batchSize">
+                      {formData.scheduleType === "keyword_pipeline" ? "Keywords Per Run" : "Batch Size"}
+                    </Label>
                     <Input
                       id="batchSize"
                       type="number"
                       min="1"
                       max="50"
-                      value={formData.batchSize}
-                      onChange={(e) => setFormData({ ...formData, batchSize: parseInt(e.target.value) })}
+                      value={formData.scheduleType === "keyword_pipeline" ? formData.keywordsPerRun : formData.batchSize}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          ...(formData.scheduleType === "keyword_pipeline"
+                            ? { keywordsPerRun: parseInt(e.target.value) || 1 }
+                            : { batchSize: parseInt(e.target.value) || 1 }),
+                        })
+                      }
                       required
                     />
                     <p className="text-xs text-muted-foreground mt-1">
-                      Number of items to generate per run (1-50)
+                      {formData.scheduleType === "keyword_pipeline"
+                        ? "How many keywords to process per run (1-20)"
+                        : "Number of items to generate per run (1-50)"}
                     </p>
                   </div>
                 </div>
+
+                {formData.scheduleType === "keyword_pipeline" && (
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <Label htmlFor="keywordList">Keyword List</Label>
+                      <Textarea
+                        id="keywordList"
+                        value={formData.keywordList}
+                        onChange={(e) => setFormData({ ...formData, keywordList: e.target.value })}
+                        placeholder="jasa cetak buku, cetak kalender murah, cetak kalender 2027"
+                        rows={4}
+                        required
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Pisahkan dengan koma atau baris baru.
+                      </p>
+                    </div>
+                    <div>
+                      <Label htmlFor="articlesPerKeyword">Articles Per Keyword</Label>
+                      <Input
+                        id="articlesPerKeyword"
+                        type="number"
+                        min="1"
+                        max="10"
+                        value={formData.articlesPerKeyword}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            articlesPerKeyword: parseInt(e.target.value) || 1,
+                          })
+                        }
+                        required
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Default 1. Bisa dinaikkan jadi 2+ untuk variasi per keyword.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="qualityMode">Quality Mode</Label>
+                    <Select
+                      value={formData.qualityMode}
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, qualityMode: value as "economy" | "standard" | "high" })
+                      }
+                    >
+                      <SelectTrigger id="qualityMode">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="economy">Economy</SelectItem>
+                        <SelectItem value="standard">Standard</SelectItem>
+                        <SelectItem value="high">High Quality</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="providerOverride">Provider Override</Label>
+                    <Select
+                      value={formData.providerOverride}
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, providerOverride: value as "auto" | "gateway" | "groq" | "gemini" })
+                      }
+                    >
+                      <SelectTrigger id="providerOverride">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="auto">Auto (from settings)</SelectItem>
+                        <SelectItem value="gateway">Gateway</SelectItem>
+                        <SelectItem value="groq">Groq</SelectItem>
+                        <SelectItem value="gemini">Gemini</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="modelOverride">Model Override (Optional)</Label>
+                    <Input
+                      id="modelOverride"
+                      value={formData.modelOverride}
+                      onChange={(e) => setFormData({ ...formData, modelOverride: e.target.value })}
+                      placeholder="e.g. gpt-5.4 / gemini-2.5-pro"
+                    />
+                  </div>
+                </div>
+
+                {formData.scheduleType === "keyword_pipeline" && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="outlineQualityMode">Outline Quality Mode</Label>
+                      <Select
+                        value={formData.outlineQualityMode}
+                        onValueChange={(value) =>
+                          setFormData({
+                            ...formData,
+                            outlineQualityMode: value as "economy" | "standard" | "high",
+                          })
+                        }
+                      >
+                        <SelectTrigger id="outlineQualityMode">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="economy">Economy</SelectItem>
+                          <SelectItem value="standard">Standard</SelectItem>
+                          <SelectItem value="high">High Quality</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="fullQualityMode">Full Content Quality Mode</Label>
+                      <Select
+                        value={formData.fullQualityMode}
+                        onValueChange={(value) =>
+                          setFormData({
+                            ...formData,
+                            fullQualityMode: value as "economy" | "standard" | "high",
+                          })
+                        }
+                      >
+                        <SelectTrigger id="fullQualityMode">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="economy">Economy</SelectItem>
+                          <SelectItem value="standard">Standard</SelectItem>
+                          <SelectItem value="high">High Quality</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                )}
 
                 <div className="grid grid-cols-1 gap-4">
                   <div>
@@ -399,7 +592,7 @@ export default function CreateSchedulePage() {
           </div>
 
           {/* Prompt Settings - Only for AI Generation */}
-          {formData.scheduleType === "ai_generation" && (
+          {(formData.scheduleType === "ai_generation" || formData.scheduleType === "keyword_pipeline") && (
             <div className="space-y-4">
               <h2 className="text-lg font-semibold">Prompt Settings</h2>
               

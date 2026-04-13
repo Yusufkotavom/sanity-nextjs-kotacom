@@ -27,13 +27,15 @@ interface Schedule {
   id: string;
   name: string;
   taskType: string;
-  scheduleType: "ai_generation" | "publishing_queue";
+  scheduleType: "ai_generation" | "publishing_queue" | "keyword_pipeline";
   cronExpr: string;
   timezone: string;
   enabled: boolean;
   payload: {
     contentType?: string;
     batchSize?: number;
+    keywordsPerRun?: number;
+    articlesPerKeyword?: number;
     autoPublish?: boolean;
     generateOgImage?: boolean;
     publishingQueueConfig?: {
@@ -134,7 +136,7 @@ export default function SchedulesPage() {
     });
   }
 
-  function renderScheduleTypeBadge(scheduleType: "ai_generation" | "publishing_queue") {
+  function renderScheduleTypeBadge(scheduleType: "ai_generation" | "publishing_queue" | "keyword_pipeline") {
     if (scheduleType === "ai_generation") {
       return (
         <Badge className="bg-blue-500 hover:bg-blue-600 text-white">
@@ -142,7 +144,7 @@ export default function SchedulesPage() {
           AI Generation + Auto-Publish
         </Badge>
       );
-    } else {
+    } else if (scheduleType === "publishing_queue") {
       return (
         <Badge className="bg-purple-500 hover:bg-purple-600 text-white">
           <Clock className="w-3 h-3 mr-1" />
@@ -150,6 +152,12 @@ export default function SchedulesPage() {
         </Badge>
       );
     }
+    return (
+      <Badge className="bg-indigo-500 hover:bg-indigo-600 text-white">
+        <Sparkles className="w-3 h-3 mr-1" />
+        Keyword Pipeline
+      </Badge>
+    );
   }
 
   function resolveScheduleContentType(schedule: Schedule) {

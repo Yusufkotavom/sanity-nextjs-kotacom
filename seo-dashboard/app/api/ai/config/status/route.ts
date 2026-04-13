@@ -29,6 +29,7 @@ export async function GET(request: NextRequest) {
       mode: resolved.mode,
       defaultModel: resolved.defaultModel,
       defaultModels: resolved.defaultModels,
+      modelProfiles: resolved.modelProfiles,
       providerOrder: resolved.providerOrder,
       fallbackModels: resolved.fallbackModels,
       gatewayProviderOrder: resolved.gatewayProviderOrder,

@@ -6,6 +6,7 @@ import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 import { checkSimpleRateLimit } from "@/lib/rate-limit";
 import { sanitizeText } from "@/lib/sanitize";
 import { assertSupportedContentType } from "@/lib/ai-writer/content-type";
+import { normalizeQualityMode, normalizeRuntimeProvider, resolveModelSelection } from "@/lib/ai-writer/model-selection";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,14 @@ export async function POST(request: NextRequest) {
     const contentType = assertSupportedContentType(body.contentType);
     const count = Math.min(Number(body.count || 5), 50);
     const customPrompt = sanitizeText(body.customPrompt, 20000);
+    const qualityMode = normalizeQualityMode(body.qualityMode);
+    const provider = normalizeRuntimeProvider(body.provider);
+    const model = sanitizeText(body.model, 200);
+    const selection = await resolveModelSelection({
+      qualityMode,
+      provider,
+      model: model || undefined,
+    });
 
     if (!topic || !contentType) {
       return NextResponse.json(
@@ -70,6 +79,8 @@ Make each idea:
     const result = await generateAiText({
       prompt,
       system: "You are a content strategist expert. Generate creative, SEO-optimized content ideas with metadata.",
+      provider: selection.provider,
+      model: selection.model,
     });
 
     // Parse AI response

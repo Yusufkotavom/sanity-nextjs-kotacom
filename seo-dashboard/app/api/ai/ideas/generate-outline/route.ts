@@ -6,6 +6,7 @@ import { generateAiText } from "@/lib/ai-writer/generate";
 import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 import { checkSimpleRateLimit } from "@/lib/rate-limit";
 import { sanitizeText } from "@/lib/sanitize";
+import { normalizeQualityMode, normalizeRuntimeProvider, resolveModelSelection } from "@/lib/ai-writer/model-selection";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +25,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { ideaId } = body;
     const customPrompt = sanitizeText(body.customPrompt, 20000);
+    const qualityMode = normalizeQualityMode(body.qualityMode);
+    const provider = normalizeRuntimeProvider(body.provider);
+    const model = sanitizeText(body.model, 200);
 
     if (!ideaId) {
       return NextResponse.json(
@@ -70,9 +74,17 @@ Format as a clear, hierarchical outline.`;
           .replace(/\{\{\s*location\s*\}\}/gi, idea.location || "general")
       : defaultPrompt;
 
+    const selection = await resolveModelSelection({
+      qualityMode,
+      provider,
+      model: model || undefined,
+    });
+
     const result = await generateAiText({
       prompt,
       system: "You are a content strategist expert. Create detailed, SEO-optimized content outlines.",
+      provider: selection.provider,
+      model: selection.model,
     });
 
     // Update idea with outline

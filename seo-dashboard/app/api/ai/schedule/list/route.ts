@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { listSchedules } from "@/lib/ai-writer/schedule-manager";
 import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 
+function resolveScheduleType(schedule: any) {
+  const payload = schedule?.payload as any;
+  if (payload?.pipelineMode === "keyword_pipeline") return "keyword_pipeline";
+  return schedule?.scheduleType;
+}
+
 export async function GET(request: NextRequest) {
   const auth = await ensureSeoApiAccess(request);
   if (!auth.ok) return auth.response;
@@ -43,7 +49,10 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      schedules: filtered,
+      schedules: filtered.map((schedule) => ({
+        ...schedule,
+        scheduleType: resolveScheduleType(schedule),
+      })),
       count: filtered.length,
     });
   } catch (error) {

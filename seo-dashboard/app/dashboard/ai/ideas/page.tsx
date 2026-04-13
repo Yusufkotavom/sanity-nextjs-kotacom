@@ -87,6 +87,9 @@ Return a structured outline with:
   // Templates
   const [templates, setTemplates] = useState<any[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [qualityMode, setQualityMode] = useState<"economy" | "standard" | "high">("standard");
+  const [providerOverride, setProviderOverride] = useState<"auto" | "gateway" | "groq" | "gemini">("auto");
+  const [modelOverride, setModelOverride] = useState("");
 
   // Filters
   const [filterStatus, setFilterStatus] = useState<string>("all");
@@ -227,6 +230,9 @@ Return a structured outline with:
           contentType,
           count: ideaCount,
           customPrompt: ideaPrompt,
+          qualityMode,
+          provider: providerOverride === "auto" ? undefined : providerOverride,
+          model: modelOverride || undefined,
         }),
       });
 
@@ -298,7 +304,13 @@ Return a structured outline with:
       const response = await fetch("/api/ai/ideas/generate-outline", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ideaId, customPrompt: outlinePrompt }),
+        body: JSON.stringify({
+          ideaId,
+          customPrompt: outlinePrompt,
+          qualityMode,
+          provider: providerOverride === "auto" ? undefined : providerOverride,
+          model: modelOverride || undefined,
+        }),
       });
 
       if (!response.ok) {
@@ -365,6 +377,9 @@ Return a structured outline with:
         body: JSON.stringify({
           ideaId,
           templateId: selectedTemplate,
+          qualityMode,
+          provider: providerOverride === "auto" ? undefined : providerOverride,
+          model: modelOverride || undefined,
         }),
       });
 
@@ -494,6 +509,9 @@ Return a structured outline with:
         body: JSON.stringify({
           ideaIds: ideaItems.map((item) => item.id),
           templateId: selectedTemplate,
+          qualityMode,
+          provider: providerOverride === "auto" ? undefined : providerOverride,
+          model: modelOverride || undefined,
         }),
       });
       if (!response.ok) {
@@ -699,6 +717,51 @@ Return a structured outline with:
                         ))}
                       </SelectContent>
                     </Select>
+                  </div>
+                </div>
+
+                <div className="grid gap-3 grid-cols-1 md:grid-cols-3 pt-2">
+                  <div>
+                    <Label htmlFor="idea-quality-mode">Quality Mode</Label>
+                    <Select
+                      value={qualityMode}
+                      onValueChange={(value) => setQualityMode(value as "economy" | "standard" | "high")}
+                    >
+                      <SelectTrigger id="idea-quality-mode">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="economy">Economy</SelectItem>
+                        <SelectItem value="standard">Standard</SelectItem>
+                        <SelectItem value="high">High Quality</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="idea-provider-override">Provider Override</Label>
+                    <Select
+                      value={providerOverride}
+                      onValueChange={(value) => setProviderOverride(value as "auto" | "gateway" | "groq" | "gemini")}
+                    >
+                      <SelectTrigger id="idea-provider-override">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="auto">Auto (from settings)</SelectItem>
+                        <SelectItem value="gateway">Gateway</SelectItem>
+                        <SelectItem value="groq">Groq</SelectItem>
+                        <SelectItem value="gemini">Gemini</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="idea-model-override">Model Override (Optional)</Label>
+                    <Input
+                      id="idea-model-override"
+                      value={modelOverride}
+                      onChange={(e) => setModelOverride(e.target.value)}
+                      placeholder="e.g. gpt-5.4 / gemini-2.5-pro"
+                    />
                   </div>
                 </div>
 
