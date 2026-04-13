@@ -15,6 +15,13 @@
       "when": 1775943000000,
       "tag": "0001_mushy_fat_cobra",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776032669942,
+      "tag": "0002_abandoned_ogun",
+      "breakpoints": true
     }
   ]
 }

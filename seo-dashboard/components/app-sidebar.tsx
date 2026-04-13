@@ -14,6 +14,7 @@ import {
   Globe,
   LogOut,
   TrendingUp,
+  Calendar,
 } from "lucide-react";
 
 import {
@@ -57,6 +58,17 @@ export const dashboardNavGroups = [
         title: "AI Generations", 
         url: "/dashboard/ai",
         icon: Sparkles,
+        subItems: [
+          { title: "History", url: "/dashboard/ai" },
+          { title: "Generate", url: "/dashboard/ai/generate" },
+          { title: "Templates", url: "/dashboard/ai/templates" },
+          { title: "Content Ideas", url: "/dashboard/ai/ideas" },
+        ],
+      },
+      { 
+        title: "Schedules", 
+        url: "/dashboard/schedules",
+        icon: Calendar,
       },
       { 
         title: "Templates", 
@@ -135,14 +147,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               {group.items.map((item) => {
                 const isActive = pathname === item.url || pathname.startsWith(`${item.url}/`);
                 const Icon = item.icon;
+                const hasSubItems = 'subItems' in item && item.subItems && item.subItems.length > 0;
+                
                 return (
                   <SidebarMenuItem key={item.url}>
-                    <SidebarMenuButton asChild isActive={isActive}>
+                    <SidebarMenuButton asChild isActive={isActive && !hasSubItems}>
                       <Link href={item.url}>
                         <Icon className="size-4" />
                         <span>{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
+                    {hasSubItems && (
+                      <SidebarMenuSub>
+                        {(item as any).subItems.map((subItem: any) => (
+                          <SidebarMenuSubItem key={subItem.url}>
+                            <SidebarMenuSubButton asChild isActive={pathname === subItem.url}>
+                              <Link href={subItem.url}>{subItem.title}</Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        ))}
+                      </SidebarMenuSub>
+                    )}
                   </SidebarMenuItem>
                 );
               })}

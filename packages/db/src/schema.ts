@@ -66,12 +66,30 @@ export const jobRuns = pgTable(
   }),
 );
 
+export const promptTemplates = pgTable(
+  "prompt_templates",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    name: text("name").notNull(),
+    contentType: text("content_type").notNull(),
+    systemPrompt: text("system_prompt").notNull(),
+    userPromptTemplate: text("user_prompt_template").notNull(),
+    variables: jsonb("variables").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    contentTypeIndex: index("prompt_templates_content_type_idx").on(table.contentType),
+    nameContentTypeUnique: uniqueIndex("prompt_templates_name_content_type_unique").on(table.name, table.contentType),
+  }),
+);
+
 export const aiGenerations = pgTable(
   "ai_generations",
   {
     id: uuid("id").defaultRandom().primaryKey(),
     sourceType: text("source_type").notNull(),
-    templateId: uuid("template_id"),
+    templateId: uuid("template_id").references(() => promptTemplates.id),
     jobRunId: uuid("job_run_id").references(() => jobRuns.id),
     inputJson: jsonb("input_json").notNull(),
     promptVersion: text("prompt_version"),
@@ -83,6 +101,8 @@ export const aiGenerations = pgTable(
     validationErrors: jsonb("validation_errors"),
     sanityWriteStatus: text("sanity_write_status").notNull(),
     sanityDocumentId: text("sanity_document_id"),
+    ogImageAssetId: text("og_image_asset_id"),
+    readyToPublish: boolean("ready_to_publish").default(false).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => ({
@@ -182,5 +202,29 @@ export const analyticsGa4Daily = pgTable(
     uniqueDaily: uniqueIndex("analytics_ga4_daily_unique").on(table.pageUrl, table.date),
     dateIndex: index("analytics_ga4_daily_date_idx").on(table.date),
     contentDateIndex: index("analytics_ga4_daily_content_date_idx").on(table.contentItemId, table.date),
+  }),
+);
+
+export const contentIdeas = pgTable(
+  "content_ideas",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    topic: text("topic").notNull(),
+    contentType: text("content_type").notNull(),
+    idea: text("idea").notNull(),
+    outline: text("outline"),
+    generationId: uuid("generation_id").references(() => aiGenerations.id),
+    status: text("status").notNull().default("idea"),
+    // Template variables
+    audience: text("audience"),
+    keyword: text("keyword"),
+    wordCount: text("word_count"),
+    location: text("location"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    statusIndex: index("content_ideas_status_idx").on(table.status),
+    createdIndex: index("content_ideas_created_idx").on(table.createdAt),
   }),
 );

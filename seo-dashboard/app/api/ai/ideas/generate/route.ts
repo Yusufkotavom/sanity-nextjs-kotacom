@@ -1,0 +1,121 @@
+import { NextRequest, NextResponse } from "next/server";
+import { db } from "@/lib/db";
+import { contentIdeas } from "@repo/db/schema";
+import { generateAiText } from "@/lib/ai-writer/generate";
+
+export const dynamic = "force-dynamic";
+
+/**
+ * POST /api/ai/ideas/generate
+ * Generate content ideas using AI
+ */
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { topic, contentType, count = 5 } = body;
+
+    if (!topic || !contentType) {
+      return NextResponse.json(
+        { error: "Topic and content type are required" },
+        { status: 400 }
+      );
+    }
+
+    // Generate ideas using AI
+    const prompt = `Generate ${count} unique content ideas for ${contentType} about: ${topic}
+
+For each idea, provide:
+- idea: The content idea/title
+- audience: Target audience for this content
+- keyword: Primary SEO keyword
+- wordCount: Suggested word count (e.g., "1500", "2000")
+- location: If relevant, otherwise "general"
+
+Return ONLY a JSON array. Format:
+[
+  {
+    "idea": "Content idea here",
+    "audience": "target audience",
+    "keyword": "main keyword",
+    "wordCount": "1500",
+    "location": "general"
+  }
+]
+
+Make each idea:
+- Specific and actionable
+- SEO-friendly
+- Relevant to the topic
+- Unique from each other`;
+
+    const result = await generateAiText({
+      prompt,
+      system: "You are a content strategist expert. Generate creative, SEO-optimized content ideas with metadata.",
+    });
+
+    // Parse AI response
+    let ideas: Array<{
+      idea: string;
+      audience?: string;
+      keyword?: string;
+      wordCount?: string;
+      location?: string;
+    }> = [];
+    
+    try {
+      const cleaned = result.text
+        .replace(/^```(?:json)?\s*\n/gm, "")
+        .replace(/\n```\s*$/gm, "")
+        .trim();
+      ideas = JSON.parse(cleaned);
+    } catch {
+      // Fallback: treat as simple string array
+      const simpleIdeas = result.text
+        .split("\n")
+        .filter((line) => line.trim())
+        .map((line) => line.replace(/^[-*]\s*/, "").trim())
+        .slice(0, count);
+      
+      ideas = simpleIdeas.map(idea => ({
+        idea,
+        audience: "general audience",
+        keyword: topic,
+        wordCount: "1500",
+        location: "general",
+      }));
+    }
+
+    // Store ideas in database
+    const database = db();
+    const createdIdeas = [];
+
+    for (const ideaData of ideas) {
+      const [created] = await database
+        .insert(contentIdeas)
+        .values({
+          topic,
+          contentType,
+          idea: ideaData.idea,
+          audience: ideaData.audience || "general audience",
+          keyword: ideaData.keyword || topic,
+          wordCount: ideaData.wordCount || "1500",
+          location: ideaData.location || "general",
+          status: "idea",
+        })
+        .returning();
+      
+      createdIdeas.push(created);
+    }
+
+    return NextResponse.json({
+      success: true,
+      ideas: createdIdeas,
+    });
+  } catch (error) {
+    console.error("Failed to generate ideas:", error);
+    return NextResponse.json(
+      { error: "Failed to generate ideas" },
+      { status: 500 }
+    );
+  }
+}
