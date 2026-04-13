@@ -52,6 +52,7 @@ export function JobDetailsRow({ job }: JobDetailsRowProps) {
           {new Intl.DateTimeFormat("en-US", {
             dateStyle: "medium",
             timeStyle: "short",
+            timeZone: "UTC",
           }).format(new Date(job.createdAt))}
         </td>
         <td className="px-4 py-3">
