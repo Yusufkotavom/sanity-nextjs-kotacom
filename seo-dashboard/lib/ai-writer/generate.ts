@@ -2,7 +2,7 @@ import { generateWithFallback, type AiGenerateInput, type AiProvider } from "@re
 import { getAiWriterResolvedSettings } from "@/lib/ai-writer/settings-source";
 
 export type AiGenerateResult = {
-  providerMode: "gateway" | "direct-gemini" | "direct-groq";
+  providerMode: "gateway" | "direct-gemini" | "direct-groq" | "direct-vertex";
   model: string;
   text: string;
 };
@@ -27,6 +27,7 @@ export async function generateAiText(
       gatewayFallbackModels: settings.fallbackModels,
       groqKeys: settings.secrets.groqKeys,
       geminiKeys: settings.secrets.geminiKeys,
+      vertexKeys: settings.secrets.vertexKeys,
     },
     input,
   );
@@ -35,9 +36,11 @@ export async function generateAiText(
     providerMode:
       result.provider === "gateway"
         ? "gateway"
-        : result.provider === "groq"
-          ? "direct-groq"
-          : "direct-gemini",
+        : result.provider === "vertex"
+          ? "direct-vertex"
+          : result.provider === "groq"
+            ? "direct-groq"
+            : "direct-gemini",
     model: result.model,
     text: result.text,
   };

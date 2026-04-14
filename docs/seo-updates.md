@@ -1139,3 +1139,33 @@ Completed full AI settings implementation requested for flexible model control:
 
 ### Verification Status
 - ✅ `pnpm --filter seo-dashboard run typecheck` passed after changes.
+
+## 2026-04-14 — AI Runtime Contract Sync (Frontend + Shared Package + Dashboard)
+
+### Changed Files
+- `frontend/sanity/queries/ai-writer-settings.ts` (MODIFIED) - Synced query contract with latest AI writer settings shape
+- `packages/ai/src/index.ts` (MODIFIED) - Updated shared AI package export surface to match runtime model-selection usage
+- `seo-dashboard/.env.example` (MODIFIED) - Updated/clarified AI runtime env keys for model/profile configuration
+- `seo-dashboard/app/api/ai/config/save/route.ts` (MODIFIED) - Continued save-route contract alignment for model/profile settings
+- `seo-dashboard/app/api/ai/schedule/[id]/route.ts` (MODIFIED) - Schedule update payload alignment for model/profile options
+- `seo-dashboard/app/api/ai/schedule/create/route.ts` (MODIFIED) - Schedule create payload alignment for model/profile options
+- `seo-dashboard/app/dashboard/ai-settings/page.tsx` (MODIFIED) - AI settings UI refinements after initial full implementation
+- `seo-dashboard/lib/ai-writer/content-generator.ts` (MODIFIED) - Generator runtime model resolution alignment
+- `seo-dashboard/lib/ai-writer/generate.ts` (MODIFIED) - Shared generate path alignment to resolved model contracts
+- `seo-dashboard/lib/ai-writer/model-selection.ts` (MODIFIED) - Model selection helper refinements
+- `seo-dashboard/lib/ai-writer/schedule-manager.ts` (MODIFIED) - Schedule payload types/contract refinements
+- `seo-dashboard/lib/ai-writer/settings-source.ts` (MODIFIED) - Resolved settings contract and profile sourcing refinements
+- `seo-dashboard/sanity/queries/ai-writer-settings.ts` (MODIFIED) - Query shape sync for dashboard runtime
+- `studio/schemas/documents/ai-writer-settings.ts` (MODIFIED) - Studio schema sync for AI profile/runtime fields
+
+### Summary
+Synchronized AI runtime contracts across frontend query layer, shared package exports, dashboard API/UI, and Studio schema to keep model-selection behavior consistent in schedule and manual generation flows.
+
+### Impact on SEO/Integration
+- No direct SEO impact.
+- Integration impact:
+  - Reduces cross-app drift between Studio fields, frontend query shape, and seo-dashboard runtime behavior.
+  - Keeps AI settings/schedule model-selection configuration consistent end-to-end.
+
+### Verification Status
+- ⚠️ No additional full test/build run in this cycle before push (changes are contract-sync follow-up).

@@ -1,9 +1,9 @@
-export type AiWriterMode = "gateway" | "direct-gemini" | "direct-groq";
-export type AiRuntimeProvider = "gateway" | "gemini" | "groq";
+export type AiWriterMode = "gateway" | "direct-gemini" | "direct-groq" | "direct-vertex";
+export type AiRuntimeProvider = "gateway" | "gemini" | "groq" | "vertex";
 export type AiQualityMode = "economy" | "standard" | "high";
 
 function normalizeRuntimeProvider(value: string): AiRuntimeProvider | undefined {
-  if (value === "gateway" || value === "gemini" || value === "groq") return value;
+  if (value === "gateway" || value === "gemini" || value === "groq" || value === "vertex") return value;
   return undefined;
 }
 
@@ -46,15 +46,20 @@ export async function getAiWriterResolvedSettings() {
   const defaultGeminiModel =
     (studio?.customModelGemini || "").trim() ||
     (studio?.defaultModelGemini || "gemini-2.5-flash").trim();
+  const defaultVertexModel =
+    (studio?.customModelVertex || "").trim() ||
+    (studio?.defaultModelVertex || "gemini-2.5-flash").trim();
   const defaultGroqModel =
     (studio?.customModelGroq || "").trim() ||
     (studio?.defaultModelGroq || "meta-llama/llama-4-scout-17b-16e-instruct").trim();
 
   const defaultRuntimeProvider: AiRuntimeProvider =
-    mode === "direct-gemini" ? "gemini" : mode === "direct-groq" ? "groq" : "gateway";
+    mode === "direct-gemini" ? "gemini" : mode === "direct-groq" ? "groq" : mode === "direct-vertex" ? "vertex" : "gateway";
   const defaultRuntimeModel =
     defaultRuntimeProvider === "gemini"
       ? defaultGeminiModel
+      : defaultRuntimeProvider === "vertex"
+      ? defaultVertexModel
       : defaultRuntimeProvider === "groq"
         ? defaultGroqModel
         : defaultGatewayModel;
@@ -94,6 +99,10 @@ export async function getAiWriterResolvedSettings() {
     .split(/\r?\n|,/g)
     .map((k) => k.trim())
     .filter(Boolean);
+  const vertexKeys = (process.env.AI_WRITER_VERTEX_KEYS || process.env.VERTEX_API_KEYS || "")
+    .split(/\r?\n|,/g)
+    .map((k) => k.trim())
+    .filter(Boolean);
   const groqKeys = (process.env.AI_WRITER_GROQ_KEYS || "")
     .split(/\r?\n|,/g)
     .map((k) => k.trim())
@@ -107,6 +116,7 @@ export async function getAiWriterResolvedSettings() {
       gateway: defaultGatewayModel,
       groq: defaultGroqModel,
       gemini: defaultGeminiModel,
+      vertex: defaultVertexModel,
     },
     modelProfiles: {
       standard: {
@@ -122,7 +132,7 @@ export async function getAiWriterResolvedSettings() {
         model: economyProfile.model,
       },
     } as Record<AiQualityMode, { provider: AiRuntimeProvider; model: string }>,
-    providerOrder: ["gateway", "groq", "gemini"] as AiWriterMode[],
+    providerOrder: ["gateway", "groq", "vertex", "gemini"] as AiWriterMode[],
     fallbackModels: (studio?.fallbackModels || []).filter(Boolean),
     gatewayProviderOrder: [] as string[],
     temperature:
@@ -146,6 +156,7 @@ export async function getAiWriterResolvedSettings() {
       gatewayApiKey,
       hasOidcToken: Boolean(process.env.VERCEL_OIDC_TOKEN),
       geminiKeys,
+      vertexKeys,
       groqKeys,
     },
   };

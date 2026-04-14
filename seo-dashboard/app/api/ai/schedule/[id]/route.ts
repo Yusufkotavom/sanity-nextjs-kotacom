@@ -7,7 +7,7 @@ import { ensureSeoApiAccess } from "@/lib/seo-ops/api-auth";
 import { sanitizeText } from "@/lib/sanitize";
 import { assertSupportedContentType } from "@/lib/ai-writer/content-type";
 
-const VALID_AI_PROVIDERS = ["gateway", "groq", "gemini"];
+const VALID_AI_PROVIDERS = ["gateway", "groq", "gemini", "vertex"];
 const VALID_QUALITY_MODES = ["economy", "standard", "high"];
 
 function resolveScheduleType(schedule: any) {

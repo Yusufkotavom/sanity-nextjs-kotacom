@@ -27,7 +27,7 @@ export interface ContentGenerationPayload {
   ideationInput?: string;
   ideationKeywords?: string[];
   qualityMode?: "economy" | "standard" | "high";
-  provider?: "gateway" | "groq" | "gemini";
+  provider?: "gateway" | "groq" | "gemini" | "vertex";
   model?: string;
   pipelineMode?: "keyword_pipeline";
   keywords?: string[];
@@ -36,9 +36,9 @@ export interface ContentGenerationPayload {
   currentKeywordIndex?: number;
   outlineQualityMode?: "economy" | "standard" | "high";
   fullQualityMode?: "economy" | "standard" | "high";
-  outlineProvider?: "gateway" | "groq" | "gemini";
+  outlineProvider?: "gateway" | "groq" | "gemini" | "vertex";
   outlineModel?: string;
-  fullProvider?: "gateway" | "groq" | "gemini";
+  fullProvider?: "gateway" | "groq" | "gemini" | "vertex";
   fullModel?: string;
   lastProcessedKeywords?: string[];
   lastKeywordPipelineRunAt?: string;

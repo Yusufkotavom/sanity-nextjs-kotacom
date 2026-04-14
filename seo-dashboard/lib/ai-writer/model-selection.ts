@@ -19,7 +19,7 @@ export function normalizeQualityMode(value: unknown): AiQualityMode {
 }
 
 export function normalizeRuntimeProvider(value: unknown): AiRuntimeProvider | undefined {
-  if (value === "gateway" || value === "groq" || value === "gemini") return value;
+  if (value === "gateway" || value === "groq" || value === "gemini" || value === "vertex") return value;
   return undefined;
 }
 

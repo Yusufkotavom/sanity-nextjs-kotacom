@@ -27,6 +27,8 @@ type FormState = {
   customModelGateway: string;
   defaultModelGemini: string;
   customModelGemini: string;
+  defaultModelVertex: string;
+  customModelVertex: string;
   defaultModelGroq: string;
   customModelGroq: string;
   fallbackModelsText: string;
@@ -58,6 +60,8 @@ const DEFAULT_FORM: FormState = {
   customModelGateway: "",
   defaultModelGemini: "gemini-2.5-flash",
   customModelGemini: "",
+  defaultModelVertex: "gemini-2.5-flash",
+  customModelVertex: "",
   defaultModelGroq: "meta-llama/llama-4-scout-17b-16e-instruct",
   customModelGroq: "",
   fallbackModelsText: "",
@@ -139,6 +143,11 @@ export default function AiSettingsPage() {
           asString(runtime?.defaultModels?.gemini, DEFAULT_FORM.defaultModelGemini),
         ),
         customModelGemini: asString(studio?.customModelGemini),
+        defaultModelVertex: asString(
+          studio?.defaultModelVertex,
+          asString(runtime?.defaultModels?.vertex, DEFAULT_FORM.defaultModelVertex),
+        ),
+        customModelVertex: asString(studio?.customModelVertex),
         defaultModelGroq: asString(
           studio?.defaultModelGroq,
           asString(runtime?.defaultModels?.groq, DEFAULT_FORM.defaultModelGroq),
@@ -206,6 +215,8 @@ export default function AiSettingsPage() {
         customModelGateway: form.customModelGateway.trim(),
         defaultModelGemini: form.defaultModelGemini.trim(),
         customModelGemini: form.customModelGemini.trim(),
+        defaultModelVertex: form.defaultModelVertex.trim(),
+        customModelVertex: form.customModelVertex.trim(),
         defaultModelGroq: form.defaultModelGroq.trim(),
         customModelGroq: form.customModelGroq.trim(),
         fallbackModels: parsedFallbackModels,
@@ -309,6 +320,7 @@ export default function AiSettingsPage() {
               <SelectContent>
                 <SelectItem value="gateway">Gateway</SelectItem>
                 <SelectItem value="direct-gemini">Direct Gemini</SelectItem>
+                <SelectItem value="direct-vertex">Direct Vertex AI</SelectItem>
                 <SelectItem value="direct-groq">Direct Groq</SelectItem>
               </SelectContent>
             </Select>
@@ -324,7 +336,7 @@ export default function AiSettingsPage() {
           </div>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-4">
           <div className="space-y-2">
             <Label>Default Gateway Model</Label>
             <Input
@@ -350,6 +362,20 @@ export default function AiSettingsPage() {
             <Input
               value={form.customModelGemini}
               onChange={(e) => setForm((prev) => ({ ...prev, customModelGemini: e.target.value }))}
+              placeholder="optional override"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Default Vertex Model</Label>
+            <Input
+              value={form.defaultModelVertex}
+              onChange={(e) => setForm((prev) => ({ ...prev, defaultModelVertex: e.target.value }))}
+              placeholder="gemini-2.5-flash"
+            />
+            <Label>Vertex Custom Override</Label>
+            <Input
+              value={form.customModelVertex}
+              onChange={(e) => setForm((prev) => ({ ...prev, customModelVertex: e.target.value }))}
               placeholder="optional override"
             />
           </div>

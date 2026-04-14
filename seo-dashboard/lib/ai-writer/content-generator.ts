@@ -18,7 +18,7 @@ export interface GenerateContentParams {
   prompt?: string;
   system?: string;
   model?: string;
-  provider?: "gateway" | "groq" | "gemini";
+  provider?: "gateway" | "groq" | "gemini" | "vertex";
   qualityMode?: "economy" | "standard" | "high";
   metadata?: Record<string, any>;
   templateId?: string;
@@ -388,7 +388,7 @@ function parseContent(rawOutput: string, contentType: string): {
 async function generateAiTextWithBackoff(params: {
   prompt: string;
   system?: string;
-  provider?: "gateway" | "groq" | "gemini";
+  provider?: "gateway" | "groq" | "gemini" | "vertex";
   model?: string;
 }) {
   let lastError: unknown;

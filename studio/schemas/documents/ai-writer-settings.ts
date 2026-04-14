@@ -75,6 +75,10 @@ export default defineType({
             value: "direct-gemini",
           },
           {
+            title: "☁️ Direct Google Vertex AI  →  env: VERTEX_API_KEYS",
+            value: "direct-vertex",
+          },
+          {
             title: "⚡ Direct Groq (Model Cepat & Gratis)  →  env: AI_WRITER_GROQ_KEYS",
             value: "direct-groq",
           },
@@ -127,6 +131,28 @@ export default defineType({
         "Isi untuk mengoverride pilihan dropdown di atas. Contoh: 'gemini-1.5-pro', 'gemini-2.0-flash'",
       type: "string",
       hidden: ({ document }) => document?.mode !== "direct-gemini",
+      group: "model",
+    }),
+    defineField({
+      name: "defaultModelVertex",
+      title: "Model AI — Mode Direct Vertex AI",
+      description:
+        "Hanya aktif jika mode 'Direct Google Vertex AI' dipilih. Rekomendasi: Gemini 2.5 Flash.",
+      type: "string",
+      initialValue: "gemini-2.5-flash",
+      hidden: ({ document }) => document?.mode !== "direct-vertex",
+      options: {
+        list: GEMINI_MODELS,
+      },
+      group: "model",
+    }),
+    defineField({
+      name: "customModelVertex",
+      title: "Input Model Manual (Override Dropdown)",
+      description:
+        "Isi untuk mengoverride pilihan dropdown di atas. Contoh: 'gemini-1.5-pro', 'gemini-2.0-flash'",
+      type: "string",
+      hidden: ({ document }) => document?.mode !== "direct-vertex",
       group: "model",
     }),
     defineField({

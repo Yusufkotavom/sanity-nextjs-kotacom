@@ -7,6 +7,8 @@ type SaveBody = {
   customModelGateway?: string;
   defaultModelGemini?: string;
   customModelGemini?: string;
+  defaultModelVertex?: string;
+  customModelVertex?: string;
   defaultModelGroq?: string;
   customModelGroq?: string;
   fallbackModels?: string[];
@@ -139,6 +141,8 @@ export async function POST(request: NextRequest) {
     customModelGateway: normalizeString(body.customModelGateway),
     defaultModelGemini: normalizeString(body.defaultModelGemini),
     customModelGemini: normalizeString(body.customModelGemini),
+    defaultModelVertex: normalizeString(body.defaultModelVertex),
+    customModelVertex: normalizeString(body.customModelVertex),
     defaultModelGroq: normalizeString(body.defaultModelGroq),
     customModelGroq: normalizeString(body.customModelGroq),
     fallbackModels,

@@ -1,7 +1,7 @@
 import { createGateway } from "@ai-sdk/gateway";
 import { generateText } from "ai";
 
-export type AiProvider = "gateway" | "groq" | "gemini";
+export type AiProvider = "gateway" | "groq" | "gemini" | "vertex";
 
 export type AiRoutingConfig = {
   enabled: boolean;
@@ -10,6 +10,7 @@ export type AiRoutingConfig = {
     gateway: string;
     groq: string;
     gemini: string;
+    vertex: string;
   };
   temperature: number;
   maxOutputTokens: number;
@@ -18,6 +19,7 @@ export type AiRoutingConfig = {
   gatewayFallbackModels?: string[];
   groqKeys: string[];
   geminiKeys: string[];
+  vertexKeys: string[];
 };
 
 export type AiGenerateInput = {
@@ -42,6 +44,12 @@ function normalizeModel(model: string, fallback: string) {
 }
 
 function normalizeGeminiModel(model: string) {
+  const value = model.trim();
+  if (!value) return "gemini-2.5-flash";
+  return value.startsWith("google/") ? value.replace(/^google\//, "") : value;
+}
+
+function normalizeVertexModel(model: string) {
   const value = model.trim();
   if (!value) return "gemini-2.5-flash";
   return value.startsWith("google/") ? value.replace(/^google\//, "") : value;
@@ -168,6 +176,53 @@ async function generateViaGemini(config: AiRoutingConfig, input: AiGenerateInput
   throw new Error(`Gemini rotation failed: ${lastError}`);
 }
 
+async function generateViaVertex(config: AiRoutingConfig, input: AiGenerateInput) {
+  const model = normalizeVertexModel(
+    normalizeModel(input.model || config.defaultModels.vertex, config.defaultModels.vertex),
+  );
+  if (config.vertexKeys.length === 0) {
+    throw new Error("No Vertex API keys configured.");
+  }
+
+  let lastError = "Unknown error";
+  for (const key of config.vertexKeys) {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+        model,
+      )}:generateContent?key=${encodeURIComponent(key)}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          generationConfig: {
+            temperature: config.temperature,
+            maxOutputTokens: Math.max(config.maxOutputTokens, input.minOutputTokens ?? 0),
+          },
+          systemInstruction: input.system ? { parts: [{ text: input.system }] } : undefined,
+          contents: [{ role: "user", parts: [{ text: input.prompt }] }],
+        }),
+      },
+    );
+
+    const json = (await response.json().catch(() => ({}))) as any;
+    if (!response.ok) {
+      lastError = json?.error?.message || `Vertex request failed (${response.status})`;
+      continue;
+    }
+
+    const text =
+      json?.candidates?.[0]?.content?.parts?.map((p: any) => p?.text || "").join("") || "";
+    if (!text) {
+      lastError = "Vertex returned an empty response.";
+      continue;
+    }
+
+    return { provider: "vertex" as const, model, text };
+  }
+
+  throw new Error(`Vertex rotation failed: ${lastError}`);
+}
+
 export async function generateWithFallback(
   config: AiRoutingConfig,
   input: AiGenerateInput,
@@ -186,6 +241,7 @@ export async function generateWithFallback(
       if (provider === "gateway") return await generateViaGateway(config, input);
       if (provider === "groq") return await generateViaGroq(config, input);
       if (provider === "gemini") return await generateViaGemini(config, input);
+      if (provider === "vertex") return await generateViaVertex(config, input);
     } catch (error) {
       lastError = error instanceof Error ? error.message : String(error);
     }
