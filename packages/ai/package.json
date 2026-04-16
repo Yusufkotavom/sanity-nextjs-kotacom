@@ -8,8 +8,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.85",
-    "ai": "^6.0.143",
+    "@ai-sdk/gateway": "^3.0.95",
+    "ai": "^6.0.158",
     "zod": "^4.3.6"
   },
   "devDependencies": {
