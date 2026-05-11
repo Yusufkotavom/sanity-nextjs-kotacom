@@ -8,9 +8,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.85",
-    "ai": "^6.0.143",
-    "zod": "^4.3.6"
+    "@ai-sdk/gateway": "^3.0.112",
+    "ai": "^6.0.177",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
