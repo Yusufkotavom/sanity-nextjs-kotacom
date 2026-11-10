@@ -4,14 +4,11 @@ import { orderRankField } from "@sanity/orderable-document-list";
 import meta from "../blocks/shared/meta";
 import pageBlocks from "../blocks/shared/page-blocks";
 
-const HYBRID_PAGE_SLUGS = new Set([
-  "home-pepar",
-  "index",
-  "layanan",
-  "pembuatan-website",
-  "percetakan",
-  "software",
-]);
+// Sanity-only architecture (F1): every public URL is ONE `page` document rendered
+// from `blocks[]`. `path` is the canonical absolute route (supports nested slugs
+// like /percetakan/cetak-buku). `contentStatus` gates public render + sitemap.
+// Hybrid fields (topBlockCount / HYBRID_PAGE_SLUGS) and the code+template render
+// fallbacks are retired.
 
 export default defineType({
   name: "page",
@@ -35,15 +32,34 @@ export default defineType({
   fields: [
     defineField({ name: "title", type: "string", group: "content" }),
     defineField({
+      name: "path",
+      title: "Path (URL)",
+      type: "string",
+      group: "settings",
+      description:
+        "Route absolut kanonik. Contoh: /about, /percetakan/cetak-buku. Gunakan '/' untuk homepage. Menentukan URL publik (mendukung slug bersarang).",
+      placeholder: "/percetakan/cetak-buku",
+      validation: (Rule) =>
+        Rule.required().custom((value?: string) => {
+          if (!value) return "Path wajib diisi";
+          if (!value.startsWith("/")) return "Path harus diawali '/'";
+          if (/\s/.test(value)) return "Path tidak boleh mengandung spasi";
+          if (value.length > 1 && value.endsWith("/"))
+            return "Path tidak boleh diakhiri '/'";
+          return true;
+        }),
+    }),
+    defineField({
       name: "slug",
-      title: "Slug",
+      title: "Slug (legacy)",
       type: "slug",
       group: "settings",
+      description:
+        "Dipertahankan untuk kompatibilitas migrasi. Sumber URL kini adalah field `path`.",
       options: {
         source: "title",
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "thumbnail",
@@ -60,14 +76,22 @@ export default defineType({
     }),
     pageBlocks,
     defineField({
-      name: "topBlockCount",
-      title: "Top Block Count",
+      name: "contentStatus",
+      title: "Content Status",
+      type: "string",
+      group: "seo",
       description:
-        "Untuk page hybrid, tentukan berapa block pertama yang dirender sebelum section code-owned di tengah halaman.",
-      type: "number",
-      group: "settings",
-      initialValue: 3,
-      validation: (Rule) => Rule.integer().min(0),
+        "draft = tidak dirender publik & tidak di-sitemap · ready = dirender tapi noindex (belum di-sitemap) · index = index,follow & masuk sitemap.",
+      options: {
+        list: [
+          { title: "Draft", value: "draft" },
+          { title: "Ready (noindex)", value: "ready" },
+          { title: "Index (sitemap)", value: "index" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "draft",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "aggregateRating",
@@ -82,19 +106,15 @@ export default defineType({
   preview: {
     select: {
       title: "title",
+      path: "path",
       slug: "slug.current",
-      topBlockCount: "topBlockCount",
+      contentStatus: "contentStatus",
     },
-    prepare({ title, slug, topBlockCount }) {
-      const isHybrid = typeof slug === "string" && HYBRID_PAGE_SLUGS.has(slug);
-      const splitCount =
-        typeof topBlockCount === "number" && Number.isFinite(topBlockCount)
-          ? Math.max(0, topBlockCount)
-          : 0;
-
+    prepare({ title, path, slug, contentStatus }) {
+      const route = path || (slug ? `/${slug}` : "");
       return {
-        title: title || slug || "Untitled page",
-        subtitle: isHybrid ? `Hybrid · Top ${splitCount}` : slug || "Page",
+        title: title || route || "Untitled page",
+        subtitle: `${route}${contentStatus ? ` · ${contentStatus}` : ""}`,
       };
     },
   },

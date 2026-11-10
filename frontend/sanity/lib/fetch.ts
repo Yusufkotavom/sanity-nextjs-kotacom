@@ -60,7 +60,6 @@ import {
 } from "@/sanity/queries/post";
 import {
   PAGE_QUERY_RESULT,
-  PAGES_SLUGS_QUERY_RESULT,
   POST_QUERY_RESULT,
   POSTS_QUERY_RESULT,
   POSTS_SLUGS_QUERY_RESULT,
@@ -121,10 +120,34 @@ export const fetchSanityPageBySlug = async ({
 }: {
   slug: string;
 }): Promise<PAGE_QUERY_RESULT> => {
+  // Derive a canonical path from a legacy slug so the same query serves both
+  // homepage ("index" -> "/") and flat slugs ("about" -> "/about").
+  const path = !slug ? undefined : slug === "index" ? "/" : `/${slug.replace(/^\/+/, "")}`;
   const data = await fetchPublishedCached<PAGE_QUERY_RESULT>({
     query: PAGE_QUERY,
-    params: { slug },
+    params: { slug, path, },
     tags: ["pages", `page:${slug}`],
+    revalidate: 604800,
+  });
+
+  return data;
+};
+
+// Sanity-only architecture: fetch a page by its canonical absolute path
+// (supports nested routes like "/percetakan/cetak-buku"). Falls back to the last
+// path segment as a legacy slug match.
+export const fetchSanityPageByPath = async ({
+  path,
+}: {
+  path: string;
+}): Promise<PAGE_QUERY_RESULT> => {
+  const normalized = path && path !== "/" ? path.replace(/\/+$/, "") : "/";
+  const legacySlug =
+    normalized === "/" ? "index" : normalized.split("/").filter(Boolean).pop();
+  const data = await fetchPublishedCached<PAGE_QUERY_RESULT>({
+    query: PAGE_QUERY,
+    params: { path: normalized, slug: legacySlug },
+    tags: ["pages", `page:${normalized}`],
     revalidate: 604800,
   });
 
@@ -242,16 +265,21 @@ export const fetchTemplatePageRoutes = async (): Promise<
   return (data || []).filter((item) => isAllowedTemplateRoute(item.route));
 };
 
+export type PageStaticParam = {
+  path?: string | null;
+  contentStatus?: string | null;
+};
+
 export const fetchSanityPagesStaticParams =
-  async (): Promise<PAGES_SLUGS_QUERY_RESULT> => {
+  async (): Promise<PageStaticParam[]> => {
     const data = await client
       .withConfig({ useCdn: false })
-      .fetch(PAGES_SLUGS_QUERY, {}, {
+      .fetch<PageStaticParam[]>(PAGES_SLUGS_QUERY, {}, {
         perspective: "published",
         stega: false,
       });
 
-    return data;
+    return data || [];
   };
 
 export const fetchSanityPages = async (): Promise<any[]> => {

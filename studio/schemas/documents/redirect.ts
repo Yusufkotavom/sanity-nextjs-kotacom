@@ -66,6 +66,22 @@ export default defineType({
       initialValue: true,
     }),
     defineField({
+      name: "statusCode",
+      title: "Status Code",
+      type: "string",
+      description:
+        "Dipakai bila butuh 410 Gone (konten dihapus permanen). Biarkan kosong untuk redirect biasa (301/302).",
+      options: {
+        list: [
+          { title: "301 / 308 — Permanen (default)", value: "301" },
+          { title: "302 — Sementara", value: "302" },
+          { title: "410 — Gone (tanpa destination)", value: "410" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "301",
+    }),
+    defineField({
       name: "isEnabled",
       title: "Enabled",
       description: "Toggle this redirect on or off.",

@@ -114,11 +114,11 @@ const REDIRECTS_QUERY = `*[
   _type == "redirect"
   && isEnabled == true
   && defined(source)
-  && defined(destination)
 ]{
   source,
   destination,
-  permanent
+  permanent,
+  statusCode
 }`;
 
 async function fetchSanityRedirects() {
@@ -126,7 +126,7 @@ async function fetchSanityRedirects() {
     console.warn(
       "[next.config] Sanity redirect loader skipped: missing NEXT_PUBLIC_SANITY_PROJECT_ID or NEXT_PUBLIC_SANITY_DATASET",
     );
-    return [];
+    return { redirects: [], gone: [] };
   }
 
   try {
@@ -139,19 +139,27 @@ async function fetchSanityRedirects() {
       token: SANITY_REDIRECT_TOKEN,
     });
 
-    const redirects = await client.fetch(REDIRECTS_QUERY);
-    if (!Array.isArray(redirects)) {
+    const docs = await client.fetch(REDIRECTS_QUERY);
+    if (!Array.isArray(docs)) {
       console.warn("[next.config] Sanity redirect loader returned non-array payload");
-      return [];
+      return { redirects: [], gone: [] };
     }
 
-    const normalized = redirects
-      .filter((item) => item && typeof item.source === "string" && typeof item.destination === "string")
-      .map((item) => ({
+    const redirects = [];
+    const gone = [];
+    for (const item of docs) {
+      if (!item || typeof item.source !== "string") continue;
+      if (item.statusCode === "410") {
+        gone.push(item.source);
+        continue;
+      }
+      if (typeof item.destination !== "string") continue;
+      redirects.push({
         source: item.source,
         destination: item.destination,
-        permanent: Boolean(item.permanent),
-      }));
+        permanent: item.statusCode ? item.statusCode === "301" : Boolean(item.permanent),
+      });
+    }
 
     console.log(
       "[next.config] Sanity redirects loaded",
@@ -160,21 +168,31 @@ async function fetchSanityRedirects() {
         dataset: SANITY_DATASET,
         apiVersion: SANITY_API_VERSION,
         tokenMode: SANITY_REDIRECT_TOKEN ? "authenticated" : "anonymous",
-        count: normalized.length,
-        sample: normalized.slice(0, 3),
+        redirects: redirects.length,
+        gone: gone.length,
+        sample: redirects.slice(0, 3),
       }),
     );
 
-    return normalized;
+    return { redirects, gone };
   } catch (error) {
     console.warn("[next.config] Failed to load Sanity redirects:", error);
-    return [];
+    return { redirects: [], gone: [] };
   }
 }
+
+// Evaluated once (build/start) so we can expose the 410 Gone set to middleware
+// via env. ESM top-level await is supported in next.config.mjs.
+const sanityRouteData = await fetchSanityRedirects();
+
 
 const nextConfig = {
   turbopack: {
     root: __dirname,
+  },
+  // Expose the 410 Gone set to middleware (read at build/start).
+  env: {
+    SANITY_GONE_PATHS: JSON.stringify(sanityRouteData.gone),
   },
   allowedDevOrigins: [
     '168.110.210.101',
@@ -182,8 +200,7 @@ const nextConfig = {
     '127.0.0.1',
   ],
   async redirects() {
-    const sanityRedirects = await fetchSanityRedirects();
-    return [...STATIC_REDIRECTS, ...sanityRedirects];
+    return [...STATIC_REDIRECTS, ...sanityRouteData.redirects];
   },
   images: {
     qualities: [60, 75, 85],

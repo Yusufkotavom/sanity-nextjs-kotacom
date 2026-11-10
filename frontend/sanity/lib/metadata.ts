@@ -11,6 +11,7 @@ type MetaCompatiblePage = {
   title?: string | null;
   excerpt?: string | null;
   image?: any;
+  contentStatus?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -146,10 +147,10 @@ const buildMetadata = ({
     },
     robots: robotsValue,
     alternates: {
+      // Canonical is self-referencing (canonicalUrl override or derived from the
+      // page's own slug/path). The previous hardcoded id-ID alternate always
+      // pointed at the homepage — removed until real i18n exists.
       canonical: resolvedCanonical,
-      languages: {
-        'id-ID': 'https://www.kotacom.id/',
-      },
     },
   };
 };
@@ -188,6 +189,9 @@ export async function generatePageMetadata({
   const seo = await getSeoSettings();
   const siteName = await getSiteName();
   const compatiblePage = page as MetaCompatiblePage | null;
+  const isDraftOrReady =
+    compatiblePage?.contentStatus === "draft" ||
+    compatiblePage?.contentStatus === "ready";
 
   return buildMetadata({
     page: compatiblePage,
@@ -196,7 +200,9 @@ export async function generatePageMetadata({
     description:
       compatiblePage?.meta?.description || compatiblePage?.excerpt || undefined,
     canonicalUrl: compatiblePage?.meta?.canonicalUrl || undefined,
-    noindex: compatiblePage?.meta?.noindex || undefined,
+    // contentStatus gating: draft/ready => noindex (ready is still publicly
+    // renderable but must not be indexed until promoted to "index").
+    noindex: compatiblePage?.meta?.noindex || isDraftOrReady || undefined,
     openGraphType: pageType,
     seo,
     siteName,
