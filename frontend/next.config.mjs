@@ -161,6 +161,28 @@ async function fetchSanityRedirects() {
       });
     }
 
+    // Guard 1: a live page/route must always win over a redirect.
+    // Guard 2: dedupe by source (first wins) so Next never sees conflicting rules.
+    const livePaths = new Set([
+      "/", "/about", "/contact", "/privacy",
+      "/blog", "/products", "/projects", "/services", "/blog/category",
+    ]);
+    try {
+      const pagePaths = await client.fetch(
+        `*[_type=="page" && defined(path)].path`,
+      );
+      for (const p of pagePaths) if (typeof p === "string") livePaths.add(p);
+    } catch {
+      // non-fatal: fall back to static live-route list
+    }
+    const seenSources = new Set();
+    const safeRedirects = redirects.filter((r) => {
+      if (livePaths.has(r.source)) return false;
+      if (seenSources.has(r.source)) return false;
+      seenSources.add(r.source);
+      return true;
+    });
+
     console.log(
       "[next.config] Sanity redirects loaded",
       JSON.stringify({
@@ -168,13 +190,14 @@ async function fetchSanityRedirects() {
         dataset: SANITY_DATASET,
         apiVersion: SANITY_API_VERSION,
         tokenMode: SANITY_REDIRECT_TOKEN ? "authenticated" : "anonymous",
-        redirects: redirects.length,
+        redirects: safeRedirects.length,
+        filtered: redirects.length - safeRedirects.length,
         gone: gone.length,
-        sample: redirects.slice(0, 3),
+        sample: safeRedirects.slice(0, 3),
       }),
     );
 
-    return { redirects, gone };
+    return { redirects: safeRedirects, gone };
   } catch (error) {
     console.warn("[next.config] Failed to load Sanity redirects:", error);
     return { redirects: [], gone: [] };
