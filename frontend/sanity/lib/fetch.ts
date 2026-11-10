@@ -159,9 +159,10 @@ export const fetchSanityPageBySlugBuildOnly = async ({
 }: {
   slug: string;
 }): Promise<PAGE_QUERY_RESULT> => {
+  const path = !slug ? undefined : slug === "index" ? "/" : `/${slug.replace(/^\/+/, "")}`;
   const data = await fetchPublished<PAGE_QUERY_RESULT>({
     query: PAGE_QUERY,
-    params: { slug },
+    params: { slug, path },
   });
 
   return data;
