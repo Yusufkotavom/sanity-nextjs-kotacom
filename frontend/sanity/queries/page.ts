@@ -12,7 +12,7 @@ export const PAGE_QUERY = groq`
     (defined($path) && path == $path)
     || (defined($slug) && slug.current == $slug)
     || (defined($path) && $path == "/" && slug.current == "index")
-  )][0]{
+  )] | order(select(path == $path => 0, 1) asc, _updatedAt desc)[0]{
     title,
     "path": coalesce(path, "/" + slug.current),
     contentStatus,
