@@ -37,14 +37,20 @@ export function SectionIntro({
   title,
   description,
   align = "left",
+  level = 2,
   className,
 }: {
   eyebrow?: string;
   title: string;
   description?: string;
   align?: "left" | "center";
+  level?: 1 | 2 | 3;
   className?: string;
 }) {
+  const HeadingTag = (level === 1 ? "h1" : level === 3 ? "h3" : "h2") as
+    | "h1"
+    | "h2"
+    | "h3";
   return (
     <div
       className={cn(
@@ -56,9 +62,9 @@ export function SectionIntro({
       {eyebrow ? (
         <p className="text-ui-label text-foreground/55">{eyebrow}</p>
       ) : null}
-      <h2 className="mt-2 text-2xl font-semibold tracking-tight md:text-3xl">
+      <HeadingTag className="mt-2 text-2xl font-semibold tracking-tight md:text-3xl">
         {title}
-      </h2>
+      </HeadingTag>
       {description ? (
         <p className="mt-3 text-sm leading-7 text-muted-foreground md:text-base">
           {description}

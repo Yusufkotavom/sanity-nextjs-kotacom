@@ -44,6 +44,7 @@ export default function Hero1({
           ) : null}
           <SectionIntro
             title={resolvedTitle || ""}
+            level={1}
             className="mb-0 max-w-3xl"
           />
           {body ? (
