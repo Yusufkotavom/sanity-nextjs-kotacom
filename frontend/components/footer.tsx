@@ -190,7 +190,7 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="section-divider mt-7 flex flex-row gap-6 pt-6 text-xs lg:mt-8">
+        <div className="section-divider mt-7 flex flex-col gap-3 pt-6 text-xs sm:flex-row sm:flex-wrap sm:items-center sm:gap-6 lg:mt-8">
           <div className="flex items-center gap-2 text-foreground/60">
             <span>&copy; {new Date().getFullYear()}</span>
             {settings?.copyright && (
@@ -198,6 +198,17 @@ export default async function Footer() {
                 <PortableTextRenderer value={settings.copyright} />
               </span>
             )}
+          </div>
+          <div className="flex items-center gap-2 text-foreground/60">
+            <span>Situs terkait:</span>
+            <a
+              href="https://devk.my.id/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground/70 transition-colors hover:text-primary"
+            >
+              Devk &mdash; Software House &amp; Servis Komputer
+            </a>
           </div>
         </div>
       </div>
