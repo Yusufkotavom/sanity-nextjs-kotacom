@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
+import { buildDynamicOgUrl } from "@/sanity/lib/metadata";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import SanityIcon from "@/components/icons/sanity-icon";
 import { PAGE_QUERY_RESULT } from "@/sanity.types";
@@ -29,6 +30,17 @@ export default function Hero1({
 }: Hero1Props) {
   const resolvedTitle = title?.trim() || pageTitle?.trim() || undefined;
 
+  const waHref = "https://wa.me/6285799520350";
+  const effectiveLinks = ((links && links.length > 0
+    ? links
+    : [
+        { _key: "wa", _type: "link", title: "Chat WhatsApp", href: waHref, isExternal: true, target: true },
+        { _key: "contact", _type: "link", title: "Minta Penawaran", href: "/contact", isExternal: false },
+      ]) as any[]);
+  const heroImgSrc = image?.asset?._id
+    ? urlFor(image).width(900).url()
+    : buildDynamicOgUrl({ title: resolvedTitle || pageTitle || "Kotacom", sub: tagLine });
+
   return (
     <SectionShell className="pt-16 lg:pt-24">
       <SectionPanel
@@ -52,9 +64,9 @@ export default function Hero1({
               <PortableTextRenderer value={body} />
             </div>
           ) : null}
-          {links && links.length > 0 ? (
+          {effectiveLinks && effectiveLinks.length > 0 ? (
             <div className="mt-8 flex flex-wrap gap-3">
-              {links.map((link) => (
+              {effectiveLinks.map((link) => (
                 <Button key={link.title} variant={link?.buttonVariant} asChild>
                   <Link
                     href={link.href || "#"}
@@ -70,14 +82,14 @@ export default function Hero1({
           ) : null}
         </div>
         <div className="flex flex-col justify-center">
-          {image && image.asset?._id && (
+          {heroImgSrc && (
             <div className="overflow-hidden rounded-[1.5rem] border border-white/45 bg-white/70 shadow-[0_18px_48px_rgba(15,23,42,0.1)] dark:border-white/12 dark:bg-white/5">
               <Image
                 className="h-full w-full object-cover"
-                src={urlFor(image).width(900).url()}
-                alt={image.alt || ""}
-                width={image.asset?.metadata?.dimensions?.width || 800}
-                height={image.asset?.metadata?.dimensions?.height || 800}
+                src={heroImgSrc}
+                alt={image?.alt || resolvedTitle || ""}
+                width={image?.asset?.metadata?.dimensions?.width || 1200}
+                height={image?.asset?.metadata?.dimensions?.height || 630}
                 placeholder={image?.asset?.metadata?.lqip ? "blur" : undefined}
                 blurDataURL={image?.asset?.metadata?.lqip || ""}
                 quality={85}
