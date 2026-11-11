@@ -1,5 +1,7 @@
 import Blocks from "@/components/blocks";
+import JsonLd from "@/components/seo/json-ld";
 import { notFound } from "next/navigation";
+import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "@/lib/seo-jsonld";
 import {
   fetchSanityPageByPath,
   fetchSanityPagesStaticParams,
@@ -59,6 +61,19 @@ export async function generateMetadata({ params }: RouteParams) {
   });
 }
 
+function portableTextToPlain(body: unknown): string {
+  if (!Array.isArray(body)) return "";
+  return body
+    .map((blk: any) =>
+      Array.isArray(blk?.children)
+        ? blk.children.map((c: any) => (typeof c?.text === "string" ? c.text : "")).join(" ")
+        : "",
+    )
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export default async function CatchAllPage({ params }: RouteParams) {
   const { slug } = await params;
   const route = routeFromSegments(slug);
@@ -70,5 +85,34 @@ export default async function CatchAllPage({ params }: RouteParams) {
     notFound();
   }
 
-  return <Blocks blocks={page.blocks ?? []} pageTitle={page.title} />;
+  // SEO: emit FAQPage + Breadcrumb JSON-LD derived from the page blocks.
+  const faqEntries = ((page.blocks ?? []) as any[])
+    .filter((b) => b?._type === "faqs")
+    .flatMap((b) => (b.faqs ?? []) as any[])
+    .map((f) => ({
+      question: typeof f?.title === "string" ? f.title : "",
+      answer: portableTextToPlain(f?.body),
+    }))
+    .filter((f) => f.question && f.answer);
+
+  const segments = route.replace(/^\/+/, "").split("/").filter(Boolean);
+  const breadcrumb = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    ...segments.map((seg, i) => ({
+      name: seg
+        .split("-")
+        .filter(Boolean)
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" "),
+      path: "/" + segments.slice(0, i + 1).join("/"),
+    })),
+  ]);
+
+  return (
+    <>
+      <JsonLd data={breadcrumb} />
+      {faqEntries.length > 0 ? <JsonLd data={buildFaqJsonLd(faqEntries)} /> : null}
+      <Blocks blocks={page.blocks ?? []} pageTitle={page.title} />
+    </>
+  );
 }
