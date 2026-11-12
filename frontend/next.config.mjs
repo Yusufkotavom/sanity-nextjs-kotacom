@@ -169,7 +169,7 @@ async function fetchSanityRedirects() {
     ]);
     try {
       const pagePaths = await client.fetch(
-        `*[_type=="page" && defined(path)].path`,
+        `*[_type=="page" && defined(path) && coalesce(contentStatus,"index") != "draft"].path`,
       );
       for (const p of pagePaths) if (typeof p === "string") livePaths.add(p);
     } catch {
